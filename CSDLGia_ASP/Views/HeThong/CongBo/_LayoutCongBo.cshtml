@@ -1,0 +1,330 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>@ViewData["title"]</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com connect.facebook.net www.googleadservices.com www.google-analytics.com googleads.g.doubleclick.net onesignal.com tpc.googlesyndication.com;">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+    <!--link href="~/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"-->
+    <link href="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />*@
+    <!-- END PAGE LEVEL PLUGIN STYLES -->
+    <!-- BEGIN PAGE STYLES -->
+    <link href="~/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+
+
+    @RenderSection("custom_style", false);
+    <!-- END PAGE STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="~/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/plugins-md.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/admin/layout3/css/layout.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/admin/layout3/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color">
+    <link href="~/assets/admin/layout3/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/assets/global/plugins/bootstrap-toastr/toastr.min.css" />
+    <!-- END THEME STYLES -->
+    <!--link rel="shortcut icon" href="favicon.ico"/-->
+    <link rel="shortcut icon" href="~/logo/logolife.png" type="image/x-icon" />
+    <script src="~/assets/global/plugins/respond.min.js"></script>
+    <script src="~/assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="~/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="~/assets/admin/layout3/scripts/layout.js" type="text/javascript"></script>
+    <script src="~/assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
+    <script src="~/assets/admin/pages/scripts/index3.js" type="text/javascript"></script>
+    <script src="~/assets/admin/pages/scripts/tasks.js" type="text/javascript"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core componets
+            Layout.init(); // init layout
+            Demo.init(); // init demo(theme settings page)
+            //Index.init(); // init index page
+            //Tasks.initDashboardWidget(); // init tash dashboard widget
+        });
+    </script>
+    <!-- END JAVASCRIPTS -->
+
+    <script type="text/javascript">
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ nhật";
+            weekday[1] = "Thứ hai";
+            weekday[2] = "Thứ ba";
+            weekday[3] = "Thứ tư";
+            weekday[4] = "Thứ năm";
+            weekday[5] = "Thứ sáu";
+            weekday[6] = "Thứ bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + ":" + m + ":" + s;
+            if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+
+            tmp = '<span class="date"> ' + today + ' | ' + nowTime + '</span>';
+
+            document.getElementById("clock").innerHTML = tmp;
+
+            clocktime = setTimeout("time()", "1000", "JavaScript");
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+    </script>
+
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
+<body style="" class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid" onload="time()">
+    <!-- BEGIN HEADER -->
+    <div class="page-header">
+        <!-- BEGIN HEADER TOP -->
+        <div class="page-header-top" style="">
+            <div class="container">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <a href="~/CongBo">
+                        <h3 style="text-transform: uppercase;"><b style="color: #25aae2">CƠ SỞ DỮ LIỆU VỀ GIÁ @ViewBag.HeThong.DiaDanh</b></h3>
+                    </a>
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler"></a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <b style="color: #25aae2"><div id="clock"></div></b>
+                    @if (ViewBag.bSession)
+                    {
+                        <a class="text-bold text-white no-underline" href="~/CongBo" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Vào chương trình</a>
+                    }
+                    else
+                    {
+                        <b>
+                            <a asp-controller="DSTaiKhoan" asp-action="DangNhap" class="text-bold text-white no-underline" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Đăng nhập</a>
+                            &nbsp;Hoặc&nbsp;
+                            <a class="text-bold text-white no-underline" href="~/searchtkdangky" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in"> Kiểm tra tài khoản đăng ký</a>
+                        </b>
+                    }
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+
+        </div>
+
+        <!-- END HEADER TOP -->
+        <!-- BEGIN HEADER MENU -->
+        <div class="page-header-menu">
+            <div class="container">
+                <!-- BEGIN MEGA MENU -->
+                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+                <div class="hor-menu ">
+
+                    <ul class="nav navbar-nav">
+                        @**if (chkCongBo('csdlmucgiahhdv'))**@
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">Hàng hóa, dịch vụ<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" dropdown-submenu">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        &nbsp;Định giá (Phần I)
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @*Viết 1 hàm lấy tên chức năng hoặc trả lại. Lưu Dictionary to session sau đó làm như mảng Array*@
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiadatpl">giadatpl->Giá đất phân loại </a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiathuedatnuoc">giathuedatnuoc->Giá thuê mặt đất-nước</a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiarung">giarung->Giá rừng</a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbthuemuanhaxh">giathuemuanhaxh->Giá thuê mua nhà XH</a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgianuocsachsinhhoat">gianuocsh->Giá nước sạch sinh hoạt</a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiathuetscong">giathuetscong->Giá thuê tài sản công </a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiaspdvci">giaspdvci->Giá sản phẩm, dịch vụ công ích,... đặt hàng </a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbgiadvgiaoducdaotao">giadvgddt->Giá dịch vụ GD-ĐT</a></li>
+                                        <li><a asp-controller="CongBo" asp-action="~/cbdichvukcb">giadvkcb->Giá dịch vụ KCB</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class=" dropdown-submenu">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        &nbsp;Định giá (Phần II)
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a asp-action="~/cbtrogiatrocuoc">trogiatrocuoc->Mức trợ giá, trợ cước </a></li>
+                                        <li><a asp-action="~/cbgiahhdvcn">giahhdvcn->Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành </a></li>
+                                        <li><a asp-action="~/cbgiadatduan">giadatduan->Giá đất cụ thể dự án </a></li>
+                                        <li><a asp-action="~/cbdaugiadatts">daugiadatts->Giá đấu giá đất và tài sản gắn liền đất </a></li>
+                                        <li><a asp-action="~/cbgiathuetainguyen">giathuetn->Giá thuế tài nguyên</a></li>
+                                        <li><a asp-action="~/cbgiacuocvanchuyen">giacuocvanchuyen->Giá cước vận chuyển </a></li>
+                                        <li><a asp-action="~/cbgiathuenhacongvu">giathuenhacongvu->Giá thuê nhà công vụ</a></li>
+                                        <li><a asp-action="~/cbbannhataidinhcu">bannhataidinhcu->Giá bán nhà tái định cư </a></li>
+                                        <li><a asp-action="~/cbgiadatdiaban">giacldat->Giá đất theo địa bàn </a></li>
+                                        <li><a asp-action="~/cbgiadaugiadat">giadaugiadat->Giá đấu giá đất</a></li>
+                                    </ul>
+                                </li>
+                                <!-- Chon năm; chon phân loại mặt hàng -->
+                                <li><a asp-action="~/cbbinhongia"><i class="icon-folder"></i>bog->Bình ổn giá</a></li>
+                                <li><a asp-action="~/coming"><i class="icon-folder"></i>Giá HH-DV khác</a></li>
+
+                                <li><a asp-action="~/cbgialephitruocba"><i class="icon-folder"></i>gialephitruocba->Giá lệ phí trước bạ</a></li>
+                                <li><a asp-action="~/cbphilephi"><i class="icon-folder"></i>giaphilephi->Phí, lệ phí</a></li>
+                            </ul>
+                        </li>
+                        @**endif**@
+
+                        <li class="menu-dropdown classic-menu-dropdown">
+                            <a data-hover="megamenu-dropdown" data-close-others="true" href="javascript:;">Kê khai, niêm yết giá<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu pull-left">
+                                <li><a asp-action="~/cbkekhaigia">Doanh nghiệp kê khai, niêm yết giá</a></li>
+                                <li><a asp-action="~/cblinhvuckk">Lĩnh vực hoạt động kinh doanh</a></li>
+                                <li><a asp-action="~/timkiemkekhai">Tìm kiếm giá kê khai, niêm yết</a></li>
+                            </ul>
+                        </li>
+
+
+
+                        @*{{--if (chkCongBo('csdlthamdinhgia')) --}}*@
+                        <li class="menu-dropdown classic-menu-dropdown">
+                            <a data-hover="megamenu-dropdown" data-close-others="true" asp-action="~/cbthamdinhgia">Thẩm định giá</a>
+                        </li>
+                        @*{{--endif--}}*@
+
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">Văn bản QLNN<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" dropdown-submenu">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        &nbsp;Văn bản QLNN về giá, phí lệ phí
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @*<?php $modelbcthvegia = \App\Model\manage\vanbanplvegia\baocaoth\BcThVeGiaDm::all(); ?>
+                                            foreach ($modelbcthvegia as $bcthvegia)*@
+                                        <li><a asp-action="~//cbvbqlnn"><i class="icon-folder"></i> &nbsp;bcthvegia->mota</a></li>
+                                        @*endforeach*@
+                                    </ul>
+                                </li>
+
+                                <li class=" dropdown-submenu">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        &nbsp;Thông tin QLNN về giá
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @*<?php $ttpvctqlnn = \App\Model\manage\ttpvctqlnn\TtPvCtQlNnDm::all(); ?>
+                                            foreach ($ttpvctqlnn as $ttpv)*@
+                                        <li>
+                                            <a asp-action="~//cbttqlnn"><i class="icon-folder"></i> $ttpv->mota</a>
+                                        </li>
+                                        @*endforeach*@
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">&nbsp;Hỗ trợ<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu pull-left">
+                                <li><a asp-action="~/danhsachusertaphuan"><i class="icon-folder"></i>&nbsp;Danh sách tài khoản tập huấn</a></li>
+                                <li><a asp-action="~/thongtinhotro" target="_blank"><i class="icon-folder"></i> &nbsp;Thông tin hỗ trợ</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MEGA MENU -->
+            </div>
+        </div>
+        <!-- END HEADER MENU -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN PAGE CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN PAGE HEAD -->
+        <!-- END PAGE HEAD -->
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="page-content" style="">
+            <br>
+            @RenderBody();
+        </div>
+        <!-- END PAGE CONTENT -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+    <!-- BEGIN PRE-FOOTER -->
+    <!-- END PRE-FOOTER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-prefooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 footer-block" style="text-align: center">
+                    <h2><strong>Giá hàng hóa dịch vụ @ViewBag.HeThong.DiaDanh</strong></h2>
+                    <p>Bản quyền thuộc về &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.TenDonVi</b></p>
+                    <p>Địa chỉ: &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.DiaChi</b></p>
+                    <p>Thông tin liên hệ: &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.DienThoai</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <div class="container">
+            <div class="col-md-12">
+                Copyright &copy;  2016 - @DateTime.Now.Year;  <a href="https://phanmemcuocsong.com/" target="_blank">Tiện ích hơn - Hiệu quả hơn</a>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]-->
+    @RenderSection("custom_script", false)
+    @await RenderSectionAsync("Scripts", false)
+</body>
+<!-- END BODY -->
+</html>
