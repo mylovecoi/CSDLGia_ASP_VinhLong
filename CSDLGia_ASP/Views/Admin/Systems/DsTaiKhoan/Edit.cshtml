@@ -1,0 +1,126 @@
+﻿@using CSDLGia_ASP.Models.Systems
+@{
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var chucnang = (IEnumerable<GroupPermissions>)ViewData["ChucNang"];
+}
+
+@model CSDLGia_ASP.Models.Systems.Users
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin tài khoản<small>&nbsp;chỉnh sửa</small>
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="DsTaiKhoan" asp-action="Update" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <input hidden asp-for="Madv" />
+                <input hidden asp-for="Id" />
+                <input hidden asp-for="Password" />
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Đơn vị</label>
+                            <select asp-for="Madv" class="form-control">
+                                @foreach (var item in dsdonvi)
+                            {
+                                <option value="@item.MaDv">@item.TenDv</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tên tài khoản<span class="require">*</span></label>
+                        <input type="text" class="form-control" asp-for="Name" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Phân loại nhóm tài khoản</label>
+                        <select asp-for="Chucnang" class="form-control">
+                            @foreach (var item in chucnang)
+                            {
+                                <option value="@item.KeyLink">@item.TenNhomQ</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="Kích hoạt">Kích hoạt</option>
+                            <option value="Vô hiệu">Vô hiệu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tài khoản truy cập<span class="require">*</span></label>
+                        <input type="text" class="form-control" asp-for="Username" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Mật khẩu<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="NewPassword" name="NewPassword" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="DsTaiKhoan" asp-action="Index" asp-route-MaDv="@ViewData["MaDv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function setQuanTri() {
+        if (document.getElementById("quantri").checked) {
+            $('#tonghop').prop('checked', false);
+            $('#nhaplieu').prop('checked', false);
+        }
+    }
+    function setTongHop() {
+        if (document.getElementById("tonghop").checked || document.getElementById("nhaplieu").checked) {
+            $('#quantri').prop('checked', false);
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

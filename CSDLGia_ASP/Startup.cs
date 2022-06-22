@@ -21,7 +21,12 @@ namespace CSDLGia_ASP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CSDLGiaDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CSDLGia_ASPConnection")));
+            services.AddDbContext<CSDLGiaDBContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("CSDLGia_ASPConnection"), options =>
+                {
+                    options.CommandTimeout(180); // 3 minutes
+                })
+            );
             //services.AddDbContext<DanhMucChungDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DanhMucChungConnection")));
             services.AddRazorPages();
             services.AddControllersWithViews();
@@ -33,6 +38,10 @@ namespace CSDLGia_ASP
             });
 
             services.AddHttpContextAccessor();
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Login", "");
+            });
             //services.AddMvc();
         }
 

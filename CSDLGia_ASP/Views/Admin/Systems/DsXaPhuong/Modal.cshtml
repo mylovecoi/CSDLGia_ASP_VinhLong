@@ -1,0 +1,166 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin xã, phường
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới thông tin xã, phường</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    @*<div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã địa bàn</label>*@
+                            <input hidden type="text" id="madiaban_create" name="madiaban_create" value="@ViewData["MaDiaBan"]" readonly="readonly" />
+                        @*</div>
+                    </div>*@
+                    @*<div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã xã, phường</label>
+                            <input type="text" id="maxp_create" name="maxp_create" class="form-control" readonly="readonly" p />
+                        </div>
+                    </div>*@
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên xã, phường<span class="require">*</span></label>
+                            <input type="text" id="tenxp_create" name="tenxp_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin xã, phường
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin xã, phường</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="edit_thongtin">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DsXaPhuong" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin xã, phường???</span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên xã phường: </label>
+                                <span style="font-weight:bold; color:blue" id="tenxp_delete"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa xã phường</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        $.ajax({
+            url: '/DsXaPhuong/Store',
+            type: 'POST',
+            data: {
+                MaDiaBan: $('#madiaban_create').val(),
+                TenXp: $('#tenxp_create').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetDelete(id, tenxp) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tenxp_delete").innerHTML = tenxp;
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DsXaPhuong/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        $.ajax({
+            url: '/DsXaPhuong/Update',
+            type: 'POST',
+            data: {
+                TenXp: $('#tenxp_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

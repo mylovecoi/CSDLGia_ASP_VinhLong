@@ -1,0 +1,218 @@
+﻿@model IEnumerable<CSDLGia_ASP.ViewModels.Systems.VMRegisters>
+@{
+    var record = 1;
+}
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin doanh nghiệp<small>&nbsp;đăng ký tài khoản</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <tbody>
+                    @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="font-weight: bold">Tên doanh nghiệp</td>
+                        <td>@item.Tendn</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Mã số thuế</td>
+                        <td>@item.Madv</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Địa chỉ</td>
+                        <td>@item.Diachi</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Số điện thoại</td>
+                        <td>@item.Tel</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Số Fax</td>
+                        <td>@item.Fax</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Email quản lý</td>
+                        <td>@item.Email</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Giấy đăng ký kinh doanh</td>
+                        <td>@item.Giayphepkd</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Địa danh</td>
+                        <td>@item.Diadanh</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Tên tài khoản</td>
+                        <td>@item.Username</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Mã đăng ký</td>
+                        <td>@item.Mahs</td>
+                    </tr>
+                    @if (item.Status == "Bị trả lại")
+                    {
+                        <tr>
+                            <td style="font-weight: bold">Lý do trả lại</td>
+                            <td>@item.Lydo</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="5%">#</th>
+                    <th>Ngành nghề kinh doanh</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center" width="5%">@(record++)</td>
+                        <td>@item.Tennghe</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="Register" asp-action="Index" asp-route-Madiaban="@ViewData["Madiaban"]" class="btn btn-danger">
+            <i class="la la-reply"></i>Quay lại
+        </a>
+        @if ((string)ViewData["Status"] != "Bị trả lại")
+        {
+            <button type="button" class="btn btn-primary" title="Kích hoạt" data-toggle="modal" data-target="#TraLai_Modal"
+                onclick="SetDuyet('@ViewData["Id"]', '@ViewData["Name"]', '@ViewData["Username"]', '@ViewData["Madiaban"]')">
+                Kích hoạt tài khoản
+                <i class="la la-check"></i>
+            </button>
+            <button type="button" class="btn btn-danger" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                onclick="SetTraLai('@ViewData["Id"]', '@ViewData["Name"]', '@ViewData["Username"]', '@ViewData["Madiaban"]')">
+                Trả lại hồ sơ đăng ký
+                <i class="la la-mail-forward"></i>
+            </button>
+        }
+    </div>
+</div>
+
+<!--Duyệt Modal-->
+<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Đồng ý duyệt hồ sơ tài khoản?
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="Register" asp-action="Duyet" id="frm_duyet">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                Doanh nghiệp: <span style="font-weight:bold; color:blue" id="name_duyet"></span> - tài khoản truy cập: <span style="font-weight:bold; color:blue" id="username_duyet"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id_duyet" name="id_duyet" hidden />
+                    <input id="madiaban_duyet" name="madiaban_duyet" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Duyệt hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Trả lại Modal-->
+<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Đồng ý trả lại hồ sơ tài khoản?
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="Register" asp-action="TraLai" id="frm_tralai">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                Doanh nghiệp: <span style="font-weight:bold; color:blue" id="name_tralai"></span> - tài khoản truy cập: <span style="font-weight:bold; color:blue" id="username_tralai"></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Lý do</label>
+                                <textarea class="form-control" rows="5" id="lydo_tralai" name="lydo_tralai"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id_tralai" name="id_tralai" hidden />
+                    <input id="madiaban_tralai" name="madiaban_tralai" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ValidateTraLai()">Trả lại hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetDuyet(id, name, username, madiaban) {
+        document.getElementById("id_duyet").value = id;
+        document.getElementById("name_duyet").innerHTML = name;
+        document.getElementById("username_duyet").innerHTML = username;
+        document.getElementById("madiaban_duyet").value = madiaban;
+    }
+
+    function SetTraLai(id, name, username, madiaban) {
+        document.getElementById("id_tralai").value = id;
+        document.getElementById("name_tralai").innerHTML = name;
+        document.getElementById("username_tralai").innerHTML = username;
+        document.getElementById("madiaban_tralai").value = madiaban;
+    }
+
+    function ValidateTraLai() {
+        if ($('#lydo_tralai').val() == '') {
+            toastr.error("Bạn cần nhập lý do trả lại hồ sơ!", "Lỗi!!!")
+        } else {
+            document.getElementById("frm_tralai").submit();
+        }
+    }
+</script>

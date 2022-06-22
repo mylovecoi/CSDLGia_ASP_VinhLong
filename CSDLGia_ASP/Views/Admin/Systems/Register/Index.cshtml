@@ -1,0 +1,112 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Systems.VMUsers>
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+
+        $(function() {
+            $('#Madiaban').change(function() {
+                var current_path_url = '/DangKy/DanhSach?';
+                var madiaban = '&Madiaban=' + $('#Madiaban').val();
+                var url = current_path_url + madiaban;
+                window.location.href = url;
+            })
+        });
+
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Quản lý thông tin tài khoản<small>&nbsp;đăng ký</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="mb-12">
+                <div class="row">
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold; color:blue">Địa bàn</label>
+                            <select class="form-control" id="Madiaban" name="Madiaban">
+                                @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)ViewData["Madiaban"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <thead>
+                    <tr style="text-align:center">
+                        <th width="5%">#</th>
+                        <th>Tên doanh nghiệp</th>
+                        <th width="15%">Mã số thuế</th>
+                        <th width="15%">Trạng thái</th>
+                        <th width="15%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td class="active">
+                                <b style="color: blue">@item.Name</b><br />
+                                <span>Ngày đăng ký: @Helpers.ConvertDateToStr(item.Created_at)</span>
+                                @if (item.Status == "Bị trả lại")
+                                {
+                                    <br />
+                                    <span>Ngày cập nhật: @Helpers.ConvertDateToStr(item.Updated_at)</span>
+                                }
+                            </td>
+                            <td>@item.Madv</td>
+                            <td class="text-center">
+                                <span>
+                                    @if (item.Status == "Chờ xét duyệt")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-light-danger label-inline">@item.Status</span>
+                                    }
+                                    @if (item.Status == "Bị trả lại")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-light-danger label-inline">@item.Status</span><br />
+                                        <span><u>Lý do: @item.Lydo</u></span>
+                                    }
+                                </span>
+
+                                </td>
+                                <td>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
+                                    {
+                                        <a asp-controller="Register" asp-action="Show" asp-route-Id="@item.Id" asp-route-Madv="@item.Madv"
+                               asp-route-Madiaban="@ViewData["Madiaban"]" asp-route-Name="@item.Name" asp-route-Username="@item.Username" asp-route-Status="@item.Status"
+                               class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-eye text-primary"></i>
+                                        </a>
+                                    }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

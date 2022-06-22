@@ -1,0 +1,133 @@
+﻿@{
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.GroupPermissions>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+        function SetDelete(id, name) {
+            document.getElementById("id_delete").value = id;
+            document.getElementById("groupname_delete").innerHTML = name;
+        }
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Create"))
+            {
+                <a asp-controller="DsNhomTaiKhoan" asp-action="Create" class="btn btn-primary font-weight-bolder">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
+            }
+            <!--end::Button-->
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <!--begin: Datatable-->
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="5%">#</th>
+                    <th>Tên nhóm quyền</th>
+                    <th>Chức năng</th>
+                    <th width="15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center" width="5%">@(record_id++)</td>
+
+                        <td class="active" style="font-weight:bold">@item.TenNhomQ</td>
+                        @if (item.ChucNang == "TONGHOP")
+                        {
+                            <td class="active" style="font-weight:bold;color:blue">Đơn vị tổng hợp dữ liệu</td>
+                        }
+                        @if (item.ChucNang == "NHAPLIEU")
+                        {
+                            <td class="active" style="font-weight:bold;color:blue">Đơn vị nhập liệu</td>
+                        }
+                        @if (item.ChucNang == "QUANTRI")
+                        {
+                            <td class="active" style="font-weight:bold;color:blue">Quản trị hệ thống</td>
+                        }
+                        @if (item.ChucNang == "K")
+                        {
+                            <td class="active" style="font-weight:bold;color:blue">Khác</td>
+                        }
+
+                        <td>
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Edit"))
+                            {
+                                <a asp-controller="DsNhomTaiKhoan" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon"
+                           title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </a>
+                            }
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Delete"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.TenNhomQ')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!--end: Datatable-->
+    </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DsNhomTaiKhoan" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin tài khoản
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Đồng ý xóa chức năng truy cập cho nhóm quyền
+                        </span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Nhóm quyền </label>
+                            <b id="groupname_delete" style="color: #0000FF"></b>
+                        </div>
+                    </div>
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

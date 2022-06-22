@@ -1,0 +1,177 @@
+﻿@using CSDLGia_ASP.Models.Systems
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+}
+
+@model CSDLGia_ASP.Models.Systems.DsDonVi
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        @*<div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+            <i class="fa fa-star text-warning "></i>
+        </div>*@
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin đơn vị<small>&nbsp;chỉnh sửa</small>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="DsDonVi" asp-action="Update" method="post" enctype="multipart/form-data">
+    <div class="card-body">
+        <input hidden asp-for="MaDiaBan"/>
+        <input hidden asp-for="Id" />
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Mã quan hệ ngân sách</label>
+                    <input type="text" class="form-control" asp-for="MaQhNs" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Tên đơn vị<span class="require">*</span></label>
+                    <input type="text" class="form-control" asp-for="TenDv" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Tên đơn vị hiển thị báo cáo<span class="require">*</span></label>
+                    <input type="text" class="form-control" asp-for="TenDvHienThi" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Tên đơn vị cấp trên</label>
+                    <input type="text" class="form-control" asp-for="TenDvCqHienThi" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Địa chỉ trụ sở</label>
+                    <input type="text" class="form-control" asp-for="DiaChi" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Địa danh</label>
+                    <input type="text" class="form-control" asp-for="DiaDanh" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Chức vụ người ký</label>
+                    <input type="text" class="form-control" asp-for="ChucVuKy" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Họ và tên người ký</label>
+                    <input type="text" class="form-control" asp-for="NguoiKy" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Chức vụ người ký thay</label>
+                    <input type="text" class="form-control" asp-for="ChucVuKyThay" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Địa bàn quản lý</label>
+                    <select asp-for="MaDiaBan" class="form-control">
+                        @foreach (var item in dsdiaban)
+                        {
+                            <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Phân loại chức năng</label>
+                    <select asp-for="ChucNang" class="form-control">
+                        <option value="QUANTRI">Quản trị</option>
+                        <option value="TONGHOP">Tổng hợp</option>
+                        <option value="NHAPLIEU">Nhập liệu</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Email quản lý</label>
+                    <input type="text" class="form-control" asp-for="EmailQl" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Email quản trị</label>
+                    <input type="text" class="form-control" asp-for="EmailQt" />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Số ngày làm việc</label>
+                    <select asp-for="SoNgayLv" class="form-control">
+                        @for (var i = 1; i < 8; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <label>Thông tin liên hệ</label>
+                    <textarea asp-for="TtLienHe" class="form-control" cols="12" rows="5" placeholder="Thông tin, số điện thoại liên lạc với các bộ phận"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="DsDonVi" asp-action="Index" asp-route-MaDiaBan="@ViewData["MaDiaBan"]" class="btn btn-danger">
+            <i class="la la-reply"></i>Quay lại
+        </a>&ensp;
+        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+        <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Cập nhật</button>
+    </div>
+    </form>
+    <!--end::Form-->
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

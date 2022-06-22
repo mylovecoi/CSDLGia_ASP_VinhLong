@@ -1,0 +1,261 @@
+﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.DmNgheKd>
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+    </script>
+}
+    @{
+    int record_id = 1;
+}
+<div class="card card-custom wave wave-animate-slower">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Create"))
+            {
+                <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <input hidden id="Manganh" name="Manganh" value="@ViewData["Manganh"]">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th width="15%">Mã nghề</th>
+                    <th>Tên nghề</th>
+                    <th width="20%">Theo dõi</th>
+                    <th width="15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td>@item.Manghe</td>
+                        <td class="active">@item.Tennghe</td>
+                        <td style="text-align: center">
+                            @if (item.Theodoi == "TD")
+                            {
+                                <span class="label font-weight-bold label-lg  label-primary label-inline">Theo dõi</span>
+                            }
+                            else
+                            {
+                                <span class="label font-weight-bold label-lg label-danger label-inline">Dừng theo dõi</span>
+                            }
+                        </td>
+                        <td>
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Edit"))
+                            {
+                                <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <div class="col-xl-12" style="text-align:center">
+            <a asp-controller="DmNganhKd" asp-action="Index" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+        </div>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin ngành nghề
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã nghề<span class="require">*</span></label>
+                            <input type="text" name="manghe_create" id="manghe_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên nghề<span class="require">*</span></label>
+                            <input type="text" name="tennghe_create" id="tennghe_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Theo dõi<span class="require">*</span></label>
+                            <select id="theodoi_create" name="theodoi_create" class="form-control">
+                                <option value="TD">Theo dõi</option>
+                                <option value="DTD">Dừng theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hồ sơ
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()" id="btn_update">Cập nhật</button>
+                <div id="loading_update" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        document.getElementById("btn_store").style.display = "none";
+        document.getElementById("loading_store").style.display = "block";
+        if ($('#manghe_create').val() != '') {
+            if ($('#tennghe_create').val() != '') {
+                $.ajax({
+                    url: '/DmNganhNghe/ChiTiet/Store',
+                    type: 'POST',
+                    data: {
+                        Manganh: $('#Manganh').val(),
+                        Manghe: $('#manghe_create').val(),
+                        Tennghe: $('#tennghe_create').val(),
+                        Theodoi: $('#theodoi_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_store").style.display = "block";
+                        document.getElementById("loading_store").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nghề kinh doanh không được để trống", "Lỗi!");
+                document.getElementById("btn_store").style.display = "block";
+                document.getElementById("loading_store").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nghề kinh doanh không được để trống", "Lỗi!");
+            document.getElementById("btn_store").style.display = "block";
+            document.getElementById("loading_store").style.display = "none";
+        }
+    }
+
+    function Update() {
+        document.getElementById("btn_update").style.display = "none";
+        document.getElementById("loading_update").style.display = "block";
+        if ($('#manghe_edit').val() != '') {
+            if ($('#tennghe_edit').val() != '') {
+                $.ajax({
+                    url: '/DmNganhNghe/ChiTiet/Update',
+                    type: 'POST',
+                    data: {
+                        Manganh: $('#Manganh').val(),
+                        Manghe: $('#manghe_edit').val(),
+                        Tennghe: $('#tennghe_edit').val(),
+                        Theodoi: $('#theodoi_edit').val(),
+                        Id: $('#id_edit').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thành công!!!", "Thành công!");
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_update").style.display = "block";
+                        document.getElementById("loading_update").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nghề kinh doanh không được để trống", "Lỗi!");
+                document.getElementById("btn_update").style.display = "block";
+                document.getElementById("loading_update").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nghề kinh doanh không được để trống", "Lỗi!");
+            document.getElementById("btn_update").style.display = "block";
+            document.getElementById("loading_update").style.display = "none";
+        }
+    }
+
+    function SetEdit(id) {
+        $.ajax({
+            url: '/DmNganhNghe/ChiTiet/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

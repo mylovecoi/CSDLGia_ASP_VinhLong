@@ -1,0 +1,40 @@
+﻿<div class="d-flex flex-column flex-root">
+    <!--begin::Error-->
+    <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30">
+        <!--begin::Content-->
+        <h1 class="font-weight-boldest " style="font-size: 10rem; color:red">Error!!!</h1>
+        <p class="font-size-h3 text-muted font-weight-normal"><b>@ViewData["Messages"]</b></p>
+        <p class="font-size-h5 text-muted font-weight-normal">Bấm vào <a href="/">đây</a> để quay lại chương trình</p>
+
+        <!--end::Content-->
+    </div>
+    <!--end::Error-->
+</div>
+@*<div id="error-page-content">
+    <h1>Lỗi!</h1>
+    @if (ViewData["ThongBaoLoi"] == null)
+    {
+        <h4>
+            Thông tin này không thuộc phạm vi quản lý của bạn!
+        </h4>
+    }
+    else
+    {
+        <h4>
+            @ViewData["ThongBaoLoi"]
+        </h4>
+    }
+    @if (ViewData["url"] == null)
+    {
+        <p>
+            <a href="/">Bấm vào đây</a> để quay lại.
+        </p>
+    }
+    else
+    {
+        <p>
+            <a href="@ViewData["url"]">Bấm vào đây</a> để quay lại.
+        </p>
+    }
+
+</div>*@

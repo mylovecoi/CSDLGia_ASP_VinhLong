@@ -1,0 +1,142 @@
+﻿@using CSDLGia_ASP.Models.Systems
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.DsDonVi>
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+
+        $(function() {
+            $('#MaDiaBan').change(function() {
+                var current_path_url = '/DsDonVi?';
+                var madiaban = '&MaDiaBan=' + $('#MaDiaBan').val();
+                var url = current_path_url + madiaban;
+                window.location.href = url;
+            })
+        });
+
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh sách đơn vị<small>&nbsp;quản lý</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Create"))
+            {
+                <a class="btn btn-primary font-weight-bolder" asp-controller="DsDonVi" asp-action="Create"
+               asp-route-MaDiaBan="@ViewData["MaDiaBan"]">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="mb-12">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold; color:blue">Địa bàn</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)ViewData["MaDiaBan"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <thead>
+                    <tr style="text-align:center">
+                        <th width="5%">#</th>
+                        <th width="15%">Mã đơn vị</th>
+                        <th>Tên đơn vị</th>
+                        <th width="15%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td class="text-center">@item.MaDv</td>
+                            <td class="active">@item.TenDv</td>
+                            <td>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Edit"))
+                                {
+                                    <a asp-controller="DsDonVi" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </a>
+                                }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.TenDv')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DsDonVi" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin đơn vị quản lý???</span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên đơn vị: </label>
+                                <span style="font-weight:bold; color:blue" id="tendv_delete"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa đơn vị</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function SetDelete(id, tendv) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tendv_delete").innerHTML = tendv;
+    }
+</script>

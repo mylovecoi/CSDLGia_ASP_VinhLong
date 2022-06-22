@@ -1,0 +1,232 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Systems.VMUsers>
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+
+        $(function() {
+            $('#MaDv').change(function() {
+                var current_path_url = '/DsTaiKhoan?';
+                var madv = '&MaDv=' + $('#MaDv').val();
+                var url = current_path_url + madv;
+                window.location.href = url;
+            })
+        });
+
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh sách tài khoản<small>&nbsp;đơn vị</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
+            {
+                <a class="btn btn-primary font-weight-bolder" asp-controller="DsTaiKhoan" asp-action="Create"
+               asp-route-MaDv="@ViewData["MaDv"]">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="mb-12">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold; color:blue">Đơn vị</label>
+                        <select class="form-control" id="MaDv" name="MaDv">
+                            @foreach (var db in dsdiaban)
+                            {
+                                <optgroup label="@db.TenDiaBan">
+                                    @{
+                                        var dsdv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan).ToList();
+                                    }
+                                    @foreach (var dv in dsdv)
+                                    {
+                                        <!option value="@dv.MaDv" @((string)ViewData["MaDv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <thead>
+                    <tr style="text-align:center">
+                        <th rowspan="2" width="5%">#</th>
+                        <th rowspan="2">Tên tài khoản</th>
+                        <th rowspan="2">Tài khoản truy cập</th>
+                        <th colspan="4">Chức năng</th>
+                        <th rowspan="2">Trạng thái</th>
+                        <th rowspan="2">Thao tác</th>
+                    </tr>
+                    <tr style="text-align:center">
+                        <th>Nhập liệu</th>
+                        <th>Tổng hợp</th>
+                        <th>Quản trị</th>
+                        <th>Khác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td>@item.Name</td>
+                            <td class="active text-center">@item.Username</td>
+                            @*<td style="text-align:center">
+                        @if (item.Chucnang == "NHAPLIEU;" || item.Chucnang == "NHAPLIEU;TONGHOP;")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>
+                        <td style="text-align:center">
+                        @if (item.Chucnang == "TONGHOP;" || item.Chucnang == "NHAPLIEU;TONGHOP;")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>
+                        <td style="text-align:center">
+                        @if (item.Chucnang == "QUANTRI;")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>*@
+                            <td style="text-align:center">
+                                @if (item.TenChucnang == "NHAPLIEU")
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.TenChucnang == "TONGHOP")
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.TenChucnang == "QUANTRI")
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.TenChucnang == "K")
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                <span style="width: 112px;">
+                                    @if (item.Status == "Kích hoạt")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-light-primary label-inline">@item.Status</span>
+                                    }
+                                    else if (item.Status == "Vô hiệu")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-light-danger label-inline">@item.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-light-info label-inline">@item.Status</span>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Edit"))
+                                {
+                                    <a asp-controller="DsTaiKhoan" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </a>
+                                }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.Name', '@item.Username')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
+                                {
+                                    @if (item.TenChucnang == "K")
+                                    {
+                                        <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
+                                            <i class="icon-lg la la-user-cog text-dark"></i>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DsTaiKhoan" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin tài khoản???</span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên tài khoản: </label>
+                                <span style="font-weight:bold; color:blue" id="tentk_delete"></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tài khoản truy cập: </label>
+                                <span style="font-weight:bold; color:blue" id="tktruycap_delete"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa tài khoản</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*<script>
+    function SetDelete(id, tentk, tktruycap) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tentk_delete").innerHTML = tentk;
+        document.getElementById("tktruycap_delete").innerHTML = tktruycap;
+    }
+</script>*@

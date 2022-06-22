@@ -19,19 +19,30 @@ namespace CSDLGia_ASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("CSDLGia")))
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 return RedirectToAction("Index", "CongBo");
             }
             else
             {
-                ViewData["Title"] = "Home";
+                ViewData["Title"] = "Trang chủ";
                 ViewData["MenuLv1"] = "menu_home";
-                return View("Views/HeThong/TrangChu/Index.cshtml");
+                return View("Views/Admin/Home/Index.cshtml");
             }
+            /*if (string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                ViewData["Title"] = "Login";
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                ViewData["Title"] = "Trang chủ";
+                ViewData["MenuLv1"] = "menu_home";
+                return View("Views/Admin/Home/Index.cshtml");
+            }*/
         }
 
-        public IActionResult Privacy()
+        /*public IActionResult Privacy()
         {
             return View();
         }
@@ -40,6 +51,6 @@ namespace CSDLGia_ASP.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }*/
     }
 }

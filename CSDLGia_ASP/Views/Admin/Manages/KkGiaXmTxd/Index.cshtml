@@ -1,0 +1,324 @@
+﻿@{
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+
+        $(function() {
+            $('#Madv, #Nam').change(function() {
+                var current_path_url = '/KeKhaiGiaXmTxd?';
+                var madv = '&Madv=' + $('#Madv').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var url = current_path_url + madv + nam;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin kê khai giá<small>&nbsp;xi măng, thép xây dựng</small><br />
+                    <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Create"))
+            {
+                <a class="btn btn-primary font-weight-bolder" asp-controller="KeKhaiGiaXmTxd" asp-action="Create"
+               asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        @{
+                            var nam_start = DateTime.Now.Year - 5;
+                            var nam_stop = DateTime.Now.Year + 1;
+                            for (var i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control" id="Madv" name="Madv">
+                        @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
+                                }
+                                @foreach (var item in company)
+                                {
+                                    <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th>Ngày kê khai</th>
+                    <th>Ngày thực hiện<br />mức giá kê khai</th>
+                    <th>Số công văn</th>
+                    <th>Số công văn<br />liền kề</th>
+                    <th>Cơ quan tiếp nhận</th>
+                    <th>Trạng thái</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaynhap)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                            <td class="text-center active">@item.Socv</td>
+                            <td style="text-align: center">@item.Socvlk</td>
+                            <td style="text-align: center">@item.Macqcq</td>
+                            <td style="text-align: center">
+                                @if (item.Trangthai == "CC")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ chuyển</span>
+                                }
+                                @if (item.Trangthai == "CD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
+
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CN")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ nhận</span>
+
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                }
+                                @if (item.Trangthai == "DD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
+
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="KeKhaiGiaXmTxd" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                           target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Edit"))
+                                    {
+                                        <a asp-controller="KeKhaiGiaXmTxd" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                        <i class="icon-lg la la-share text-primary "></i>
+                                    </button>
+                                    @if (item.Trangthai == "BTL")
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Lý do trả lại" data-toggle="modal" data-target="#LyDo_Modal" onclick="getLyDo('@item.Lydo')">
+                                            <i class="icon-lg la la-search text-warning "></i>
+                                        </button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Chuyen Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KkGiaXmTxdXd" asp-action="Chuyen" id="frm_chuyen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hoàn thành hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Họ và tên người nộp*</label>
+                                <input type="text" id="Ttnguoinop" name="Ttnguoinop" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số điện thoại liên hệ*</label>
+                                <input type="text" id="Dtll" name="Dtll" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận* </label>
+                                <select class="form-control" id="Macqcq" name="Macqcq">
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var cqcq = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in cqcq)
+                                            {
+                                                <option value="@item.MaDv">@item.TenDv</option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ValidateChuyen()">Chuyển hồ sơ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Lý Do Modal-->
+<div class="modal fade" id="LyDo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Hồ sơ bị trả lại
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Lý do trả lại: </label>
+                            <span style="font-weight:bold; color:blue" id="lydotralai_show"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="KeKhaiGiaXmTxd" asp-action="Delete">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý xóa thông tin???
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function Chuyen(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
+    }
+
+    function getLyDo(lydo) {
+        document.getElementById("lydotralai_show").innerHTML = lydo;
+    }
+
+    function ValidateChuyen() {
+        if ($('#Ttnguoinop').val() == '') {
+            toastr.error("Họ và tên người nộp không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Dtll').val() == '') {
+                toastr.error("Số điện thoại liên hệ không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_chuyen").submit();
+            }
+        }
+    }
+</script>
