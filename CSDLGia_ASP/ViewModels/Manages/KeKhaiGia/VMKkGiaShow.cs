@@ -25,5 +25,14 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public DateTime Ngaychuyen { get; set; }
         public DateTime Ngaynhan { get; set; }
         public List<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
+        public List<KkGiaEtanolCt> KkGiaEtanolCt { get; set; }
+        public List<KkGiaSachCt> KkGiaSachCt { get; set; }
+        public List<KkGsCt> KkGsCt { get; set; }
+        public List<KkGiaVtXbCt> KkGiaVtXbCt { get; set; }
+        public List<KkGiaVtXkCt> KkGiaVtXkCt { get; set; }
+        public List<KkGiaVtXtxCt> KkGiaVtXtxCt { get; set; }
+        public List<KkGiaThanCt> KkGiaThanCt { get; set; }
+        public List<KkGiaGiayCt> KkGiaGiayCt { get; set; }
+        public List<KkGiaTaCnCt> KkGiaTaCnCt { get; set; }
     }
 }

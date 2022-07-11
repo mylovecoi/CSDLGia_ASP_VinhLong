@@ -186,6 +186,8 @@ namespace CSDLGia_ASP.Database
         public DbSet<GeneralConfigs> GeneralConfigs { get; set; }
         public DbSet<Register> Register { get; set; }
         public DbSet<Towns> Towns { get; set; }
+        public DbSet<TtDnTd> TtDnTd { get; set; }
+        public DbSet<TtDnTdCt> TtDnTdCt { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<GroupPermissions> GroupPermissions { get; set; }

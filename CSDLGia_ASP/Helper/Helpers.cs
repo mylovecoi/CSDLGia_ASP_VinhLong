@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using CSDLGia_ASP.Database;
 
 namespace CSDLGia_ASP.Helper
 {
@@ -123,9 +125,34 @@ namespace CSDLGia_ASP.Helper
                 "csdlmucgiahhdv.kknygia",
                 "csdlmucgiahhdv.kknygia.ttdn",
                 "csdlmucgiahhdv.kknygia.xdtttddn",
+
                 "csdlmucgiahhdv.kknygia.kkgxmtxd",
                 "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk",
                 "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd",
+
+                "csdlmucgiahhdv.kknygia.kkgsach",
+                "csdlmucgiahhdv.kknygia.kkgsach.giakk",
+                "csdlmucgiahhdv.kknygia.kkgsach.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgetanol",
+                "csdlmucgiahhdv.kknygia.kkgetanol.giakk",
+                "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgtpcn",
+                "csdlmucgiahhdv.kknygia.kkgtpcn.giakk",
+                "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd",
+
+                "csdlmucgiahhdv.kknygia.kkgvtxb",
+                "csdlmucgiahhdv.kknygia.kkgvtxb.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxb.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgvtxk",
+                "csdlmucgiahhdv.kknygia.kkgvtxk.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd",
+
+                "csdlmucgiahhdv.kknygia.kkgthan",
+                "csdlmucgiahhdv.kknygia.kkgthan.giakk",
+                "csdlmucgiahhdv.kknygia.kkgthan.giakkxd",
 
                 //Hệ thống
                 "hethong",
@@ -148,7 +175,6 @@ namespace CSDLGia_ASP.Helper
 
         public static string ConvertDateToText(DateTime date)
         {
-
             string date_convert = date.Date.ToString("dd/MM/yyyy");
             if (date_convert == "01/01/0001")
             {

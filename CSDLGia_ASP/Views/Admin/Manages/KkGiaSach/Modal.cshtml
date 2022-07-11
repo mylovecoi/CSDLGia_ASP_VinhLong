@@ -1,0 +1,248 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thêm mới thông tin dịch vụ - quy cách chất lượng
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên dịch vụ cung ứng*</b></label>
+                            <input type="text" id="tendvcu_create" name="tendvcu_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Quy cách chất lượng dịch vụ</b></label>
+                            <textarea type="text" id="qccl_create" name="qccl_create" cols="12" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính*</b></label>
+                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-left">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Giá kê khai hiện hành*</b></label>
+                            <input type="text" id="gialk_create" name="gialk_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Giá kê khai mới*</b></label>
+                            <input type="text" id="giakk_create" name="giakk_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Ghi chú</b></label>
+                            <textarea type="text" id="ghichu_create" name="ghichu_create" cols="12" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin dịch vụ - quy cách chất lượng
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetStore() {
+        if (document.getElementById("tendvcu_create").value == '') {
+            toastr.error("Tên dịch vụ cung ứng không được để trống!!!", "Lỗi!");
+        } else {
+            if (document.getElementById("dvt_create").value == '') {
+                toastr.error("Đơn vị tính không được để trống!!!", "Lỗi!");
+            } else {
+                if (document.getElementById("gialk_create").value == '') {
+                    toastr.error("Giá kê khai hiện hành không được để trống!!!", "Lỗi!");
+                } else {
+                    if (document.getElementById("giakk_create").value == '') {
+                        toastr.error("Giá kê khai mới không được để trống!!!", "Lỗi!");
+                    } else {
+                        $.ajax({
+                            url: '/KkGiaSachCt/Store',
+                            type: 'POST',
+                            data: {
+                                Tendvcu: $('#tendvcu_create').val(),
+                                Qccl: $('#qccl_create').val(),
+                                Dvt: $('#dvt_create').val(),
+                                Gialk: $('#gialk_create').val(),
+                                Giakk: $('#giakk_create').val(),
+                                Ghichu: $('#ghichu_create').val(),
+                                Madv: $('#Madv').val(),
+                            },
+                            dataType: 'JSON',
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                                    $('#frm_data').replaceWith(data.message);
+                                    $(document).ready(function() {
+                                        TableManaged4.init();
+                                    });
+                                    $('#Create_Modal').modal("hide");
+                                } else {
+                                    toastr.error(data.message, "Lỗi!");
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/KkGiaSachCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+        if (document.getElementById("tendvcu_edit").value == '') {
+            toastr.error("Tên dịch vụ cung ứng không được để trống!!!", "Lỗi!");
+        } else {
+            if (document.getElementById("dvt_edit").value == '') {
+                toastr.error("Đơn vị tính không được để trống!!!", "Lỗi!");
+            } else {
+                if (document.getElementById("gialk_edit").value == '') {
+                    toastr.error("Giá kê khai hiện hành không được để trống!!!", "Lỗi!");
+                } else {
+                    if (document.getElementById("giakk_edit").value == '') {
+                        toastr.error("Giá kê khai mới không được để trống!!!", "Lỗi!");
+                    } else {
+                        $.ajax({
+                            url: '/KkGiaSachCt/Update',
+                            type: 'POST',
+                            data: {
+                                Tendvcu: $('#tendvcu_edit').val(),
+                                Qccl: $('#qccl_edit').val(),
+                                Dvt: $('#dvt_edit').val(),
+                                Gialk: $('#gialk_edit').val(),
+                                Giakk: $('#giakk_edit').val(),
+                                Ghichu: $('#ghichu_edit').val(),
+                                Madv: $('#Madv').val(),
+                                Id: $('#id_edit').val()
+                            },
+                            dataType: 'JSON',
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                                    $('#frm_data').replaceWith(data.message);
+                                    $(document).ready(function() {
+                                        TableManaged4.init();
+                                    });
+                                    $('#Edit_Modal').modal("hide");
+                                } else {
+                                    toastr.error(data.message, "Lỗi!");
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/KkGiaSachCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

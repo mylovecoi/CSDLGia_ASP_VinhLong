@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.ViewModels.Systems
@@ -9,6 +11,7 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public string Madv { get; set; }
         public string Macqcq { get; set; }
         public string Madiaban { get; set; }
+        public string Tendiaban { get; set; }
         public string Manghe { get; set; }
         public string Tendn { get; set; }
         public string Diachi { get; set; }
@@ -47,5 +50,6 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public double Thocgao { get; set; }
         public double Thuocpcb { get; set; }
         public bool Kiemtra { get; set; }
+        public List<VMCompanyLvCc> VMCompanyLvCc { get; set; }
     }
 }

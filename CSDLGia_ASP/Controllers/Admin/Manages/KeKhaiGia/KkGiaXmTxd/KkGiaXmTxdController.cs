@@ -328,13 +328,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
                 {
-                    var model = GetThongTinKk(Mahs);
+                    var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
+                    var hoso_kk = new VMKkGiaShow
+                    {
+                        Id = model.Id,
+                        Mahs = model.Mahs,
+                        Socv = model.Socv,
+                        Ngaynhap = model.Ngaynhap,
+                        Ngayhieuluc = model.Ngayhieuluc,
+                        Ttnguoinop = model.Ttnguoinop,
+                        Dtll = model.Dtll,
+                        Sohsnhan = model.Sohsnhan,
+                        Ngaychuyen = model.Ngaychuyen,
+                        Ngaynhan = model.Ngaynhan,
+                        Ytcauthanhgia = model.Ytcauthanhgia,
+                        Thydggadgia = model.Thydggadgia
+                    };
+
+                    var modeldn = _db.Company.FirstOrDefault(t => t.Madv == model.Mahs);
+                    if (modeldn != null)
+                    {
+                        hoso_kk.Tendn = modeldn.Tendn;
+                        hoso_kk.Diadanh = modeldn.Diadanh;
+                        hoso_kk.Diachi = modeldn.Diachi;
+                    }
+
+                    var modeldv = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
+                    if (modeldv != null)
+                    {
+                        hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
+                    }
+
+                    var modelct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs);
+                    if (modelct != null)
+                    {
+                        hoso_kk.KkGiaXmTxdCt = modelct.ToList();
+                    }
+
+                    /*var model = GetThongTinKk(Mahs);*/
 
                     ViewData["Title"] = "Kê khai giá xi măng thép xây dựng";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgxmtxd";
                     ViewData["MenuLv3"] = "menu_giakk";
-                    return View("Views/Admin/Manages/KkGiaXmTxd/Show.cshtml", model);
+                    return View("Views/Admin/Manages/KkGiaXmTxd/Show.cshtml", hoso_kk);
 
                 }
                 else
@@ -349,7 +386,131 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             }
         }
 
-        private VMKkGiaShow GetThongTinKk(string Mahs)
+        [Route("KeKhaiGiaXmTxd/Search")]
+        [HttpGet]
+        public IActionResult Search(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaXmTxdCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá xi măng thép xây dựng";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgxmtxd";
+                    ViewData["MenuLv3"] = "menu_giakktk";
+                    return View("Views/Admin/Manages/KkGiaXmTxd/TimKiem/Index.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+        
+        [Route("KeKhaiGiaXmTxd/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaXmTxdCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+                    
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá xi măng thép xây dựng";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgxmtxd";
+                    ViewData["MenuLv3"] = "menu_giakktk";
+                    return View("Views/Admin/Manages/KkGiaXmTxd/TimKiem/Printf.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        /*private VMKkGiaShow GetThongTinKk(string Mahs)
         {
             var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
             var hoso_kk = new VMKkGiaShow
@@ -367,9 +528,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                 Ytcauthanhgia = model.Ytcauthanhgia,
                 Thydggadgia = model.Thydggadgia
             };
+
             hoso_kk = GetThongTinDn(hoso_kk, model.Mahs);
             hoso_kk = GetThongTinDv(hoso_kk, model.Macqcq);
             hoso_kk = GetThongTinCt(hoso_kk, model.Mahs);
+
             return hoso_kk;
         }
 
@@ -403,7 +566,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                 hoso.KkGiaXmTxdCt = modelct.ToList();
             }
             return hoso;
-        }
+        }*/
 
     }
 }

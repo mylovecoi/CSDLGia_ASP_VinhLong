@@ -101,13 +101,13 @@
     </div>
     <script>
         function ValidateXmTxd() {
-            if ($('#Socv').val() == '') {
+            if ($('#Socv').val().trim() == '') {
                 toastr.error("Số công văn không được để trống!", "Lỗi!!!")
             } else {
-                if ($('#Ngayhieuluc').val() == '') {
+                if ($('#Ngayhieuluc').val().trim() == '') {
                     toastr.error("Ngày thực hiện mức giá kê khai không được để trống!", "Lỗi!!!")
                 } else {
-                    if ($('#Ngaycvlk').val() == '') {
+                    if ($('#Ngaycvlk').val().trim() == '') {
                         toastr.error("Ngày nhập số công văn liền kề không được để trống!", "Lỗi!!!")
                     } else {
                         document.getElementById("frm_xmtxd_update").submit();
