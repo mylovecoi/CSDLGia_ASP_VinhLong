@@ -10,6 +10,8 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public string Madv { get; set; }
         public string Macqcq { get; set; }
         public string Madiaban { get; set; }
+        public string Tendiaban { get; set; }
+        public string Manghe { get; set; }
         public string Tendn { get; set; }
         public string Diachi { get; set; }
         public string Tel { get; set; }

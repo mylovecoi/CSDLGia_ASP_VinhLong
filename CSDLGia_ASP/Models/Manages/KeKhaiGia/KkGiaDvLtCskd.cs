@@ -21,9 +21,16 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
         public string Telkd { get; set; }
         public string Link { get; set; }
         public string Avatar { get; set; }
+        [NotMapped]
+        public string Avatarupload { get; set; }
         public string Town { get; set; }
         public string District { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+
+        [NotMapped]
+        public int Lankk { get; set; }
+        [NotMapped]
+        public string Kklc { get; set; }
     }
 }

@@ -1,0 +1,149 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueMuaNhaXhSearch>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Nam, #Mota').change(function () {
+                var current_path_url = '/DinhGiaThueMuaNhaXaHoi/Search?';
+                var nam = '&Nam=' + $('#Nam').val();
+                var mota = '&Mota=' + $('#Mota').val();
+                var url = current_path_url + nam + mota;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Tìm kiếm thông tin giá<small>&nbsp;thuê mua nhà xã hội</small>
+            </h3>
+        </div>
+    </div>
+</div>
+<hr />
+<form asp-controller="Giathuemuanhaxh" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_tmnxh_result">
+    <div class="card-body">
+        <div class="mb-3 font-weight-bold font-size-lg">
+            <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control" id="dv" name="dv">
+                        <option value="">--Tất cả các đơn vị--</option>
+                        @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
+                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                }
+
+                                @foreach (var item in company)
+                                {
+
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label><b>Tên nhà</b></label>
+                    <select class="form-control" id="tn" name="tn">
+                        <option value="">--Tất cả các phân loại--</option>
+                        @foreach (var tn in tennha)
+                        {
+                            <option value="@tn.Maso">@tn.Tennha</option>
+                         }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập từ</label>
+                    <input type="date" class="form-control" name="beginTime" id="beginTime" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập đến</label>
+                    <input type="date" class="form-control" name="endTime" id="endTime" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Đơn giá từ</label>
+                    <input type="text" class="form-control" name="beginPrice" id="beginPrice" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Đơn giá đến</label>
+                    <input type="text" class="form-control" name="endPrice" id="endPrice" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+        <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Tìm</button>
+    </div>
+</form>
+<script>
+    function ValidateTmdmn() {
+        if ($('#beginTime').val().trim() == '') {
+            toastr.error("Thời gian bắt đầu không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#endTime').val().trim() == '') {
+                toastr.error("Thời gian kết thúc không được để trống!", "Lỗi!!!")
+            } else {
+                if ($('#beginPrice').val().trim() == '') {
+                    toastr.error("Đơn gía bắt đầu không được để trống!", "Lỗi!!!")
+                } else {
+                    if ($('#endPrice').val().trim() == '') {
+                        toastr.error("Đơn gía kết thúc không được để trống!", "Lỗi!!!")
+                    } else {
+                         if ($('#dv').val().trim() == '') {
+                                toastr.error("Đơn vị không được để trống!", "Lỗi!!!")
+                         } else {
+                                document.getElementById("frm_tmnxh_result").submit();
+                         }
+                    }
+                }
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

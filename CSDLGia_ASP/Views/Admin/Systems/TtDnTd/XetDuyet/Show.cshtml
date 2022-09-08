@@ -1,0 +1,256 @@
+﻿@{
+    var record_id = 1;
+    var record_id_td = 1;
+
+    var comct = (IEnumerable<VMCompanyLvCc>)ViewData["CompanyLvcc"];
+    var dn = (CSDLGia_ASP.ViewModels.Systems.VMTtDnTd)ViewData["TtDnTd"];
+    var dnct = (IEnumerable<VMTtDnTdCt>)ViewData["TtDnTdCt"];
+}
+@model CSDLGia_ASP.ViewModels.Systems.VMCompany
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+
+        $(function() {
+
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    THÔNG TIN DOANH NGHIỆP CHI TIẾT
+                </h3>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tbody>
+                            @if (Model != null)
+                        {
+                            <tr>
+                                <td colspan="2" style="text-align: center;color: #5b9bd1"><b>Thông tin hiện tại</b></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"> <b>Tên doanh nghiệp</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Tendn</span> </td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Mã số thuế</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Madv</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Địa chỉ trụ sở chính</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Diachi</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Điện thoại trụ sở chính</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Tel</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Số fax trụ sở chính</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Fax</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Email quản lý</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Email</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Chức danh người ký</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Chucdanh</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Họ và tên người ký</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Nguoiky</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Tendiaban</span></td>
+                            </tr>
+                            <tr>
+                                <td style="width:15%"><b>Địa danh</b></td>
+                                <td style="width:35%"><span class="text-muted">@Model.Diadanh</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <table class="table table-striped table-bordered table-hover">
+                    @if (comct != null)
+                    {
+                        <tr style="text-align: center">
+                            <th>STT</th>
+                            <th>Ngành nghề kinh doanh</th>
+                        </tr>
+                        @foreach (var item in comct)
+                        {
+                            <tr>
+                                <td class="text-center">@(record_id++)</td>
+                                <td>@item.Tennghe</td>
+                            </tr>
+                        }
+                    }
+                </table>
+
+            </div>
+            @if (dn != null)
+            {
+                <div class="col-xl-6">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tbody>
+                            @if (dn != null)
+                            {
+                                <tr>
+                                    <td colspan="2" style="text-align: center;color: #5b9bd1"><b>Thông tin thay đổi</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"> <b>Tên doanh nghiệp</b></td>
+                                    <td style="width:35%"><span class="text-muted"></span>@dn.Tendn</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Mã số thuế</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Madv</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Địa chỉ trụ sở chính</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Diachi</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Điện thoại trụ sở chính</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Tel</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Số fax trụ sở chính</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Fax</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Email quản lý</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Email</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Chức danh người ký</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Chucdanh</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Họ và tên người ký</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Nguoiky</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Tendiaban</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%"><b>Địa danh</b></td>
+                                    <td style="width:35%"><span class="text-muted">@dn.Diadanh</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <table class="table table-striped table-bordered table-hover">
+                        @if (dnct != null)
+                        {
+                            <tr style="text-align: center">
+                                <th>STT</th>
+                                <th>Ngành nghề kinh doanh</th>
+                            </tr>
+                            @foreach (var item in dnct)
+                            {
+                                <tr>
+                                    <td class="text-center">@(record_id_td++)</td>
+                                    <td>@item.Tennghe</td>
+                                </tr>
+                            }
+                        }
+                    </table>
+
+                </div>
+            }
+        </div>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="TtDnTdXd" asp-action="Index" asp-route-Madiaban="@ViewData["Madiaban"]" class="btn btn-light-primary">
+            <i class="la la-reply"></i>Quay lại
+        </a>
+        <a asp-controller="TtDnTdXd" asp-action="Approve" asp-route-Madv="@ViewData["Madv"]" class="btn btn-success">
+            <i class="la la-check"></i>Thay đổi
+        </a>
+        @*<a asp-controller="TtDnTdXd" asp-action="Return" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <i class="la la-mail-forward"></i>Trả lại
+        </a>*@
+        <button type="button" class="btn btn-danger" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                onclick="SetTraLai('@ViewData["Madv"]')">
+            Trả lại
+            <i class="la la-mail-forward"></i>
+        </button>
+    </div>
+</div>
+
+<!--Trả lại Modal-->
+<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Đồng ý trả lại hồ sơ tài khoản?
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="TtDnTdXd" asp-action="Return" id="frm_tralai">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Lý do trả lại</b></label>
+                                <textarea class="form-control" rows="5" id="lydo_tralai" name="lydo_tralai"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    @*<input id="id_tralai" name="id_tralai" hidden />*@
+                    <input id="madv_tralai" name="madv_tralai" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ValidateTraLai()">Trả lại hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetTraLai(madv) {
+        //document.getElementById("id_tralai").value = id;
+        document.getElementById("madv_tralai").value = madv;
+    }
+
+    function ValidateTraLai() {
+        if ($('#lydo_tralai').val() == '') {
+            toastr.error("Bạn cần nhập lý do trả lại hồ sơ!", "Lỗi!!!")
+        } else {
+            document.getElementById("frm_tralai").submit();
+        }
+    }
+</script>

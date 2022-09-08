@@ -1,0 +1,180 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin nhóm hàng hóa
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã nhóm*</label>
+                            <input type="text" name="manhom_create" id="manhom_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên nhóm*</label>
+                            <input type="text" name="tennhom_create" id="tennhom_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Theo dõi</label>
+                            <select id="theodoi_create" name="theodoi_create" class="form-control">
+                                <option value="TD">Theo dõi</option>
+                                <option value="DTD">Dừng theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Phân loại</label>
+                            <select id="phanloai_create" name="phanloai_create" class="form-control">
+                                <!option value="THAMDINHGIA" @((string)ViewData["Phanloai"] == "THAMDINHGIA" ? "selected" : "")>Thẩm định giá</!option>
+                                <!option value="GIAHHDVKHAC" @((string)ViewData["Phanloai"] == "GIAHHDVKHAC" ? "selected" : "")>Giá HH-DV khác</!option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin nhóm hàng hóa
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()" id="btn_update">Cập nhật</button>
+                <div id="loading_update" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function Store() {
+        document.getElementById("btn_store").style.display = "none";
+        document.getElementById("loading_store").style.display = "block";
+        if ($('#manhom_create').val() != '') {
+            if ($('#tennhom_create').val() != '') {
+                $.ajax({
+                    url: '/DmNhomHh/Store',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_create').val(),
+                        Tennhom: $('#tennhom_create').val(),
+                        Theodoi: $('#theodoi_create').val(),
+                        Phanloai: $('#phanloai_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_store").style.display = "block";
+                        document.getElementById("loading_store").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nhóm hàng hóa không được để trống", "Lỗi!");
+                document.getElementById("btn_store").style.display = "block";
+                document.getElementById("loading_store").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+            document.getElementById("btn_store").style.display = "block";
+            document.getElementById("loading_store").style.display = "none";
+        }
+    }
+
+    function Update() {
+        document.getElementById("btn_update").style.display = "none";
+        document.getElementById("loading_update").style.display = "block";
+        if ($('#manhom_edit').val() != '') {
+            if ($('#tennhom_edit').val() != '') {
+                $.ajax({
+                    url: '/DmNganhNghe/Update',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_edit').val(),
+                        Tennhom: $('#tennhom_edit').val(),
+                        Theodoi: $('#theodoi_edit').val(),
+                        Phanloai: $('#phanloai_edit').val(),
+                        Id: $('#id_edit').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thành công!!!", "Thành công!");
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_update").style.display = "block";
+                        document.getElementById("loading_update").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nhóm hàng hóa không được để trống", "Lỗi!");
+                document.getElementById("btn_update").style.display = "block";
+                document.getElementById("loading_update").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+            document.getElementById("btn_update").style.display = "block";
+            document.getElementById("loading_update").style.display = "none";
+        }
+    }
+
+    function SetEdit(id) {
+        $.ajax({
+            url: '/DmNhomHh/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

@@ -10,11 +10,277 @@ using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using CSDLGia_ASP.Database;
+using CSDLGia_ASP.ViewModels.Manages;
+using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.Models.Systems;
+using System.Xml.Linq;
 
 namespace CSDLGia_ASP.Helper
 {
     public class Helpers
     {
+        public static List<VMKeyValue> GetListColExcel()
+        {
+            List<VMKeyValue> list = new List<VMKeyValue> { };
+            list.Add(new VMKeyValue { Key = "A", Value = 1 });
+            list.Add(new VMKeyValue { Key = "B", Value = 2 });
+            list.Add(new VMKeyValue { Key = "C", Value = 3 });
+            list.Add(new VMKeyValue { Key = "D", Value = 4 });
+            list.Add(new VMKeyValue { Key = "E", Value = 5 });
+            list.Add(new VMKeyValue { Key = "F", Value = 6 });
+            list.Add(new VMKeyValue { Key = "G", Value = 7 });
+            list.Add(new VMKeyValue { Key = "H", Value = 8 });
+            list.Add(new VMKeyValue { Key = "I", Value = 9 });
+            list.Add(new VMKeyValue { Key = "J", Value = 10 });
+            list.Add(new VMKeyValue { Key = "K", Value = 11 });
+            list.Add(new VMKeyValue { Key = "L", Value = 12 });
+            list.Add(new VMKeyValue { Key = "M", Value = 13 });
+            list.Add(new VMKeyValue { Key = "N", Value = 14 });
+            list.Add(new VMKeyValue { Key = "O", Value = 15 });
+            list.Add(new VMKeyValue { Key = "P", Value = 16 });
+            list.Add(new VMKeyValue { Key = "Q", Value = 17 });
+            list.Add(new VMKeyValue { Key = "R", Value = 18 });
+            list.Add(new VMKeyValue { Key = "S", Value = 19 });
+            list.Add(new VMKeyValue { Key = "T", Value = 20 });
+            list.Add(new VMKeyValue { Key = "U", Value = 21 });
+            list.Add(new VMKeyValue { Key = "V", Value = 22 });
+            list.Add(new VMKeyValue { Key = "W", Value = 23 });
+            list.Add(new VMKeyValue { Key = "X", Value = 24 });
+            list.Add(new VMKeyValue { Key = "Y", Value = 25 });
+            list.Add(new VMKeyValue { Key = "Z", Value = 26 });
+
+            return list;
+        }
+
+        public static List<VMRoleList> GetRoleList()
+        {
+            List<VMRoleList> list = new List<VMRoleList> { };
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv", Name = "" });
+            //chức năng định giá
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia", Name = "Định giá" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.datcuthe", Name = "Giá đất cụ thể" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", Name = "Giá đất cụ thể thông tin" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.datcuthe.xetduyet", Name = "Giá đất cụ thể xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc", Name = "Giá thuê mặt đất, mặt nước" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", Name = "Giá thuê mặt đất, mặt nước danh mục" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", Name = "Giá thuê mặt đất, mặt nước thông tin" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", Name = "Giá thuê mặt đất, mặt nước xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.rung", Name = "Giá rừng" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.rung.danhmuc", Name = "Giá rừng danh mục" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.rung.thongtin", Name = "Giá rừng thông tin" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.rung.xetduyet", Name = "Giá rừng xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha", Name = "Giá thuê mua nhà ở" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.danhmuc", Name = "Giá thuê mua nhà ở danh mục" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", Name = "Giá thuê mua nhà ở thông tin" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.xetduyet", Name = "Giá thuê mua nhà ở xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nuocsh", Name = "Giá nước sạch sinh hoạt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", Name = "Giá nước sạch sinh hoạt danh mục" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", Name = "Giá nước sạch sinh hoạt danh mục" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nuocsh.xetduyet", Name = "Giá nước sạch sinh hoạt xét duyệt" });
+
+            //chức năng bình ổn giá
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog", Name = "Mặt hàng bình ổn giá" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.ttdn", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.xdtttddn", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.phanloai", Name = "Mặt hàng bình ổn giá phân loại" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.thongtin", Name = "Mặt hàng bình ổn giá thông tin" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.xetduyet", Name = "Mặt hàng bình ổn giá xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.timkiem", Name = "Mặt hàng bình ổn giá tìm kiếm" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.bog.baocao", Name = "Mặt hàng bình ổn giá báo cáo" });
+
+            //chức năng kê khai giá
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia", Name = "Mức giá kê khai - đăng ký" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.ttdn", Name = "Thông tin doanh nghiệp" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.xdtttddn", Name = "Xét duyệt thông tin thay đổi doanh nghiệp" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd", Name = "Xi măng, thép xây dựng" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", Name = "Xi măng, thép xây dựng kê khai giá" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd", Name = "Xi măng, thép xây dựng xét duyệt" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt", Name = "Dịch vụ lưu trú" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", Name = "Dịch vụ lưu trú kê khai giá" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakkxd", Name = "Dịch vụ lưu trú xét duyệt" });
+
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx.giakkxd", Name = "" });
+
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakkxd", Name = "" });
+
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue.giakkxd", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk.giakk", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk.giakkxd", Name = "" });
+
+            //Hệ thống
+            list.Add(new VMRoleList { Role = "hethong", Name = "HỆ THỐNG" });
+            list.Add(new VMRoleList { Role = "hethong.nguoidung", Name = "Quản trị người dùng" });
+            list.Add(new VMRoleList { Role = "hethong.nguoidung.dsnhomtaikhoan", Name = "Danh sách nhóm tài khoản" });
+            list.Add(new VMRoleList { Role = "hethong.nguoidung.dstaikhoan", Name = "Danh sách tài khoản" });
+            list.Add(new VMRoleList { Role = "hethong.nguoidung.dstaikhoan.phanquyen", Name = "Danh sách tài khoản phân quyền" });
+            list.Add(new VMRoleList { Role = "hethong.nguoidung.dsdangky", Name = "" });
+            list.Add(new VMRoleList { Role = "hethong.hethong", Name = "Quản trị hệ thống" });
+            list.Add(new VMRoleList { Role = "hethong.hethong.dsdiaban", Name = "Danh sách địa bàn" });
+            list.Add(new VMRoleList { Role = "hethong.hethong.dsdonvi", Name = "Danh sách đơn vị sử dụng" });
+            list.Add(new VMRoleList { Role = "hethong.hethong.dsxaphuong", Name = "Danh sách xã, phường, thị trấn" });
+            list.Add(new VMRoleList { Role = "hethong.danhmuc", Name = "Quản trị danh mục" });
+            list.Add(new VMRoleList { Role = "hethong.danhmuc.dmnganhnghekd", Name = "Danh mục ngành nghề kinh doanh" });
+
+
+            return list;
+        }
+
+        public static string[] GetRolesList()
+        {
+            string[] roles = new string[]
+            {
+                "csdlmucgiahhdv",
+                //chức năng định giá
+                "csdlmucgiahhdv.dinhgia",
+                "csdlmucgiahhdv.dinhgia.datcuthe",
+                "csdlmucgiahhdv.dinhgia.datcuthe.thongtin",
+                "csdlmucgiahhdv.dinhgia.datcuthe.xetduyet",
+                "csdlmucgiahhdv.dinhgia.thuedatnuoc",
+                "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc",
+                "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin",
+                "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet",
+                "csdlmucgiahhdv.dinhgia.rung",
+                "csdlmucgiahhdv.dinhgia.rung.danhmuc",
+                "csdlmucgiahhdv.dinhgia.rung.thongtin",
+                "csdlmucgiahhdv.dinhgia.rung.xetduyet",
+                "csdlmucgiahhdv.dinhgia.thuemuanha",
+                "csdlmucgiahhdv.dinhgia.thuemuanha.danhmuc",
+                "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin",
+                "csdlmucgiahhdv.dinhgia.thuemuanha.xetduyet",
+                "csdlmucgiahhdv.dinhgia.nuocsh",
+                "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc",
+                "csdlmucgiahhdv.dinhgia.nuocsh.thongtin",
+                "csdlmucgiahhdv.dinhgia.nuocsh.xetduyet",
+
+                //chức năng bình ổn giá
+                "csdlmucgiahhdv.bog",
+                "csdlmucgiahhdv.bog.ttdn",
+                "csdlmucgiahhdv.bog.xdtttddn",
+                "csdlmucgiahhdv.bog.phanloai",
+                "csdlmucgiahhdv.bog.thongtin",
+                "csdlmucgiahhdv.bog.xetduyet",
+                "csdlmucgiahhdv.bog.timkiem",
+                "csdlmucgiahhdv.bog.baocao",
+
+                //chức năng kê khai giá
+                "csdlmucgiahhdv.kknygia",
+                "csdlmucgiahhdv.kknygia.ttdn",
+                "csdlmucgiahhdv.kknygia.xdtttddn",
+                "csdlmucgiahhdv.kknygia.kkgxmtxd",
+                "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk",
+                "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgdvlt",
+                "csdlmucgiahhdv.kknygia.kkgdvlt.giakk",
+                "csdlmucgiahhdv.kknygia.kkgdvlt.giakkxd",
+
+                "csdlmucgiahhdv.kknygia.kkgsach",
+                "csdlmucgiahhdv.kknygia.kkgsach.giakk",
+                "csdlmucgiahhdv.kknygia.kkgsach.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgetanol",
+                "csdlmucgiahhdv.kknygia.kkgetanol.giakk",
+                "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgtpcn",
+                "csdlmucgiahhdv.kknygia.kkgtpcn.giakk",
+                "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgcatsan",
+                "csdlmucgiahhdv.kknygia.kkgcatsan.giakk",
+                "csdlmucgiahhdv.kknygia.kkgcatsan.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkghplx",
+                "csdlmucgiahhdv.kknygia.kkghplx.giakk",
+                "csdlmucgiahhdv.kknygia.kkghplx.giakkxd",
+
+                "csdlmucgiahhdv.kknygia.kkgthan",
+                "csdlmucgiahhdv.kknygia.kkgthan.giakk",
+                "csdlmucgiahhdv.kknygia.kkgthan.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkggiay",
+                "csdlmucgiahhdv.kknygia.kkggiay.giakk",
+                "csdlmucgiahhdv.kknygia.kkggiay.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgtacn",
+                "csdlmucgiahhdv.kknygia.kkgtacn.giakk",
+                "csdlmucgiahhdv.kknygia.kkgtacn.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgdatsanlap",
+                "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakk",
+                "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgdaxaydung",
+                "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakk",
+                "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakkxd",
+
+
+                "csdlmucgiahhdv.kknygia.kkgvtxb",
+                "csdlmucgiahhdv.kknygia.kkgvtxb.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxb.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgvtxk",
+                "csdlmucgiahhdv.kknygia.kkgvtxk.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk",
+                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkgcahue",
+                "csdlmucgiahhdv.kknygia.kkgcahue.giakk",
+                "csdlmucgiahhdv.kknygia.kkgcahue.giakkxd",
+                "csdlmucgiahhdv.kknygia.kkcvchk",
+                "csdlmucgiahhdv.kknygia.kkcvchk.giakk",
+                "csdlmucgiahhdv.kknygia.kkcvchk.giakkxd",
+
+                //Hệ thống
+                "hethong",
+                "hethong.nguoidung",
+                "hethong.nguoidung.dsnhomtaikhoan",
+                "hethong.nguoidung.dstaikhoan",
+                "hethong.nguoidung.dstaikhoan.phanquyen",
+                "hethong.nguoidung.dsdangky",
+                "hethong.hethong",
+                "hethong.hethong.dsdiaban",
+                "hethong.hethong.dsdonvi",
+                "hethong.hethong.dsxaphuong",
+                "hethong.danhmuc",
+                "hethong.danhmuc.dmnganhnghekd",
+
+            };
+            return roles;
+
+        }
+
         public static string GetMenuMinimize(ISession session)
         {
             if (!string.IsNullOrEmpty(session.GetString("MenuMinimize")))
@@ -114,63 +380,6 @@ namespace CSDLGia_ASP.Helper
 
             // Return the hexadecimal string.
             return sBuilder.ToString();
-        }
-
-        public static string[] GetRolesList()
-        {
-            string[] roles = new string[]
-            {
-                //Chức năng
-                "csdlmucgiahhdv",
-                "csdlmucgiahhdv.kknygia",
-                "csdlmucgiahhdv.kknygia.ttdn",
-                "csdlmucgiahhdv.kknygia.xdtttddn",
-
-                "csdlmucgiahhdv.kknygia.kkgxmtxd",
-                "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk",
-                "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd",
-
-                "csdlmucgiahhdv.kknygia.kkgsach",
-                "csdlmucgiahhdv.kknygia.kkgsach.giakk",
-                "csdlmucgiahhdv.kknygia.kkgsach.giakkxd",
-                "csdlmucgiahhdv.kknygia.kkgetanol",
-                "csdlmucgiahhdv.kknygia.kkgetanol.giakk",
-                "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd",
-                "csdlmucgiahhdv.kknygia.kkgtpcn",
-                "csdlmucgiahhdv.kknygia.kkgtpcn.giakk",
-                "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd",
-
-                "csdlmucgiahhdv.kknygia.kkgvtxb",
-                "csdlmucgiahhdv.kknygia.kkgvtxb.giakk",
-                "csdlmucgiahhdv.kknygia.kkgvtxb.giakkxd",
-                "csdlmucgiahhdv.kknygia.kkgvtxk",
-                "csdlmucgiahhdv.kknygia.kkgvtxk.giakk",
-                "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd",
-                "csdlmucgiahhdv.kknygia.kkgvtxtx",
-                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk",
-                "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd",
-
-                "csdlmucgiahhdv.kknygia.kkgthan",
-                "csdlmucgiahhdv.kknygia.kkgthan.giakk",
-                "csdlmucgiahhdv.kknygia.kkgthan.giakkxd",
-
-                //Hệ thống
-                "hethong",
-                "hethong.nguoidung",
-                "hethong.nguoidung.dsnhomtaikhoan",
-                "hethong.nguoidung.dstaikhoan",
-                "hethong.nguoidung.dstaikhoan.phanquyen",
-                "hethong.nguoidung.dsdangky",
-                "hethong.hethong",
-                "hethong.hethong.dsdiaban",
-                "hethong.hethong.dsdonvi",
-                "hethong.hethong.dsxaphuong",
-                "hethong.danhmuc",
-                "hethong.danhmuc.dmnganhnghekd",
-
-            };
-            return roles;
-
         }
 
         public static string ConvertDateToText(DateTime date)
@@ -312,6 +521,18 @@ namespace CSDLGia_ASP.Helper
             else
             {
                 return year.ToString();
+            }
+        }
+
+        public static string ConvertMonthToStr(int month)
+        {
+            if (month == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return month.ToString();
             }
         }
 
@@ -505,7 +726,6 @@ namespace CSDLGia_ASP.Helper
             return new_str;
         }
 
-
         public static string[] GetListsDays()
         {
             string[] days = new string[]
@@ -516,6 +736,7 @@ namespace CSDLGia_ASP.Helper
                };
             return days;
         }
+
         public static string[] GetListsMonths()
         {
             string[] months = new string[]
@@ -670,69 +891,33 @@ namespace CSDLGia_ASP.Helper
             catch (NullReferenceException) { return false; }
             return bKQ;
         }
-
-        /*public static string SetTraLaiDn(string macqcq, KkGia hoso, string lydo)
+        public static string[] DviTinhRung()
         {
-            if(macqcq == hoso.Macqcq)
-            {
-                hoso.Macqcq = null;
-                hoso.Trangthai = "BTL";
-                hoso.Lydo = lydo;
-            }
-            
-            if(macqcq == hoso.Macqcq_h)
-            {
-                hoso.Macqcq_h = null;
-                hoso.Trangthai_h = "BTL";
-                hoso.Lydo_h = lydo;
-            }
-            
-            if(macqcq == hoso.Macqcq_t)
-            {
-                hoso.Macqcq_t = null;
-                hoso.Trangthai_t = "BTL";
-                hoso.Lydo_t = lydo;
-            }
-            
-            if(macqcq == hoso.Macqcq_ad)
-            {
-                hoso.Macqcq_ad = null;
-                hoso.Trangthai_ad = "BTL";
-                hoso.Lydo_ad = lydo;
-            }
-
-            //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-            if (macqcq == hoso.Madv_h)
-            {
-                hoso.Macqcq_h = null;
-                hoso.Madv_h = null;
-                hoso.Ngaychuyen_h = DateTime.MinValue;
-                hoso.Ngaynhan_h = DateTime.MinValue;
-                hoso.Lydo_h = null;
-                hoso.Trangthai_h = null;
-            }
-            
-            if (macqcq == hoso.Madv_t)
-            {
-                hoso.Macqcq_t = null;
-                hoso.Madv_t = null;
-                hoso.Ngaychuyen_t = DateTime.MinValue;
-                hoso.Ngaynhan_t = DateTime.MinValue;
-                hoso.Lydo_t = null;
-                hoso.Trangthai_t = null;
-            }
-            
-            if (macqcq == hoso.Madv_ad)
-            {
-                hoso.Macqcq_ad = null;
-                hoso.Madv_ad = null;
-                hoso.Ngaychuyen_ad = DateTime.MinValue;
-                hoso.Ngaynhan_ad = DateTime.MinValue;
-                hoso.Lydo_ad = null;
-                hoso.Trangthai_ad = null;
-            }
-
-            return hoso.ToString();
-        }*/
+            string[] dvi = new string[]
+           {
+                "đồng",
+                "đồng/ngày",
+                "đồng/gói",
+                "VNĐ/m2",
+                "đồng/m2",
+                "đồng/ha/năm",
+                "đồng/tháng",
+                "đ/kg",
+                "đg/kg",
+                "đồng/người/chuyến",
+                "đ/tấn",
+                "đồng/lần",
+                "đ/m2/ngày",
+                "đồng/buổi",
+                "đồng/m2/ngày",
+                "đồng/lít",
+                "đồng/bình",
+                "bình",
+                "đồng/vé/lượt",
+                "bao",
+                "chai"
+           };
+            return dvi;
+        }
     }
 }

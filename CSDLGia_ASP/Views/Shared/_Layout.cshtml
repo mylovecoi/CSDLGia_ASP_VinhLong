@@ -223,7 +223,6 @@
                                                     <!--end::Svg Icon-->
                                                 </span>
                                                 <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Thông tin hỗ trợ</span>
-                                                @*<span class="d-block text-dark-50 font-size-lg">Latest cases</span>*@
                                             </a>
                                         </div>
                                         <!--end:Item-->
@@ -242,7 +241,6 @@
                                                     <!--end::Svg Icon-->
                                                 </span>
                                                 <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Tài liệu hướng dẫn</span>
-                                                @*<span class="d-block text-dark-50 font-size-lg">Console</span>*@
                                             </a>
                                         </div>
                                         <!--end:Item-->
@@ -252,13 +250,6 @@
                                 <!--end::Dropdown-->
                             </div>
                             <!--end::Quick Actions-->
-                            @*<div class="topbar-item">
-                            <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
-                            <img class="h-30px w-25px rounded-sm" src="@Url.Content("~/Admin/assets/media/svg/flags/220-vietnam.svg")" alt="">
-                            <span class="pulse-ring"></span>
-                            </div>
-                            </div>*@
-
                             <!--begin::User-->
                             <div class="topbar-item">
                                 <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
@@ -505,7 +496,7 @@
         <script src="~/Admin/assets/js/pages/widgets.js"></script>
         <!--end::Page Scripts-->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 var menu1 = document.getElementById("MenuLv1").value;
                 var menu2 = document.getElementById("MenuLv2").value;
                 var menu3 = document.getElementById("MenuLv3").value;
@@ -537,7 +528,7 @@
                     url: '/Ajax/SetMenuMinimize',
                     type: 'GET',
                     dataType: 'JSON',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status == 'success') {
                             toastr.success("Cập nhật thông tin thành công!", "Thành công");
                             document.getElementById('MenuMinimize').value = data.message;

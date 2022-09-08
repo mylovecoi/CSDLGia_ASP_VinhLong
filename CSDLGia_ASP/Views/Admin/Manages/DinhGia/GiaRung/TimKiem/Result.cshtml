@@ -1,0 +1,87 @@
+﻿@{
+    int record_id = 1;
+    var loairung = (IEnumerable<GiaRungDm>)ViewData["Loairung"];
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaRungSearch>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+
+}
+<script>
+    $(document).ready(function () {
+        TableManaged.init();
+    });
+</script>
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Tìm kiếm thông tin định giá rừng
+            </h3>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Đơn vị nhập</th>
+                    <th>Thời điểm</th>
+                    <th>Loại hồ sơ</th>
+                    <th>Loại rừng</th>
+                    <th>Vị trí</th>
+                    <th>Diện tích rừng</th>
+                    <th>Diện tích sử dụng</th>
+                    <th>Đơn vị tính</th>
+                    <th>Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: left">@item.Dvt</td>
+                    <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: left">@item.Phanloai</td>
+                    @foreach (var lr in loairung)
+                    {
+                        if (item.Manhom == lr.Manhom)
+                        {
+                            <td style="text-align: left">@lr.Tennhom</td>
+                        }
+                    }
+                    <td style="text-align: left">@item.Tenvitri</td>
+                    <td style="text-align: left">@item.Dientich</td>
+                    <td style="text-align: left">@item.Dientichsd</td>
+                    <td style="text-align: left">@item.Dvt</td>
+                    <td style="text-align: left">@item.Giatri</td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="Giarung" asp-action="Search" class="btn btn-danger">
+            <i class="la la-reply"></i>Quay lại
+        </a>
+    </div>
+</div>
+
+
+
+
+

@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,6 +30,7 @@ namespace CSDLGia_ASP.ViewModels.Systems
         [NotMapped]
         public IFormFile Giayphepkdupload { get; set; }
         public string Level { get; set; }
+        public string Lydo { get; set; }
         public string Avatar { get; set; }
         public string Pl { get; set; }
         public string Mahs { get; set; }
@@ -50,6 +52,7 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public double Thocgao { get; set; }
         public double Thuocpcb { get; set; }
         public bool Kiemtra { get; set; }
+        public DateTime Created_at { get; set; }
         public List<VMCompanyLvCc> VMCompanyLvCc { get; set; }
     }
 }

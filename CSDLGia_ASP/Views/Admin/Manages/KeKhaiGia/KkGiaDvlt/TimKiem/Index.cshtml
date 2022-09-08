@@ -1,0 +1,77 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdn = (IEnumerable<Company>)ViewData["DsDn"];
+    var dmnghe = (IEnumerable<DmNgheKd>)ViewData["DmNghe"];
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Tìm kiếm thông tin giá dịch vụ lưu trú
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="KkGiaDvlt" asp-action="Result" method="post">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label style="font-weight: bold">Năm</label>
+                            <select class="form-control" id="Nam" name="Nam">
+                                <option value="all">--Tất cả các năm--</option>
+                                @{
+                                var nam_start = DateTime.Now.Year - 5;
+                                var nam_stop = DateTime.Now.Year + 1;
+                                for (var i = nam_start; i <= nam_stop; i++)
+                                {
+                                    <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Tên khách sạn</label>
+                        <input class="form-control" id="Tenks" name="Tenks" value="@(!string.IsNullOrEmpty((string)ViewData["Tenks"]) ? ViewData["Tenks"] : "")" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Tên hàng hóa dịch vụ</label>
+                        <input class="form-control" id="Tenhh" name="Tenhh" value="@(!string.IsNullOrEmpty((string)ViewData["Tenhh"]) ? ViewData["Tenhh"] : "")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Tìm kiếm</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

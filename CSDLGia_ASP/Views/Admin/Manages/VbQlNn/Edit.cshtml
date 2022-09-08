@@ -1,0 +1,232 @@
+﻿@{
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["Dsdonvi"];
+}
+@model CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    HỒ SƠ GIÁ THUẾ TÀI NGUYÊN
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="VbQlNn" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_vbqlnn_update">
+            <div class="card-body">
+                <input hidden asp-for="Ipf1"/>
+                <input hidden asp-for="Ipf2" />
+                <input hidden asp-for="Ipf3" />
+                <input hidden asp-for="Ipf4"/>
+                <input hidden asp-for="Ipf5" />
+                <input hidden asp-for="Mahs" />
+                <input hidden asp-for="Madv" />
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Đơn vị nhập liệu</label>
+                            <select class="form-control" asp-for="Madv">
+                            @foreach (var dv in dsdonvi)
+                            {
+                                <option value="@dv.MaDv">@dv.TenDv</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn vị ban hành*</label>
+                        <input type="text" asp-for="Dvbanhanh" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Phân loại</label>
+                        <select class="form-control" asp-for="Phanloai">
+                            <option value="gia">Văn bản về Giá</option>
+                            <option value="philephi">Văn bản Phí lệ phí</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Loại văn bản</label>
+                        <select class="form-control" asp-for="Loaivb">
+                            <option value="luat">Luật</option>
+                            <option value="nghidinh">Nghị định</option>
+                            <option value="nghiquyet">Nghị quyết</option>
+                            <option value="thongtu">Thông tư</option>
+                            <option value="quyetdinh">Quyết định</option>
+                            <option value="vbhd">Văn bản hướng dẫn</option>
+                            <option value="baocao">Báo cáo tình hình giá thị trường</option>
+                            <option value="tailieu">Báo cáo, tài liệu học tập kinh nghiệm</option>
+                            <option value="khoahoc">Kết quả, đề tài nghiên cứu khoa học</option>
+                            <option value="vbkhac">Báo cáo, văn bản có liên quan khác</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số hiệu*</label>
+                        <input type="text" asp-for="Kyhieuvb" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày nhập liệu*</label>
+                        <input type="date" asp-for="Thoidiem" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày ban hành*</label>
+                        <input type="date" asp-for="Ngaybanhanh" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày áp dụng*</label>
+                        <input type="date" asp-for="Ngayapdung" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung*</label>
+                        <textarea class="form-control" rows="2" asp-for="Tieude"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm 1</label>
+                        @if (!string.IsNullOrEmpty(Model.Ipf1))
+                        {
+                            <a href="~/UpLoad/File/VbQlNn/@ViewData["Ipf1"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                @Model.Ipf1
+                            </a>
+                        }
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm 2</label>
+                        @if (!string.IsNullOrEmpty(Model.Ipf2))
+                        {
+                            <a href="~/UpLoad/File/VbQlNn/@ViewData["Ipf2"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                @Model.Ipf2
+                            </a>
+                        }
+                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm 3</label>
+                        @if (!string.IsNullOrEmpty(Model.Ipf3))
+                        {
+                            <a href="~/UpLoad/File/VbQlNn/@ViewData["Ipf3"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                @Model.Ipf3
+                            </a>
+                        }
+                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm 4</label>
+                        @if (!string.IsNullOrEmpty(Model.Ipf4))
+                        {
+                            <a href="~/UpLoad/File/VbQlNn/@ViewData["Ipf4"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                @Model.Ipf4
+                            </a>
+                        }
+                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm 5</label>
+                        @if (!string.IsNullOrEmpty(Model.Ipf5))
+                        {
+                            <a href="~/UpLoad/File/VbQlNn/@ViewData["Ipf5"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                @Model.Ipf5
+                            </a>
+                        }
+                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="VbQlNn" asp-action="Index" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValVb()"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValVb() {
+        if ($('#Thoidiem').val().trim() == '') {
+            toastr.error("Ngày nhập liệu không được để trống", "Lỗi")
+        } else {
+            if ($('#Ngaybanhanh').val().trim() == '') {
+                toastr.error("Ngày ban hành không được để trống", "Lỗi")
+            } else {
+                if ($('#Ngayapdung').val().trim() == '') {
+                    toastr.error("Ngày áp dụng không được để trống", "Lỗi")
+                } else {
+                    if ($('#Dvbanhanh').val().trim() == '') {
+                        toastr.error("Đơn vị ban hành không được để trống", "Lỗi")
+                    } else {
+                        if ($('#Kyhieuvb').val().trim() == '') {
+                            toastr.error("Số hiệu không được để trống", "Lỗi")
+                        } else {
+                            document.getElementById("frm_vbqlnn_update").submit();
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

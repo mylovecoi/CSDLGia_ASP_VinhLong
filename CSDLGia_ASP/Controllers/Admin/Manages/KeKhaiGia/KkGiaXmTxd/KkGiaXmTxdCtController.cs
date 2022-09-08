@@ -27,11 +27,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 
         [Route("KkGiaXmTxdCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGiaXmTxdCt
             {
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                Mahs = Mahs,
                 Madv = Madv,
                 Tendvcu = Tendvcu,
                 Qccl = Qccl,
@@ -45,7 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             };
             _db.KkGiaXmTxdCt.Add(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -116,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 
         [Route("KkGiaXmTxdCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Update(int Id, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = _db.KkGiaXmTxdCt.FirstOrDefault(t => t.Id == Id);
             model.Tendvcu = Tendvcu;
@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             model.Updated_at = DateTime.Now;
             _db.KkGiaXmTxdCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -140,14 +140,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             var model = _db.KkGiaXmTxdCt.FirstOrDefault(t => t.Id == Id);
             _db.KkGiaXmTxdCt.Remove(model);
             _db.SaveChanges();
-            string result = GetData(model.Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        public string GetData(string Madv)
+        public string GetData(string Mahs)
         {
-            var model = _db.KkGiaXmTxdCt.Where(t => t.Madv == Madv).ToList();
+            var model = _db.KkGiaXmTxdCt.Where(t => t.Mahs == Mahs).ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";

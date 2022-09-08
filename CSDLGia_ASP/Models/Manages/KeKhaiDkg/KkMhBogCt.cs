@@ -20,8 +20,8 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDkg
         public string Quycach { get; set; }
         public string Dvt { get; set; }
         public string Plhh { get; set; }
-        public string Gialk { get; set; }
-        public string Giakk { get; set; }
+        public double Gialk { get; set; }
+        public double Giakk { get; set; }
         public string Ghichu { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }

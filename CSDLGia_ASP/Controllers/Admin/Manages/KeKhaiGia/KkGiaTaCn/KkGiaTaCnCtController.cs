@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTaCn
 {
     public class KkGiaTaCnCtController : Controller
     {
-        private readonly CSDLGiaDBContext _db; // khai báo thuộc tính
+        private readonly CSDLGiaDBContext _db;
 
         public KkGiaTaCnCtController(CSDLGiaDBContext db)
         {
@@ -27,11 +27,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTaCn
 
         [Route("KkGiaTaCnCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGiaTaCnCt
             {
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                Mahs = Mahs,
                 Madv = Madv,
                 Tendvcu = Tendvcu,
                 Qccl = Qccl,
@@ -45,7 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTaCn
             };
             _db.KkGiaTaCnCt.Add(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTaCn
             model.Updated_at = DateTime.Now;
             _db.KkGiaTaCnCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -140,14 +140,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTaCn
             var model = _db.KkGiaTaCnCt.FirstOrDefault(t => t.Id == Id);
             _db.KkGiaTaCnCt.Remove(model);
             _db.SaveChanges();
-            string result = GetData(model.Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        public string GetData(string Madv)
+        public string GetData(string Mahs)
         {
-            var model = _db.KkGiaTaCnCt.Where(t => t.Madv == Madv).ToList();
+            var model = _db.KkGiaTaCnCt.Where(t => t.Mahs == Mahs).ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";

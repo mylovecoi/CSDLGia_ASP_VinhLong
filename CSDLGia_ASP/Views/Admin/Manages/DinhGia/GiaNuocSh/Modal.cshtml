@@ -1,0 +1,198 @@
+﻿@{
+    var mahs = ViewData["Mahs"];
+    //var loairung = (IEnumerable<GiaRungDm>)ViewData["Loairung"];
+}
+<!--edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin chi tiết hồ sơ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="@mahs" id="mahs_edit" />
+                <input type="hidden" name="id_create" id="id_edit" />
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đối tượng</b></label>
+                            <input type="text" id="tendoituong" name="tendoituong" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Năm áp dụng 1</b></label>
+                            <input type="text" id="nam_edit" name="nam_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá 1</b></label>
+                            <input type="text" id="gia_edit" name="gia_edit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Năm áp dụng 2</b></label>
+                            <input type="text" id="nam1_edit" name="nam1_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá 2</b></label>
+                            <input type="text" id="gia1_edit" name="gia1_edit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Năm áp dụng 3</b></label>
+                            <input type="text" id="nam2_edit" name="nam2_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá 3</b></label>
+                            <input type="text" id="gia2_edit" name="gia2_edit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Năm áp dụng 4</b></label>
+                            <input type="text" id="nam3_edit" name="nam3_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá 4</b></label>
+                            <input type="text" id="gia3_edit" name="gia3_edit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Năm áp dụng 5</b></label>
+                            <input type="text" id="nam4_edit" name="nam4_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá 5</b></label>
+                            <input type="text" id="gia4_edit" name="gia4_edit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function SetEdit(id,tendoituong) {
+        document.getElementById("tendoituong").value = tendoituong;
+        document.getElementById("id_edit").value = id;
+    }
+    function SetEditAd(id, tendoituong) {
+        document.getElementById("tendoituong").value = tendoituong;
+        document.getElementById("id_edit").value = id;
+        document.getElementById("gia_edit").value = null;
+        document.getElementById("gia1_edit").value = null;
+        document.getElementById("gia2_edit").value = null;
+        document.getElementById("gia3_edit").value = null;
+        document.getElementById("gia4_edit").value = null;
+    }
+    function GetEdit() {
+        $.ajax({
+            url: '/DinhGiaNuocShCt/Update',
+            type: 'POST',
+            data: {
+                Mahs: $('#mahs_edit').val(),
+                Doituongsd: $('#tendoituong').val(),
+                Madoituong: $('#madoituong').val(),
+                Namchuathue: $('#nam_edit').val(),
+                Namchuathue1: $('#nam1_edit').val(),
+                Namchuathue2: $('#nam2_edit').val(),
+                Namchuathue3: $('#nam3_edit').val(),
+                Namchuathue4: $('#nam4_edit').val(),
+                Giachuathue: $('#gia_edit').val(),
+                Giachuathue1: $('#gia1_edit').val(),
+                Giachuathue2: $('#gia2_edit').val(),
+                Giachuathue3: $('#gia3_edit').val(),
+                Giachuathue4: $('#gia4_edit').val(),
+                Id: $('#id_edit').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    
+    function SetUpdate() {
+        $.ajax({
+            url: '/DinhGiaNuocShCt/Update',
+            type: 'POST',
+            data: {
+                Mahs: $('#mahs_edit').val(),
+                Dvthue: $('#dvthue_edit').val(),
+                Diachi: $('#diachi_edit').val(),
+                Noidung: $('#noidung_edit').val(),
+                Manhom: $('#phanloai_edit').val(),
+                Phanloai: $('#loairung_edit').val(),
+                Dientich: $('#dt_edit').val(),
+                Dientichsd: $('#dtthue_edit').val(),
+                Dvt: $('#dvtinh_edit').val(),
+                Soqdpd: $('#sqthue_edit').val(),
+                Thoigianpd: $('#tdthue_edit').val(),
+                Soqdgkd: $('#sqKhoiDiem_edit').val(),
+                Thoigiangkd: $('#tdKhoiDiem_edit').val(),
+                Thuetungay: $('#tungay_edit').val(),
+                Thuedenngay: $('#denngay_edit').val(),
+                Dongia: $('#dongia_edit').val(),
+                Giakhoidiem: $('#giaKhoiDiem_edit').val(),
+                Giatri: $('#giaThue_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+
+</script>

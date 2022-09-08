@@ -1,0 +1,269 @@
+﻿@{
+    var dmnhomhh = (IEnumerable<DmNhomHh>)ViewData["Dmnhomhh"];
+    var dvt = (IEnumerable<DmDvt>)ViewData["Dvt"];
+}
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hóa dịch vụ
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới hàng hóa dịch vụ</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input id="Matt" name="Matt" value="@ViewData["Matt"]" />
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Nhóm hàng hóa, dịch vụ*</label>
+                            <select id="manhom_create" name="manhom_create" class="form-control">
+                                <option value="">--Chọn nhóm hàng hóa, dịch vụ--</option>
+                                @foreach (var item in dmnhomhh)
+                                {
+                                    <option value="@item.Manhom">@item.Tennhom</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã hàng hóa dịch vụ*</label>
+                            <input type="text" id="mahhdv_create" name="mahhdv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên hàng hóa dịch vụ*</label>
+                            <input type="text" id="tenhhdv_create" name="tenhhdv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đặc điểm kỹ thuật*</label>
+                            <input type="text" id="dacdiemkt_create" name="dacdiemkt_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-10">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị tính</label>
+                            <select class="form-control" id="dvt_create" name="dvt_create">
+                                @foreach (var item in dvt)
+                                {
+                                    <option value="@item.Dvt">@item.Dvt</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>&nbsp;&nbsp;&nbsp;</label>
+                            <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
+                                <i class="la la-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hóa dịch vụ
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa hàng hóa dịch vụ</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="edit_thongtin">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hóa dịch vụ
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin hàng hóa dịch vụ???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaHhDvkDm" asp-action="Delete">
+                <div class="modal-body">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Dvt Modal-->
+<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị tính
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới đơn vị tính</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị tính*</label>
+                            <input class="form-control" id="dvt_add" name="dvt_add" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        if ($('#manhom_create').val().trim() == '') {
+            toastr.error("Nhóm hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+        } else {
+            if ($('#mahhdv_create').val().trim() == '') {
+                toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+            } else {
+                if ($('#tenhhdv_create').val().trim() == '') {
+                    toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+                } else {
+                    $.ajax({
+                        url: '/GiaHhDvkDmCt/Store',
+                        type: 'POST',
+                        data: {
+                            Manhom: $('#manhom_create').val(),
+                            Matt: $('#Matt').val(),
+                            Mahhdv: $('#mahhdv_create').val(),
+                            Tenhhdv: $('#tenhhdv_create').val(),
+                            Dacdiemkt: $('#dacdiemkt_create').val(),
+                            Dvt: $('#dvt_create').val(),
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                                location.reload();
+                            } else {
+                                toastr.error(data.message, "Lỗi!");
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    function getId(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function editId(id_edit) {
+        $.ajax({
+            url: '/GiaHhDvkDmCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        if ($('#manhom_edit').val().trim() == '') {
+            toastr.error("Nhóm hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+        } else {
+            if ($('#mahhdv_edit').val().trim() == '') {
+                toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+            } else {
+                if ($('#tenhhdv_edit').val().trim() == '') {
+                    toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+                } else {
+                    $.ajax({
+                        url: '/GiaHhDvkDmCt/Update',
+                        type: 'POST',
+                        data: {
+                            Manhom: $('#manhom_edit').val(),
+                            Mahhdv: $('#mahhdv_edit').val(),
+                            Tenhhdv: $('#tenhhdv_edit').val(),
+                            Dacdiemkt: $('#dacdiemkt_edit').val(),
+                            Dvt: $('#dvt_edit').val(),
+                            Matt: $('#matt_edit').val(),
+                            Id: $('#id_edit').val()
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                                location.reload();
+                            } else {
+                                toastr.error(data.message, "Lỗi!");
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    function Dvt() {
+        if ($('#dvt_add').val().trim() == '') {
+            toastr.error("Đơn vị tính không được để trống!!!", "Lỗi!");
+        } else {
+            $('#Dvt_Modal').modal('hide');
+            var gt = $('#dvt_add').val();
+            $('#dvt_create').append(new Option(gt, gt, true, true));
+            $('#dvt_create').val(gt).trigger('change');
+        }
+    }
+</script>

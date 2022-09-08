@@ -82,17 +82,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                                               Id = kk.Id,
                                               Tendn = dn.Tendn,
                                               Macqcq = Madv,
+                                              Madv = kk.Madv_h,
                                               Mahs = kk.Mahs,
                                               Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
+                                              Ngaychuyen = kk.Ngaychuyen_h,
                                               Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
+                                              Ngaynhan = kk.Ngaynhan_h,
                                               Ngayhieuluc = kk.Ngayhieuluc,
                                               Socv = kk.Socv,
                                               Ttnguoinop = kk.Ttnguoinop,
                                               Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
-                                              Trangthai_ad = kk.Trangthai_ad,
+                                              Trangthai = kk.Trangthai_h,
                                               Level = getdonvi.Level,
                                           };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -109,8 +109,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá cước vận tải hành khách bằng ôtô tuyến cố định";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgvtxk";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
-                        return View("Views/Admin/Manages/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
+                        ViewData["MenuLv3"] = "menu_giakkvtxkxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
                     {
@@ -125,17 +125,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                                               Id = kk.Id,
                                               Tendn = dn.Tendn,
                                               Macqcq = Madv,
+                                              Madv = kk.Madv_t,
                                               Mahs = kk.Mahs,
                                               Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
+                                              Ngaychuyen = kk.Ngaychuyen_t,
                                               Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
+                                              Ngaynhan = kk.Ngaynhan_t,
                                               Ngayhieuluc = kk.Ngayhieuluc,
                                               Socv = kk.Socv,
                                               Ttnguoinop = kk.Ttnguoinop,
                                               Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
-                                              Trangthai_ad = kk.Trangthai_ad,
+                                              Trangthai = kk.Trangthai_t,
                                               Level = getdonvi.Level,
                                           };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -152,8 +152,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá cước vận tải hành khách bằng ôtô tuyến cố định";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgvtxk";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
-                        return View("Views/Admin/Manages/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
+                        ViewData["MenuLv3"] = "menu_giakkvtxkxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
                     }
                     else
                     {
@@ -168,16 +168,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                                               Id = kk.Id,
                                               Tendn = dn.Tendn,
                                               Macqcq = Madv,
+                                              Madv = kk.Madv_ad,
                                               Mahs = kk.Mahs,
                                               Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
+                                              Ngaychuyen = kk.Ngaychuyen_ad,
                                               Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
+                                              Ngaynhan = kk.Ngaynhan_ad,
                                               Ngayhieuluc = kk.Ngayhieuluc,
                                               Socv = kk.Socv,
                                               Ttnguoinop = kk.Ttnguoinop,
                                               Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
+                                              Trangthai = kk.Trangthai_ad,
                                               Trangthai_ad = kk.Trangthai_ad,
                                               Level = getdonvi.Level,
                                           };
@@ -195,68 +196,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá cước vận tải hành khách bằng ôtô tuyến cố định";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgvtxk";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
-                        return View("Views/Admin/Manages/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
+                        ViewData["MenuLv3"] = "menu_giakkvtxkxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXk/XetDuyet/Index.cshtml", model_join);
                     }
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult Chuyen(string mahs_chuyen, string Ttnguoinop, string Dtll, string Macqcq)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxk.giakk", "Approve"))
-                {
-                    var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
-
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                     join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                     select new VMDsDonVi
-                                     {
-                                         Id = dvcq.Id,
-                                         MaDiaBan = dvcq.MaDiaBan,
-                                         MaDv = dvcq.MaDv,
-                                         TenDv = dvcq.TenDv,
-                                         Level = db.Level,
-                                     };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
-
-                    model.Ttnguoinop = Ttnguoinop;
-                    model.Dtll = Dtll;
-                    model.Macqcq = Macqcq;
-                    model.Ngaychuyen = DateTime.Now;
-                    model.Trangthai = "CD";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = Macqcq;
-                        model.Ngaychuyen_t = DateTime.Now;
-                        model.Trangthai_t = "CD";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = Macqcq;
-                        model.Ngaychuyen_ad = DateTime.Now;
-                        model.Trangthai_ad = "CD";
-                    }
-                    else
-                    {
-                        model.Madv_h = Macqcq;
-                        model.Ngaychuyen_h = DateTime.Now;
-                        model.Trangthai_h = "CD";
-                    }
-                    _db.KkGia.Update(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "KkGiaVtXk", new { model.Madv, Nam = model.Ngaynhap.Year });
                 }
                 else
                 {

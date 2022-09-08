@@ -39,7 +39,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 }
                 else
                 {
-                    /*ViewData["Title"] = "Danh sách địa bàn";*/
                     ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
                     return View("Views/Admin/Error/Page.cshtml");
                 }
@@ -99,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Update"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Edit"))
                 {
                     var model = _db.DsDiaBan.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -175,7 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Update"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Edit"))
                 {
                     if (!string.IsNullOrEmpty(TenDiaBan))
                     {

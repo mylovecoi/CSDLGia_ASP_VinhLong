@@ -1,0 +1,128 @@
+﻿@{
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvLtCskd>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Madv, #Nam').change(function () {
+                var current_path_url = '/KeKhaiGiaDvlt/ThongTinCskd?';
+                var madv = '&Madv=' + $('#Madv').val();
+                var url = current_path_url + madv;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <marquee>
+                <b style="color: #ff0000">Ghi chú:</b> Màn hình hiển thị thông tin cơ sở kinh doanh mà doanh nghiệp đang quản lý. Cơ sở kinh doanh là duy nhất khi doanh nghiệp bắt đầu nhập chương trình cần cập
+                nhật cơ sở kinh doanh mình đang quản lý. Có thể sửa thông tin của cơ sở kinh doanh nhưng ko thể xoá cơ sở kinh doanh.
+            </marquee>
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh sách cơ sở kinh doanh<small>&nbsp;dịch vụ lưu trú</small><br />
+                    <small style="color: blue;">@ViewData["Tendn"] - Mã số thuế: @ViewData["Madv"]</small>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Create")
+            || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+            {
+                <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaDvltCskd" asp-action="Create"
+               asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control" id="Madv" name="Madv">
+                        @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
+                                }
+                                @foreach (var item in company)
+                                {
+                                    <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th width="20%">Ảnh đại diện</th>
+                    <th>Tên cơ sở kinh doanh</th>
+                    <th>Loại hạng</th>
+                    <th>Địa chỉ</th>
+                    <th width="10%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">
+                                @if (item.Avatar == "" || item.Avatar == null)
+                                {
+                                    <img src="~/Admin/FileUpload/Avatar/no-image.png" class="image-input-wrapper" width="100" height="100">
+                                }
+                                else
+                                {
+                                    <img src="~/UpLoad/Avatar/@item.Avatar" class="image-input-wrapper" width="100" height="100">
+                                }
+                            </td>
+                            <td class="text-left active">@item.Tencskd</td>
+                            <td style="text-align: center">@item.Loaihang</td>
+                            <td style="text-align: left">@item.Diachikd</td>
+                            <td>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Edit")
+                               || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                                {
+                                    <a asp-controller="KkGiaDvltCskd" asp-action="Edit" asp-route-Macskd="@item.Macskd" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

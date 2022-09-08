@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
         {
             var hethong = _db.tblHeThong;
             ViewData["Title"] = "Đăng nhập";
-            return View("Views/Admin/Systems/Auth/Login.cshtml",hethong);
+            return View("Views/Admin/Systems/Auth/Login.cshtml", hethong);
         }
 
         [Route("SignIn")]

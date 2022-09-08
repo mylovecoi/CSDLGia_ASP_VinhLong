@@ -19,11 +19,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTpcn
 
         [Route("KkGiaTpcnCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGsCt
             {
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                Mahs = Mahs,
                 Madv = Madv,
                 Tendvcu = Tendvcu,
                 Qccl = Qccl,
@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTpcn
             };
             _db.KkGsCt.Add(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -120,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTpcn
             model.Updated_at = DateTime.Now;
             _db.KkGsCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -132,7 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTpcn
             var model = _db.KkGsCt.FirstOrDefault(t => t.Id == Id);
             _db.KkGsCt.Remove(model);
             _db.SaveChanges();
-            string result = GetData(model.Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }

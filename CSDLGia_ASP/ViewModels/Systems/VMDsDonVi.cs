@@ -20,5 +20,6 @@
         public string NguoiKy { get; set; }
         public string DiaDanh { get; set; }
         public string ChucNang { get; set; }
+        public string TenDiaBan { get; set; }
     }
 }

@@ -51,9 +51,22 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Ipf1 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
         public string Ipf2 { get; set; }
         public string Ipf3 { get; set; }
         public string Ipf4 { get; set; }
         public string Ipf5 { get; set; }
+        [NotMapped]
+        public List<GiaThueTaiNguyenCt> GiaThueTaiNguyenCt { get; set; }
+        [NotMapped]
+        public string MadvCh { get; set; }
+        [NotMapped]
+        public string TendvCh { get; set; }
+        [NotMapped]
+        public string Tencqcq { get; set; }
+        [NotMapped]
+        public string Level { get; set; }
+
     }
 }

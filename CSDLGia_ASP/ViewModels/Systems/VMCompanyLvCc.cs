@@ -9,6 +9,7 @@
         public string Manghe { get; set; }
         public string Tennghe { get; set; }
         public string Macqcq { get; set; }
+        public string Phanloai { get; set; }
         public string Trangthai { get; set; }
     }
 }

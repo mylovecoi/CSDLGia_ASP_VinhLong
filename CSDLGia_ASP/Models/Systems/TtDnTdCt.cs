@@ -13,6 +13,7 @@ namespace CSDLGia_ASP.Models.Systems
         [Key]
         public int Id { get; set; }
         public string Madv { get; set; }
+        public string Mahs { get; set; }
         public string Manganh { get; set; }
         public string Manghe { get; set; }
         public string Macqcq { get; set; }

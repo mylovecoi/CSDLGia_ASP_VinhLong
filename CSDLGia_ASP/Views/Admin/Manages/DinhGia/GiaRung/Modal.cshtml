@@ -1,0 +1,325 @@
+﻿<!--Create Modal-->
+@{
+    var mahs = ViewData["Mahs"];
+    var loairung = (IEnumerable<GiaRungDm>)ViewData["Loairung"];
+}
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin chi tiết hồ sơ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="@mahs" id="mahs_create" />
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị khai thác(thuê)</b></label>
+                            <input type="text" id="dvthue_create" name="dvthue_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Địa chỉ</b></label>
+                            <input type="text" id="diachi_create" name="diachi_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Nội dung chi tiết</b></label>
+                            <input type="text" id="noidung_create" name="noidung_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phân loại</b></label>
+                            <select class="form-control" id="phanloai_create" name="phanloai_create">
+                                <option value="tmt">Thuê môi trường</option>
+                                <option value="kt">Khai thác</option>
+                                <option value="tl">Thanh lý</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Loại rừng</b></label>
+                            <select class="form-control" id="loairung_create" name="loairung_create">
+                                @foreach (var item in loairung)
+                                {
+                                    <option value="@item.Manhom">@item.Tennhom</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Diện tích</b></label>
+                            <input type="text" id="dt_create" name="dt_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Diện tích khai thác (thuê)</b></label>
+                            <input type="text" id="dtthue_create" name="dtthue_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính</b></label>
+                            <select class="form-control" id="dvtinh_create" name="dvtinh_create">
+                                @*<option value='dv1'>đồng</option>
+        <option value='dv2'>đồng/ngày</option>
+        <option value='dv3'>đồng/gói</option>*@
+                                @foreach (string dvi in Helpers.DviTinhRung())
+                                {
+                                    <option value="@dvi">@dvi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Số quyết khai thác(thuê)</b></label>
+                            <input type="text" id="sqthue_create" name="sqthue_create" class="form-control text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời điểm khai thác(thuê)</b></label>
+                            <input type="date" id="tdthue_create" name="tdthue_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Số quyết giá khởi điểm</b></label>
+                            <input type="text" id="sqKhoiDiem_create" name="sqKhoiDiem_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời điểm giá khởi điểm</b></label>
+                            <input type="date" id="tdKhoiDiem_create" name="tdKhoiDiem_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời gian - Từ ngày</b></label>
+                            <input type="date" id="tungay_create" name="tungay_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời gian - Đến ngày</b></label>
+                            <input type="date" id="denngay_create" name="denngay_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá</b></label>
+                            <input type="text" id="dongia_create" name="dongia_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Giá khởi điểm*</b></label>
+                            <input type="text" id="giaKhoiDiem_create" name="giaKhoiDiem_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Giá khai thác(thuê)*</b></label>
+                            <input type="text" id="giaThue_create" name="giaThue_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin giá rừng
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetStore() {
+        $.ajax({
+            url: '/GiarungCt/Store',
+            type: 'POST',
+            data: {
+                Mahs: $('#mahs_create').val(),
+                Dvthue: $('#dvthue_create').val(),
+                Diachi: $('#diachi_create').val(),
+                Noidung: $('#noidung_create').val(),
+                Manhom: $('#phanloai_create').val(),
+                Phanloai: $('#loairung_create').val(),
+                Dientich: $('#dt_create').val(),
+                Dientichsd: $('#dtthue_create').val(),
+                Dvt: $('#dvtinh_create').val(),
+                Soqdpd: $('#sqthue_create').val(),
+                Thoigianpd: $('#tdthue_create').val(),
+                Soqdgkd: $('#sqKhoiDiem_create').val(),
+                Thoigiangkd: $('#tdKhoiDiem_create').val(),
+                Thuetungay: $('#tungay_create').val(),
+                Thuedenngay: $('#denngay_create').val(),
+                Dongia: $('#dongia_create').val(),
+                Giakhoidiem: $('#giaKhoiDiem_create').val(),
+                Giatri: $('#giaThue_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Create_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DinhGiaRungCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+        $.ajax({
+            url: '/DinhGiaRungCt/Update',
+            type: 'POST',
+            data: {
+                Mahs: $('#mahs_edit').val(),
+                Dvthue: $('#dvthue_edit').val(),
+                Diachi: $('#diachi_edit').val(),
+                Noidung: $('#noidung_edit').val(),
+                Manhom: $('#phanloai_edit').val(),
+                Phanloai: $('#loairung_edit').val(),
+                Dientich: $('#dt_edit').val(),
+                Dientichsd: $('#dtthue_edit').val(),
+                Dvt: $('#dvtinh_edit').val(),
+                Soqdpd: $('#sqthue_edit').val(),
+                Thoigianpd: $('#tdthue_edit').val(),
+                Soqdgkd: $('#sqKhoiDiem_edit').val(),
+                Thoigiangkd: $('#tdKhoiDiem_edit').val(),
+                Thuetungay: $('#tungay_edit').val(),
+                Thuedenngay: $('#denngay_edit').val(),
+                Dongia: $('#dongia_edit').val(),
+                Giakhoidiem: $('#giaKhoiDiem_edit').val(),
+                Giatri: $('#giaThue_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/DinhGiaRungCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

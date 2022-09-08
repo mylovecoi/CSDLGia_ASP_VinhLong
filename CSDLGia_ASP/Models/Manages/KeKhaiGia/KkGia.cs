@@ -14,6 +14,16 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
         public int Id { get; set; }
         public string Mahs { get; set; }
         public string Madiaban { get; set; }
+        //<!--dvlt
+        public string Macskd { get; set; }
+        public string Maxp { get; set; }
+        public string Email { get; set; }
+        public string Fax { get; set; }
+        public string Ptnguyennhan { get; set; }
+        public string Chinhsachkm { get; set; }
+        public string Macqcq1 { get; set; }
+        public string Macqcq2 { get; set; }
+        //dvlt-->
         public DateTime Ngaynhap { get; set; }
         public DateTime Ngayhieuluc { get; set; }
         public string Manghe { get; set; }

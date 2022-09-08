@@ -27,14 +27,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
 
         [Route("KeKhaiGiaGiay")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam, string Manghe)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
+                    var Manghe = "GIAY";
                     var dsdonvi = (from com in _db.Company
-                                   join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == "GIAY") on com.Mahs equals lvkd.Mahs
+                                   join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == Manghe) on com.Mahs equals lvkd.Mahs
                                    select new VMCompany
                                    {
                                        Id = com.Id,
@@ -45,6 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
+
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -64,35 +67,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
-                        Manghe = "GIAY";
-                        var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
 
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+
+                        if (comct.Count > 0)
                         {
-                            ViewData["DsDonVi"] = dsdonvi;
+                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
+
+                            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                            {
+                                ViewData["DsDonVi"] = dsdonvi;
+                            }
+                            else
+                            {
+                                ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            }
+                            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                            ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                            ViewData["Madv"] = Madv;
+                            ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                            ViewData["Nam"] = Nam;
+                            ViewData["Manghe"] = Manghe;
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giấy";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkggiay";
+                            ViewData["MenuLv3"] = "menu_giakkgiay";
+                            return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/Index.cshtml", model);
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giấy";
+                            ViewData["Messages"] = "Kê khai giấy không thuộc quản lý của doanh nghiệp";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkggiay";
+                            ViewData["MenuLv3"] = "menu_giakkgiay";
+                            return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                         }
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Manghe"] = Manghe;
-                        ViewData["Title"] = "Danh sách hồ sơ kê khai giá giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước";
-                        ViewData["MenuLv1"] = "menu_kknygia";
-                        ViewData["MenuLv2"] = "menu_kkggiay";
-                        ViewData["MenuLv3"] = "menu_giakk";
-                        return View("Views/Admin/Manages/KkGiaGiay/Index.cshtml", model);
                     }
                     else
                     {
-                        ViewData["Title"] = "Danh sách hồ sơ kê khai giá giấy ";
-                        ViewData["Messages"] = "Hệ thống chưa có doanh nghiệp kê khai giá giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước";
+                        ViewData["Title"] = "Danh sách hồ sơ kê khai giấy";
+                        ViewData["Messages"] = "Hệ thống chưa có doanh nghiệp kê khai giấy.";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkggiay";
-                        ViewData["MenuLv3"] = "menu_giakk";
+                        ViewData["MenuLv3"] = "menu_giakkgiay";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -115,23 +133,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Create") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new VMKkGia
                     {
                         Manghe = Manghe,
                         Madv = Madv,
                         Ngaynhap = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
                     ViewData["Madv"] = Madv;
+                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                     ViewData["Manghe"] = Manghe;
-                    ViewData["Title"] = "Thêm mới Kê khai giá giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước";
+                    ViewData["Title"] = "Thêm mới Kê khai giấy";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkggiay";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giakkgiay";
 
-                    return View("Views/Admin/Manages/KkGiaGiay/Create.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/Create.cshtml", model);
                 }
                 else
                 {
@@ -151,11 +172,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Create") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new KkGia
                     {
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = request.Mahs,
                         Manghe = request.Manghe,
                         Madv = request.Madv,
                         Ngaynhap = request.Ngaynhap,
@@ -173,12 +195,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                     _db.KkGia.Add(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaGiayCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaGiayCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
                     _db.KkGiaGiayCt.UpdateRange(modelct);
@@ -204,7 +226,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Edit") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMKkGia
@@ -221,17 +244,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                         Thydggadgia = model.Thydggadgia
                     };
 
-                    var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv);
+                    var model_ct = _db.KkGiaGiayCt.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv);
 
-                    model_new.KkGiaXmTxdCt = model_ct.ToList();
+                    model_new.KkGiaGiayCt = model_ct.ToList();
 
                     ViewData["Madv"] = model.Madv;
-                    ViewData["Title"] = "Chỉnh sửa Kê khai giá giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước";
+                    ViewData["Title"] = "Chỉnh sửa Kê khai giấy";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkggiay";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giakkgiay";
 
-                    return View("Views/Admin/Manages/KkGiaGiay/Edit.cshtml", model_new);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/Edit.cshtml", model_new);
                 }
                 else
                 {
@@ -251,7 +274,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Edit") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Ngaynhap = request.Ngaynhap;
@@ -265,12 +289,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                     _db.KkGia.Update(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaGiayCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaGiayCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
                     _db.KkGiaGiayCt.UpdateRange(modelct);
@@ -296,14 +320,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Delete") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Id == id_delete);
                     _db.KkGia.Remove(model);
                     _db.SaveChanges();
 
-                    var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs && t.Madv == model.Madv);
-                    _db.KkGiaXmTxdCt.RemoveRange(model_ct);
+                    var model_ct = _db.KkGiaGiayCt.Where(t => t.Mahs == model.Mahs && t.Madv == model.Madv);
+                    _db.KkGiaGiayCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KeKhaiGiaGiay", new { model.Madv });
@@ -326,16 +351,201 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = GetThongTinKk(Mahs);
 
-                    ViewData["Title"] = "Kê khai giá giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước";
+                    ViewData["Title"] = "Kê khai giấy";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkggiay";
-                    ViewData["MenuLv3"] = "menu_giakk";
-                    return View("Views/Admin/Manages/KkGiaGiay/Show.cshtml", model);
+                    ViewData["MenuLv3"] = "menu_giakkgiay";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/Show.cshtml", model);
 
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("KeKhaiGiaGiay/Search")]
+        [HttpGet]
+        public IActionResult Search(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaGiayCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "GIAY" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giấy";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkggiay";
+                    ViewData["MenuLv3"] = "menu_giakkgiaytk";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/TimKiem/Index.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("KeKhaiGiaGiay/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaGiayCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "GIAY" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giấy";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkggiay";
+                    ViewData["MenuLv3"] = "menu_giakkgiaytk";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/TimKiem/Printf.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult Chuyen(string mahs_chuyen, string Ttnguoinop, string Dtll, string Macqcq)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Approve") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                {
+                    var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
+
+                    var dvcq_join = from dvcq in _db.DsDonVi
+                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dvcq.Id,
+                                        MaDiaBan = dvcq.MaDiaBan,
+                                        MaDv = dvcq.MaDv,
+                                        TenDv = dvcq.TenDv,
+                                        Level = db.Level,
+                                    };
+                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
+
+                    model.Ttnguoinop = Ttnguoinop;
+                    model.Dtll = Dtll;
+                    model.Macqcq = Macqcq;
+                    model.Ngaychuyen = DateTime.Now;
+                    model.Trangthai = "CD";
+                    if (chk_dvcq != null && chk_dvcq.Level == "T")
+                    {
+                        model.Madv_t = Macqcq;
+                        model.Ngaychuyen_t = DateTime.Now;
+                        model.Trangthai_t = "CD";
+                    }
+                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    {
+                        model.Madv_ad = Macqcq;
+                        model.Ngaychuyen_ad = DateTime.Now;
+                        model.Trangthai_ad = "CD";
+                    }
+                    else
+                    {
+                        model.Madv_h = Macqcq;
+                        model.Ngaychuyen_h = DateTime.Now;
+                        model.Trangthai_h = "CD";
+                    }
+                    _db.KkGia.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "KkGiaGiay", new { model.Madv, Nam = model.Ngaynhap.Year });
                 }
                 else
                 {
@@ -367,9 +577,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                 Ytcauthanhgia = model.Ytcauthanhgia,
                 Thydggadgia = model.Thydggadgia
             };
-            hoso_kk = GetThongTinDn(hoso_kk, model.Mahs);
+
+            hoso_kk = GetThongTinDn(hoso_kk, model.Madv);
             hoso_kk = GetThongTinDv(hoso_kk, model.Macqcq);
             hoso_kk = GetThongTinCt(hoso_kk, model.Mahs);
+
             return hoso_kk;
         }
 

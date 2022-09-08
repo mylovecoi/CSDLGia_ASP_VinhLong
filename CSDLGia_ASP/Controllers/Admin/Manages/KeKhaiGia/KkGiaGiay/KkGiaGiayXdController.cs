@@ -82,16 +82,103 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                                               Id = kk.Id,
                                               Tendn = dn.Tendn,
                                               Macqcq = Madv,
+                                              Madv = kk.Madv_h,
                                               Mahs = kk.Mahs,
                                               Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
+                                              Ngaychuyen = kk.Ngaychuyen_h,
                                               Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
+                                              Ngaynhan = kk.Ngaynhan_h,
                                               Ngayhieuluc = kk.Ngayhieuluc,
                                               Socv = kk.Socv,
                                               Ttnguoinop = kk.Ttnguoinop,
                                               Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
+                                              Trangthai = kk.Trangthai_h,
+                                              Level = getdonvi.Level,
+                                          };
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
+                        }
+                        ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Nam"] = Nam;
+                        ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá giấy";
+                        ViewData["MenuLv1"] = "menu_kknygia";
+                        ViewData["MenuLv2"] = "menu_kkggiay";
+                        ViewData["MenuLv3"] = "menu_giakkgiayxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/XetDuyet/Index.cshtml", model_join);
+                    }
+                    else if (getdonvi.Level == "T")
+                    {
+                        var model = _db.KkGia.Where(t => t.Madv_t == Madv && t.Ngaychuyen_t.Year == int.Parse(Nam) && t.Manghe == "GIAY"
+                                                        && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
+
+                        var model_join = from kk in model
+                                          join dn in _db.Company on kk.Madv equals dn.Madv
+                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "GIAY") on dn.Mahs equals dnct.Mahs
+                                          select new VMKkGia
+                                          {
+                                              Id = kk.Id,
+                                              Tendn = dn.Tendn,
+                                              Macqcq = Madv,
+                                              Madv = kk.Madv_t,
+                                              Mahs = kk.Mahs,
+                                              Ngaynhap = kk.Ngaynhap,
+                                              Ngaychuyen = kk.Ngaychuyen_t,
+                                              Ngaycvlk = kk.Ngaycvlk,
+                                              Ngaynhan = kk.Ngaynhan_t,
+                                              Ngayhieuluc = kk.Ngayhieuluc,
+                                              Socv = kk.Socv,
+                                              Ttnguoinop = kk.Ttnguoinop,
+                                              Dtll = kk.Dtll,
+                                              Trangthai = kk.Trangthai_t,
+                                              Level = getdonvi.Level,
+                                          };
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
+                        }
+                        ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Nam"] = Nam;
+                        ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá giấy";
+                        ViewData["MenuLv1"] = "menu_kknygia";
+                        ViewData["MenuLv2"] = "menu_kkgGIAY";
+                        ViewData["MenuLv3"] = "menu_giakkgiayxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/XetDuyet/Index.cshtml", model_join);
+                    }
+                    else
+                    {
+                        var model = _db.KkGia.Where(t => t.Madv_ad == Madv && t.Ngaychuyen_ad.Year == int.Parse(Nam) && t.Manghe == "GIAY"
+                                                         && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
+
+                        var model_join = from kk in model
+                                          join dn in _db.Company on kk.Madv equals dn.Madv
+                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "GIAY") on dn.Mahs equals dnct.Mahs
+                                          select new VMKkGia
+                                          {
+                                              Id = kk.Id,
+                                              Tendn = dn.Tendn,
+                                              Macqcq = Madv,
+                                              Madv = kk.Madv_ad,
+                                              Mahs = kk.Mahs,
+                                              Ngaynhap = kk.Ngaynhap,
+                                              Ngaychuyen = kk.Ngaychuyen_ad,
+                                              Ngaycvlk = kk.Ngaycvlk,
+                                              Ngaynhan = kk.Ngaynhan_ad,
+                                              Ngayhieuluc = kk.Ngayhieuluc,
+                                              Socv = kk.Socv,
+                                              Ttnguoinop = kk.Ttnguoinop,
+                                              Dtll = kk.Dtll,
+                                              Trangthai = kk.Trangthai_ad,
                                               Trangthai_ad = kk.Trangthai_ad,
                                               Level = getdonvi.Level,
                                           };
@@ -109,154 +196,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaGiay
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá giấy";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkggiay";
-                        ViewData["MenuLv3"] = "menu_giagiay";
-                        return View("Views/Admin/Manages/KkGiaGiay/XetDuyet/Index.cshtml", model_join);
+                        ViewData["MenuLv3"] = "menu_giakkgiayxd";
+                        return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/XetDuyet/Index.cshtml", model_join);
                     }
-                    else if (getdonvi.Level == "T")
-                    {
-                        var model = _db.KkGia.Where(t => t.Madv_t == Madv && t.Ngaychuyen_t.Year == int.Parse(Nam) && t.Manghe == "GIAY"
-                                                        && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
-
-                        var model_join = from kk in model
-                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "GIAY") on dn.Mahs equals dnct.Mahs
-                                          select new VMKkGia
-                                          {
-                                              Id = kk.Id,
-                                              Tendn = dn.Tendn,
-                                              Macqcq = Madv,
-                                              Mahs = kk.Mahs,
-                                              Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
-                                              Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
-                                              Ngayhieuluc = kk.Ngayhieuluc,
-                                              Socv = kk.Socv,
-                                              Ttnguoinop = kk.Ttnguoinop,
-                                              Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
-                                              Trangthai_ad = kk.Trangthai_ad,
-                                              Level = getdonvi.Level,
-                                          };
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                        }
-                        ViewData["DsDiaBan"] = dsdiaban;
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
-                        ViewData["MenuLv1"] = "menu_kknygia";
-                        ViewData["MenuLv2"] = "menu_kkgGIAY";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
-                        return View("Views/Admin/Manages/KkGiaGIAY/XetDuyet/Index.cshtml", model_join);
-                    }
-                    else
-                    {
-                        var model = _db.KkGia.Where(t => t.Madv_ad == Madv && t.Ngaychuyen_ad.Year == int.Parse(Nam) && t.Manghe == "GIAY"
-                                                         && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
-
-                        var model_join = from kk in model
-                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "GIAY") on dn.Mahs equals dnct.Mahs
-                                          select new VMKkGia
-                                          {
-                                              Id = kk.Id,
-                                              Tendn = dn.Tendn,
-                                              Macqcq = Madv,
-                                              Mahs = kk.Mahs,
-                                              Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen,
-                                              Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan,
-                                              Ngayhieuluc = kk.Ngayhieuluc,
-                                              Socv = kk.Socv,
-                                              Ttnguoinop = kk.Ttnguoinop,
-                                              Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai,
-                                              Trangthai_ad = kk.Trangthai_ad,
-                                              Level = getdonvi.Level,
-                                          };
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                        }
-                        ViewData["DsDiaBan"] = dsdiaban;
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
-                        ViewData["MenuLv1"] = "menu_kknygia";
-                        ViewData["MenuLv2"] = "menu_kkggiay";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
-                        return View("Views/Admin/Manages/KkGiaGiay/XetDuyet/Index.cshtml", model_join);
-                    }
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult Chuyen(string mahs_chuyen, string Ttnguoinop, string Dtll, string Macqcq)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay.giakk", "Approve"))
-                {
-                    var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
-
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                     join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                     select new VMDsDonVi
-                                     {
-                                         Id = dvcq.Id,
-                                         MaDiaBan = dvcq.MaDiaBan,
-                                         MaDv = dvcq.MaDv,
-                                         TenDv = dvcq.TenDv,
-                                         Level = db.Level,
-                                     };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
-
-                    model.Ttnguoinop = Ttnguoinop;
-                    model.Dtll = Dtll;
-                    model.Macqcq = Macqcq;
-                    model.Ngaychuyen = DateTime.Now;
-                    model.Trangthai = "CD";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = Macqcq;
-                        model.Ngaychuyen_t = DateTime.Now;
-                        model.Trangthai_t = "CD";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = Macqcq;
-                        model.Ngaychuyen_ad = DateTime.Now;
-                        model.Trangthai_ad = "CD";
-                    }
-                    else
-                    {
-                        model.Madv_h = Macqcq;
-                        model.Ngaychuyen_h = DateTime.Now;
-                        model.Trangthai_h = "CD";
-                    }
-                    _db.KkGia.Update(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "KkGiaGiay", new { model.Madv, Nam = model.Ngaynhap.Year });
                 }
                 else
                 {

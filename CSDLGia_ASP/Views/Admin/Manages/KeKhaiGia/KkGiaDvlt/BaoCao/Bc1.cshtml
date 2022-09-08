@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia>
+<br />
+<br />
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: .........</td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">
+    BÁO CÁO KẾT QUẢ GIẢI QUYẾT HỒ SƠ
+</p>
+
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay_bc"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay_bc"])</p>
+<p style="text-align: center; font-size: 16px;">Loại hạng: @((string)ViewData["loaihang"] == "all" ? "Tất cả" : ViewData["loaihang"])</p>
+<p style="text-align: center; font-size: 16px;">Phân loại hồ sơ: @((string)ViewData["phanloai"] == "all" ? "Tất cả" : ViewData["phanloai"])</p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Tên cơ sơ kinh doanh</th>
+            <th style="text-align: center">Loại hạng</th>
+            <th style="text-align: center">Địa chỉ</th>
+            <th style="text-align: center">Số điện thoại</th>
+            <th style="text-align: center">Số công văn</th>
+            <th style="text-align: center">Ngày gửi kê khai giá</th>
+            <th style="text-align: center">Ngày trả kết quả</th>
+            <th style="text-align: center">Ngày thực hiện mức giá kê khai</th>
+            <th style="text-align: center">Thời hạn giải quyết</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center">@(record_id++)</td>
+                <td style="text-align: left">@item.Tencskd</td>
+                <td style="text-align: center">@item.Loaihang</td>
+                <td style="text-align: left">@item.Diachi</td>
+                <td style="text-align: center">@item.Sdt</td>
+                <td style="text-align: center">@item.Socv</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaychuyen)</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaynhan)</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                <td style="text-align: center">@item.Thoihan</td>
+            </tr>
+        }
+        <tr>
+            <td style="text-align: left; font-weight:bold" colspan="10">
+                @("Tổng cộng: " + Model.Count() + " hồ sơ.")
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br />
+            - Bộ tài chính;<br />
+            - Lưu: VT, QLGCS.
+        </td>
+        <td style="vertical-align: top;">
+            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
+            <i>(Ký tên, đóng dấu)</i>
+        </td>
+    </tr>
+</table>

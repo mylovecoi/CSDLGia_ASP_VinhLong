@@ -19,12 +19,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
 
         [Route("KeKhaiGiaEtanol")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam, string Manghe)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
+                    var Manghe = "ETANOL";
                     var dsdonvi = (from com in _db.Company
                                    join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == "ETANOL") on com.Mahs equals lvkd.Mahs
                                    select new VMCompany
@@ -56,27 +57,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
-                        Manghe = "ETANOL";
-                        var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
 
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        if (comct.Count > 0)
                         {
-                            ViewData["DsDonVi"] = dsdonvi;
+                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
+
+                            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                            {
+                                ViewData["DsDonVi"] = dsdonvi;
+                            }
+                            else
+                            {
+                                ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            }
+                            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                            ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                            ViewData["Madv"] = Madv;
+                            ViewData["Nam"] = Nam;
+                            ViewData["Manghe"] = Manghe;
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giá etanol";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkgetanol";
+                            ViewData["MenuLv3"] = "menu_giakketanol";
+                            return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/Index.cshtml", model);
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giá etanol";
+                            ViewData["Messages"] = "Kê khai giá etanol không thuộc quản lý của doanh nghiệp";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkgetanol";
+                            ViewData["MenuLv3"] = "menu_giakketanol";
+                            return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                         }
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Manghe"] = Manghe;
-                        ViewData["Title"] = "Danh sách hồ sơ kê khai giá Etanol";
-                        ViewData["MenuLv1"] = "menu_kknygia";
-                        ViewData["MenuLv2"] = "menu_kkgetanol";
-                        ViewData["MenuLv3"] = "menu_giakketanol";
-                        return View("Views/Admin/Manages/KkGiaEtanol/Index.cshtml", model);
                     }
                     else
                     {
@@ -109,7 +123,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
 
                     var model = new VMKkGia
@@ -117,6 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         Manghe = Manghe,
                         Madv = Madv,
                         Ngaynhap = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
                     ViewData["Madv"] = Madv;
@@ -125,7 +140,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgetanol";
                     ViewData["MenuLv3"] = "menu_giakketanol";
-                    return View("Views/Admin/Manages/KkGiaEtanol/Create.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/Create.cshtml", model);
                 }
                 else
                 {
@@ -145,11 +160,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new KkGia
                     {
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = request.Mahs,
                         Manghe = request.Manghe,
                         Madv = request.Madv,
                         Ngaynhap = request.Ngaynhap,
@@ -167,15 +182,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                     _db.KkGia.Add(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaXmTxdCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaEtanolCt.Where(t => t.Madv == request.Madv);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
-                    _db.KkGiaXmTxdCt.UpdateRange(modelct);
+                    _db.KkGiaEtanolCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KkGiaEtanol", new { request.Madv });
@@ -198,7 +213,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Edit") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMKkGia
@@ -215,9 +231,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         Thydggadgia = model.Thydggadgia
                     };
 
-                    var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv);
+                    var model_ct = _db.KkGiaEtanolCt.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv);
 
-                    model_new.KkGiaXmTxdCt = model_ct.ToList();
+                    model_new.KkGiaEtanolCt = model_ct.ToList();
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Title"] = "Chỉnh sửa Kê khai giá Etanol";
@@ -225,7 +241,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                     ViewData["MenuLv2"] = "menu_kkgetanol";
                     ViewData["MenuLv3"] = "menu_giakketanol";
 
-                    return View("Views/Admin/Manages/KkGiaEtanol/Edit.cshtml", model_new);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/Edit.cshtml", model_new);
                 }
                 else
                 {
@@ -246,7 +262,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Edit") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Ngaynhap = request.Ngaynhap;
@@ -260,15 +276,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                     _db.KkGia.Update(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaXmTxdCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaEtanolCt.Where(t => t.Madv == request.Madv);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
-                    _db.KkGiaXmTxdCt.UpdateRange(modelct);
+                    _db.KkGiaEtanolCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KkGiaetanol", new { request.Madv });
@@ -291,17 +307,263 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Delete") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Id == id_delete);
                     _db.KkGia.Remove(model);
                     _db.SaveChanges();
 
-                    var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs && t.Madv == model.Madv);
-                    _db.KkGiaXmTxdCt.RemoveRange(model_ct);
+                    var model_ct = _db.KkGiaEtanolCt.Where(t => t.Mahs == model.Mahs && t.Madv == model.Madv);
+                    _db.KkGiaEtanolCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KkGiaEtanol", new { model.Madv });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+        [Route("KeKhaiGiaEtanol/Show")]
+        [HttpGet]
+        public IActionResult Show(string Mahs)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                {
+                    var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
+                    var hoso_kk = new VMKkGiaShow
+                    {
+                        Id = model.Id,
+                        Mahs = model.Mahs,
+                        Socv = model.Socv,
+                        Ngaynhap = model.Ngaynhap,
+                        Ngayhieuluc = model.Ngayhieuluc,
+                        Ttnguoinop = model.Ttnguoinop,
+                        Dtll = model.Dtll,
+                        Sohsnhan = model.Sohsnhan,
+                        Ngaychuyen = model.Ngaychuyen,
+                        Ngaynhan = model.Ngaynhan,
+                        Ytcauthanhgia = model.Ytcauthanhgia,
+                        Thydggadgia = model.Thydggadgia
+                    };
+
+                    var modeldn = _db.Company.FirstOrDefault(t => t.Madv == model.Madv);
+                    if (modeldn != null)
+                    {
+                        hoso_kk.Tendn = modeldn.Tendn;
+                        hoso_kk.Diadanh = modeldn.Diadanh;
+                        hoso_kk.Diachi = modeldn.Diachi;
+                    }
+
+                    var modeldv = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
+                    if (modeldv != null)
+                    {
+                        hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
+                    }
+
+                    var modelct = _db.KkGiaEtanolCt.Where(t => t.Mahs == model.Mahs);
+                    if (modelct != null)
+                    {
+                        hoso_kk.KkGiaEtanolCt = modelct.ToList();
+                    }
+
+                    ViewData["Title"] = "Kê khai giá Etanol";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgetanol";
+                    ViewData["MenuLv3"] = "menu_giakketanol";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/Show.cshtml", hoso_kk);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult Chuyen(string mahs_chuyen, string Ttnguoinop, string Dtll, string Macqcq)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Approve") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                {
+                    var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
+
+                    var dvcq_join = from dvcq in _db.DsDonVi
+                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dvcq.Id,
+                                        MaDiaBan = dvcq.MaDiaBan,
+                                        MaDv = dvcq.MaDv,
+                                        TenDv = dvcq.TenDv,
+                                        Level = db.Level,
+                                    };
+                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
+
+                    model.Ttnguoinop = Ttnguoinop;
+                    model.Dtll = Dtll;
+                    model.Macqcq = Macqcq;
+                    model.Ngaychuyen = DateTime.Now;
+                    model.Trangthai = "CD";
+                    if (chk_dvcq != null && chk_dvcq.Level == "T")
+                    {
+                        model.Madv_t = Macqcq;
+                        model.Ngaychuyen_t = DateTime.Now;
+                        model.Trangthai_t = "CD";
+                    }
+                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    {
+                        model.Madv_ad = Macqcq;
+                        model.Ngaychuyen_ad = DateTime.Now;
+                        model.Trangthai_ad = "CD";
+                    }
+                    else
+                    {
+                        model.Madv_h = Macqcq;
+                        model.Ngaychuyen_h = DateTime.Now;
+                        model.Trangthai_h = "CD";
+                    }
+                    _db.KkGia.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "KkGiaEtanol", new { model.Madv, Nam = model.Ngaynhap.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("KeKhaiGiaEtanol/Search")]
+        [HttpGet]
+        public IActionResult Search(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaEtanolCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "ETANOL" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá Etanol";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgetanol";
+                    ViewData["MenuLv3"] = "menu_giakktketanol";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/TimKiem/Index.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("KeKhaiGiaEtanol/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaEtanolCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "ETANOL" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá etanol";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgetanol";
+                    ViewData["MenuLv3"] = "menu_giakktketanol";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/TimKiem/Printf.cshtml", model_join);
+
                 }
                 else
                 {

@@ -1,0 +1,186 @@
+﻿@{
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$('.select2multi').select2();
+
+            
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Báo cáo tổng hợp<small>&nbsp;dịch vụ lưu trú</small><br />
+                </h3>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <ol>
+                            <li>
+                                <button data-target="#BC1_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span style="font-size:16px; color:blue;  font-weight: bold">
+                                        Báo cáo kết quả giải quyết hồ sơ
+                                    </span>
+                                </button>
+                            </li>
+                            <li>
+                                <button data-target="#BC2_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span style="font-size:16px; color:blue;  font-weight: bold">
+                                        Báo cáo đơn vị kê khai dịch vụ lưu trú
+                                    </span>
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--BC1 Modal!-->
+    <div class="modal fade" id="BC1_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form asp-controller="KkGiaDvltBc" asp-action="Bc1" target="_blank" id="frm_bc1">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Báo cáo tổng hợp hồ sơ kê khai giá
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Từ ngày</label>
+                                    <input type="date" id="tungay_bc" name="tungay_bc" class="form-control" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" style="text-align: center" />
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Đến ngày</label>
+                                    <input type="date" id="denngay_bc" name="denngay_bc" class="form-control" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" style="text-align: center" />
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Loại hạng</label>
+                                    <select class="form-control" id="loaihang" name="loaihang">
+                                        <option value="all">--Tất cả--</option>
+                                        <option value="1 sao">1 sao</option>
+                                        <option value="1 sao">2 sao</option>
+                                        <option value="3 sao">3 sao</option>
+                                        <option value="4 sao">4 sao</option>
+                                        <option value="5 sao">5 sao</option>
+                                        <option value="Khác(Nhà nghỉ)">Khác(Nhà nghỉ)</option>
+                                        <option value="Chưa xác định(Khách sạn chưa xác định sao)">Chưa xác định(Khách sạn chưa xác định sao)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Phân loại hồ sơ</label>
+                                    <select class="form-control" id="phanloai" name="phanloai">
+                                        <option value="all">--Tất cả--</option>
+                                        <option value="Trước thời hạn">Trước thời hạn</option>
+                                        <option value="Đúng thời hạn">Đúng thời hạn</option>
+                                        <option value="Quá thời hạn">Quá thời hạn</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                        <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC1()">Đồng ý</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--BC2 Modal!-->
+    <div class="modal fade" id="BC2_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form asp-controller="KkGiaDvltBc" asp-action="Bc2" target="_blank" id="frm_bc2">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Báo cáo đơn vị kê khai giá dịch vụ lưu trú
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Từ ngày</label>
+                                    <input type="date" id="tungay" name="tungay" class="form-control" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" style="text-align: center" />
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Đến ngày</label>
+                                    <input type="date" id="denngay" name="denngay" class="form-control" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" style="text-align: center" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                        <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC2()">Đồng ý</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function ClickBC1() {
+            var date_tu = new Date($('#tungay_bc').val());
+            var date_den = new Date($('#denngay_bc').val());
+            var date_tu_int = date_tu.getTime();
+            var date_den_int = date_den.getTime();
+            if (date_tu_int > date_den_int) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            } else {
+                $('#frm_bc1').submit();
+            }
+        }
+
+        function ClickBC2() {
+            var date_tu = new Date($('#tungay').val());
+            var date_den = new Date($('#denngay').val());
+            var date_tu_int = date_tu.getTime();
+            var date_den_int = date_den.getTime();
+            if (date_tu_int > date_den_int) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            } else {
+                $('#frm_bc2').submit();
+            }
+        }
+    </script>

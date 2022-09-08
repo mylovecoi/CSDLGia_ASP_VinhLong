@@ -2,8 +2,11 @@
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
+using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.EntityFrameworkCore;
+using CSDLGia_ASP.Models.Temp.TempSystems;
+using CSDLGia_ASP.Models.Temp.TempManages.TempKeKhaiGia;
 
 namespace CSDLGia_ASP.Database
 {
@@ -30,57 +33,33 @@ namespace CSDLGia_ASP.Database
         //Manages:
         //Kê khai giá
         public DbSet<KkGia> KkGia { get; set; }
-        public DbSet<KkGiaCt> KkGiaCt { get; set; }
-        public DbSet<KkCuocVcHk> KkCuocVcHk { get; set; }
         public DbSet<KkCuocVcHkCt> KkCuocVcHkCt { get; set; }
-        public DbSet<KkGiaCatSan> KkGiaCatSan { get; set; }
         public DbSet<KkGiaCatSanCt> KkGiaCatSanCt { get; set; }
-        public DbSet<KkGiaDatSanLap> KkGiaDatSanLap { get; set; }
         public DbSet<KkGiaDatSanLapCt> KkGiaDatSanLapCt { get; set; }
-        public DbSet<KkGiaDaXayDung> KkGiaDaXayDung { get; set; }
         public DbSet<KkGiaDaXayDungCt> KkGiaDaXayDungCt { get; set; }
-        public DbSet<KkGiaDvCang> KkGiaDvCang { get; set; }
         public DbSet<KkGiaDvCangCt> KkGiaDvCangCt { get; set; }
-        public DbSet<KkGiaDvCh> KkGiaDvCh { get; set; }
         public DbSet<KkGiaDvChCt> KkGiaDvChCt { get; set; }
-        public DbSet<KkGiaDvDlBb> KkGiaDvDlBb { get; set; }
         public DbSet<KkGiaDvDlBbCt> KkGiaDvDlBbCt { get; set; }
-        public DbSet<KkGiaDvHdTm> KkGiaDvHdTm { get; set; }
         public DbSet<KkGiaDvHdTmCt> KkGiaDvHdTmCt { get; set; }
-        public DbSet<KkGiaDvLt> KkGiaDvLt { get; set; }
+        public DbSet<KkGiaDvLtCskd> KkGiaDvLtCskd { get; set; }
         public DbSet<KkGiaDvLtCt> KkGiaDvLtCt { get; set; }
-        public DbSet<KkGiaEtanol> KkGiaEtanol { get; set; }
         public DbSet<KkGiaEtanolCt> KkGiaEtanolCt { get; set; }
-        public DbSet<KkGiaGiay> KkGiaGiay { get; set; }
         public DbSet<KkGiaGiayCt> KkGiaGiayCt { get; set; }
-        public DbSet<KkGiaHpLx> KkGiaHpLx { get; set; }
         public DbSet<KkGiaHpLxCt> KkGiaHpLxCt { get; set; }
-        public DbSet<KkGiaKcbTn> KkGiaKcbTn { get; set; }
         public DbSet<KkGiaKcbTnCt> KkGiaKcbTnCt { get; set; }
-        public DbSet<KkGiaOtoNkSx> KkGiaOtoNkSx { get; set; }
         public DbSet<KkGiaOtoNkSxCt> KkGiaOtoNkSxCt { get; set; }
-        public DbSet<KkGiaSach> KkGiaSach { get; set; }
         public DbSet<KkGiaSachCt> KkGiaSachCt { get; set; }
-        public DbSet<KkGiaTaCn> KkGiaTaCn { get; set; }
         public DbSet<KkGiaTaCnCt> KkGiaTaCnCt { get; set; }
-        public DbSet<KkGiaThan> KkGiaThan { get; set; }
         public DbSet<KkGiaThanCt> KkGiaThanCt { get; set; }
-        public DbSet<KkGiaVeTqKdl> KkGiaVeTqKdl { get; set; }
         public DbSet<KkGiaVeTqKdlCt> KkGiaVeTqKdlCt { get; set; }
         public DbSet<KkGiaVlXd> KkGiaVlXd { get; set; }
         public DbSet<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
         public DbSet<KkGiaVlXdDm> KkGiaVlXdDm { get; set; }
-        public DbSet<KkGiaVtXb> KkGiaVtXb { get; set; }
         public DbSet<KkGiaVtXbCt> KkGiaVtXbCt { get; set; }
-        public DbSet<KkGiaVtXk> KkGiaVtXk { get; set; }
         public DbSet<KkGiaVtXkCt> KkGiaVtXkCt { get; set; }
-        public DbSet<KkGiaVtXtx> KkGiaVtXtx { get; set; }
         public DbSet<KkGiaVtXtxCt> KkGiaVtXtxCt { get; set; }
-        public DbSet<KkGiaXeMayNkSx> KkGiaXeMayNkSx { get; set; }
         public DbSet<KkGiaXeMayNkSxCt> KkGiaXeMayNkSxCt { get; set; }
-        public DbSet<KkGiaXmTxd> KkGiaXmTxd { get; set; }
         public DbSet<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
-        public DbSet<KkGs> KkGs { get; set; }
         public DbSet<KkGsCt> KkGsCt { get; set; }
 
         //Kê khai đăng ký giá
@@ -133,6 +112,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaPhiChuyenGiaNhom> GiaPhiChuyenGiaNhom { get; set; }
         public DbSet<GiaRung> GiaRung { get; set; }
         public DbSet<GiaRungCt> GiaRungCt { get; set; }
+        public DbSet<GiaRungDm> GiaRungDm { get; set; }
         public DbSet<GiaSpDvCi> GiaSpDvCi { get; set; }
         public DbSet<GiaSpDvCiCt> GiaSpDvCiCt { get; set; }
         public DbSet<GiaSpDvCiDm> GiaSpDvCiDm { get; set; }
@@ -165,20 +145,31 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaVangNgoaiTe> GiaVangNgoaiTe { get; set; }
         public DbSet<GiaVangNgoaiTeCt> GiaVangNgoaiTeCt { get; set; }
         public DbSet<GiaVangNgoaiTeDm> GiaVangNgoaiTeDm { get; set; }
+        public DbSet<GiaThueMatDatMatNuoc> GiaThueMatDatMatNuoc { get; set; }
+        public DbSet<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
+        public DbSet<GiaGocVlxdTh> GiaGocVlxdTh { get; set; }
+        public DbSet<GiaHhDvkNhom> GiaHhDvkNhom { get; set; }
+        public DbSet<GiaHhDvkDm> GiaHhDvkDm { get; set; }
+
+        //VBQLNN
+        public DbSet<VbQlNn> VbQlNn { get; set; }
+
+
 
         //Systems:
         public DbSet<Company> Company { get; set; }
         public DbSet<CompanyLvCc> CompanyLvCc { get; set; }
-        public DbSet<DiaBanHd> DiaBanHd { get; set; }
+        /*public DbSet<DiaBanHd> DiaBanHd { get; set; }*/
         public DbSet<Districts> Districts { get; set; }
         public DbSet<DmDvt> DmDvt { get; set; }
         public DbSet<DmHinhThucThanhToan> DmHinhThucThanhToan { get; set; }
         public DbSet<DmLoaiGia> DmLoaiGia { get; set; }
         public DbSet<DmNganhKd> DmNganhKd { get; set; }
         public DbSet<DmNgheKd> DmNgheKd { get; set; }
+        public DbSet<DmNhomHh> DmNhomHh { get; set; }
         public DbSet<DsDiaBan> DsDiaBan { get; set; }
         public DbSet<DsDonVi> DsDonVi { get; set; }
-        public DbSet<DsDonViTdg> DsDonViTdg { get; set; }
+        /*public DbSet<DsDonViTdg> DsDonViTdg { get; set; }*/
         public DbSet<DsNhomTaiKhoan> DsNhomTaiKhoan { get; set; }
         public DbSet<DsThamDinhVien> DsThamDinhVien { get; set; }
         public DbSet<DsVanPhong> DsVanPhong { get; set; }

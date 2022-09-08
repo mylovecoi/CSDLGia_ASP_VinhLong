@@ -27,11 +27,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
 
         [Route("KkGiaThanCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGiaThanCt
             {
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                Mahs = Mahs,
                 Madv = Madv,
                 Tendvcu = Tendvcu,
                 Qccl = Qccl,
@@ -43,14 +43,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
-
             _db.KkGiaThanCt.Add(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        
+
         [Route("KkGiaThanCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
@@ -129,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
             model.Updated_at = DateTime.Now;
             _db.KkGiaThanCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -141,14 +140,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
             var model = _db.KkGiaThanCt.FirstOrDefault(t => t.Id == Id);
             _db.KkGiaThanCt.Remove(model);
             _db.SaveChanges();
-            string result = GetData(model.Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        public string GetData(string Madv)
+        public string GetData(string Mahs)
         {
-            var model = _db.KkGiaThanCt.Where(t => t.Madv == Madv).ToList();
+            var model = _db.KkGiaThanCt.Where(t => t.Mahs == Mahs).ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
@@ -196,6 +195,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
             return result;
 
         }
-        
     }
 }

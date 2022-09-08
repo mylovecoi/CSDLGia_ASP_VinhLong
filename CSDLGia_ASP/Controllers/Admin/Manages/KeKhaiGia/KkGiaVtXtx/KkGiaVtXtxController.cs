@@ -25,16 +25,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
             _db = db;
         }
 
-        [Route("KkGiaVtXtx")]
+        [Route("KeKhaiGiaVtXtx")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam, string Manghe)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
+                    var Manghe = "VTXTX";
                     var dsdonvi = (from com in _db.Company
-                                   join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == "VTXTX") on com.Mahs equals lvkd.Mahs
+                                   join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == Manghe) on com.Mahs equals lvkd.Mahs
                                    select new VMCompany
                                    {
                                        Id = com.Id,
@@ -45,6 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
+                    
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -64,27 +67,42 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
-                        Manghe = "VTXTX";
-                        var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
 
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+
+                        if (comct.Count > 0)
                         {
-                            ViewData["DsDonVi"] = dsdonvi;
+                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
+
+                            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                            {
+                                ViewData["DsDonVi"] = dsdonvi;
+                            }
+                            else
+                            {
+                                ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            }
+                            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                            ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                            ViewData["Madv"] = Madv;
+                            ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                            ViewData["Nam"] = Nam;
+                            ViewData["Manghe"] = Manghe;
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giá cước vận tải hành khách bằng xe taxi";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkgvtxtx";
+                            ViewData["MenuLv3"] = "menu_giakkvtxtx";
+                            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/Index.cshtml", model);
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                            ViewData["Title"] = "Danh sách hồ sơ kê khai giá cước vận tải hành khách bằng xe taxi";
+                            ViewData["Messages"] = "Kê khai giá cước vận tải hành khách bằng xe taxi không thuộc quản lý của doanh nghiệp";
+                            ViewData["MenuLv1"] = "menu_kknygia";
+                            ViewData["MenuLv2"] = "menu_kkgvtxtx";
+                            ViewData["MenuLv3"] = "menu_giakkvtxtx";
+                            return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                         }
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Manghe"] = Manghe;
-                        ViewData["Title"] = "Danh sách hồ sơ kê khai giá cước vận tải hành khách bằng xe taxi";
-                        ViewData["MenuLv1"] = "menu_kknygia";
-                        ViewData["MenuLv2"] = "menu_kkgvtxtx";
-                        ViewData["MenuLv3"] = "menu_giakk";
-                        return View("Views/Admin/Manages/KkGiaVtXtx/Index.cshtml", model);
                     }
                     else
                     {
@@ -92,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                         ViewData["Messages"] = "Hệ thống chưa có doanh nghiệp kê khai giá cước vận tải hành khách bằng xe taxi.";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgvtxtx";
-                        ViewData["MenuLv3"] = "menu_giakk";
+                        ViewData["MenuLv3"] = "menu_giakkvtxtx";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -108,30 +126,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("KkGiaVtXtx/Create")]
+
+        [Route("KeKhaiGiaVtXtx/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Manghe)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Create") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new VMKkGia
                     {
                         Manghe = Manghe,
                         Madv = Madv,
                         Ngaynhap = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
                     ViewData["Madv"] = Madv;
+                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                     ViewData["Manghe"] = Manghe;
                     ViewData["Title"] = "Thêm mới Kê khai giá cước vận tải hành khách bằng xe taxi";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvtxtx";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giakkvtxtx";
 
-                    return View("Views/Admin/Manages/KkGiaVtXtx/Create.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/Create.cshtml", model);
                 }
                 else
                 {
@@ -145,18 +166,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
             }
         }
 
-        
-        [Route("KkGiaVtXtx/Store")]
+        [Route("KeKhaiGiaVtXtx/Store")]
         [HttpPost]
         public IActionResult Store(VMKkGia request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Create") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new KkGia
                     {
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = request.Mahs,
                         Manghe = request.Manghe,
                         Madv = request.Madv,
                         Ngaynhap = request.Ngaynhap,
@@ -174,12 +195,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                     _db.KkGia.Add(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaVtXtxCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaVtXtxCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
                     _db.KkGiaVtXtxCt.UpdateRange(modelct);
@@ -198,14 +219,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("KkGiaVtXtx/Edit")]
+
+        [Route("KeKhaiGiaVtXtx/Edit")]
         [HttpGet]
         public IActionResult Edit(string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Edit") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMKkGia
@@ -230,9 +252,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                     ViewData["Title"] = "Chỉnh sửa Kê khai giá cước vận tải hành khách bằng xe taxi";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvtxtx";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giakkvtxtx";
 
-                    return View("Views/Admin/Manages/KkGiaVtXtx/Edit.cshtml", model_new);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/Edit.cshtml", model_new);
                 }
                 else
                 {
@@ -245,14 +267,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("KkGiaVtXtx/Update")]
+
+        [Route("KeKhaiGiaVtXtx/Update")]
         [HttpPost]
         public IActionResult Update(VMKkGia request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Edit") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Ngaynhap = request.Ngaynhap;
@@ -266,12 +289,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                     _db.KkGia.Update(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaVtXtxCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaVtXtxCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
                         {
-                            item.Mahs = model.Mahs;
+                            item.Trangthai = "XD";
                         }
                     }
                     _db.KkGiaVtXtxCt.UpdateRange(modelct);
@@ -290,14 +313,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("KkGiaVtXtx/Delete")]
+
+        [Route("KeKhaiGiaVtXtx/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Delete") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(t => t.Id == id_delete);
                     _db.KkGia.Remove(model);
@@ -320,22 +344,85 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("KkGiaVtXtx/Show")]
+
+        [Route("KeKhaiGiaVtXtx/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = GetThongTinKk(Mahs);
 
-                    ViewData["Title"] = "Kê khai giá xi măng thép xây dựng";
+                    ViewData["Title"] = "Kê khai giá cước vận tải hành khách bằng xe taxi";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvtxtx";
-                    ViewData["MenuLv3"] = "menu_giakk";
-                    return View("Views/Admin/Manages/KkGiaVtXtx/Show.cshtml", model);
+                    ViewData["MenuLv3"] = "menu_giakkvtxtx";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/Show.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("KeKhaiGiaVtXtx/Search")]
+        [HttpGet]
+        public IActionResult Search(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaVtXtxCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "VTXTX" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá cước vận tải hành khách bằng xe taxi";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgvtxtx";
+                    ViewData["MenuLv3"] = "menu_giakkvtxtxtk";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/TimKiem/Index.cshtml", model_join);
 
                 }
                 else
@@ -350,6 +437,128 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
             }
         }
         
+        [Route("KeKhaiGiaVtXtx/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Nam, string Mota)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", "Index"))
+                {
+
+                    var model_join = from kkct in _db.KkGiaVtXtxCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "VTXTX" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join com in _db.Company on kk.Madv equals com.Madv
+                                     select new VMKkGiaCt
+                                     {
+                                         Id = kkct.Id,
+                                         Mahs = kkct.Mahs,
+                                         Madv = kkct.Madv,
+                                         Tendvcu = kkct.Tendvcu,
+                                         Qccl = kkct.Qccl,
+                                         Dvt = kkct.Dvt,
+                                         Giakk = kkct.Giakk,
+                                         Ghichu = kkct.Ghichu,
+                                         Tendn = com.Tendn,
+                                         Ngayhieuluc = kk.Ngayhieuluc,
+                                     };
+                    
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                    }
+
+                    if (!string.IsNullOrEmpty(Mota))
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
+                    }
+                    else
+                    {
+                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
+                    }
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Mota"] = Mota;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá cước vận tải hành khách bằng xe taxi";
+                    ViewData["MenuLv1"] = "menu_kknygia";
+                    ViewData["MenuLv2"] = "menu_kkgvtxtx";
+                    ViewData["MenuLv3"] = "menu_giakkvtxtxtk";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/TimKiem/Printf.cshtml", model_join);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult Chuyen(string mahs_chuyen, string Ttnguoinop, string Dtll, string Macqcq)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd", "Approve") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                {
+                    var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
+
+                    var dvcq_join = from dvcq in _db.DsDonVi
+                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dvcq.Id,
+                                        MaDiaBan = dvcq.MaDiaBan,
+                                        MaDv = dvcq.MaDv,
+                                        TenDv = dvcq.TenDv,
+                                        Level = db.Level,
+                                    };
+                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
+
+                    model.Ttnguoinop = Ttnguoinop;
+                    model.Dtll = Dtll;
+                    model.Macqcq = Macqcq;
+                    model.Ngaychuyen = DateTime.Now;
+                    model.Trangthai = "CD";
+                    if (chk_dvcq != null && chk_dvcq.Level == "T")
+                    {
+                        model.Madv_t = Macqcq;
+                        model.Ngaychuyen_t = DateTime.Now;
+                        model.Trangthai_t = "CD";
+                    }
+                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    {
+                        model.Madv_ad = Macqcq;
+                        model.Ngaychuyen_ad = DateTime.Now;
+                        model.Trangthai_ad = "CD";
+                    }
+                    else
+                    {
+                        model.Madv_h = Macqcq;
+                        model.Ngaychuyen_h = DateTime.Now;
+                        model.Trangthai_h = "CD";
+                    }
+                    _db.KkGia.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "KkGiaVtXtx", new { model.Madv, Nam = model.Ngaynhap.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
         private VMKkGiaShow GetThongTinKk(string Mahs)
         {
             var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
@@ -368,12 +577,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 Ytcauthanhgia = model.Ytcauthanhgia,
                 Thydggadgia = model.Thydggadgia
             };
-            hoso_kk = GetThongTinDn(hoso_kk, model.Mahs);
+
+            hoso_kk = GetThongTinDn(hoso_kk, model.Madv);
             hoso_kk = GetThongTinDv(hoso_kk, model.Macqcq);
             hoso_kk = GetThongTinCt(hoso_kk, model.Mahs);
+
             return hoso_kk;
         }
-        
+
         private VMKkGiaShow GetThongTinDn(VMKkGiaShow hoso, string Madv)
         {
             var modeldn = _db.Company.FirstOrDefault(t => t.Madv == Madv);
@@ -405,6 +616,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
             }
             return hoso;
         }
-        
+
     }
 }

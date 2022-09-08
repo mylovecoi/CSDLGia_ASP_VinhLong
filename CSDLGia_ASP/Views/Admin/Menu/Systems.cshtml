@@ -161,7 +161,19 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Danh ngành nghề kinh doanh</span>
+                                            <span class="menu-text">Danh mục ngành nghề kinh doanh</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                        <a asp-controller="DmNhomHh" asp-action="Index" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Danh mục nhóm hàng hóa</span>
                                         </a>
                                     </li>
                                 }

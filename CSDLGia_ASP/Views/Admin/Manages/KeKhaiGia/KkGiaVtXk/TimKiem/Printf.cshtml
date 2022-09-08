@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaCt>
+
+<br /><br />
+      <h2 class="page-title" style="text-align: center;text-transform: uppercase">
+          Tìm kiếm thông tin kê khai giá cước vận tải hành khách bằng ôtô tuyến cố định
+      </h2>
+<br /><br />
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th width="4%">#</th>
+            <th>Doanh nghiệp</th>
+            <th>Ngày thực hiện<br />mức giá</th>
+            <th>Mô tả</th>
+            <th>Quy cách chất lượng</th>
+            <th>Đơn vị tính</th>
+            <th>Mức giá kê khai</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td>
+                        <b>Tên DN: </b>@item.Tendn<br />
+                        <b>Mã số thuế: </b>@item.Madv
+                    </td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                    <td style="text-align: left">@item.Tendvcu</td>
+                    <td style="text-align: left">@item.Qccl</td>
+                    <td style="text-align: left">@item.Dvt</td>
+                    <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Giakk)</td>
+                    <td style="text-align: left">@item.Ghichu</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -13,6 +13,7 @@ namespace CSDLGia_ASP.Models.Systems
         [Key]
         public int Id { get; set; }
         public string Madv { get; set; }
+        public string Mahs { get; set; }
         public string Macqcq { get; set; }
         public string Madiaban { get; set; }
         public string Tendn { get; set; }
@@ -41,5 +42,7 @@ namespace CSDLGia_ASP.Models.Systems
         public string Level { get; set; }
         public string Lydo { get; set; }
         public DateTime Ngaychuyen { get; set; }
+        public DateTime Created_at { get; set; }
+        public DateTime Updated_at { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public int Id { get; set; }
         public string Mahs { get; set; }
         public string Madv { get; set; }
+        public string Macskd { get; set; }
         public string Tendvcu { get; set; }
         public string Qccl { get; set; }
         public string Dvt { get; set; }
@@ -16,6 +17,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Thuevat { get; set; }
         public string Trangthai { get; set; }
         public string Tendn { get; set; }
+        public string Tenks { get; set; }
         public DateTime Ngayhieuluc { get; set; }
     }
 }

@@ -9,6 +9,20 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public int Id { get; set; }
         public string Mahs { get; set; }
         public string Madiaban { get; set; }
+        //<!--dvlt
+        public string Macskd { get; set; }
+        public string Tencskd { get; set; }
+        public string Diachi { get; set; }
+        public string Loaihang { get; set; }
+        public string Sdt { get; set; }
+        public string Maxp { get; set; }
+        public string Email { get; set; }
+        public string Fax { get; set; }
+        public string Ptnguyennhan { get; set; }
+        public string Chinhsachkm { get; set; }
+        public string Macqcq1 { get; set; }
+        public string Macqcq2 { get; set; }
+        //dvlt-->
         public DateTime Ngaynhap { get; set; }
         public DateTime Ngayhieuluc { get; set; }
         public string Manghe { get; set; }
@@ -71,5 +85,12 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public List<KkGiaThanCt> KkGiaThanCt { get; set; }
         public List<KkGiaGiayCt> KkGiaGiayCt { get; set; }
         public List<KkGiaTaCnCt> KkGiaTaCnCt { get; set; }
+        public List<KkGiaDatSanLapCt> KkGiaDatSanLapCt { get; set; }
+        public List<KkGiaCatSanCt> KkGiaCatSanCt { get; set; }
+        public List<KkGiaHpLxCt> KkGiaHpLxCt { get; set; }
+        public List<KkGiaDvChCt> KkGiaDvChCt { get; set; }
+        public List<KkGiaDaXayDungCt> KkGiaDaXayDungCt { get; set; }
+        public List<KkCuocVcHkCt> KkCuocVcHkCt { get; set; }
+        public List<KkGiaDvLtCt> KkGiaDvLtCt { get; set; }
     }
 }

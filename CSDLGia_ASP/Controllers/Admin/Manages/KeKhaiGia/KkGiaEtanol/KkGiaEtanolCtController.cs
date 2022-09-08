@@ -6,24 +6,24 @@ using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using System;
 
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
+namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
 {
-    public class KkGiaSachCtController : Controller
+    public class KkGiaEtanolCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public KkGiaSachCtController(CSDLGiaDBContext db)
+        public KkGiaEtanolCtController(CSDLGiaDBContext db)
         {
             _db = db;
         }
- 
-        [Route("KkGiaSachCt/Store")]
+
+        [Route("KkGiaEtanolCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs,string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
-            var model = new KkGiaSachCt
+            var model = new KkGiaEtanolCt
             {
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                Mahs = Mahs,
                 Madv = Madv,
                 Tendvcu = Tendvcu,
                 Qccl = Qccl,
@@ -35,18 +35,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
-            _db.KkGiaSachCt.Add(model);
+            _db.KkGiaEtanolCt.Add(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        [Route("KkGiaSachCt/Edit")]
+        [Route("KkGiaEtanolCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-            var model = _db.KkGiaSachCt.FirstOrDefault(p => p.Id == Id);
+            var model = _db.KkGiaEtanolCt.FirstOrDefault(p => p.Id == Id);
 
             if (model != null)
             {
@@ -106,11 +106,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
             }
         }
 
-        [Route("KkGiaSachCt/Update")]
+        [Route("KkGiaEtanolCt/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
-            var model = _db.KkGiaSachCt.FirstOrDefault(t => t.Id == Id);
+            var model = _db.KkGiaEtanolCt.FirstOrDefault(t => t.Id == Id);
             model.Tendvcu = Tendvcu;
             model.Qccl = Qccl;
             model.Dvt = Dvt;
@@ -118,28 +118,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
             model.Giakk = Giakk;
             model.Ghichu = Ghichu;
             model.Updated_at = DateTime.Now;
-            _db.KkGiaSachCt.Update(model);
+            _db.KkGiaEtanolCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        [Route("KkGiaSachCt/Delete")]
+        [Route("KkGiaEtanolCt/Delete")]
         [HttpPost]
         public JsonResult Delete(int Id)
         {
-            var model = _db.KkGiaSachCt.FirstOrDefault(t => t.Id == Id);
-            _db.KkGiaSachCt.Remove(model);
+            var model = _db.KkGiaEtanolCt.FirstOrDefault(t => t.Id == Id);
+            _db.KkGiaEtanolCt.Remove(model);
             _db.SaveChanges();
-            string result = GetData(model.Madv);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
         public string GetData(string Madv)
         {
-            var model = _db.KkGiaSachCt.Where(t => t.Madv == Madv).ToList();
+            var model = _db.KkGiaEtanolCt.Where(t => t.Madv == Madv).ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";

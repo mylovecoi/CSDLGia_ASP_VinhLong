@@ -29,7 +29,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index(string Madv)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
                 if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                 {
@@ -60,6 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                     Chucdanh = com.Chucdanh,
                                     Nguoiky = com.Nguoiky,
                                     Diadanh = com.Diadanh,
+                                    Trangthai = com.Trangthai,
                                 }).FirstOrDefault(t => t.Madv == Madv);
 
                 var comct_join = (from comct in _db.CompanyLvCc
@@ -74,10 +76,41 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       Manganh = comct.Manganh,
                                       Macqcq = comct.Macqcq,
                                       Trangthai = comct.Trangthai,
-                                  }).Where(t => t.Madv == Madv).ToList();
+                                  }).Where(t => t.Madv == Madv && t.Trangthai == "XD").ToList();
 
-                var dn = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
-                var dnct = _db.TtDnTdCt.Where(t => t.Madv == Madv).ToList();
+                var dn_join = (from dn in _db.TtDnTd
+                               join db in _db.DsDiaBan on dn.Madiaban equals db.MaDiaBan
+                               select new VMTtDnTd
+                               {
+                                   Id = dn.Id,
+                                   Madv = dn.Madv,
+                                   Madiaban = dn.Madiaban,
+                                   Tendiaban = db.TenDiaBan,
+                                   Tendn = dn.Tendn,
+                                   Diachi = dn.Diachi,
+                                   Tel = dn.Tel,
+                                   Fax = dn.Fax,
+                                   Email = dn.Email,
+                                   Chucdanh = dn.Chucdanh,
+                                   Nguoiky = dn.Nguoiky,
+                                   Diadanh = dn.Diadanh,
+                                   Trangthai = dn.Trangthai,
+                                   Lydo = dn.Lydo,
+                               }).FirstOrDefault(t => t.Madv == Madv);
+
+                var dnct_join = (from dnct in _db.TtDnTdCt
+                                 join nghe in _db.DmNgheKd on dnct.Manghe equals nghe.Manghe
+                                 select new VMTtDnTdCt
+                                 {
+                                     Id = dnct.Id,
+                                     Mahs = dnct.Mahs,
+                                     Madv = dnct.Madv,
+                                     Manghe = dnct.Manghe,
+                                     Tennghe = nghe.Tennghe,
+                                     Manganh = dnct.Manganh,
+                                     Macqcq = dnct.Macqcq,
+                                     Trangthai = dnct.Trangthai,
+                                 }).Where(t => t.Madv == Madv).ToList();
 
                 if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                 {
@@ -90,8 +123,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                 ViewData["CompanyLvCc"] = comct_join;
-                ViewData["TtDnTd"] = dn;
-                ViewData["TtDnTdCt"] = dnct;
+                ViewData["TtDnTd"] = dn_join;
+                ViewData["TtDnTdCt"] = dnct_join;
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
                 ViewData["MenuLv1"] = "menu_kknygia";
@@ -108,13 +141,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Edit(string Madv)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
                 var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
                 var model_new = new VMCompany
                 {
                     Id = model.Id,
                     Madv = model.Madv,
+                    Madiaban = model.Madiaban,
                     Mahs = model.Mahs,
                     Macqcq = model.Macqcq,
                     Tendn = model.Tendn,
@@ -126,6 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     Nguoiky = model.Nguoiky,
                     Diadanh = model.Diadanh,
                     Giayphepkd = model.Giayphepkd,
+                    Created_at = model.Created_at,
                 };
 
                 var model_ct = from com_ct in _db.CompanyLvCc.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv)
@@ -143,6 +179,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                };
 
                 model_new.VMCompanyLvCc = model_ct.ToList();
+
+                foreach (var item in model_new.VMCompanyLvCc)
+                {
+                    var model_ttdntd_ct = new TtDnTdCt
+                    {
+                        Madv = item.Madv,
+                        Manghe = item.Manghe,
+                        Manganh = item.Manganh,
+                        Macqcq = item.Macqcq,
+                        Trangthai = item.Trangthai,
+                        Created_at = DateTime.Now,
+                    };
+                    _db.TtDnTdCt.Add(model_ttdntd_ct);
+                    _db.SaveChanges();
+                }
 
                 ViewData["Madv"] = Madv;
                 ViewData["DmNganhKd"] = _db.DmNganhKd;
@@ -162,7 +213,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpPost]
         public async Task<IActionResult> Update(VMCompany request, IFormFile Giayphepkdupload)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
                 if (Giayphepkdupload != null && Giayphepkdupload.Length > 0)
                 {
@@ -180,12 +232,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                 var ttdntd = new TtDnTd
                 {
-
+                    Madv = request.Madv,
+                    Mahs = request.Mahs,
+                    Macqcq = request.Macqcq,
+                    Madiaban = request.Madiaban,
+                    Tendn = request.Tendn,
+                    Diachi = request.Diachi,
+                    Tel = request.Tel,
+                    Fax = request.Fax,
+                    Email = request.Email,
+                    Diadanh = request.Diadanh,
+                    Chucdanh = request.Chucdanh,
+                    Nguoiky = request.Nguoiky,
+                    Ghichu = request.Ghichu,
+                    Trangthai = "CC",
+                    Tailieu = request.Tailieu,
+                    Giayphepkd = request.Giayphepkd,
+                    Level = request.Level,
+                    Lydo = request.Lydo,
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                    Ngaychuyen = DateTime.Now,
                 };
                 _db.TtDnTd.Add(ttdntd);
                 _db.SaveChanges();
 
-                return RedirectToAction("Index", "TtDnTd");
+                var ttdntd_ct_new = _db.TtDnTdCt.Where(t => t.Madv == request.Madv);
+                if (ttdntd_ct_new != null)
+                {
+                    foreach (var item in ttdntd_ct_new)
+                    {
+                        item.Mahs = ttdntd.Mahs;
+                        item.Trangthai = "XD";
+                    }
+                }
+                _db.TtDnTdCt.UpdateRange(ttdntd_ct_new);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index", "TtDnTd", new { Madv = request.Madv });
             }
             else
             {
@@ -193,13 +277,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
+        public IActionResult Chuyen(string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+            {
+                var model = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
+                model.Trangthai = "CD";
+                model.Ngaychuyen = DateTime.Now;
 
+                _db.TtDnTd.Update(model);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index", "TtDnTd", new { Madv = Madv });
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         [Route("DoanhNghiepCt/Store")]
         [HttpPost]
         public JsonResult Store(string Madv, string Manghe, string Madiaban)
         {
-            var model = new CompanyLvCc
+            var model = new TtDnTdCt
             {
                 Madv = Madv,
                 Manghe = Manghe,
@@ -208,7 +310,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
-            _db.CompanyLvCc.Add(model);
+            _db.TtDnTdCt.Add(model);
             _db.SaveChanges();
             string result = this.GetData(Madv);
             var data = new { status = "success", message = result };
@@ -219,8 +321,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpPost]
         public JsonResult Delete(int Id)
         {
-            var model = _db.CompanyLvCc.FirstOrDefault(t => t.Id == Id);
-            _db.CompanyLvCc.Remove(model);
+            var model = _db.TtDnTdCt.FirstOrDefault(t => t.Id == Id);
+            _db.TtDnTdCt.Remove(model);
             _db.SaveChanges();
             string result = this.GetData(model.Madv);
             var data = new { status = "success", message = result };
@@ -230,7 +332,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         //Get
         public string GetData(string Madv)
         {
-            var model = _db.CompanyLvCc.Where(t => t.Madv == Madv).ToList();
+            var model = _db.TtDnTdCt.Where(t => t.Madv == Madv).ToList();
             var model_join = (from cty in model
                               join dmnghe in _db.DmNgheKd on cty.Manghe equals dmnghe.Manghe
                               select new VMCompanyLvCc

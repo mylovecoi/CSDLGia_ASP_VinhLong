@@ -1,0 +1,74 @@
+﻿@{
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDatCt>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+
+}
+<script>
+    $(document).ready(function () {
+        TableManaged.init();
+    });
+</script>
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Tìm kiếm thông tin định giá đất cụ thể
+            </h3>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Đơn vị nhập</th>
+                    <th>Thời điểm</th>
+                    <th>Phân loại dất</th>
+                    <th>Vị trí</th>
+                    <th>Diện tích</th>
+                    <th>Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td></td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: left">@item.Loaidat</td>
+                    <td style="text-align: left">@item.Tenvitri</td>
+                    <td style="text-align: left">@item.Dientich</td>
+                    <td style="text-align: left">@item.Giatri</td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="GiaDatPl" asp-action="Search" class="btn btn-danger">
+            <i class="la la-reply"></i>Quay lại
+        </a>
+    </div>
+</div>
+
+
+
+
+

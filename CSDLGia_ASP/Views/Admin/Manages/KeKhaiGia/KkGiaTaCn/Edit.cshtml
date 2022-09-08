@@ -1,0 +1,123 @@
+﻿@model CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin kê khai hồ sơ giá<small>&nbsp;thức ăn chăn nuôi chỉnh sửa</small><br />
+                    <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="KeKhaiGiaTaCn" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_tacn_update">
+            <div class="card-body">
+                <input hidden asp-for="Madv" />
+                <input hidden asp-for="Mahs" />
+                <input hidden asp-for="Manghe" />
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Ngày kê khai*</label>
+                            <input type="date" class="form-control" asp-for="Ngaynhap"/>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Ngày thực hiện mức giá kê khai*</label>
+                            <input type="date" class="form-control" asp-for="Ngayhieuluc"/>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Số công văn*</label>
+                            <input type="text" class="form-control" asp-for="Socv" />
+                            <span id="SocvError" name="SocvError" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Số công văn liền kề</label>
+                            <input type="text" class="form-control" asp-for="Socvlk" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Ngày nhập số công văn liền kề*</label>
+                            <input type="date" class="form-control" asp-for="Ngaycvlk"/>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>
+                                Các yếu tố chi phí cấu thành giá (đối với kê khai lần đầu); phân tích nguyên nhân,
+                                nêu rõ biến động của các yếu tố hình thành giá tác động làm tăng hoặc giảm giá (đối với kê khai lại).
+                            </label>
+                            <textarea class="form-control" asp-for="Ytcauthanhgia" cols="12" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Các trường hợp ưu đãi, giảm giá; điều kiện áp dụng giá (nếu có).</label>
+                            <textarea class="form-control" asp-for="Thydggadgia" cols="12" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaTaCn/Detail.cshtml")
+
+            </div>
+            <div class="card-footer" style="text-align:center">
+                <a asp-controller="KeKhaiGiaTaCn" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                    <i class="la la-reply"></i>Quay lại
+                </a>&ensp;
+                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+                <button type="button" class="btn btn-primary mr-2" onclick="ValidateTaCn()"><i class="la la-check"></i>Cập nhật</button>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <script>
+        function ValidateTaCn() {
+            if ($('#Socv').val().trim() == '') {
+                toastr.error("Số công văn không được để trống!", "Lỗi!!!")
+            } else {
+                if ($('#Ngayhieuluc').val().trim() == '') {
+                    toastr.error("Ngày thực hiện mức giá kê khai không được để trống!", "Lỗi!!!")
+                } else {
+                    if ($('#Ngaycvlk').val().trim() == '') {
+                        toastr.error("Ngày nhập số công văn liền kề không được để trống!", "Lỗi!!!")
+                    } else {
+                        document.getElementById("frm_tacn_update").submit();
+                    }
+                }
+            }
+        }
+    </script>
+    @section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
