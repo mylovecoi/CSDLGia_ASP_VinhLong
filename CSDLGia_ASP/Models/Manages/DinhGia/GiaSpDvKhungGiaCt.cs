@@ -16,10 +16,23 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Mota { get; set; }
         public double Giatoithieu { get; set; }
+        public string Trangthai { get; set; }
         public double Giatoida { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Phanloaidv { get; set; }
         public string Dvt { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string Manhom { get; set; }
+        [NotMapped]
+        public string Ttqd { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public string Soqd { get; set; }
     }
 }

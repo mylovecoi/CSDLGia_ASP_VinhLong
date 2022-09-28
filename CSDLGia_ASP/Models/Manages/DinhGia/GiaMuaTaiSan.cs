@@ -55,5 +55,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Level { get; set; }
     }
 }

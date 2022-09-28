@@ -1,0 +1,214 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị thẩm định giá
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới thông tin đơn vị thẩm định giá</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên đơn vị*</label>
+                            <input type="text" id="tendv_create" name="tendv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Địa chỉ trụ sở*</label>
+                            <input type="text" id="diachi_create" name="diachi_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Người đại diện*</label>
+                            <input type="text" id="nguoidaidien_create" name="nguoidaidien_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Chức vụ</label>
+                            <input type="text" id="chucvu_create" name="chucvu_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã thẻ thẩm định</label>
+                            <input type="text" id="sothe_create" name="sothe_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Ngày cấp</label>
+                            <input type="date" id="ngaycap_create" name="ngaycap_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị thẩm định giá
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin đơn vị thẩm định giá</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="edit_thongtin">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị thẩm định giá
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin đơn vị thẩm định giá ???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="ThamDinhGiaDv" asp-action="Delete">
+                <div class="modal-body">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Đơn vị: </label>
+                        <b id="tendv_delete" style="color: #0000FF"></b>
+                    </div>
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        if ($('#tendv_create').val().trim() == '') {
+            toastr.error("Tên đơn vị không được để trống!!!", "Lỗi!");
+        } else {
+            if ($('#diachi_create').val().trim() == '') {
+                toastr.error("Địa chỉ trụ sở không được để trống!!!", "Lỗi!");
+            } else {
+                if ($('#nguoidaidien_create').val().trim() == '') {
+                    toastr.error("Người đại diện không được để trống!!!", "Lỗi!");
+                } else {
+                    $.ajax({
+                        url: '/ThamDinhGia/Donvi/Store',
+                        type: 'POST',
+                        data: {
+                            Tendv: $('#tendv_create').val(),
+                            Diachi: $('#diachi_create').val(),
+                            Nguoidaidien: $('#nguoidaidien_create').val(),
+                            Chucvu: $('#chucvu_create').val(),
+                            Mathethamdinh: $('#sothe_create').val(),
+                            Ngaycap: $('#ngaycap_create').val(),
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                                location.reload();
+                            } else {
+                                toastr.error(data.message, "Lỗi!");
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    function getId(id, tendv) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tendv_delete").innerHTML = tendv;
+    }
+
+    function editId(id_edit) {
+        $.ajax({
+            url: '/ThamDinhGia/Donvi/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        if ($('#tendv_edit').val().trim() == '') {
+            toastr.error("Tên đơn vị không được để trống!!!", "Lỗi!");
+        } else {
+            if ($('#diachi_edit').val().trim() == '') {
+                toastr.error("Địa chỉ trụ sở không được để trống!!!", "Lỗi!");
+            } else {
+                if ($('#nguoidaidien_edit').val().trim() == '') {
+                    toastr.error("Người đại diện không được để trống!!!", "Lỗi!");
+                } else {
+                    $.ajax({
+                        url: '/ThamDinhGia/Donvi/Update',
+                        type: 'POST',
+                        data: {
+                            Tendv: $('#tendv_edit').val(),
+                            Diachi: $('#diachi_edit').val(),
+                            Nguoidaidien: $('#nguoidaidien_edit').val(),
+                            Chucvu: $('#chucvu_edit').val(),
+                            Sothe: $('#sothe_edit').val(),
+                            Ngaycap: $('#ngaycap_edit').val(),
+                            Id: $('#id_edit').val(),
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message);
+                                location.reload();
+                            } else {
+                                toastr.error(data.message, "Lỗi!");
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+</script>

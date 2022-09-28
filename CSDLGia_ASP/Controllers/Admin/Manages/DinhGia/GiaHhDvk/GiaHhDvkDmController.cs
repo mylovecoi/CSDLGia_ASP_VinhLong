@@ -65,37 +65,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Create"))
                 {
-                    var request = new GiaHhDvkDm
+                    var check = _db.GiaHhDvkDm.FirstOrDefault(t => t.Manhom == Manhom && t.Matt == Matt && t.Mahhdv == Mahhdv);
+                    if (check == null)
                     {
-                        Manhom = Manhom,
-                        Matt = Matt,
-                        Mahhdv = Manhom + "." + Mahhdv,
-                        Tenhhdv = Tenhhdv,
-                        Dacdiemkt = Dacdiemkt,
-                        Dvt = Dvt,
-                        Theodoi = "TD",
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-                    _db.GiaHhDvkDm.Add(request);
-                    _db.SaveChanges();
-
-                    var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
-
-                    if(check_dvt == null)
-                    {
-                        var dvt = new DmDvt
+                        var request = new GiaHhDvkDm
                         {
+                            Manhom = Manhom,
+                            Matt = Matt,
+                            Mahhdv = Manhom + "." + Mahhdv,
+                            Tenhhdv = Tenhhdv,
+                            Dacdiemkt = Dacdiemkt,
                             Dvt = Dvt,
+                            Theodoi = "TD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         };
-                        _db.DmDvt.Add(dvt);
+                        _db.GiaHhDvkDm.Add(request);
                         _db.SaveChanges();
-                    }
 
-                    var data = new { status = "success", message = "Thêm mới thành công!" };
-                    return Json(data);
+                        var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
+
+                        if (check_dvt == null)
+                        {
+                            var dvt = new DmDvt
+                            {
+                                Dvt = Dvt,
+                                Created_at = DateTime.Now,
+                                Updated_at = DateTime.Now,
+                            };
+                            _db.DmDvt.Add(dvt);
+                            _db.SaveChanges();
+                        }
+
+                        var data = new { status = "success", message = "Thêm mới thành công!" };
+                        return Json(data);
+                    }
+                    else
+                    {
+                        var data = new { status = "error", message = "Mã hàng hóa dịch vụ này đã tồn tại!" };
+                        return Json(data);
+                    }
                 }
                 else
                 {
@@ -125,6 +134,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Nhóm hàng hóa, dịch vụ*</label>";
@@ -170,7 +180,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         result += "<div class='col-xl-2'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>&nbsp;&nbsp;&nbsp;</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal' data-toggle='modal'><i class='la la-plus'></i></button>";
+                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_Edit' data-toggle='modal'><i class='la la-plus'></i></button>";
                         result += "</div>";
                         result += "</div>";
 
@@ -220,6 +230,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         model.Updated_at = DateTime.Now;
                         _db.GiaHhDvkDm.Update(model);
                         _db.SaveChanges();
+
+                        var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
+
+                        if (check_dvt == null)
+                        {
+                            var dvt = new DmDvt
+                            {
+                                Dvt = Dvt,
+                                Created_at = DateTime.Now,
+                                Updated_at = DateTime.Now,
+                            };
+                            _db.DmDvt.Add(dvt);
+                            _db.SaveChanges();
+                        }
 
                         var data = new { status = "success", message = "Cập nhật thành công!" };
                         return Json(data);

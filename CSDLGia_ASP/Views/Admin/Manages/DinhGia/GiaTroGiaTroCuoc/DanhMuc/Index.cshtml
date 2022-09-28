@@ -1,0 +1,371 @@
+﻿@{
+    int record_id = 1;
+        var DmDvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuocDm>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh mục<small>&nbsp;hàng hóa trợ giá trợ cước</small><br />
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.dm", "Create"))
+            {
+                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" >
+                    <i class="la la-plus">Thêm mới</i>
+                </button>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Tên hàng hóa</th>
+                    <th>Phân loại</th>
+                    <th width="8%">Đơn vị tính</th>
+                    <th>Mô tả</th>
+                    <th width="18%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+
+                            <td style="text-align: center">@item.Tenspdv</td>
+                            <td style="text-align: center">@item.Phanloai</td>
+                            <td style="text-align: center">@item.Dvt</td>
+                            <td style="text-align: center">@item.Mota</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                    <i class="icon-lg la la-edit text-warning"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hóa trợ giá trợ giá trợ cước
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên hàng hóa*</b></label>
+                            <input type="text" id="Tenspdv_create" name="Tenspdv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Mô tả*</b></label>
+                            <input type="text" id="Mota_create" name="Mota_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-5">
+                        <label class="form-control-label">Đơn vị tính</label>
+                        <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
+                            <option value="">---Select---</option>
+                            @foreach (var item in DmDvt)
+                            {
+                                <option value="@item.Dvt">@item.Dvt</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-left: 0px;">
+                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phân loại sản phẩm*</b></label>
+                            <select id="Phanloai_create" name="Phanloai_create"  class="form-control">
+                                @foreach(string item in Helpers.PlTroGiaTroCuoc()){
+                                      <option value="@item">@item</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa danh mục giá dịch vụ giáo dục đào tạo
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Dvt create Modal-->
+<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="dvt_add" class="form-control" name="dvt_add" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Dvt edit Modal-->
+<div class="modal fade" id="Dvt_edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="dvt_edit_add" class="form-control" name="dvt_edit_add" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="DvtEdit()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function Dvt() {
+        $('#Dvt_Modal').modal('hide');
+        var gt = $('#dvt_add').val();
+        $('#Dvt_create').append(new Option(gt, gt, true, true));
+        $('#Dvt_create').val(gt).trigger('change');
+    }
+
+    function DvtEdit() {
+        $('#Dvt_edit_Modal').modal('hide');
+        var gt = $('#dvt_edit_add').val();
+        $('#Dvt_edit').append(new Option(gt, gt, true, true));
+        $('#Dvt_edit').val(gt).trigger('change');
+    }
+
+    function SetCreate() {
+
+        $.ajax({
+            url: '/DanhMucTGTC/Store',
+            type: 'POST',
+            data: {
+                Tenspdv: $('#Tenspdv_create').val(),
+                Mota: $('#Mota_create').val(),
+                Dvt: $('#Dvt_create').val(),
+                PhanLoai: $('#Phanloai_create').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    location.reload();
+                    toastr.success("Thêm mới thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    $('#Create_Modal').modal("hide");
+
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+    function GetDelete() {
+        $.ajax({
+            url: '/DanhMucTGTC/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DanhMucTGTC/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    //toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+
+    function GetEdit() {
+        $.ajax({
+            url: '/DanhMucTGTC/Update',
+            type: 'POST',
+            data: {
+                Tenspdv: $('#Tenspdv_edit').val(),
+                Mota: $('#Mota_edit').val(),
+                Dvt: $('#Dvt_cedit').val(),
+                Phanloai: $('#Phanloai_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+</script>

@@ -1,0 +1,155 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var nhomhhdvk = (IEnumerable<GiaHhDvkNhom>)ViewData["Nhomhhdvk"];
+}
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Hồ sơ giá hàng hóa dịch vụ<small> chỉnh sửa</small>
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="GiaHhDvk" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_giahhdvk_update">
+            <div class="card-body">
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <input asp-for="Madv"/>
+                <input asp-for="Mahs"/>
+                <input asp-for="Matt"/>
+                <input asp-for="Madiaban"/>
+                <input asp-for="Ipf1" />
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Theo thông tư quyết định</label>
+                            <select asp-for="Matt" class="form-control" disabled="disabled">
+                            @foreach (var item in nhomhhdvk)
+                            {
+                                <!option value="@item.Matt" @((string)Model.Matt == item.Matt ? "selected" : "")>@item.Tentt</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select asp-for="Madiaban" class="form-control" disabled="disabled">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>
+                        <input hidden asp-for="Thang">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@Model.Nam</span></label>
+                        <input hidden asp-for="Nam">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số báo cáo*</label>
+                        <input type="text" asp-for="Soqd" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày áp dụng*</label>
+                        <input type="date" asp-for="Thoidiem" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định liền kề</label>
+                        <input type="text" asp-for="Soqdlk" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày báo cáo liền kề</label>
+                        <input type="date" asp-for="Thoidiemlk" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf1))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@Model.Ipf1" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/DanhSach/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaHhDvk" asp-action="Index" asp-route-Nam="@Model.Nam" asp-route-Thang="@Model.Thang"
+               asp-route-Madv="@Model.Madv" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValHhDvk()"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValHhDvk() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số báo cáo không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Ngày áp dụng không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_giahhdvk_update").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

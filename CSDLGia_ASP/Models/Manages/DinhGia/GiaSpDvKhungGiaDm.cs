@@ -12,7 +12,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
+        public string Manhom { get; set; }
         public string Maspdv { get; set; }
+        public double Giatoithieu { get; set; }
+        public double Giatoida { get; set; }
         public string Tenspdv { get; set; }
         public string Dvt { get; set; }
         public string Mota { get; set; }

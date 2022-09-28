@@ -1,0 +1,293 @@
+﻿@{
+    var mahs = ViewData["Mahs"];
+       var Phanloai = (IEnumerable<GiaPhiLePhiDm>)ViewData["Phanloai"];
+}
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin chi tiết hồ sơ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="@mahs" id="Mahs_create" />
+                <div class="row">
+                    <div class="col-xl-11">
+                        <div class="form-control-label">
+                            <label><b>Tên phân loại nhóm phí, lệ phí*</b></label>
+                            <select id="Phanloai_create" name="Phanloai_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
+
+                                @foreach (var item in Phanloai)
+                                {
+                                    <option>@item.Phanloai</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="padding-left: 0px;">
+                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Phanloai_Modal" data-toggle="modal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên phí</b></label>
+                            <input class="form-control" id="Ptcp_create" name="Ptcp_create" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phần trăm</b></label>
+                            <input type="text" id="Phantram_create" name="Phantram_create" class="form-control text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Mức thu phí - từ</b></label>
+                            <input type="text" id="Mucthutu_create" name="Mucthutu_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Mức thu phí - đến</b></label>
+                            <input type="text" id="Mucthuden_create" name="Mucthuden_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin giá
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Phân loại create Modal-->
+<div class="modal fade" id="Phanloai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin phân loại
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="pl_add" class="form-control" name="pl_add" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Phanloai()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Phân loại edit Modal-->
+<div class="modal fade" id="Phanloai_edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin phân loại
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="pl_edit_add" class="form-control" name="pl_edit_add" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="PhanloaiEdit()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function Phanloai() {
+        $('#Phanloai_Modal').modal('hide');
+        var gt = $('#pl_add').val();
+        $('#Phanloai_create').append(new Option(gt, gt, true, true));
+        $('#Phanloai_create').val(gt).trigger('change');
+    }
+
+    function PhanloaiEdit() {
+        $('#Phanloai_edit_Modal').modal('hide');
+        var gt = $('#pl_edit_add').val();
+        $('#Phanloai_edit').append(new Option(gt, gt, true, true));
+        $('#Phanloai_edit').val(gt).trigger('change');
+    }
+
+    function SetStore() {
+        $.ajax({
+            url: '/DinhGiaLePhiCt/Store',
+            type: 'POST',
+            data: {
+                Mahs: $('#Mahs_create').val(),
+                Phanloai: $('#Phanloai_create').val(),
+                Ptcp: $('#Ptcp_create').val(),
+                Phantram: $('#Phantram_create').val(),
+                Mucthutu: $('#Mucthutu_create').val(),
+                Mucthuden: $('#Mucthuden_create').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    $('#Create_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DinhGiaLePhiCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+        $.ajax({
+            url: '/DinhGiaLePhiCt/Update',
+            type: 'POST',
+            data: {
+                Phanloai: $('#Phanloai_edit').val(),
+                Ptcp: $('#Ptcp_edit').val(),
+                Phantram: $('#Phantram_edit').val(),
+                Mucthutu: $('#Mucthutu_edit').val(),
+                Mucthuden: $('#Mucthuden_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/DinhGiaLePhiCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

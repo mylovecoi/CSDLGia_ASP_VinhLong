@@ -159,6 +159,37 @@
     </div>
 </div>
 
+<!--Edit Dvt Modal-->
+<div class="modal fade" id="Dvt_Modal_Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị tính
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới đơn vị tính</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị tính*</label>
+                            <input class="form-control" id="dvt_add_edit" name="dvt_add_edit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="DvtEdit()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function Store() {
         if ($('#manhom_create').val().trim() == '') {
@@ -264,6 +295,17 @@
             var gt = $('#dvt_add').val();
             $('#dvt_create').append(new Option(gt, gt, true, true));
             $('#dvt_create').val(gt).trigger('change');
+        }
+    }
+
+    function DvtEdit() {
+        if ($('#dvt_add_edit').val().trim() == '') {
+            toastr.error("Đơn vị tính không được để trống!!!", "Lỗi!");
+        } else {
+            $('#Dvt_Modal_Edit').modal('hide');
+            var gt = $('#dvt_add_edit').val();
+            $('#dvt_edit').append(new Option(gt, gt, true, true));
+            $('#dvt_edit').val(gt).trigger('change');
         }
     }
 </script>

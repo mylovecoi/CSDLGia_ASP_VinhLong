@@ -1,0 +1,165 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            TableManaged.init();
+        });
+        $(function() {
+            $('#Nam, #Mota').change(function() {
+                var current_path_url = '/GiaTrungThauDat/Search?';
+                var nam = '&Nam=' + $('#Nam').val();
+                var mota = '&Mota=' + $('#Mota').val();
+                var url = current_path_url + nam + mota;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Tìm kiếm thông tin giá<small>&nbsp; trúng thầu quyền sd đất</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <form asp-controller="GiaTrungThauDat" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_search">
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold; color:blue">Đơn vị</label>
+                        <select class="form-control" id="dv" name="dv">
+                            <option value="All">--Tất cả các đơn vị--</option>
+                            @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                }
+
+                                @foreach (var item in company)
+                                {
+
+                                    <!option value="@item.MaDv">@item.TenDv</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                    <br />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Tên dự án</label>
+                    <input type="text" class="form-control" name="ten" id="ten" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập từ</label>
+                    <input type="date" class="form-control" name="beginTime" id="beginTime" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập đến</label>
+                    <input type="date" class="form-control" name="endTime" id="endTime" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá khởi điểm - từ</label>
+                    <input type="number" class="form-control" name="Giakhoidiem_tu" id="Giakhoidiem_tu" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá khởi điểm - đến</label>
+                    <input type="number" class="form-control" name="Giakhoidiem_den" id="Giakhoidiem_den" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá đấu giá từ</label>
+                    <input type="number" class="form-control" name="Giadaugia_tu" id="Giadaugia_tu" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá đấu giá đến</label>
+                    <input type="number" class="form-control" name="Giadaugia_den" id="Giadaugia_den" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer" style="text-align:center">
+        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+        <button type="button" onclick="valedate()" class="btn btn-primary mr-2"><i class="la la-check"></i>Tìm</button>
+    </div>
+</form>
+
+
+<script>
+    function valedate() {
+
+        if ($('#beginTime').val().trim() != "" && $('#endTime').val().trim() != "") {
+            if ($('#beginTime').val().trim() >= $('#endTime').val().trim()) {
+                toastr.error("Thời gian từ không được nhỏ hơn thời gian đến!", "Lỗi!!!")
+            }
+            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#Giakhoidiem_tu').val().trim() <= $('#Giakhoidiem_den').val().trim() && $('#Giadaugia_tu').val().trim() <= $('#Giadaugia_den').val().trim()) {
+                document.getElementById("frm_search").submit();
+            }
+        }
+        else if ($('#Giakhoidiem_tu').val().trim() != "" && $('#Giakhoidiem_den').val().trim() != "") {
+            if ($('#Giakhoidiem_tu').val().trim() >= $('#Giakhoidiem_den').val().trim()) {
+                toastr.error("Giá khưởi điểm từ không được nhỏ hơn giá khưởi điểm đến!", "Lỗi!!!")
+            }
+            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#Giakhoidiem_tu').val().trim() <= $('#Giakhoidiem_den').val().trim() && $('#Giadaugia_tu').val().trim() <= $('#Giadaugia_den').val().trim()) {
+                document.getElementById("frm_search").submit();
+            }
+        }
+        else if ($('#Giadaugia_tu').val().trim() != "" && $('#Giadaugia_den').val().trim() != "") {
+            if ($('#Giadaugia_tu').val().trim() >= $('#Giadaugia_den').val().trim()) {
+                toastr.error("Giá đấu giá từ không được nhỏ hơn giá đấu giá đến!", "Lỗi!!!")
+            }
+            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#Giakhoidiem_tu').val().trim() <= $('#Giakhoidiem_den').val().trim() && $('#Giadaugia_tu').val().trim() <= $('#Giadaugia_den').val().trim()) {
+                document.getElementById("frm_search").submit();
+            }
+        }
+        else {
+            document.getElementById("frm_search").submit();
+        }
+
+    }
+
+</script>

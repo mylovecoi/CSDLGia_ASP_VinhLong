@@ -78,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam)).ToList();
+                                model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam) && t.Madv_h == Madv).ToList();
                             }
                             else
                             {
@@ -99,6 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Trangthai = kk.Trangthai_h,
                                               Soqd = kk.Soqd,
                                               Level = getdonvi.Level,
+                                              Ipf1 = kk.Ipf1,
                                           });
 
                         var model_join = (from kkj in model_new
@@ -116,6 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
+                                              Ipf1 = kkj.Ipf1,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -145,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam)).ToList();
+                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam) && t.Madv_t == Madv).ToList();
                             }
                             else
                             {
@@ -166,6 +168,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                              Trangthai = kk.Trangthai_t,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
+                                             Ipf1 = kk.Ipf1,
                                          });
 
                         var model_join = (from kkj in model_new
@@ -183,6 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
+                                              Ipf1 = kkj.Ipf1,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -212,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam)).ToList();
+                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam) && t.Madv_ad == Madv).ToList();
                             }
                             else
                             {
@@ -233,6 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Trangthai = kk.Trangthai_ad,
                                               Soqd = kk.Soqd,
                                               Level = getdonvi.Level,
+                                              Ipf1 = kk.Ipf1,
                                           });
 
                         var model_join = (from kkj in model_new
@@ -250,6 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
+                                              Ipf1 = kkj.Ipf1,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)

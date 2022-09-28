@@ -1,0 +1,145 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var nhomhhdvk = (IEnumerable<GiaHhDvkNhom>)ViewData["Nhomhhdvk"];
+}
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Hồ sơ giá hàng hóa dịch vụ<small> thêm mới</small>
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="GiaHhDvk" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giahhdvk_store">
+            <div class="card-body">
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <input asp-for="Madv" value="@ViewData["MadvBc"]">
+                <input asp-for="Mahs" value="@ViewData["Mahs"]">
+                <input asp-for="Matt" value="@ViewData["MattBc"]">
+                <input asp-for="Madiaban" value="@ViewData["MadiabanBc"]">
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Theo thông tư quyết định</label>
+                            <select asp-for="Matt" class="form-control" disabled="disabled">
+                            @foreach (var item in nhomhhdvk)
+                            {
+                                <!option value="@item.Matt" @((string)ViewData["MattBc"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select asp-for="Madiaban" class="form-control" disabled="disabled">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)ViewData["MadiabanBc"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@ViewData["ThangBc"]</span></label>
+                        <input hidden asp-for="Thang" value="@ViewData["ThangBc"]">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@ViewData["NamBc"]</span></label>
+                        <input hidden asp-for="Nam" value="@ViewData["NamBc"]">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số báo cáo*</label>
+                        <input type="text" asp-for="Soqd" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày áp dụng*</label>
+                        <input type="date" id="Thoidiem" name="Thoidiem" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định liền kề</label>
+                        <input type="text" asp-for="Soqdlk" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày báo cáo liền kề</label>
+                        <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/DanhSach/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaHhDvk" asp-action="Index" asp-route-Nam="@ViewData["NamBc"]" asp-route-Thang="@ViewData["ThangBc"]"
+               asp-route-Madv="@ViewData["MadvBc"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValHhDvk()"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValHhDvk() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số báo cáo không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Ngày áp dụng không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_giahhdvk_store").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -1,0 +1,123 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi;
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Chỉnh sửa hồ sơ giá<small>&nbsp;lệ phí trước bạ</small><br />
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="GiaLephi" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
+            <div class="card-body">
+                <input asp-for="Madv" />
+                <input asp-for="Mahs" />
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Số quyết định</label>
+                            <input type="text" class="form-control" asp-for="Soqd" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Ngày áp dụng*</label>
+                            <input type="date" class="form-control" asp-for="Thoidiem" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <textarea type="text" class="form-control" asp-for="Mota" ></textarea> 
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Ghi chú</label>
+                            <textarea type="text" class="form-control" asp-for="Ghichu" ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Detail.cshtml")
+            </div>
+            <div class="card-footer" style="text-align:center">
+                <a asp-controller="GiaLePhi" asp-action="Index" asp-route-Madv="@Model.Mahs" class="btn btn-danger">
+                    <i class="la la-reply"></i>Quay lại
+                </a>&ensp;
+                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+                <button type="button" class="btn btn-primary mr-2" onclick="Validatelp()"><i class="la la-check"></i>Thêm mới</button>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <script>
+        function Validatelp() {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Ngày quyết định không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_r_store").submit();
+            }
+
+        }
+    </script>
+    @section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

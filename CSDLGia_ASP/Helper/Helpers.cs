@@ -99,13 +99,13 @@ namespace CSDLGia_ASP.Helper
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", Name = "Dịch vụ lưu trú kê khai giá" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakkxd", Name = "Dịch vụ lưu trú xét duyệt" });
 
-            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "Sách giáo khoa" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakk", Name = "" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakkxd", Name = "" });
-            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol", Name = "Etanol" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakk", Name = "" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd", Name = "" });
-            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn", Name = "" });
+            list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn", Name = "Thực phẩm chức năng" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakk", Name = "" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd", Name = "" });
             list.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan", Name = "" });
@@ -192,6 +192,57 @@ namespace CSDLGia_ASP.Helper
                 "csdlmucgiahhdv.dinhgia.nuocsh.thongtin",
                 "csdlmucgiahhdv.dinhgia.nuocsh.xetduyet",
 
+                "csdlmucgiahhdv.dinhgia.giaoducdaotao",
+                "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc",
+                "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin",
+                "csdlmucgiahhdv.dinhgia.giaoducdaotao.xetduyet",
+                "csdlmucgiahhdv.dinhgia.giaoducdaotao.timkiem",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh.nhom",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet",
+                "csdlmucgiahhdv.dinhgia.khamchuabenh.timkiem",
+                "csdlmucgiahhdv.dinhgia.trogiatrocuoc",
+                "csdlmucgiahhdv.dinhgia.trogiatrocuoc.danhmuc",
+                "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin",
+                "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet",
+                "csdlmucgiahhdv.dinhgia.trogiatrocuoc.timkiem",
+                "csdlmucgiahhdv.dinhgia.dichvucongich",
+                "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc",
+                "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin",
+                "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet",
+                "csdlmucgiahhdv.dinhgia.dichvucongich.timkiem",
+                "csdlmucgiahhdv.dinhgia.thuetaisancong",
+                "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc",
+                "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin",
+                "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet",
+                "csdlmucgiahhdv.dinhgia.thuetaisancong.timkiem",
+                // Tài sản công
+                "csdlmucgiahhdv.taisancong",
+                "csdlmucgiahhdv.taisancong.thongtin",
+                "csdlmucgiahhdv.taisancong.xetduyet",
+                "csdlmucgiahhdv.taisancong.timkiem",
+                //trúng thầu mua hàng hóa dịch vụ
+                "csdlmucgiahhdv.muataisan",
+                "csdlmucgiahhdv.muataisan.thongtin",
+                "csdlmucgiahhdv.muataisan.xetduyet",
+                "csdlmucgiahhdv.muataisan.timkiem",
+                //trung thầu quyền sd đất
+                "csdlmucgiahhdv.daugiadat",
+                "csdlmucgiahhdv.daugiadat.thongtin",
+                "csdlmucgiahhdv.daugiadat.xetduyet",
+                "csdlmucgiahhdv.daugiadat.timkiem",
+                //giá lệ phí trước bạ
+                 "csdlmucgiahhdv.lephi",
+                "csdlmucgiahhdv.lephi.danhmuc",
+                "csdlmucgiahhdv.lephi.thongtin",
+                "csdlmucgiahhdv.lephi.xetduyet",
+                "csdlmucgiahhdv.lephi.timkiem",
+
+
+
+
                 //chức năng bình ổn giá
                 "csdlmucgiahhdv.bog",
                 "csdlmucgiahhdv.bog.ttdn",
@@ -201,6 +252,9 @@ namespace CSDLGia_ASP.Helper
                 "csdlmucgiahhdv.bog.xetduyet",
                 "csdlmucgiahhdv.bog.timkiem",
                 "csdlmucgiahhdv.bog.baocao",
+
+
+
 
                 //chức năng kê khai giá
                 "csdlmucgiahhdv.kknygia",
@@ -481,6 +535,20 @@ namespace CSDLGia_ASP.Helper
                 return str;
             }
         }
+        
+        public static string ConvertDateToStrAjax(DateTime date)
+        {
+
+            string str = date.Date.ToString("yyyy-MM-dd");
+            if (str == "0001-01-01")
+            {
+                return "";
+            }
+            else
+            {
+                return str;
+            }
+        }
 
         public static string ConvertDateTimeToStr(DateTime datetime)
         {
@@ -726,6 +794,78 @@ namespace CSDLGia_ASP.Helper
             return new_str;
         }
 
+        public static string ConvertIntToRoman(int roman)
+        {
+            string str = "";
+            switch (roman)
+            {
+                case 1:
+                    str = "I";
+                    break;
+                case 2:
+                    str = "II";
+                    break;
+                case 3:
+                    str = "III";
+                    break;
+                case 4:
+                    str = "IV";
+                    break;
+                case 5:
+                    str = "V";
+                    break;
+                case 6:
+                    str = "VI";
+                    break;
+                case 7:
+                    str = "VII";
+                    break;
+                case 8:
+                    str = "VIII";
+                    break;
+                case 9:
+                    str = "IX";
+                    break;
+                case 10:
+                    str = "X";
+                    break;
+                case 11:
+                    str = "XI";
+                    break;
+                case 12:
+                    str = "XII";
+                    break;
+                case 13:
+                    str = "XIII";
+                    break;
+                case 14:
+                    str = "XIV";
+                    break;
+                case 15:
+                    str = "XV";
+                    break;
+                case 16:
+                    str = "XVI";
+                    break;
+                case 17:
+                    str = "XVII";
+                    break;
+                case 18:
+                    str = "XVIII";
+                    break;
+                case 19:
+                    str = "XiX";
+                    break;
+                case 20:
+                    str = "XX";
+                    break;
+                default:
+                    str = "";
+                    break;
+            }
+            return str;
+        }
+
         public static string[] GetListsDays()
         {
             string[] days = new string[]
@@ -891,6 +1031,7 @@ namespace CSDLGia_ASP.Helper
             catch (NullReferenceException) { return false; }
             return bKQ;
         }
+
         public static string[] DviTinhRung()
         {
             string[] dvi = new string[]
@@ -919,5 +1060,58 @@ namespace CSDLGia_ASP.Helper
            };
             return dvi;
         }
+
+        public static string[] PlTroGiaTroCuoc()
+        {
+            string[] phanloai = new string[]
+           {
+            "Chi từ Nhân sách địa phương và trung ương",
+            "Mức giá hoặc khung giá bán lẻ",
+            "Cung ứng hàng hóa, dịch vụ thiết yếu phục vụ đồng bào miền núi, vùng sâu, xa và hải đảo",
+            "Trợ giá, trợ cước khác",
+           };
+            return phanloai;
+        }
+
+        public static string[] PlDvCi()
+        {
+            string[] phanloai = new string[]
+           {
+            "Sản phẩm",
+            "Dịch vụ công ích",
+            "Dịch vụ sự công nghiệp",
+            "hàng hóa, dịch vụ",
+            "Sản phẩm, dịch vụ khác"
+           };
+            return phanloai;
+        }
+
+        public static string[] HientrangThueTsc()
+        {
+            string[] phanloai = new string[]
+           {
+            "Đang cho thuê",
+            "Đang sử dụng",
+            "Đã bán",
+            "Chưa sử dụng",
+           };
+            return phanloai;
+        }
+
+        public static string[] PlDauGiaDat()
+        {
+            string[] phanloai = new string[]
+           {
+            "Theo dự án",
+            "Theo lô",
+            "Đất ở",
+            "Đất công ích",
+            "Đất khác"
+           };
+            return phanloai;
+        }
+
+
+
     }
 }

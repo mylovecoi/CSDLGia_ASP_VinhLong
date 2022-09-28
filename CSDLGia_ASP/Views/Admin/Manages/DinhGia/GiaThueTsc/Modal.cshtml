@@ -1,0 +1,310 @@
+﻿@{
+    var mahs = ViewData["Mahs"];
+    var GiaThueTaiSanCongDm = (IEnumerable<GiaThueTaiSanCongDm>)ViewData["GiaThueTaiSanCongDm"];
+}
+@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueTsc;
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin chi tiết hồ sơ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="@mahs" id="Mahs_create" />
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên sản phẩm dịch vụ</b></label>
+                            <select class="form-control" id="Mataisan_create" name="Mataisan_create">
+                                @foreach (var item in GiaThueTaiSanCongDm)
+                                {
+                                    <option value="@item.Mataisan">@item.Tentaisan</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị thuê</b></label>
+                            <input type="text" id="Dvthue_create" name="Dvthue_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Địa chỉ</b></label>
+                            <input type="text" id="Diachi_create" name="Diachi_create" class="form-control" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Số quyết định phê duyệt</b></label>
+                            <input type="text" id="Soqdpd_create" name="Soqdpd_create" class="form-control " />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời điểm phê duyệt</b></label>
+                            <input type="date" asp-for="Thoigianpd_create" class="form-control " />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Số quyết định đấu giá</b></label>
+                            <input type="text" id="Soqddg_create" name="Soqddg_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời điểm đấu giá</b></label>
+                            <input type="date" asp-for="Thoigiandg_create" class="form-control " />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Hợp đồng số</b></label>
+                            <input type="text" id="Hdthue_create" name="Hdthue_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời hạn thuê</b></label>
+                            <input type="text" id="Ththue_create" name="Ththue_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b> Thuê từ ngày</b></label>
+                            <input type="date" asp-for="Thuetungay_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thuê đến ngày</b></label>
+                            <input type="date" asp-for="Thuedenngay_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính</b></label>
+                            <input type="text" id="Dvt_create" name="Dvt_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn giá thuê</b></label>
+                            <input type="text" id="Dongiathue_create" name="Dongia_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thành tiền</b></label>
+                            <input type="text" id="Sotienthuenam_create" name="Sotienthuenam_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin giá thuê tài sản công
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetStore() {
+        var tu = $('#Thuetungay_create').val().trim();
+        var den = $('#Thuedenngay_create').val().trim();
+        if (tu >= den) {
+            toastr.error("ngày bắt đầu phải nhỏ hơn ngày kết thúc!!!", "Lỗi!");
+
+        }
+        else {
+            $.ajax({
+                url: '/DinhGiaThueTscCt/Store',
+                type: 'POST',
+                data: {
+                    Mahs: $('#Mahs_create').val(),
+                    Mataisan: $('#Mataisan_create').val(),
+                    Dvthue: $('#Dvthue_create').val(),
+                    Diachi: $('#Diachi_create').val(),
+                    Soqdpd: $('#Soqdpd_create').val(),
+                    Thoigianpd: $('#Thoigianpd_create').val(),
+                    Soqddg: $('#Soqddg_create').val(),
+                    Thoigiandg: $('#Thoigiandg_create').val(),
+                    Hdthue: $('#Hdthue_create').val(),
+                    Ththue: $('#Ththue_create').val(),
+                    Thuetungay: $('#Thuetungay_create').val(),
+                    Thuedenngay: $('#Thuedenngay_create').val(),
+                    Dvt: $('#Dvt_create').val(),
+                    Dongiathue: $('#Dongiathue_create').val(),
+                    Sotienthuenam: $('#Sotienthuenam_create').val(),
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                        $('#frm_data').replaceWith(data.message);
+                        $(document).ready(function() {
+                            TableManaged4.init();
+                        });
+                        $('#Create_Modal').modal("hide");
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DinhGiaThueTscCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+        var tu = $('#Thuetungay_edit').val().trim();
+        var den = $('#Thuedenngay_edit').val().trim();
+        if (tu >= den) {
+            toastr.error("ngày bắt đầu phải nhỏ hơn ngày kết thúc!!!", "Lỗi!");
+
+        }
+        else {
+            $.ajax({
+                url: '/DinhGiaThueTscCt/Update',
+                type: 'POST',
+                data: {
+
+                    Mataisan: $('#Mataisan_edit').val(),
+                    Dvthue: $('#Dvthue_edit').val(),
+                    Diachi: $('#Diachi_edit').val(),
+                    Soqdpd: $('#Soqdpd_edit').val(),
+                    Thoigianpd: $('#Thoigianpd_edit').val(),
+                    Soqddg: $('#Soqddg_edit').val(),
+                    Thoigiandg: $('#Thoigiandg_edit').val(),
+                    Hdthue: $('#Hdthue_edit').val(),
+                    Ththue: $('#Ththue_edit').val(),
+                    Thuetungay: $('#Thuetungay_edit').val(),
+                    Thuedenngay: $('#Thuedenngay_edit').val(),
+                    Dvt: $('#Dvt_edit').val(),
+                    Dongiathue: $('#Dongiathue_edit').val(),
+                    Sotienthuenam: $('#Sotienthuenam_edit').val(),
+                    Id: $('#id_edit').val()
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                        $('#frm_data').replaceWith(data.message);
+                        $(document).ready(function() {
+                            TableManaged4.init();
+                        });
+                        $('#Edit_Modal').modal("hide");
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/DinhGiaThueTscCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function() {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

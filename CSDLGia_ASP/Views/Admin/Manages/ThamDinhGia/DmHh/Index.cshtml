@@ -1,0 +1,252 @@
+﻿@{
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.DmNhomHh>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh mục nhóm hàng hóa
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.hh", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th>Mã nhóm</th>
+                    <th>Tên nhóm</th>
+                    <th width="20%">Theo dõi</th>
+                    <th width="15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td>@item.Manhom</td>
+                        <td class="active">@item.Tennhom</td>
+                        <td style="text-align: center">
+                            @if (item.Theodoi == "TD")
+                            {
+                                <span class="label font-weight-bold label-lg  label-primary label-inline">Theo dõi</span>
+                            }
+                            else
+                            {
+                                <span class="label font-weight-bold label-lg label-danger label-inline">Dừng theo dõi</span>
+                            }
+                        </td>
+                        <td>
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                            }
+
+                            <a asp-controller="ThamDinhGiaDmHhCt" asp-action="Index" asp-route-Manhom="@item.Manhom"
+                           class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+
+                            <a asp-controller="ThamDinhGiaDmHh" asp-action="Excel" asp-route-Manhom="@item.Manhom"
+                           class="btn btn-sm btn-clean btn-icon" title="Xuất dữ liệu" target="_blank">
+                                <i class="icon-lg la la-cloud-download text-warning"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thêm mới nhóm hàng hóa
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã nhóm*</label>
+                            <input type="text" name="manhom_create" id="manhom_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên nhóm*</label>
+                            <input type="text" name="tennhom_create" id="tennhom_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Chỉnh sửa nhóm hàng hóa
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()" id="btn_update">Cập nhật</button>
+                <div id="loading_update" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        document.getElementById("btn_store").style.display = "none";
+        document.getElementById("loading_store").style.display = "block";
+        if ($('#manhom_create').val().trim() != '') {
+            if ($('#tennhom_create').val().trim() != '') {
+                $.ajax({
+                    url: '/ThamDinhGia/DanhMuc/Store',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_create').val(),
+                        Tennhom: $('#tennhom_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_store").style.display = "block";
+                        document.getElementById("loading_store").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nhóm hàng hóa không được để trống", "Lỗi!");
+                document.getElementById("btn_store").style.display = "block";
+                document.getElementById("loading_store").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+            document.getElementById("btn_store").style.display = "block";
+            document.getElementById("loading_store").style.display = "none";
+        }
+    }
+
+    function Update() {
+        document.getElementById("btn_update").style.display = "none";
+        document.getElementById("loading_update").style.display = "block";
+        if ($('#manhom_edit').val().trim() != '') {
+            if ($('#tennhom_edit').val().trim() != '') {
+                $.ajax({
+                    url: '/ThamDinhGia/DanhMuc/Update',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_edit').val(),
+                        Tennhom: $('#tennhom_edit').val(),
+                        Id: $('#id_edit').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thành công!!!", "Thành công!");
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_update").style.display = "block";
+                        document.getElementById("loading_update").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên nhóm hàng hóa không được để trống", "Lỗi!");
+                document.getElementById("btn_update").style.display = "block";
+                document.getElementById("loading_update").style.display = "none";
+            }
+        } else {
+            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+            document.getElementById("btn_update").style.display = "block";
+            document.getElementById("loading_update").style.display = "none";
+        }
+    }
+
+    function editId(id) {
+        $.ajax({
+            url: '/ThamDinhGia/DanhMuc/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

@@ -19,11 +19,13 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Tendb { get; set; }
         public string Email { get; set; }
         public string Fax { get; set; }
+        public string Phanloaidv { get; set; }
         
         public List<GiaNuocShCt> GiaNuocShCt { get; set; }
         public List<GiaDatPhanLoaiCt> GiaDatPhanLoaiCt { get; set; }
         public List<GiaRungCt> GiaRungCt { get; set; }
         public List<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
         public List<GiaThueMuaNhaXhCt> GiaThueMuaNhaXhCt { get; set; }
+        public List<GiaSpDvCuTheCt> GiaSpDvCuTheCt { get; set; }
     }
 }

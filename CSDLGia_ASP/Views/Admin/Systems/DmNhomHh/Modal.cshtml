@@ -85,8 +85,8 @@
     function Store() {
         document.getElementById("btn_store").style.display = "none";
         document.getElementById("loading_store").style.display = "block";
-        if ($('#manhom_create').val() != '') {
-            if ($('#tennhom_create').val() != '') {
+        if ($('#manhom_create').val().trim() != '') {
+            if ($('#tennhom_create').val().trim() != '') {
                 $.ajax({
                     url: '/DmNhomHh/Store',
                     type: 'POST',
@@ -123,8 +123,8 @@
     function Update() {
         document.getElementById("btn_update").style.display = "none";
         document.getElementById("loading_update").style.display = "block";
-        if ($('#manhom_edit').val() != '') {
-            if ($('#tennhom_edit').val() != '') {
+        if ($('#manhom_edit').val().trim() != '') {
+            if ($('#tennhom_edit').val().trim() != '') {
                 $.ajax({
                     url: '/DmNganhNghe/Update',
                     type: 'POST',

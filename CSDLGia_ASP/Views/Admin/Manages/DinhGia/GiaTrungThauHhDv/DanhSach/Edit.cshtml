@@ -1,0 +1,129 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan;
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DmNhomHh = (IEnumerable<DmNhomHh>)ViewData["DmNhomHh"];
+}
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu hàng hóa dịch vụ</small><br />
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="GiaTrungThauHhdv" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
+            <div class="card-body">
+                <input asp-for="Madv" />
+                <input asp-for="Mahs" />
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label>Dịa bàn</label>
+                            <select class="form-control" asp-for="Madiaban">
+                                @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Nhóm hàng hóa dịch vụ</label>
+                        <select class="form-control" asp-for="Manhom">
+                            @foreach (var item in DmNhomHh)
+                            {
+                                <!option value="@item.Manhom" @(item.Manhom == Model.Manhom ? "selected" : "")>@item.Tennhom</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
+                        <input type="text" class="form-control" asp-for="Soqd" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Ngày quyết định</label>
+                        <input type="date" class="form-control" asp-for="Ngayqd" />
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="form-group">
+                        <label>Thôn tin quyết định</label>
+                        <input type="text" class="form-control" asp-for="Thongtinqd" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Tên nhà thầu</label>
+                        <input type="text" class="form-control" asp-for="Tennhathau" />
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <input type="text" class="form-control" asp-for="Ghichu" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label class="control-label">File đính kèm</label>
+                    <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaTrungThauHhdv" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="Validatemts()"><i class="la la-check"></i>Lưu lại</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function Validatemts() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Tennhathau').val().trim() == '') {
+                toastr.error("Tên nhà thầu không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_r_store").submit();
+            }
+        }
+    }
+</script>

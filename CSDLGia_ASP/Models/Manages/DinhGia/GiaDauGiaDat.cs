@@ -56,5 +56,14 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Phanloai { get; set; }
+        [NotMapped]
+        public string Level { get; set; }
+        [NotMapped]
+        public double Giakhoidiem { get; set; }
+        [NotMapped]
+        public double Giadaugia { get; set; }
+        [NotMapped]
+        public List<GiaDauGiaDatCt> GiaDauGiaDatCt { get; set; }
+
     }
 }

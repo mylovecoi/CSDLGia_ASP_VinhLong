@@ -1,0 +1,181 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat;
+@{
+    var DsDonVi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    int record_id = 1;
+}
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function() {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu quyền sd đất</small><br />
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="GiaTrungThauDat" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
+            <div class="card-body">
+                @*    <input id="Madv" name="Madv" value="@ViewData["Madv"]" />*@
+                <input asp-for="Mahs" />
+                @* <input id="Madiaban" name="Madiaban" value="@ViewData["Madb"]" />*@
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Dịa bàn</label>
+                            <select class="form-control" id="Madv" name="Madv" disabled>
+                                @foreach (var item in DsDonVi)
+                            {
+                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "") >@item.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Xã/phường</label>
+                        <select class="form-control" id="Maxp" name="Maxp" disabled>
+                            @foreach (var item in DsXaPhuong)
+                            {
+                                <!option value="@item.Maxp" @((string)ViewData["Maxp"] == item.Maxp ? "selected" : "")>@item.Tenxp</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <label>Tên dự án*</label>
+                    <input type="text" class="form-control" asp-for="Tenduan" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định phương án đấu giá*</label>
+                        <input type="text" class="form-control" asp-for="Soqdpagia" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định đấu giá*</label>
+                        <input type="text" class="form-control" asp-for="Soqddaugia" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định phê duyệt giá khởi điểm*</label>
+                        <input type="text" class="form-control" asp-for="Soqdgiakhoidiem" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định công nhận kết quả trúng đấu giá*</label>
+                        <input type="text" class="form-control" asp-for="Soqdkqdaugia" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Phân loại*</label>
+                        <select class="form-control" asp-for="Phanloai">
+                            @foreach (var item in Helpers.PlDauGiaDat())
+                            {
+                                <!option value="@item" @(item == (string)ViewData["Maxp"] ? "selcted" : "")>@item</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label class="control-label">File đính kèm</label>
+                    <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <label>Ghi chú</label>
+                    <input type="text" class="form-control" asp-for="Thongtin" />
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+    <!--end::Form-->
+</div>
+
+<div class="card-body" id="frm_data">
+    <table class="table table-striped table-bordered table-hover" id="datatable_4">
+        <thead>
+            <tr style="text-align:center">
+                <th>STT</th>
+                <th>Số lô</th>
+                <th>Số thửa</th>
+                <th>Tờ bản đồ</th>
+                <th>Mô tả</th>
+                <th>Diện tích</th>
+                <th>Dvt</th>
+                <th>Gia khởi <br /> điểm</th>
+                <th>Gia đấu <br /> giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @if (Model.GiaDauGiaDatCt != null)
+                {
+                    @foreach (var item in Model.GiaDauGiaDatCt)
+                    {
+                        <tr>
+                            <td style="text-align:center">@(record_id++)</td>
+                            <td style="text-align:center">@item.Solo</td>
+                            <td style="text-align:center">@item.Sothua</td>
+                            <td style="text-align:center">@item.Tobanbo</td>
+                            <td style="text-align:center">@item.Mota</td>
+                            <td style="text-align:center">@item.Dientich</td>
+                            <td style="text-align:center">@item.Dvt</td>
+                            <td style="text-align:center">@item.Giakhoidiem</td>
+                            <td style="text-align:center">@item.Giadaugia</td>
+
+
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+    <!--end: Datatable-->
+</div>
+

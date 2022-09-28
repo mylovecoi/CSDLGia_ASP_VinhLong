@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record = 1;
+    int record_ct = 1;
+    var nhomhh = (IEnumerable<DmNhomHh>)ViewData["Nhomhh"];
+}
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
+
+<p style="text-align: center;font-weight: bold">PHỤ LỤC SỐ 1</p>
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <span style="text-transform: uppercase"></span><br>
+            <span style="text-transform: uppercase;font-weight: bold"></span><br>
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: @Model.Soqd</td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày..@Model.Thoidiem.Day..tháng..@Model.Thoidiem.Month..năm..@Model.Thoidiem.Year..</i></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
+    BẢNG GIÁ THỊ TRƯỜNG HÀNG HÓA, DỊCH VỤ THÁNG @Model.Thang NĂM @Model.Nam
+</p>
+<p style="text-align: center; font-size: 16px; font-style:italic">
+    (Ban hành kèm theo Thông tư số 116/2018/TT-BTC ngày 28/11/2018 của Bộ Tài chính quy định chế độ báo cáo giá thị trường)
+</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Mã<br> hàng hóa</th>
+            <th style="text-align: center">Tên hàng hóa dịch vụ</th>
+            <th style="text-align: center" width="20%">Đặc điểm kinh tế, <br>kỹ thuật, quy cách</th>
+            <th style="text-align: center">Đơn <br>vị<br> tính</th>
+            <th style="text-align: center">Loại giá</th>
+            <th style="text-align: center">Giá kỳ <br>trước</th>
+            <th style="text-align: center">Giá kỳ <br>này</th>
+            <th style="text-align: center">Mức tăng<br>(giảm)</th>
+            <th style="text-align: center">Tỷ lệ<br>tăng<br>(giảm)<br>(%)</th>
+            <th style="text-align: center">Nguồn thông tin</th>
+            <th style="text-align: center" width="5%">Ghi chú</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">1</th>
+            <th style="text-align: center">2</th>
+            <th style="text-align: center">3</th>
+            <th style="text-align: center">4</th>
+            <th style="text-align: center">5</th>
+            <th style="text-align: center">6</th>
+            <th style="text-align: center">7</th>
+            <th style="text-align: center">8</th>
+            <th style="text-align: center">9=8-7</th>
+            <th style="text-align: center">10=9/7</th>
+            <th style="text-align: center">11</th>
+            <th style="text-align: center">12</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nhom in nhomhh)
+        {
+            <tr style="font-weight: bold;">
+                <td>@(Helpers.ConvertIntToRoman(record++))</td>
+                <td colspan="11">@nhom.Tennhom</td>
+            </tr>
+            @if (Model.GiaHhDvkCt.Count() > 0)
+            {
+                @foreach (var ct in Model.GiaHhDvkCt.Where(t=>t.Manhom == nhom.Manhom))
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_ct++)</td>
+                        <td style="text-align: center">@ct.Mahhdv</td>
+                        <td>@ct.Tenhhdv</td>
+                        <td>@ct.Dacdiemkt</td>
+                        <td style="text-align: center">@ct.Dvt</td>
+                        <td style="text-align: left">@ct.Loaigia</td>
+                        <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gialk)</td>
+                        <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gia)</td>
+                        <td style="text-align: right;font-weight: bold">@(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(ct.Gia - ct.Gialk))</td>
+                        <td style="text-align: right;font-weight: bold">
+                            @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr((ct.Gia - ct.Gialk) * 100 / ct.Gialk))
+                        </td>
+                        <td>@ct.Nguontt</td>
+                        <td>@ct.Ghichu</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
+    <tr>
+        <td width="45%" style="text-align: left">
+            <br /><br /><br /><br />
+            <span style="font-style:italic; font-weight: bold">Nơi nhận</span><br />
+            <span>- UBND tỉnh;</span><br />
+            <span>- Bộ tài chính;</span><br />
+            <span>- Lưu: VT, QLGCS.</span>
+        </td>
+        <td width="55%" style="text-align: center">
+            <span style="font-weight: bold">
+                THỦ TRƯỞNG ĐƠN VỊ
+            </span><br />
+            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
+        </td>
+    </tr>
+    <tr style="text-align: center; height:100px">
+        <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+        <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+    </tr>
+</table>

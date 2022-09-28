@@ -62,5 +62,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ipf3 { get; set; }
         public string Ipf4 { get; set; }
         public string Ipf5 { get; set; }
-    }
+        [NotMapped]
+        public string Level { get; set; }
+        [NotMapped]
+        public List<GiaTaiSanCongCt> GiaTaiSanCongCt { get; set; }
+}
 }

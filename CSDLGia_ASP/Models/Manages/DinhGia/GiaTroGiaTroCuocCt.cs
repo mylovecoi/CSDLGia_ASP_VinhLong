@@ -15,7 +15,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Mahs { get; set; }
         public string Maspdv { get; set; }
         public string Mota { get; set; }
-        public string Dongia { get; set; }
+        public double Dongia { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }

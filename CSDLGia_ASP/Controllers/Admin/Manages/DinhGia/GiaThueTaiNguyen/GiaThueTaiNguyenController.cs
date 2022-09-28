@@ -281,8 +281,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
                     model.GiaThueTaiNguyenCt = model_ct.ToList();
 
-                    ViewData["Madv"] = model.Madv;
-                    ViewData["Ipf1"] = model.Ipf1;
+                    /*ViewData["Madv"] = model.Madv;
+                    ViewData["Ipf1"] = model.Ipf1;*/
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";

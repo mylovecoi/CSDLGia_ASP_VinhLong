@@ -1,0 +1,160 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+<!--Trả lại Modal-->
+<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueTSanCongHt" asp-action="TraLai" id="frm_tralai">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý trả lại hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_tralai" name="id_tralai" />
+                    <input id="madv_tralai" name="madv_tralai" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Trả lại hồ sơ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Cong Bo Modal-->
+<div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueTSanCongHt" asp-action="CongBo">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý công bố?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="mahs_cb" name="mahs_cb" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Huy Cong Bo Modal-->
+<div class="modal fade" id="HuyCongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueTSanCongHt" asp-action="HuyCongBo">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hủy công bố?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="mahs_hcb" name="mahs_hcb" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Chuyển hoàn thành Modal-->
+<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="GiaThueTSanCongHt" asp-action="ChuyenHoanThanh">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hoàn thành hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
+                                <select class="form-control" id="Macqcq" name="Macqcq">
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        @if (db.Level == "ADMIN")
+                                        {
+                                            <optgroup label="@db.TenDiaBan">
+                                                @{
+                                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                                }
+                                                @foreach (var item in company)
+                                                {
+                                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="mahs_complete" name="mahs_complete" />
+                     <input id="madv_hientai" name="madv_hientai" value="@ViewData["Madv"]" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetComplete(mahs ) {
+        document.getElementById("mahs_complete").value = mahs;
+    }
+
+    function TraLai(id, madv) {
+        document.getElementById("id_tralai").value = id;
+        document.getElementById("madv_tralai").value = madv;
+    }
+    function CongBo(mahs_cb) {
+        document.getElementById("mahs_cb").value = mahs_cb;
+    }
+
+    function HuyCongBo(mahs_hcb) {
+        document.getElementById("mahs_hcb").value = mahs_hcb;
+    }
+
+    function ValidateXetDuyet() {
+        if ($('#Sohsnhan').val() == '') {
+            toastr.error("Số hồ sơ nhận không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Ngaynhan').val() == '') {
+                toastr.error("Ngày duyệt hồ sơ không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_xetduyet").submit();
+            }
+        }
+    }
+</script>
