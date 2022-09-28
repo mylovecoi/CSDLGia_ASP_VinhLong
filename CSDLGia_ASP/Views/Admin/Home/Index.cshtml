@@ -1,8 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = "Thông tin hỗ trợ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="text-center pt-10 pb-10">
+            <h1 class="font-weight-bolder text-dark mb-6" style="text-transform:uppercase">PHẦN MỀM CƠ SỞ DỮ LIỆU VỀ GIÁ</h1>
+            @*<div class="h4 text-dark-50" style="text-transform:uppercase; font-style:italic">@ViewData["TenTinh"]</div>*@
+        </div>
+        @*@await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Actions.cshtml")
+        @await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Update.cshtml")*@
+        @await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Supports.cshtml")
+    </div>
+    <!--end::Container-->
 </div>

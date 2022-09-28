@@ -227,6 +227,53 @@
     </div>
 </div>
 
+<!--Chuyển Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="ThamDinhGia" asp-action="Complete">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hoàn thành hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận*</label>
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var db in dsdiaban.Where(t => t.Level == "ADMIN"))
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in donvi)
+                                            {
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
@@ -249,5 +296,9 @@
                 }
             }
         })
+    }
+
+    function Chuyen(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
     }
 </script>

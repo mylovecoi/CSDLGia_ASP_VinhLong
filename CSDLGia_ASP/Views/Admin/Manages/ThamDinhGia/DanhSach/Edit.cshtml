@@ -20,6 +20,12 @@
             TableManaged.init();
             TableManaged2.init();
             TableManaged4.init();
+            $('#Songaykq').change(function () {
+                addngay();
+            });
+            $('#Thoidiem').change(function () {
+                addngay();
+            });
         });
     </script>
 }
@@ -223,9 +229,38 @@
 </div>
 
 <script>
+    function add_date(thoidiem, songay) {
+        if (thoidiem == '') {
+            return null;
+        }
+        if (songay == '' || songay == 0) {
+            return thoidiem;
+        }
+
+        var date = new Date(thoidiem);
+        date.setDate(date.getDate() + parseInt(songay));
+
+        var dd = date.getDate();
+        var mm = date.getMonth() + 1;
+        var y = date.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        return (y + '-' + mm + '-' + dd);
+    }
+
     function adddonvi(tendv) {
         $('#Dvyc_Modal').modal('hide');
         $('#Dvyeucau').val(tendv);
+    }
+
+    function addngay() {
+        var thoidiem = $('#Thoidiem').val();
+        var songay = $('#Songaykq').val();
+        $('#Thoihan').val(add_date(thoidiem, songay));
     }
 
     function ValTdg() {
