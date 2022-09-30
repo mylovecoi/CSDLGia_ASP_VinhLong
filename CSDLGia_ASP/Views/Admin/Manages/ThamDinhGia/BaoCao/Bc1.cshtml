@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaCt>
+
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+    </tr>
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 20px">
+        </td>
+        <td style="vertical-align: top;">
+        </td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
+    THÔNG TIN VỀ TÀI SẢN THẨM ĐỊNH GIÁ
+</p>
+<p style="text-align: center; font-size: 16px; ">
+    (Ban hành kèm thông tư số 142/2015/TT-BTC ngày 04 tháng 09 năm 2015 của Bộ tài chính quy định về Cơ sở dữ liệu quốc gia về giá)
+</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th style="text-align: center; font-weight: bold">STT</th>
+            <th style="text-align: center; font-weight: bold">Tên tài<br>sản</th>
+            <th style="text-align: center; font-weight: bold">Đặc<br>điểm<br>pháp lý</th>
+            <th style="text-align: center; font-weight: bold">Đặc điểm<br>kinh tế, kỹ<br>thuật</th>
+            <th style="text-align: center; font-weight: bold">Địa điểm<br>thẩm định<br>giá</th>
+            <th style="text-align: center; font-weight: bold">Thời điểm<br>thẩm định<br>giá</th>
+            <th style="text-align: center; font-weight: bold">Phương<br>pháp thẩm<br>định giá</th>
+            <th style="text-align: center; font-weight: bold">Mục đích<br>thẩm<br>định giá</th>
+            <th style="text-align: center; font-weight: bold">Tên đơn vị<br>đề nghị/yêu<br>cầu thẩm<br>định giá</th>
+            <th style="text-align: center; font-weight: bold">Giá trị tài<br>sản thẩm<br>định</th>
+            <th style="text-align: center; font-weight: bold">Thời hạn sử<br>dụng của kết<br>quả thẩm<br>định giá</th>
+            <th style="text-align: center; font-weight: bold">Ghi<br>chú</th>
+        </tr>
+        <tr>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(1)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(2)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(3)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(4)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(5)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(6)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(7)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(8)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(9)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(10)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(11)</th>
+            <th style="text-align: center; font-weight: bold; font-style:italic;">(12)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center;">@(record++)</td>
+                    <td style="font-weight: bold;">@item.Tents</td>
+                    <td>@item.Dacdiempl</td>
+                    <td>@item.Thongsokt</td>
+                    <td>@item.Diadiem</td>
+                    <td style="text-align: center;">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td>@item.Ppthamdinh</td>
+                    <td>@item.Mucdich</td>
+                    <td>@item.Dvyeucau</td>
+                    <td style="text-align: right; font-weight: bold;">@Helpers.ConvertDbToStr(item.Giatritstd)</td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoihan)</td>
+                    <td>@item.Ghichu</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

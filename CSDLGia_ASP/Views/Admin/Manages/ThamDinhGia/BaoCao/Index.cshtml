@@ -1,0 +1,116 @@
+﻿@{
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["Dsdonvi"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["Dsdiaban"];
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Báo cáo tổng hợp<small>&nbsp;thẩm định giá tài sản</small><br />
+                </h3>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <span>Thông tư 142/2015/BTC</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <ol>
+                            <li>
+                                <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span style="font-size:16px; color:blue;  font-weight: bold">
+                                        Phụ lục 5- Thông tin về tài sản thẩm định giá
+                                    </span>
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Report Modal!-->
+    <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form asp-controller="ThamDinhGiaBc" asp-action="Bc1" target="_blank" id="frm_report">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Thông tin về tài sản thẩm định giá
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Từ ngày</label>
+                                    <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Đến ngày</label>
+                                    <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight: bold">Đơn vị</label>
+                                    <select class="form-control" id="madv" name="madv">
+                                        <option value="all">--Tất cả các đơn vị--</option>
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in donvi)
+                                            {
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

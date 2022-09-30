@@ -71,5 +71,15 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public DateTime Updated_at { get; set; }
         [NotMapped]
         public List<ThamDinhGiaCt> ThamDinhGiaCt { get; set; }
-}
+        [NotMapped]
+        public string MadvCh { get; set; }
+        [NotMapped]
+        public string TendvCh { get; set; }
+        [NotMapped]
+        public string Tencqcq { get; set; }
+        [NotMapped]
+        public string Tendb { get; set; }
+        [NotMapped]
+        public string Level { get; set; }
+    }
 }

@@ -46,9 +46,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Admin\Manages\DinhGia\GiaHhDvk\BaoCao\" />
-    <Folder Include="Views\Admin\Manages\ThamDinhGia\BaoCao\" />
-    <Folder Include="Views\Admin\Manages\ThamDinhGia\TimKiem\" />
-    <Folder Include="Views\Admin\Manages\ThamDinhGia\XetDuyet\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />

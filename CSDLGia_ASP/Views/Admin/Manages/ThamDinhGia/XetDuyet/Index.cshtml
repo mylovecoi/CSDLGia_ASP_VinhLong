@@ -3,7 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -21,7 +21,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/GiaThueTaiNguyen/XetDuyet?';
+                var current_path_url = '/ThamDinhGia/XetDuyet?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -35,7 +35,7 @@
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
                 <h3 class="card-label">
-                    Thông tin hồ sơ giá thuế tài nguyên
+                    Hồ sơ thẩm định giá
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -85,9 +85,10 @@
                 <tr style="text-align:center">
                     <th width="4%">#</th>
                     <th>Cơ quan chuyển hồ sơ</th>
-                    <th>Số QĐ</th>
+                    <th>Địa bàn</th>
                     <th>Thời điểm xác định</th>
-                    <th>Nội dung</th>
+                    <th>Thông tin tài sản thẩm định</th>
+                    <th>Đơn vị yêu cầu thẩm định</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="15%">Thao tác</th>
@@ -101,9 +102,10 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td class="active">@item.TendvCh</td>
-                            <td style="text-align: center">@item.Soqd</td>
-                            <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td>@item.Cqbh</td>
+                            <td style="text-align: center">@item.Tendb</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td>@item.Tttstd</td>
+                            <td>@item.Dvyeucau</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -132,12 +134,12 @@
                             </td>
                             <td style="text-align: left">@item.Tencqcq</td>
                             <td>
-                                <a asp-controller="GiaThueTaiNguyen" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="ThamDinhGia" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.xd", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")
                                     {
@@ -161,29 +163,7 @@
                                             </button>
                                         }
                                     }
-                                    else
-                                    {
-
-                                        @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
-                                                <i class="icon-lg la la-reply text-danger "></i>
-                                            </button>
-
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
-                                                <i class="icon-lg la la-check text-primary "></i>
-                                            </button>
-
-                                        }
-                                    }
                                 }
-
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </a>
                             </td>
                         </tr>
                     }
@@ -192,4 +172,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/XetDuyet/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/XetDuyet/Modal.cshtml")

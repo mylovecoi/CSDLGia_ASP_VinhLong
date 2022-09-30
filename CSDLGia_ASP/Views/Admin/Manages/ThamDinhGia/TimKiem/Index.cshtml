@@ -1,0 +1,133 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Tìm kiếm thông tin hồ sơ thẩm định giá
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form asp-controller="ThamDinhGia" asp-action="Result" method="post" id="frm_tdg_timkiem">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Đơn vị</label>
+                            <select class="form-control" id="madv" name="madv">
+                                <option value="all">--Tất cả các đơn vị--</option>
+                            @foreach (var db in dsdiaban)
+                            {
+                                <optgroup label="@db.TenDiaBan">
+                                    @{
+                                        var company = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    }
+                                    @foreach (var item in company)
+                                    {
+                                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tên sản phẩm dịch vụ</label>
+                        <input type="text" class="form-control" id="tenspdv" name="tenspdv" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời gian nhập từ</label>
+                        <input type="date" id="ngaynhap_tu" name="ngaynhap_tu" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời gian nhập đến</label>
+                        <input type="date" id="ngaynhap_den" name="ngaynhap_den" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn giá đề nghị từ</label>
+                        <input type="text" id="gia_tu" name="gia_tu" class="form-control money" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn giá đề nghị đến</label>
+                        <input type="text" id="gia_den" name="gia_den" class="form-control money" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn giá thẩm định từ</label>
+                        <input type="text" id="giatd_tu" name="giatd_tu" class="form-control money" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn giá thẩm định đến</label>
+                        <input type="text" id="giatd_den" name="giatd_den" class="form-control money" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValTdgTk()"><i class="la la-check"></i>Tìm kiếm</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValTdgTk() {
+        var date_tu = new Date($('#ngaynhap_tu').val());
+        var date_den = new Date($('#ngaynhap_den').val());
+        var date_tu_int = date_tu.getTime();
+        var date_den_int = date_den.getTime();
+
+        if (date_tu_int > date_den_int) {
+            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
+        } else {
+            if ($('#gia_tu').val() > $('#gia_den').val()) {
+                toastr.error("Đơn giá đề nghị đến phải lớn hơn Đơn giá đề nghị từ!", "Lỗi!!!")
+            } else {
+                if ($('#giatd_tu').val() > $('#giatd_den').val()) {
+                    toastr.error("Đơn giá thẩm định đến phải lớn hơn Đơn giá thẩm định từ!", "Lỗi!!!")
+                } else {
+                    document.getElementById("frm_tdg_timkiem").submit();
+                }
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

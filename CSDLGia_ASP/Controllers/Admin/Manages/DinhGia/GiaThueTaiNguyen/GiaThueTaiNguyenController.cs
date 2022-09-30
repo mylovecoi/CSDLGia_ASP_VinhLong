@@ -487,7 +487,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     {
                         ViewData["Madv"] = "";
                     }
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaThueTaiNguyenNhom.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";

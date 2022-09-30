@@ -14,6 +14,7 @@ using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.Extensions.Hosting;
 using System.Net.WebSockets;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -136,11 +137,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     {
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = Madv,
+                        Madiaban = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv).MaDiaBan,
                         Thoidiem = DateTime.Now,
                     };
 
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Madv"] = Madv;
+                    ViewData["Madiaban"] = model.Madiaban;
                     ViewData["TdgDonvi"] = _db.ThamDinhGiaDv.ToList();
                     ViewData["TdgDmHh"] = _db.ThamDinhGiaDmHh.ToList();
                     ViewData["Dvt"] = _db.DmDvt.ToList();
@@ -164,7 +167,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhSach/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia request, 
+        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia request,
             IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -184,7 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         request.Ipf1 = filename;
                     }
-                    
+
                     if (Ipf2upload != null && Ipf2upload.Length > 0)
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -198,7 +201,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         request.Ipf2 = filename;
                     }
-                    
+
                     if (Ipf3upload != null && Ipf3upload.Length > 0)
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -212,7 +215,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         request.Ipf3 = filename;
                     }
-                    
+
                     if (Ipf4upload != null && Ipf4upload.Length > 0)
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -230,6 +233,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     var model = new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
                     {
                         Mahs = request.Mahs,
+                        Madiaban = request.Madiaban,
                         Madv = request.Madv,
                         Dvyeucau = request.Dvyeucau,
                         Hosotdgia = request.Hosotdgia,
@@ -293,6 +297,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Madv"] = model.Madv;
+                    ViewData["Madiaban"] = model.Madiaban;
                     ViewData["TdgDonvi"] = _db.ThamDinhGiaDv.ToList();
                     ViewData["TdgDmHh"] = _db.ThamDinhGiaDmHh.ToList();
                     ViewData["Dvt"] = _db.DmDvt.ToList();
@@ -336,7 +341,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         request.Ipf1 = filename;
                     }
-                    
 
                     if (Ipf2upload != null && Ipf2upload.Length > 0)
                     {
@@ -489,12 +493,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 var model = _db.ThamDinhGia.FirstOrDefault(t => t.Id == Id);
                 string result = "<div class='modal-body' id='frm_file'>";
                 result += "<div class='row'>";
-                /*result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold'>Nội dung: </label>";
-                result += "<span style='color:blue'>" + model.Tieude + "</span>";
-                result += "</div>";
-                result += "</div>";*/
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form -group fv-plugins-icon-container'>";
                 result += "<label style='font-weight:bold'>File đính kèm</label>";
@@ -502,7 +500,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 if (model.Ipf1 != null && model.Ipf1.Length > 0)
                 {
                     result += "<p>";
-                    result += "1. ";
+                    result += " - ";
                     result += "<a href='/UpLoad/File/ThamDinhGia/" + model.Ipf1 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/ThamDinhGia/" + model.Ipf1 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf1 + "</a>";
@@ -511,7 +509,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 if (model.Ipf2 != null && model.Ipf2.Length > 0)
                 {
                     result += "<p>";
-                    result += "2. ";
+                    result += " - ";
                     result += "<a href='/UpLoad/File/ThamDinhGia/" + model.Ipf2 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/ThamDinhGia/" + model.Ipf2 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf2 + "</a>";
@@ -520,7 +518,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 if (model.Ipf3 != null && model.Ipf3.Length > 0)
                 {
                     result += "<p>";
-                    result += "3. ";
+                    result += " - ";
                     result += "<a href='/UpLoad/File/ThamDinhGia/" + model.Ipf3 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/ThamDinhGia/" + model.Ipf3 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf3 + "</a>";
@@ -529,7 +527,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 if (model.Ipf4 != null && model.Ipf4.Length > 0)
                 {
                     result += "<p>";
-                    result += "4. ";
+                    result += " - ";
                     result += "<a href='/UpLoad/File/ThamDinhGia/" + model.Ipf4 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/ThamDinhGia/" + model.Ipf4 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf4 + "</a>";
@@ -597,6 +595,119 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "ThamDinhGia", new { model.Madv });
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("ThamDinhGia/TimKiem")]
+        [HttpGet]
+        public IActionResult Search()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                {
+
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    {
+                        ViewData["Madv"] = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    }
+                    else
+                    {
+                        ViewData["Madv"] = "";
+                    }
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ thẩm định giá";
+                    ViewData["MenuLv1"] = "menu_tdg";
+                    ViewData["MenuLv2"] = "menu_tdg_tk";
+                    return View("Views/Admin/Manages/ThamDinhGia/TimKiem/Index.cshtml");
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("ThamDinhGia/TimKiem/KetQua")]
+        [HttpPost]
+        public IActionResult Result(string madv, string tenspdv, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, double giatd_tu, double giatd_den)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                {
+                    var model = (from tdgct in _db.ThamDinhGiaCt
+                                 join tdg in _db.ThamDinhGia on tdgct.Mahs equals tdg.Mahs
+                                 join dv in _db.DsDonVi on tdg.Madv equals dv.MaDv
+                                 select new ThamDinhGiaCt
+                                 {
+                                     Id = tdgct.Id,
+                                     Mahs = tdgct.Mahs,
+                                     Tents = tdgct.Tents,
+                                     Sl = tdgct.Sl,
+                                     Giadenghi = tdgct.Giadenghi,
+                                     Giatritstd = tdgct.Giatritstd,
+                                     Madv = tdg.Madv,
+                                     Thoidiem = tdg.Thoidiem,
+                                     Tendv = dv.TenDv,
+                                     Tttstd = tdg.Tttstd,
+                                     Dvyeucau = tdg.Dvyeucau,
+                                 });
+
+                    if (madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == madv);
+                    }
+
+                    if (!string.IsNullOrEmpty(tenspdv))
+                    {
+                        model = model.Where(t => t.Tents.Contains(tenspdv));
+                    }
+
+                    if (ngaynhap_tu.ToString("yyMMdd") != "010101")
+                    {
+                        model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
+                    }
+
+                    if (ngaynhap_den.ToString("yyMMdd") != "010101")
+                    {
+                        model = model.Where(t => t.Thoidiem <= ngaynhap_den);
+                    }
+
+                    model = model.Where(t => t.Giadenghi >= gia_tu);
+                    if (gia_den > 0)
+                    {
+                        model = model.Where(t => t.Giadenghi <= gia_den);
+                    }
+                    
+                    model = model.Where(t => t.Giatritstd >= giatd_tu);
+                    if (giatd_den > 0)
+                    {
+                        model = model.Where(t => t.Giatritstd <= giatd_den);
+                    }
+
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ thẩm định giá";
+                    ViewData["MenuLv1"] = "menu_tdg";
+                    ViewData["MenuLv2"] = "menu_tdg_tk";
+                    return View("Views/Admin/Manages/ThamDinhGia/TimKiem/Result.cshtml", model);
 
                 }
                 else

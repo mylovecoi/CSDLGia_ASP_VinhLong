@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
 {
@@ -26,5 +27,23 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public string Tttstd { get; set; }
+        [NotMapped]
+        public string Dvyeucau { get; set; }
+        [NotMapped]
+        public string Diadiem { get; set; }
+        [NotMapped]
+        public string Ppthamdinh { get; set; }
+        [NotMapped]
+        public string Mucdich { get; set; }
+        [NotMapped]
+        public DateTime Thoihan { get; set; }
     }
 }
