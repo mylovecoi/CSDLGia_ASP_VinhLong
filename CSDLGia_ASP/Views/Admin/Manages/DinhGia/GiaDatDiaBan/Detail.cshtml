@@ -1,0 +1,79 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
+@{
+    int record_id = 1;
+    var mahs = ViewData["Mahs"];
+}
+@*Khi sử dụng chức năng edit thì dùng*@
+<div class="col-md-12">
+
+
+    <div class="card-toolbar">
+        <button type="button" data-target="#Modal_Create" data-toggle="modal" class="btn btn-light-primary">
+            <i class="la la-plus"></i>Thêm mới
+        </button>
+        <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+            <i class="la la-file-excel-o"></i>Nhận dữ liệu
+        </button>&ensp;
+        <button type="button" data-target="#Delete_Modal2" data-toggle="modal" class="btn btn-light-warning">
+            <i class="la la-lock"></i>Xóa chi tiết
+        </button>&ensp;
+    </div>
+
+</div>
+
+<div class="card-body" id="frm_data">
+    <table class="table table-striped table-bordered table-hover" id="datatable_4">
+        <thead>
+            <tr style="text-align:center">
+                <th>STT</th>
+                <th>Xã phường</th>
+                <th>Loại đất</th>
+                <th>Khu vực tên đường phố</th>
+                <th>Địa giới</th>
+                <th>VT1</th>
+                <th>VT2</th>
+                <th>VT3</th>
+                <th>VT4</th>
+                <th>Thao tác</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @if (Model.GiaDatDiaBanCt != null)
+                {
+
+                    @foreach (var item in Model.GiaDatDiaBanCt)
+                    {
+                        <tr style="text-align:center">
+
+                            <td>@(record_id++)</td>
+                            <td class="active">@item.Maxp</td>
+                            <td class="active">@item.Maloaidat</td>
+                            <td class="active">@item.Khuvuc</td>
+                            <td class="active">@item.Diemdau đến @item.Diemcuoi </td>
+                            <td class="active">@item.Giavt1</td>
+                            <td class="active">@item.Giavt2</td>
+                            <td class="active">@item.Giavt3</td>
+                            <td class="active">@item.Giavt4</td>
+                            <td>
+                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                            onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                            onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+    <!--end: Datatable-->
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Modal.cshtml")

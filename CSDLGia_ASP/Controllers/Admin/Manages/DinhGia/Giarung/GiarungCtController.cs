@@ -80,7 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th>STT</th>";
-            result += "<th>Phân loại</th>";
+            result += "<th>Phân loại( Getdata-Giarungct)</th>";
             result += "<th>Loại rừng</th>";
             result += "<th>Đơn vị khac thác(thuê)</th>";
             result += "<th>Nội dung chi tiết</th>";
@@ -95,18 +95,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 result += "<tr>";
                 result += "<td style='text-align:center'>"+(record++)+"</td>";
+
                 result += "<td class='active'>" + item.Phanloai + "</td>";
                 foreach(var lr in loairung){
                     if(item.Manhom==lr.Manhom){
                         result += "<td>" + lr.Tennhom + "</td>";
                     }
                 }
+                result += "<td>" + item.Manhom + "</td>";
                 result += "<td>" + item.Dvthue + "</td>";
-                result += "<td>" + item.Noidung + "</td>";
                 result += "<td>" + item.Dientich + "</td>";
                 result += "<td>" + item.Dientichsd + "</td>";
                 result += "<td>" + item.Dvt + "</td>";
                 result += "<td>" + item.Giatri + "</td>";
+
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
@@ -115,6 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
                 result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-trash text-danger'></i>";
+
                 result += "</button></td></tr>";
             }
             result += "</tbody>";
@@ -128,7 +131,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
-                result += "<input type='text' id='id_edit' name='id_edit' value='"+Id+"' class='form-control'/>";
+
+                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+
                 result += "<div class='row'>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -136,91 +141,135 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<input type='text' id='dvthue_edit' name='dvthue_edit' value='"+@model.Dvthue+"' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
+
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Địa chỉ</b></label>";
                 result += "<input type='text' id='diachi_edit' name='diachi_edit' value='"+@model.Diachi+"' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Nội dung chi tiết</b></label>";
+                result += "<label>Nội dung chi tiết</label>";
                 result += "<input type='text' id='noidung_edit' name='noidung_edit' value='"+@model.Noidung+"' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='row'><div class='col-xl-6'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Phân loại</b></label>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Phân loại</label>";
                 result += "<select id='phanloai_edit' name='phanloai_edit' class='form-control'>";
                 result += "<option value='tmt'>Thuế môi trường</option>";
                 result += "<option value='kt'>Khai thác</option>";
                 result += "<option value='tl'>Thanh lý</option>";
-                result += "</select></div></div>";
-                result += "<div class='col-xl-6'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Loại rừng</b></label>";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Loại rừng</label>";
                 result += "<select class='form-control' id='loairung_edit' name='loairung_edit'>";
                 var loairung= _db.GiaRungDm.ToList();
                 foreach(var item in loairung)
                 {
                     result+="<option value ='"+@item.Manhom + "'>"+@item.Tennhom + "</ option >";
                 }
-                result += "</select></div></div></div>";
-                result += "<div class='row'><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Diện tích</b></label>";
-                result += "<input type='text' id='dt_edit' name='dt_edit' value='"+@model.Dientich+"' class='form-control'/>";
+                result += "</select>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Diện tích khai thác (thuê)</b></label>";
-                result += "<input type='text' id='dtthue_edit' name='dtthue_edit' value='"+@model.Dientichsd+"' class='form-control'/>";
-                result += "</div></div><div class='col-xl-6'><div class='form-group fv-plugins-icon-container'>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Diện tích</label>";
+                result += "<input type='text' id='dt_edit' name='dt_edit' value='" + @model.Dientich + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Diện tích khai thác (thuê)</label>";
+                result += "<input type='text' id='dtthue_edit' name='dtthue_edit' value='" + @model.Dientichsd + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn vị tính</b></label>";
-                 result += "<select id='dvtinh_edit' name='dvtinh_edit' class='form-control'>";
+                result += "<select id='dvtinh_edit' name='dvtinh_edit' class='form-control'>";
                 result += "<option value='dv1'>đồng</option>";
                 result += "<option value='dv2'>đồng/ngày</option>";
                 result += "<option value='dv3'>đồng/gói</option>";
-                result += "</select></div></div>";
-                 result += "<div class='row'><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Số quyết khai thác(thuê)</b></label>";
-                result += "<input type='text' id='sqthue_edit' name='sqthue_edit' value='"+@model.Soqdpd+"' class='form-control'/>";
+                result += "</select>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thời điểm khai thác(thuê)</b></label>";
-                result += "<input type='date' id='tdthue_edit' name='tdthue_edit' value='"+@model.Thoigianpd+"' class='form-control'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Số quyết khai thác(thuê)</label>";
+                result += "<input type='text' id='sqthue_edit' name='sqthue_edit' value='" + @model.Soqdpd + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Số quyết giá khởi điểm</b></label>";
-                result += "<input type='text' id='sqKhoiDiem_edit' name='sqKhoiDiem_edit' value='"+@model.Soqdgkd+"' class='form-control'/>";
+
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời điểm khai thác(thuê)</label>";
+                result += "<input type='date' id='tdthue_edit' name='tdthue_edit' value='" + @model.Thoigianpd + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thời điểm giá khởi điểm</b></label>";
-                result += "<input type='date' id='tdKhoiDiem_edit' name='tdKhoiDiem_edit' value='"+@model.Thoigiangkd+"' class='form-control'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Số quyết giá khởi điểm</label>";
+                result += "<input type='text' id='sqKhoiDiem_edit' name='sqKhoiDiem_edit' value='" + @model.Soqdgkd + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thời gian - Từ ngày</b></label>";
-                result += "<input type='date' id='tungay_edit' name='tungay_edit' value='"+@model.Thuetungay+"' class='form-control'/>";
+
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời điểm giá khởi điểm</label>";
+                result += "<input type='date' id='tdKhoiDiem_edit' name='tdKhoiDiem_edit' value='" + @model.Thoigiangkd + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thời gian - Đến ngày</b></label>";
-                result += "<input type='date' id='denngay_edit' name='denngay_edit' value='"+@model.Thuedenngay+"' class='form-control'/>";
-                result += "</div></div>";
-                result += "<div class='col-xl-4'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đơn giá</b></label>";
-                result += "<input type='text' id='dongia_edit' name='dongia_edit' value='"+@model.Dongia+"' class='form-control'/>";
-                result += "</div></div>";
-                result += "<div class='col-xl-4'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá khởi điểm*</b></label>";
-                result += "<input type='text' id='giaKhoiDiem_edit' name='giaKhoiDiem_edit' value='"+@model.Giakhoidiem+"' class='form-control'/>";
-                result += "</div></div>";
-                result += "<div class='col-xl-4'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá khai thác(thuê)*</b></label>";
-                result += "<input type='text' id='giaThue_edit' name='giaThue_edit' value='" + @model.Giatri+"' class='form-control'/>";
-                result += "</div></div>";
-                
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời gian - Từ ngày</label>";
+                result += "<input type='date' id='tungay_edit' name='tungay_edit' value='" + @model.Thuetungay + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời gian - Đến ngày</label>";
+                result += "<input type='date' id='denngay_edit' name='denngay_edit' value='" + @model.Thuedenngay + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Đơn giá</label>";
+                result += "<input type='text' id='dongia_edit' name='dongia_edit' value='" + @model.Dongia + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá khởi điểm*</label>";
+                result += "<input type='text' id='giaKhoiDiem_edit' name='giaKhoiDiem_edit' value='" + @model.Giakhoidiem + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá khai thác(thuê)*</label>";
+                result += "<input type='text' id='giaThue_edit' name='giaThue_edit' value='" + @model.Giatri + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
 
                 var data = new { status = "success", message = result };
                 return Json(data);

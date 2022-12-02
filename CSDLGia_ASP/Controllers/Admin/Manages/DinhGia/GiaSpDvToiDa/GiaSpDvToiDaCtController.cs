@@ -47,7 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             _db.GiaSpDvToiDaCt.Add(model);
             _db.SaveChanges();
 
-            string result = GetData(Mahs);
+            string result = GetDataCt(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -62,47 +62,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
-                result += "<div class='row'>";
-                result += "<div class='col-md-11' style='padding-left: 0px;'>";
-                result += "<label>Phân loại sản phẩm, dịch vụ</label>";
-                result += "<select class='form-control' id='phanloaidv_edit' name='phanloaidv_edit'>";
-                var phanloaispdv = _db.GiaSpDvToiDaCt.ToList();
-                foreach (var item in phanloaispdv)
-                {
-                    result += "<option value ='" + item.Phanloaidv + "'>" + item.Phanloaidv + "</ option >";
-                }
-                result += "</select>";
+                result += "<div class='row text-left'>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá sản phẩm dịch vụ cụ thể (đồng)</label>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Dongia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "</div>";
                 result += "</div>";
                 result += "</div>";
 
-                result += "<br />";
-
-                result += "<div class='row'>";
-                result += "<div class='col-md-11' style='padding-left: 0px;'>";
-                result += "<label>Tên sản phẩm dịch vụ</label>";
-                result += "<input type='text' id='mota_edit' name='mota_edit' value='" + model.Mota + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<br />";
-
-                result += "<div class='row'>";
-                result += "<div class='col-xl-6' style='padding-left: 0px;'>";
-                result += "<label>Đơn vị tính</label>";
-                result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
-                var donvitinh = _db.DmDvt.ToList();
-                foreach (var item in donvitinh)
-                {
-                    result += "<option value ='" + item.Dvt + "'>" + item.Dvt + "</ option >";
-                }
-                result += "</select>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += " <div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá tối đa</label>";
-                result += "<input type='text' id='dongia_edit' name='dongia_edit' value='" + model.Dongia + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
                 result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                 result += "</div>";
 
@@ -118,19 +86,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 
         [Route("DinhGiaSpDvToiDaCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, string phanloaispvd, string mota, string dvt, double dongia)
+        public JsonResult Update(int Id, double Gia)
         {
             var model = _db.GiaSpDvToiDaCt.FirstOrDefault(t => t.Id == Id);
-            model.Mahs = Mahs;
-            model.Phanloaidv = phanloaispvd;
-            model.Mota = mota;
-            model.Dvt = dvt;
-            model.Dongia = dongia;
-
+            model.Dongia = Gia;
             model.Updated_at = DateTime.Now;
             _db.GiaSpDvToiDaCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Mahs); // lấy dữ liệu theo mã hồ sơ
+            string result = GetDataCt(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -142,14 +105,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             var model = _db.GiaSpDvToiDaCt.FirstOrDefault(t => t.Id == Id);
             _db.GiaSpDvToiDaCt.Remove(model);
             _db.SaveChanges();
-            var result = GetData(model.Mahs);
+            var result = GetDataCt(model.Mahs);
             var data = new { status = "success", message = result };
 
             return Json(data);
         }
 
 
-        public string GetData(string Mahs)
+        public string GetDataCt(string Mahs)
         {
             var model = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == Mahs).ToList();
 

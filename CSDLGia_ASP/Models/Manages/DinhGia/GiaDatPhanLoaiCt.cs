@@ -20,7 +20,18 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giacuthe { get; set; }
         public double Hesodc { get; set; }
         public double Sapxep { get; set; }
+        public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string Loaidat { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public double Dientich { get; set; }
     }
 }

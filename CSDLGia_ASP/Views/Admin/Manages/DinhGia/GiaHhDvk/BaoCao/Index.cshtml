@@ -1,0 +1,205 @@
+﻿@{
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+    var nhomhhdv = (IEnumerable<GiaHhDvkNhom>)ViewData["NhomHhDv"];
+    var nam_start = DateTime.Now.Year - 7;
+    var nam_stop = DateTime.Now.Year + 1;
+    var nam = ViewData["Nam"].ToString();
+
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$('.select2multi').select2();
+
+            $("#radio1").click(function () {
+                if (this.checked) {
+                    $("#option2").css("display", "none");
+                    $("#option1").css("display", "block");
+                }
+            });
+
+            $("#radio2").click(function () {
+                if (this.checked) {
+                    $("#option1, .quy").css("display", "none");
+                    $("#option2, .thang").css("display", "block");
+                }
+            });
+
+            $("#radio3").click(function () {
+                if (this.checked) {
+                    $("#option1, .thang").css("display", "none");
+                    $("#option2, .quy").css("display", "block");
+                }
+            });
+        });
+
+        $(function () {
+            $('#Matt').change(function () {
+                var current_path_url = '/GiaHhDvk/BaoCao?';
+                var matt = '&Matt=' + $('#Matt').val();
+                var url = current_path_url + matt;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                BÁO CÁO TỔNG HỢP GIÁ HH-DV KHÁC
+            </h3>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Nhóm hàng hóa, dịch vụ</label>
+                    <select class="form-control select2basic" id="Matt" name="Matt">
+                        @foreach (var nhom in nhomhhdv)
+                        {
+                            <!option value="@nhom.Matt" @((string)ViewData["Matt"] == nhom.Matt ? "selected" : "")>@nhom.Tentt</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group fv-plugins-icon-container">
+                    <ol>
+                        <li>
+                            <button data-target="#Bc1_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                <span style="font-size:16px; color:blue;  font-weight: bold">
+                                    Báo cáo giá bán lẻ hàng hóa thị trường
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button data-target="#Bc2_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                <span style="font-size:16px; color:blue;  font-weight: bold">
+                                    Báo cáo giá hàng hóa thị trường theo tháng
+                                </span>
+                            </button>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Bc1 Modal!-->
+<div class="modal fade" id="Bc1_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaHhDvkBc" asp-action="Bc1" target="_blank" id="frm_report">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Báo cáo tổng hợp giá hàng hóa thị trường
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input id="matt" name="matt" type="hidden" value="@ViewData["Matt"]"/>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight: bold">Từ ngày</label>
+                                <input type="date" class="form-control" name="tungay" id="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight: bold">Ngày báo cáo đến ngày</label>
+                                <input type="date" class="form-control" name="denngay" id="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Đơn vị nhập liệu</label>
+                                <select class="form-control" id="dv" name="dv">
+                                    @foreach (var ds in dsdonvi)
+                                    {
+                                        <option value="@ds.MaDv">@ds.TenDv</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Bc2 Modal!-->
+<div class="modal fade" id="Bc2_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaHhDvkBc" asp-action="Bc2" target="_blank" id="frm_report">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Báo cáo giá hàng hóa thị trường theo tháng
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input id="matt" name="matt" type="hidden" value="@ViewData["Matt"]"/>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight: bold">Kỳ báo cáo liền kề</label>
+                                <select class="form-control" name="kybclk" id="kybclk">
+                                    <option>--Chọn kỳ báo cáo--</option>
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.Mahs">@item.Ttbc</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight: bold">Kỳ báo cáo</label>
+                                <select class="form-control" name="kybc" id="kybc">
+                                    <option>--Chọn kỳ báo cáo--</option>
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.Mahs">@item.Ttbc</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

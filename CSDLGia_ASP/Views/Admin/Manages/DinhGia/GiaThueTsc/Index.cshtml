@@ -114,24 +114,7 @@
                             <td>@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-center center">
-                                @if (GiaThueTaiSanCongDm != null && GiaThueTaiSanCongCt != null)
-                                {
-                                    @foreach (var ct in GiaThueTaiSanCongCt)
-                                    {
-                                        @if (item.Mahs == ct.Mahs)
-                                        {
-                                            @foreach (var dm in GiaThueTaiSanCongDm)
-                                            {
-                                                @if (ct.Mataisan == dm.Mataisan)
-                                                {
-                                                    <span>@dm.Mota</span>
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
+                            <td class="text-center center">@item.Thongtinhs</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {

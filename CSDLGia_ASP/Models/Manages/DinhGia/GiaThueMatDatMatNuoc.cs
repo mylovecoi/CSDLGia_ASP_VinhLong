@@ -15,6 +15,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int Id { get; set; }
         public string Mahs { get; set; }
         public string Madiaban { get; set; }
+       
         public string Maxp { get; set; }
         public string Soqd { get; set; }
         public string Congbo { get; set; }
@@ -46,5 +47,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Tendiaban { get; set; }
     }
 }

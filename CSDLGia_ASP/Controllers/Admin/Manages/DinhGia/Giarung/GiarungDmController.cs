@@ -162,7 +162,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table-bordered table - hover' id='sample_3'>";
+            result += "<table class='table table-striped table-bordered table-hover' id='sample_3'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th>STT</th>";
@@ -183,7 +183,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
+                result += "data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-trash text-danger'></i>";
                 result += "</button></td></tr>";
             }

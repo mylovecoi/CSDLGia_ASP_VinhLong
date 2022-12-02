@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 
         [Route("KeKhaiGiaXmTxd")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, string Nam, string Trangthai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -47,7 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
-                    
+
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -68,12 +68,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
 
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
+
                         var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
 
                         if (comct.Count > 0)
                         {
-                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
-
+                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Trangthai == Trangthai).ToList();
+                            var check_tt = _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai != "DD").Count();
+                            /*return Ok(check_tt);*/
                             if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                             {
                                 ViewData["DsDonVi"] = dsdonvi;
@@ -85,9 +91,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                             ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                             ViewData["Madv"] = Madv;
+                            ViewData["Trangthai"] = Trangthai;
                             ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                             ViewData["Nam"] = Nam;
                             ViewData["Manghe"] = Manghe;
+                            ViewData["check_tt"] = check_tt;
                             ViewData["Title"] = "Danh sách hồ sơ kê khai giá xi măng thép xây dựng";
                             ViewData["MenuLv1"] = "menu_kknygia";
                             ViewData["MenuLv2"] = "menu_kkgxmtxd";
@@ -153,6 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     ViewData["MenuLv3"] = "menu_giakk";
 
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Create.cshtml", model);
+
                 }
                 else
                 {
@@ -206,7 +215,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     _db.KkGiaXmTxdCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { request.Madv });
+                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = request.Madv, Nam = request.Ngaynhap.Year });
                 }
                 else
                 {
@@ -300,7 +309,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     _db.KkGiaXmTxdCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { request.Madv });
+                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = request.Madv, Nam = request.Ngaynhap.Year });
                 }
                 else
                 {
@@ -331,7 +340,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     _db.KkGiaXmTxdCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { model.Madv });
+                    return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = model.Madv, Nam = model.Ngaynhap.Year });
                 }
                 else
                 {
@@ -354,43 +363,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    /*var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
-                    var hoso_kk = new VMKkGiaShow
-                    {
-                        Id = model.Id,
-                        Mahs = model.Mahs,
-                        Socv = model.Socv,
-                        Ngaynhap = model.Ngaynhap,
-                        Ngayhieuluc = model.Ngayhieuluc,
-                        Ttnguoinop = model.Ttnguoinop,
-                        Dtll = model.Dtll,
-                        Sohsnhan = model.Sohsnhan,
-                        Ngaychuyen = model.Ngaychuyen,
-                        Ngaynhan = model.Ngaynhan,
-                        Ytcauthanhgia = model.Ytcauthanhgia,
-                        Thydggadgia = model.Thydggadgia
-                    };
-
-                    var modeldn = _db.Company.FirstOrDefault(t => t.Madv == model.Mahs);
-                    if (modeldn != null)
-                    {
-                        hoso_kk.Tendn = modeldn.Tendn;
-                        hoso_kk.Diadanh = modeldn.Diadanh;
-                        hoso_kk.Diachi = modeldn.Diachi;
-                    }
-
-                    var modeldv = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
-                    if (modeldv != null)
-                    {
-                        hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
-                    }
-
-                    var modelct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs);
-                    if (modelct != null)
-                    {
-                        hoso_kk.KkGiaXmTxdCt = modelct.ToList();
-                    }*/
-
                     var model = GetThongTinKk(Mahs);
 
                     ViewData["Title"] = "Kê khai giá xi măng thép xây dựng";
@@ -398,7 +370,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     ViewData["MenuLv2"] = "menu_kkgxmtxd";
                     ViewData["MenuLv3"] = "menu_giakk";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Show.cshtml", model);
-
                 }
                 else
                 {
@@ -420,7 +391,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
                 {
-
                     var model_join = from kkct in _db.KkGiaXmTxdCt
                                      join kk in _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                      join com in _db.Company on kk.Madv equals com.Madv
@@ -437,7 +407,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
-
 
                     if (string.IsNullOrEmpty(Nam))
                     {
@@ -473,7 +442,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("KeKhaiGiaXmTxd/Printf")]
         [HttpGet]
         public IActionResult Printf(string Nam, string Mota)
@@ -499,7 +468,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
-                    
+
 
                     if (string.IsNullOrEmpty(Nam))
                     {
@@ -582,7 +551,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     }
                     _db.KkGia.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "KkGiaXmTxd", new { model.Madv, Nam = model.Ngaynhap.Year });
+                    return RedirectToAction("Index", "KkGiaXmTxd", new { model.Madv, Nam = model.Ngaynhap.Year, Trangthai = "CD" });
                 }
                 else
                 {

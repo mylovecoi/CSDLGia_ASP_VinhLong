@@ -117,13 +117,13 @@
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Dơn gia nhập từ</label>
-                    <input type="number" class="form-control" name="beginPrice" id="beginPrice" />
+                    <input type="number" class="form-control money" name="beginPrice" id="beginPrice" />
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Dơn gia nhập đến</label>
-                    <input type="number" class="form-control" name="endPrice" id="endPrice" />
+                    <input type="number" class="form-control money" name="endPrice" id="endPrice" />
                 </div>
             </div>
         </div>
@@ -136,26 +136,17 @@
 
 <script>
     function valedate() {
-        if ($('#beginTime').val().trim() != "" && $('#endTime').val().trim() != "") {
-            if ($('#beginTime').val().trim() > $('#endTime').val().trim()) {
-                toastr.error("Thời gian từ không được nhỏ hơn thời gian đến!", "Lỗi!!!")
-            }
-            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#beginPrice').val().trim() <= $('#endPrice').val().trim()) {
-                document.getElementById("frm_search").submit();
-            }
-        }
-        else if ($('#beginPrice').val().trim() != "" && $('#endPrice').val().trim() != "") {
-            if ($('#beginPrice').val().trim() > $('#endPrice').val().trim()) {
+        if ($('#endPrice').val() != "" || $('#endPrice').val() != 0) {
+            if ($('#beginPrice').val() > $('#endPrice').val()) {
                 toastr.error("Đơn giá nhập từ không được nhỏ hơn đơn giá nhập đến!", "Lỗi!!!")
             }
-            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#beginPrice').val().trim() <= $('#endPrice').val().trim()) {
+            else {
                 document.getElementById("frm_search").submit();
             }
         }
         else {
             document.getElementById("frm_search").submit();
         }
-
     }
 
 </script>

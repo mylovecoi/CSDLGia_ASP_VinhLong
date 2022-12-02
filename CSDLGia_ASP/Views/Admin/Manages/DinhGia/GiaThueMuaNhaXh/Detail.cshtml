@@ -2,7 +2,7 @@
 @{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var tennha= (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
+    var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -26,7 +26,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Tên nhà</th>
+                    <th>Tên nhà( Detail )</th>
                     <th>Đơn vị thuê</th>
                     <th>Đơn vị tính</th>
                     <th>Giá bán</th>
@@ -41,30 +41,34 @@
                     {
                         @foreach (var item in Model.GiaThueMuaNhaXhCt)
                         {
-                <tr>
-                    <td style="text-align:center">@(record_id++)</td>
-                    @foreach (var tn in tennha)
-                    {
-                        @if (item.Maso == tn.Maso)
-                        {
-                            <td class="active">@tn.Tennha</td>
-                        }
-                    }
-                    <td>@item.Dvthue</td>
-                    <td>@item.Dvt</td>
-                    <td>@item.Dongia</td>
-                    <td>@item.Dongiathue</td>
-                    <td>
-                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                            <tr>
+                                <td style="text-align:center">@(record_id++)</td>
+
+                                <td style="text-align:center">
+                                    @foreach (var tn in tennha)
+                                    {
+                                        @if (item.Maso == tn.Maso)
+                                        {
+                                            <span>@tn.Tennha</span>
+                                        }
+                                    }
+                                </td>
+
+                                <td style="text-align:center">@item.Dvthue</td>
+                                <td style="text-align:center">@item.Dvt</td>
+                                <td style="text-align:center">@item.Dongia</td>
+                                <td style="text-align:center">@item.Dongiathue</td>
+                                <td style="text-align:center">
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                 onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                            <i class="icon-lg la la-edit text-primary"></i>
-                        </button>
-                        <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
                                 onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                            <i class="icon-lg la la-trash text-danger"></i>
-                        </button>
-                    </td>
-                </tr>
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         }
                     }
                 }
@@ -73,4 +77,4 @@
         <!--end: Datatable-->
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/GiaThueMuaNhaXh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Modal.cshtml")

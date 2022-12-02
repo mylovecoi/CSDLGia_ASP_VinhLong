@@ -3,7 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat>
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueMuaNhaXh>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -48,6 +48,7 @@
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Năm</label>
                         <select class="form-control" id="Nam" name="Nam">
+                             <option value="all">--Tất cả--</option>
                             @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -89,7 +90,7 @@
                     <th>Thông tin hồ sơ</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận hồ sơ</th>
-                    <th width="15%">Thao tác</th>
+                    <th width="18%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,9 +99,65 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td style="text-align: center">@(record_id++)</td>
-                            <td class="active">@item.TenDv</td>
-                            <td style="text-align: center">@item.TenDiaBan</td>
+                             <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">
+
+                                @if (dsdonvi != null)
+                                {
+                                    @if (item.Level == "ADMIN")
+                                    {
+                                        @if (item.Trangthai_h == "CCB")
+                                        {
+                                            @foreach (var ten in dsdonvi)
+                                            {
+                                                @if (ten.MaDv == item.Madv_h)
+                                                {
+                                                    <span>@ten.TenDv</span>
+                                                }
+                                            }
+                                        }
+                                        else if (item.Trangthai_t == "CCB")
+                                        {
+                                            @foreach (var ten in dsdonvi)
+                                            {
+                                                @if (ten.MaDv == item.Madv_t)
+                                                {
+                                                    <span>@ten.TenDv</span>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @foreach (var ten in dsdonvi)
+                                            {
+                                                @if (ten.MaDv == item.Madv)
+                                                {
+                                                    <span>@ten.TenDv</span>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @foreach (var ten in dsdonvi)
+                                        {
+                                            @if (ten.MaDv == item.Madv)
+                                            {
+                                                <span>@ten.TenDv </span>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td style="text-align: center">
+                                @foreach (var ds in dsdiaban)
+                                {
+                                    @if (item.Madiaban == ds.MaDiaBan)
+                                    {
+                                        <span>@ds.TenDiaBan</span>
+                                    }
+                                }
+                            </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td class="text-center danger">@item.Thongtin</td>
                             <td style="text-align: center">
@@ -109,44 +166,98 @@
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
                                     <br />
                                 }
-                                else if(item.Trangthai_ad == "HCB")
+                                else if (item.Trangthai_ad == "HCB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ công bố</span>
                                     <br />
                                 }
+                                else if (item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ hoàn thành</span>
+                                    <br />
+                                }
+                                else if (item.Trangthai_ad == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa công bố</span>
+                                    <br />
+                                }
                                 else
                                 {
-                                <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa công bố|chưa hoàn thành</span>
-                                <br />
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa hoàn thành</span>
+                                    <br />
                                 }
                             </td>
-                            <td style="text-align: center"></td>
-                            <td>
-                                <a asp-controller="Giathuemuanhaxh" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chi tiết"
-                                   target="_blank">
+
+                            <td style="text-align: center">
+                                @if (dsdonvi != null && item.Level != "ADMIN")
+                                {
+                                    @if (item.Trangthai_h == "CCB")
+                                    {
+                                        @foreach (var ten in dsdonvi)
+                                        {
+                                            @if (ten.MaDv == item.Macqcq_h)
+                                            {
+                                                <span>@ten.TenDv</span>
+                                            }
+                                        }
+                                    }
+                                    else if (item.Trangthai_t == "CCB")
+                                    {
+                                        @foreach (var ten in dsdonvi)
+                                        {
+                                            @if (ten.MaDv == item.Macqcq_t)
+                                            {
+                                                <span>@ten.TenDv</span>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+
+
+
+                            <td style="text-align: center">
+                                <a asp-controller="Giathuemuanhaxh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                           target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmnxh.htg", "Approve"))
                                 {
-                                    @if (item.Level == "ADMIN" || item.Level == "T")
+                                    @if (item.Level == "ADMIN")
                                     {
                                         @if (item.Trangthai_ad == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                                    onclick="HuyCongBo('@item.Mahs','HCB')">
+                                onclick="HuyCongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
+
                                         }
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                                    onclick="CongBo('@item.Mahs','CB')">
+                                onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                onclick="TraLai('@item.Id','@item.Macqcq')">
+                                                <i class="icon-lg la la-reply text-danger "></i>
+                                            </button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @if (item.Trangthai_ad == null || item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
+                                        {
+
+                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal"
+                                data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                                <i class="icon-lg la la-check text-primary"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                                onclick="TraLai( '@item.Id','@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -163,4 +274,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/GiaThueMuaNhaXh/HoanThanh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/HoanThanh/Modal.cshtml")

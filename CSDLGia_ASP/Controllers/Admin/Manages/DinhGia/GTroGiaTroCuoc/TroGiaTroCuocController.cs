@@ -164,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
-                        Thongtin = request.Thongtin,
+                        Ttqd = request.Ttqd,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -209,7 +209,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
+                        Ttqd = model.Ttqd,
                     };
 
                     var model_ct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == model_new.Mahs);
@@ -251,7 +251,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     model.Madiaban = request.Madiaban;
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
-                    model.Thongtin = request.Thongtin;
+                    model.Ttqd = request.Ttqd;
                     model.Updated_at = DateTime.Now;
                     _db.GiaTroGiaTroCuoc.Update(model);
                     _db.SaveChanges();

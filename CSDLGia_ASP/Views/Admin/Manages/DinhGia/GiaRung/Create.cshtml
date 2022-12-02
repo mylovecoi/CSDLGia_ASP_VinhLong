@@ -24,15 +24,15 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giá<small>&nbsp;rừng</small><br />
+                Thông tin hồ sơ giá<small>&nbsp;rừng ( Create )</small><br />
             </h3>
         </div>
     </div>
     <!--begin::Form-->
     <form asp-controller="Giarung" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
         <div class="card-body">
-            <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
+            <input  asp-for="Madv" />
+            <input  asp-for="Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -73,36 +73,36 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png"/>
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png"/>
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf2" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png"/>
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf3" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png"/>
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf4" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png"/>
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf5" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
             </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/GiaRung/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="Giarung" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">

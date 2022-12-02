@@ -55,6 +55,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         [NotMapped]
+        public string Tendiaban { get; set; }
+        [NotMapped]
         public List<GiaSpDvToiDaCt> GiaSpDvToiDaCt { get; set; }
         [NotMapped]
         public string MadvCh { get; set; }

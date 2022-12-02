@@ -21,6 +21,8 @@
         });
     </script>
 }
+
+
     <div class="card card-custom">
         <div class="card-header ribbon ribbon-top ribbon-ver">
             <div class="card-title">
@@ -43,7 +45,7 @@
                             <select class="form-control" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
-                                <option value="@item.MaDiaBan" >@item.TenDiaBan</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
 
                             }
                         </select>
@@ -71,12 +73,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-6">
                     <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg, .jpeg, .png" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -92,6 +93,9 @@
     </form>
     <!--end::Form-->
 </div>
+
+
+
 <script>
     function ValidateGiaSpDvCuThe() {
         if ($('#Soqd').val().trim() == '') {

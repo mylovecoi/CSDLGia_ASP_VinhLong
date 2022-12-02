@@ -255,10 +255,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tsc.ttg", "Edit"))
                 {
                     var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    model.Madiaban = request.Madiaban;
+                    
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
-                    model.Thongtin = request.Thongtin;
+                    model.Thongtinhs = request.Thongtinhs;
                     model.Updated_at = DateTime.Now;
                     _db.GiaThueTaiSanCong.Update(model);
                     _db.SaveChanges();

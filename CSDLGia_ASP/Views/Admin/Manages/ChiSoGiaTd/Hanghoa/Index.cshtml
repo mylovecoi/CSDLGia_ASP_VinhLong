@@ -1,0 +1,538 @@
+﻿@{
+    int record_id = 1;
+    var chisogia = Helpers.NhomChiSoGia();
+    var danhsach = (IEnumerable<ChiSoGiaTd>)ViewData["danhsach"];
+    var nhom = (IEnumerable<ChiSoGiaTdDm>)ViewData["nhom"];
+    var model = (IEnumerable<ChiSoGiaTdHh>)ViewData["model"];
+    var dvtinh = (IEnumerable<DmDvt>)ViewData["dvtinh"];
+}
+@*@model IEnumerable<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDmCt>*@
+@*@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.ChiSoGia.VMChiSoGiaTdDm>*@
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#nhomId_create").select2();
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh mục nhóm hàng hóa dịch vụ
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.tieuchi", "Create"))
+            {
+                <button type="button" class="btn btn-light-success font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+                <button type="button" class="btn btn-light-primary font-weight-bolder" data-toggle="modal" data-target="#Import_Modal">
+                    <i class="la la-plus"></i>Nhập file excel
+                </button>
+                <a asp-controller="ChiSoGiaTdHh" asp-action="Export" class="btn btn-light-warning">
+                    <i class="fa fa-cloud-download"></i> Tải file mẫu
+                </a>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th>STT</th>
+                    <th>Mã số</th>
+                    <th>Tên nhóm(cấp 4)</th>
+                    <th>Tên mặt hàng</th>
+                    <th>Đơn vị tính</th>
+                    <th rowspan="2" width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (model != null)
+                {
+                    @foreach (var item in model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td class="text-center active">@item.Masogoc</td>
+                            @foreach (var nh in nhom)
+                            {
+                                if (item.Masogoc == nh.Masohanghoa)
+                                {
+                                    <td class="text-center active">@nh.Tenhanghoa</td>
+                                }
+                            }
+                            <td class="text-center active">@item.Tenhanghoa</td>
+                            <td class="text-center active">@item.Dvt</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                    <i class="icon-lg la la-edit text-warning"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hoá
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="masodanhmuc_create" name="masodanhmuc_create" value="@ViewData["Masodanhmuc"]" />
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Mã nhóm</b></label>
+                            <select class="form-control" id="masonhom_create" name="masonhom_create">
+                                <option value="">-Chọn cấp nhóm danh mục-</option>
+                                @foreach (var csg in chisogia)
+                                {
+                                    <option value="@csg">@csg</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên hàng hoá</b></label>
+                            <input type="text" id="tenhanghoa_create" name="tenhanghoa_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-5">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính</b></label>
+                            <select class="form-control" id="dvtinh_create" name="dvtinh_create">
+                                <option value="">-Chọn đơn vị tính-</option>
+                                @foreach (var dvi in dvtinh)
+                                {
+                                    <option value="@dvi.Dvt">@dvi.Dvt</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-1" style="margin-top:25px">
+                        <div class="form-group fv-plugins-icon-container">
+                            <button type="button" class="btn btn-default" data-target="#dvtinhModal" data-toggle="modal">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Hiển thị báo cáo</b></label>
+                            <select class="form-control" id="baocao_create" name="baocao_create">
+                                <option value="">-Chọn trạng thái báo cáo-</option>
+                                <option value="Đang theo dõi">Đang theo dõi</option>
+                                <option value="Không theo dõi">Không theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin thông tư, quyết định
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*dvt modal*@
+<div class="modal fade" id="dvtinhModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính*</b></label>
+                            <input type="text" id="dvtinh_add" name="dvtinh_add" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="SetAdd()">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*dvt modal edit*@
+<div class="modal fade" id="dvtinhModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input hidden id="id_delete" name="id_delete" />
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính*</b></label>
+                            <input type="text" id="dvtinh_addEdit" name="dvtinh_addEdit" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="SetAddEdit()">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Import Modal-->
+<div class="modal fade" id="Import_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin mặt hàng
+                    <span class="d-block text-muted pt-2 font-size-sm">Nhận dữ liệu từ file excel</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã mặt hàng</label>
+                            <select id="mahanghoa_excel" name="mahanghoa_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "5" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên mặt hàng</label>
+                            <select id="tennhom_excel" name="tennhom_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "2" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã số gốc</label>
+                            <select id="masogoc_excel" name="masogoc_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "3" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Giá</label>
+                            <select id="gia_excel" name="gia_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "6" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị</label>
+                            <select id="dvt_excel" name="dvt_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "4" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>File dữ liệu:</label><br />
+                            <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Sheet</label>
+                            <input type="number" class="form-control" id="sheet_excel" name="sheet_excel" value="1" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div cla ss="form-group fv-plugins-icon-container">
+                            <label>Từ dòng</label>
+                            <input type="number" class="form-control" id="linestart_excel" name="linestart_excel" value="1" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đến dòng</label>
+                            <input type="number" class="form-control" id="linestop_excel" name="linestop_excel" value="752" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Import()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SetCreate() {
+        $.ajax({
+            url: '/Danhmuchanghoa/Store',
+            type: 'POST',
+            data: {
+                Tenhanghoa: $('#tenhanghoa_create').val(),
+                Masonhom: $('#masonhom_create').val(),
+                Trangthai: $('#trangthai_create').val(),
+                Dvt: $('#dvtinh_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Thêm mới thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Create_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+    function GetDelete() {
+        $.ajax({
+            url: '/Danhmuchanghoa/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/Danhmuchanghoa/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+    function GetEdit() {
+        $.ajax({
+            url: '/Danhmuchanghoa/Update',
+            type: 'POST',
+            data: {
+                Tenhanghoa: $('#tenhanghoa_edit').val(),
+                Masonhom: $('#masonhom_edit').val(),
+                Trangthai: $('#trangthai_edit').val(),
+                Dvt: $('#dvtinh_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    function SetAdd() {
+        $('#dvtinhModal').modal('hide');
+        var gt = $('#dvtinh_add').val();
+        $('#dvtinh_create').append(new Option(gt, gt, true, true));
+        $('#dvtinh_create').val(gt).trigger('change');
+    }
+    function SetAddEdit() {
+        $('#dvtinhModalEdit').modal('hide');
+        var gt = $('#dvtinh_addEdit').val();
+        $('#dvtinh_edit').append(new Option(gt, gt, true, true));
+        $('#dvtinh_edit').val(gt).trigger('change');
+    }
+    function Import() {
+        if ($('#file_excel').val() == '') {
+            toastr.error("File đính kèm không được để trống!!!", "Lỗi!");
+        } else {
+            var file = new FormData();
+            file.append("Mahanghoa", $("#mahanghoa_excel").val());
+            file.append("Tennhomhang", $("#tennhom_excel").val());
+            file.append("Dvt", $("#dvt_excel").val());
+            file.append("Magoc", $("#masogoc_excel").val());
+            file.append("Gia", $("#gia_excel").val());
+
+            file.append("FormFile", $("#file_excel")[0].files[0]);
+            file.append("Sheet", $("#sheet_excel").val());
+            file.append("LineStart", $("#linestart_excel").val());
+            file.append("LineStop", $("#linestop_excel").val());
+
+            $.ajax({
+                url: '/Danhmuchanghoa/Import',
+                type: 'POST',
+                data: file,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Thêm mới thành công!!!", "Thành công!");
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+</script>

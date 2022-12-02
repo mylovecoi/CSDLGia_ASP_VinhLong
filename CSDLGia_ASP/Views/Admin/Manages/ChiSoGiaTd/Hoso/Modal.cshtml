@@ -1,0 +1,453 @@
+﻿@{
+    int record_id = 1;
+    int record_idAv = 1;
+    //int record_hh = 1;
+    //var hanghoa = (IEnumerable<ChiSoGiaTdHh>)ViewData["hanghoa"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
+    var listTt = (IEnumerable<ChiSoGiaTdDm>)ViewData["listTt"];
+    var matt = (from t in listTt
+                group t by t.Matt into grp
+                select new
+                {
+                    matt = grp.Key,
+                });
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+<!--create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hồ sơ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên hồ sơ</b></label>
+                            <input type="text" id="thongtinbc_create" name="thongtinbc_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Nội dung</b></label>
+                            <textarea class="form-control" name="ghichu_create" id="ghichu_create" cols="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Chọn tháng</b></label>
+                            <select class="form-control" id="thang_create" name="thang_create">
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    <option value="@i">Tháng @i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Chọn địa phương</b></label>
+                            <select class="form-control" id="dp_create" name="dp_create">
+                                <option value="nt">Nông thôn</option>
+                                <option value="tt">Thành thị</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Ngày báo cáo</b></label>
+                            <input type="date" id="ngaybc_create" name="ngaybc_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Theo dõi</b></label>
+                            <select class="form-control" id="tinhtrang_create" name="tinhtrang_create">
+                                <option value="Đang theo dõi">Đang theo dõi</option>
+                                <option value="Không theo dõi">Không theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input value="@ViewData["matt"]" id="matt_create" name="matt_create" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin thông tư, quyết định
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Mathang Modal-->
+@*<form asp-controller="ChiSoGiaTdHhCt" asp-action="Add" method="post" enctype="multipart/form-data" id="testData">
+        <div class="modal fade" id="Mathang_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Thông tin hàng hoá
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="mahs_create" name="mahs_create" value="@ViewData["Mahs"]" />
+                        <div id="sample_3_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="row">
+                                <div class="table-scrollable">
+                                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_3" role="grid" aria-describedby="sample_3_info">
+                                        <thead>
+                                            <tr style="text-align:center">
+                                                <th>STT</th>
+                                                <th>Mã số</th>
+                                                <th>Tên nhóm(cấp 4)</th>
+                                                <th>Tên mặt hàng</th>
+                                                <th>Đơn vị tính</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (hanghoa != null)
+                                            {
+                                                @foreach (var item in hanghoa)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center">@(record_hh++)</td>
+                                                        <td class="text-center active">@item.Masogoc</td>
+                                                        @foreach (var nhom in allModel)
+                                                        {
+                                                            if (item.Masohanghoa == nhom.Masohanghoa)
+                                                            {
+                                                                <td class="text-center active">@nhom.Tenhanghoa</td>
+                                                            }
+                                                        }
+                                                        <td class="text-center active">@item.Tenhanghoa</td>
+                                                        <td class="text-center active">@item.Dvt</td>
+                                                        <td style="text-align: center">
+                                                            <input type="checkbox" name="chk" value="@item.Masohanghoa" onclick="setMaSo(this)" />
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-danger font-weight-bold" onclick="TestData()">Thêm mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>*@
+<script>
+    var a_hh = new Array();
+    console.log("lan1");
+    console.log(a_hh);
+    function arrayRemove(arr, value) {
+        return arr.filter(function (ele) {
+            return ele != value;
+        });
+    }
+
+    function setMaSo(obj) {
+        if (obj.checked) {
+            if (!a_hh.includes(obj.value)) {
+                a_hh.push(obj.value)
+            }
+        } else {
+            if (a_hh.includes(obj.value)) {
+                a_hh = arrayRemove(a_hh, obj.value)
+            }
+        }
+    }
+    console.log("lan2");
+    console.log(a_hh);
+    function setMaHH() {
+        if (a_hh.length > 0) {
+            $.ajax({
+                url: '/DanhMucChiSoGiaTieuDungCt/Hh',
+                type: 'POST',
+                data: {
+                    Mahs: $('#mahs_create').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message, "ok");
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        } else {
+            toastr.error("Bạn cần chọn hàng hóa, dịch vụ để thêm vào danh mục.", "Lỗi!");
+        }
+    }
+</script>
+<!--Average Modal-->
+<div class="modal fade" id="Average_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Tính trung bình
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <thead>
+                    <tr style="text-align:center">
+                        <th>STT</th>
+                        <th>Kỳ chọn</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: center">@(record_idAv++)</td>
+                                <td class="text-center active">Tháng @item.Thang</td>
+                                <td class="text-center active">@item.Giakychon</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <form asp-controller="ChiSoGiaTd" asp-action="Average" method="post" enctype="multipart/form-data" id="frm_average">
+                <input type="hidden" id="nam_average" name="nam_average" value="@ViewData["nam"]" />
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetAverage()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Chuyển Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="ChiSoGiaTd" asp-action="Complete">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hoàn thành hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận*</label>
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in donvi)
+                                            {
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function SetCreate() {
+        $.ajax({
+            url: '/ChiSoGiaTieuDung/Store',
+            type: 'POST',
+            data: {
+                Thongtinbc: $('#thongtinbc_create').val(),
+                Ghichu: $('#ghichu_create').val(),
+                Ngaybc: $('#ngaybc_create').val(),
+                Trangthai: $('#trangthai_create').val(),
+                Thang: $('#thang_create').val(),
+                Matt: $('#matt_create').val(),
+                Donvi: $('#Donvi').val(),
+                Diaphuong: $('#dp_create').val(),
+
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Thêm mới thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Create_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+    function GetDelete() {
+        $.ajax({
+            url: '/ChiSoGiaTieuDung/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/ChiSoGiaTieuDung/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+    function GetEdit() {
+        $.ajax({
+            url: '/ChiSoGiaTieuDung/Update',
+            type: 'POST',
+            data: {
+                Thongtinbc: $('#thongtinbc_edit').val(),
+                Ghichu: $('#ghichu_edit').val(),
+                Ngaybc: $('#ngaybc_edit').val(),
+                Tinhtrang: $('#tinhtrang_create').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    function TestData() {
+        document.getElementById("testData").submit();
+    }
+    function GetAverage() {
+        document.getElementById("frm_average").submit();
+    }
+</script>

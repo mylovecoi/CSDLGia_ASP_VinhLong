@@ -1,0 +1,174 @@
+﻿
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin ngành kinh doanh
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã loại đất<span class="require">*</span></label>
+                            <input type="text" name="maloaidat_create" id="maloaidat_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Loại đất<span class="require">*</span></label>
+                            <input type="text" name="loaidat_create" id="loaidat_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DmLoaiDat" asp-action="Delete">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý xóa thông tin???
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit Modal-->
+
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+       
+        if ($('#maloaidat_create').val() != '') {
+            if ($('#loaidat_create').val() != '') {
+                $.ajax({
+                    url: '/DmLoaiDat/Store',
+                    type: 'POST',
+                    data: {
+                        Maloaidat: $('#maloaidat_create').val(),
+                        Loaidat: $('#loaidat_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                    }
+                })
+            } else {
+                toastr.error("Loại đất không được để trống", "Lỗi!");              
+            }
+        } else {
+            toastr.error("Mã số không được để trống", "Lỗi!");
+        }
+    }
+
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetEdit(id) {
+
+        $.ajax({
+            url: '/DmLoaiDat/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+
+        $.ajax({
+            url: '/DmLoaiDat/Update',
+            type: 'POST',
+            data: {
+
+                Id: $('#id_edit').val(),
+                Maloaidat: $('#maloaidat_edit').val(),
+                Loaidat: $('#loaidat_edit').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+               
+            }
+        })
+
+    }
+
+    
+
+</script>

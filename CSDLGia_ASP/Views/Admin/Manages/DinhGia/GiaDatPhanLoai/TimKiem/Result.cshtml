@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDatCt>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -49,12 +49,12 @@
                     {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    <td></td>
+                    <td style="text-align: center">@item.Tendv</td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align: left">@item.Loaidat</td>
-                    <td style="text-align: left">@item.Tenvitri</td>
-                    <td style="text-align: left">@item.Dientich</td>
-                    <td style="text-align: left">@item.Giatri</td>
+                    <td style="text-align: center">@item.Loaidat</td>
+                    <td style="text-align: center">@item.Vitri</td>
+                    <td style="text-align: center">@item.Dientich</td>
+                    <td style="text-align: center">@item.Giacuthe</td>
                 </tr>
                     }
                 }

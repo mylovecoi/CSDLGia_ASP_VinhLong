@@ -488,7 +488,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
                 {
-                    var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC");
+                    var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaHhDvkCt = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == model.Mahs)
                                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv

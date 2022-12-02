@@ -40,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                 Giakk = Giakk,
                 Gialk = Gialk,
                 Ghichu = Ghichu,
-                Trangthai = "CXD",
+                Trangthai = "XD",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };

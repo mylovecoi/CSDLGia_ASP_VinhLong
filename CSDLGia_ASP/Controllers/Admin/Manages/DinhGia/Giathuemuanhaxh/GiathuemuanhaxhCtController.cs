@@ -29,13 +29,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         [HttpPost]
         public JsonResult Store(string Mahs,string Dvthue,string Diachi, string Tennha, string Soqdpd, DateTime Thoigianpd,string Soqddg,DateTime Thoigiandg,string Hdthue,string Ththue,DateTime Tungay,DateTime Denngay,string Dvt,double Dongia,double Dongiathue)
         {
+            
             var model = new GiaThueMuaNhaXhCt
             {
                 Mahs = Mahs,
                 Dvthue=Dvthue,
                 Diachi=Diachi,
                 Soqdpd=Soqdpd,
-                Maso=Tennha,
+                Maso= Tennha,
                 Thoigianpd=Thoigianpd,
                 Soqddg = Soqddg,
                 Thoigiandg = Thoigiandg,
@@ -77,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th>STT</th>";
-            result += "<th>Tên nhà</th>";
+            result += "<th>Tên nhà </th>";
             result += "<th>Đơn vị thuê</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Giá bán</th>";
@@ -87,17 +88,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 
             foreach (var item in model)
             {
-                result += "<tr>";
+                result += "<tr style='text-align:center'>";
                 result += "<td style='text-align:center'>"+(record++)+"</td>";
-                foreach(var tn in tennha){
-                    if(item.Maso==tn.Maso){
-                        result += "<td>" + tn.Tennha + "</td>";
-                    }
-                    else
-                    {
-                        result += "";
+
+                result += "<td style='text-align:center'>";
+                foreach (var tn in tennha){
+                    if(item.Maso == tn.Maso){
+                        result += "<span>" + tn.Tennha + "</span>";
                     }
                 }
+                result += "</td>";
+
                 result += "<td>"+ item.Dvthue +"</td>";
                 result += "<td>"+item.Dvt+"</td>";
                 result += "<td>"+item.Dongia+"</td>";
@@ -124,10 +125,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
-                result += "<div class='row'>";
+
+                result += "<div class='row'>"; // Mở row
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Tên nhà</b></label>";
+                result += "<label>Tên nhà(DinhGiaThueMuaNhaXhCt/Edit)</label>";
                 result += "<select id='tennha_edit' name='tennha_edit' class='form-control'>";
                 foreach (var tn in tennha)
                 {
@@ -136,89 +138,117 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 result += "</select>";
                 result += "</div>";
                 result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đơn vị thuê</b></label>";
-                result += "<input type='text' id='donvithue_edit' name='donvithue_edit' value='"+model.Dvthue+"' class='form-control'/>";
+                result += "<label>Đơn vị thuê</label>";
+                result += "<input type='text' id='donvithue_edit' name='donvithue_edit' value='" + model.Dvthue + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa chỉ</b></label>";
+                result += "<label>Địa chỉ</label>";
                 result += "<input type='text' id='diachi_edit' name='diachi_edit' value='" + model.Dvthue + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='row''>";
+                result += "</div>"; // Đóng row
+
+                result += "<div class='row'>"; // Mở row
+
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Số QĐ phê duyệt chủ trương</b></label>";
-                result += "<input type='text' id='sqdct_edit' name='sqdct_edit' value='"+model.Soqdpd+"' class='form-control'/>";
+                result += "<label>Số QĐ phê duyệt chủ trương</label>";
+                result += "<input type='text' id='sqdct_edit' name='sqdct_edit' value='" + model.Soqdpd + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='row'><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Thời điểm PD chủ trương</b></label>";
-                result += "<input type='date' id='tdqdct_edit' name='tdqdct_edit' class='form-control' value='"+model.Thoigianpd+"'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời điểm PD chủ trương</label>";
+                result += "<input type='date' id='tdqdct_edit' name='tdqdct_edit' class='form-control' value='" + model.Thoigianpd + "'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Số QĐ phê duyệt giá</b></label>";
-                result += "<input type='text' id='sqdg_edit' name='sqdg_edit' class='form-control' value='"+model.Soqdpd+"'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Số QĐ phê duyệt giá</label>";
+                result += "<input type='text' id='sqdg_edit' name='sqdg_edit' class='form-control' value='" + model.Soqdpd + "'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='row'><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Thời điểm PD giá</b></label>";
-                result += "<input type='date' id='tdqdg_edit' name='tdqdg_edit' class='form-control' value='"+model.Thoigiandg+"'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời điểm PD giá</label>";
+                result += "<input type='date' id='tdqdg_edit' name='tdqdg_edit' class='form-control' value='" + model.Thoigiandg + "'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "</div>";
-                result += "<div class='row'>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Hợp đồng số</b></label>";
-                result += "<input type='text' id='hdso_edit' name='hdso_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Hdthue+"'/>";
-                result += "</div></div><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Thời hạn</b></label>";
-                result += "<input type='text' id='thoihan_edit' name='thoihan_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Ththue+"'/>";
-                result += "</div></div>";
-                 result += "<div class='row'><div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Từ ngày</b></label>";
-                result += "<input type='date' id='tungay_edit' name='tungay_edit' class='form-control' value='"+model.Tungay+"'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Hợp đồng số</label>";
+                result += "<input type='text' id='hdso_edit' name='hdso_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Hdthue + "'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đến ngày</b></label>";
-                result += "<input type='date' id='denngay_edit' name='denngay_edit' class='form-control' value='"+model.Denngay+"'/>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thời hạn</label>";
+                result += "<input type='text' id='thoihan_edit' name='thoihan_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Ththue + "'/>";
                 result += "</div>";
                 result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Từ ngày</label>";
+                result += "<input type='date' id='tungay_edit' name='tungay_edit' class='form-control' value='" + model.Tungay + "'/>";
                 result += "</div>";
-                result += "<div class='row'>";
-                result += "<div class='col-xl-3'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đơn vị tính</b></label>";
-                result += "<select class='form-control' id='dvtinh_edit' name='dvtinh_edit'>";
-                result += "<option value='dv1'>DV1</option>";
-                result += "<option value='dv2'>DV2</option>";
-                result += "<option value='dv3'>DV3</option>";
-                result += "<option value='dv4'>DV4</option>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Đến ngày</label>";
+                result += "<input type='date' id='denngay_edit' name='denngay_edit' class='form-control' value='" + model.Denngay + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<label class='form-control-label'>Đơn vị tính</label>";
+                result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
+
+                var dvt = _db.DmDvt.ToList();
+                foreach (var item in dvt)
+                {
+                    result += "<option value ='" + @item.Dvt + "'>" + @item.Dvt + "</ option >";
+                }
                 result += "</select>";
                 result += "</div>";
+
+                result += "<div class='col-xl-1' style='padding-left: 0px;'>";
+                result += "<label class='control-label'>Thêm</label>";
+                result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
+                result += "</button>";
                 result += "</div>";
-                result += "</div>";
-                result+= "<div class='col-xl-1' style='padding-left: 0px;'>";
-                result+= "<label class='control-label'>&nbsp;&nbsp;&nbsp;</label>";
-                result+= "<button type='button' class='btn btn-default' data-target='#modal-dvt' data-toggle='modal'>";
-                result += "<i class='fa fa-plus'></i></button></div>";
-                result += "<div class='col-xl-4'><div class='form-group fv-plugins-icon-container'>";
+
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá bán*</b></label>";
-                result += "<input type='text' id='giaban_edit' name='giaban_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Dongia+"'/>";
+                result += "<input type='text' id='giaban_edit' name='giaban_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia + "'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-4'><div class='form-group fv-plugins-icon-container'>";
+
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá thuê*</b></label>";
-                result += "<input type='text' id='giathue_edit' name='giathue_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Dongiathue+"'/>";
+                result += "<input type='text' id='giathue_edit' name='giathue_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongiathue + "'/>";
                 result += "</div>";
                 result += "</div>";
+
+                result += "</div>"; // Đóng row
+
                 result += "<input type='hidden' id='id_edit' name='id_edit' value='"+Id+"'/>";
-                result += "</div></div>";
-                
+                result += "</div>";
+
                 var data = new { status = "success", message = result };
                 return Json(data);
             }
@@ -230,10 +260,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         }
         [Route("DinhGiaThueMuaNhaXhCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, string Dvthue, string Tennha, string Soqdpd, DateTime Thoigianpd, string Soqddg, DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
+        public JsonResult Update(int Id, string Dvthue, string Tennha, string Soqdpd, DateTime Thoigianpd, string Soqddg, DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
         {
             var model = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Id == Id);
-            model.Mahs = Mahs;
+           
                 model.Dvthue = Dvthue;
                 model.Soqdpd = Soqdpd;
                 model.Maso = Tennha;
@@ -250,7 +280,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             model.Updated_at = DateTime.Now;
             _db.GiaThueMuaNhaXhCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Mahs);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }

@@ -149,14 +149,20 @@
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Edit"))
                                     {
-                                        <a asp-controller="GiaHhDvk" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        <a asp-controller="GiaHhDvkTh" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-warning"></i>
                                         </a>
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Delete"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Tạo hồ sơ" data-toggle="modal" data-target="#CreateHs_Modal" onclick="SetCreateHs('@item.Mahs')">
+                                            <i class="icon-lg la la-plus text-primary"></i>
                                         </button>
                                     }
                                 }

@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table - bordered table - hover' id='datatable_4'>";
+            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th>STT</th>";
@@ -80,8 +80,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
             foreach (var item in model)
             {
-                result += "<tr>";
-                result += "<td style='text-align:center'>"+(record++)+"</td>";
+                result += "<tr  style='text-align:center'>";
+                result += "<td>"+(record++)+"</td>";
                 result += "<td class='active'>" + item.Vitri + "</td>";
                 result += "<td>" + item.Diemdau + "</td>";
                 result += "<td>" + item.Diemcuoi + "</td>";
@@ -156,10 +156,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         }
         [Route("DinhGiaThueMatDatMatNuocCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, int Vitri, string Diemdau, string Diemcuoi, string Mota,double Dientich,double Dongia)
+        public JsonResult Update(int Id, int Vitri, string Diemdau, string Diemcuoi, string Mota,double Dientich,double Dongia)
         {
             var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
-            model.Mahs = Mahs;
+           
             model.Vitri = Vitri;
             model.Diemdau = Diemdau;
             model.Diemcuoi = Diemcuoi;
@@ -169,7 +169,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             model.Updated_at = DateTime.Now;
             _db.GiaThueMatDatMatNuocCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Mahs);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }

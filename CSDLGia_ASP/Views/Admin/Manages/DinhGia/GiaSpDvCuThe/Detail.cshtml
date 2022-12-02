@@ -44,16 +44,19 @@
                         {
                             <tr>
                                 <td style="text-align:center">@(record_id++)</td>
-                                <td style="text-align:center"  class="active">@item.Phanloaidv</td>
+                                <td style="text-align:center" class="active">@item.Phanloaidv</td>
                                 <td style="text-align:center" >@item.Mota</td>
                                 <td style="text-align:center" >@item.Dvt</td>
                                 <td style="text-align:center" >@item.Mucgia</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </button>
-                                  
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                            onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
                                 </td>
                             </tr>
                         }

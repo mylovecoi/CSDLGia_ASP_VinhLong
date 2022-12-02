@@ -1,0 +1,121 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+
+
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    GIÁ HÀNG HÓA, DỊCH VỤ KHÁC THEO QUY ĐỊNH CỦA PHÁP LUẬT CHUYÊN NGÀNH
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        @*sau khi thêm load lại chỗ này*@
+        <form asp-controller="GiaHhDvCn" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_hhdvcn_store">
+            <div class="card-body">
+                <input asp-for="Mahs" value="@Model.Mahs">
+                <input asp-for="Madv" value="@Model.Madv">
+                <div class="row">
+                  
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Số quyết định</label>
+                            <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Thời điểm*</label>
+                            <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Thông tin quyết định</label>
+                            <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label">File đính kèm</label>
+                            <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png" />
+                        </div>
+                    </div>
+                </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvCn/Detail.cshtml")
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaHhDvCn" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateGiaHhDvCn()"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValidateGiaHhDvCn() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_hhdvcn_store").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

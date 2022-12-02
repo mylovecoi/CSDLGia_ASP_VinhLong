@@ -30,70 +30,72 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvToiDa" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvtoida_store">
-            <input asp-for="Madv" value="@ViewData["Madv"]">
-            <input asp-for="Manhom" value="@ViewData["Manhom"]">
-            <input asp-for="Mahs" value="@ViewData["Mahs"]">
+            <div class="card-body">
+                <input asp-for="Madv" value="@ViewData["Madv"]">
+                <input asp-for="Manhom" value="@ViewData["Manhom"]">
+                <input asp-for="Mahs" value="@ViewData["Mahs"]">
 
-            <div class="row">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Số quyết định</label>
+                            <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Thời điểm*</label>
+                            <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Nội dung</label>
+                            <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg, ,jpeg, .png" class="form-control" />
                     </div>
                 </div>
 
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
-                    </div>
-                </div>
+                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Detail.cshtml")
             </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Nội dung</label>
-                        <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-            </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Detail.cshtml")
         </form>
         <div class="card-footer" style="text-align:center">
-        <a asp-controller="GiaSpDvToiDa" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="GiaSpDvToiDa" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
             <button type="button" class="btn btn-primary mr-2" onclick="ValidateSpDvToiDa()"><i class="la la-check"></i>Thêm mới</button>
         </div>
-     
-      </div>
+
+    </div>
 
     <!--end::Form-->
 
-<script>
+    <script>
         function ValidateSpDvToiDa() {
-        if ($('#Soqd').val().trim() == '') {
-            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            if ($('#Soqd').val().trim() == '') {
+                toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
             } else {
-                document.getElementById("frm_spdvtoida_store").submit();
+                if ($('#Thoidiem').val().trim() == '') {
+                    toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+                } else {
+                    document.getElementById("frm_spdvtoida_store").submit();
+                }
             }
         }
-    }
-</script>
-@section Scripts{
+    </script>
+    @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

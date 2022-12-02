@@ -19,7 +19,9 @@
             TableManaged4.init();
         });
     </script>
+
 }
+
     <div class="card card-custom">
         <div class="card-header ribbon ribbon-top ribbon-ver">
             <div class="card-title">
@@ -30,9 +32,11 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
+            <div class="card-body">
             <input asp-for="Madv" value="@ViewData["Madv"]">
             <input asp-for="Manhom" value="@ViewData["Manhom"]">
             <input asp-for="Mahs" value="@ViewData["Mahs"]">
+
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
@@ -57,15 +61,16 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>File đính kèm</label>
+                            <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        </div>
                     </div>
                 </div>
-            </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Detail.cshtml")
+            </div>
         </form>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="GiaSpDvKhungGia" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">

@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     ViewData["Matt"] = Matt;
                     ViewData["Tentt"] = _db.GiaHhDvkNhom.FirstOrDefault(t => t.Matt == Matt).Tentt;
-                    ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC");
+                    ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     ViewData["Dvt"] = _db.DmDvt;
                     ViewData["Title"] = "Thông tin chi tiết hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";
@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Edit"))
                 {
                     var model = _db.GiaHhDvkDm.FirstOrDefault(p => p.Id == Id);
-                    var dmnhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC");
+                    var dmnhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var dvt = _db.DmDvt;
 
                     if (model != null)

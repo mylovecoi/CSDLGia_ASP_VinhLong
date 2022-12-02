@@ -1,0 +1,84 @@
+﻿@{
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDd>
+
+<style>
+    .dropdown-submenu .dropdown-menu {
+        top: -3px;
+        left: 100%;
+        margin-top: -1px;
+    }
+</style>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            $('.js-example-basic-multiple').select2();
+        });
+        $(function () {
+            $('#Matt').change(function () {
+                var current_path_url = '/ChiSoGiaTieuDung?';
+                var matt = '&Matt=' + $('#Matt').val();
+                var madv = '&Madv=' + $('#Madv').val();
+                var url = current_path_url + madv + matt;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["tenhs"]
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @*<a asp-controller="ChiSoGiaTdDd" asp-action="Create" class="btn btn-primary font-weight-bolder" title="Thêm mới"
+               asp-route-Madv="@ViewData["Donvi"]" asp-route-Matt="@ViewData["matt"]">
+                <i class="icon-lg la la-plus text-primary"></i>Thêm mới
+            </a>*@
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Kết quả chỉ số</label>
+                    <input class="form-control" value="@ViewData["gia"]" readonly />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    @if (ViewData["state"].ToString() == "tang")
+                    {
+                        <label style="font-weight:bold; color:blue">Tăng</label>
+                    }
+                    else
+                    {
+                        <label style="font-weight:bold; color:blue">Giảm</label>
+                    }
+                    <input class="form-control" value="@ViewData["compare"]" readonly />
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+

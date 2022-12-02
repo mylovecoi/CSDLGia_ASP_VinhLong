@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -20,30 +20,30 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Hồ sơ giá hàng hóa dịch vụ<small> thêm mới</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Hồ sơ giá hàng hóa dịch vụ<small> thêm mới</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaHhDvk" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giahhdvk_store">
-            <div class="card-body">
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <input asp-for="Madv" value="@ViewData["MadvBc"]">
-                <input asp-for="Mahs" value="@ViewData["Mahs"]">
-                <input asp-for="Matt" value="@ViewData["MattBc"]">
-                <input asp-for="Madiaban" value="@ViewData["MadiabanBc"]">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaHhDvk" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giahhdvk_store">
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <input asp-for="Madv" value="@ViewData["MadvBc"]" hidden>
+            <input asp-for="Mahs" value="@ViewData["Mahs"]" hidden>
+            <input asp-for="Matt" value="@ViewData["MattBc"]" hidden>
+            <input asp-for="Madiaban" value="@ViewData["MadiabanBc"]" hidden>
 
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Theo thông tư quyết định</label>
-                            <select asp-for="Matt" class="form-control" disabled="disabled">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Theo thông tư quyết định</label>
+                        <select asp-for="Matt" class="form-control" disabled="disabled">
                             @foreach (var item in nhomhhdvk)
                             {
                                 <!option value="@item.Matt" @((string)ViewData["MattBc"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
@@ -142,4 +142,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

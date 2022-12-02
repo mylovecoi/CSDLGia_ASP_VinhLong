@@ -1,0 +1,161 @@
+﻿@{
+    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
+    var nhom1 = allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "1");
+    var nhom2 = allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "2");
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+<style>
+    @*#nhomSelect1 ~ spanselect2-container--below {
+        width: 400px;
+    }*@
+</style>
+}
+@section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            $('.selectMul').select2();
+        });
+    </script>
+}
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
+</div>
+<div class="card card-custom" style="border: 1px solid #60aee4;">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+            </h3>
+        </div>
+        <div class="card-toolbar">
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_update">
+
+    </div>
+    <a asp-controller="ChiSoGiaTdDd" asp-action="Calculate" asp-route-Mahs="@ViewData["Mahs"]"
+       class="btn btn-sm btn-clean btn-icon btn-success" style="width:auto">
+        Dự đoán chí số giá CPI
+    </a>
+
+</div>
+<!--Predict Modal-->
+<div class="modal fade" id="Predict_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Dự đoán chỉ số
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input id="Id" name="Id" type="hidden"/>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Xu hướng dự đoán</label>
+                            <select id="xuhuong" name="xuhuong" class="form-control">
+                                <option value="">--Chọn xu hướng--</option>
+                                <option value="tang">Tăng</option>
+                                <option value="giam">Giảm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tỉ lệ dự đoán</label>
+                            <input name="tile" id="tile" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="UpdateElement()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.selectMul').select2();
+        
+    });
+    function SetUpdate() {
+        $.ajax({
+            url: "/DuDoanChiSoGiaTieuDung/SetUpdate",
+            type: "POST",
+            data: {
+                List1: $('#nhomSelect1').val(),
+                List2: $('#nhomSelect2').val(),
+                List3: $('#nhomSelect3').val(),
+                Nam: $('#Nam').val(),
+                Thang: $('#Thang').val(),
+                Mahs: $('#Mahs').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_update').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        });
+    }
+    function GetUpdate(id) {
+        document.getElementById("Id").value = id;
+    }
+    function UpdateElement() {
+        var nhom = document.getElementsByName('nhom[]');
+        var newA = [];
+        for (var i = 0; i < nhom.length; i++) {
+            var a = nhom[i];
+            v = a.value;
+            newA.push(v);
+        }
+        $.ajax({
+            url: "/DuDoanChiSoGiaTieuDung/UpdateElement",
+            type: 'POST',
+            data: {
+                Id: $('#Id').val(),
+                Xuhuong: $('#xuhuong').val(),
+                Tile: $('#tile').val(),
+                List: newA,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#frm_update').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Predict_Modal').modal("hide");
+                    //toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        });
+    }
+</script>

@@ -86,7 +86,7 @@
                         <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gia)</td>
                         <td style="text-align: right;font-weight: bold">@(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(ct.Gia - ct.Gialk))</td>
                         <td style="text-align: right;font-weight: bold">
-                            @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr((ct.Gia - ct.Gialk) * 100 / ct.Gialk))
+                            @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(((ct.Gia - ct.Gialk)/ ct.Gialk)*100))
                         </td>
                         <td>@ct.Nguontt</td>
                         <td>@ct.Ghichu</td>

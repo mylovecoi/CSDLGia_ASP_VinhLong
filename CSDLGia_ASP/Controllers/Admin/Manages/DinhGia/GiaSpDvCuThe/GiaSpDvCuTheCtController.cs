@@ -129,6 +129,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
             return result;
         }
-
+        [Route("DinhGiaSpDvCuTheCt/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
+            _db.GiaSpDvCuTheCt.Remove(model);
+            _db.SaveChanges();
+            var result = GetDataCt(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
     }
 }

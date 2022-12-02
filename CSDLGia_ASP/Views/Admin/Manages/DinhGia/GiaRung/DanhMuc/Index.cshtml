@@ -30,8 +30,8 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.r.dm", "Create"))
             {
-                <button type="button" class="btn btn-sm btn-clean btn-icon" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus">Thêm mới</i>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
             }
 
@@ -90,13 +90,13 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label><b>Mã nhóm*<b></label>
+                                <label>Mã nhóm</label>
                                 <input type="text" id="manhom_create" name="manhom_create" class="form-control" />
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label><b>Tên nhóm*</b></label>
+                                <label>Tên nhóm</label>
                                 <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                             </div>
                         </div>

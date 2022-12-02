@@ -165,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
-                        Thongtin = request.Thongtin,
+                        Ttqd = request.Ttqd,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -211,7 +211,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
+                        Ttqd = model.Ttqd,
                     };
 
                     var model_ct = _db.GiaSpDvCiCt.Where(t => t.Mahs == model_new.Mahs);
@@ -253,7 +253,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     model.Madiaban = request.Madiaban;
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
-                    model.Thongtin = request.Thongtin;
+                    model.Ttqd = request.Ttqd;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCi.Update(model);
                     _db.SaveChanges();
@@ -388,10 +388,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.ttg", "Edit"))
                 {
-                    var model_join = from dgct in _db.GiaTroGiaTroCuocCt
-                                     join dg in _db.GiaTroGiaTroCuoc on dgct.Mahs equals dg.Mahs
-                                     join dgdm in _db.GiaTroGiaTroCuocDm on dgct.Maspdv equals dgdm.Maspdv
-                                     select new VMDinhGiaTroGiaTroCuoc
+                    var model_join = from dgct in _db.GiaSpDvCiCt
+                                     join dg in _db.GiaSpDvCi on dgct.Mahs equals dg.Mahs
+                                     join dgdm in _db.GiaSpDvCiDm on dgct.Maspdv equals dgdm.Maspdv
+                                     select new VMDinhGiaDvCi
                                      {
                                          Id = dg.Id,
                                          Mahs = dg.Mahs,

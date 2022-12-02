@@ -53,5 +53,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ipf5 { get; set; }
         public string Tunam { get; set; }
         public string Dennam { get; set; }
+        [NotMapped]
+        public string Tendiaban { get; set; }
+
     }
 }

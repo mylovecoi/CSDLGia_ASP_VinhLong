@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 /*using Grpc.Core;*/
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
@@ -21,14 +22,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GianuocshController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public GianuocshController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         [Route("DinhGiaNuocSh")]
         [HttpGet]
-        public IActionResult Index(string Donvi, string Nam)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -45,40 +49,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
-                                       TenDv = dv.TenDv
+                                       TenDv = dv.TenDv,
+                                        MaDv = dv.MaDv,
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
-                            Donvi = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(Donvi))
-                            {
-                                //Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                                model = _db.GiaNuocSh.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = _db.GiaNuocSh.Where(t => t.Macqcq == Donvi && t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                        }
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
+                            Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                             ViewData["DsDonVi"] = dsdonvi;
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDiaBan == Donvi);
+                            if (string.IsNullOrEmpty(Madv))
+                            {
+                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                                //model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                                model = _db.GiaNuocSh.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                            }
+                            else
+                            {
+                                model = _db.GiaNuocSh.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                            }
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan.ToList();
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Donvi"] = Donvi;
-                        //ViewData["Loairung"]=_db.GiaNuocShDm.ToList();
+                        ViewData["Donvi"] = Madv;
+                       
                         ViewData["Title"] = " Thông tin hồ sơ giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
@@ -109,31 +110,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         }
         [Route("DinhGiaNuocSh/Create")]
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
                 {
-                    var dsdonvi = (from com in _db.Company
-                                   join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == "NSH") on com.Mahs equals lvkd.Mahs
-                                   select new VMCompany
-                                   {
-                                       Id = com.Id,
-                                       Manghe = lvkd.Manghe,
-                                       Madv = com.Madv,
-                                       Madiaban = com.Madiaban,
-                                       Mahs = com.Mahs,
-                                       Tendn = com.Tendn,
-                                       Trangthai = com.Trangthai
-                                   }).FirstOrDefault();
 
-                    var viewmodel = new VMDinhGiaNuocSh()
+                    var model = new VMDinhGiaNuocSh()
                     {
-                        Madv = dsdonvi.Madv,
+                        Madv = Madv,
                         Thoidiem = DateTime.Now,
-                        Mahs = dsdonvi.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                        //GiaNuocShCt = new List<GiaNuocShCt>(),
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                   
                     };
                     var dm = _db.GiaNuocShDm.ToList();
                     foreach (var item in dm)
@@ -142,22 +131,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         {
                             Madoituong = item.Madoituong,
                             Doituongsd = item.Doituongsd,
-                            Mahs= viewmodel.Mahs,
+                            Mahs= model.Mahs,
                         };
-                        //viewmodel.GiaNuocShCt.Add(ct);
+                     
+
                         _db.GiaNuocShCt.Add(ct);
                         _db.SaveChanges();
                     }
-                    ViewData["Mahs"] = dsdonvi.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["Madv"] = Madv;
+                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();           
                     ViewData["Danhmuc"]=_db.GiaNuocShDm.ToList();
-                    ViewData["Chitiet"] = _db.GiaNuocShCt.Where(t => t.Mahs == viewmodel.Mahs);
+                    ViewData["Chitiet"] = _db.GiaNuocShCt.Where(t => t.Mahs == model.Mahs);
                     ViewData["Title"] = "Thêm mới giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_tm";
+                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
 
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Create.cshtml", viewmodel);
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Create.cshtml", model);
                 }
                 else
                 {
@@ -173,12 +164,81 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         
         [Route("DinhGiaNuocSh/Store")]
         [HttpPost]
-        public IActionResult Store(VMDinhGiaNuocSh request)
+        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
+
+                    if (Ipf2 != null && Ipf2.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
+                        string extension = Path.GetExtension(Ipf2.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf2.CopyToAsync(FileStream);
+                        }
+                        request.Ipf2 = filename;
+                    }
+
+                    if (Ipf3 != null && Ipf3.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
+                        string extension = Path.GetExtension(Ipf3.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf3.CopyToAsync(FileStream);
+                        }
+                        request.Ipf3 = filename;
+                    }
+
+                    if (Ipf4 != null && Ipf4.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
+                        string extension = Path.GetExtension(Ipf4.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf4.CopyToAsync(FileStream);
+                        }
+                        request.Ipf4 = filename;
+                    }
+
+                    if (Ipf5 != null && Ipf5.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
+                        string extension = Path.GetExtension(Ipf5.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf5.CopyToAsync(FileStream);
+                        }
+                        request.Ipf5 = filename;
+                    }
                     var model = new GiaNuocSh
                     {
                         Mahs=request.Mahs,
@@ -186,10 +246,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         Madiaban=request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
-                        Thongtin = request.Thongtin,
+                        Mota = request.Mota,
                         Ghichu=request.Ghichu,
                         Tunam=request.Tunam,
                         Dennam=request.Dennam,
+                        Ipf1 = request.Ipf1,
+                        Ipf2 = request.Ipf2,
+                        Ipf3 = request.Ipf3,
+                        Ipf4 = request.Ipf4,
+                        Ipf5 = request.Ipf5,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -253,14 +318,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Edit"))
                 {
-                    var model = _db.GiaNuocSh.FirstOrDefault(t => t.Mahs == Mahs);
-                    //var modelDm = _db.GiaNuocShDm.Select(t=>t.Madoituong);
+                    var model = _db.GiaNuocSh.FirstOrDefault(t => t.Mahs == Mahs); // Lấy ra bản ghi có Mahs bằng Mahs chuyền sang
                     var model_new = new VMDinhGiaNuocSh
                     {
                         Madv = model.Madv,
                         Mahs = model.Mahs,
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
+                        Tunam = model.Tunam,
+                        Dennam = model.Dennam,
+                        Mota = model.Mota,
+                        Ipf1 = model.Ipf1,
+                        Ipf2 = model.Ipf2,
+                        Ipf3 = model.Ipf3,
+                        Ipf4 = model.Ipf4,
+                        Ipf5 = model.Ipf5,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
                         Ghichu=model.Ghichu,
@@ -268,10 +340,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
 
                     var model_ct = _db.GiaNuocShCt.Where(t => t.Mahs == model_new.Mahs);
 
-                    //model_new.GiaNuocShCt = model_ct.ToList();
-
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
+                    ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["Ipf2"] = model.Ipf2;
+                    ViewData["Ipf3"] = model.Ipf3;
+                    ViewData["Ipf4"] = model.Ipf4;
+                    ViewData["Ipf5"] = model.Ipf5;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Chitiet"] = _db.GiaNuocShCt.Where(t => t.Mahs == Mahs);
                     ViewData["Title"] = "Chỉnh sửa giá nước sinh hoạt";
@@ -296,6 +371,63 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         [Route("DinhGiaNuocSh/Update")]
         [HttpPost]
 
+        [Route("DinhGiaNuocSh/Show")]
+        [HttpGet]
+        public IActionResult Show(string Mahs)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Edit"))
+                {
+                    var model = _db.GiaNuocSh.FirstOrDefault(t => t.Mahs == Mahs);
+                    var model_new = new VMDinhGiaNuocSh
+                    {
+                        Madv = model.Madv,
+                        Mahs = model.Mahs,
+                        Madiaban = model.Madiaban,
+                        Tunam = model.Tunam,
+                        Dennam = model.Dennam,
+                        Soqd = model.Soqd,
+                        Mota = model.Mota,
+                        Ipf1 = model.Ipf1,
+                        Ipf2 = model.Ipf2,
+                        Ipf3 = model.Ipf3,
+                        Ipf4 = model.Ipf4,
+                        Ipf5 = model.Ipf5,
+                        Thoidiem = model.Thoidiem,
+                        Thongtin = model.Thongtin,
+                        Ghichu = model.Ghichu,
+                    };
+
+                    var model_ct = _db.GiaNuocShCt.Where(t => t.Mahs == model_new.Mahs);
+
+                    ViewData["Madv"] = model.Madv;
+                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["Ipf2"] = model.Ipf2;
+                    ViewData["Ipf3"] = model.Ipf3;
+                    ViewData["Ipf4"] = model.Ipf4;
+                    ViewData["Ipf5"] = model.Ipf5;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["Chitiet"] = _db.GiaNuocShCt.Where(t => t.Mahs == Mahs);
+                    ViewData["Title"] = "Chỉnh sửa giá nước sinh hoạt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgnsh";
+                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
+
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Show.cshtml", model_new);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
         public IActionResult Update(VMDinhGiaNuocSh request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -336,7 +468,64 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
+        [Route("DinhGiaNuocSh/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Nam, string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
+                {
+
+                    // Lấy bản ghi có năm và mã đơn vị trùng với năm và mã đơn vị truyền vào ( Năm và Mã đơn vị tuyền từ Index sang )
+
+
+                    var model = _db.GiaNuocSh.Where(t => t.Trangthai == "HT").ToList();
+
+
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+
+                    }
+                    model = model.Where(t => t.Madv == Madv).ToList();
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        model = model.ToList();
+                    }
+                    else
+                    {
+                        if (Nam != "all")
+                        {
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                        }
+                        else
+                        {
+                            model = model.ToList();
+                        }
+                    }
+
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgnsh";
+                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Print.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
         [Route("DinhGiaNuocSh/Search")]
         [HttpGet]
         public IActionResult Search()
@@ -382,13 +571,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         }
         [Route("DinhGiaNuocSh/Result")]
         [HttpPost]
-        public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string dt,string dv)
+        public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string dt,string madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Edit"))
                 {
-                    var model_join = from dgct in _db.GiaNuocShCt
+                    var model = from dgct in _db.GiaNuocShCt
                                      join dg in _db.GiaNuocSh on dgct.Mahs equals dg.Mahs
                                      select new VMDinhGiaNuocShSearch
                                      {
@@ -409,15 +598,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                                          Giachuathue3=dgct.Giachuathue3,
                                          Giachuathue4=dgct.Giachuathue4,
                                      };
-                    model_join.Where(t => t.Madoituong == dt
+                    /*model_join.Where(t => t.Madoituong == dt
                                     && t.Macqcq == dv
                                     && t.Thoidiem >= beginTime
                                     && t.Thoidiem <= endTime
                                     && t.Giatri >= beginPrice
-                                    && t.Giatri <= endPrice);
+                                    && t.Giatri <= endPrice);*/
+                    if (madv != "All")
+                    {
+                        model = model.Where(t => t.Madv == madv);
+                    }
+                    if (dt != "All")
+                    {
+                        model = model.Where(t => t.Madoituong == dt);
+                    }
+                    if (beginTime.ToString("yyMMdd") != "010101")
+                    {
+                        model = model.Where(t => t.Thoidiem >= beginTime);
+                    }
+
+                    if (endTime.ToString("yyMMdd") != "010101")
+                    {
+                        model = model.Where(t => t.Thoidiem <= endTime);
+                    }
+                    model = model.Where(t => t.Giachuathue >= beginPrice);
+                    if (endPrice > 0)
+                    {
+                        model = model.Where(t => t.Giachuathue <= endPrice);
+                    }
                     ViewData["Doituong"] = _db.GiaNuocShDm;
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/TimKiem/Result.cshtml", model_join);
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/TimKiem/Result.cshtml", model);
                 }
                 else
                 {

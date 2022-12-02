@@ -22,13 +22,14 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Loaiduong { get; set; }
         public string Mota { get; set; }
         public string Mdsd { get; set; }
-        /*public decimal Giavt1 { get; set; }
-        public decimal Giavt2 { get; set; }
-        public decimal Giavt3 { get; set; }
-        public decimal Giavt4 { get; set; }
-        public decimal Giavt5 { get; set; }*/
+        public double Giavt1 { get; set; }
+        public double Giavt2 { get; set; }
+        public double Giavt3 { get; set; }
+        public double Giavt4 { get; set; }
+        public double Giavt5 { get; set; }
         public double Hesok { get; set; }
         public double Sapxep { get; set; }
+        public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }

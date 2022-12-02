@@ -19,10 +19,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
     public class GiaTrungThauDatController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaTrungThauDatController(CSDLGiaDBContext db)
+        public GiaTrungThauDatController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
         [Route("GiaTrungThauDat")]
         [HttpGet]
@@ -30,7 +32,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Index"))
                 {
 
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level == "H")
@@ -118,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Create"))
                 {
                     var model = new GiaDauGiaDat
                     {
@@ -155,13 +157,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat/Store")]
         [HttpPost]
-        public IActionResult Store(GiaDauGiaDat request )
+        public async Task<IActionResult> Store(GiaDauGiaDat request, IFormFile Ipf1)
         {
          
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Create"))
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
                     var model = new GiaDauGiaDat
                     {
                         Mahs = request.Mahs,
@@ -178,6 +193,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Phanloai = request.Phanloai,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
+                        Ipf1=request.Ipf1,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -206,7 +222,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Edit"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaDauGiaDat
@@ -254,12 +270,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat/Update")]
         [HttpPost]
-        public IActionResult Update(GiaDauGiaDat request)
+        public async Task<IActionResult> Update(GiaDauGiaDat request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Edit"))
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Tenduan = request.Tenduan;
                     model.Thoidiem = request.Thoidiem;
@@ -270,6 +299,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     model.Soqdkqdaugia = request.Soqdkqdaugia;
                     model.Soqdgiakhoidiem = request.Soqdgiakhoidiem;
                     model.Phanloai = request.Phanloai;
+                    model.Ipf1 = request.Ipf1;
                     model.Updated_at = DateTime.Now;
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
@@ -296,7 +326,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Delete"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaDauGiaDat.Remove(model);
@@ -326,7 +356,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Show"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaDauGiaDat
@@ -373,7 +403,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.timkiem", "Index"))
                 {
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
@@ -403,7 +433,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dgd.giadgd.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.timkiem", "Index"))
                 {
 
                     var model_join = from dg in _db.GiaDauGiaDat

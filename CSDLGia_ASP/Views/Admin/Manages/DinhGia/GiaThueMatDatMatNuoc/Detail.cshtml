@@ -2,6 +2,7 @@
 @{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
+     var GiaThueMatDatMatNuocCt = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["GiaThueMatDatMatNuocCt"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -41,7 +42,7 @@
                     {
                         @foreach (var item in Model.GiaThueMatDatMatNuocCt)
                         {
-                        <tr>
+                        <tr style="text-align:center">
                             <td style="text-align:center">@(record_id++)</td>
                             <td>@item.Vitri</td>
                             <td>@item.Diemdau</td>
@@ -68,4 +69,4 @@
         <!--end: Datatable-->
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/GiaThueMatDatMatNuoc/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modal.cshtml")

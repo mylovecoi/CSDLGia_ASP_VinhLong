@@ -26,10 +26,10 @@
             </div>
         </div>
         <!--begin::Form-->
-        <form asp-controller="GiaThueTSanCong" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
+        <form asp-controller="GiaThueTSanCong" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_update">
             <div class="card-body">
-              @*  <input asp-for="Madv" />
-                <input asp-for="Mahs" />*@
+                <input asp-for="Madv" />
+                <input asp-for="Mahs" />
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
                 </div>
@@ -77,7 +77,7 @@
                 if ($('#Thoidiem').val().trim() == '') {
                     toastr.error("Thời điểm không được để trống!", "Lỗi!!!")
                 } else {
-                    document.getElementById("frm_r_store").submit();
+                    document.getElementById("frm_r_update").submit();
                 }
             }
         }

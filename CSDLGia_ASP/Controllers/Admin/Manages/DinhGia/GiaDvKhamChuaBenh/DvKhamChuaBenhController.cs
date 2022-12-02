@@ -20,10 +20,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
     public class DvKhamChuaBenhController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
-        public DvKhamChuaBenhController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public DvKhamChuaBenhController(CSDLGiaDBContext db,IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         [Route("DinhGiaDvKcb")]
@@ -146,6 +147,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                             Mahs = model.Mahs,
                             Maspdv = item.Maspdv,
                             Tenspdv = item.Tenspdv,
+                            Madichvu=item.Madichvu,
+                            Dvt=item.Dvt,
+                            Phanloai=item.Phanloai,
                             Ghichu = "CXD",
                             Giadv = 0,
                             Created_at = DateTime.Now,
@@ -182,7 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DinhGiaDvKcb/Store")]
         [HttpPost]
-        public IActionResult Store(VMDinhGiaDvKcb request)
+        public async Task<IActionResult> Store(VMDinhGiaDvKcb request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -201,6 +205,71 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        model.Ipf1 = filename;
+                    }
+                    if (Ipf2 != null && Ipf2.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
+                        string extension = Path.GetExtension(Ipf2.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf2.CopyToAsync(FileStream);
+                        }
+                        model.Ipf2 = filename;
+                    }
+                    if (Ipf3 != null && Ipf3.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
+                        string extension = Path.GetExtension(Ipf3.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf3.CopyToAsync(FileStream);
+                        }
+                        model.Ipf3 = filename;
+                    }
+                    if (Ipf4 != null && Ipf4.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
+                        string extension = Path.GetExtension(Ipf4.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf4.CopyToAsync(FileStream);
+                        }
+                        model.Ipf4 = filename;
+                    }
+                    if (Ipf5 != null && Ipf5.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
+                        string extension = Path.GetExtension(Ipf5.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf5.CopyToAsync(FileStream);
+                        }
+                        model.Ipf5 = filename;
+                    }
                     _db.GiaDvKcb.Add(model);
                     _db.SaveChanges();
 
@@ -326,7 +395,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DinhGiaDvKcb/Update")]
         [HttpPost]
-        public IActionResult Update(VMDinhGiaDvGdDt request)
+        public async Task<IActionResult> Update(VMDinhGiaDvGdDt request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -338,6 +407,71 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     model.Thoidiem = request.Thoidiem;
                     model.Mota = request.Mota;
                     model.Updated_at = DateTime.Now;
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        model.Ipf1 = filename;
+                    }
+                    if (Ipf2 != null && Ipf2.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
+                        string extension = Path.GetExtension(Ipf2.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf2.CopyToAsync(FileStream);
+                        }
+                        model.Ipf2 = filename;
+                    }
+                    if (Ipf3 != null && Ipf3.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
+                        string extension = Path.GetExtension(Ipf3.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf3.CopyToAsync(FileStream);
+                        }
+                        model.Ipf3 = filename;
+                    }
+                    if (Ipf4 != null && Ipf4.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
+                        string extension = Path.GetExtension(Ipf4.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf4.CopyToAsync(FileStream);
+                        }
+                        model.Ipf4 = filename;
+                    }
+                    if (Ipf5 != null && Ipf5.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
+                        string extension = Path.GetExtension(Ipf5.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf5.CopyToAsync(FileStream);
+                        }
+                        model.Ipf5 = filename;
+                    }
                     _db.GiaDvKcb.Update(model);
                     _db.SaveChanges();
 

@@ -50,8 +50,8 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="dv" name="dv">
-                        <option value="">--Tất cả các đơn vị--</option>
+                    <select class="form-control" id="madv" name="madv">
+                        <option value="All">--Tất cả các đơn vị--</option>
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -74,7 +74,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label><b>Đối tượng sử dụng*</b></label>
                     <select class="form-control" id="pl" name="pl">
-                        <option value="">--Tất cả các phân loại--</option>
+                        <option value="All">--Tất cả các phân loại--</option>
                         @foreach (var dt in doituong)
                         {
                             <option value="@dt.Madoituong">@dt.Doituongsd</option>
@@ -101,13 +101,13 @@
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Giá trị từ</label>
-                    <input type="text" class="form-control" name="beginPrice" id="beginPrice" />
+                    <input type="text" class="form-control money" name="beginPrice" id="beginPrice" />
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Giá trị đến</label>
-                    <input type="text" class="form-control" name="endPrice" id="endPrice" />
+                    <input type="text" class="form-control money" name="endPrice" id="endPrice" />
                 </div>
             </div>
         </div>
@@ -119,29 +119,19 @@
 </form>
 <script>
     function ValidateNsh() {
-        if ($('#beginTime').val().trim() == '') {
-            toastr.error("Thời gian bắt đầu không được để trống!", "Lỗi!!!")
+        var date_tu = new Date($('#beginTime').val());
+        var date_den = new Date($('#endTime').val());
+        var date_tu_int = date_tu.getTime();
+        
+        var date_den_int = date_den.getTime();
+
+        if (date_tu_int > date_den_int) {
+            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
         } else {
-            if ($('#endTime').val().trim() == '') {
-                toastr.error("Thời gian kết thúc không được để trống!", "Lỗi!!!")
+            if ($('#beginPrice').val() > $('#endPrice').val()) {
+                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
             } else {
-                if ($('#beginPrice').val().trim() == '') {
-                    toastr.error("Đơn gía bắt đầu không được để trống!", "Lỗi!!!")
-                } else {
-                    if ($('#endPrice').val().trim() == '') {
-                        toastr.error("Đơn gía kết thúc không được để trống!", "Lỗi!!!")
-                    } else {
-                        if ($('#pl').val().trim() == '') {
-                            toastr.error("Đối tượng sử dụng không được để trống!", "Lỗi!!!")
-                        } else {
-                            if ($('#dv').val().trim() == '') {
-                                toastr.error("Đơn vị không được để trống!", "Lỗi!!!")
-                            } else {
-                                document.getElementById("frm_nsh_result").submit();
-                            }
-                        }
-                    }
-                }
+                document.getElementById("frm_dct_result").submit();
             }
         }
     }

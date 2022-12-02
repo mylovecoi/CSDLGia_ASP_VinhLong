@@ -62,14 +62,11 @@
                     <td>@item.Namchuathue4</td>
                     <td>@(@item.Giachuathue4 != 0 ? item.Giachuathue4 : "")</td>
                     <td>
-                        @*<button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                    onclick="SetStore('@mahs','@item.Madoituong')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                <i class="icon-lg la la-edit text-default"></i>
-            </button>*@
-                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                class="btn btn-primary font-weight-bolder" title="Edit" onclick="SetEdit('@item.Id', '@item.Doituongsd')">
-                            <i class="la la-plus"></i>Sửa
-                        </button>
+                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                onclick="SetEdit('@item.Id', '@item.Doituongsd')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                
                     </td>
                 </tr>
                 }
@@ -79,4 +76,4 @@
         <!--end: Datatable-->
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/GiaNuocSh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaNuocSh/Modal.cshtml")

@@ -4,6 +4,7 @@ using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
 using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
+using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.Models.Temp.TempSystems;
@@ -167,6 +168,12 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaVangNgoaiTeDm> GiaVangNgoaiTeDm { get; set; }
         public DbSet<GiaThueMatDatMatNuoc> GiaThueMatDatMatNuoc { get; set; }
         public DbSet<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
+        public DbSet<GiaTaiSanTths> GiaTaiSanTths { get; set; }
+        public DbSet<GiaTaiSanTthsCt> GiaTaiSanTthsCt { get; set; }
+        public DbSet<GiaHhHaiQuanXnk> GiaHhHaiQuanXnk { get; set; }
+        public DbSet<GiaHhHaiQuanXnkCt> GiaHhHaiQuanXnkCt { get; set; }
+        public DbSet<GiaHhHaiQuanXnkDm> GiaHhHaiQuanXnkDm { get; set; }
+        public DbSet<GiaHhHaiQuanXnkThue> GiaHhHaiQuanXnkThue { get; set; }
         
         
         
@@ -181,6 +188,15 @@ namespace CSDLGia_ASP.Database
         //VBQLNN
         public DbSet<VbQlNn> VbQlNn { get; set; }
 
+        //CPI
+        public DbSet<ChiSoGiaTd> ChiSoGiaTd { get; set; }
+        public DbSet<ChiSoGiaTdDd> ChiSoGiaTdDd { get; set; }
+        public DbSet<ChiSoGiaTdDm> ChiSoGiaTdDm { get; set; }
+        public DbSet<ChiSoGiaTdDmCt> ChiSoGiaTdDmCt { get; set; }
+        public DbSet<ChiSoGiaTdDmCtDd> ChiSoGiaTdDmCtDd { get; set; }
+        public DbSet<ChiSoGiaTdHh> ChiSoGiaTdHh { get; set; }
+        public DbSet<ChiSoGiaTdHhCt> ChiSoGiaTdHhCt { get; set; }
+
 
 
         //Systems:
@@ -194,6 +210,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<DmNganhKd> DmNganhKd { get; set; }
         public DbSet<DmNgheKd> DmNgheKd { get; set; }
         public DbSet<DmNhomHh> DmNhomHh { get; set; }
+        public DbSet<DmLoaiDat> DmLoaiDat { get; set; }
         public DbSet<DsDiaBan> DsDiaBan { get; set; }
         public DbSet<DsDonVi> DsDonVi { get; set; }
         /*public DbSet<DsDonViTdg> DsDonViTdg { get; set; }*/

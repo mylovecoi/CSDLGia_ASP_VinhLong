@@ -1,0 +1,214 @@
+﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaRung
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var mahs = ViewData["Mahs"];
+        int record_id = 1;
+  
+    var loairung = (IEnumerable<GiaRungDm>)ViewData["Loairung"];
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;rừng ( Show )</small>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="Giarung" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_rung_update">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Nội dung hồ sơ</label>
+                        <input type="text" class="form-control" asp-for="Ghichu" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf1))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf1"]" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                      
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf2))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf2"]" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                       
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf3))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf3"]" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                      
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf4))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf5"]" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                      
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf5))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf5"]" target="_blank"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                      
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+    <!--end::Form-->
+</div>
+  <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover" id="datatable_4">
+            <thead>
+                <tr style="text-align:center">
+                    <th>STT</th>
+                    <th>Phân loại( show )</th>
+                    <th>Loại rừng</th>
+                    <th>Đơn vị khai thác(thuê)</th>
+                    <th>Nội dung chi tiết</th>
+                    <th>Diện tích rừng</th>
+                    <th>Diện tích sử dụng</th>
+                    <th>Đơn vị tính</th>
+                    <th>Giá trị</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @if (Model.GiaRungCt != null)
+                    {
+                        @foreach (var item in Model.GiaRungCt)
+                        {
+                            <tr>
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="text-align:center">@item.Phanloai</td>
+                                <td style="text-align:center">
+                                    @foreach (var lr in loairung)
+                                    {
+                                        @if (item.Manhom == lr.Manhom)
+                                        {
+                                            <span>@lr.Tennhom</span>
+                                        }
+                                    }
+                                </td>
+                                <td style="text-align:center">@item.Dvthue</td>
+                                <td style="text-align:center">@item.Noidung</td>
+                                <td style="text-align:center">@item.Dientich</td>
+                                <td style="text-align:center">@item.Dientichsd</td>
+                                <td style="text-align:center">@item.Dvt</td>
+                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatri)</td>
+
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <!--end: Datatable-->
+    </div>

@@ -2,7 +2,7 @@
 @{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var loairung= (IEnumerable<GiaRungDm>)ViewData["Loairung"];
+    var loairung = (IEnumerable<GiaRungDm>)ViewData["Loairung"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -26,7 +26,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Phân loại</th>
+                    <th>Phân loại( Detail)</th>
                     <th>Loại rừng</th>
                     <th>Đơn vị khai thác(thuê)</th>
                     <th>Nội dung chi tiết</th>
@@ -44,31 +44,37 @@
                     {
                         @foreach (var item in Model.GiaRungCt)
                         {
-                        <tr>
-                            <td style="text-align:center">@(record_id++)</td>
-                            <td class="active">@item.Phanloai</td>
-                            @foreach(var lr in loairung){
-                                @if(item.Manhom==lr.Manhom){
-                                    <td>@lr.Tennhom</td>
-                                }
-                            }
-                            <td>@item.Dvthue</td>
-                            <td>@item.Noidung</td>
-                            <td>@item.Dientich</td>
-                            <td>@item.Dientichsd</td>
-                            <td>@item.Dvt</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatri)</td>
-                            <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                        onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                        onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="text-align:center">@item.Phanloai</td>
+                                <td style="text-align:center">
+                                    @foreach (var lr in loairung)
+                                    {
+                                        @if (item.Manhom == lr.Manhom)
+                                        {
+                                            <span>@lr.Tennhom</span>
+                                        }
+                                    }
+                                </td>
+                                <td style="text-align:center">@item.Dvthue</td>
+                                <td style="text-align:center">@item.Noidung</td>
+                                <td style="text-align:center">@item.Dientich</td>
+                                <td style="text-align:center">@item.Dientichsd</td>
+                                <td style="text-align:center">@item.Dvt</td>
+                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatri)</td>
+                                <td style="text-align:center">
+
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         }
                     }
                 }
@@ -77,4 +83,4 @@
         <!--end: Datatable-->
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/GiaRung/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/Modal.cshtml")

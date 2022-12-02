@@ -29,7 +29,7 @@
             </div>
         </div>
         <!--begin::Form-->
-        <form asp-controller="GiaSpDvToiDa" asp-action="Result" method="post" id="frm_spdvcuthe_timkiem">
+        <form asp-controller="GiaSpDvToiDa" asp-action="Result" method="post" id="frm_spdvtoida_timkiem">
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-6">
@@ -75,13 +75,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Mức giá - Từ</label>
-                        <input type="text" id="gia_tu" name="gia_tu" class="form-control money" />
+                        <input type="text" id="beginPrice" name="beginPrice" class="form-control money" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Mức giá - Đến</label>
-                        <input type="text" id="gia_den" name="gia_den" class="form-control money" />
+                        <input type="text" id="endPrice" name="endPrice" class="form-control money" />
                     </div>
                 </div>
             </div>
@@ -95,19 +95,16 @@
 </div>
 <script>
     function ValSpDvToiDaTk() {
-        var date_tu = new Date($('#ngaynhap_tu').val());
-        var date_den = new Date($('#ngaynhap_den').val());
-        var date_tu_int = date_tu.getTime();
-        var date_den_int = date_den.getTime();
-
-        if (date_tu_int > date_den_int) {
-            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
-        } else {
-            if ($('#gia_tu').val() > $('#gia_den').val()) {
-                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_spdvcuthe_timkiem").submit();
+        if ($('#endPrice').val() != "" || $('#endPrice').val() != 0) {
+            if ($('#beginPrice').val() > $('#endPrice').val()) {
+                toastr.error("Đơn giá nhập từ không được nhỏ hơn đơn giá nhập đến!", "Lỗi!!!")
             }
+            else {
+                document.getElementById("frm_spdvtoida_timkiem").submit();
+            }
+        }
+        else {
+            document.getElementById("frm_spdvtoida_timkiem").submit();
         }
     }
 </script>

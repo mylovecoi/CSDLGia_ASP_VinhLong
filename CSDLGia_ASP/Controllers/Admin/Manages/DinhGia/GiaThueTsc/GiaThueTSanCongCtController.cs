@@ -170,7 +170,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Thời điểm phê duyệt</b></label>";
-                result += "<input type='date' id='Thoigianpd_edit' name='Thoigianpd_edit' value='" + @model.Thoigianpd + "' class='form-control'/>";
+                result += "<input type='date' id='Thoigianpd_edit' name='Thoigianpd_edit' value='" + (@model.Thoigianpd.ToString("yyMMdd")) + "' class='form-control'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -180,7 +180,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Thời điểm đấu giá</b></label>";
-                result += "<input type='date' id='Thoigiandg_edit' name='Thoigiandg_edit' value='" + @model.Thoigiandg + "' class='form-control'/>";
+                result += "<input type='date' id='Thoigiandg_edit' name='Thoigiandg_edit' value='" + (@model.Thoigiandg.ToString("yyMMdd")) + "' class='form-control'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -195,12 +195,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Thuê từ ngày</b></label>";
-                result += "<input type='date' id='Thuetungay_edit' name='Thuetungay_edit' value='" + @model.Thuetungay + "' class='form-control'/>";
+                result += "<input type='date' id='Thuetungay_edit' name='Thuetungay_edit' value='" + (@model.Thuetungay.ToString("yyMMdd")) + "' class='form-control'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Thuê đến ngày</b></label>";
-                result += "<input type='date' id='Thuedenngay_edit' name='Thuedenngay_edit' value='" + @model.Thuedenngay + "' class='form-control'/>";
+                result += "<input type='date' id='Thuedenngay_edit' name='Thuedenngay_edit' value='" + (@model.Thuedenngay.ToString("yyMMdd")) + "' class='form-control'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";

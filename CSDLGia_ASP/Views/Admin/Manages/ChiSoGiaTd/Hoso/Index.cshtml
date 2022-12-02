@@ -1,0 +1,201 @@
+﻿@{
+    int record_id = 1;
+    int record_idAv = 1;
+    //int record_hh = 1;
+    //var hanghoa = (IEnumerable<ChiSoGiaTdHh>)ViewData["hanghoa"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
+    var listTt = (IEnumerable<ChiSoGiaTdDm>)ViewData["listTt"];
+    var matt = (from t in listTt
+                group t by t.Matt into grp
+                select new
+                {
+                    matt = grp.Key,
+                });
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+        $(function () {
+            $('#Matt').change(function () {
+                var current_path_url = '/ChiSoGiaTieuDung?';
+                var matt = '&Matt=' + $('#Matt').val();
+                var madv = '&Madv=' + $('#Madv').val();
+                var url = current_path_url + madv + matt;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh sách thông tin hồ sơ chỉ số giá
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Create"))
+            {
+                <button type="button" class="btn btn-light-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Mã thông tư</label>
+                    <select class="form-control" id="Matt" name="Matt">
+                        @foreach (var t in matt)
+                        {
+                            foreach (var list in listTt)
+                            {
+                                if (list.Matt == t.matt)
+                                {
+                                    <!option value="@list.Matt" @((string)ViewData["matt"] == list.Matt ? "selected" : "")>@list.Baocao</!option>
+                                    break;
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control" id="Madv" name="Madv">
+                        @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                }
+                                @foreach (var item in company)
+                                {
+                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th>STT</th>
+                    <th>Tên hồ sơ</th>
+                    <th>Nội dung</th>
+                    <th>Trạng thái</th>
+                    <th>Kỳ chọn</th>
+                    <th>Chỉ số giá</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@item.Thongtinbc</td>
+                            <td class="text-center active">@item.Ghichu</td>
+                            <td style="text-align: center" width="15%">
+                                @if (item.Trangthai == "CHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "HHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
+                                }
+                                @if (item.Trangthai == "HCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
+                                }
+                            </td>
+                            <td class="text-center active">Tháng @item.Thang năm @item.Nam</td>
+                            <td class="text-center active">@item.Giakychon</td>
+                            <td>
+                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Edit"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                            <i class="icon-lg la la-edit text-warning"></i>
+                                        </button>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Index"))
+                                    {
+                                        <a asp-controller="ChiSoGiaTdDmCt" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem nhóm hàng hoá">
+                                            <i class="icon-lg la la la-flag-o text-info"></i>
+                                        </a>
+                                        <a asp-controller="ChiSoGiaTdHhCt" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hàng hoá">
+                                            <i class="icon-lg la la-eye text-success"></i>
+                                        </a>
+                                        <a asp-controller="ChiSoGiaTd" asp-action="Calculate" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Tính chí số giá CPI">
+                                            <i class="icon-lg la la-calculator text-warning"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Index"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                            <i class="icon-lg la la-check text-primary "></i>
+                                        </button>
+                                    }
+                                }
+                                @*<button type="button" class="btn btn-sm btn-clean btn-icon" title="Thêm mới" data-toggle="modal" data-target="#Mathang_Modal">
+                                        <i class="icon-lg la la-plus text-success"></i>
+                                    </button>*@
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-light-primary font-weight-bolder"
+                data-toggle="modal" data-target="#Average_Modal" style="float:right;">
+            Tính trung bình
+        </button>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/ChiSoGiaTd/Hoso/Modal.cshtml")

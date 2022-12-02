@@ -1,14 +1,16 @@
 ﻿<!--Create Modal-->
 @{
+     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
     var mahs = ViewData["Mahs"];
     var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
 }
+
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Thông tin chi tiết hồ sơ
+                    Thông tin chi tiết hồ sơ ( Modal )
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -23,7 +25,7 @@
                             <select id="tennha_create" name="tennha_create" class="form-control">
                                 @foreach (var tn in tennha)
                                 {
-                                    <option value="@tn.Maso">@tn.Tennha</option>
+                                    <option value="@tn.Tennha">@tn.Tennha</option>
                                 }
                             </select>
                         </div>
@@ -91,22 +93,22 @@
                         </div>
                     </div>
                     <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Đơn vị tính</b></label>
-                            <select class="form-control" id="dvtinh_create" name="dvtinh_create">
-                                <option value="dv1">DV1</option>
-                                <option value="dv2">DV2</option>
-                                <option value="dv3">DV3</option>
-                                <option value="dv4">DV4</option>
-                            </select>
-                        </div>
+                        <label class="form-control-label">Đơn vị tính</label>
+                        <select id="dvt_create" class="form-control select2me select2-offscreen" name="dvt_create" tabindex="-1" title="">
+                            @foreach (var item in dsdvt)
+                            {
+                                <option value="@item.Dvt">@item.Dvt</option>
+                            }
+                        </select>
                     </div>
-                    <div class="col-xl-1" style="padding-left: 0px;">
-                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
-                        <button type="button" class="btn btn-default" data-target="#modal-dvt" data-toggle="modal">
-                            <i class="fa fa-plus"></i>
+
+                    <div class="col-xl-1">
+                        <label class="control-label">Thêm </label>
+                        <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
+                            <i class="la la-plus"></i>
                         </button>
                     </div>
+
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá bán*</b></label>
@@ -128,6 +130,37 @@
         </div>
     </div>
 </div>
+
+<!--Thêm đơn vị tính -->
+
+<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính ( Modal)
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="dvt_add" class="form-control" name="dvt_add" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,8 +209,50 @@
     </div>
 </div>
 
+<!--Thêm đơn vị tính edit -->
+
+<div class="modal fade" id="Dvt_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Thông tin đơn vị tính ( Modal)
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="dvt_add" class="form-control" name="dvt_add_edit" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvtedit()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    function Dvt() {
+        $('#Dvt_Modal').modal('hide');
+        var gt = $('#dvt_add').val();
+        $('#dvt_create').append(new Option(gt, gt, true, true));
+        $('#dvt_create').val(gt).trigger('change');
+    }
+    function Dvtedit() {
+        $('#Dvt_Modal_edit').modal('hide');
+        var gt = $('#dvt_add_edit').val();
+        $('#dvt_edit').append(new Option(gt, gt, true, true));
+        $('#dvt_edit').val(gt).trigger('change');
+    }
     function SetStore() {
+      
         $.ajax({
             url: '/DinhGiaThueMuaNhaXhCt/Store',
             type: 'POST',
@@ -194,9 +269,9 @@
                 Ththue: $('#thoihan_create').val(),
                 Tungay: $('#tungay_create').val(),
                 Denngay: $('#denngay_create').val(),
-                Dvt: $('#dvtinh_create').val(),
+                Dvt: $('#dvt_create').val(),
                 Dongia: $('#giaban_create').val(),
-                Dongiathue: $('#giaThue_create').val(),
+                Dongiathue: $('#giathue_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -234,6 +309,7 @@
     }
 
     function SetUpdate() {
+     
         $.ajax({
             url: '/DinhGiaThueMuaNhaXhCt/Update',
             type: 'POST',
@@ -249,9 +325,9 @@
                 Ththue: $('#thoihan_edit').val(),
                 Tungay: $('#tungay_edit').val(),
                 Denngay: $('#denngay_edit').val(),
-                Dvt: $('#dvtinh_edit').val(),
+                Dvt: $('#dvt_edit').val(),
                 Dongia: $('#giaban_edit').val(),
-                Dongiathue: $('#giaThue_edit').val(),
+                Dongiathue: $('#giathue_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungCt>
+<br />
+<br />
+
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: .........</td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
+    </tr>
+</table>
+
+
+<p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">TỔNG HỢP GIÁ DỊCH VỤ MÔI TRƯỜNG RỪNG</p>
+<p style="text-align: center;font-style: italic;">'Từ ngày: @ViewData["tungay"]  đến ngày @ViewData["denngay"]  </p>
+<p style="text-align: right;font-style: italic;">Diện tích: ha; Giá trị: ngàn đồng</p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;" id="data">
+    <thead>
+        <tr>
+            <th rowspan="2" style="text-align: center" width="2%">STT</th>
+            <th rowspan="2" style="text-align: center">Tên đơn vị thuê</th>
+            <th rowspan="2" style="text-align: center">Diện tích<br>thuê</th>
+            <th rowspan="2" style="text-align: center">Địa chỉ</th>
+            <th colspan="2" style="text-align: center">Quyết định cho thuê</th>
+            <th colspan="3" style="text-align: center">Giá cho thuê</th>
+            <th colspan="2" style="text-align: center">Thời gian thuê</th>
+            <th rowspan="2" style="text-align: center">Ghi chú</th>
+        </tr>
+        <tr>
+            <th>Số QĐ</th>
+            <th>Ngày tháng</th>
+
+            <th>Diện<br>tích</th>
+            <th>Đơn<br>giá</th>
+            <th>Thành<br>tiền</th>
+
+            <th>Từ ngày</th>
+            <th>Đến ngày</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center">@(record_id++)</td>
+                <td></td>
+                <td style="text-align: center">@item.Dientich</td>
+                <td></td>
+                <td style="text-align: center">@item.Soqdpd</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoigianpd)</td>
+                <td style="text-align: center">@item.Dientichsd</td>
+                <td style="text-align: right">@item.Dongia</td>
+                <td style="text-align: right">@item.Giatri</td>
+                <td style="text-align: center">@item.Thuetungay</td>
+                <td style="text-align: center">@item.Thuedenngay</td>
+                <td></td>
+            </tr>
+        }
+
+
+        <tr style="font-weight: bold" class="text-right;">
+            <td colspan="2">Tổng cộng</td>
+            <td style="text-align: center">@ViewData["sum_dientich"]</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: center">@ViewData["sum_dientichSd"]</td>
+            <td style="text-align: right">@ViewData["sum_dongia"]</td>
+            <td style="text-align: right">@ViewData["sum_giatri"]</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br>
+            - Bộ tài chính;<br>
+            - Lưu: VT, QLGCS.
+        </td>
+        <td style="vertical-align: top;">
+            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
+            <i>(Ký tên, đóng dấu)</i>
+        </td>
+    </tr>
+</table>

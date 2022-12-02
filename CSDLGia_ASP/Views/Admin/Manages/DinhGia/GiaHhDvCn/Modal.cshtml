@@ -1,0 +1,210 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    var mahs = ViewData["Mahs"];
+    var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
+}
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin sản phẩm, dịch vụ
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm tài nguyên</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input asp-for="Mahs" value="@ViewData["Mahs"]">
+                <div class="row">
+
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên sản phẩm, dịch vụ*</label>
+                            <select id="maspdv_create" name="maspdv_create" class="form-control">
+                                @foreach (var item in spdv)
+                                {
+                                    <option value="@item.Maspdv">@item.Tenspdv</option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn giá*</label>
+                            <input type="text" id="dongia_create" name="_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    function SetStore() {
+        $.ajax({
+            url: '/GiaHhDvCnCt/Store',
+            type: 'POST',
+            data: {
+                Mahs: $('#Mahs').val(), //mahs
+                Dongia: $('#dongia_create').val(),
+                Maspdv: $('#maspdv_create').val(),
+               
+            },
+            dataType: 'JSON',
+
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+
+                    $('#frm_data').replaceWith(data.message);
+
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+
+                    $('#Create_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/GiaHhDvCnCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+
+    function SetUpdate() {
+        $.ajax({
+            url: '/GiaHhDvCnCt/Update',
+            type: 'POST',
+            data: {
+                Id: $('#id_edit').val(),
+                Dongia: $('#dongia_edit').val(),
+                Maspdv: $('#maspdv_edit').val()
+               
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/GiaHhDvCnCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

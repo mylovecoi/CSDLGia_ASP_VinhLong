@@ -1,0 +1,317 @@
+﻿@{
+    int record_id = 1;
+    var dsdiaban1 = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan1"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDv"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
+    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            TableManaged2.init();
+        });
+
+        $(function () {
+            $('#Madiaban, #Nam').change(function () {
+                var current_path_url = '/GiaDatDiaBan?';
+                var madiaban = '&Madiaban=' + $('#Madiaban').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var url = current_path_url + madiaban + nam;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    BẢNG GIÁ CÁC LOẠI ĐẤT
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtin", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        <option value="all">--Tất cả--</option>
+                        @{
+                            var nam_start = DateTime.Now.Year - 5;
+                            var nam_stop = DateTime.Now.Year + 1;
+                            for (var i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control" id="Madiaban" name="Madiaban">
+                        @foreach (var item in dsdiaban1)
+                        {
+                            <!option value="@item.MaDiaBan" @((string)ViewData["madiaban"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th>Thời điểm</th>
+                    <th>Thông tư, quyết định</th>
+                    <th>Trạng thái</th>
+                    <th>Cơ quan tiếp nhận</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center" width="3%">@(record_id++)</td>
+                            <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center" width="10%">@item.Soqd</td>
+                            <td style="text-align: center" width="15%">
+                                @if (item.Trangthai == "CHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "HHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
+                                }
+                                @if (item.Trangthai == "HCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
+                                }
+                            </td>
+                            <td style="text-align: left" width="15%">@item.Macqcq</td>
+                            <td width="12%">
+                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtin", "Edit"))
+                                    {
+                                        <a asp-controller="GiaDatDiaBan" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtin", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                        <i class="icon-lg la la-check text-primary "></i>
+                                    </button>
+                                }
+                                @if (item.Trangthai == "HT")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtin", "Edit"))
+                                    {
+                                        <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Sửa"
+                           target="_blank">
+                                            <i class="icon-lg la la-eye text-success"></i>
+                                        </a>
+                                    }
+
+                                }
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form asp-controller="GiaDatDiaBan" asp-action="Create" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin giá đất theo địa bàn
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <hr />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Đơn vị nhập liệu</label>
+                                <select id="madv" name="madv" class="form-control">
+                                    @foreach (var db in dsdv)
+                                    {
+                                        <!option value="@db.MaDv">@db.TenDv</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Địa bàn</label>
+                                <select id="madiaban" name="madiaban" class="form-control">
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        @if (db.MaDiaBan == (string)ViewData["MaDiaBan"])
+                                        {
+                                            <option value="@db.MaDiaBan">@db.TenDiaBan</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <select id="soqd" name="soqd" class="form-control">
+                                    @foreach (var qd in soqd)
+                                    {
+                                        <!option value="@qd.Soqd">@qd.Mota</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="GiaDatDiaBan" asp-action="Delete">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý xóa thông tin???
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--complete Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaDatDiaBan" asp-action="Complete">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hoàn thành hồ sơ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận*</label>
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var db in dsdiaban1)
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in donvi)
+                                            {
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+
+    function Chuyen(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
+    }
+</script>

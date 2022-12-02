@@ -1,0 +1,160 @@
+﻿@{
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Báo cáo tổng hợp<small>&nbsp;Định giá rừng</small><br />
+                </h3>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <ol>
+                            <li>
+
+                                <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span onclick="op2()" style="font-size:16px; color:blue;  font-weight: bold">
+                                        Báo cáo tổng hợp giá khai thác, thanh lý rừng
+                                    </span>
+                                </button>
+                            </li>
+                            <li>
+
+                                <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span onclick="op1()" style="font-size:16px; color:blue;  font-weight: bold">
+                                        Báo cáo tổng hợp giá dịch vụ môi trường rừng
+                                    </span>
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Report Modal!-->
+    <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form asp-controller="GiarungBc" asp-action="BaoCao" target="_blank" id="frm_report">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Báo cáo tổng hợp định giá rừng
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                                    <select class="form-control" id="Madv" name="Madv">
+                                    @foreach (var db in dsdiaban)
+                                    {
+                                        <optgroup label="@db.TenDiaBan">
+                                            @{
+                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                            }
+                                            @foreach (var item in company)
+                                            {
+
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
+                                            }
+                                        </optgroup>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="option1">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label><b>Từ ngày</b></label>
+                                    <select class="form-control" id="phanloai" name="phanloai">
+                                        <option id="moitruong" selected="selected">Thuê môi trường</option>
+                                        <option id="khaithac">Khai thác</option>
+                                        <option>Thanh lý</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label><b>Từ ngày</b></label>
+                                    <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label><b>Đến ngày</b></label>
+                                    <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="valedate()">Đồng ý</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+    function op1() {
+        document.getElementById("moitruong").selected = 'selected';
+    }
+    function op2() {
+        document.getElementById("khaithac").selected = 'selected';
+    }
+
+    function valedate() {
+        var T1 = $('#tungay').val().trim();
+        var T2 = $('#denngay').val().trim();
+        if (T1 != "" && T2 != "") {
+            if (T1 > T2) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            }
+            else if (T1 <= T2) {
+                document.getElementById("frm_report").submit();
+            }
+        }
+        else {
+            document.getElementById("frm_report").submit();
+        }
+
+    }
+</script>

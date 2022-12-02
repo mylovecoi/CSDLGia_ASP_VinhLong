@@ -30,9 +30,11 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmnxh.dm", "Create"))
             {
-            <button type="button" class="btn btn-sm btn-clean btn-icon" data-toggle="modal" data-target="#Create_Modal">
-                <i class="la la-plus"></i>Thêm mới
-            </button>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+
+          
             }
 
         </div>
@@ -58,12 +60,12 @@
                     {
                         <tr>
                             <td>@(record_id++)</td>
-                            <td style="text-align: center">@item.Tennha</td>
+                            <td style="text-align: center">@item.Phanloai</td>
                             <td class="text-center center">@item.Tennha</td>
                             <td class="text-center center">@item.Diachi</td>
                             <td class="text-center center">@item.Thoigian</td>
                             <td class="text-center center">@item.Hientrang</td>
-                            <td>
+                            <td style="text-align: center">
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
@@ -123,10 +125,10 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Hiện trạng</b></label>
                                 <select id="hientrang_create" name="hientrang_create" class="form-control">
-                                    <option value="DCT">Đang cho thuê</option>
-                                    <option value="DSD">Đang sử dụng</option>
-                                    <option value="DB">Đã bán</option>
-                                    <option value="CSD">Chưa sử dụng</option>
+                                    <option >Đang cho thuê</option>
+                                    <option >Đang sử dụng</option>
+                                    <option>Đã bán</option>
+                                    <option>Chưa sử dụng</option>
                                 </select>
                             </div>
                         </div>
@@ -134,10 +136,10 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Phân loại</b></label>
                                 <select id="phanloai_create" name="phanloai_create" class="form-control">
-                                    <option value="XH">Nhà ở xã hội</option>
-                                    <option value="CV">Nhà ở công vụ</option>
-                                    <option value="NN">Nhà ở thuộc sở hữu của nhà nước</option>
-                                    <option value="K">Nhà ở khác</option>
+                                    <option>Nhà ở xã hội</option>
+                                    <option>Nhà ở công vụ</option>
+                                    <option>Nhà ở thuộc sở hữu của nhà nước</option>
+                                    <option>Nhà ở khác</option>
                                 </select>
                             </div>
                         </div>
@@ -228,6 +230,7 @@
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
+                      location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -253,6 +256,7 @@
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#Delete_Modal').modal("hide");
+                      location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -283,13 +287,13 @@
             url: '/DanhMucGiaThueMuaNhaO/Update',
             type: 'POST',
             data: {
-                Thoigian: $('#thoigian_create').val(),
-                Tennha: $('#tennha_create').val(),
-                Diachi: $('#diachi_create').val(),
-                Dientich: $('#dientich_create').val(),
-                Hientrang: $('#hientrang_create').val(),
-                Phanloai: $('#phanloai_create').val(),
-                Ghichu: $('#ghichu_create').val(),
+                Thoigian: $('#thoigian_edit').val(),
+                Tennha: $('#tennha_edit').val(),
+                Diachi: $('#diachi_edit').val(),
+                Dientich: $('#dientich_edit').val(),
+                Hientrang: $('#hientrang_edit').val(),
+                Phanloai: $('#phanloai_edit').val(),
+                Ghichu: $('#ghichu_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
@@ -301,6 +305,7 @@
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");
+                      location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

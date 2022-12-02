@@ -27,5 +27,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public List<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
         public List<GiaThueMuaNhaXhCt> GiaThueMuaNhaXhCt { get; set; }
         public List<GiaSpDvCuTheCt> GiaSpDvCuTheCt { get; set; }
+        public List<GiaSpDvKhungGiaCt> GiaSpDvKhungGiaCt { get; set; }
+        public List<GiaSpDvToiDaCt> GiaSpDvToiDaCt { get; set; }
+        public List<GiaTaiSanTthsCt> GiaTaiSanTthsCt { get; set; }
     }
 }

@@ -19,10 +19,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
     public class GiaLePhiController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaLePhiController(CSDLGiaDBContext db)
+        public GiaLePhiController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         [Route("DinhGiaLePhi")]
@@ -31,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
                 {
 
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
@@ -111,7 +113,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
                 {
                     var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Ghichu == "CXD").ToList();
                     if (modelcxd != null)
@@ -167,13 +169,79 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("DinhGiaLePhi/Store")]
         [HttpPost]
-        public IActionResult Store(GiaPhiLePhi request)
+        public async Task<IActionResult> Store(GiaPhiLePhi request, IFormFile Ipf1, IFormFile Ipf2
+            , IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
         {
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
+                    if (Ipf2 != null && Ipf2.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
+                        string extension = Path.GetExtension(Ipf2.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf2.CopyToAsync(FileStream);
+                        }
+                        request.Ipf2 = filename;
+                    }
+                    if (Ipf3 != null && Ipf3.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
+                        string extension = Path.GetExtension(Ipf3.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf3.CopyToAsync(FileStream);
+                        }
+                        request.Ipf3 = filename;
+                    }
+                    if (Ipf4 != null && Ipf4.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
+                        string extension = Path.GetExtension(Ipf4.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf4.CopyToAsync(FileStream);
+                        }
+                        request.Ipf4 = filename;
+                    }
+                    if (Ipf5 != null && Ipf5.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
+                        string extension = Path.GetExtension(Ipf5.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf5.CopyToAsync(FileStream);
+                        }
+                        request.Ipf5 = filename;
+                    }
                     var model = new GiaPhiLePhi
                     {
                         Mahs = request.Mahs,
@@ -184,6 +252,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Thongtin = request.Thongtin,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
+                        Mota=request.Mota,
+                        Ipf1=request.Ipf1,
+                        Ipf2=request.Ipf2,
+                        Ipf3=request.Ipf3,
+                        Ipf4=request.Ipf4,
+                        Ipf5=request.Ipf5,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -224,7 +298,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaPhiLePhi
@@ -268,12 +342,78 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("DinhGiaLePhi/Update")]
         [HttpPost]
-        public IActionResult Update(GiaPhiLePhi request)
+        public async Task<IActionResult> Update(GiaPhiLePhi request, IFormFile Ipf1, IFormFile Ipf2
+            , IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
+                    if (Ipf2 != null && Ipf2.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
+                        string extension = Path.GetExtension(Ipf2.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf2.CopyToAsync(FileStream);
+                        }
+                        request.Ipf2 = filename;
+                    }
+                    if (Ipf3 != null && Ipf3.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
+                        string extension = Path.GetExtension(Ipf3.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf3.CopyToAsync(FileStream);
+                        }
+                        request.Ipf3 = filename;
+                    }
+                    if (Ipf4 != null && Ipf4.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
+                        string extension = Path.GetExtension(Ipf4.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf4.CopyToAsync(FileStream);
+                        }
+                        request.Ipf4 = filename;
+                    }
+                    if (Ipf5 != null && Ipf5.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
+                        string extension = Path.GetExtension(Ipf5.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf5.CopyToAsync(FileStream);
+                        }
+                        request.Ipf5 = filename;
+                    }
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
                     model.Mota = request.Mota;
@@ -281,6 +421,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     model.Thoidiem = request.Thoidiem;
                     model.Thongtin = request.Thongtin;
                     model.Updated_at = DateTime.Now;
+                    model.Ipf1 = request.Ipf1;
+                    model.Ipf2 = request.Ipf2;
+                    model.Ipf3 = request.Ipf3;
+                    model.Ipf4 = request.Ipf4;
+                    model.Ipf5 = request.Ipf5;
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
 
@@ -310,7 +455,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaPhiLePhi.Remove(model);
@@ -340,7 +485,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Show"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaPhiLePhi
@@ -381,7 +526,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
                 {
 
                     ViewData["GiaPhiLePhiDm"] = _db.GiaPhiLePhiDm.ToList();
@@ -410,7 +555,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Edit"))
                 {
                     var model_join = from dgct in _db.GiaPhiLePhiCt
                                      join dg in _db.GiaPhiLePhi on dgct.Mahs equals dg.Mahs
@@ -431,7 +576,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                      };
                     if (tsp != "All")
                     {
-                        model_join = model_join.Where(t => t.Tennhom == tsp);
+                        model_join = model_join.Where(t => t.Manhom == tsp);
                     }
                     if (dv != "All")
                     {

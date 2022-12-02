@@ -8,7 +8,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Thông tin chi tiết hồ sơ
+                    Thông tin chi tiết hồ sơ ( Modal )
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -41,9 +41,9 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Phân loại</b></label>
                             <select class="form-control" id="phanloai_create" name="phanloai_create">
-                                <option value="tmt">Thuê môi trường</option>
-                                <option value="kt">Khai thác</option>
-                                <option value="tl">Thanh lý</option>
+                                <option>Thuê môi trường</option>
+                                <option>Khai thác</option>
+                                <option>Thanh lý</option>
                             </select>
                         </div>
                     </div>
@@ -70,13 +70,10 @@
                             <input type="text" id="dtthue_create" name="dtthue_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Đơn vị tính</b></label>
                             <select class="form-control" id="dvtinh_create" name="dvtinh_create">
-                                @*<option value='dv1'>đồng</option>
-        <option value='dv2'>đồng/ngày</option>
-        <option value='dv3'>đồng/gói</option>*@
                                 @foreach (string dvi in Helpers.DviTinhRung())
                                 {
                                     <option value="@dvi">@dvi</option>
@@ -93,7 +90,7 @@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Thời điểm khai thác(thuê)</b></label>
-                            <input type="date" id="tdthue_create" name="tdthue_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="date" id="tdthue_create" name="tdthue_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
                     <div class="col-xl-3">
@@ -105,34 +102,34 @@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Thời điểm giá khởi điểm</b></label>
-                            <input type="date" id="tdKhoiDiem_create" name="tdKhoiDiem_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="date" id="tdKhoiDiem_create" name="tdKhoiDiem_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Thời gian - Từ ngày</b></label>
-                            <input type="date" id="tungay_create" name="tungay_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="date" id="tungay_create" name="tungay_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Thời gian - Đến ngày</b></label>
-                            <input type="date" id="denngay_create" name="denngay_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="date" id="denngay_create" name="denngay_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Đơn giá</b></label>
                             <input type="text" id="dongia_create" name="dongia_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá khởi điểm*</b></label>
                             <input type="text" id="giaKhoiDiem_create" name="giaKhoiDiem_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá khai thác(thuê)*</b></label>
                             <input type="text" id="giaThue_create" name="giaThue_create" class="form-control money text-right" style="font-weight: bold" />
@@ -178,14 +175,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Chỉnh sửa thông tin giá rừng
+                    Chỉnh sửa thông tin giá rừng ( Modal)
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -198,15 +194,15 @@
 <script>
     function SetStore() {
         $.ajax({
-            url: '/GiarungCt/Store',
+            url: '/DinhGiaRungCt/Store',
             type: 'POST',
             data: {
                 Mahs: $('#mahs_create').val(),
                 Dvthue: $('#dvthue_create').val(),
                 Diachi: $('#diachi_create').val(),
                 Noidung: $('#noidung_create').val(),
-                Manhom: $('#phanloai_create').val(),
-                Phanloai: $('#loairung_create').val(),
+                Phanloai: $('#phanloai_create').val(),
+                Manhom: $('#loairung_create').val(),
                 Dientich: $('#dt_create').val(),
                 Dientichsd: $('#dtthue_create').val(),
                 Dvt: $('#dvtinh_create').val(),
@@ -221,11 +217,11 @@
                 Giatri: $('#giaThue_create').val(),
             },
             dataType: 'JSON',
-            success: function (data) {
+            success: function(data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
@@ -244,7 +240,7 @@
                 Id: id_edit
             },
             dataType: 'JSON',
-            success: function (data) {
+            success: function(data) {
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
@@ -264,8 +260,8 @@
                 Dvthue: $('#dvthue_edit').val(),
                 Diachi: $('#diachi_edit').val(),
                 Noidung: $('#noidung_edit').val(),
-                Manhom: $('#phanloai_edit').val(),
-                Phanloai: $('#loairung_edit').val(),
+                  Phanloai: $('#phanloai_edit').val(),
+               Manhom: $('#loairung_edit').val(),
                 Dientich: $('#dt_edit').val(),
                 Dientichsd: $('#dtthue_edit').val(),
                 Dvt: $('#dvtinh_edit').val(),
@@ -281,11 +277,11 @@
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
-            success: function (data) {
+            success: function(data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");
@@ -308,10 +304,10 @@
                 Id: $('#id_delete').val(),
             },
             dataType: 'JSON',
-            success: function (data) {
+            success: function(data) {
                 if (data.status == 'success') {
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         TableManaged4.init();
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");

@@ -71,7 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 Madichvu = Madichvu,
                 Dvt = Dvt,
                 Manhom = Manhom,
-                Maspdv = DateTime.Now.ToString("yyMMddssmmHH"),
+                Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -200,7 +200,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.dm", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
-                    var list_add = new List<GiaDvKcbDm>();
+                    //var list_add = new List<GiaDvKcbDm>();
                     int sheet = Sheet == 0 ? 0 : (Sheet - 1);
                     using (var stream = new MemoryStream())
                     {
@@ -214,12 +214,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                             //var n = 1;
                             for (int row = LineStart; row <= LineStop; row++)
                             {
-                                list_add.Add(new GiaDvKcbDm
+                                var list_add = new GiaDvKcbDm
                                 {
                                     Manhom = Manhom,
                                     Created_at = DateTime.Now,
                                     Updated_at = DateTime.Now,
-                                    //Maspdv = DateTime.Now.ToString("yyMMddssmmHH") + (n++) ,
+                                    Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
 
                                     Madichvu = worksheet.Cells[row, Int16.Parse(Madichvu)].Value.ToString() != null ?
                                                 worksheet.Cells[row, Int16.Parse(Madichvu)].Value.ToString().Trim() : "",
@@ -234,12 +234,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                                 worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
 
 
-                                });
+                                };
+                                _db.GiaDvKcbDm.Add(list_add);
                             }
 
                         }
                     }
-                    _db.GiaDvKcbDm.AddRange(list_add);
+                    //_db.GiaDvKcbDm.AddRange(list_add);
                     _db.SaveChanges();
 
                     var data = new { status = "success" };

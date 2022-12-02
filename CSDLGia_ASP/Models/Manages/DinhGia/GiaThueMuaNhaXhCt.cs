@@ -30,5 +30,16 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thoigianpd { get; set; }
         public string Soqddg { get; set; }
         public DateTime Thoigiandg { get; set; }
+
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string Ghichu { get; set; }
+        [NotMapped]
+        public double Dientich { get; set; }
+        [NotMapped]
+        public string Tennha { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
@@ -77,6 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         Gia = Gia,
                         Phanloai = Phanloai,
                         Hientrang = Hientrang,
+                        Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -304,82 +306,75 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        //[Route("GiaSpDvToiDaDmCt/Excel")]
-        //[HttpPost]
-        //public async Task<JsonResult> Excel(string Manhom, string Level, string Cap1, string Cap2, string Cap3,
-        //    string Cap4, string Cap5, string Dvt, string Ten, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.danhmuc", "Edit"))
-        //        {
-        //            LineStart = LineStart == 0 ? 1 : LineStart;
-        //            var list_add = new List<GiaSpDvToiDaDm>();
-        //            int sheet = Sheet == 0 ? 0 : (Sheet - 1);
-        //            using (var stream = new MemoryStream())
-        //            {
-        //                await FormFile.CopyToAsync(stream);
-        //                using (var package = new ExcelPackage(stream))
-        //                {
-        //                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-        //                    var rowcount = worksheet.Dimension.Rows;
-        //                    LineStop = LineStop > rowcount ? rowcount : LineStop;
+        [Route("GiaSpDvToiDaDmCt/Excel")]
+        [HttpPost]
+        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Gia, string Phanloai,
+            string Hientrang, string Dvt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida", "Edit"))
+                {
+                    LineStart = LineStart == 0 ? 1 : LineStart;
+                    int sheet = Sheet == 0 ? 0 : (Sheet - 1);
+                    using (var stream = new MemoryStream())
+                    {
+                        await FormFile.CopyToAsync(stream);
+                        using (var package = new ExcelPackage(stream))
+                        {
+                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                            var rowcount = worksheet.Dimension.Rows;
+                            LineStop = LineStop > rowcount ? rowcount : LineStop;
+                            //var n = 1;
+                            for (int row = LineStart; row <= LineStop; row++)
+                            {
+                                var list_add = new GiaSpDvToiDaDm
+                                {
+                                    Manhom = Manhom,
+                                    Created_at = DateTime.Now,
+                                    Updated_at = DateTime.Now,
+                                    Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
 
-        //                    for (int row = LineStart; row <= LineStop; row++)
-        //                    {
-        //                        list_add.Add(new GiaSpDvToiDaDm
-        //                        {
-        //                            Manhom = Manhom,
-        //                            Theodoi = "TD",
-        //                            Created_at = DateTime.Now,
-        //                            Updated_at = DateTime.Now,
+                                    Mota = worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString() != null ?
+                                                worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString().Trim() : "",
 
-        //                            Level = worksheet.Cells[row, Int16.Parse(Level)].Value.ToString() != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Level)].Value.ToString().Trim() : "",
+                                    Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
+                                                worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
+                                    Gia = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) != 0 ?
+                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) : 0,
+                                    Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
+                                                worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
+                                    Hientrang = worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?
+                                                worksheet.Cells[row, Int16.Parse(Hientrang)].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
+                                                worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
 
-        //                            Cap1 = worksheet.Cells[row, Int16.Parse(Cap1)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap1)].Value.ToString().Trim() : "",
 
-        //                            Cap2 = worksheet.Cells[row, Int16.Parse(Cap2)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap2)].Value.ToString().Trim() : "",
+                                };
+                                _db.GiaSpDvToiDaDm.Add(list_add);
+                            }
 
-        //                            Cap3 = worksheet.Cells[row, Int16.Parse(Cap3)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap3)].Value.ToString().Trim() : "",
+                        }
+                    }
+                    //_db.GiaDvKcbDm.AddRange(list_add);
+                    _db.SaveChanges();
 
-        //                            Cap4 = worksheet.Cells[row, Int16.Parse(Cap4)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap4)].Value.ToString().Trim() : "",
+                    var data = new { status = "success" };
+                    return Json(data);
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
 
-        //                            Cap5 = worksheet.Cells[row, Int16.Parse(Cap5)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap5)].Value.ToString().Trim() : "",
-
-        //                            Ten = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-
-        //                            Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-        //                        });
-        //                    }
-
-        //                }
-        //            }
-        //            _db.GiaSpDvToiDaDm.AddRange(list_add);
-        //            _db.SaveChanges();
-
-        //            var data = new { status = "success" };
-        //            return Json(data);
-        //        }
-        //        else
-        //        {
-        //            var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-        //            return Json(data);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-        //        return Json(data);
-        //    }
-        //}
+        }
     }
 }

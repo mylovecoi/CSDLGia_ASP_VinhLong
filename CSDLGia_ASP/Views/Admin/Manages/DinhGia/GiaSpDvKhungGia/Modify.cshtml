@@ -30,9 +30,10 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvKhungGia" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
-            <input asp-for="Mahs" value="@Model.Mahs">
             <input asp-for="Madv" value="@Model.Madv">
-
+            <input asp-for="Madv" value="@Model.Madv">
+            <input asp-for="Mahs" value="@Model.Mahs">
+            <input asp-for="Ipf1" value="@ViewData["Ipf1"]">
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
@@ -57,12 +58,19 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
+             <div class="col-xl-6">
+                <div class="form-group">
+                    <label>
+                        File đính kèm
+                        @if (!string.IsNullOrEmpty(Model.Ipf1))
+                        {
+                            <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf1"]" target="_blank"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                File đính kèm hiện tại
+                            </a>
+                        }
+                    </label>
+                    <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                 </div>
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Detail.cshtml")

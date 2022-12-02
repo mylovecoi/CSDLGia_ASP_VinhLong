@@ -1,0 +1,59 @@
+﻿@{
+    int record_id = 1;
+    var hanghoa = (IEnumerable<ChiSoGiaTdHh>)ViewData["hanghoa"];
+    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Chỉ số trung bình là
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="form-group fv-plugins-icon-container">
+                    <label><b>Năm</b></label>
+                    <input type="text" value="Năm @ViewData["nam"]" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group fv-plugins-icon-container">
+                    <label><b>Số tháng</b></label>
+                    <input type="text" value="@ViewData["thang"]" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group fv-plugins-icon-container">
+                    <label><b>Chỉ số giá trung bình</b></label>
+                    <input type="text" value="@ViewData["average"]" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group fv-plugins-icon-container">
+                    <button type="button" data-target="#Compare_Modal" data-toggle="modal" class="btn btn-light-success">
+                        So sánh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

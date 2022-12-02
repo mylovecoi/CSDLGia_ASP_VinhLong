@@ -1,7 +1,13 @@
 ﻿@{
 
     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
-    var plspdv = (IEnumerable<GiaSpDvCuTheDm>)ViewData["PhanLoaiDichVu"];
+    var PhanLoaiDichVu = (IEnumerable<GiaSpDvCuTheDm>)ViewData["PhanLoaiDichVu"];
+    var list = (from t in PhanLoaiDichVu
+                group t by t.Phanloai into grp
+                select new
+                {
+                    pl = grp.Key
+                });
 
 }
 
@@ -77,9 +83,9 @@
                     <div class="col-xl-11">
                         <label class="control-label">Phân loại sản phẩm, dịch vụ</label>
                         <select id="plspdv_create" class="form-control" name="plspdv_create">
-                            @foreach (var item in plspdv)
+                            @foreach (var item in list)
                             {
-                                <option value="@item.Phanloai">@item.Phanloai</option>
+                                <option value="@item.pl">@item.pl</option>
                             }
                         </select>
                     </div>
@@ -308,7 +314,7 @@
 
 
 <!--Excel Modal-->
-@*<div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -322,14 +328,14 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" type="hidden"/>
                     <div class="mb-3 font-weight-bold font-size-lg">
                         <label style="color: blue;font-weight: bold; text-transform: uppercase">@ViewData["Tennhom"]</label>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Level</label>
-                            <select id="level_excel" name="level_excel" class="form-control">
+                            <label>Tên sản phẩm</label>
+                            <select id="Ten_excel" name="Ten_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "1" ? "selected" : "")>@item.Key</!option>
@@ -339,8 +345,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Cấp I*</label>
-                            <select id="cap1_excel" name="cap1_excel" class="form-control">
+                            <label>Mô tả</label>
+                            <select id="Mota_excel" name="Mota_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "2" ? "selected" : "")>@item.Key</!option>
@@ -350,8 +356,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Cấp II*</label>
-                            <select id="cap2_excel" name="cap2_excel" class="form-control">
+                            <label>Giá</label>
+                            <select id="Gia_excel" name="Gia_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "3" ? "selected" : "")>@item.Key</!option>
@@ -361,8 +367,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Cấp III*</label>
-                            <select id="cap3_excel" name="cap3_excel" class="form-control">
+                            <label>Đơn vị tính</label>
+                            <select id="Dvt_excel" name="Dvt_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "4" ? "selected" : "")>@item.Key</!option>
@@ -372,8 +378,8 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Cấp IV*</label>
-                            <select id="cap4_excel" name="cap4_excel" class="form-control">
+                            <label>Phân loại</label>
+                            <select id="Phanloai_excel" name="Phanloai_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "5" ? "selected" : "")>@item.Key</!option>
@@ -383,33 +389,11 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Cấp V*</label>
-                            <select id="cap5_excel" name="cap5_excel" class="form-control">
+                            <label>Hiện trạng</label>
+                            <select id="Hientrang_excel" name="Hientrang_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "6" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm, loại tài nguyên*</label>
-                            <select id="ten_excel" name="ten_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "7" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị tính*</label>
-                            <select id="dvt_excel" name="dvt_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "8" ? "selected" : "")>@item.Key</!option>
                                 }
                             </select>
                         </div>
@@ -446,7 +430,7 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 <script>
 
@@ -584,14 +568,12 @@
             toastr.error("File đính kèm không được để trống!!!", "Lỗi!");
         } else {
             var file = new FormData();
-            file.append("Level", $("#level_excel").val());
-            file.append("Cap1", $("#cap1_excel").val());
-            file.append("Cap2", $("#cap2_excel").val());
-            file.append("Cap3", $("#cap3_excel").val());
-            file.append("Cap4", $("#cap4_excel").val());
-            file.append("Cap5", $("#cap5_excel").val());
-            file.append("Ten", $("#ten_excel").val());
-            file.append("Dvt", $("#dvt_excel").val());
+            file.append("Ten", $("#Ten_excel").val());
+            file.append("Mota", $("#Mota_excel").val());
+            file.append("Gia", $("#Gia_excel").val());
+            file.append("Dvt", $("#Dvt_excel").val());
+            file.append("Phanloai", $("#Phanloai_excel").val());
+            file.append("Hientrang", $("#Hientrang_excel").val());
             file.append("FormFile", $("#file_excel")[0].files[0]);
             file.append("Sheet", $("#sheet_excel").val());
             file.append("LineStart", $("#linestart_excel").val());

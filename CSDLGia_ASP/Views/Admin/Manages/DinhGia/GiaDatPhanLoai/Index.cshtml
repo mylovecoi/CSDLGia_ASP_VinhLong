@@ -23,9 +23,9 @@
         });
 
         $(function () {
-            $('#Donvi, #Nam').change(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/DinhGiaDatCuThe?';
-                var madv = '&Madv=' + $('#Donvi').val();
+                var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
                 window.location.href = url;
@@ -46,7 +46,7 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
-                   asp-route-Madv="@ViewData["Donvi"]">
+                   asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -74,7 +74,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Donvi" name="Donvi">
+                    <select class="form-control" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -83,7 +83,7 @@
                                 }
                                 @foreach (var item in company)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                                 }
                             </optgroup>
                         }

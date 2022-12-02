@@ -1,0 +1,141 @@
+﻿@{
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+<style>
+    .dropdown-submenu .dropdown-menu {
+        top: -3px;
+        left: 100%;
+        margin-top: -1px;
+    }
+</style>
+
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            $('.js-example-basic-multiple').select2();
+            $("#select3").css("display", "none");
+            $("#select2").css("display", "none");
+            $("#nhom1").click(function () {
+                if (this.checked) {
+                    $("#select2").css("display", "none");
+                    $("#select1").css("display", "block");
+                    $("#select3").css("display", "none");
+                }
+            });
+
+            $("#nhom2").click(function () {
+                if (this.checked) {
+                    $("#select1").css("display", "none");
+                    $("#select2").css("display", "block");
+                    $("#select3").css("display", "none");
+                }
+            });
+
+            $("#nhom3").click(function () {
+                if (this.checked) {
+                    $("#select1").css("display", "none");
+                    $("#select2").css("display", "none");
+                    $("#select3").css("display", "block");
+                }
+            });
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thêm mới hồ sơ chỉ số giá
+            </h3>
+        </div>
+        <div class="card-toolbar">
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <input value="@ViewData["matt"]" id="Matt" name="Matt"/>
+        <input value="@ViewData["nam"]" id="Nam" name="Nam"/>
+        <input value="@ViewData["Thang"]" id="Thang" name="Thang"/>
+        <input value="@ViewData["Mahs"]" id="Mahs" name="Mahs"/>
+        
+        <div class="card-title">
+            <h3 class="card-label">
+                Chọn nhóm dự đoán
+            </h3>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="radio-inline">
+                    <label class="radio">
+                        <input type="radio" checked="checked" id="nhom1" name="time" value="nhom1" />
+                        <span></span>
+                        Nhóm 1
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="nhom2" name="time" value="nhom2" />
+                        <span></span>
+                        Nhóm 2
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="nhom3" name="time" value="nhom3" />
+                        <span></span>
+                        Nhóm 3
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12" id="select1">
+                <div class="form-group fv-plugins-icon-container">
+                    <select class="js-example-basic-multiple" name="nhom1" id="nhomSelect1" multiple="multiple">
+                        @foreach (var n1 in allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "1"))
+                        {
+                            <option value="@n1.Masohanghoa">@n1.Tenhanghoa</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-12" id="select2">
+                <div class="form-group fv-plugins-icon-container">
+                    <select class="js-example-basic-multiple" name="nhom2" id="nhomSelect2" multiple="multiple">
+                        @foreach (var n2 in allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "2"))
+                        {
+                            <option value="@n2.Masohanghoa">@n2.Tenhanghoa</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-12" id="select3">
+                <div class="form-group fv-plugins-icon-container">
+                    <select class="js-example-basic-multiple" name="nhom3" id="nhomSelect3" multiple="multiple">
+                        @foreach (var n3 in allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "3"))
+                        {
+                            <option value="@n3.Masohanghoa">@n3.Tenhanghoa</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-light-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Admin/Manages/ChiSoGiaTd/Dudoan/Update.cshtml")

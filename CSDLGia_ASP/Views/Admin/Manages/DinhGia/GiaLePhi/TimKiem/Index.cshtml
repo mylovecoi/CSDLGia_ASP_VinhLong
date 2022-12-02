@@ -44,75 +44,76 @@
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
 
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="dv" name="dv">
-                        <option value="All">--Tất cả các đơn vị--</option>
-                        @foreach (var db in dsdiaban)
-                        {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold; color:blue">Đơn vị</label>
+                        <select class="form-control" id="dv" name="dv">
+                            <option value="All">--Tất cả các đơn vị--</option>
+                            @foreach (var db in dsdiaban)
+                            {
+                                <optgroup label="@db.TenDiaBan">
+                                    @{
+                                        var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    }
 
-                                @foreach (var item in company)
-                                {
+                                    @foreach (var item in company)
+                                    {
 
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
+                                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label><b>Tên sản phẩm dịch vụ</b></label>
+                        <select class="form-control" id="tsp" name="tsp">
+                            <option value="All">--Tất cả các sản phẩm, dịch vụ--</option>
+                            @foreach (var tn in GiaPhiLePhiDm)
+                            {
+                                <option value="@tn.Manhom">@tn.Tennhom</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời gian nhập từ</label>
+                        <input type="date" class="form-control" name="beginTime" id="beginTime" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời gian nhập đến</label>
+                        <input type="date" class="form-control" name="endTime" id="endTime" />
+                    </div>
                 </div>
             </div>
 
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label><b>Tên sản phẩm dịch vụ</b></label>
-                    <select class="form-control" id="tsp" name="tsp">
-                        <option value="All">--Tất cả các sản phẩm, dịch vụ--</option>
-                        @foreach (var tn in GiaPhiLePhiDm)
-                        {
-                            <option value="@tn.Tennhom">@tn.Tennhom</option>
-                        }
-                    </select>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn gia nhập từ</label>
+                        <input type="number" class="form-control" name="beginPrice" id="beginPrice" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn gia nhập đến</label>
+                        <input type="number" class="form-control" name="endPrice" id="endPrice" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="form-group">
-                <label>Thời gian nhập từ</label>
-                <input type="date" class="form-control" name="beginTime" id="beginTime" />
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="form-group">
-                <label>Thời gian nhập đến</label>
-                <input type="date" class="form-control" name="endTime" id="endTime" />
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="form-group">
-                <label>Dơn gia nhập từ</label>
-                <input type="number" class="form-control" name="beginPrice" id="beginPrice" />
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="form-group">
-                <label>Dơn gia nhập đến</label>
-                <input type="number" class="form-control" name="endPrice" id="endPrice" />
-            </div>
-        </div>
-    </div>
+    
     `
     <div class="card-footer" style="text-align:center">
         <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
@@ -126,22 +127,20 @@
             if ($('#beginTime').val().trim() > $('#endTime').val().trim()) {
                 toastr.error("Thời gian từ không được nhỏ hơn thời gian đến!", "Lỗi!!!")
             }
-            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#beginPrice').val().trim() <= $('#endPrice').val().trim()) {
-                document.getElementById("frm_search").submit();
+            else {
+                if ($('#beginPrice').val().trim() > $('#endPrice').val().trim()) {
+                    toastr.error("Giá khởi điểm từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
+                } else {
+                    document.getElementById("frm_search").submit();
+                }
             }
-        }
-        else if ($('#beginPrice').val().trim() != "" && $('#endPrice').val().trim() != "") {
+        } else {
             if ($('#beginPrice').val().trim() > $('#endPrice').val().trim()) {
-                toastr.error("Đơn giá nhập từ không được nhỏ hơn đơn giá nhập đến!", "Lỗi!!!")
-            }
-            else if ($('#beginTime').val().trim() <= $('#endTime').val().trim() && $('#beginPrice').val().trim() <= $('#endPrice').val().trim()) {
+                toastr.error("Giá khởi điểm từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
+            } else {
                 document.getElementById("frm_search").submit();
             }
         }
-        else {
-            document.getElementById("frm_search").submit();
-        }
-
     }
 
 </script>
