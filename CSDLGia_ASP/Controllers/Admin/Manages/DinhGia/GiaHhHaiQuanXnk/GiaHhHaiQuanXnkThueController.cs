@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.thue", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", "Index"))
                 {
                     var model = _db.GiaHhHaiQuanXnkThue;
 
@@ -59,7 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.thue", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", "Create"))
                 {
                     var request = new GiaHhHaiQuanXnkThue
                     {
@@ -92,7 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.thue", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhHaiQuanXnkThue.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -135,7 +135,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.thue", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhHaiQuanXnkThue.FirstOrDefault(t => t.Id == Id);
                     model.TenThue = TenThue;
@@ -164,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.thue", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhHaiQuanXnkThue.FirstOrDefault(t => t.Id == Id);
                     _db.GiaHhHaiQuanXnkThue.Remove(model);

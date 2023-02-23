@@ -313,7 +313,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
-                    ViewData["Title"] = "Bảng giá đất địa bàn";
+                    ViewData["Title"] = "Bảng giá các loại đất";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";

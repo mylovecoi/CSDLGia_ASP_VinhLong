@@ -78,8 +78,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                         if (comct.Count > 0)
                         {
                             var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Trangthai == Trangthai).ToList();
-                            var check_tt = _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai != "DD").Count();
-                            /*return Ok(check_tt);*/
                             if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                             {
                                 ViewData["DsDonVi"] = dsdonvi;
@@ -88,6 +86,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             {
                                 ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
                             }
+                            var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
+                            ViewData["check_tt"] = check_tt;
                             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                             ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                             ViewData["Madv"] = Madv;
@@ -95,7 +95,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                             ViewData["Nam"] = Nam;
                             ViewData["Manghe"] = Manghe;
-                            ViewData["check_tt"] = check_tt;
                             ViewData["Title"] = "Danh sách hồ sơ kê khai giá xi măng thép xây dựng";
                             ViewData["MenuLv1"] = "menu_kknygia";
                             ViewData["MenuLv2"] = "menu_kkgxmtxd";

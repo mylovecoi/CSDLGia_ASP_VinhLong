@@ -4,13 +4,6 @@
 
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var listTt = (IEnumerable<ChiSoGiaTdDm>)ViewData["listTt"];
-    var matt = (from t in listTt
-                group t by t.Matt into grp
-                select new
-                {
-                    matt = grp.Key,
-                });
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDd>
 
@@ -37,11 +30,10 @@
             $('.js-example-basic-multiple').select2();
         });
         $(function () {
-            $('#Matt').change(function () {
+            $('#Madv').change(function () {
                 var current_path_url = '/ChiSoGiaTieuDung?';
-                var matt = '&Matt=' + $('#Matt').val();
                 var madv = '&Madv=' + $('#Madv').val();
-                var url = current_path_url + madv + matt;
+                var url = current_path_url + madv ;
                 window.location.href = url;
             })
         });
@@ -50,6 +42,8 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        @*<input value="@ViewData["Nam"]" id="Nam" name="Nam" />
+        <input value="@ViewData["Thang"]" id="Thang" name="Thang" />*@
         <div class="card-title">
             <h3 class="card-label">
                 Danh sách thông tin hồ sơ chỉ số giá
@@ -57,7 +51,7 @@
         </div>
         <div class="card-toolbar">
             <a asp-controller="ChiSoGiaTdDd" asp-action="Create" class="btn btn-primary font-weight-bolder" title="Thêm mới"
-               asp-route-Madv="@ViewData["Donvi"]" asp-route-Matt="@ViewData["matt"]">
+               asp-route-Madv="@ViewData["Donvi"]" asp-route-Type="@ViewData["Type"]">
                 <i class="icon-lg la la-plus text-primary"></i>Thêm mới
             </a>
         </div>
@@ -65,24 +59,6 @@
     <hr />
     <div class="card-body" id="frm_data">
         <div class="row">
-            <div class="col-xl-3">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Mã thông tư</label>
-                    <select class="form-control" id="Matt" name="Matt">
-                        @foreach (var t in matt)
-                        {
-                            foreach (var list in listTt)
-                            {
-                                if (list.Matt == t.matt)
-                                {
-                                    <!option value="@list.Matt" @((string)ViewData["matt"] == list.Matt ? "selected" : "")>@list.Baocao</!option>
-                                    break;
-                                }
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>

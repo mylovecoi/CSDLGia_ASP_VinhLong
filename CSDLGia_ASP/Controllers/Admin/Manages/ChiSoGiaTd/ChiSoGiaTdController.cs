@@ -378,7 +378,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     {
                         double giaKychonNhom4 = 0;
                         double giaKychonRsN4 = 0;
-                        double count = 0;
+                        /*double count = 0;*/
                         var getGiagoc4 = allnhom4.Where(x => x.Masogoc == item.masogoc);
                         //loc qua tung nhom 4
                         foreach (var getItem in getGiagoc4)
@@ -580,6 +580,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             }
 
         }
+
         [Route("ChiSoGiaTieuDung/Average")]
         [HttpPost]
         public IActionResult Average(string nam_average)

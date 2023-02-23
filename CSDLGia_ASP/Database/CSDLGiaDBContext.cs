@@ -63,6 +63,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<KkGiaXeMayNkSxCt> KkGiaXeMayNkSxCt { get; set; }
         public DbSet<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
         public DbSet<KkGsCt> KkGsCt { get; set; }
+        public DbSet<KkGiaSieuThiCt> KkGiaSieuThiCt { get; set; }
 
         //Kê khai đăng ký giá
         public DbSet<KkDkg> KkDkg { get; set; }

@@ -853,7 +853,7 @@ namespace CSDLGia_ASP.Helper
                     str = "XVIII";
                     break;
                 case 19:
-                    str = "XiX";
+                    str = "XIX";
                     break;
                 case 20:
                     str = "XX";

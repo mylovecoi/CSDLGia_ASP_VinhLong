@@ -9646,6 +9646,54 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("KkGiaSachCt");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaSieuThiCt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dvt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ghichu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Giakk")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Gialk")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mahs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qccl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tendvcu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thuevat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KkGiaSieuThiCt");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaTaCnCt", b =>
                 {
                     b.Property<int>("Id")

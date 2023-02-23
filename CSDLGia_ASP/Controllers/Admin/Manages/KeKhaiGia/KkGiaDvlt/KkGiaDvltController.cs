@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
         [Route("KeKhaiGiaDvlt")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam, string Macskd)
+        public IActionResult Index(string Madv, string Nam, string Macskd, string Trangthai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -82,7 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             var cskd = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv).ToList();
                             if (cskd.Count > 0)
                             {
-                                var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd).ToList();
+                                var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd && t.Trangthai == Trangthai).ToList();
 
                                 if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                                 {
@@ -92,6 +92,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                                 {
                                     ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
                                 }
+                                var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
+                                ViewData["check_tt"] = check_tt;
                                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                                 ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                                 ViewData["Cskd"] = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);

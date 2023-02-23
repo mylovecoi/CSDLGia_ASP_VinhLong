@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DuDoanChiSoGiaTieuDung")]
         [HttpGet]
-        public IActionResult Index(string Matt, string Madv)
+        public IActionResult Index( string Madv,string Type)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -62,20 +62,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         }
 
                         List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDd> model = new List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDd>();
-                        if (string.IsNullOrEmpty(Matt))
-                        {
 
-                            model = _db.ChiSoGiaTdDd.Where(x => x.Madv == Madv).ToList();
-                            ViewData["matt"] = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt != "1").Matt;
-                            ViewData["nam"] = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt != "1").Nam;
-                        }
-                        else
-                        {
-                            var getNam = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt == Matt).Nam;
-                            model = _db.ChiSoGiaTdDd.Where(x => x.Nam == getNam && x.Madv == Madv).ToList();
-                            ViewData["matt"] = Matt;
-                            ViewData["nam"] = getNam;
-                        }
+                        //var getNam = _db.ChiSoGiaTdDm.OrderBy(x => x.Id).LastOrDefault().Nam;
+                        var lastRecord = _db.ChiSoGiaTd.OrderBy(x => x.Id).LastOrDefault();
+                        model = _db.ChiSoGiaTdDd.Where(x => x.Nam == lastRecord.Nam && x.Madv == Madv).ToList();
+                        ViewData["Type"] = Type;
+                        ViewData["Nam"] = lastRecord.Nam;
+                        ViewData["Thang"] = lastRecord.Thang;
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -84,15 +78,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
-                        
+
                         ViewData["listTt"] = _db.ChiSoGiaTdDm.Where(x => x.Matt != "1");
                         ViewData["Title"] = " Thông tin chi tiết hồ sơ";
-                        
+
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["MenuLv1"] = "menu_csg";
                         ViewData["MenuLv2"] = "menu_csgHs";
-                        ViewData["MenuLv3"] = "menu_csgHs_dd";
+                        ViewData["MenuLv3"] = "menu_csgHs_ddlastmonth";
                         return View("Views/Admin/Manages/ChiSoGiaTd/Dudoan/Index.cshtml", model);
                     }
                     else
@@ -101,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         ViewData["Messages"] = "Thông tin chi tiết hồ sơ.";
                         ViewData["MenuLv1"] = "menu_csg";
                         ViewData["MenuLv2"] = "menu_csgHs";
-                        ViewData["MenuLv3"] = "menu_csgHs_dd";
+                        ViewData["MenuLv3"] = "menu_csgHs_ddlastmonth";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -120,46 +114,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DuDoanChiSoGiaTieuDung/Create")]
         [HttpGet]
-        public IActionResult Create(string Madv,string Matt)
+        public IActionResult Create(string Madv,string Type)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Create"))
                 {
-
                     //lấy time của sample lấy ra dự đoán=>dựa theo time mẫu lấy time sau để dự đoán
-                    var getNam = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt == Matt).Nam;
-                    var geTileastRecord = _db.ChiSoGiaTd.OrderByDescending(x => x.Nam == getNam).FirstOrDefault();
-                    var geTileastThang = _db.ChiSoGiaTd.OrderByDescending(x => x.Nam == getNam).FirstOrDefault().Thang;
-                    var thangDd = (int.Parse(geTileastRecord.Thang) + 1).ToString();
-
+                    var lastRecord = _db.ChiSoGiaTd.OrderBy(x=>x.Id).LastOrDefault();
+                    
+                    var thangDd = (int.Parse(lastRecord.Thang) + 1).ToString();
+                    var lastyear = (int.Parse(lastRecord.Nam) - 1).ToString();
+                    
+                    ViewData["allModel"] = this.CheckType(Type);
+                    
                     var model = new ChiSoGiaTdDd
                     {
                         Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
-                        Madv = geTileastRecord.Madv,
-                        Ghichu = geTileastRecord.Ghichu,
+                        Madv = lastRecord.Madv,
                         Thang = thangDd,
-                        Nam = getNam,
-                        Congbo = geTileastRecord.Congbo,
-                        Diaphuong = geTileastRecord.Diaphuong,
-                        Macqcq = geTileastRecord.Macqcq,
-                        Trangthai = geTileastRecord.Trangthai,
+                        Nam = lastRecord.Nam,
+                        Congbo = lastRecord.Congbo,
+                        Diaphuong = lastRecord.Diaphuong,
+                        Macqcq = lastRecord.Macqcq,
+                        Trangthai = lastRecord.Trangthai,
                     };
                     _db.ChiSoGiaTdDd.Add(model);
                     _db.SaveChanges();
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Madv"] = model.Madv;
-                    ViewData["matt"] = Matt;
-                    ViewData["Thang"] = thangDd;
-                    ViewData["nam"] = getNam;
+                    ViewData["Type"] = Type;
+                    ViewData["ThangDd"] = thangDd;
+                    ViewData["Thang"] = lastRecord.Thang;
+                    ViewData["nam"] = lastRecord.Nam;
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["allModel"] = _db.ChiSoGiaTdDm;
                     
                     ViewData["Title"] = "Thêm mới hồ sơ dự đoán chỉ số giá";
                     ViewData["MenuLv1"] = "menu_csg";
                     ViewData["MenuLv2"] = "menu_csgHs";
-                    ViewData["MenuLv3"] = "menu_csgHs_dd";
+                    ViewData["MenuLv3"] = "menu_csgHs_ddlastmonth";
 
                     return View("Views/Admin/Manages/ChiSoGiaTd/Dudoan/Create.cshtml");
                 }
@@ -177,19 +171,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         [Route("DuDoanChiSoGiaTieuDung/SetUpdate")]
         [HttpPost]
         public JsonResult SetUpdate(string[] List1, string[] List2, string[] List3,
-            string Mahs,string Thang,string Nam,string Matt)
+            string Mahs, string Thang,string ThangDd, string Nam, string Type)
         {
-            var thangDd = (int.Parse(Thang) - 1).ToString();
-            var getDm = _db.ChiSoGiaTdDmCt.Where(x => x.Nam == Nam && x.Thang==thangDd);
+            //var thangDd = (int.Parse(Thang) - 1).ToString();
+            var getDm = _db.ChiSoGiaTdDmCt.AsQueryable();
+            var namDd = (int.Parse(Nam) - 1).ToString();
+            
+            getDm = this.CheckType(Type);
             
             var getDmDd = new List<ChiSoGiaTdDmCtDd>();
-
             string[] List;
             //dựa vào list nhóm nào sẽ xoá luôn các nhóm sau nó khi lấy sample dự đoán
-            if (List1.Count() > 0)
+            if (List3.Count() > 0)
             {
-                List = List1;
-                getDm = getDm.Where(x => x.Masonhomhanghoa == "1");
+                List = List3;
+                getDm = getDm.Where(x => x.Masonhomhanghoa != "4");
             }
             else if (List2.Count() > 0)
             {
@@ -198,8 +194,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             }
             else
             {
-                List = List3;
-                getDm = getDm.Where(x => x.Masonhomhanghoa != "4");
+                List = List1;
+                getDm = getDm.Where(x => x.Masonhomhanghoa == "1");
             }
 
 
@@ -216,7 +212,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     Baocao = lastDm.Baocao,
                     QuyensoTt = lastDm.QuyensoTt,
                     QuyensoNt = lastDm.QuyensoNt,
-                    Thang = Thang,
+                    Thang = ThangDd,
                     Giakychon = lastDm.Giakychon,
                     Nam = Nam,
                     Created_at = DateTime.Now,
@@ -225,27 +221,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             }
             _db.ChiSoGiaTdDmCtDd.AddRange(getDmDd);
             _db.SaveChanges();
-            string result = GetData(List,Mahs);
+            string result = GetData(List, Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
         [Route("DuDoanChiSoGiaTieuDung/UpdateElement")]
         [HttpPost]
-        public JsonResult UpdateElement(int Id, string Xuhuong, string Tile, string[] List)
+        public JsonResult UpdateElement(int Id, string Xuhuong, string Tile, string[] List,string Type)
         {
             var info = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Id == Id);
             var record = _db.ChiSoGiaTdDd.FirstOrDefault(x => x.Mahs == info.Mahs);
             //var record = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Mahs == Mahs);
-            record.Noidung = "Dự đoán tháng " + record.Thang + " năm " + record.Nam;
+            if(Type== "Lastmonth") { 
+                record.Noidung = "Dự đoán CPI so với tháng " + (int.Parse(record.Thang)-1) + " năm " + record.Nam; 
+            }
+            if (Type == "Lastyear")
+            {
+                record.Noidung = "Dự đoán CPI so với tháng " + (int.Parse(record.Thang) - 1) + " năm " + (int.Parse(record.Nam) - 1);
+            }
+            if (Type == "Kygoc")
+            {
+                record.Noidung = "Dự đoán CPI so kỳ gốc ";
+            }
+            if (Type == "Last12")
+            {
+                record.Noidung = "Dự đoán CPI so với tháng 12 năm " + record.Nam;
+            }
+            if (Type == "Average")
+            {
+                record.Noidung = "Dự đoán CPI so bình quân năm " + record.Nam;
+            }
+
             if (Xuhuong == "tang")
             {
                 record.Ghichu = record.Ghichu + "Tăng nhóm " + info.Tenhanghoa + " " + Tile + "%|";
-                info.Giakychon= info.Giakychon * (100 + float.Parse(Tile)) / 100; ;
+                info.Giakychon = info.Giakychon * (100 + float.Parse(Tile)) / 100; ;
             }
             if (Xuhuong == "giam")
             {
-                record.Ghichu = record.Ghichu+"Giảm nhóm " + info.Tenhanghoa + " " + Tile + "%|";
+                record.Ghichu = record.Ghichu + "Giảm nhóm " + info.Tenhanghoa + " " + Tile + "%|";
                 info.Giakychon = info.Giakychon * (100 - float.Parse(Tile)) / 100; ;
             }
             _db.ChiSoGiaTdDd.Update(record);
@@ -266,7 +281,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        public string GetData(string[] List,string Mahs)
+        public string GetData(string[] List, string Mahs)
         {
             string result = "<div class='card-body' id='frm_update'>";
             result += "<table class='table table-striped table-bordered table-hover' id='dudoanTb'>";
@@ -282,9 +297,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             for (int i = 0; i < List.Length; i++)
             {
                 result += "<tr>";
-                var value = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Masohanghoa == List[i] && x.Mahs==Mahs);
-                result += "<td>" + value.Tenhanghoa+ "</td>";
-                result += "<td>" + value.Giakychon+ "</td>";
+                var value = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Masohanghoa == List[i] && x.Mahs == Mahs);
+                result += "<td>" + value.Tenhanghoa + "</td>";
+                result += "<td>" + value.Giakychon + "</td>";
                 result += "<input value='" + List[i] + "' id='nhom' name='nhom[]' type='hidden'/>";
                 int id = value.Id;
                 result += "<td><button type='button' class='btn btn-primary font-weight-bold' data-toggle='modal' data-target='#Predict_Modal' onclick='GetUpdate(`" + id + "`)'>";
@@ -310,7 +325,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     //var allnhom3 = _db.ChiSoGiaTdDmCt.Where(x =>x.Masonhomhanghoa == "3");
                     var allnhom3 = _db.ChiSoGiaTdDmCtDd.Where(x => x.Mahs == Mahs && x.Masonhomhanghoa == "3").ToList();
                     //lay tat ca cac nhom 3 con nhom 2
-                    if (allnhom3.Count() > 0) {
+                    if (allnhom3.Count() > 0)
+                    {
                         var getNhom3 = from t in allnhom3
                                        group t by t.Masogoc into grp
                                        select new
@@ -356,13 +372,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                             _db.ChiSoGiaTdDmCtDd.Update(nhom2);
                         }
                     }
-                    
-                        //average all nhom 2
-                        //lay tat ca cac nhom 2
-                        //var allnhom2 = _db.ChiSoGiaTdDmCt.Where(x =>x.Masonhomhanghoa == "2");
-                        var allnhom2 = _db.ChiSoGiaTdDmCtDd.Where(x =>
-                                                    x.Masonhomhanghoa == "2"
-                                                    && x.Mahs == Mahs).ToList();
+
+                    //average all nhom 2
+                    //lay tat ca cac nhom 2
+                    //var allnhom2 = _db.ChiSoGiaTdDmCt.Where(x =>x.Masonhomhanghoa == "2");
+                    var allnhom2 = _db.ChiSoGiaTdDmCtDd.Where(x =>
+                                                x.Masonhomhanghoa == "2"
+                                                && x.Mahs == Mahs).ToList();
                     //lay tat ca cac nhom 2 con nhom 1
                     if (allnhom2.Count() > 0)
                     {
@@ -409,7 +425,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                             _db.ChiSoGiaTdDmCtDd.Update(nhom1);
                         }
                     }
-                        
+
                     //average all nhom 1
                     //lay tat ca cac nhom 1
                     //var nhom1 = _db.ChiSoGiaTdDmCt.Where(x => x.Mahs == Mahs && x.Masonhomhanghoa == "1");
@@ -454,7 +470,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                                        TenDv = dv.TenDv,
                                        MaDv = dv.MaDv,
                                    }).ToList();
-                    int compareThang = int.Parse(getHs.Thang)-1;
+                    int compareThang = int.Parse(getHs.Thang) - 1;
                     var priceRoot = _db.ChiSoGiaTd.FirstOrDefault(x => x.Nam == getHs.Nam
                       && x.Thang == compareThang.ToString()).Giakychon;
                     ViewData["DsDonVi"] = dsdonvi;
@@ -463,14 +479,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     ViewData["thang"] = getHs.Thang;
                     ViewData["nam"] = getHs.Nam;
                     ViewData["gia"] = giaKychonRsN1;
-                    if(giaKychonRsN1 - priceRoot > 0)
+                    if (giaKychonRsN1 - priceRoot > 0)
                     {
                         ViewData["compare"] = giaKychonRsN1 - priceRoot;
                         ViewData["state"] = "tang";
                     }
                     else
                     {
-                        ViewData["compare"] = priceRoot- giaKychonRsN1;
+                        ViewData["compare"] = priceRoot - giaKychonRsN1;
                         ViewData["state"] = "giam";
                     }
                     ViewData["tenhs"] = _db.ChiSoGiaTdDd.FirstOrDefault(x => x.Mahs == Mahs).Noidung;
@@ -478,7 +494,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["MenuLv1"] = "menu_csg";
                     ViewData["MenuLv2"] = "menu_csgHs";
-                    ViewData["MenuLv3"] = "menu_csgHs_dd";
+                    ViewData["MenuLv3"] = "menu_csgHs_ddlastmonth";
                     return View("Views/Admin/Manages/ChiSoGiaTd/Dudoan/Result.cshtml");
                 }
                 else
@@ -507,7 +523,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     ViewData["Title"] = " Thông tin chi tiết hồ sơ";
                     ViewData["MenuLv1"] = "menu_csg";
                     ViewData["MenuLv2"] = "menu_csgHs";
-                    ViewData["MenuLv3"] = "menu_csgHs_dd";
+                    ViewData["MenuLv3"] = "menu_csgHs_ddlastmonth";
                     return View("Views/Admin/Manages/ChiSoGiaTd/Dudoan/Detail.cshtml");
                 }
                 else
@@ -520,6 +536,131 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+        private IQueryable<ChiSoGiaTdDmCt> CheckType(string Type)
+        {
+            var lastRecord = _db.ChiSoGiaTd.OrderBy(x => x.Id).LastOrDefault();
+
+            var thangDd = (int.Parse(lastRecord.Thang) + 1).ToString();
+            var lastyear = (int.Parse(lastRecord.Nam) - 1).ToString();
+            var getDm = _db.ChiSoGiaTdDmCt.AsQueryable();
+            if(Type== "Lastmonth")
+            {
+                getDm = getDm.Where(x => x.Nam == lastRecord.Nam && x.Thang == lastRecord.Thang && x.Trangthai!="tb");
+            }
+            if (Type == "Lastyear")
+            {
+                getDm = getDm.Where(x => x.Nam == lastyear && x.Thang == lastRecord.Thang);
+            }
+            if (Type == "Last12")
+            {
+                getDm = getDm.Where(x => x.Nam == lastyear && x.Thang == "12");
+            }
+            if (Type == "Average")
+            {
+                var Average = (from t in _db.ChiSoGiaTdDmCt.Where(x => x.Nam == lastRecord.Nam && x.Trangthai!="tb")
+                               group t by new
+                               {
+                                   t.Masohanghoa,
+                                   t.Masonhomhanghoa,
+                                   t.QuyensoNt,
+                                   t.QuyensoTt,
+                                   t.Masogoc,
+                                   t.Tenhanghoa
+                               }
+                                      into grp
+                               select new
+                               {
+                                   grp.Key.Masohanghoa,
+                                   grp.Key.Masonhomhanghoa,
+                                   grp.Key.QuyensoNt,
+                                   grp.Key.QuyensoTt,
+                                   grp.Key.Masogoc,
+                                   grp.Key.Tenhanghoa,
+                                   Giakychon = grp.Sum(t => t.Giakychon) / (Convert.ToDouble(grp.Count())),
+                               });
+                var checkNull = _db.ChiSoGiaTdDmCt.Where(x => x.Thang == lastRecord.Thang && x.Nam == lastRecord.Nam && x.Trangthai=="tb");
+                if (checkNull.Count() <=0)
+                {
+                    foreach (var item in Average)
+                    {
+                        var newa = new ChiSoGiaTdDmCt
+                        {
+                            Masonhomhanghoa = item.Masonhomhanghoa,
+                            Masohanghoa = item.Masohanghoa,
+                            Giakychon = item.Giakychon,
+                            QuyensoNt = item.QuyensoNt,
+                            QuyensoTt = item.QuyensoTt,
+                            Thang = lastRecord.Thang,
+                            Nam = lastRecord.Nam,
+                            Tenhanghoa = item.Tenhanghoa,
+                            Masogoc = item.Masogoc,
+                            Baocao = "Bình quân tháng 1 đến tháng " + lastRecord.Thang,
+                            Trangthai = "tb",
+                        };
+                        _db.ChiSoGiaTdDmCt.Add(newa);
+
+                    }
+                }
+                
+                getDm = getDm.Where(x => x.Nam == lastRecord.Nam && x.Thang == lastRecord.Thang && x.Trangthai == "tb");
+                _db.SaveChanges();
+            }
+            if (Type == "Kygoc")
+            {
+                var checkNull = _db.ChiSoGiaTdDmCt.Where(x => x.Trangthai == "root");
+                if (checkNull.Count()<=0)
+                {
+                    foreach (var item in _db.ChiSoGiaTdDm.Where(x => x.Matt == "1"))
+                    {
+                        var newa = new ChiSoGiaTdDmCt
+                        {
+                            Masonhomhanghoa = item.Masonhomhanghoa,
+                            Masohanghoa = item.Masohanghoa,
+                            Giakychon = item.Gia,
+                            QuyensoNt = item.QuyensoNt,
+                            QuyensoTt = item.QuyensoTt,
+                            Thang = lastRecord.Thang,
+                            Nam = lastRecord.Nam,
+                            Tenhanghoa = item.Tenhanghoa,
+                            Masogoc = item.Masogoc,
+                            Baocao = "Kỳ gốc",
+                            Trangthai = "root",
+                        };
+                        _db.ChiSoGiaTdDmCt.Add(newa);
+
+                    }
+                }
+                
+                getDm = getDm.Where(x => x.Trangthai == "root");
+                _db.SaveChanges();
+            }
+            return (IQueryable<ChiSoGiaTdDmCt>)getDm;
+        }
+        
+        [Route("DuDoanChiSoGiaTieuDung/DropList")]
+        [HttpPost]
+        public JsonResult DropList(string[] id,string nhom,string Nam,string Type)
+        {
+            var model = new List<ChiSoGiaTdDmCt>();
+            //var modelAverage = new List<ChiSoGiaTdAverage>();
+            string result = "";
+            for (int i = 0; i < id.Length; i++)
+            {
+                var list = this.CheckType(Type).Where(x => x.Masogoc == id[i]);
+                var t = this.CheckType(Type).Where(x => x.Masogoc == id[i]).Count();
+                foreach (var item in list)
+                {
+                    model.Add(item);
+                }
+                foreach (var item in model)
+                {
+                    result += "<option value ='" + item.Masohanghoa + "'>" + item.Tenhanghoa + "</ option >";
+                }
+
+            }
+            var data = new { status = "success", message = result };
+            return Json(data);
         }
     }
 }

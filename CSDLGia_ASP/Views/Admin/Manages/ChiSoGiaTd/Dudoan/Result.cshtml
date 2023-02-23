@@ -30,11 +30,10 @@
             $('.js-example-basic-multiple').select2();
         });
         $(function () {
-            $('#Matt').change(function () {
+            $('#Madv').change(function () {
                 var current_path_url = '/ChiSoGiaTieuDung?';
-                var matt = '&Matt=' + $('#Matt').val();
                 var madv = '&Madv=' + $('#Madv').val();
-                var url = current_path_url + madv + matt;
+                var url = current_path_url + madv ;
                 window.location.href = url;
             })
         });

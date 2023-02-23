@@ -1,7 +1,5 @@
 ﻿@{
-    var allModel = (IEnumerable<ChiSoGiaTdDm>)ViewData["allModel"];
-    var nhom1 = allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "1");
-    var nhom2 = allModel.Where(x => x.Matt == "1" && x.Masonhomhanghoa == "2");
+    var allModel = (IEnumerable<ChiSoGiaTdDmCt>)ViewData["allModel"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -22,7 +20,6 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
-            $('.selectMul').select2();
         });
     </script>
 }
@@ -64,6 +61,7 @@
             <div class="modal-body">
                 <div class="row text-left">
                     <input id="Id" name="Id" type="hidden"/>
+                    <input id="Type" name="Type" value="@ViewData["Type"]" type="hidden"/>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Xu hướng dự đoán</label>
@@ -91,21 +89,18 @@
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-
-    $(document).ready(function () {
-        $('.selectMul').select2();
-        
-    });
     function SetUpdate() {
         $.ajax({
             url: "/DuDoanChiSoGiaTieuDung/SetUpdate",
             type: "POST",
             data: {
-                List1: $('#nhomSelect1').val(),
-                List2: $('#nhomSelect2').val(),
-                List3: $('#nhomSelect3').val(),
+                List1: $('#grp1').val(),
+                List2: $('#grp2').val(),
+                List3: $('#grp3').val(),
                 Nam: $('#Nam').val(),
                 Thang: $('#Thang').val(),
+                ThangDd: $('#ThangDd').val(),
+                Type: $('#Type').val(),
                 Mahs: $('#Mahs').val(),
             },
             dataType: 'JSON',
@@ -141,6 +136,7 @@
                 Xuhuong: $('#xuhuong').val(),
                 Tile: $('#tile').val(),
                 List: newA,
+                Type: $("#Type").val(),
             },
             dataType: 'JSON',
             success: function (data) {

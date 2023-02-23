@@ -12,38 +12,39 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
             TableManaged2.init();
             TableManaged4.init();
         });
 
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam, #Manghe').change(function () {
                 var current_path_url = '/BinhOnGia/DanhSach?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var manghe = '&Manghe=' + $('#Manghe').val();
+                var url = current_path_url + madv + nam + manghe;
                 window.location.href = url;
             })
         });
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    MẶT HÀNG BÌNH ỔN GIÁ
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                MẶT HÀNG BÌNH ỔN GIÁ
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
@@ -86,6 +87,18 @@
                                     <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
                                 }
                             </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Mặt hàng</label>
+                    <select class="form-control" id="Manghe" name="Manghe">
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dmnghekd)
+                        {
+                            <!option value="@item.Manghe" @((string)ViewData["Manghe"] == item.Manghe ? "selected" : "")>@item.Tennghe</!option>
                         }
                     </select>
                 </div>

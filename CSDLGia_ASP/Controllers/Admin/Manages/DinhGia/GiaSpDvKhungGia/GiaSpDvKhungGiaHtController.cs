@@ -132,8 +132,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         ViewData["MenuLv3"] = "menu_spdvkhunggia_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/HoanThanh/Index.cshtml", model_join);
 
-
-
                     }
                     else
                     {

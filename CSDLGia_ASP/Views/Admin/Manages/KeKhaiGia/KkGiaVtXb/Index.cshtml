@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var check_tt = ViewData["check_tt"].ToString();
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
 
@@ -11,43 +12,50 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam, #Trangthai').change(function () {
                 var current_path_url = '/KeKhaiGiaVtXb?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var tt = '&Trangthai=' + $('#Trangthai').val();
+                var url = current_path_url + madv + nam + tt;
                 window.location.href = url;
             })
         });
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin kê khai giá<small>&nbsp;cước vận tải hành khách bằng xe buýt theo tuyến cố định</small><br />
-                    <small style="color: blue;">@ViewData["Tendn"] - Mã số thuế: @ViewData["Madv"]</small>
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", "Create")
-                 || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <marquee>
+            <b style="color: #ff0000">Lưu ý:</b> Để thêm mới hồ sơ kê khai giá, các hồ sơ đã tạo từ trước cần được duyệt(trạng thái hồ sơ đã duyệt). Vui lòng kiểm tra lại trạng thái của hồ sơ đã tạo.
+        </marquee>
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin kê khai giá<small>&nbsp;cước vận tải hành khách bằng xe buýt theo tuyến cố định</small><br />
+                <small style="color: blue;">@ViewData["Tendn"] - Mã số thuế: @ViewData["Madv"]</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", "Create")
+            || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaVtXb" asp-action="Create"
+                if (check_tt == "0")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaVtXb" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
+                }
             }
 
         </div>
@@ -86,6 +94,17 @@
                                 }
                             </optgroup>
                         }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Trạng thái</label>
+                    <select class="form-control" id="Trangthai" name="Trangthai">
+                        <!option value="CC" @((string)ViewData["Trangthai"] == "CC" ? "selected" : "")>Chờ chuyển</!option>
+                        <!option value="CD" @((string)ViewData["Trangthai"] == "CD" ? "selected" : "")>Chờ duyệt</!option>
+                        <!option value="BTL" @((string)ViewData["Trangthai"] == "BTL" ? "selected" : "")>Bị trả lại</!option>
+                        <!option value="DD" @((string)ViewData["Trangthai"] == "DD" ? "selected" : "")>Đã duyệt</!option>
                     </select>
                 </div>
             </div>
@@ -154,14 +173,14 @@
                                 @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", "Edit")
-                                     || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                                   || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                     {
                                         <a asp-controller="KkGiaVtXb" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", "Delete")
-                                     || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                                   || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>

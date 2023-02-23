@@ -8,7 +8,7 @@ namespace CSDLGia_ASP.Models
     public class tblDMChucNang
     {
         public int? STT { get; set; }
-        public string? KiHieu { get; set; }
+        public string KiHieu { get; set; }
 
         [Key]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
@@ -27,14 +27,14 @@ namespace CSDLGia_ASP.Models
         [DefaultValue(false)]
         public bool CongBo { get; set; }
 
-        public string? PhanLoai { get; set; }
+        public string PhanLoai { get; set; }
 
-        public string? TenBangHoSo { get; set; }
+        public string TenBangHoSo { get; set; }
 
-        public string? TenBangChiTiet { get; set; }
+        public string TenBangChiTiet { get; set; }
 
         //có thể thay thế bằng Controller/Action
-        public string? UrlTongHop { get; set; }
+        public string UrlTongHop { get; set; }
 
         //Mặc định các quyền tồn tại trong hệ thống (0: hệ thống ko có; 1: hệ thống có chức năng)
         [DefaultValue(0)]

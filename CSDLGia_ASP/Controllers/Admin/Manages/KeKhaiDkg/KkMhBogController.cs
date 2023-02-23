@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 
         [Route("BinhOnGia/DanhSach")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, string Nam, string Manghe)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -67,6 +67,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                             }
                         }
 
+                        if (string.IsNullOrEmpty(Manghe))
+                        {
+                            model = model.ToList();
+                        }
+                        else
+                        {
+                            if(Manghe != "all")
+                            {
+                                model = model.Where(t => t.Manghe == Manghe).ToList();
+                            }
+                            else
+                            {
+                                model = model.ToList();
+                            }
+                            
+                        }
+
                         var model_join = (from kkbog in model
                                      join nghe in _db.DmNgheKd on kkbog.Manghe equals nghe.Manghe
                                      select new VMKkMhBog
@@ -102,11 +119,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
                         }
+                        /*var check_tt = _db.KkMhBog.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
+                        ViewData["check_tt"] = check_tt;*/
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                         ViewData["DmNgheKd"] = dmnghekd;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Manghe"] = Manghe;
                         ViewData["Title"] = "Danh sách hồ sơ giá kê khai mặt hàng bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
                         ViewData["MenuLv2"] = "menu_thongtin";
