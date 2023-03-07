@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                             ViewData["Title"] = "Danh sách hồ sơ kê khai giá siêu thị";
                             ViewData["MenuLv1"] = "menu_kknygia";
                             ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                            ViewData["MenuLv3"] = "menu_giakk";
+                            ViewData["MenuLv3"] = "menu_giasieuthikk";
                             return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/Index.cshtml", model);
                         }
                         else
@@ -102,7 +102,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                             ViewData["Messages"] = "Kê khai giá siêu thị không thuộc quản lý của doanh nghiệp";
                             ViewData["MenuLv1"] = "menu_kknygia";
                             ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                            ViewData["MenuLv3"] = "menu_giakk";
+                            ViewData["MenuLv3"] = "menu_giasieuthikk";
                             return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                         }
                     }
@@ -112,7 +112,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                         ViewData["Messages"] = "Hệ thống chưa có doanh nghiệp kê khai giá siêu thị.";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                        ViewData["MenuLv3"] = "menu_giakk";
+                        ViewData["MenuLv3"] = "menu_giasieuthikk";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -152,7 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                     ViewData["Title"] = "Thêm mới Kê khai giá siêu thị";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giasieuthikk";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/Create.cshtml", model);
                 }
                 else
@@ -253,7 +253,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                     ViewData["Title"] = "Chỉnh sửa Kê khai giá siêu thị";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giasieuthikk";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/Edit.cshtml", model_new);
                 }
                 else
@@ -360,7 +360,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                     ViewData["Title"] = "Kê khai giá siêu thị";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                    ViewData["MenuLv3"] = "menu_giakk";
+                    ViewData["MenuLv3"] = "menu_giasieuthikk";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/Show.cshtml", model);
 
                 }
@@ -422,7 +422,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                     ViewData["Title"] = "Tìm kiếm thông tin kê khai giá siêu thị";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                    ViewData["MenuLv3"] = "menu_giakktk";
+                    ViewData["MenuLv3"] = "menu_giakksieuthitk";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/TimKiem/Index.cshtml", model_join);
 
                 }

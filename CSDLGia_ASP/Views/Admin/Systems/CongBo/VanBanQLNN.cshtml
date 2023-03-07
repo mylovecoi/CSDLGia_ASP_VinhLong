@@ -1,21 +1,39 @@
 ﻿@{
     Layout = "_LayoutCongBo.cshtml";
 }
+@model IEnumerable<CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn>
 
 @section custom_style{
-<link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
 @section custom_script{
-<script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
-<script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-<script>
-    $(document).ready(function () {
-        TableManaged.init();
-    });
-</script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Phanloai').change(function () {
+                var current_path_url = '/CongBo?';
+                var phanloai = '&Phanloai=' + $('#Phanloai').val();
+                var url = current_path_url + phanloai;
+                window.location.href = url;
+            })
+            $('#Loaivb').change(function () {
+                var current_path_url = '/CongBo?';
+                var phanloai = '&Phanloai=' + $('#Phanloai').val();
+                var loaivb = '&Loaivb=' + $('#Loaivb').val();
+                var url = current_path_url + phanloai + loaivb;
+                window.location.href = url;
+            })
+        });
+    </script>
 }
 
 <div class="card card-custom">
@@ -31,13 +49,40 @@
 
     <div class="card-body">
         <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Phân loại</label>
-                    <select class="form-control" name="phanloai" id="phanloai">
-                        <option value="all">--Tất cả--</option>
-                        <option value="gia">Văn bản về Giá</option>
-                        <option value="philephi">Văn bản Phí lệ phí</option>
+            @*<div class="col-md-3">
+            <div class="form-group">
+            <label>Phân loại</label>
+            <select class="form-control" name="phanloai" id="phanloai">
+            <option value="all">--Tất cả--</option>
+            <option value="gia">Văn bản về Giá</option>
+            <option value="philephi">Văn bản Phí lệ phí</option>
+            </select>
+            </div>
+            </div>*@
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Phân loại</label>
+                    <select class="form-control" id="Phanloai" name="Phanloai">
+                        <!option value="gia" @((string)ViewData["Phanloai"] == "gia" ? "selected" : "")>Văn bản về Giá</!option>
+                        <!option value="philephi" @((string)ViewData["Phanloai"] == "philephi" ? "selected" : "")>Văn bản Phí lệ phí</!option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Loại văn bản</label>
+                    <select class="form-control" id="Loaivb" name="Loaivb">
+                        <!option value="all" @((string)ViewData["Loaivb"] == "all" ? "selected" : "")>--Tất cả loại văn bản--</!option>
+                        <!option value="luat" @((string)ViewData["Loaivb"] == "luat" ? "selected" : "")>Luật</!option>
+                        <!option value="nghidinh" @((string)ViewData["Loaivb"] == "nghidinh" ? "selected" : "")>Nghị định</!option>
+                        <!option value="nghiquyet" @((string)ViewData["Loaivb"] == "nghiquyet" ? "selected" : "")>Nghị quyết</!option>
+                        <!option value="thongtu" @((string)ViewData["Loaivb"] == "thongtu" ? "selected" : "")>Thông tư</!option>
+                        <!option value="quyetdinh" @((string)ViewData["Loaivb"] == "quyetdinh" ? "selected" : "")>Quyết định</!option>
+                        <!option value="vbhd" @((string)ViewData["Loaivb"] == "vbhd" ? "selected" : "")>Văn bản hướng dẫn</!option>
+                        <!option value="baocao" @((string)ViewData["Loaivb"] == "baocao" ? "selected" : "")>Báo cáo tình hình giá thị trường</!option>
+                        <!option value="tailieu" @((string)ViewData["Loaivb"] == "tailieu" ? "selected" : "")>Báo cáo, tài liệu học tập kinh nghiệm</!option>
+                        <!option value="khoahoc" @((string)ViewData["Loaivb"] == "khoahoc" ? "selected" : "")>Kết quả, đề tài nghiên cứu khoa học</!option>
+                        <!option value="vbkhac" @((string)ViewData["Loaivb"] == "vbkhac" ? "selected" : "")>Báo cáo, văn bản có liên quan khác</!option>
                     </select>
                 </div>
             </div>
@@ -49,19 +94,53 @@
                     <th style="text-align: center">Đơn vị ban hành</th>
                     <th style="text-align: center">Số hiệu văn bản</th>
                     <th style="text-align: center">Nội dung</th>
+                    <th style="text-align: center">Ngày ban hành</th>
                     <th style="text-align: center">Ngày áp dụng</th>
                     <th style="text-align: center" width="5%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-left active">@item.Dvbanhanh</td>
+                            <td class="text-left success">@item.Kyhieuvb</td>
+                            <td style="text-align: left">@item.Tieude</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaybanhanh)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayapdung)</td>
+                            <td>
+                                <button type="button" data-target="#Show_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                onclick="GetChiTiet('@item.Id')" title="Tải tệp">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function GetChiTiet(id) {
+        $.ajax({
+            url: '/CongBo/Show',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_show').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

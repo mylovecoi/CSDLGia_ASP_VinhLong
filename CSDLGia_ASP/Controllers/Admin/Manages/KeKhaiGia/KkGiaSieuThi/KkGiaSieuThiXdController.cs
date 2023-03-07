@@ -109,7 +109,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai siêu thị";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
+                        ViewData["MenuLv3"] = "menu_giakksieuthixd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -152,7 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai siêu thị";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
+                        ViewData["MenuLv3"] = "menu_giakksieuthixd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -196,7 +196,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai siêu thị";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                        ViewData["MenuLv3"] = "menu_giakkxd";
+                        ViewData["MenuLv3"] = "menu_giakksieuthixd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/XetDuyet/Index.cshtml", model_join);
                     }
                 }

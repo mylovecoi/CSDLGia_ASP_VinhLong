@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                     ViewData["Title"] = "Báo cáo tổng hợp kê khai giá siêu thị";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgsieuthi";
-                    ViewData["MenuLv3"] = "menu_giakkbc";
+                    ViewData["MenuLv3"] = "menu_giakksieuthibc";
                     return View("Views/Admin/Manages/KeKhaiGia/KkGiaSieuThi/BaoCao/Index.cshtml");
                 }
                 else

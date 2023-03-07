@@ -21,7 +21,7 @@ namespace CSDLGia_ASP.Controllers.HeThong
 
         [Route("CongBo")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Phanloai, string Loaivb)
         {
             ViewBag.bSession = false;
             /*var m_chucnang = new DMChucNangDao(_dbGia);
@@ -31,7 +31,19 @@ namespace CSDLGia_ASP.Controllers.HeThong
             /*string phanQuyen = JsonConvert.SerializeObject(lstChucNang);
             HttpContext.Session.SetString("ChucNang", phanQuyen);*/
             //string test = HttpContext.Session.GetString("ChucNang");
-            var model = _db.VbQlNn.ToList();
+            if (string.IsNullOrEmpty(Phanloai))
+            {
+                Phanloai = "gia";
+            }
+            if (string.IsNullOrEmpty(Loaivb))
+            {
+                Loaivb = "all";
+            }
+            var model = _db.VbQlNn.Where(t => t.Phanloai == Phanloai).ToList();
+            if (Loaivb != "all")
+            {
+                model = model.Where(t => t.Loaivb == Loaivb).ToList();
+            }
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -44,6 +56,87 @@ namespace CSDLGia_ASP.Controllers.HeThong
             /*ViewBag.ChucNang = lstChucNang;*/
             ViewData["Title"] = "Công bố thông tin";
             return View("Views/Admin/Systems/CongBo/VanBanQLNN.cshtml", model);
+        }
+
+        [Route("CongBo/Show")]
+        [HttpPost]
+        public JsonResult Show(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.VbQlNn.FirstOrDefault(t => t.Id == Id);
+                string result = "<div class='modal-body' id='frm_show'>";
+                result += "<div class='row'>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label style='font-weight:bold'>Nội dung: </label>";
+                result += "<span style='color:blue'>" + model.Tieude + "</span>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form -group fv-plugins-icon-container'>";
+                result += "<label style='font-weight:bold'>File đính kèm</label>";
+
+                if (model.Ipf1 != null && model.Ipf1.Length > 0)
+                {
+                    result += "<p>";
+                    result += "1. ";
+                    result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf1 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf1 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += model.Ipf1 + "</a>";
+                    result += "</p>";
+                }
+                if (model.Ipf2 != null && model.Ipf2.Length > 0)
+                {
+                    result += "<p>";
+                    result += "2. ";
+                    result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf2 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf2 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += model.Ipf2 + "</a>";
+                    result += "</p>";
+                }
+                if (model.Ipf3 != null && model.Ipf3.Length > 0)
+                {
+                    result += "<p>";
+                    result += "3. ";
+                    result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf3 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf3 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += model.Ipf3 + "</a>";
+                    result += "</p>";
+                }
+                if (model.Ipf4 != null && model.Ipf4.Length > 0)
+                {
+                    result += "<p>";
+                    result += "4. ";
+                    result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf4 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf4 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += model.Ipf4 + "</a>";
+                    result += "</p>";
+                }
+                if (model.Ipf5 != null && model.Ipf5.Length > 0)
+                {
+                    result += "<p>";
+                    result += "5. ";
+                    result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf5 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf5 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += model.Ipf5 + "</a>";
+                    result += "</p>";
+                }
+
+                result += "</div>";
+                result += "</div>";
+
+                result += "</div>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
         }
     }
 }
