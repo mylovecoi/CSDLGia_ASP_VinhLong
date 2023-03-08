@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.danhmuc.chitiet", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.danhmuc.chitiet", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     //var model = _db.ChiSoGiaTdDmCt.Where(x => x.Mahs == Mahs);
@@ -271,7 +271,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.danhmuc", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
                     var list_add = new List<ChiSoGiaTdDmCt>();

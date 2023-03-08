@@ -102,7 +102,7 @@
                             <td class="text-center active">Tháng @item.Thang năm @item.Nam</td>
                             <td class="text-center active">@item.Giakychon</td>
                             <td>
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Index"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.dudoan", "Index"))
                                 {
                                     <a asp-controller="ChiSoGiaTdDd" asp-action="Detail" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem nhóm hàng hoá">
                                         <i class="icon-lg la la la-eye text-primary"></i>

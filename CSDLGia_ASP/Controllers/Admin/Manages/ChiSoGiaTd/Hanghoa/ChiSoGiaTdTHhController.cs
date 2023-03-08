@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hanghoa", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hanghoa", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.ChiSoGiaTdHh.Where(x=>x.Matt=="1");
@@ -68,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hanghoa", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hanghoa", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     List<ChiSoGiaTdHh> model = new List<ChiSoGiaTdHh>();
@@ -362,7 +362,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.danhmuc", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
                     var list_add = new List<ChiSoGiaTdHh>();

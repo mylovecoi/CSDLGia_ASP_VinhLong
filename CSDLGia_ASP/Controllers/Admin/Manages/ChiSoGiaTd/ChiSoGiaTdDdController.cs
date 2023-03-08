@@ -32,7 +32,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.dudoan", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
 
@@ -118,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.dudoan", "Create"))
                 {
                     //lấy time của sample lấy ra dự đoán=>dựa theo time mẫu lấy time sau để dự đoán
                     var lastRecord = _db.ChiSoGiaTd.OrderBy(x=>x.Id).LastOrDefault();
@@ -315,7 +315,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.dudoan", "Index"))
                 {
                     //take masonhomhanghoa
                     //var takeMasonhom = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Mahs == Mahs).Masonhomhanghoa;
@@ -515,7 +515,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.dudoan", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.dudoan", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     ViewData["model"] = _db.ChiSoGiaTdDmCtDd.Where(x => x.Mahs == Mahs);

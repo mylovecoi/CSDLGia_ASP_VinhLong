@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Index") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
 
@@ -315,7 +315,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso", "Index"))
                 {
                     var dp = _db.ChiSoGiaTd.FirstOrDefault(x => x.Mahs == Mahs).Diaphuong;
                     //average all hanghoa
@@ -587,7 +587,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Index")) 
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso", "Index")) 
                 {
                     var model = _db.ChiSoGiaTd.Where(x => x.Nam == nam_average);
                     double average = 0;
@@ -624,7 +624,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Index"))
                 {
                     var model = _db.ChiSoGiaTd.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 

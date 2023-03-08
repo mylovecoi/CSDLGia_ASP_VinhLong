@@ -50,7 +50,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.hoso", "Create"))
             {
                 <button type="button" class="btn btn-light-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
@@ -152,19 +152,19 @@
                             <td>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Edit"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.hoso", "Edit"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                             <i class="icon-lg la la-edit text-warning"></i>
                                         </button>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Delete"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.hoso", "Delete"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.hoso", "Index"))
                                     {
                                         <a asp-controller="ChiSoGiaTdDmCt" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem nhóm hàng hoá">
                                             <i class="icon-lg la la la-flag-o text-info"></i>
@@ -176,7 +176,7 @@
                                             <i class="icon-lg la la-calculator text-warning"></i>
                                         </a>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Index"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
                                             <i class="icon-lg la la-check text-primary "></i>

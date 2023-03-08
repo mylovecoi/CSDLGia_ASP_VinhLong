@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi;
                     var dsdiaban = _db.DsDiaBan;
@@ -288,7 +288,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Approve"))
                 {
                     var model = _db.ChiSoGiaTd.FirstOrDefault(t => t.Mahs == mahs);
 
@@ -368,7 +368,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Approve"))
                 {
                     var model = _db.ChiSoGiaTd.FirstOrDefault(t => t.Id == id_tralai);
 
@@ -446,7 +446,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Approve"))
                 {
                     var model = _db.ChiSoGiaTd.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -485,7 +485,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.chisogia.hoso.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso.xetduyet", "Approve"))
                 {
                     var model = _db.ChiSoGiaTd.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

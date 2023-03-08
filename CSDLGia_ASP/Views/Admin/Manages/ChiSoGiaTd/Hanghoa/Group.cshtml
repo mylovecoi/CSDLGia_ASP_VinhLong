@@ -55,7 +55,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.chisogia.tieuchi", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia.tieuchi", "Create"))
             {
                 <button type="button" class="btn btn-light-success font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới

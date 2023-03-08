@@ -100,7 +100,7 @@
 
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
@@ -121,9 +121,9 @@
                             <label>Chức năng</label>
                             <select class="form-control" id="roles" name="roles">
                                 <option value="">---Chọn Quyền---</option>
-                                @foreach (string roles in Helpers.GetRolesList())
+                                @foreach (var roles in Helpers.GetRoleList())
                                 {
-                                    <option value="@roles">@roles</option>
+                                    <option value="@roles.Role">@roles.Name</option>
                                 }
                             </select>
                         </div>
@@ -177,7 +177,7 @@
 
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
