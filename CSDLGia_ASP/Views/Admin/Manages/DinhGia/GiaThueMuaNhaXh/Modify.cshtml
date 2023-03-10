@@ -31,9 +31,9 @@
     <!--begin::Form-->
     <form asp-controller="Giathuemuanhaxh" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_tmnxh_update">
         <div class="card-body">
-            <input  asp-for="Madv" />
-            <input  asp-for="Mahs" />
-            <input asp-for="Ipf1" value="@ViewData["Ipf1"]"/>
+            <input hidden asp-for="Madv" />
+            <input hidden  asp-for="Mahs" />
+            <input hidden asp-for="Ipf1" value="@ViewData["Ipf1"]"/>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>

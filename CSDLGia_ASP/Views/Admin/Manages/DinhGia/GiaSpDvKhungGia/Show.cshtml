@@ -33,8 +33,8 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
-            <input asp-for="Mahs" value="@Model.Mahs">
-            <input asp-for="Madv" value="@Model.Madv">
+        <input hidden asp-for="Mahs" value="@Model.Mahs">
+        <input hidden asp-for="Madv" value="@Model.Madv">
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">

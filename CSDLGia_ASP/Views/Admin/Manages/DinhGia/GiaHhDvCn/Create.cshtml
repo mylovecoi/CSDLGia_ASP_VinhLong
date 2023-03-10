@@ -36,8 +36,8 @@
         @*sau khi thêm load lại chỗ này*@
         <form asp-controller="GiaHhDvCn" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_hhdvcn_store">
             <div class="card-body">
-                <input asp-for="Madv" value="@ViewData["Madv"]">
-                <input asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
+            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
                 <div class="row">
 
                     <div class="col-xl-6">

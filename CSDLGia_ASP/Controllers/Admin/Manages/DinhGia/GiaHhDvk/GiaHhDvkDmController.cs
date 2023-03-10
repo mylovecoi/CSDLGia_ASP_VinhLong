@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     ViewData["Matt"] = Matt;
                     ViewData["Tentt"] = _db.GiaHhDvkNhom.FirstOrDefault(t => t.Matt == Matt).Tentt;
-                    ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
+                    ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC").ToList();
                     ViewData["Dvt"] = _db.DmDvt;
                     ViewData["Title"] = "Thông tin chi tiết hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";

@@ -40,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Index"))
                 {
                     //Check Madv lần đầu tiên nếu không có thì lấy Madv đầu tiên trong bảng DsDonVi
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -147,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Madiaban"] = Madiaban;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất địa bàn";
-                        ViewData["MenuLv2"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);
@@ -219,7 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Madiaban"] = Madiaban;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất địa bàn";
-                        ViewData["MenuLv2"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);
@@ -243,7 +243,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs);
 
@@ -323,7 +323,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Id == id_tralai);
 
@@ -401,7 +401,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -429,7 +429,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

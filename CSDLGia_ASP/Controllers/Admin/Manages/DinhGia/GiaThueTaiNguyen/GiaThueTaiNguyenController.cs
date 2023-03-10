@@ -80,6 +80,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             }
                         }
 
+                        var model_join = (from thuetn in model
+                                          join dv in dsdonvi on thuetn.Macqcq equals dv.MaDv
+                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+                                          {
+                                              Id = thuetn.Id,
+                                              Mahs = thuetn.Mahs,
+                                              Madv= thuetn.Madv,
+                                              Macqcq= thuetn.Macqcq,
+                                              Trangthai= thuetn.Trangthai,
+                                              Cqbh = thuetn.Cqbh,
+                                              Soqd = thuetn.Soqd,
+                                              Thoidiem = thuetn.Thoidiem,
+                                              Tencqcq = dv.TenDv,
+                                          });
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -96,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgthuetn";
                         ViewData["MenuLv3"] = "menu_dgthuetn_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Index.cshtml", model);
+                        return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Index.cshtml", model_join);
                     }
                     else
                     {
@@ -227,6 +242,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         Mahs = request.Mahs,
                         Manhom = request.Manhom,
                         Madv = request.Madv,
+                        Macqcq = request.Madv,
                         Thoidiem = request.Thoidiem,
                         Soqd = request.Soqd,
                         Soqdlk = request.Soqdlk,

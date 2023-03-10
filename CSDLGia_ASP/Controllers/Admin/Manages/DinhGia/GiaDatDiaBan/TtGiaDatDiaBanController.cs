@@ -32,12 +32,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadatdb.thongtu", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Index"))
                 {
                     var model = _db.GiaDatDiaBanTt.ToList();
 
                     ViewData["Title"] = "Thông tư giá đất theo địa bàn";
-                    ViewData["MenuLv2"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_t4";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/TtGiaDatDiaBan/Index.cshtml", model);
@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadatdb.thongtu", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Create"))
                 {
                     string filename = "";
                     if (Ipf1upload != null)
@@ -144,7 +144,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadatdb.thongtu", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Delete"))
                 {
                     var model = _db.GiaDatDiaBanTt.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaDatDiaBanTt.Remove(model);
@@ -169,7 +169,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadatdb.thongtu", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Edit"))
                 {
                     var model = _db.GiaDatDiaBanTt.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -252,7 +252,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadatdb.thongtu", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Create"))
                 {
                     string filename = "";
                     if (Ipf1upload != null)

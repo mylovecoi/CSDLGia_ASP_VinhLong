@@ -28,10 +28,10 @@
         <!--begin::Form-->
         <form asp-controller="KkGiaDvlt" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_dvlt_store">
             <div class="card-body">
-                <input asp-for="Madv" />
-                <input asp-for="Manghe" />
-                <input asp-for="Mahs" />
-                <input asp-for="Macskd" />
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Manghe" />
+            <input hidden asp-for="Mahs" />
+            <input hidden asp-for="Macskd" />
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
                 </div>

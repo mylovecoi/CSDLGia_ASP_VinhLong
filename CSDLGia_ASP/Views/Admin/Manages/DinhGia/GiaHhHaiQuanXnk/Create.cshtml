@@ -31,9 +31,9 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input asp-for="Madv" value="@ViewData["Madv"]">
-            <input asp-for="Mahs" value="@ViewData["Mahs"]">
-            <input asp-for="Manhom" value="@ViewData["Nhom"]">
+            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
+            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="Manhom" value="@ViewData["Nhom"]">
 
             <div class="row">
                 <div class="col-xl-6">

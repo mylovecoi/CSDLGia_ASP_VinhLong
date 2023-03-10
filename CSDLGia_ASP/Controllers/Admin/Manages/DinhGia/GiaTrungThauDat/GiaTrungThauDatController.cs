@@ -26,13 +26,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             _db = db;
             _hostEnvironment = hostEnvironment;
         }
+
         [Route("GiaTrungThauDat")]
         [HttpGet]
         public IActionResult Index(string Madb, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Index"))
                 {
 
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level == "H")
@@ -87,8 +88,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["ADMIN"] = _db.DsDiaBan.Where(t => t.Level == "ADMIN");
                         ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                        ViewData["MenuLv1"] = "menu_dgd";
-                        ViewData["MenuLv2"] = "menu_giadgd_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgd";
+                        ViewData["MenuLv3"] = "menu_giadgd_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Index.cshtml", model);
                     }
                     else
@@ -120,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Create"))
                 {
                     var model = new GiaDauGiaDat
                     {
@@ -138,8 +140,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dgd";
-                    ViewData["MenuLv2"] = "menu_giadgd_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Create.cshtml", model);
                 }
                 else
@@ -162,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
          
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Create"))
                 {
                     if (Ipf1 != null && Ipf1.Length > 0)
                     {
@@ -222,7 +225,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Edit"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaDauGiaDat
@@ -250,8 +253,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
                     ViewData["Title"] = " Thông tin hồ sơ giá Trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dgd";
-                    ViewData["MenuLv2"] = "menu_giadgd_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tt";
 
 
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Edit.cshtml", model_new);
@@ -274,7 +278,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Edit"))
                 {
                     if (Ipf1 != null && Ipf1.Length > 0)
                     {
@@ -326,7 +330,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Delete"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaDauGiaDat.Remove(model);
@@ -356,7 +360,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.thongtin", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Show"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaDauGiaDat
@@ -379,8 +383,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sử dụng đất";
-                    ViewData["MenuLv1"] = "menu_dgd";
-                    ViewData["MenuLv2"] = "menu_giadgd_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
                 }
@@ -403,15 +408,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.timkiem", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.timkiem", "Index"))
                 {
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
               
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dgd";
-                    ViewData["MenuLv2"] = "menu_giadgd_tk";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tk";
 
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Index.cshtml");
                 }
@@ -433,7 +439,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.daugiadat.timkiem", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.timkiem", "Index"))
                 {
 
                     var model_join = from dg in _db.GiaDauGiaDat
@@ -486,8 +492,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sửu dụng đất";
-                    ViewData["MenuLv1"] = "menu_dgd";
-                    ViewData["MenuLv2"] = "menu_giadgd_tk";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tk";
 
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Result.cshtml", model_join);
                 }

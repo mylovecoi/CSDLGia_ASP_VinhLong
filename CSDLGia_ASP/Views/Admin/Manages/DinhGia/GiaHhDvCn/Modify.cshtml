@@ -30,11 +30,10 @@
             </div>
         </div>
         <!--begin::Form-->
-        @*sau khi thêm load lại chỗ này*@
         <form asp-controller="GiaHhDvCn" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_hhdvcn_store">
             <div class="card-body">
-                <input asp-for="Mahs" value="@Model.Mahs">
-                <input asp-for="Madv" value="@Model.Madv">
+            <input hidden asp-for="Mahs" value="@Model.Mahs">
+            <input hidden asp-for="Madv" value="@Model.Madv">
                 <div class="row">
                   
                     <div class="col-xl-6">

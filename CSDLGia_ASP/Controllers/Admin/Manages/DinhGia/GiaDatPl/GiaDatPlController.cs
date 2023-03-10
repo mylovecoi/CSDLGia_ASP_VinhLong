@@ -33,52 +33,57 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
                 {
-                    List<GiaDatPhanLoai> model = new List<GiaDatPhanLoai>();
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                    }
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = dv.MaDiaBan,
                                        TenDv = dv.TenDv,
-                                       MaDv=dv.MaDv
+                                       MaDv = dv.MaDv,
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                            ViewData["DsDonVi"] = dsdonvi;
                         }
                         else
                         {
                             if (string.IsNullOrEmpty(Madv))
                             {
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                                //model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                                model = _db.GiaDatPhanLoai.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                            }
+                        }
+
+                        var model = _db.GiaDatPhanLoai.Where(t => t.Madv == Madv).ToList();
+
+                        if (string.IsNullOrEmpty(Nam))
+                        {
+                            model = model.ToList();
+                        }
+                        else
+                        {
+                            if (Nam != "all")
+                            {
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
                             }
                             else
                             {
-                                model = _db.GiaDatPhanLoai.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
+                                model = model.ToList();
                             }
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
-                        /*if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
                         }
                         else
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
-                            //ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDiaBan == Madv);
-                        }*/
-                        ViewData["Nam"] = Nam;
+                        }
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["Nam"] = Nam;
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Madv"] = Madv;
@@ -110,6 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Create")]
         [HttpGet]
         public IActionResult Create(string Madv)
@@ -147,6 +153,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Store")]
         [HttpPost]
         public IActionResult Store(VMDinhGiaDat request)
@@ -189,6 +196,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -218,6 +226,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Modify")]
         [HttpGet]
         public IActionResult Modify(string Mahs)
@@ -264,6 +273,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Update")]
         [HttpPost]
         public IActionResult Update(VMDinhGiaDat request)
@@ -306,6 +316,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Print")]
         [HttpGet]
         public IActionResult Print(string Mahs)
@@ -362,6 +373,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Search")]
         [HttpGet]
         public IActionResult Search()
@@ -409,6 +421,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDatCuThe/Result")]
         [HttpPost]
         public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string mld,string madv)
@@ -462,6 +475,63 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Result.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
+                {
+                    var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Mahs == mahs_chuyen);
+
+                    var dvcq_join = from dvcq in _db.DsDonVi
+                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dvcq.Id,
+                                        MaDiaBan = dvcq.MaDiaBan,
+                                        MaDv = dvcq.MaDv,
+                                        TenDv = dvcq.TenDv,
+                                        Level = db.Level,
+                                    };
+                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
+                    model.Macqcq = macqcq_chuyen;
+                    model.Trangthai = "HT";
+                    if (chk_dvcq != null && chk_dvcq.Level == "T")
+                    {
+                        model.Madv_t = macqcq_chuyen;
+                        model.Thoidiem_t = DateTime.Now;
+                        model.Trangthai_t = "CHT";
+                    }
+                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    {
+                        model.Madv_ad = macqcq_chuyen;
+                        model.Thoidiem_ad = DateTime.Now;
+                        model.Trangthai_ad = "CHT";
+                    }
+                    else
+                    {
+                        model.Madv_h = macqcq_chuyen;
+                        model.Thoidiem_h = DateTime.Now;
+                        model.Trangthai_h = "CHT";
+                    }
+                    _db.GiaDatPhanLoai.Update(model);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
+
                 }
                 else
                 {

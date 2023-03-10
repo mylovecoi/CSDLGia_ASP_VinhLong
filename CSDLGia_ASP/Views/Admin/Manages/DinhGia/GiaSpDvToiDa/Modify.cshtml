@@ -31,10 +31,10 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvToiDa" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_spdvtoida_store">
-            <input asp-for="Madv" value="@Model.Madv">
-            <input asp-for="Madv" value="@Model.Madv">
-            <input asp-for="Mahs" value="@Model.Mahs">
-            <input asp-for="Ipf1" value="@ViewData["Ipf1"]">
+            <input hidden asp-for="Madv" value="@Model.Madv">
+        <input hidden asp-for="Madv" value="@Model.Madv">
+        <input hidden asp-for="Mahs" value="@Model.Mahs">
+        <input hidden asp-for="Ipf1" value="@ViewData["Ipf1"]">
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">

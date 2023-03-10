@@ -3721,6 +3721,51 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("GiaKhungGiaDat");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDatCt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Giatddb")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giatdmn")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giatdtd")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giattdb")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giattmn")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giatttd")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Mahs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Vungkt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GiaKhungGiaDatCt");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaLpTbNha", b =>
                 {
                     b.Property<int>("Id")

@@ -33,9 +33,9 @@
         <!--begin::Form-->
         <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
             <div class="card-body">
-            <input asp-for="Madv" value="@ViewData["Madv"]">
-            <input asp-for="Manhom" value="@ViewData["Manhom"]">
-            <input asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
+            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
+            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
 
             <div class="row">
                 <div class="col-xl-6">

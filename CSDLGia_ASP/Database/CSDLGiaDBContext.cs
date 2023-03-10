@@ -110,6 +110,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhDvkTh> GiaHhDvkTh { get; set; }
         public DbSet<GiaHhDvkCtTh> GiaHhDvkCtTh { get; set; }
         public DbSet<GiaKhungGiaDat> GiaKhungGiaDat { get; set; }
+        public DbSet<GiaKhungGiaDatCt> GiaKhungGiaDatCt { get; set; }
         public DbSet<GiaLpTbNha> GiaLpTbNha { get; set; }
         public DbSet<GiaLpTbNhaCtClCl> GiaLpTbNhaCtClCl { get; set; }
         public DbSet<GiaLpTbNhaCtXdm> GiaLpTbNhaCtXdm { get; set; }

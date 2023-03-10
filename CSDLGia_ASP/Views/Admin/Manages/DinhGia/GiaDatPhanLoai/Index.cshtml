@@ -2,9 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    //var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -17,9 +15,11 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
         });
 
         $(function () {
@@ -46,7 +46,7 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
+               asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -60,6 +60,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
+                        <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -71,19 +72,19 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-xl-4">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
                                 @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                 }
-                                @foreach (var item in company)
+                                @foreach (var item in donvi)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                                 }
                             </optgroup>
                         }
@@ -108,75 +109,76 @@
                 {
                     @foreach (var item in Model)
                     {
-                <tr>
-                    <td style="text-align: center">@(record_id++)</td>
-                    @foreach (var ds in dsdiabanAll)
-                    {
-                        @if (item.Madiaban == ds.MaDiaBan)
-                        {
-                            <td style="text-align: center">@ds.TenDiaBan</td>
-                        }
-                    }
-                    <td style="text-align: center">@item.Thoidiem</td>
-                    <td class="text-center active">@item.Thongtin</td>
-                    <td style="text-align: center">
-                        @if (item.Trangthai == "HT")
-                        {
-                            <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
-                        }
-                        @if (item.Trangthai == "CHT")
-                        {
-                            <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
-                        }
-                        @if (item.Trangthai == "HHT")
-                        {
-                            <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
-                        }
-                    </td>
-                    @if (item.Macqcq != null)
-                    {
-                        @foreach (var ds in dscqcq)
-                        {
-                            @if (item.Macqcq == ds.MaDv)
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            @foreach (var ds in dsdiabanAll)
                             {
-                                <td style="text-align: center">@ds.TenDv</td>
+                                @if (item.Madiaban == ds.MaDiaBan)
+                                {
+                                    <td style="text-align: center">@ds.TenDiaBan</td>
+                                }
                             }
-                        }
-                    }
-                    else
-                    {
-                        <td style="text-align: center"></td>
-                    }
-                    <td>
-                        <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                            <td style="text-align: center">@item.Thoidiem</td>
+                            <td class="text-center active">@item.Thongtin</td>
+                            <td style="text-align: center">
+                                @if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "CHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
+                                }
+                                @if (item.Trangthai == "HHT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                }
+                            </td>
+                            @*@if (item.Macqcq != null)
+                            {
+                                @foreach (var ds in dscqcq)
+                                {
+                                    @if (item.Macqcq == ds.MaDv)
+                                    {
+                                        <td style="text-align: center">@ds.TenDv</td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td style="text-align: center"></td>
+                            }*@
+                            <td style="text-align: center"></td>
+                            <td>
+                                <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">
-                            <i class="icon-lg la la-eye text-primary"></i>
-                        </a>
-                        @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-                        {
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Delete"))
-                            {
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
-                            }
-                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                <i class="icon-lg la la-check text-success"></i>
-                            </button>
-                        }
-                        @if (item.Trangthai == "HT")
-                        {
-                            <a asp-controller="GiaDatPl" asp-action="Print" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="In hồ sơ"
-                               target="_blank">
-                                <i class="icon-lg la la-print text-info"></i>
-                            </a>
-                        }
+                                    <i class="icon-lg la la-eye text-primary"></i>
+                                </a>
+                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Edit"))
+                                    {
+                                        <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                        <i class="icon-lg la la-check text-primary "></i>
+                                    </button>
+                                }
 
-                        <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                            <i class="icon-lg la la-download text-warning"></i>
-                        </button>
-                    </td>
-                </tr>
+                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </a>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -208,11 +210,12 @@
         </div>
     </div>
 </div>
-<!--complete Modal-->
-<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!--Chuyển Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form asp-controller="GiaDatPlHt" asp-action="Complete">
+        <form asp-controller="GiaDatPl" asp-action="Complete">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý hoàn thành hồ sơ?
@@ -224,19 +227,19 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận*</label>
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
                                     @foreach (var db in dsdiaban)
                                     {
                                         <optgroup label="@db.TenDiaBan">
                                             @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                             }
-                                            @foreach (var item in company)
+                                            @foreach (var item in donvi)
                                             {
-                                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
                                             }
                                         </optgroup>
                                     }
@@ -244,27 +247,23 @@
                             </div>
                         </div>
                     </div>
-                    <input id="mahs_complete" name="mahs_complete" type="hidden"/>
+                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
-
 
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
-    @*function SetComplete(id) {
-        document.getElementById("mahs_complete ").value = id;
-    }*@
-    function SetComplete(mahs) {
-        document.getElementById("mahs_complete").value = mahs;
-    }
 
+    function Chuyen(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
+    }
 </script>

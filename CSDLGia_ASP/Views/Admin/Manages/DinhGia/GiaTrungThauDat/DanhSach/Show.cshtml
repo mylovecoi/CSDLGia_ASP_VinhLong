@@ -35,7 +35,7 @@
         <form asp-controller="GiaTrungThauDat" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
             <div class="card-body">
                 @*    <input id="Madv" name="Madv" value="@ViewData["Madv"]" />*@
-                <input asp-for="Mahs" />
+            <input hidden asp-for="Mahs" />
                 @* <input id="Madiaban" name="Madiaban" value="@ViewData["Madb"]" />*@
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>

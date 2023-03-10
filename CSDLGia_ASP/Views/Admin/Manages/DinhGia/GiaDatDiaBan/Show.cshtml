@@ -37,8 +37,8 @@
     Mã đơn vị gửi hồ sơ lên*@
         <form asp-controller="GiaDatDiaBan" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
             <div class="card-body">
-                <input asp-for="Madv">
-                <input asp-for="Mahs">
+            <input hidden asp-for="Madv">
+                <input hidden asp-for="Mahs">
                 <div class="row">
 
                     <div class="col-xl-12">
