@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 
 
                     ViewData["Title"] = "Thuế giá hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_thue";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/Thue/Index.cshtml", model);

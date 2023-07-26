@@ -126,9 +126,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvtoida";
-                        ViewData["MenuLv3"] = "menu_spdvtoida_ht";
+                        ViewData["MenuLv1"] = "menu_spdvtoida";
+                        ViewData["MenuLv2"] = "menu_spdvtoida_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -193,9 +192,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvtoida";
-                        ViewData["MenuLv3"] = "menu_spdvtoida_ht";
+                        ViewData["MenuLv1"] = "menu_spdvtoida";
+                        ViewData["MenuLv2"] = "menu_spdvtoida_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
                     }
                     else
@@ -260,9 +258,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvtoida";
-                        ViewData["MenuLv3"] = "menu_spdvtoida_ht";
+                        ViewData["MenuLv1"] = "menu_spdvtoida";
+                        ViewData["MenuLv2"] = "menu_spdvtoida_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
                     }
                 }
@@ -415,7 +412,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -424,33 +421,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     var model = _db.GiaSpDvToiDa.FirstOrDefault(t => t.Id == id_tralai);
 
                     //Gán trạng thái của đơn vị chuyển hồ sơ
+                    // Macqcq là cơ quan nhận hồ sơ
                     if (madv_tralai == model.Macqcq)
                     {
                         model.Macqcq = null;
                         model.Trangthai = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "HHT";
+                        model.Lydo_h = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "HHT";
+                        model.Lydo_t = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "HHT";
+                        model.Lydo_ad = Lydo;
                     }
 
 
                     //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
+                    //Madv là cơ quan gửi hồ sơ
 
                     if (madv_tralai == model.Madv_h)
                     {
@@ -458,6 +460,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         model.Madv_h = null;
                         model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
+                        model.Lydo_ad = Lydo;
+
                     }
 
                     if (madv_tralai == model.Madv_t)
@@ -466,6 +470,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         model.Madv_t = null;
                         model.Thoidiem_t = DateTime.MinValue;
                         model.Trangthai_t = null;
+                        model.Lydo_ad = Lydo;
                     }
 
                     if (madv_tralai == model.Madv_ad)
@@ -474,6 +479,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         model.Madv_ad = null;
                         model.Thoidiem_ad = DateTime.MinValue;
                         model.Trangthai_ad = null;
+                        model.Lydo_ad = Lydo;
                     }
 
                     _db.GiaSpDvToiDa.Update(model);

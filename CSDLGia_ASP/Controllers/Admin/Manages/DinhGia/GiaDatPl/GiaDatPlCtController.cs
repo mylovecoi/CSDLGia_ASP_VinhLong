@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             _db = db;
         }
 
-        [Route("DinhGiaDatCuTheCt/Store")]
+        [Route("GiaDatCuThe/Store")]
         [HttpPost]
         public JsonResult Store(string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc)
         {
@@ -47,59 +47,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        [Route("DinhGiaDatCuTheCt/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
-            _db.GiaDatPhanLoaiCt.Remove(model);
-            _db.SaveChanges();
-            var result = GetData(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
-        public string GetData(string Mahs)
-        {
-            var model = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs).ToList();
 
-            string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table - bordered table - hover' id='datatable_4'>";
-            result += "<thead>";
-            result += "<tr style='text-align:center'>";
-            result += "<th>STT</th>";
-            result += "<th>Tên đường, giới hạn, khu vực</th>";
-            result += "<th>Loại đất</th>";
-            result += "<th>Vị trí</th>";
-            result += "<th>Giá đất tại bảng giá</th>";
-            result += "<th>Giá đất cụ thể</th>";
-            result += "<th>Hệ số điều chỉnh</th>";
-            result += "<th>Thao tác</th>";
-            result += "</tr></thead><tbody>";
-
-            foreach (var item in model)
-            {
-                result += "<tr>";
-                result += "<td style='text-align:center'></td>";
-                result += "<td class='active'>" + item.Khuvuc + "</td>";
-                result += "<td>" + item.Maloaidat + "</td>";
-                result += "<td>" + item.Vitri + "</td>";
-                result += "<td>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
-                result += "<td>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
-                result += "<td>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
-                result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-edit text-primary'></i>";
-                result += "</button>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button></td></tr>";
-            }
-            result += "</tr></thead><tbody>";
-            return result;
-        }
-        [Route("DinhGiaDatCuTheCt/Edit")]
+        [Route("GiaDatCuThe/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
@@ -155,7 +104,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return Json(data);
             }
         }
-        [Route("DinhGiaDatCuTheCt/Update")]
+
+        [Route("GiaDatCuThe/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc)
         {
@@ -172,6 +122,60 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
+        }
+
+        [Route("GiaDatCuThe/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
+            _db.GiaDatPhanLoaiCt.Remove(model);
+            _db.SaveChanges();
+            var result = GetData(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        public string GetData(string Mahs)
+        {
+            var model = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs).ToList();
+
+            string result = "<div class='card-body' id='frm_data'>";
+            result += "<table class='table table-striped table - bordered table - hover' id='datatable_4'>";
+            result += "<thead>";
+            result += "<tr style='text-align:center'>";
+            result += "<th>STT</th>";
+            result += "<th>Tên đường, giới hạn, khu vực</th>";
+            result += "<th>Loại đất</th>";
+            result += "<th>Vị trí</th>";
+            result += "<th>Giá đất tại bảng giá</th>";
+            result += "<th>Giá đất cụ thể</th>";
+            result += "<th>Hệ số điều chỉnh</th>";
+            result += "<th>Thao tác</th>";
+            result += "</tr></thead><tbody>";
+
+            foreach (var item in model)
+            {
+                result += "<tr>";
+                result += "<td style='text-align:center'></td>";
+                result += "<td class='active'>" + item.Khuvuc + "</td>";
+                result += "<td>" + item.Maloaidat + "</td>";
+                result += "<td>" + item.Vitri + "</td>";
+                result += "<td>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
+                result += "<td>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
+                result += "<td>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
+                result += "<td>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-edit text-primary'></i>";
+                result += "</button>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
+                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-trash text-danger'></i>";
+                result += "</button></td></tr>";
+            }
+            result += "</tr></thead><tbody>";
+            return result;
         }
     }
 }

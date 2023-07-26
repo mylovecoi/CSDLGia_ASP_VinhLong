@@ -147,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Madiaban"] = Madiaban;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất địa bàn";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);
@@ -219,7 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Madiaban"] = Madiaban;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất địa bàn";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);

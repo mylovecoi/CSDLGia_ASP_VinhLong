@@ -77,7 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["Nam"] = Nam;
                     ViewData["madiaban"] = madiaban;
                     ViewData["Title"] = " Thông tin hồ sơ";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Index.cshtml", model);
@@ -127,10 +127,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["Title"] = "Thông tin hồ sơ giá đất";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Create.cshtml", m_qd);
 
                     }
@@ -141,7 +140,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                         ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
@@ -155,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                         ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
@@ -278,7 +277,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Title"] = "Bảng giá đất địa bàn";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Edit.cshtml", model);
@@ -314,7 +313,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Title"] = "Bảng giá các loại đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Show.cshtml", model);

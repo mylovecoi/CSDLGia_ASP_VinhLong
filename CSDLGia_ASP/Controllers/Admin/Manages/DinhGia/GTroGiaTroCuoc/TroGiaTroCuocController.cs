@@ -128,7 +128,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaTroGiaTroCuocDm"] = _db.GiaTroGiaTroCuocDm.ToList();
-
                     ViewData["Title"] = " Thông tin hồ Mức trợ giá trợ cước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";
@@ -332,7 +331,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     ViewData["Title"] = "Thông tin Mức giá trợ giá trợ cước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";
-                    ViewData["MenuLv3"] = "menu_dgtgtc_ht";
+                    ViewData["MenuLv3"] = "menu_dgtgtc_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Show.cshtml", model_new);
                 }

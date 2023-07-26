@@ -38,9 +38,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                   
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_spdvcuthe_bc";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/Index.cshtml");
                 }
                 else
@@ -81,9 +80,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_spdvcuthe_bc";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -111,9 +109,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = _db.GiaSpDvCuTheCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_spdvcuthe_bc";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/BcCT.cshtml", model);
                 }
                 else

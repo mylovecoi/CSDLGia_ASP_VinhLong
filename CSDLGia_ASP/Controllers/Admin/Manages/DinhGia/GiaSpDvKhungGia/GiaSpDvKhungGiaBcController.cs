@@ -38,9 +38,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                   
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ khung giá";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                    ViewData["MenuLv3"] = "menu_spdvkhunggia_bc";
+                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                    ViewData["MenuLv2"] = "menu_spdvkhunggia_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/BaoCao/Index.cshtml");
                 }
                 else
@@ -71,9 +70,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ khung giá";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                    ViewData["MenuLv3"] = "menu_spdvkhunggia_bc";
+                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                    ViewData["MenuLv2"] = "menu_spdvkhunggia_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -102,9 +100,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = _db.GiaSpDvKhungGiaCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ khung giá";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                    ViewData["MenuLv3"] = "menu_spdvkhunggia_bc";
+                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                    ViewData["MenuLv2"] = "menu_spdvkhunggia_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/BaoCao/BcCT.cshtml", model);
                 }
                 else

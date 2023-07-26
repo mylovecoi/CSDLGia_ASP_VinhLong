@@ -135,6 +135,46 @@
                                     </li>
                                 }
 
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api", "Index"))
+                                {
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_api">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Kết nối API</span>
+                                        </a>
+                                        <div class="menu-submenu">
+                                            <i class="menu-arrow"></i>
+                                            <ul class="menu-subnav">
+
+                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chung", "Index"))
+                                                {
+                                                    <li class="menu-item" aria-haspopup="true" id="menu_api_chung">
+                                                        <a asp-controller="API" asp-action="ThietLapChung" class="menu-link">
+                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i>
+                                                            <span class="menu-text">Thông điệp chung</span>
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chitiet", "Index"))
+                                                {
+                                                    <li class="menu-item" aria-haspopup="true" id="menu_api_chitiet">
+                                                                        <a asp-controller="API" asp-action="ThietLapChiTiet" class="menu-link">
+                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i>
+                                                            <span class="menu-text">Thông điệp chi tiết</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </li>

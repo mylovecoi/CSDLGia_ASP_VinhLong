@@ -42,9 +42,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["Manhom"] = Manhom;
                     ViewData["Tennhom"] = _db.GiaSpDvCuTheNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
                     ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_spdvcuthe_dm";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_dm";
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCuTheDm.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/DanhMuc/ChiTiet/Index.cshtml", model);

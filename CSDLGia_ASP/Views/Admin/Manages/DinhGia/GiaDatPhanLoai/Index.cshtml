@@ -134,25 +134,24 @@
                                     <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
                                 }
                             </td>
-                            @*@if (item.Macqcq != null)
+                            @if (item.Macqcq != null)
                             {
-                                @foreach (var ds in dscqcq)
+                                @foreach (var cqcq in dsdonvi)
                                 {
-                                    @if (item.Macqcq == ds.MaDv)
+                                    @if (item.Macqcq == cqcq.MaDv)
                                     {
-                                        <td style="text-align: center">@ds.TenDv</td>
+                                        <td style="text-align: center">@cqcq.TenDv</td>
                                     }
                                 }
                             }
                             else
                             {
                                 <td style="text-align: center"></td>
-                            }*@
-                            <td style="text-align: center"></td>
+                            }
                             <td>
                                 <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">
-                                    <i class="icon-lg la la-eye text-primary"></i>
+                                    <i class="icon-lg la la-eye text-success"></i>
                                 </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {

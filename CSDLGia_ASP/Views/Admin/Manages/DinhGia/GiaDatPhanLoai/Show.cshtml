@@ -4,11 +4,13 @@
     var mahs = ViewData["Mahs"];
     int record_id = 1;
 }
+
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+
+@section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -16,34 +18,35 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;đất cụ thể</small><br />
-                    <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
-                </h3>
-            </div>
+
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;đất cụ thể</small><br />
+                <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaDatPl" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_dct_update">
-            <div class="card-body">
-                <input hidden asp-for="Madv" />
-                <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Địa bàn</label>
-                            <select class="form-control" id="MaDiaBan" name="MaDiaBan">
-                                @foreach (var item in dsdiaban)
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaDatPl" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_dct_update">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
                             {
                                 <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
                             }
@@ -99,7 +102,6 @@
                             <th>Giá đất tại bảng giá</th>
                             <th>Giá đất cụ thể</th>
                             <th>Hệ số điều chỉnh</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -117,7 +119,6 @@
                                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
                                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Hesodc)</td>
-
                                     </tr>
                                 }
                             }
@@ -126,9 +127,7 @@
                 </table>
                 <!--end: Datatable-->
             </div>
-
         </div>
-
     </form>
     <!--end::Form-->
 </div>

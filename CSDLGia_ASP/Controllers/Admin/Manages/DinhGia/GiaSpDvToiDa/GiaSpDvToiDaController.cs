@@ -93,18 +93,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ tối đa";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvtoida";
-                        ViewData["MenuLv3"] = "menu_spdvtoida_thongtin";
+                        ViewData["MenuLv1"] = "menu_spdvtoida";
+                        ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Index.cshtml", model);
                     }
                     else
                     {
                         ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ tối đa";
                         ViewData["Messages"] = "Hệ thống chưa có định giá sản phẩm dịch vụ tối đa.";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvtoida";
-                        ViewData["MenuLv3"] = "menu_spdvtoida_thongtin";
+                        ViewData["MenuLv1"] = "menu_spdvtoida";
+                        ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -189,9 +187,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvtoida";
-                    ViewData["MenuLv3"] = "menu_spdvtoida_thongtin";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Create.cshtml", model);
 
                 }
@@ -238,6 +235,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         Manhom = request.Manhom,
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
+                        Ttqd = request.Ttqd,
                         Ghichu = request.Ghichu,
                         Ipf1 = request.Ipf1,
                         Thoidiem = request.Thoidiem,
@@ -321,13 +319,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     var model_ct = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == model.Mahs);
 
                     model.GiaSpDvToiDaCt = model_ct.ToList();
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvtoida";
-                    ViewData["MenuLv3"] = "menu_spdvtoida_thongtin";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Modify.cshtml", model);
 
                 }
@@ -356,9 +354,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     model.GiaSpDvToiDaCt = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvtoida";
-                    ViewData["MenuLv3"] = "menu_spdvtoida_thongtin";
+                    ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Show.cshtml", model);
 
                 }
@@ -400,7 +398,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     model.Madiaban = request.Madiaban;
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
-                    model.Thongtin = request.Thongtin;
+                    model.Ttqd = request.Ttqd;
                     model.Ipf1 = request.Ipf1;
                     model.Ghichu = request.Ghichu;
                     model.Updated_at = DateTime.Now;
@@ -511,9 +509,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvtoida";
-                    ViewData["MenuLv3"] = "menu_spdvtoida_tk";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/TimKiem/Index.cshtml");
 
                 }
@@ -584,9 +581,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvtoida";
-                    ViewData["MenuLv3"] = "menu_spdvtoida_tk";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/TimKiem/Result.cshtml",model);
 
                 }
@@ -644,9 +640,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 
 
                     ViewData["Title"] = "In định giá đât cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_sandvcuthe_thongtin";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Print.cshtml", hoso_dg);
 
                 }

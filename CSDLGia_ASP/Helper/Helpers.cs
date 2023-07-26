@@ -51,6 +51,29 @@ namespace CSDLGia_ASP.Helper
 
             return list;
         }
+        
+        public static List<VMType> GetTypeData()
+        {
+            List<VMType> list = new List<VMType> { };
+            list.Add(new VMType { Value = "STRING", Description = "STRING"});
+            list.Add(new VMType { Value = "DATE", Description = "DATE"});
+            list.Add(new VMType { Value = "BASES64", Description = "BASES64"});
+            list.Add(new VMType { Value = "OBJECT", Description = "OBJECT"});
+            list.Add(new VMType { Value = "NUMBER", Description = "NUMBER"});
+            list.Add(new VMType { Value = "BOOLEAN", Description = "BOOLEAN"});
+
+            return list;
+        }
+
+        public static List<VMType> GetClass()
+        {
+            List<VMType> list = new List<VMType> { };
+            list.Add(new VMType { Value = "Header", Description = "Header" });
+            list.Add(new VMType { Value = "Body", Description = "Body" });
+            list.Add(new VMType { Value = "Security", Description = "Security/Signature" });
+
+            return list;
+        }
 
         public static List<VMRoleList> GetRoleList()
         {
@@ -1335,6 +1358,142 @@ namespace CSDLGia_ASP.Helper
             str += " Năm " + date.ToString("yyyy");
             return str;
         }*/
+        public static List<VMGetAPIThietLap> getAPIThietLapMacDinh()
+        {
+            //Thiết lập chung
+            List<VMGetAPIThietLap> list = new List<VMGetAPIThietLap> { };
+            list.Add(new VMGetAPIThietLap { Stt = 1, Phanloai = "Header", Tendong = "Version", Mota = "Tên phiên bản XML truyền nhận dữ liệu", Kieudulieu = "String", Dinhdang = "", Dodai = "250", Batbuoc = true, Macdinh = "1.0", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 2, Phanloai = "Header", Tendong = "Sender_Code", Mota = "Mã nơi gửi, giá trị thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 3, Phanloai = "Header", Tendong = "Sender_Name", Mota = "Tên nơi gửi, giá trị thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "250", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 4, Phanloai = "Header", Tendong = "Receiver_Code", Mota = "Mã nơi nhận, giá trị thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 5, Phanloai = "Header", Tendong = "Receiver_Name", Mota = "Tên nơi nhận, giá trị thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "250", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 6, Phanloai = "Header", Tendong = "Tran_Code", Mota = "Mã loại dữ liệu trao đổi.", Kieudulieu = "String", Dinhdang = "", Dodai = "10", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 7, Phanloai = "Header", Tendong = "Tran_Name", Mota = "Tên loại dữ liệu trao đổi.", Kieudulieu = "String", Dinhdang = "", Dodai = "150", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 8, Phanloai = "Header", Tendong = "Msg_ID", Mota = "Mã gói tin. Mã gói tin sẽ thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 9, Phanloai = "Header", Tendong = "Msg_RefID", Mota = "Mã gói tham chiếu. Đây là mã gói được sinh ra tại ứng dụng gốc qua các nút truyền nhận mã không thay đổi.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 10, Phanloai = "Header", Tendong = "Send_Date", Mota = "Ngày gửi gói tin, giá trị Send Date thay đổi qua các nút truyền dữ liệu.", Kieudulieu = "String", Dinhdang = "DD/MM/YYYY HH24:MI:SS", Dodai = "19", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 11, Phanloai = "Header", Tendong = "Original_Code", Mota = "Mã gốc nơi gửi dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 12, Phanloai = "Header", Tendong = "Original_name", Mota = "Tên gốc nơi gửi dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "250", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 13, Phanloai = "Header", Tendong = "Export_Date", Mota = "Ngày đóng gói gói tin tại ứng dụng nguồn, khi gửi qua các nút truyền dữ liệu thì giá trị Export_Date không thay đổi.", Kieudulieu = "String", Dinhdang = "DD/MM/YYYY HH24:MI:SS", Dodai = "19", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 14, Phanloai = "Header", Tendong = "Notes", Mota = "Trường hợp này phục vụ rẽ nhánh dữ liệu trong trường hợp cùng một mã loại dữ liệu được gửi cho nhiều nơi khác nhau nhưng thông tin chi tiết của gói tin không giống nhau. Trục sẽ sử dụng thông tin này để gửi đến đúng đích..", Kieudulieu = "String", Dinhdang = "", Dodai = "5", Batbuoc = false, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 15, Phanloai = "Header", Tendong = "Tran_Num", Mota = "Tổng số dòng trong phần body.", Kieudulieu = "String", Dinhdang = "", Dodai = "5", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 16, Phanloai = "Header", Tendong = "Path", Mota = "Đường dẫn của gói tin. Mỗi gói tin đi qua nút chuyển dữ liệu, nút đó điền thêm thông tin vào đường dẫn của gói tin này.", Kieudulieu = "String", Dinhdang = "", Dodai = "50", Batbuoc = true, Macdinh = "", Ghichu = "" });
+            list.Add(new VMGetAPIThietLap { Stt = 17, Phanloai = "Header", Tendong = "NumMsg_InGroup", Mota = "Số lượng của gói tin tách ra, thành bao nhiêu gói tin nhỏ.", Kieudulieu = "String", Dinhdang = "", Dodai = "3", Batbuoc = true, Macdinh = "", Ghichu = "Khi một gói tin có số lượng dòng lớn hơn 5000 phải tách thành các gói tin nhỏ hơn (gói lớn nhất có số dòng = 5000)" });
+            list.Add(new VMGetAPIThietLap { Stt = 18, Phanloai = "Header", Tendong = "SPARE1", Mota = "Trường thông tin dự phòng. Hiện tại, dữ liệu xuất phát từ DMDC sử dụng để đưa thông tin từ user webservice được hệ thống DMDC cấp cho ứng dụng để trao đổi dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "10", Batbuoc = false, Macdinh = "", Ghichu = "Hệ thống DMDC cung cấp qua văn bản đến các ứng dụng" });
+            list.Add(new VMGetAPIThietLap { Stt = 19, Phanloai = "Header", Tendong = "SPARE2", Mota = "Trường thông tin dự phòng. Hiện tại, dữ liệu xuất phát từ DMDC sử dụng để đưa thông tin từ mật khẩu webservice được hệ thống DMDC cấp cho ứng dụng để trao đổi dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "10", Batbuoc = false, Macdinh = "", Ghichu = "Hệ thống DMDC cung cấp qua văn bản đến các ứng dụng" });
+            list.Add(new VMGetAPIThietLap { Stt = 20, Phanloai = "Header", Tendong = "SPARE3", Mota = "Trường thông tin dự phòng. Hiện tại, dữ liệu xuất phát từ DMDC sử dụng để đưa thông tin từ giá trị quy định DMDC nhận dữ liệu hay cung cấp dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "10", Batbuoc = false, Macdinh = "", Ghichu = "0: PUT (đẩy dữ liệu)1: GET (Nhận dữ liệu)" });
+            list.Add(new VMGetAPIThietLap { Stt = 21, Phanloai = "Header", Tendong = "Finish_Code", Mota = "Dùng để phân biệt gói phản hồi đối soát dữ liệu.", Kieudulieu = "String", Dinhdang = "", Dodai = "0", Batbuoc = false, Macdinh = "", Ghichu = "" });
 
+            //Thiết lập Hồ sơ kê khai giá HOSO
+            list.Add(new VMGetAPIThietLap { Tentruong = "plhs", Macdinh = "", Dinhdang = "", Stt = 1, Tendong = "LOAI_HO_SO", Kieudulieu = "NUMBER", Dodai = "1", Batbuoc = true, Ghichu = "NUMBER", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "0", Dinhdang = "", Stt = 2, Tendong = "LOAI_XNK", Kieudulieu = "NUMBER", Dodai = "1", Batbuoc = true, Ghichu = "NUMBER", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "madv", Macdinh = "", Dinhdang = "", Stt = 3, Tendong = "DOANH_NGHIEP_DKKK", Kieudulieu = "STRING", Dodai = "100", Batbuoc = true, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "socv", Macdinh = "", Dinhdang = "", Stt = 4, Tendong = "SO_VAN_BAN", Kieudulieu = "STRING", Dodai = "100", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ngaynhap", Macdinh = "", Dinhdang = "DD/MM/YY", Stt = 5, Tendong = "NGAY_THUC_HIEN", Kieudulieu = "STRING(DATE)", Dodai = "8", Batbuoc = true, Ghichu = "STRING(DATE)", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ngayhieuluc", Macdinh = "", Dinhdang = "DD/MM/YY", Stt = 6, Tendong = "NGAY_BD_HIEU_LUC", Kieudulieu = "STRING(DATE)", Dodai = "8", Batbuoc = true, Ghichu = "STRING(DATE)", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 7, Tendong = "TY_GIA", Kieudulieu = "NUMBER", Dodai = "(18,0)", Batbuoc = false, Ghichu = "NUMBER", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "GET_NGUOI_KY", Dinhdang = "", Stt = 8, Tendong = "NGUOI_KY", Kieudulieu = "STRING", Dodai = "500", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ngaychuyen", Macdinh = "", Dinhdang = "DD/MM/YY", Stt = 9, Tendong = "NGAY_KY", Kieudulieu = "STRING(DATE)'", Dodai = "8", Batbuoc = false, Ghichu = "STRING(DATE)", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 10, Tendong = "TRICH_YEU", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 11, Tendong = "QUOC_GIA_XNK", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 12, Tendong = "CHI_NHANH", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 13, Tendong = "KHO_HANG", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 14, Tendong = "TINH_THANH", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "", Dinhdang = "", Stt = 15, Tendong = "DOI_TUONG_AP_DUNG", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "mahinhthucthanhtoan", Macdinh = "dinhdang", Dinhdang = "", Stt = 16, Tendong = "HINH_THUC_THANH_TOAN", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = false, Ghichu = "STRING", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "DS_HHDV", Macdinh = "", Dinhdang = "", Stt = 17, Tendong = "DS_HHDV_DKG", Kieudulieu = "OBJECT", Dodai = "", Batbuoc = true, Ghichu = "OBJECT", Phanloai = "KeKhaiGia", });
+
+            //Thiết lập Hồ sơ kê khai giá CHITIET
+            list.Add(new VMGetAPIThietLap { Tentruong = "maloaigia", Macdinh = "1", Dinhdang = "", Stt = 1, Tendong = "LOAI_GIA", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_DKG", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "MA_HHDV", Dinhdang = "", Stt = 2, Tendong = "MA_HHDV", Kieudulieu = "STRING", Dodai = "50", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_DKG", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "dvt", Macdinh = "", Dinhdang = "", Stt = 3, Tendong = "MA_DON_VI_TINH", Kieudulieu = "STRING", Dodai = "10", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_DKG", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "giakk", Macdinh = "", Dinhdang = "", Stt = 4, Tendong = "MUC_GIA_MOI", Kieudulieu = "NUMBER", Dodai = "(18,0)", Batbuoc = true, Ghichu = "NUMBER", Tendong_goc = "DS_HHDV_DKG", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ghichu", Macdinh = "", Dinhdang = "", Stt = 5, Tendong = "GHI_CHU", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_DKG", Phanloai = "KeKhaiGia", });
+
+            list.Add(new VMGetAPIThietLap { Tentruong = "ghichu1", Macdinh = "", Dinhdang = "", Stt = 1, Tendong = "GHI_CHU1", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "TINH_THANH", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ghichu2", Macdinh = "", Dinhdang = "", Stt = 2, Tendong = "GHI_CHU2", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "TINH_THANH", Phanloai = "KeKhaiGia", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ghichu3", Macdinh = "", Dinhdang = "", Stt = 3, Tendong = "GHI_CHU3", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "TINH_THANH", Phanloai = "KeKhaiGia", });
+
+            //Thiết lập Hồ sơ hàng hóa thị trường HOSO
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "GET_DIABAN", Dinhdang = "", Stt = 1, Tendong = "DIA_BAN", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "2", Dinhdang = "", Stt = 2, Tendong = "NGUON_SO_LIEU", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "24", Dinhdang = "", Stt = 3, Tendong = "DINH_KY", Kieudulieu = "NUMBER", Dodai = "2", Batbuoc = true, Ghichu = "NUMBER", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "1", Dinhdang = "", Stt = 4, Tendong = "THOI_GIAN_BC_1", Kieudulieu = "NUMBER", Dodai = "3", Batbuoc = true, Ghichu = "NUMBER", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "thang", Macdinh = "", Dinhdang = "", Stt = 5, Tendong = "THOI_GIAN_BC_2", Kieudulieu = "NUMBER", Dodai = "3", Batbuoc = false, Ghichu = "NUMBER", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "nam", Macdinh = "", Dinhdang = "", Stt = 6, Tendong = "THOI_GIAN_BC_NAM", Kieudulieu = "NUMBER", Dodai = "4", Batbuoc = true, Ghichu = "NUMBER", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ipf1", Macdinh = "1", Dinhdang = "", Stt = 7, Tendong = "FILE_DINH_KEM", Kieudulieu = "STRING(BASES64)", Dodai = "", Batbuoc = true, Ghichu = "STRING(BASES64)", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "DS_HHDV", Macdinh = "", Dinhdang = "", Stt = 8, Tendong = "DS_HHDV_TT", Kieudulieu = "OBJECT", Dodai = "", Batbuoc = true, Ghichu = "OBJECT", Phanloai = "giahhdvk", });
+
+            //Thiết lập Hồ sơ hàng hóa thị trường CHITIET
+            list.Add(new VMGetAPIThietLap { Tentruong = "maloaigia", Macdinh = "1", Dinhdang = "", Stt = 1, Tendong = "LOAI_GIA", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "mahhdv", Macdinh = "", Dinhdang = "", Stt = 2, Tendong = "MA_HHDV", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "GET_TEN_HHDV", Dinhdang = "", Stt = 3, Tendong = "TEN_HANG_HOA_DICH_VU", Kieudulieu = "STRING", Dodai = "1000", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "GET_TEN_HHDV", Dinhdang = "", Stt = 4, Tendong = "DON_VI_TINH", Kieudulieu = "STRING", Dodai = "3", Batbuoc = true, Ghichu = "STRING", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "gialk", Macdinh = "", Dinhdang = "", Stt = 5, Tendong = "GIA_KY_TRUOC", Kieudulieu = "NUMBER", Dodai = "(18,0)", Batbuoc = false, Ghichu = "NUMBER", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "gia", Macdinh = "", Dinhdang = "", Stt = 6, Tendong = "GIA_KY_NAY", Kieudulieu = "NUMBER", Dodai = "(18,0)", Batbuoc = true, Ghichu = "NUMBER", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "NULL", Macdinh = "GET_NGUONTT", Dinhdang = "", Stt = 7, Tendong = "NGUON_THONG_TIN", Kieudulieu = "NUMBER", Dodai = "1", Batbuoc = true, Ghichu = "NUMBER", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+            list.Add(new VMGetAPIThietLap { Tentruong = "ghichu", Macdinh = "", Dinhdang = "", Stt = 8, Tendong = "GHI_CHU", Kieudulieu = "STRING", Dodai = "4000", Batbuoc = false, Ghichu = "STRING", Tendong_goc = "DS_HHDV_TT", Phanloai = "giahhdvk", });
+
+            return list;
+        }
+
+        public static string ToAlpha(int number)
+        {
+            char[] alphabet = { ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            if (number <= 25)
+            {
+                return alphabet[number].ToString();
+            }
+            else if (number > 25)
+            {
+                int dividend = (number + 1);
+                string alpha = "";
+                while (dividend > 0)
+                {
+                    int modulo = (dividend - 1) % 26;
+                    alpha = alphabet[modulo] + alpha;
+                    dividend = ((dividend - modulo) / 26);
+                }
+                return alpha;
+            }
+            return "";
+        }
+
+        public static string ToRoman(int number)
+        {
+            /*if (-9999 >= number || number <= 9999)
+            {
+                throw new ArgumentOutOfRangeException("number");
+            }
+*/
+            if (number == 0)
+            {
+                return "NUL";
+            }
+
+            StringBuilder sb = new StringBuilder(10);
+
+            if (number < 0)
+            {
+                sb.Append('-');
+                number *= -1;
+            }
+
+            string[,] table = new string[,] {
+            { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" },
+            { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" },
+            { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" },
+            { "", "M", "MM", "MMM", "M(V)", "(V)", "(V)M", "(V)MM", "(V)MMM", "M(X)" }
+        };
+
+            for (int i = 1000, j = 3; i > 0; i /= 10, j--)
+            {
+                int digit = number / i;
+                sb.Append(table[j, digit]);
+                number -= digit * i;
+            }
+
+            return sb.ToString();
+        }
     }
 }

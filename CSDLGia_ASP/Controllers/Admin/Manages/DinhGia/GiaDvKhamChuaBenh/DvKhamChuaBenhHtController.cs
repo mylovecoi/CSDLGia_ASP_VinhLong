@@ -108,7 +108,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgkcb";
                         ViewData["MenuLv3"] = "menu_dgkcb_ht";
-                        
                         return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuabenh/HoanThanh/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -341,7 +340,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -355,21 +354,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                         model.Macqcq = null;
                         model.Trangthai = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "BTL";
+                        model.Lydo = Lydo;
                     }
                     //Gán trạng thái của đơn vị tiếp nhận hồ sơ
 
@@ -379,6 +382,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         model.Madv_h = null;
                         model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Madv_t)
                     {
@@ -386,6 +390,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         model.Madv_t = null;
                         model.Thoidiem_t = DateTime.MinValue;
                         model.Trangthai_t = null;
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Madv_ad)
                     {
@@ -393,6 +398,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         model.Madv_ad = null;
                         model.Thoidiem_ad = DateTime.MinValue;
                         model.Trangthai_ad = null;
+                        model.Lydo = Lydo;
                     }
 
                     _db.GiaDvKcb.Update(model);

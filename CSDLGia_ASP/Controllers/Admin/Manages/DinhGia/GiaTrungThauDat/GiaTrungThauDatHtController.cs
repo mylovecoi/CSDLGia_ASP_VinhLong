@@ -106,7 +106,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Nam"] = Nam;
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Hoàn thành định giá trung thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_ht";
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/HoanThanh/Index.cshtml", model_join);

@@ -84,16 +84,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_dgtths";
-                        ViewData["MenuLv2"] = "menu_dgtths_tt";
+                        ViewData["MenuLv1"] = "menu_giakhac";
+                        ViewData["MenuLv2"] = "menu_dgtths";
+                        ViewData["MenuLv3"] = "menu_dgtths_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Index.cshtml", model);
                     }
                     else
                     {
                         ViewData["Messages"] = "Thông tin hồ sơ giá tài sản công.";
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_tsc";
-                        ViewData["MenuLv2"] = "menu_giatsc_tt";
+                        ViewData["MenuLv1"] = "menu_giakhac";
+                        ViewData["MenuLv2"] = "menu_dgtths";
+                        ViewData["MenuLv3"] = "menu_dgtths_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -127,7 +129,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["list"] = _db.GiaTaiSanTthsCt;
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dgtths";
                     ViewData["MenuLv3"] = "menu_dgtths_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Create.cshtml",model);
@@ -219,7 +221,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     ViewData["Mahs"] = Mahs;
                     ViewData["list"] = _db.GiaTaiSanTthsCt;
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dgtths";
                     ViewData["MenuLv3"] = "menu_dgtths_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Edit.cshtml", model);
@@ -354,10 +356,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     /*var model = GetThongTinKk(Mahs);*/
 
 
-                    ViewData["Title"] = "In định giá đât cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_sandvcuthe_thongtin";
+                    ViewData["Title"] = "In định giá tài sản tố tụng hình sự";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dgtths";
+                    ViewData["MenuLv3"] = "menu_dgtths_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Print.cshtml", hoso_dg);
 
                 }
@@ -393,7 +395,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dgtths";
                     ViewData["MenuLv3"] = "menu_dgtths_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/TimKiem/Index.cshtml");
@@ -476,9 +478,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         }
                     }
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dgtths";
+                    ViewData["MenuLv3"] = "menu_dgtths_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/TimKiem/Result.cshtml", model);
 
                 }

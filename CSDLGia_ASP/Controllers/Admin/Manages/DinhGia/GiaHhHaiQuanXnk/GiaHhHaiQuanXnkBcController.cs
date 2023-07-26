@@ -42,9 +42,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp hàng hoá hải quan trong xuất nhập khẩu";
                     ViewData["Danhmuc"] = _db.GiaHhHaiQuanXnkDm ;
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_bc";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dghqxnk";
+                    ViewData["MenuLv3"] = "menu_dghqxnk_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/BaoCao/Index.cshtml");
                 }
                 else
@@ -80,7 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["tungay"] = beginTime;
                     ViewData["denngay"] = endTime;
                     ViewData["Title"] = "Báo cáo tổng hợp giá hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/BaoCao/BcTh.cshtml", model);
@@ -129,7 +129,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["denngay"] = endTime;
                     ViewData["ct"] = _db.GiaHhHaiQuanXnkCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/BaoCao/BcCt.cshtml", model);

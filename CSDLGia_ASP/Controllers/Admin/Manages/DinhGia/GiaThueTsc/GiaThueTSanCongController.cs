@@ -141,7 +141,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";
                     ViewData["MenuLv3"] = "menu_dgtsc_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Create.cshtml", model);
                 }
                 else
@@ -231,7 +230,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";
                     ViewData["MenuLv3"] = "menu_dgtsc_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Edit.cshtml", model_new);
                 }
                 else
@@ -339,7 +337,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";
                     ViewData["MenuLv3"] = "menu_dgtsc_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Show.cshtml", model_new);
                 }
                 else
@@ -440,8 +437,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin giá thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtgtc";
-                    ViewData["MenuLv3"] = "menu_dgtgtc_tk";
+                    ViewData["MenuLv2"] = "menu_dgtsc";
+                    ViewData["MenuLv3"] = "menu_dgtsc_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaThueTsc/TimKiem/Result.cshtml", model_join);
                 }
                 else

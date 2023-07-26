@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             _db = db;
         }
 
-        [Route("BaoCaoDgDatPl")]
+        [Route("GiaDatCuThe/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                    
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/Index.cshtml");
@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("BaoCaoDgDatPl/BcTH")]
+        [Route("GiaDatCuThe/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay)
         {
@@ -76,7 +76,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/BcTH.cshtml", model);
@@ -92,10 +92,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //GiaDatPhanLoai
-        //GiaDatPhanLoaiCt
-        //GiaDatPhanLoaiDm
-        [Route("BaoCaoDgDatPl/BcCT")]
+
+        [Route("GiaDatCuThe/BcCT")]
         [HttpPost]
         public IActionResult BcCT(DateTime tungay, DateTime denngay)
         {
@@ -109,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = _db.GiaDatPhanLoaiCt;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/BcCT.cshtml", model);

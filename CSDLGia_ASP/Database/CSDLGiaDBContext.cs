@@ -6,6 +6,7 @@ using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Models.Systems.API;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.Models.Temp.TempSystems;
 using CSDLGia_ASP.Models.Temp.TempManages.TempKeKhaiGia;
@@ -228,5 +229,11 @@ namespace CSDLGia_ASP.Database
         public DbSet<Users> Users { get; set; }
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<GroupPermissions> GroupPermissions { get; set; }
+
+        //API
+        public DbSet<KetNoiAPI> KetNoiAPI { get; set; }
+        public DbSet<KetNoiAPI_HoSo> KetNoiAPI_HoSo { get; set; }
+        public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
+        public DbSet<DmChucnang> DmChucnang { get; set; }
     }
 }

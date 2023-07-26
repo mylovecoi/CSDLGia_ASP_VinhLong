@@ -31,6 +31,8 @@ namespace CSDLGia_ASP.Controllers.HeThong
             /*string phanQuyen = JsonConvert.SerializeObject(lstChucNang);
             HttpContext.Session.SetString("ChucNang", phanQuyen);*/
             //string test = HttpContext.Session.GetString("ChucNang");
+            var serverName = Request.Host.Host;
+            HttpContext.Session.SetString("ServerName", serverName);
             if (string.IsNullOrEmpty(Phanloai))
             {
                 Phanloai = "gia";

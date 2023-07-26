@@ -35,7 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.ToList();
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Index.cshtml", model);

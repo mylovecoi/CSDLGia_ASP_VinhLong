@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             _db = db;
         }
 
-        [Route("DinhGiaDatCuThe")]
+        [Route("GiaDatCuThe")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
@@ -74,6 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 model = model.ToList();
                             }
                         }
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -82,13 +83,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = " Thông tin hồ sơ giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", model);
@@ -97,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         ViewData["Title"] = "Thông tin hồ sơ giá đất cụ thể";
                         ViewData["Messages"] = "Thông tin hồ sơ giá đất cụ thể.";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
@@ -116,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Create")]
+        [Route("GiaDatCuThe/Create")]
         [HttpGet]
         public IActionResult Create(string Madv)
         {
@@ -136,9 +138,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     //ViewData["Maloaidat"] = _db.GiaDatPhanLoaiDm.ToList();
                     ViewData["Title"] = "Thêm mới giá đát cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_tm";
+                    ViewData["MenuLv3"] = "menu_dgdct_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Create.cshtml", model);
                 }
@@ -154,7 +156,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Store")]
+        [Route("GiaDatCuThe/Store")]
         [HttpPost]
         public IActionResult Store(VMDinhGiaDat request)
         {
@@ -197,7 +199,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Delete")]
+        [Route("GiaDatCuThe/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
@@ -227,7 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Modify")]
+        [Route("GiaDatCuThe/Modify")]
         [HttpGet]
         public IActionResult Modify(string Mahs)
         {
@@ -256,7 +258,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tt";
 
@@ -274,7 +276,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Update")]
+        [Route("GiaDatCuThe/Update")]
         [HttpPost]
         public IActionResult Update(VMDinhGiaDat request)
         {
@@ -317,7 +319,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Print")]
+        [Route("GiaDatCuThe/Print")]
         [HttpGet]
         public IActionResult Print(string Mahs)
         {
@@ -356,7 +358,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     ViewData["Title"] = "In định giá đât cụ thể";
                     ViewData["Maloaidat"] = _db.GiaDatPhanLoaiDm.ToList();
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Print.cshtml", hoso_dg);
@@ -374,7 +376,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Search")]
+        [Route("GiaDatCuThe/Search")]
         [HttpGet]
         public IActionResult Search()
         {
@@ -404,7 +406,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin định giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Index.cshtml", model_join);
@@ -422,7 +424,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("DinhGiaDatCuThe/Result")]
+        [Route("GiaDatCuThe/Result")]
         [HttpPost]
         public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string mld,string madv)
         {
@@ -471,7 +473,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model = model.Where(t => t.Giacuthe <= endPrice);
                     }
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Result.cshtml", model);

@@ -78,8 +78,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = " Thông tin hồ sơ giá đất cụ thể";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgdct";
-                        ViewData["MenuLv3"] = "menu_dgdct_tt";
+                        ViewData["MenuLv2"] = "menu_dgtmnxh";
+                        ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Index.cshtml", model);
                     }
                     else
@@ -87,8 +87,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         ViewData["Title"] = "Thông tin hồ sơ giá đất cụ thể";
                         ViewData["Messages"] = "Thông tin hồ sơ giá đất cụ thể.";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgdct";
-                        ViewData["MenuLv3"] = "menu_dgdct_tt";
+                        ViewData["MenuLv2"] = "menu_dgtmnxh";
+                        ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -128,8 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     ViewData["Title"] = "Thêm mới giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
-                    ViewData["MenuLv3"] = "menu_dgtmnxh_tm";
-
+                    ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Create.cshtml", model);
                 }
                 else
@@ -334,7 +333,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Modify.cshtml", model_new);
                 }
                 else
@@ -424,7 +422,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Show.cshtml", model_new);
                 }
                 else

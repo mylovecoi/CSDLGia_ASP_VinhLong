@@ -32,9 +32,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 {
                     var model = _db.GiaSpDvKhungGiaNhom.ToList();
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ khung giá";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                    ViewData["MenuLv3"] = "menu_spdvkhunggia_dm";
+                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                    ViewData["MenuLv2"] = "menu_spdvkhunggia_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else

@@ -126,9 +126,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvcuthe";
-                        ViewData["MenuLv3"] = "menu_spdvcuthe_ht";
+                        ViewData["MenuLv1"] = "menu_spdvcuthe";
+                        ViewData["MenuLv2"] = "menu_spdvcuthe_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/HoanThanh/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -193,9 +192,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvcuthe";
-                        ViewData["MenuLv3"] = "menu_spdvcuthe_ht";
+                        ViewData["MenuLv1"] = "menu_spdvcuthe";
+                        ViewData["MenuLv2"] = "menu_spdvcuthe_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/HoanThanh/Index.cshtml", model_join);
                     }
                     else
@@ -260,9 +258,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvcuthe";
-                        ViewData["MenuLv3"] = "menu_spdvcuthe_ht";
+                        ViewData["MenuLv1"] = "menu_spdvcuthe";
+                        ViewData["MenuLv2"] = "menu_spdvcuthe_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/HoanThanh/Index.cshtml", model_join);
                     }
                 }

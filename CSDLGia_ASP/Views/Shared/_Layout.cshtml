@@ -343,6 +343,7 @@
                             <input hidden id="MenuLv1" value="@ViewData["MenuLv1"]" />
                             <input hidden id="MenuLv2" value="@ViewData["MenuLv2"]" />
                             <input hidden id="MenuLv3" value="@ViewData["MenuLv3"]" />
+                            <input hidden id="MenuLv4" value="@ViewData["MenuLv4"]" />
                             <input hidden id="MenuMinimize" value="@Helpers.GetMenuMinimize(HttpContextAccessor.HttpContext.Session)" />
                         </div>
                         <!--end::Nav-->
@@ -501,7 +502,13 @@
                 var menu1 = document.getElementById("MenuLv1").value;
                 var menu2 = document.getElementById("MenuLv2").value;
                 var menu3 = document.getElementById("MenuLv3").value;
-                if (menu3 != '') {
+                var menu4 = document.getElementById("MenuLv4").value;
+                if (menu4 != '') {
+                    document.getElementById(menu1).className = "menu-item menu-item-open menu-item-here";
+                    document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
+                    document.getElementById(menu3).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
+                    document.getElementById(menu4).className = "menu-item menu-item-active";
+                } else if (menu3 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-open menu-item-here";
                     document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
                     document.getElementById(menu3).className = "menu-item menu-item-active";

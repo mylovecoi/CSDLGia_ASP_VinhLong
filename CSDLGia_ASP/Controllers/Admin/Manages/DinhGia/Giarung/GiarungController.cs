@@ -131,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["Title"] = "Thêm mới giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
-                    ViewData["MenuLv3"] = "menu_dgr_tm";
+                    ViewData["MenuLv3"] = "menu_dgr_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Create.cshtml", model);
                 }
@@ -335,7 +335,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Modify.cshtml", model_new);
                 }
                 else
@@ -435,9 +434,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["Loairung"] = _db.GiaRungDm.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgr";
-                    ViewData["MenuLv3"] = "menu_dgr_tt";
-
+                    ViewData["MenuLv2"] = "menu_nhomhhdv";
+                    ViewData["MenuLv3"] = "menu_dgr";
+                    ViewData["MenuLv4"] = "menu_dgr_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Show.cshtml", model_new);
                 }
                 else
@@ -535,7 +534,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     }
 
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgr";
+                    ViewData["MenuLv2"]  = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Print.cshtml", model);
 

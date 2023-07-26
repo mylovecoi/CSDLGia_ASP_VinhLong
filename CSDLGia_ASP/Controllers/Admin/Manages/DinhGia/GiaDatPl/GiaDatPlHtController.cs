@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             _db = db;
         }
         
-        [Route("HoanThanhDinhGiaDatCuThe")]
+        [Route("GiaDatCuThe/XetDuyet")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
@@ -195,7 +195,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
@@ -264,7 +264,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
@@ -374,25 +374,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     if (madv_tralai == model.Macqcq)
                     {
                         model.Macqcq = null;
-                        model.Trangthai = "BTL";
+                        model.Trangthai = "HHT";
                     }
 
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
-                        model.Trangthai_h = "BTL";
+                        model.Trangthai_h = "HHT";
                     }
 
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
-                        model.Trangthai_t = "BTL";
+                        model.Trangthai_t = "HHT";
                     }
 
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
-                        model.Trangthai_ad = "BTL";
+                        model.Trangthai_ad = "HHT";
                     }
 
 
@@ -403,7 +403,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         model.Macqcq_h = null;
                         model.Madv_h = null;
-                        model.Thoidiem_h= DateTime.MinValue;
+                        model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
                     }
 

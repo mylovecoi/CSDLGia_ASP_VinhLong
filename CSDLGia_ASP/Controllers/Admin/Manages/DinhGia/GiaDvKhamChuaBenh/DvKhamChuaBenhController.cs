@@ -163,12 +163,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
-
                     ViewData["Title"] = "Thêm mới giá dịch vụ khám chữa bệnh";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Create.cshtml", model);
                 }
                 else
@@ -361,6 +359,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Madv = model.Madv,
                         Mahs = model.Mahs,
                         Manhom = model.Manhom,
+                        Ipf1 = model.Ipf1,
+                        Ipf2 = model.Ipf2,
+                        Ipf3 = model.Ipf3,
+                        Ipf4 = model.Ipf4,
+                        Ipf5 = model.Ipf5,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
                         Mota = model.Mota
@@ -375,10 +378,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá dịch vụ giáo dục đào tạo";
+                    ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["Ipf2"] = model.Ipf2;
+                    ViewData["Ipf3"] = model.Ipf3;
+                    ViewData["Ipf4"] = model.Ipf4;
+                    ViewData["Ipf5"] = model.Ipf5;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Edit.cshtml", model_new);
                 }
                 else
@@ -582,7 +589,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Manhom = model.Manhom,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
+                        Ipf1 = model.Ipf1,
+                        Ipf2 = model.Ipf2,
+                        Ipf3 = model.Ipf3,
+                        Ipf4 = model.Ipf4,
+                        Ipf5 = model.Ipf5,
                         Mota = model.Mota
+
                     };
 
                     var model_ct = _db.GiaDvKcbCt.Where(t => t.Mahs == model_new.Mahs);
@@ -592,11 +605,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá dịch vụ khám chữa bệnh";
+                    ViewData["Ipf2"] = model.Ipf2;
+                    ViewData["Ipf3"] = model.Ipf3;
+                    ViewData["Ipf4"] = model.Ipf4;
+                    ViewData["Ipf5"] = model.Ipf5;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-
-
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model_new);
                 }
                 else

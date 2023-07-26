@@ -1,0 +1,295 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin chi tiết
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Phân loại*</label>
+                            <select id="phanloai_create" name="phanloai_create" class="form-control">
+                                @foreach (var item in Helpers.GetClass())
+                                {
+                                    <option value="@item.Value">@item.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên trường*</label>
+                            <input type="text" name="tentruong_create" id="tentruong_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mô tả</label>
+                            <textarea id="mota_create" name="mota_create" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Kiểu dữ liệu*</label>
+                            <select id="kieudl_create" name="kieudl_create" class="form-control">
+                                @foreach (var item in Helpers.GetTypeData())
+                                {
+                                    <option value="@item.Value">@item.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Định dạng</label>
+                            <input type="text" name="dinhdang_create" id="dinhdang_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Độ dài*</label>
+                            <input type="text" name="dodai_create" id="dodai_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Bắt buộc*</label>
+                            <select id="batbuoc_create" name="batbuoc_create" class="form-control">
+                                <option value="0">Không</option>
+                                <option value="1">Có</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Giá trị mặc định</label>
+                            <input type="text" name="macdinh_create" id="macdinh_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Stt</label>
+                            <input type="number" name="stt_create" id="stt_create" value="@ViewData["Stt"]" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin chi tiết
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()" id="btn_update">Cập nhật</button>
+                <div id="loading_update" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Đồng ý xóa thông tin
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="API" asp-action="ThietLapChungDelete">
+                <div class="modal-body">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Default Modal-->
+<div class="modal fade" id="Default_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Đồng ý khôi phục?
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>  
+            <form asp-controller="API" asp-action="ThietLapChungDefault" method="post" enctype="multipart/form-data" id="frm_default">
+                <div class="modal-body">
+                    <p style="color:blue">Bạn có chắc chắn muốn xóa hết thiết lập hiện tại để khôi phục về ban đầu không ?</p>
+                    <div class="row" id="data_default">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Bạn có chắc chắn muốn xóa hết thiết lập hiện tại để khôi phục về ban đầu không ?</label>
+                                <select id="phanloai_default" name="phanloai_default" class="form-control">
+                                    <option value="Header">Thiết lập hồ sơ chung</option>
+                                    <option value="KeKhaiGia">Thiết lập hồ sơ kê khai giá</option>
+                                    <option value="giahhdvk">Thiết lập hồ sơ giá hàng hóa thị trường</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold" onclick="Default()" id="btn_default">Đồng ý</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+<script>
+    function Store() {
+        document.getElementById("btn_store").style.display = "none";
+        document.getElementById("loading_store").style.display = "block";
+        if ($('#tentruong_create').val().trim() != '') {
+            if ($('#dodai_create').val().trim() != '') {
+                $.ajax({
+                    url: '/KetNoiAPI/ThietLapChung/Store',
+                    type: 'POST',
+                    data: {
+                        Phanloai: $('#phanloai_create').val(),
+                        Tentruong: $('#tentruong_create').val(),
+                        Mota: $('#mota_create').val(),
+                        Kieudl: $('#kieudl_create').val(),
+                        Dinhdang: $('#dinhdang_create').val(),
+                        Dodai: $('#dodai_create').val(),
+                        Batbuoc: $('#batbuoc_create').val(),
+                        Macdinh: $('#macdinh_create').val(),
+                        Stt: $('#stt_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_store").style.display = "block";
+                        document.getElementById("loading_store").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên trường không được để trống", "Lỗi!");
+                document.getElementById("btn_store").style.display = "block";
+                document.getElementById("loading_store").style.display = "none";
+            }
+        } else {
+            toastr.error("Độ dài không được để trống", "Lỗi!");
+            document.getElementById("btn_store").style.display = "block";
+            document.getElementById("loading_store").style.display = "none";
+        }
+    }
+
+    function Update() {
+        document.getElementById("btn_update").style.display = "none";
+        document.getElementById("loading_update").style.display = "block";
+        if ($('#tentruong_edit').val().trim() != '') {
+            if ($('#dodai_edit').val().trim() != '') {
+                $.ajax({
+                    url: '/KetNoiAPI/ThietLapChung/Update',
+                    type: 'POST',
+                    data: {
+                        Phanloai: $('#phanloai_edit').val(),
+                        Tentruong: $('#tentruong_edit').val(),
+                        Mota: $('#mota_edit').val(),
+                        Kieudl: $('#kieudl_edit').val(),
+                        Dinhdang: $('#dinhdang_edit').val(),
+                        Dodai: $('#dodai_edit').val(),
+                        Batbuoc: $('#batbuoc_edit').val(),
+                        Macdinh: $('#macdinh_edit').val(),
+                        Stt: $('#stt_edit').val(),
+                        Id: $('#id_edit').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thành công!!!", "Thành công!");
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        document.getElementById("btn_update").style.display = "block";
+                        document.getElementById("loading_update").style.display = "none";
+                    }
+                })
+            } else {
+                toastr.error("Tên trường không được để trống", "Lỗi!");
+                document.getElementById("btn_store").style.display = "block";
+                document.getElementById("loading_store").style.display = "none";
+            }
+        } else {
+            toastr.error("Độ dài không được để trống", "Lỗi!");
+            document.getElementById("btn_store").style.display = "block";
+            document.getElementById("loading_store").style.display = "none";
+        }
+    }
+
+    function SetEdit(id) {
+        $.ajax({
+            url: '/KetNoiAPI/ThietLapChung/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function getId(id) {
+        //console.log(id);
+        document.getElementById("id_delete").value = id;
+    }
+</script>

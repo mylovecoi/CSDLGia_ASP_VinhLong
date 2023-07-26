@@ -161,7 +161,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dggddt";
                     ViewData["MenuLv3"] = "menu_dggddt_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Create.cshtml", model);
                 }
                 else
@@ -361,8 +360,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["Title"] = "Chỉnh sửa giá dịch vụ giáo dục đào tạo";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dggddt";
-                    ViewData["MenuLv3"] = "menu_dggddt_ht";
-
+                    ViewData["MenuLv3"] = "menu_dggddt_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Show.cshtml", model);
                 }
                 else

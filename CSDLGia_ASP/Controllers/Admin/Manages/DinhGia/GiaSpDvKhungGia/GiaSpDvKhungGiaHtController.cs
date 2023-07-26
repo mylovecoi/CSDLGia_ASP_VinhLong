@@ -127,9 +127,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ khung giá";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                        ViewData["MenuLv3"] = "menu_spdvkhunggia_ht";
+                        ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                        ViewData["MenuLv2"] = "menu_spdvkhunggia_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/HoanThanh/Index.cshtml", model_join);
 
                     }
@@ -195,9 +194,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ khung giá";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_spdvkhunggia";
-                        ViewData["MenuLv3"] = "menu_spdvkhunggia_ht";
+                        ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                        ViewData["MenuLv2"] = "menu_spdvkhunggia_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/HoanThanh/Index.cshtml", model_join);
                     }
                 }

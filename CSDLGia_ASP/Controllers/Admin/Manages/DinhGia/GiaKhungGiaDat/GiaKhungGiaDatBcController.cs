@@ -40,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/BaoCao/Index.cshtml");
@@ -102,7 +102,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     ViewData["Ct"] = _db.GiaKhungGiaDatCt.ToList();
                     ViewData["Nambc"] = nambc;
                     ViewData["Title"] = "Báo cáo chi tiết giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/BaoCao/Bc2.cshtml", model);

@@ -108,7 +108,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá khung giá đất";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgkhunggd";
                         ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Index.cshtml", model_join);
@@ -117,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     {
                         ViewData["Title"] = "Thông tin giá khung giá đất";
                         ViewData["Messages"] = "Hệ thống chưa có định giá khung giá đất.";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgkhunggd";
                         ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
@@ -160,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Create.cshtml", model);
@@ -262,7 +262,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     model.GiaKhungGiaDatCt = model_ct.ToList();
 
                     ViewData["Title"] = "Bảng giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Edit.cshtml", model);
@@ -373,7 +373,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     model.GiaKhungGiaDatCt = _db.GiaKhungGiaDatCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Show.cshtml", model);
@@ -470,7 +470,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/TimKiem/Index.cshtml");
@@ -534,7 +534,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá khung giá đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/TimKiem/Result.cshtml", model);

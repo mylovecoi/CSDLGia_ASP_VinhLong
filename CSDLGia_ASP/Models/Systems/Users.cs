@@ -48,5 +48,6 @@ namespace CSDLGia_ASP.Models.Systems
         public string Chucnang { get; set; }
         public double Solandn { get; set; }
         public string Group { get; set; }
+        public string LinkAPI { get; set; }
     }
 }

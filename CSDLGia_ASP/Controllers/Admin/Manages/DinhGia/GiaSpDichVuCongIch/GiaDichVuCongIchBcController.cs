@@ -122,7 +122,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
     }
 }

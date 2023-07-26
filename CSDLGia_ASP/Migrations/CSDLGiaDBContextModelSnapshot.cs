@@ -10792,6 +10792,159 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("VbQlNn");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Batbuoc")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dinhdang")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dodai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ghichu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kieudulieu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macdinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phanloai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stt")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tendong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KetNoiAPI");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_HoSo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Batbuoc")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dinhdang")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dodai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ghichu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kieudulieu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macdinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Maso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stt")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tendong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tentruong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KetNoiAPI_HoSo");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_HoSo_ChiTiet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Batbuoc")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dinhdang")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dodai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ghichu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kieudulieu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macdinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Maso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stt")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tendong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tendong_goc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tentruong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KetNoiAPI_HoSo_ChiTiet");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -11008,6 +11161,42 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("Districts");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmChucnang", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Api")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Capdo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Maso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Maso_goc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Menu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DmChucnang");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmDvt", b =>
                 {
                     b.Property<int>("Id")
@@ -11019,6 +11208,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Dvt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madvt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
@@ -12001,6 +12193,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkAPI")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lydo")

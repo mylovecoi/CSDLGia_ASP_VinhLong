@@ -88,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["ADMIN"] = _db.DsDiaBan.Where(t => t.Level == "ADMIN");
                         ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgd";
                         ViewData["MenuLv3"] = "menu_giadgd_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Index.cshtml", model);
@@ -97,8 +97,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         ViewData["Messages"] = "Thông tin hồ sơ giá trúng thầu quyền sd đất.";
                         ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                        ViewData["MenuLv1"] = "menu_dgd";
-                        ViewData["MenuLv2"] = "menu_giadgd_tt";
+                        ViewData["MenuLv1"] = "menu_giadat";
+                        ViewData["MenuLv2"] = "menu_dgd";
+                        ViewData["MenuLv3"] = "menu_giadgd_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -140,7 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Create.cshtml", model);
@@ -253,11 +254,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
                     ViewData["Title"] = " Thông tin hồ sơ giá Trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tt";
-
-
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Edit.cshtml", model_new);
                 }
                 else
@@ -383,10 +382,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sử dụng đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
                 }
                 else
@@ -401,7 +399,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             }
         }
 
-
         [Route("GiaTrungThauDat/Search")]
         [HttpGet]
         public IActionResult Search()
@@ -413,12 +410,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-              
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tk";
-
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Index.cshtml");
                 }
                 else
@@ -432,6 +427,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaTrungThauDat/Result")]
         [HttpPost]
         public IActionResult Result(DateTime beginTime, DateTime endTime, string ten, string dv,
@@ -492,10 +488,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sửu dụng đất";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tk";
-
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Result.cshtml", model_join);
                 }
                 else

@@ -45,6 +45,7 @@
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Hệ số điều chỉnh</b></label>
-                            <input type="number" step="0.01" id="hs_create" name="hs_create" class="form-control" style="font-weight: bold" />
+                            <input type="number" step="any" id="hs_create" name="hs_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
                 </div>
@@ -100,6 +101,7 @@
         </div>
     </div>
 </div>
+
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -126,7 +128,7 @@
 <script>
     function SetStore() {
         $.ajax({
-            url: '/DinhGiaDatCuTheCt/Store',
+            url: '/GiaDatCuTheCt/Store',
             type: 'POST',
             data: {
                 Mahs: $('#mahs_create').val(),
@@ -155,7 +157,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DinhGiaDatCuTheCt/Edit',
+            url: '/GiaDatCuTheCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -174,7 +176,7 @@
 
     function SetUpdate() {
         $.ajax({
-            url: '/DinhGiaDatCuTheCt/Update',
+            url: '/GiaDatCuTheCt/Update',
             type: 'POST',
             data: {
                 Mahs: $('#mahs_edit').val(),
@@ -208,7 +210,7 @@
 
     function SetDelete() {
         $.ajax({
-            url: '/DinhGiaDatCuTheCt/Delete',
+            url: '/GiaDatCuTheCt/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),

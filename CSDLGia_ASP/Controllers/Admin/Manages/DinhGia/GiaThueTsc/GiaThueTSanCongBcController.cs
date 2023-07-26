@@ -98,13 +98,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                         model = model.Where(t => t.Thoidiem <= denngay);
                     }
 
-                   
-
-                  
-                   
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-
                     ViewData["Title"] = "Báo cáo tổng hợp định giá thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";

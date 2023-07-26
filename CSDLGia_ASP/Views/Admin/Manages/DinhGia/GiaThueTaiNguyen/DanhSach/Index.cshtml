@@ -140,7 +140,20 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-                            <td style="text-align: left" width="15%">@item.Tencqcq</td>
+                            @if (item.Macqcq != null)
+                            {
+                                @foreach (var cqcq in dsdonvi)
+                                {
+                                    @if (item.Macqcq == cqcq.MaDv)
+                                    {
+                                        <td style="text-align: center">@cqcq.TenDv</td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td style="text-align: center"></td>
+                            }
                             <td width="12%">
                                 <a asp-controller="GiaThueTaiNguyen" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">

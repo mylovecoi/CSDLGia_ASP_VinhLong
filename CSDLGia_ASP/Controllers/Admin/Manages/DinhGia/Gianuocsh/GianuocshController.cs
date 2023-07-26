@@ -79,7 +79,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan.ToList();
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Donvi"] = Madv;
-                       
                         ViewData["Title"] = " Thông tin hồ sơ giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
@@ -147,7 +146,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Create.cshtml", model);
                 }
                 else
@@ -353,7 +351,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Modify.cshtml", model_new);
                 }
                 else
@@ -368,9 +365,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
             }
         }
         
-        [Route("DinhGiaNuocSh/Update")]
-        [HttpPost]
-
         [Route("DinhGiaNuocSh/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
@@ -414,7 +408,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Show.cshtml", model_new);
                 }
                 else
@@ -428,6 +421,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
+        [Route("DinhGiaNuocSh/Update")]
+        [HttpPost]
         public IActionResult Update(VMDinhGiaNuocSh request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -525,7 +521,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
             }
         }
 
-
         [Route("DinhGiaNuocSh/Search")]
         [HttpGet]
         public IActionResult Search()
@@ -569,6 +564,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaNuocSh/Result")]
         [HttpPost]
         public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string dt,string madv)

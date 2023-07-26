@@ -96,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Title"] = "Thông tin giá hàng hoá hải quan trong xuất nhập khẩu";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dghqxnk";
                         ViewData["MenuLv3"] = "menu_dghqxnk_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/Index.cshtml", model);
@@ -105,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     {
                         ViewData["Title"] = "Thông tin giá hàng hoá hải quan trong xuất nhập khẩu";
                         ViewData["Messages"] = "Hệ thống chưa có định giá hàng hoá hải quan trong xuất nhập khẩu.";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dghqxnk";
                         ViewData["MenuLv3"] = "menu_dghqxnk_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
@@ -164,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["Thue"] = _db.GiaHhHaiQuanXnkThue;
                     
                     ViewData["Title"] = "Thông tin giá hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/Create.cshtml", model);
@@ -280,7 +280,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["Title"] = "Bảng giá hàng hoá hải quan trong xuất nhập khẩu";
                     ViewData["Thue"] = _db.GiaHhHaiQuanXnkThue;
                     ViewData["DmDvt"] = _db.DmDvt;
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/Edit.cshtml", model);
@@ -395,7 +395,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Nhom"] = _db.GiaHhHaiQuanXnkDm.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/TimKiem/Index.cshtml");
@@ -479,7 +479,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";
                     ViewData["Tinhtrang"] = tinhtrang;
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaHhHaiQuanXnk/TimKiem/Result.cshtml", model);

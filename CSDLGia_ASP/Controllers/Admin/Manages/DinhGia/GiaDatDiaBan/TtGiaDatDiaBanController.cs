@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     var model = _db.GiaDatDiaBanTt.ToList();
 
                     ViewData["Title"] = "Thông tư giá đất theo địa bàn";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_t4";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/TtGiaDatDiaBan/Index.cshtml", model);
@@ -135,31 +135,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             {
                 var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
                 return Json(data);
-            }
-        }
-
-        [Route("TtGiaDatDiaBan/Delete")]
-        [HttpPost]
-        public IActionResult Delete(int id_delete)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Delete"))
-                {
-                    var model = _db.GiaDatDiaBanTt.FirstOrDefault(p => p.Id == id_delete);
-                    _db.GiaDatDiaBanTt.Remove(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "TtGiaDatDiaBan");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
 
@@ -328,7 +303,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             }
         }
 
-
+        [Route("TtGiaDatDiaBan/Delete")]
+        [HttpPost]
+        public IActionResult Delete(int id_delete)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Delete"))
+                {
+                    var model = _db.GiaDatDiaBanTt.FirstOrDefault(p => p.Id == id_delete);
+                    _db.GiaDatDiaBanTt.Remove(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "TtGiaDatDiaBan");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
     }
 }
 

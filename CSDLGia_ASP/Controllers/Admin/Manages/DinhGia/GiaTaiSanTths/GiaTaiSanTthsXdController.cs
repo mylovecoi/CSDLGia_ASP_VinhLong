@@ -132,7 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dgtths";
                         ViewData["MenuLv3"] = "menu_dgtths_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/XetDuyet/Index.cshtml", model_join);
@@ -201,7 +201,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dgtths";
                         ViewData["MenuLv3"] = "menu_dgtths_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/XetDuyet/Index.cshtml", model_join);
@@ -270,7 +270,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá tài sản trong tố tụng hình sự";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dgtths";
                         ViewData["MenuLv3"] = "menu_dgtths_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/XetDuyet/Index.cshtml", model_join);

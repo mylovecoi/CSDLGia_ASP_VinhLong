@@ -129,12 +129,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaSpDvCiDm"] = _db.GiaSpDvCiDm.ToList();
-
                     ViewData["Title"] = " Thông tin hồ sơ sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Create.cshtml", model);
                 }
                 else
@@ -226,7 +224,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Edit.cshtml", model_new);
                 }
                 else
@@ -334,7 +331,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
-
                     return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Show.cshtml", model_new);
                 }
                 else
@@ -434,8 +430,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtgtc";
-                    ViewData["MenuLv3"] = "menu_dgtgtc_tk";
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/TimKiem/Result.cshtml", model_join);
                 }
                 else

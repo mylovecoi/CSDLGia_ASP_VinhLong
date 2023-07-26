@@ -32,9 +32,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 {
                     var model = _db.GiaSpDvCuTheNhom.ToList();
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe";
-                    ViewData["MenuLv3"] = "menu_spdvcuthe_dm";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else
