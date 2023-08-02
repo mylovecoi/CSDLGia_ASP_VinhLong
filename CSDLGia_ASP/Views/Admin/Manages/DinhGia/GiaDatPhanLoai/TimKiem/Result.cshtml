@@ -47,16 +47,22 @@
                 {
                     @foreach (var item in Model)
                     {
-                <tr>
-                    <td style="text-align: center">@(record_id++)</td>
-                    <td style="text-align: center">@item.Tendv</td>
-                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align: center">@item.Loaidat</td>
-                    <td style="text-align: center">@item.Vitri</td>
-                    <td style="text-align: center">@item.Dientich</td>
-                    <td style="text-align: center">@item.Giacuthe</td>
-                </tr>
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@item.Tendv</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@item.Loaidat</td>
+                            <td style="text-align: center">@item.Vitri</td>
+                            <td style="text-align: center">@item.Dientich</td>
+                            <td style="text-align: center">@item.Giacuthe</td>
+                        </tr>
                     }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Không có kết quả tìm kiếm!!!</td>
+                    </tr>
                 }
             </tbody>
         </table>

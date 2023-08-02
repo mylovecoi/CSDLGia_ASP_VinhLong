@@ -348,7 +348,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "HoanThanhDinhGiaDatCuThe", new { Madv = madv, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatPlHt", new { Madv = madv, Nam = model.Thoidiem.Year });
                 }
                 else
                 {

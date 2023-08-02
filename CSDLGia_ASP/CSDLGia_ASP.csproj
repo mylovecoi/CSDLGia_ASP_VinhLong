@@ -30,6 +30,7 @@
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.0.7" />
     <PackageReference Include="Handsontable" Version="12.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
@@ -44,12 +45,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Admin\Manages\DinhGia\GiaHhDvk\BaoCao\" />
     <Folder Include="wwwroot\data\" />
-    <Folder Include="wwwroot\UpLoad\File\DinhGia\" />
+    <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaRung\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />
   </ItemGroup>

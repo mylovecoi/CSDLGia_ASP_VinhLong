@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -49,6 +51,16 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Ipf3 { get; set; }
         public string Ipf4 { get; set; }
         public string Ipf5 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
+        [NotMapped]
+        public IFormFile Ipf2upload { get; set; }
+        [NotMapped]
+        public IFormFile Ipf3upload { get; set; }
+        [NotMapped]
+        public IFormFile Ipf4upload { get; set; }
+        [NotMapped]
+        public IFormFile Ipf5upload { get; set; }
         public List<DsDonVi> DsDonVi { get; set; }
         public List<DsDiaBan> DsDiaBan { get; set; }
         public List<GiaRungCt> GiaRungCt { get; set; }

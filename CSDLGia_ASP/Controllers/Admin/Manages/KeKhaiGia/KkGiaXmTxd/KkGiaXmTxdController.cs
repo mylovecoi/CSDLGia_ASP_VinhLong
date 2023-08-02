@@ -87,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             {
                                 ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
                             }
-                            var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
+                            var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD" && t.Madv == Madv).Count();
                             ViewData["check_tt"] = check_tt;
                             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                             ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");

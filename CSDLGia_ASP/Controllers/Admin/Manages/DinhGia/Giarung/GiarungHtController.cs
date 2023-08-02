@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             _db = db;
         }
         
-        [Route("HoanThanhDinhGiaRung")]
+        [Route("GiaRung/XetDuyet")]
         [HttpGet]
 
         public IActionResult Index(string Madv, string Nam)
@@ -49,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     }
 
 
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
+                    /*var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
                                     {
@@ -58,7 +58,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                         MaDv = dv.MaDv,
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
+                                    }).First();*/
+
+                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
+                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dv.Id,
+                                        MaDiaBan = dv.MaDiaBan,
+                                        MaDv = dv.MaDv,
+                                        TenDv = dv.TenDv,
+                                        ChucNang = dv.ChucNang,
+                                        Level = db.Level,
                                     }).First();
+
+                    return Ok(getdonvi.Level);
 
                     if (getdonvi.Level == "ADMIN")
                     {
@@ -344,6 +358,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         public IActionResult TraLai(int id_tralai, string madv_tralai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

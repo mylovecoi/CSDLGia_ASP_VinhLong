@@ -25,9 +25,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             _db = db;
         }
 
-        [Route("DinhGiaThueMatDatMatNuocCt/Store")]
+        [Route("GiaThueMatDatMatNuocCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs,int Vitri, string Diemdau, string Diemcuoi, string Mota,double Dientich,double Dongia)
+        public JsonResult Store(string Mahs, int Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
         {
             var model = new GiaThueMatDatMatNuocCt
             {
@@ -48,7 +48,98 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        [Route("DinhGiaThueMatDatMatNuocCt/Delete")]
+        
+        [Route("GiaThueMatDatMatNuocCt/Edit")]
+        [HttpPost]
+        public JsonResult Edit(int Id)
+        {
+            var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(p => p.Id == Id);
+
+            if (model != null)
+            {
+                string result = "<div class='modal-body' id='edit_thongtin'>";
+
+                result += "<div class='row'>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Vị trí</b></label>";
+                result += "<input type='number' id='vitri_edit' name='vitri_edit' value='" + model.Vitri + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Địa giới từ</b></label>";
+                result += "<input type='text' id='diemdau_edit' name='diemdau_edit' value='" + model.Diemdau + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Địa giới đến</b></label>";
+                result += "<input type='text' id='diemcuoi_edit' name='diemcuoi_edit' value='" + model.Diemcuoi + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Mô tả</b></label>";
+                result += "<input type='text' id='mota_edit' name='mota_edit' value='" + model.Mota + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Diện tích</b></label>";
+                result += "<input type='text' id='dientich_edit' name='dientich_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dientich + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn giá</b></label>";
+                result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia + "'/>";
+
+                result += "</div>";
+                result += "</div>";
+                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
+
+                result += "</div>";
+                result += "</div>";
+
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
+        }
+
+        [Route("GiaThueMatDatMatNuocCt/Update")]
+        [HttpPost]
+        public JsonResult Update(int Id, int Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
+        {
+            var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
+
+            model.Vitri = Vitri;
+            model.Diemdau = Diemdau;
+            model.Diemcuoi = Diemcuoi;
+            model.Mota = Mota;
+            model.Dientich = Dientich;
+            model.Dongia = Dongia;
+            model.Updated_at = DateTime.Now;
+            _db.GiaThueMatDatMatNuocCt.Update(model);
+            _db.SaveChanges();
+            string result = GetData(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        [Route("GiaThueMatDatMatNuocCt/Delete")]
         [HttpPost]
         public JsonResult Delete(int Id)
         {
@@ -59,6 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             var data = new { status = "success", message = result };
             return Json(data);
         }
+
         public string GetData(string Mahs)
         {
             var model = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs).ToList();
@@ -81,13 +173,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             foreach (var item in model)
             {
                 result += "<tr  style='text-align:center'>";
-                result += "<td>"+(record++)+"</td>";
+                result += "<td>" + (record++) + "</td>";
                 result += "<td class='active'>" + item.Vitri + "</td>";
-                result += "<td>" + item.Diemdau + "</td>";
-                result += "<td>" + item.Diemcuoi + "</td>";
-                result += "<td>" + item.Mota + "</td>";
-                result += "<td>" + item.Dientich + "</td>";
-                result += "<td>" + item.Dongia + "</td>";
+                result += "<td style='text-align:left;'>" + item.Diemdau + "</td>";
+                result += "<td style='text-align:left;'>" + item.Diemcuoi + "</td>";
+                result += "<td style='text-align:left;'>" + item.Mota + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + item.Dientich + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + item.Dongia + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
@@ -100,78 +192,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
             result += "</tbody>";
             return result;
-        }
-        [Route("DinhGiaThueMatDatMatNuocCt/Edit")]
-        [HttpPost]
-        public JsonResult Edit(int Id)
-        {
-            var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(p => p.Id == Id);
-
-            if (model != null)
-            {
-                string result = "<div class='modal-body' id='edit_thongtin'>";
-
-                result += "<div class='row'>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Vị trí</b></label>";
-                result += "<input type='text' id='vitri_edit' name='vitri_edit' value='"+model.Vitri+"' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới từ</b></label>";
-                result += "<input type='text' id='diemdau_edit' name='diemdau_edit' value='"+model.Diemdau+"' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới đến</b></label>";
-                result += "<input type='text' id='diemcuoi_edit' name='diemcuoi_edit' value='"+model.Diemcuoi+"' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='row'><div class='col-xl-12'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Mô tả</b></label>";
-                result += "<input type='text' id='mota_edit' name='mota_edit' value='"+model.Mota+"' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Diện tích</b></label>";
-                result += "<input type='text' id='dientich_edit' name='dientich_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Dientich+"'/>";
-                result += "</div></div><div class='col-xl-6'><div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money text-right' style='font-weight: bold' value='"+model.Dongia+"'/>";
-                result += "<input type='text' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
-                result += "</div></div></div>";
-                
-
-                var data = new { status = "success", message = result };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
-                return Json(data);
-            }
-        }
-        [Route("DinhGiaThueMatDatMatNuocCt/Update")]
-        [HttpPost]
-        public JsonResult Update(int Id, int Vitri, string Diemdau, string Diemcuoi, string Mota,double Dientich,double Dongia)
-        {
-            var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
-           
-            model.Vitri = Vitri;
-            model.Diemdau = Diemdau;
-            model.Diemcuoi = Diemcuoi;
-            model.Mota = Mota;
-            model.Dientich=Dientich;
-            model.Dongia=Dongia;
-            model.Updated_at = DateTime.Now;
-            _db.GiaThueMatDatMatNuocCt.Update(model);
-            _db.SaveChanges();
-            string result = GetData(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
         }
     }
 }

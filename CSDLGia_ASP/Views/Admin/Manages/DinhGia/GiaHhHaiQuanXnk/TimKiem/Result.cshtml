@@ -40,7 +40,7 @@
                     <th>Tên hàng hoá</th>
                     <th>Đơn vị tính</th>
                     @*<th>@(tinhtrang=="truoc" ? "Giá trước thuế" : "Giá sau thuế")</th>*@
-                    @if (tinhtrang == "truoc")
+                    @if ((string)tinhtrang == "truoc")
                     {
                         <th>Giá trước thuế</th>
                     }
@@ -63,7 +63,7 @@
                     <td style="text-align: left; font-weight: bold" class="active">@item.TenHh</td>
                     <td style="text-align: center">@item.Dvt</td>
                     @*<td style="text-align: right; font-weight:bold;">@(tinhtrang == "truoc" ? item.GiaTruocThue : item.GiaSauThue)</td>*@
-                    @if (tinhtrang == "truoc")
+                    @if ((string)tinhtrang == "truoc")
                     {
                         <td style="text-align: right; font-weight:bold;">@item.GiaTruocThue</td>
                     }

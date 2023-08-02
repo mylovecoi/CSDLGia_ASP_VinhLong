@@ -95,18 +95,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        
-        [Route("DanhMucGiaRung/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaRungDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaRungDm.Remove(model);
-            _db.SaveChanges();
-            var result = GetData();
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
 
         [Route("DanhMucGiaRung/Edit")]
         [HttpPost]
@@ -128,6 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên nhóm*</b></label>";
                 result += "<input type='text' id='tennhom_edit' name='tennhom_edit' value='" + model.Tennhom + "' class='form-control'/>";
+                result += "<input type='text' hidden id='id_edit' name='id_edit' value='" + model.Id + "' class='form-control'/>";
                 result += "</div></div></div></div>";
 
 
@@ -156,11 +145,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             return Json(data);
         }
 
+        [Route("DanhMucGiaRung/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaRungDm.FirstOrDefault(t => t.Id == Id);
+            _db.GiaRungDm.Remove(model);
+            _db.SaveChanges();
+            var result = GetData();
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
         public string GetData()
         {
             var model = _db.GiaRungDm.ToList();
 
             int record = 1;
+
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='sample_3'>";
             result += "<thead>";

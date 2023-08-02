@@ -3,7 +3,7 @@
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var maloaidat = (IEnumerable<DmLoaiDat>)ViewData["Maloaidat"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDatCt>
+@*@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDatCt>*@
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -21,7 +21,7 @@
 
         $(function () {
             $('#Nam, #Mota').change(function () {
-                var current_path_url = '/DinhGiaDatCuThe/Search?';
+                var current_path_url = '/GiaDatCuThe/Search?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var mota = '&Mota=' + $('#Mota').val();
                 var url = current_path_url + nam + mota;

@@ -22,7 +22,7 @@
 
         $(function() {
             $('#Donvi, #Nam').change(function() {
-                var current_path_url = '/HoanThanhDinhGiaThueMatDatMatNuoc?';
+                var current_path_url = '/GiaThueMatDatMatNuoc/XetDuyet?';
                 var madv = '&Madv=' + $('#Donvi').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -36,7 +36,7 @@
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
                 <h3 class="card-label">
-                    Thông tin hoàn thành định giá<small>&nbsp;thuê mặt đất mặt nước/small><br />
+                    Thông tin hoàn thành định giá<small>&nbsp;thuê mặt đất mặt nước</small><br />
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -160,7 +160,7 @@
                                 }
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-center danger">@item.Thongtin</td>
+                            <td class="text-center danger">@item.Vitri</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {

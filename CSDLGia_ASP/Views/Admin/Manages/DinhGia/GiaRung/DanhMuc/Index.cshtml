@@ -15,6 +15,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            //TableManaged4.init();
         });
 
     </script>
@@ -104,7 +105,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetStore()">Thêm mới</button>
                 </div>
         </div>
     </div>
@@ -159,7 +160,7 @@
 
 
 <script>
-    function SetCreate() {
+    function SetStore() {
         $.ajax({
             url: '/DanhMucGiaRung/Store',
             type: 'POST',
@@ -173,7 +174,7 @@
                     toastr.success("Thêm mới thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManaged.init();
                     });
                     $('#Create_Modal').modal("hide");
                 } else {
@@ -182,9 +183,11 @@
             }
         })
     }
+
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
+
     function GetDelete() {
         $.ajax({
             url: '/DanhMucGiaRung/Delete',
@@ -197,7 +200,7 @@
                 if (data.status == 'success') {
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManaged.init();
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#Delete_Modal').modal("hide");
@@ -226,6 +229,7 @@
             }
         })
     }
+
     function GetEdit() {
         $.ajax({
             url: '/DanhMucGiaRung/Update',
@@ -241,7 +245,7 @@
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManaged.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {

@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             _db = db;
         }
         
-        [Route("HoanThanhDinhGiaThueMatDatMatNuoc")]
+        [Route("GiaThueMatDatMatNuoc/XetDuyet")]
         [HttpGet]
 
         public IActionResult Index(string Madv, string Nam)
@@ -344,6 +344,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         public IActionResult TraLai(int id_tralai, string madv_tralai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

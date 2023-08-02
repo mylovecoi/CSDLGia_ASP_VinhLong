@@ -2,6 +2,7 @@
 @{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
+    var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -41,25 +42,33 @@
                     {
                         @foreach (var item in Model.GiaDatPhanLoaiCt)
                         {
-                        <tr>
-                            <td style="text-align:center">@(record_id++)</td>
-                            <td class="active">@item.Khuvuc</td>
-                            <td>@item.Maloaidat</td>
-                            <td>@item.Vitri</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Hesodc)</td>
-                            <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                        onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                        onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td class="active">@item.Khuvuc</td>
+                                <td>
+                                    @foreach (var ten in dmloaidat)
+                                    {
+                                        @if (ten.Maloaidat == item.Maloaidat)
+                                        {
+                                            <span>@ten.Loaidat</span>
+                                        }
+                                    }
+                                </td>
+                                <td>@item.Vitri</td>
+                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
+                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Hesodc)</td>
+                                <td>
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                            onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         }
                     }
                 }

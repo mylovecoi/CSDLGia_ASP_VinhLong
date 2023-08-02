@@ -399,7 +399,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (model.Ipf1 != null && model.Ipf1.Length > 0)
                 {
                     result += "<p>";
-                    result += "1. ";
+                    result += "-";
                     result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf1 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf1 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf1 + "</a>";
@@ -408,7 +408,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (model.Ipf2 != null && model.Ipf2.Length > 0)
                 {
                     result += "<p>";
-                    result += "2. ";
+                    result += "-";
                     result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf2 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf2 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf2 + "</a>";
@@ -417,7 +417,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (model.Ipf3 != null && model.Ipf3.Length > 0)
                 {
                     result += "<p>";
-                    result += "3. ";
+                    result += "-";
                     result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf3 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf3 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf3 + "</a>";
@@ -426,7 +426,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (model.Ipf4 != null && model.Ipf4.Length > 0)
                 {
                     result += "<p>";
-                    result += "4. ";
+                    result += "-";
                     result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf4 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf4 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf4 + "</a>";
@@ -435,7 +435,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (model.Ipf5 != null && model.Ipf5.Length > 0)
                 {
                     result += "<p>";
-                    result += "5. ";
+                    result += "-";
                     result += "<a href='/UpLoad/File/VbQlNn/" + model.Ipf5 + "' target='_blank' class='btn btn-link'";
                     result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.Ipf5 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                     result += model.Ipf5 + "</a>";

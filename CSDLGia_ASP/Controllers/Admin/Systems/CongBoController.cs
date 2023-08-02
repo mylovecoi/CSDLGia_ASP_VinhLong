@@ -53,7 +53,6 @@ namespace CSDLGia_ASP.Controllers.HeThong
                 model = model.Where(t => t.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")).ToList();
             }
             /*var m_HeThong = new HeThongDao(_dbGia).GetTblHeThong();
-
             ViewBag.HeThong = m_HeThong;*/
             /*ViewBag.ChucNang = lstChucNang;*/
             ViewData["Title"] = "Công bố thông tin";

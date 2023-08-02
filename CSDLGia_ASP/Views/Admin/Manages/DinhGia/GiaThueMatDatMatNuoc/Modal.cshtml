@@ -114,7 +114,7 @@
 <script>
     function SetStore() {
         $.ajax({
-            url: '/DinhGiaThueMatDatMatNuocCt/Store',
+            url: '/GiaThueMatDatMatNuocCt/Store',
             type: 'POST',
             data: {
                 Mahs: $('#mahs_create').val(),
@@ -143,7 +143,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DinhGiaThueMatDatMatNuocCt/Edit',
+            url: '/GiaThueMatDatMatNuocCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -162,7 +162,7 @@
 
     function SetUpdate() {
         $.ajax({
-            url: '/DinhGiaThueMatDatMatNuocCt/Update',
+            url: '/GiaThueMatDatMatNuocCt/Update',
             type: 'POST',
             data: {
                 Vitri: $('#vitri_edit').val(),
@@ -195,7 +195,7 @@
 
     function SetDelete() {
         $.ajax({
-            url: '/DinhGiaThueMatDatMatNuocCt/Delete',
+            url: '/GiaThueMatDatMatNuocCt/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),

@@ -24,7 +24,7 @@
         <div class="card-header ribbon ribbon-top ribbon-ver">
             <div class="card-title">
                 <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;rừng ( Modify )</small>
+                    Thông tin hồ sơ giá<small>&nbsp;rừng</small>
                 </h3>
             </div>
         </div>
@@ -69,16 +69,14 @@
                         <input type="text" class="form-control" asp-for="Thongtin" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>
                             File đính kèm
                             @if (!string.IsNullOrEmpty(Model.Ipf1))
                             {
-                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf1"]" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                <a href="~/UpLoad/File/DinhGia/GiaRung/@Model.Ipf1" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     File đính kèm hiện tại
                                 </a>
                             }
@@ -87,78 +85,12 @@
                     </div>
 
                 </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf2))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf2"]" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File đính kèm hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf2" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf3))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf3"]" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File đính kèm hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf3" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf4))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf5"]" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File đính kèm hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf4" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf5))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf5"]" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File đính kèm hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf5" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-
-                </div>
-
             </div>
-
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/Detail.cshtml")
 
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="Giarung" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="Giarung" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

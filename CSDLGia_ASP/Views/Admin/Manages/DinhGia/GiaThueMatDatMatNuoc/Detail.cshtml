@@ -2,7 +2,7 @@
 @{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-     var GiaThueMatDatMatNuocCt = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["GiaThueMatDatMatNuocCt"];
+    var GiaThueMatDatMatNuocCt = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["GiaThueMatDatMatNuocCt"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -42,25 +42,25 @@
                     {
                         @foreach (var item in Model.GiaThueMatDatMatNuocCt)
                         {
-                        <tr style="text-align:center">
-                            <td style="text-align:center">@(record_id++)</td>
-                            <td>@item.Vitri</td>
-                            <td>@item.Diemdau</td>
-                            <td>@item.Diemcuoi</td>
-                            <td>@item.Mota</td>
-                            <td>@item.Dientich</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
-                            <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                        onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                        onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr style="text-align:center">
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td>@item.Vitri</td>
+                                <td style="text-align:left;">@item.Diemdau</td>
+                                <td style="text-align:left;">@item.Diemcuoi</td>
+                                <td style="text-align:left;">@item.Mota</td>
+                                <td style="text-align:right; font-weight:bold">@item.Dientich</td>
+                                <td style="text-align:right; font-weight:bold">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                                <td>
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                            onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         }
                     }
                 }

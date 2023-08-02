@@ -13,18 +13,18 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#Donvi, #Nam').change(function() {
-                var current_path_url = '/DinhGiaThueMatDatMatNuoc?';
+        $(function () {
+            $('#Donvi, #Nam').change(function () {
+                var current_path_url = '/GiaThueMatDatMatNuoc?';
                 var madv = '&Madv=' + $('#Donvi').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -35,18 +35,18 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;giá thuê mặt đất mặt nước
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ<small>&nbsp;giá thuê mặt đất mặt nước</small><br />
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaThueDN" asp-action="Create"
-               asp-route-Madv="@ViewData["Donvi"]">
+                   asp-route-Madv="@ViewData["Donvi"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -120,7 +120,7 @@
                                     }
                                 }
                             </td>
-                            <td style="text-align: center">@item.Thoidiem</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td class="text-center active">@item.Ghichu</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
@@ -172,14 +172,14 @@
                                 else
                                 {
                                     <a asp-controller="GiaThueDN" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                       target="_blank">
                                         <i class="icon-lg la la-eye text-success"></i>
                                     </a>
                                 }
                                 @if (item.Trangthai == "HT")
                                 {
                                     <a asp-controller="GiaThueDN" asp-action="Print" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="In hồ sơ"
-                           target="_blank">
+                                       target="_blank">
                                         <i class="icon-lg la la-print text-info"></i>
                                     </a>
                                 }

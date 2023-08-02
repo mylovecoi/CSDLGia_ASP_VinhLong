@@ -135,8 +135,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
-                    //ViewData["Maloaidat"] = _db.GiaDatPhanLoaiDm.ToList();
+                    ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Thêm mới giá đát cụ thể";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
@@ -185,7 +184,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.GiaDatPhanLoaiCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaDatPl", new { request.Mahs });
+                    return RedirectToAction("Index", "GiaDatPl", new { request.Madv });
                 }
                 else
                 {
@@ -256,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
+                    ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá đất cụ thể";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
@@ -305,7 +304,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.GiaDatPhanLoaiCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaDatPl", new { request.Mahs });
+                    return RedirectToAction("Index", "GiaDatPl", new { request.Madv });
                 }
                 else
                 {
@@ -385,7 +384,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
                 {
 
-                    var model_join = from dgct in _db.GiaDatPhanLoaiCt
+                    /*var model_join = from dgct in _db.GiaDatPhanLoaiCt
                                      join dg in _db.GiaDatPhanLoai.Where(t =>  t.Trangthai == "HT") on dgct.Mahs equals dg.Mahs
                                      join dgdm in _db.GiaDatPhanLoaiDm on dgct.Maloaidat equals dgdm.Maloaidat
                                      select new VMDinhGiaDatCt
@@ -400,7 +399,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                          Maloaidat = dgct.Maloaidat,
                                          Macqcq = dg.Macqcq,
                                          Loaidat = dgdm.Loaidat
-                                     };
+                                     };*/
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -409,7 +408,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Index.cshtml", model_join);
+                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Index.cshtml");
 
                 }
                 else
@@ -430,7 +429,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
                 {
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
@@ -443,11 +442,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Tendv = donvi.TenDv,
                                      Mahs = giact.Mahs,
                                      Thoidiem = gia.Thoidiem,
-                                     Giacuthe=giact.Giacuthe,
-                                     Vitri=giact.Vitri,
-                                     Loaidat=dm.Loaidat,
-                                     Dientich=gia.Dientich,
-                                     Maloaidat=giact.Maloaidat
+                                     Maloaidat = giact.Maloaidat,
+                                     Loaidat = dm.Loaidat,
+                                     Vitri = giact.Vitri,
+                                     Dientich = giact.Dientich,
+                                     Giacuthe = giact.Giacuthe,
                                  });
 
                     if (madv != "All")
