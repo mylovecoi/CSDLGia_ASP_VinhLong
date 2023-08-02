@@ -34,7 +34,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
+                    
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
@@ -47,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-
+                    
 
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
@@ -59,6 +61,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).First();
+                    
+                 
 
                     if (getdonvi.Level == "ADMIN")
                     {
