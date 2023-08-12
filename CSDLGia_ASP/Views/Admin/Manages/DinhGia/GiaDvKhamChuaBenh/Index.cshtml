@@ -18,6 +18,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function() {
             TableManaged.init();
@@ -58,7 +59,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control " id="Nam" name="Nam">
                           <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
@@ -74,7 +75,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -83,7 +84,7 @@
                                 }
                                 @foreach (var item in company)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                                 }
                             </optgroup>
                         }
@@ -208,7 +209,7 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        <input id="Madv" name="Madv" value="@ViewData["Madv"]" />
+                        <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nhóm Danh mục giá khám bệnh, chữa bệnh*</b></label>

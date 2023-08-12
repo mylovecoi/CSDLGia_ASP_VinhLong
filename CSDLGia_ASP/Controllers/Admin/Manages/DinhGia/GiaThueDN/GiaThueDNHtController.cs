@@ -33,9 +33,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    var dsdonvi = _db.DsDonVi;
                     
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
+                    var dsdiaban = _db.DsDiaBan;
                     
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -61,8 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).First();
-                    
-                 
+
 
                     if (getdonvi.Level == "ADMIN")
                     {

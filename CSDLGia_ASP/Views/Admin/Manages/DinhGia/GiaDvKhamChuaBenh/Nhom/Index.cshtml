@@ -30,8 +30,8 @@
             <div class="card-toolbar">
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.kcb.dm", "Create"))
             {
-                <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus">Thêm mới</i>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
             }
 

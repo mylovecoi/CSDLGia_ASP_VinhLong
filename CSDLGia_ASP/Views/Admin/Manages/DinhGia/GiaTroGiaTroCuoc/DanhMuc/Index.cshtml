@@ -13,6 +13,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function() {
             TableManaged.init();
@@ -31,8 +32,8 @@
             <div class="card-toolbar">
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.dm", "Create"))
             {
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" >
-                    <i class="la la-plus">Thêm mới</i>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
             }
 
@@ -106,9 +107,20 @@
                             <input type="text" id="Mota_create" name="Mota_create" class="form-control" />
                         </div>
                     </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phân loại sản phẩm*</b></label>
+                            <select id="Phanloai_create" name="Phanloai_create" class="form-control">
+                                @foreach (string item in Helpers.PlTroGiaTroCuoc())
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xl-5">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
+                        <label class="form-control-label">Đơn vị tính</label><br/>
+                        <select id="Dvt_create" name="Dvt_create" class="form-control select2basic" tabindex="-1" title="">
                             <option value="">---Select---</option>
                             @foreach (var item in DmDvt)
                             {
@@ -116,22 +128,13 @@
                             }
                         </select>
                     </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
+                    <div class="col-xl-1" style="padding-left: 0px;">
                         <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
                         <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Phân loại sản phẩm*</b></label>
-                            <select id="Phanloai_create" name="Phanloai_create"  class="form-control">
-                                @foreach(string item in Helpers.PlTroGiaTroCuoc()){
-                                      <option value="@item">@item</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div class="modal-footer">

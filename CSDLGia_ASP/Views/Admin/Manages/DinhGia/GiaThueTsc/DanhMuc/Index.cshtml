@@ -14,6 +14,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function() {
             TableManaged.init();
@@ -22,8 +23,8 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
                 <h3 class="card-label">
                     Danh mục<small>&nbsp;tài sản công</small><br />
@@ -32,12 +33,11 @@
             <div class="card-toolbar">
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tsc.dm", "Create"))
             {
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus">Thêm mới</i>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
             }
-
-        </div>
+            </div>
     </div>
     <hr />
     <div class="card-body" id="frm_data">
@@ -86,7 +86,7 @@
 <!--create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content ">
             <div class="modal-header">
                 <h3 class="card-label">
                     Thông tin Thuê tài sản công
@@ -99,8 +99,9 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Địa Bàn*</b></label>
-                            <select id="Madv_create" name="Madv_create" class="form-control">
+                            <label><b>Địa Bàn</b></label>
+                            <br/>
+                            <select id="Madv_create" name="Madv_create" class="form-control select2basic">
                                 @foreach (var item in DsDonVi)
                                 {
                                     <option value="@item.MaDv">@item.TenDv</option>
@@ -108,12 +109,24 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Tên tài sản*</b></label>
-                            <input type="text" id="Tentaisan_create" name="Tentaisan_create" class="form-control" />
-                        </div>
+                    <div class="col-xl-11">
+                        <label class="form-control-label">Đơn vị tính</label>
+                        <br />
+                        <select id="Dvt_create" name="Dvt_create" class="form-control select2basic" tabindex="-1" title="">
+                            <option value="">---Select---</option>
+                            @foreach (var item in DmDvt)
+                            {
+                                <option value="@item.Dvt">@item.Dvt</option>
+                            }
+                        </select>
                     </div>
+                    <div class="col-md-1" style="padding-left: 0px;">
+                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                  
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Mô tả*</b></label>
@@ -127,21 +140,11 @@
                             <input type="text" id="Dientich_create" name="Dientich_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-5">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
-                            <option value="">---Select---</option>
-                            @foreach (var item in DmDvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
-                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
-                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
-                            <i class="fa fa-plus"></i>
-                        </button>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên tài sản*</b></label>
+                            <input type="text" id="Tentaisan_create" name="Tentaisan_create" class="form-control" />
+                        </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">

@@ -13,6 +13,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function() {
             TableManaged.init();
@@ -43,7 +44,7 @@
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
-                        <select class="form-control" id="Madiaban" name="Madiaban">
+                    <select class="form-control select2basic" id="Madiaban" name="Madiaban">
                                 @foreach (var item in dsdiaban)
                             {
                                 <!option value="@item.MaDiaBan" @((string)ViewData["Madiaban"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>

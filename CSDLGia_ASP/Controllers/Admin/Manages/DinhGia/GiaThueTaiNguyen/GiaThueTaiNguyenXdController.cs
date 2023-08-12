@@ -51,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-
+                   
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -62,11 +62,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                         TenDv = dv.TenDv,
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
-                                    }).First();
+                                    }).FirstOrDefault();
 
                     var model = _db.GiaThueTaiNguyen.ToList();
 
-                    /*return Ok(getdonvi.Level);*/
+                    
 
                     if (getdonvi.Level == "H")
                     {

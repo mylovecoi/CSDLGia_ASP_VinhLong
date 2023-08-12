@@ -72,7 +72,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                         Level = db.Level,
                                     }).First();
 
-                    return Ok(getdonvi.Level);
 
                     if (getdonvi.Level == "ADMIN")
                     {

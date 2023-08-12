@@ -46,30 +46,30 @@
             <tbody>
                 @if (ct != null)
                 {
-                @foreach (var item in ct)
-                {
-                <tr>
-                    <td>@(record_id++)</td>
-                    <td>@item.Doituongsd</td>
-                    <td>@item.Namchuathue</td>
-                    <td>@(@item.Giachuathue != 0 ? item.Giachuathue : "")</td>
-                    <td>@item.Namchuathue1</td>
-                    <td>@(@item.Giachuathue1 != 0 ? item.Giachuathue1 : "")</td>
-                    <td>@item.Namchuathue2</td>
-                    <td>@(@item.Giachuathue2 != 0 ? item.Giachuathue2 : "")</td>
-                    <td>@item.Namchuathue3</td>
-                    <td>@(@item.Giachuathue3 != 0 ? item.Giachuathue3 : "")</td>
-                    <td>@item.Namchuathue4</td>
-                    <td>@(@item.Giachuathue4 != 0 ? item.Giachuathue4 : "")</td>
-                    <td>
+                    @foreach (var item in ct)
+                    {
+                        <tr>
+                            <td>@(record_id++)</td>
+                            <td>@item.Doituongsd</td>
+                            <td>@item.Namchuathue</td>
+                            <td>@(@item.Giachuathue != 0 ? item.Giachuathue : "")</td>
+                            <td>@item.Namchuathue1</td>
+                            <td>@(@item.Giachuathue1 != 0 ? item.Giachuathue1 : "")</td>
+                            <td>@item.Namchuathue2</td>
+                            <td>@(@item.Giachuathue2 != 0 ? item.Giachuathue2 : "")</td>
+                            <td>@item.Namchuathue3</td>
+                            <td>@(@item.Giachuathue3 != 0 ? item.Giachuathue3 : "")</td>
+                            <td>@item.Namchuathue4</td>
+                            <td>@(@item.Giachuathue4 != 0 ? item.Giachuathue4 : "")</td>
+                            <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                onclick="SetEdit('@item.Id', '@item.Doituongsd')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        onclick="SetEdit('@item.Id', '@item.Doituongsd')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
-                                
-                    </td>
-                </tr>
-                }
+
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

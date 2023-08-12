@@ -18,6 +18,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
@@ -75,10 +76,10 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Địa bàn</label>
-                    <select class="form-control" id="Madb" name="Madb">
+                    <select class="form-control select2basic" id="Madb" name="Madb">
                         @foreach (var db in dsdiaban)
                         {
-                            <!option value="@db.MaDiaBan" @((string)ViewData["Madb"] == db.MaDiaBan ? "selected" : "")>@db.TenDiaBan</!option>
+                            <!option value="@db.MaDiaBan" @((string)ViewData["Madb"] == db.MaDiaBan ? "selected" : "")>&emsp;@db.TenDiaBan</!option>
                         }
                     </select>
                 </div>

@@ -18,6 +18,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function() {
             TableManaged.init();
@@ -35,24 +36,26 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+
+            <h3 class="card-label">
                     Thông tin hồ sơ<small>&nbsp;Giá sản phẩm giáo dục đào tạo</small>
-                </h3>
-            </div>
+            </h3> 
             <div class="card-toolbar">
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaoDucDaoTao" asp-action="Create"
+                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
+            </div>
 
         </div>
     </div>
+   
     <hr />
     <div class="card-body">
         <div class="row">
@@ -75,7 +78,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -84,7 +87,7 @@
                                 }
                                 @foreach (var item in company)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                                 }
                             </optgroup>
                         }

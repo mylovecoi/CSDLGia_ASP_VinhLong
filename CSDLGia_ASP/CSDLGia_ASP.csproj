@@ -143,7 +143,6 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Create.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\DanhMuc\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Detail.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\HoanThanh\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\HoanThanh\Modal.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Index.cshtml" />
