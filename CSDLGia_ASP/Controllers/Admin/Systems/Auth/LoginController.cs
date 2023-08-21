@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
         }
 
         [Route("DangXuat")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult LogOut()
         {
             HttpContext.Session.Remove("Permission");

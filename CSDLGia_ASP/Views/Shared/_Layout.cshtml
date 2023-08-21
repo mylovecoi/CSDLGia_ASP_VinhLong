@@ -409,7 +409,10 @@
                                 </span>
                             </span>
                         </a>
-                        <a asp-controller="Login" asp-action="LogOut" class="btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Đăng xuất</a>
+                        @*<a asp-controller="Login" asp-action="LogOut" class="btn btn-sm btn-light-danger font-weight-bolder py-2 px-5">Đăng xuất</a>*@
+                        <button type="button" class="btn btn-sm btn-light-danger" title="Đăng xuất" data-toggle="modal" data-target="#Logout_Modal">
+                            Đăng xuất
+                        </button>
                     </div>
                 </div>
             </div>
@@ -584,3 +587,23 @@
 </body>
 <!--end::Body-->
 </html>
+<div class="modal fade" id="Logout_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="Login" asp-action="LogOut">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Xác nhận đăng xuất chương trình
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
