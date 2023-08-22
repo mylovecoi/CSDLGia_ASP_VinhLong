@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230816081620_4")]
+    partial class _4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11111,39 +11113,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CompanyLvCc");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DanhMucChucNang", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Capdo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Maso")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maso_goc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Menu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DanhMucChucNang");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Districts", b =>

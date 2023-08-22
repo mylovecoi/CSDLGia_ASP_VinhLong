@@ -236,6 +236,10 @@ namespace CSDLGia_ASP.Database
         public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
         public DbSet<DmChucnang> DmChucnang { get; set; }
 
+        // Danh sách chức năng
+
+        public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
+
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
     }
