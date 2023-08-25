@@ -32,8 +32,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 {
                     var model = _db.GiaHhDvkNhom.ToList();
                     ViewData["Title"] = "Thông tin nhóm hàng hóa dịch vụ";
-                    ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_dm";
+                    /*ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_dm";*/
+                    ViewData["MenuLv1"] = "menu_hethong";
+                    ViewData["MenuLv2"] = "menu_qthethong";
+                    ViewData["MenuLv3"] = "menu_tichhop";
+                    ViewData["MenuLv4"] = "menu_tichhop_giahh";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else

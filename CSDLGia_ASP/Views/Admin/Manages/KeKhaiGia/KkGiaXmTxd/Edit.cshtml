@@ -102,21 +102,13 @@
 <script>
     function ValidateXmTxd() {
         if ($('#Socv').val().trim() == '') {
-            alert('Thông tin hồ sơ không được để trống');
             toastr.error("Số công văn không được để trống!", "Lỗi!!!")
         } else {
             if ($('#Ngayhieuluc').val().trim() == '') {
-                alert('Thông tin hồ sơ không được để trống');
                 toastr.error("Ngày thực hiện mức giá kê khai không được để trống!", "Lỗi!!!")
             } else {
-                if ($('#Ngaycvlk').val().trim() == '') {
-                    alert('Thông tin hồ sơ không được để trống');
-                    toastr.error("Ngày nhập số công văn liền kề không được để trống!", "Lỗi!!!")
-                } else {
-                    alert('Cập nhật hồ sơ kê khai giá thành công');
-                    toastr.success("Cập nhật hồ sơ kê khai giá!", "Thành công!!!")
-                    document.getElementById("frm_xmtxd_update").submit();
-                }
+                toastr.success("Cập nhật hồ sơ kê khai giá!", "Thành công!!!")
+                document.getElementById("frm_xmtxd_update").submit();
             }
         }
     }
