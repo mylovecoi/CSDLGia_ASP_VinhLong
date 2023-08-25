@@ -136,7 +136,20 @@
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
                             <td class="text-center active">@item.Socv</td>
                             <td style="text-align: center">@item.Socvlk</td>
-                            <td style="text-align: center">@item.Macqcq</td>
+                            @if (item.Macqcq != null)
+                            {
+                                @foreach (var ds in dscqcq)
+                                {
+                                    @if (item.Macqcq == ds.MaDv)
+                                    {
+                                        <td style="text-align: center">@ds.TenDv</td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td style="text-align: center"></td>
+                            }
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CC")
                                 {

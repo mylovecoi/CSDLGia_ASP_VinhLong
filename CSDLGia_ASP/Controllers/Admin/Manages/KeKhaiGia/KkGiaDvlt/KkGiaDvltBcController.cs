@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", "Index"))
                 {
                     ViewData["Title"] = "Báo cáo tổng hợp kê khai giá dịch vụ lưu trú";
                     ViewData["MenuLv1"] = "menu_kknygia";
@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", "Index"))
                 {
                     var model = (from kk in _db.KkGia.Where(t => t.Manghe == "DVLT" && (t.Ngaynhan >= tungay_bc && t.Ngaynhan <= denngay_bc))
                                  join cskd in _db.KkGiaDvLtCskd on kk.Macskd equals cskd.Macskd
@@ -113,7 +113,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", "Index"))
                 {
                     var model = _db.KkGiaDvLtCskd;
                     foreach(var tt in model)
