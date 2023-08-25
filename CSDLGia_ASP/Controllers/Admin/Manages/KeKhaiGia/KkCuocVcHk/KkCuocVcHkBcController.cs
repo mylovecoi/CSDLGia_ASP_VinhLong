@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkCuocVcHk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkcvchk.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkcvchk.giakkbc", "Index"))
                 {
                     ViewData["Title"] = "Báo cáo tổng hợp kê khai giá cước vận chuyển hành khách";
                     ViewData["MenuLv1"] = "menu_kknygia";
@@ -183,7 +183,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkCuocVcHk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkcvchk.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkcvchk.giakkbc", "Index"))
                 {
                     var model = (from kk in _db.KkGia.Where(t => t.Manghe == "VCHK" && t.Trangthai == "DD")
                                  join com in _db.Company on kk.Madv equals com.Madv

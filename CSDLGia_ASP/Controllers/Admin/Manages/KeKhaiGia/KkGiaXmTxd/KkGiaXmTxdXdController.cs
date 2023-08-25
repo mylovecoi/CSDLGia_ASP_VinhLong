@@ -104,6 +104,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
@@ -137,7 +138,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                                               Dtll = kk.Dtll,
                                               Trangthai = kk.Trangthai_t,
                                               Level = getdonvi.Level,
+                              
                                           };
+                        
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -147,6 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
@@ -182,6 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                                               Trangthai_ad = kk.Trangthai_ad,
                                               Level = getdonvi.Level,
                                           };
+                      
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -191,6 +196,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
