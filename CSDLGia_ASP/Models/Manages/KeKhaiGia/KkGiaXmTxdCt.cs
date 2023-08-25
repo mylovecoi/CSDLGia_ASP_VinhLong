@@ -24,5 +24,14 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        [Required(ErrorMessage = "Thông tin không được bỏ trống")]
+        public IFormFile FormFile { get; set; }
     }
 }

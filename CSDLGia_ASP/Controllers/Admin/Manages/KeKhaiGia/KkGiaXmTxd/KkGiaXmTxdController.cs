@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 {
@@ -152,6 +153,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
+                    var modellk = _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Madv == Madv &&
+                    (t.Trangthai == "DD" || t.Trangthai == "CB" || t.Trangthai == "HCB")).OrderByDescending(t => t.Ngayhieuluc).FirstOrDefault();
+                    if (modellk != null)
+                    {
+                        model.Socvlk = modellk.Socv;
+                        model.Ngaycvlk = modellk.Ngaynhap;
+                    }
+
+                    var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs);
+
+                    model.KkGiaXmTxdCt = model_ct.ToList();
+
+
+
                     ViewData["Madv"] = Madv;
                     ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                     ViewData["Manghe"] = Manghe;
@@ -213,6 +228,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                         }
                     }
                     _db.KkGiaXmTxdCt.UpdateRange(modelct);
+                    _db.SaveChanges();
+
+                    var history = new NhatKySuDung
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
+                        Diachitruycap = Request.HttpContext.Connection.RemoteIpAddress,
+                        Nguoisudung = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        Tendangnhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        Thoigian = model.Created_at,
+                        Chucnang = model.Manghe,
+                        Hanhdong = "Create",
+                        Noidung = "Thêm mới hồ sơ kê khai giá xi măng thép xây dựng",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.NhatKySuDung.Add(history);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = request.Madv, Nam = request.Ngaynhap.Year });
@@ -309,6 +340,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     _db.KkGiaXmTxdCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
+                    var history = new NhatKySuDung
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
+                        Diachitruycap = Request.HttpContext.Connection.RemoteIpAddress,
+                        Nguoisudung = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        Tendangnhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        Thoigian = model.Updated_at,
+                        Chucnang = model.Manghe,
+                        Hanhdong = "Edit",
+                        Noidung = "Cập nhật hồ sơ kê khai giá xi măng thép xây dựng",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.NhatKySuDung.Add(history);
+                    _db.SaveChanges();
+
                     return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = request.Madv, Nam = request.Ngaynhap.Year });
                 }
                 else
@@ -338,6 +385,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 
                     var model_ct = _db.KkGiaXmTxdCt.Where(t => t.Mahs == model.Mahs && t.Madv == model.Madv);
                     _db.KkGiaXmTxdCt.RemoveRange(model_ct);
+                    _db.SaveChanges();
+
+                    var history = new NhatKySuDung
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
+                        Diachitruycap = Request.HttpContext.Connection.RemoteIpAddress,
+                        Nguoisudung = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        Tendangnhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        Thoigian = DateTime.Now,
+                        Chucnang = model.Manghe,
+                        Hanhdong = "Delete",
+                        Noidung = "Xóa hồ sơ kê khai giá xi măng thép xây dựng",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.NhatKySuDung.Add(history);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "KeKhaiGiaXmTxd", new { Madv = model.Madv, Nam = model.Ngaynhap.Year });
@@ -551,6 +614,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                     }
                     _db.KkGia.Update(model);
                     _db.SaveChanges();
+
+                    var history = new NhatKySuDung
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
+                        Diachitruycap = Request.HttpContext.Connection.RemoteIpAddress,
+                        Nguoisudung = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        Tendangnhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        Thoigian = model.Ngaychuyen,
+                        Chucnang = model.Manghe,
+                        Hanhdong = "Transfer",
+                        Noidung = "Chuyển hồ sơ kê khai giá xi măng thép xây dựng",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.NhatKySuDung.Add(history);
+                    _db.SaveChanges();
+
                     return RedirectToAction("Index", "KkGiaXmTxd", new { model.Madv, Nam = model.Ngaynhap.Year, Trangthai = "CD" });
                 }
                 else
