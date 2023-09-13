@@ -1,9 +1,8 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
+    var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Dmtmnxh"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueMuaNhaXhSearch>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -18,16 +17,6 @@
         $(document).ready(function () {
             TableManaged.init();
         });
-
-        $(function () {
-            $('#Nam, #Mota').change(function () {
-                var current_path_url = '/DinhGiaThueMuaNhaXaHoi/Search?';
-                var nam = '&Nam=' + $('#Nam').val();
-                var mota = '&Mota=' + $('#Mota').val();
-                var url = current_path_url + nam + mota;
-                window.location.href = url;
-            })
-        });
     </script>
 }
 
@@ -41,7 +30,7 @@
     </div>
 </div>
 <hr />
-<form asp-controller="Giathuemuanhaxh" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_tmnxh_result">
+<form asp-controller="GiaThueMuaNhaXh" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_tmnxh_result">
     <div class="card-body">
         <div class="mb-3 font-weight-bold font-size-lg">
             <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
@@ -50,17 +39,16 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="dv" name="dv">
+                    <select class="form-control" id="Madv" name="Madv">
                         <option value="All">--Tất cả các đơn vị--</option>
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
                                 @{
-                                    //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                 }
 
-                                @foreach (var item in company)
+                                @foreach (var item in donvi)
                                 {
 
                                     <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
@@ -73,12 +61,12 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label><b>Tên nhà</b></label>
-                    <select class="form-control" id="tn" name="tn">
+                    <select class="form-control" id="Maso" name="Maso">
                         <option value="All">--Tất cả các phân loại--</option>
-                        @foreach (var tn in tennha)
+                        @foreach (var item in dmtmnxh)
                         {
-                            <option value="@tn.Maso">@tn.Tennha</option>
-                         }
+                            <option value="@item.Maso">@item.Tennha</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -114,11 +102,11 @@
     </div>
     <div class="card-footer" style="text-align:center">
         <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-        <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Tìm</button>
+        <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmnxh()"><i class="la la-check"></i>Tìm</button>
     </div>
 </form>
 <script>
-    function ValidateTmdmn() {
+    function ValidateTmnxh() {
         var date_tu = new Date($('#beginTime').val());
         var date_den = new Date($('#endTime').val());
         var date_tu_int = date_tu.getTime();

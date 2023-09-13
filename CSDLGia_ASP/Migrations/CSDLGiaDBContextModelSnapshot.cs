@@ -6935,6 +6935,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Ththue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Tungay")
                         .HasColumnType("datetime2");
 

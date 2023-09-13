@@ -214,7 +214,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
                         string extension = Path.GetExtension(Ipf1upload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaThueTn/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await Ipf1upload.CopyToAsync(FileStream);
@@ -316,7 +316,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
                         string extension = Path.GetExtension(Ipf1upload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaThueTn/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await Ipf1upload.CopyToAsync(FileStream);
@@ -455,7 +455,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     _db.GiaThueTaiNguyen.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaThueTaiNguyen", new { model.Madv });
+                    return RedirectToAction("Index", "GiaThueTaiNguyen", new { model.Madv, Nam = model.Thoidiem.Year });
 
                 }
                 else
@@ -520,7 +520,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     var model = (from giathuetnct in _db.GiaThueTaiNguyenCt
                                  join giathuetn in _db.GiaThueTaiNguyen on giathuetnct.Mahs equals giathuetn.Mahs
                                  join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 /*join nhomtn in _db.GiaThueTaiNguyenNhom on giathuetn.Manhom equals nhomtn.Manhom*/
                                  select new GiaThueTaiNguyenCt
                                  {
                                      Id = giathuetnct.Id,
@@ -531,7 +530,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                      Manhom = giathuetn.Manhom,
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
-                                     /*Tennhom = nhomtn.Tennhom,*/
                                  });
 
                     if (madv != "all")

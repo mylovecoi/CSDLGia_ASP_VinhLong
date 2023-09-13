@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -16,105 +16,104 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    HỒ SƠ GIÁ THUẾ TÀI NGUYÊN
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                HỒ SƠ GIÁ THUẾ TÀI NGUYÊN
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaThueTaiNguyen" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giathuetainguyen_store">
-
-            <div class="card-body">
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <input hidden asp-for="Madv" value="@ViewData["Madv"]">
-                <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
-                <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
-
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số quyết định</label>
-                            <input type="text" asp-for="Soqd" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Thời điểm</label>
-                            <input type="date" id="Thoidiem" name="Thoidiem" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số quyết định liền kề</label>
-                            <input type="text" asp-for="Soqdlk" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Ngày báo cáo liền kề</label>
-                            <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Nội dung</label>
-                            <textarea class="form-control" rows="2" asp-for="Cqbh"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Ghi chú</label>
-                            <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>File đính kèm</label>
-                            <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Detail.cshtml")
-
-            </div>
-            <div class="card-footer" style="text-align:center">
-                <a asp-controller="GiaThueTaiNguyen" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                    <i class="la la-reply"></i>Quay lại
-                </a>&ensp;
-                <button type="button" class="btn btn-primary mr-2" onclick="ValThueTn()"><i class="la la-check"></i>Hoàn Thành</button>
-            </div>
-        </form>
-        <!--end::Form-->
     </div>
-    <script>
-        function ValThueTn() {
-            if ($('#Soqd').val().trim() == '') {
-                toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
-            } else {
-                if ($('#Soqdlk').val().trim() == '') {
-                    toastr.error("Số quyết định liền kề không được để trống!", "Lỗi!!!")
-                } else {
-                    if ($('#Thoidiemlk').val().trim() == '') {
-                        toastr.error("Ngày báo cáo liền kề không được để trống!", "Lỗi!!!")
-                    } else {
-                        if ($('#Thoidiem').val().trim() == '') {
-                            toastr.error("Thời điểm không được để trống!", "Lỗi!!!")
-                        } else {
-                            document.getElementById("frm_giathuetainguyen_store").submit();
-                        }
+    <!--begin::Form-->
+    <form asp-controller="GiaThueTaiNguyen" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giathuetainguyen_store">
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <input hidden asp-for="Madv">
+            <input hidden asp-for="Manhom">
+            <input hidden asp-for="Mahs">
 
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" asp-for="Soqd" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời điểm</label>
+                        <input type="date" id="Thoidiem" name="Thoidiem" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định liền kề</label>
+                        <input type="text" asp-for="Soqdlk" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày báo cáo liền kề</label>
+                        <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung</label>
+                        <textarea class="form-control" rows="2" asp-for="Cqbh"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaThueTaiNguyen" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValThueTn()"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValThueTn() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Soqdlk').val().trim() == '') {
+                toastr.error("Số quyết định liền kề không được để trống!", "Lỗi!!!")
+            } else {
+                if ($('#Thoidiemlk').val().trim() == '') {
+                    toastr.error("Ngày báo cáo liền kề không được để trống!", "Lỗi!!!")
+                } else {
+                    if ($('#Thoidiem').val().trim() == '') {
+                        toastr.error("Thời điểm không được để trống!", "Lỗi!!!")
+                    } else {
+                        document.getElementById("frm_giathuetainguyen_store").submit();
                     }
+
                 }
             }
         }
-    </script>
-    @section Scripts{
+    }
+</script>
+@section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

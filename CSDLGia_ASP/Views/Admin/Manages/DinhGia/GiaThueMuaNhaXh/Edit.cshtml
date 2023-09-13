@@ -1,0 +1,196 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh;
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+            $('.select2multi').select2();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;thuê mua nhà xã hội</small>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaThueMuaNhaXh" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_tmnxh_update">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <input hidden asp-for="Ipf1" />
+            <input hidden asp-for="Ipf2" />
+            <input hidden asp-for="Ipf3" />
+            <input hidden asp-for="Ipf4" />
+            <input hidden asp-for="Ipf5" />
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @(@Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" asp-for="Soqd" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung*</label>
+                        <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf1))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/GiaThueMuaNhaXh/@Model.Ipf1" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    @Model.Ipf1
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf2))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/GiaThueMuaNhaXh/@Model.Ipf2" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    @Model.Ipf2
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf3))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/GiaThueMuaNhaXh/@Model.Ipf3" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    @Model.Ipf3
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf4))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/GiaThueMuaNhaXh/@Model.Ipf4" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    @Model.Ipf4
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf5))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/GiaThueMuaNhaXh/@Model.Ipf5" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    @Model.Ipf5
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+
+                </div>
+
+            </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaThueMuaNhaXh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmnxh()"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValidateTmnxh() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                if ($('#Thoidiem').val().trim() == '') {
+                    toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+                } else {
+                    document.getElementById("frm_tmnxh_update").submit();
+                }
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

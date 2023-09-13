@@ -54,6 +54,11 @@
     <Folder Include="Views\Admin\Manages\DinhGia\GiaHhDvk\BaoCao\" />
     <Folder Include="wwwroot\data\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaRung\" />
+    <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueMuaNhaXh\" />
+    <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaNuocSh\" />
+    <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueTn\" />
+    <Folder Include="wwwroot\UpLoad\File\KeKhaiGia\" />
+    <Folder Include="wwwroot\UpLoad\File\KeKhaiDkg\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />
   </ItemGroup>
@@ -143,11 +148,10 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Create.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\DanhMuc\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\HoanThanh\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\HoanThanh\Modal.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\XetDuyet\Index.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\XetDuyet\Modal.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Modal.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Print.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Printf.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Show.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\TimKiem\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\TimKiem\Result.cshtml" />
@@ -245,11 +249,11 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Create.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\DanhMuc\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Detail.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\HoanThanh\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\HoanThanh\Modal.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\XetDuyet\Index.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\XetDuyet\Modal.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Modal.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Modify.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Edit.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Print.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\Show.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaThueMuaNhaXh\TimKiem\Index.cshtml" />

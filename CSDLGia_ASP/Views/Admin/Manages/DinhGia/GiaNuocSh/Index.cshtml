@@ -1,10 +1,7 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    //var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh>
 
@@ -13,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -25,7 +22,7 @@
 
         $(function () {
             $('#Donvi, #Nam').change(function () {
-                var current_path_url = '/DinhGiaNuocSh?';
+                var current_path_url = '/GiaNuocSh?';
                 var madv = '&Madv=' + $('#Donvi').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -36,26 +33,26 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;giá nước sạch sinh hoạt</small><br />
-                    <small style="color: blue;">Mã số thuế: @ViewData["Donvi"]</small>
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ<small>&nbsp;giá nước sạch sinh hoạt</small><br />
+                <small style="color: blue;">Mã số thuế: @ViewData["Donvi"]</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.nsh.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Create"
-               asp-route-Madv="@ViewData["Donvi"]">
+                   asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
-                <a class="btn btn-danger font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Printf"
-               asp-route-Nam="@ViewData["Nam"]" asp-route-Madv="@ViewData["Donvi"]">
-                    <i class="la la-print"></i>In trang
-                </a>
-            }
+            }&ensp;
+            <a class="btn btn-danger font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Printf"
+               asp-route-Nam="@ViewData["Nam"]" asp-route-Madv="@ViewData["Madv"]">
+                <i class="la la-print"></i>In trang
+            </a>
 
         </div>
     </div>
@@ -86,11 +83,11 @@
                         {
                             <optgroup label="@db.TenDiaBan">
                                 @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                 }
-                                @foreach (var item in company)
+                                @foreach (var item in dv)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                                 }
                             </optgroup>
                         }
@@ -119,28 +116,40 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td class="text-center active">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center">@item.Mota</td>
+                            <td>@item.Mota</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
-                                }
                                 @if (item.Trangthai == "CHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                                 }
-                                @if (item.Trangthai == "BTL")
+                                @if (item.Trangthai == "HHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
+                                }
+                                @if (item.Trangthai == "HCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
                             @if (item.Macqcq != null)
                             {
-                                @foreach (var ds in dscqcq)
+                                @foreach (var dv in dsdonvi)
                                 {
-                                    @if (item.Macqcq == ds.MaDv)
+                                    @if (item.Macqcq == dv.MaDv)
                                     {
-                                        <td style="text-align: center">@ds.TenDv</td>
+                                        <td style="text-align: center">@dv.TenDv</td>
                                     }
                                 }
                             }
@@ -150,11 +159,18 @@
                             }
 
                             <td>
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
+                                <a asp-controller="GiaNuocSh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
-                                    <a asp-controller="GiaNuocSh" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </a>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Edit"))
+                                    {
+                                        <a asp-controller="GiaNuocSh" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Delete"))
                                     {
 
@@ -166,20 +182,6 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                else
-                                {
-                                    <a asp-controller="GiaNuocSh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
-                                }
-                                @if (item.Trangthai == "HT")
-                                {
-                        
-                                }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
                             </td>
                         </tr>
                     }
@@ -213,11 +215,12 @@
         </div>
     </div>
 </div>
-<!--complete Modal-->
+
+<!--Complete Modal-->
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GiaNuocShHt" asp-action="Hoanthanh">
+            <form asp-controller="GiaNuocSh" asp-action="Complete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý hoàn thành hồ sơ?
@@ -229,19 +232,19 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Cơ quan tiếp nhận*</label>
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
                                     @foreach (var db in dsdiaban)
                                     {
                                         <optgroup label="@db.TenDiaBan">
                                             @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                             }
-                                            @foreach (var item in company)
+                                            @foreach (var item in donvi)
                                             {
-                                                <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                                <!option value="@item.MaDv">@item.TenDv</!option>
                                             }
                                         </optgroup>
                                     }

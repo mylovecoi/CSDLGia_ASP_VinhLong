@@ -42,7 +42,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
                         Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                     }
                     else
                     {
@@ -65,8 +64,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                     }).FirstOrDefault();
 
                     var model = _db.GiaThueTaiNguyen.ToList();
-
-                    
 
                     if (getdonvi.Level == "H")
                     {

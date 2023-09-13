@@ -178,42 +178,13 @@
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhatky", "Index"))
                                 {
-                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_nhatky">
-                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                    <li class="menu-item" aria-haspopup="true" id="menu_nhatky">
+                                        <a asp-controller="NhatKySuDung" asp-action="Index" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Nhật ký</span>
+                                            <span class="menu-text">Nhật ký sử dụng</span>
                                         </a>
-                                        <div class="menu-submenu">
-                                            <i class="menu-arrow"></i>
-                                            <ul class="menu-subnav">
-
-                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhatky.nguoidung", "Index"))
-                                                {
-                                                    <li class="menu-item" aria-haspopup="true" id="menu_nhatky_nguoidung">
-                                                        <a asp-controller="NhatKySuDung" asp-action="Index" class="menu-link">
-                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i>
-                                                            <span class="menu-text">Nhật ký sử dụng</span>
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhatky.timkiem", "Index"))
-                                                {
-                                                    <li class="menu-item" aria-haspopup="true" id="menu_nhatky_timkiem">
-                                                        <a asp-controller="NhatKySuDung" asp-action="Search" class="menu-link">
-                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i>
-                                                            <span class="menu-text">Tìm kiếm nhật ký</span>
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
                                     </li>
                                 }
 
