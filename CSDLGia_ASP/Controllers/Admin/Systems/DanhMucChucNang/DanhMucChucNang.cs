@@ -20,7 +20,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.DanhMucChucNang
             return View("Views/Admin/Systems/DanhMucChucNang/Index1.cshtml", chucnang);
         }
 
-
+        //CSDLGia_ASP.Models.Systems.DanhMucChucNang
         public IActionResult Store1(CSDLGia_ASP.Models.Systems.DanhMucChucNang request)
         {
             var model = new CSDLGia_ASP.Models.Systems.DanhMucChucNang

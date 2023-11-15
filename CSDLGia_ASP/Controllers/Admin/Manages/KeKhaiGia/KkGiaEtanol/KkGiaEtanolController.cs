@@ -53,11 +53,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                             }
                         }
 
+
+
+
                         if (string.IsNullOrEmpty(Nam))
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
                         var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
 
                         if (comct.Count > 0)
                         {

@@ -42,8 +42,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             model = model.ToList();
                         }
                     }
-
-                   
                     ViewData["Nam"] = Nam;
                     ViewData["Title"] = "Nhật ký sử dụng";
                     ViewData["MenuLv1"] = "menu_hethong";
@@ -75,6 +73,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.NhatKySuDung.FirstOrDefault(p => p.Id == id_delete);
                     _db.NhatKySuDung.Remove(model);
                     _db.SaveChanges();
+
+                    ViewData["Nam"] = model.Thoigian.Year;
                     return RedirectToAction("Index", "NhatKySuDung", new {model.Thoigian.Year});
                 }
                 else

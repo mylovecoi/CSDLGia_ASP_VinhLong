@@ -37,9 +37,9 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <marquee>
+        @*<marquee>
             <b style="color: #ff0000">Lưu ý:</b> Để thêm mới hồ sơ kê khai giá, các hồ sơ đã tạo từ trước cần được duyệt(trạng thái hồ sơ đã duyệt). Vui lòng kiểm tra lại trạng thái của hồ sơ đã tạo.
-        </marquee>
+        </marquee>*@
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin kê khai giá<small>&nbsp;Etanol</small><br />
@@ -47,7 +47,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create"))
+           @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Create"))
             {
                 if (check_tt == "0")
                 {
@@ -56,8 +56,11 @@
                         <i class="la la-plus"></i>Thêm mới
                     </a>
                 }
-            }
-
+            }*@
+            <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaEtanol" asp-action="Create"
+               asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
+                <i class="la la-plus"></i>Thêm mới
+            </a>
         </div>
     </div>
     <hr />
@@ -133,7 +136,20 @@
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
                             <td class="text-center active">@item.Socv</td>
                             <td style="text-align: center">@item.Socvlk</td>
-                            <td style="text-align: center">@item.Macqcq</td>
+                            @if (item.Macqcq != null)
+                            {
+                                @foreach (var ds in dscqcq)
+                                {
+                                    @if (item.Macqcq == ds.MaDv)
+                                    {
+                                        <td style="text-align: center">@ds.TenDv</td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td style="text-align: center"></td>
+                            }
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CC")
                                 {
@@ -142,14 +158,12 @@
                                 @if (item.Trangthai == "CD")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
-
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
                                 @if (item.Trangthai == "CN")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ nhận</span>
-
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
@@ -160,7 +174,6 @@
                                 @if (item.Trangthai == "DD")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
-
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }

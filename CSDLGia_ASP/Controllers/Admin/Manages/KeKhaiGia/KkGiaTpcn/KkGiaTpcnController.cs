@@ -53,6 +53,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaTpcn
                             }
                         }
 
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
+
                         if (string.IsNullOrEmpty(Nam))
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);

@@ -1,6 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTH"];
 }
 <!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <input id="id_nhanhs" name="id_nhanhs" />
+                    <input hidden id="id_nhanhs" name="id_nhanhs" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy</button>
@@ -99,7 +100,7 @@
                                     {
                                         <optgroup label="@db.TenDiaBan">
                                             @{
-                                                var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "TONGHOP");
+                                                var dv = dsdonvith.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "TONGHOP");
                                             }
                                             @foreach (var item in dv)
                                             {
@@ -111,8 +112,8 @@
                             </div>
                         </div>
                     </div>
-                    <input id="mahs" name="mahs" />
-                    <input id="madv" name="madv" />
+                    <input hidden id="mahs" name="mahs" />
+                    <input hidden id="madv" name="madv" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -163,8 +164,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input id="mahs_hcb" name="mahs_hcb" />
-                    <input id="trangthai_hcb" name="trangthai_hcb" />
+                    <input hidden id="mahs_hcb" name="mahs_hcb" />
+                    <input hidden id="trangthai_hcb" name="trangthai_hcb" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>

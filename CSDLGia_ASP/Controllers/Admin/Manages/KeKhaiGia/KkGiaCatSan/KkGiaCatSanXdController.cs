@@ -75,6 +75,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                                              Tendn = dn.Tendn,
                                              Macqcq = Madv,
                                              Madv = kk.Madv_h,
+                                             Lydo = kk.Lydo_h,
                                              Mahs = kk.Mahs,
                                              Ngaynhap = kk.Ngaynhap,
                                              Ngaychuyen = kk.Ngaychuyen_h,
@@ -96,6 +97,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá cat san";
@@ -118,6 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                                              Tendn = dn.Tendn,
                                              Macqcq = Madv,
                                              Madv = kk.Madv_t,
+                                             Lydo = kk.Lydo_t,
                                              Mahs = kk.Mahs,
                                              Ngaynhap = kk.Ngaynhap,
                                              Ngaychuyen = kk.Ngaychuyen_t,
@@ -139,6 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá cat san";
@@ -161,6 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                                              Tendn = dn.Tendn,
                                              Macqcq = Madv,
                                              Madv = kk.Madv_ad,
+                                             Lydo = kk.Lydo_ad,
                                              Mahs = kk.Mahs,
                                              Ngaynhap = kk.Ngaynhap,
                                              Ngaychuyen = kk.Ngaychuyen_ad,
@@ -183,6 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá catsan";
@@ -213,7 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                     var model = _db.KkGia.FirstOrDefault(t => t.Id == id_tralai);
 
                     //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
+                    if (madv_tralai == model.Macqcq )
                     {
                         model.Macqcq = null;
                         model.Trangthai = "BTL";
@@ -227,14 +233,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Lydo_h = Lydo;
                     }
 
-                    if (madv_tralai == model.Macqcq_t)
+                    if (madv_tralai == model.Macqcq_t )
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "BTL";
                         model.Lydo_t = Lydo;
                     }
 
-                    if (madv_tralai == model.Macqcq_ad)
+                    if (madv_tralai == model.Macqcq_ad )
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "BTL";
@@ -251,9 +257,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Madv_h = null;
                         model.Ngaychuyen_h = DateTime.MinValue;
                         model.Ngaynhan_h = DateTime.MinValue;
-                        model.Lydo_h = null;
+                        model.Lydo_h = Lydo;
                         model.Trangthai_h = null;
                     }
+                    
 
                     if (madv_tralai == model.Madv_t)
                     {
@@ -261,7 +268,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Madv_t = null;
                         model.Ngaychuyen_t = DateTime.MinValue;
                         model.Ngaynhan_t = DateTime.MinValue;
-                        model.Lydo_t = null;
+                        model.Lydo_t = Lydo;
                         model.Trangthai_t = null;
                     }
 
@@ -271,7 +278,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Madv_ad = null;
                         model.Ngaychuyen_ad = DateTime.MinValue;
                         model.Ngaynhan_ad = DateTime.MinValue;
-                        model.Lydo_ad = null;
+                        model.Lydo_ad = Lydo;
                         model.Trangthai_ad = null;
                     }
 

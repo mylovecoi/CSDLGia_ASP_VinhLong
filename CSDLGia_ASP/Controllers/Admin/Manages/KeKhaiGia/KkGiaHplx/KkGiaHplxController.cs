@@ -52,6 +52,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaHplx
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.Madv).First();
                             }
                         }
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
 
                         if (string.IsNullOrEmpty(Nam))
                         {

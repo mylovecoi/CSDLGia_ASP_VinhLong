@@ -318,6 +318,42 @@
                                         </a>
                                     </li>
                                 }
+                                
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                        <a asp-controller="DmChiTieuKinhTeViMo" asp-action="Index" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Danh mục Chỉ tiêu kinh tế vĩ mô</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                        <a asp-controller="DmSieuThi" asp-action="Index" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Danh mục Siêu thị</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                        <a asp-controller="DmTaiLieuHuongDanSuDung" asp-action="Index" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Danh mục Tài liệu hướng dẫn sử dụng</span>
+                                        </a>
+                                    </li>
+                                }
 
                             </ul>
                         </div>
@@ -354,6 +390,38 @@
                         </div>
                     </li>
                 }*@
+
+
+                  
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc", "Index"))
+                {
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qtdanhmuc">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Thiết lập cấu hình công khai dữ liệu</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                        <a asp-controller="ThietLapTrangCongBo" asp-action="Index" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Thiết lập trang công bố</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </li>
+                }
 
             </ul>
         </div>

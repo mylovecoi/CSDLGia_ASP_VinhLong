@@ -10,11 +10,14 @@ using CSDLGia_ASP.Models.Systems.API;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.Models.Temp.TempSystems;
 using CSDLGia_ASP.Models.Temp.TempManages.TempKeKhaiGia;
+using System.Collections.Generic;
 
 namespace CSDLGia_ASP.Database
 {
     public class CSDLGiaDBContext : DbContext
     {
+       
+
         public CSDLGiaDBContext(DbContextOptions<CSDLGiaDBContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -177,10 +180,26 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhHaiQuanXnkCt> GiaHhHaiQuanXnkCt { get; set; }
         public DbSet<GiaHhHaiQuanXnkDm> GiaHhHaiQuanXnkDm { get; set; }
         public DbSet<GiaHhHaiQuanXnkThue> GiaHhHaiQuanXnkThue { get; set; }
-        
-        
-        
-        
+
+        // Định giá cây Trồng Vật Nuôi
+        public DbSet<GiaCayTrongVatNuoi> GiaCayTrongVatNuoi { get; set; }
+        public DbSet<GiaCayTrongVatNuoiCt> GiaCayTrongVatNuoiCt { get; set; }
+        public DbSet<GiaCayTrongVatNuoiDm> GiaCayTrongVatNuoiDm { get; set; }
+        public DbSet<GiaCayTrongVatNuoiNhom> GiaCayTrongVatNuoiNhom { get; set; }
+
+        // Định giá xây dựng mới
+        public DbSet<GiaXayDungMoi> GiaXayDungMoi { get; set; }
+        public DbSet<GiaXayDungMoiCt> GiaXayDungMoiCt { get; set; }
+        public DbSet<GiaXayDungMoiDm> GiaXayDungMoiDm { get; set; }
+        public DbSet<GiaXayDungMoiNhom> GiaXayDungMoiNhom { get; set; }
+
+        // Định giá thuê nhà ở sinh viên
+        public DbSet<GiaThueNhaSV> GiaThueNhaSV { get; set; }
+        public DbSet<GiaThueNhaSVCt> GiaThueNhaSVCt { get; set; }
+        public DbSet<GiaThueNhaSVDm> GiaThueNhaSVDm { get; set; }
+        public DbSet<GiaThueNhaSVNhom> GiaThueNhaSVNhom { get; set; }
+
+
 
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }
@@ -237,9 +256,15 @@ namespace CSDLGia_ASP.Database
         public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
         public DbSet<DmChucnang> DmChucnang { get; set; }
 
+        //Danh mục
+        public DbSet<DmChiTieuKinhTeViMo> DmChiTieuKinhTeViMo { get; set; }
+        public DbSet<DmSieuThi> DmSieuThi { get; set; }
+        public DbSet<DmTaiLieuHuongDanSuDung> DmTaiLieuHuongDanSuDung { get; set; }
+
         // Danh sách chức năng
 
         public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
+        
 
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
