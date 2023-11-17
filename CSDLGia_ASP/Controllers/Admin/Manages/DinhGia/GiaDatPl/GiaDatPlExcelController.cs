@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaDatPhanLoaiExcel request)
+        public async Task<IActionResult> Import(GiaDatPhanLoaiExcel request )
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
