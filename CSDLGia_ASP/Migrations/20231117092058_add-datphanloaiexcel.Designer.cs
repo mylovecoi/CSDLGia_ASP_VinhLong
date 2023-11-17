@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231117092058_add-datphanloaiexcel")]
+    partial class adddatphanloaiexcel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1661,19 +1663,43 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Lichsu")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LineStart")
-                        .HasColumnType("int");
-
                     b.Property<string>("Lydo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Lydo_ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lydo_h")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lydo_t")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Macqcq")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macqcq_ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macqcq_h")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Macqcq_t")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Madiaban")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madv_ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madv_h")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madv_t")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
@@ -1697,10 +1723,37 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Thoidiem")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Thoidiem_ad")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Thoidiem_h")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Thoidiem_t")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Thongtin")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Thongtin_ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thongtin_h")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thongtin_t")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trangthai_ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trangthai_h")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trangthai_t")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")

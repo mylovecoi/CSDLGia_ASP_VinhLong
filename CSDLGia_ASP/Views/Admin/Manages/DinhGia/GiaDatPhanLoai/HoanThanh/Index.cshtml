@@ -168,6 +168,15 @@
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Nhận hồ sơ" data-toggle="modal" data-target="#HuyCongBo_Modal"
+                                                onclick="HuyCongBo('@item.Mahs')">
+                                            <i class="icon-lg la la-arrow-circle-o-down "></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
+                                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                            <i class="icon-lg la la-check text-primary "></i>
+                                        </button>
                                     }
                                     else
                                     {
@@ -183,6 +192,8 @@
                                 onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
                                                 <i class="icon-lg la la-check text-primary "></i>
                                             </button>
+
+
 
                                         }
                                     }

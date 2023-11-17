@@ -85,9 +85,12 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDatDiaBanTt> GiaDatDiaBanTt { get; set; }
         public DbSet<GiaDatDuAn> GiaDatDuAn { get; set; }
         public DbSet<GiaDatDuAnDm> GiaDatDuAnDm { get; set; }
+
         public DbSet<GiaDatPhanLoai> GiaDatPhanLoai { get; set; }
         public DbSet<GiaDatPhanLoaiCt> GiaDatPhanLoaiCt { get; set; }
         public DbSet<GiaDatPhanLoaiDm> GiaDatPhanLoaiDm { get; set; }
+        public DbSet<GiaDatPhanLoaiExcel> GiaDatPhanLoaiExcel { get; set; }
+
         public DbSet<GiaDatThiTruong> GiaDatThiTruong { get; set; }
         public DbSet<GiaDatThiTruongCt> GiaDatThiTruongCt { get; set; }
         public DbSet<GiaDauGiaDat> GiaDauGiaDat { get; set; }

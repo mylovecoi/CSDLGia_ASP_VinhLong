@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
                     ViewData["Title"] = "Thông tin đơn vị thẩm định giá";
                     ViewData["MenuLv1"] = "menu_tdg";
-                    ViewData["MenuLv2"] = "menu_tdg_dv";
+                    ViewData["MenuLv2"] = "menu_dm_dv";
                     return View("Views/Admin/Manages/ThamDinhGia/DonVi/Index.cshtml", model);
                 }
                 else

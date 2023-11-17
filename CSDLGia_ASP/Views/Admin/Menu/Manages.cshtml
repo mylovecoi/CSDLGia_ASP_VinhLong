@@ -34,7 +34,7 @@
                     @* 1.1 Quản lý giá các loại đất *@
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung", "Index"))
                     {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dgr">
+                        <li class="menu-item" aria-haspopup="true" id="menu_dg_giadatpl">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
@@ -47,8 +47,8 @@
                                 <ul class="menu-subnav">
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.danhmuc", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_dm">
-                                            <a asp-controller="DmLoaiDat" asp-action="Excel" class="menu-link">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dg_giadatpl_dm">
+                                            <a asp-controller="DmLoaiDat" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -58,7 +58,7 @@
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_tt">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dg_giadatpl_tt">
                                             <a asp-controller="GiaDatPl" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -70,7 +70,7 @@
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_ht">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_giadatpl_xd">
                                             <a asp-controller="GiaDatPlHt" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -82,7 +82,7 @@
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.timkiem", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_tk">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_giadatpl_tk">
                                             <a asp-controller="GiaDatPl" asp-action="Search" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -94,7 +94,7 @@
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.baocao", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_bc">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_giadatpl_bc">
                                             <a asp-controller="GiaDatPlBc" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -1596,6 +1596,19 @@
                                         </li>
                                     }
 
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd_tk">
+                                            <a asp-controller="GiaDatDiaBan" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+
                                 </ul>
                             </div>
                         </li>
@@ -2025,7 +2038,7 @@
 
                         @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Index"))
                         {
-                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_dv">
+                            <li class="menu-item" aria-haspopup="true" id="menu_dm_dv">
                                 <a asp-controller="ThamDinhGiaDv" asp-action="Index" class="menu-link">
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>

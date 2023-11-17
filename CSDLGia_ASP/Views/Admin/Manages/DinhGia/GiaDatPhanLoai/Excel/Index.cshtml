@@ -1,0 +1,61 @@
+﻿@model CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaXmTxdCt
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+    var i = 0;
+}
+@section custom_script{
+    @*<script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>*@
+}
+<div class="card card-custom">
+    <a asp-controller="GiaDatPlExcel" asp-action="Index1"> <p>1.Excel Quản lý Giá các loại đất</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index2"> <p>2.Excel Giá cho thuê đất, mặt nước (đơn giá thuê đất, thuê mặt nước)</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index3"> <p>3.Excel Giá rừng </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index4"> <p>4.Excel thuê nước sạch sinh hoạt</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index5"> <p>5.Excel nước sinh hoạt</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index6"> <p>6.Excel cho thuê tài sản Nhà nước </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index7"> <p>7.Excel sản phẩm, dịch vụ công ích, </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index8"> <p>8.Excel dịch vụ giáo dục </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index9"> <p>9.Excel dịch vụ khám bệnh</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index10"> <p>10.Excel Quản lý mức trợ giá, trợ cước  </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index11"> <p>11. Quản lý gía hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index12"> <p>12. Danh mục bình ổn giá</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index13"> <p>13. Quản lý giá đăng ký của hàng hóa, dịch vụ thuộc danh mục bình ổn giá  </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index14"> <p>14. Giá kê khai của hàng hóa, dịch vụ thuộc danh mục kê phải khai giá</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index15"> <p>15. Quản lý giá thị trường hàng hóa, dịch vụ khác </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index6"> <p>16. Giá tài sản công  </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index17"> <p>17. Giá tính lệ phí trước bạ</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index18"> <p>18. Khung giá đất </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index19"> <p>19. Bảng giá đất cho UBND tỉnh, thành phố trực thuộc trung ương ban hành </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index20"> <p>20. Giá trúng đấu giá quyền sử dụng đất tại địa phương</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index21"> <p>21. Giá đất giao dịch thực tế trên thị trường</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index22"> <p>22. Giá giao dịch bất động sản </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index23"> <p>23. Giá trúng thầu của hàng hóa, dịch vụ được mua sắm theo quy định của pháp luật về đấu thầu</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index24"> <p>24. Quản lý Giá hàng hóa thị trường theo thông tư 116/2018/TT-BTC của Bộ Tài chính</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index25"> <p>25. Quản lý Giá hàng hóa thị trường khác ( giá hàng hoá tại các siêu thị) </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index26"> <p>26. Quản lý CSDL về thẩm định giá tại địa phương</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index27"> <p>27.Giá vật liệu xây dựng</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index28"> <p>28. Giá cụ thể đối với: sản phẩm, dịch vụ công ích thủy lợi  </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index29"> <p>29. Giá tối đa đối</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index30"> <p>30. Khung giá đối với: dịch vụ sử dụng đò, phà</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index31"> <p>31. Tổng hợp báo cáo </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index32"> <p>32. Các quyết định, văn bản quản lý, điều hành về giá</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index33"> <p>33. Các văn bản hướng dẫn, tham gia, góp ý với các đơn vị khác có liên quan đến cơ chế chính sách về giá</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index34"> <p>34. Báo cáo tình hình giá cả thị trương </p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index35"> <p>35. Các báo cáo, tài liệu học tập kinh nghiệm</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index36"> <p>36. Kết quả, đề tài nghiên cứu khoa học</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index37"> <p>37. Các báo cáo, văn bản có liên quan khác</p></a>
+    <a asp-controller="GiaDatPlExcel" asp-action="Index38"> <p>38. Tình hình thanh tra, kiểm tra, giải quyết khiếu nại, tố cáo và xử lý vi phạm pháp luật về giá và thẩm định giá</p></a>
+   
+
+</div>

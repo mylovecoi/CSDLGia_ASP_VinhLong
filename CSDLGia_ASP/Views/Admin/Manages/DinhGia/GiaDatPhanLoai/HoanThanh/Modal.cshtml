@@ -9,20 +9,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý trả lại hồ sơ?
+                        Chọn hồ sơ tổng hợp
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Lý do trả lại hồ sơ*</label>
+                                <textarea class="form-control" id="Lydo" name="Lydo" cols="12" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
                 <div class="modal-body">
                     <p style="color: blue">Hồ sơ Bị hủy sẽ chuyển lại cho cơ quan nhập chủ quản có thể chỉnh sửa hồ sơ!</p>
                     <input hidden id="id_tralai" name="id_tralai" />
                     <input hidden id="madv_tralai" name="madv_tralai" />
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
                 </div>
             </div>
         </form>
@@ -109,7 +123,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hủy công bố?
+                        Đồng ý hủy công bố
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>

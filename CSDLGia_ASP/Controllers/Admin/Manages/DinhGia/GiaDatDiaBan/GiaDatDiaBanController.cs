@@ -427,6 +427,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+        public IActionResult Search()
+        {
+            return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/TimKiem/Index.cshtml");
+        }
 
 
     }
