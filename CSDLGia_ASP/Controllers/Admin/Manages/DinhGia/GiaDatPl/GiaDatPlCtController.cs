@@ -44,7 +44,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();
-
+            ViewData["MenuLv1"] = "menu_dg";
+            ViewData["MenuLv2"] = "menu_dg_giadatpl";
+            ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -192,10 +194,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             result += "<tbody>";
             foreach (var item in model)
             {
-                result += "<tr>";
+                result += "<tr tyle='text-align:center'> >";
                 result += "<td style='text-align:center'>" + record_id++ + "</td>";
-                result += "<td class='active'>" + item.Khuvuc + "</td>";
-                result += "<td>";
+                result += "<td style='text-align:center'>" + item.Khuvuc + "</td>";
+                result += "<td style='text-align:center'>";
                 foreach (var ten in dmloaidat)
                 {
                     if (ten.Maloaidat == item.Maloaidat)
@@ -204,10 +206,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     }
                 }
                 result += "</td>";
-                result += "<td>" + item.Vitri + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
+                result += "<td style='text-align:center' >" + item.Vitri + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

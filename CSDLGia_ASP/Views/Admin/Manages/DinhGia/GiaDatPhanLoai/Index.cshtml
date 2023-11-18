@@ -46,14 +46,14 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
+                   asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
 
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-               
+
                 <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-text-o"></i>Tổng hợp
@@ -132,7 +132,7 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã hoàn thành và gửi đi</span>
                                 }
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -140,7 +140,8 @@
                                 }
                                 @if (item.Trangthai == "HHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                    <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
                             @if (item.Macqcq != null)
@@ -157,34 +158,28 @@
                             {
                                 <td style="text-align: center"></td>
                             }
-                            <td>
-                                <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                            <td style="text-align: center">
+
+                                <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Edit"))
-                                    {
-                                        <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                            <i class="icon-lg la la-edit text-primary"></i>
-                                        </a>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Delete"))
-                                    {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                            <i class="icon-lg la la-trash text-danger"></i>
-                                        </button>
-                                    }
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                    <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </a>
+
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xác nhận hoàn thành hồ sơ và chuyển lên cấp trên" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển hồ sơ" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
 
-                                    <i class="icon-lg la la-send primary"></i>
-                                </button>
-                             
                             </td>
                         </tr>
                     }

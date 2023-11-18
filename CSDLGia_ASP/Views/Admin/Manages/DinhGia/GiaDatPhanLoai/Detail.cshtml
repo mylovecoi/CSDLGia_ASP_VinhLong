@@ -42,9 +42,9 @@
                     {
                         @foreach (var item in Model.GiaDatPhanLoaiCt)
                         {
-                            <tr>
+                            <tr style="text-align:center">
                                 <td style="text-align:center">@(record_id++)</td>
-                                <td class="active">@item.Khuvuc</td>
+                                <td >@item.Khuvuc</td>
                                 <td>
                                     @foreach (var ten in dmloaidat)
                                     {
@@ -55,9 +55,9 @@
                                     }
                                 </td>
                                 <td>@item.Vitri</td>
-                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
-                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
-                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Hesodc)</td>
+                                <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
+                                <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                                <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Hesodc)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                             onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
