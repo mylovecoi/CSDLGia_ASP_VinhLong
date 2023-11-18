@@ -33,14 +33,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.baocao", "Index"))
                 {
 
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá thuế mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/Index.cshtml");
                 }
                 else
@@ -78,8 +78,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá thuế mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -108,8 +108,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["ct"] = _db.GiaThueMatDatMatNuocCt;
                     ViewData["Title"] = "Báo cáo chi tiết giá thuế mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/BcCT.cshtml", model);
                 }
                 else

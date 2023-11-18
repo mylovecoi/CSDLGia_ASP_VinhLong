@@ -75,8 +75,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ViewData["Donvi"] = Madv;
                         ViewData["Title"] = " Thông tin hồ sơ giá thuê mặt dất mặt nước";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                        ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Index.cshtml", model);
                     }
                     else
@@ -121,8 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Create.cshtml", model);
                 }
                 else
@@ -165,7 +165,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == request.Mahs);
                     _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return RedirectToAction("Index", "GiaThueDN", new { request.Madv });
                 }
                 else
@@ -191,11 +193,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaThueMatDatMatNuoc.Remove(model);
                     _db.SaveChanges();
-
                     var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaThueMatDatMatNuocCt.RemoveRange(model_ct);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return RedirectToAction("Index", "GiaThueDN", new { model.Madv });
                 }
                 else
@@ -203,6 +206,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
                     return View("Views/Admin/Error/Page.cshtml");
                 }
+               
             }
             else
             {
@@ -239,8 +243,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modify.cshtml", model_new);
                 }
                 else
@@ -283,7 +287,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     }
                     _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return RedirectToAction("Index", "GiaThueDN", new { request.Mahs });
                 }
                 else
@@ -329,8 +335,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model_new);
                 }
                 else
@@ -351,7 +357,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.timkiem", "Index"))
                 {
 
                     var model_join = from dgct in _db.GiaThueMatDatMatNuocCt
@@ -374,8 +380,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin định giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/TimKiem/Index.cshtml", model_join);
 
                 }
@@ -397,7 +403,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.timkiem", "Edit"))
                 {
                     var model = from dgct in _db.GiaThueMatDatMatNuocCt
                                 join dg in _db.GiaThueMatDatMatNuoc on dgct.Mahs equals dg.Mahs
@@ -436,7 +442,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     {
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/TimKiem/Result.cshtml", model);
                 }
                 else
