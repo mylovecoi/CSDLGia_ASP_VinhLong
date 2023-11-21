@@ -84,8 +84,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
                         ViewData["Messages"] = "Thông tin hồ sơ giá thuê mặt dất mặt nước.";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
+                        ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 

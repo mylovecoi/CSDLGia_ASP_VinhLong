@@ -94,8 +94,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                        ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhSach/Index.cshtml", model);
                     }
                     else
@@ -183,8 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhSach/Create.cshtml", model);
 
                 }
@@ -285,8 +285,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     ViewData["Ipf1"] = model.Ipf1;*/
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhSach/Edit.cshtml", model);
 
                 }
@@ -394,8 +394,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
 
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhSach/Show.cshtml", model);
 
                 }
@@ -492,8 +492,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     ViewData["NhomTn"] = _db.GiaCayTrongVatNuoiNhom.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/TimKiem/Index.cshtml");
 
                 }
@@ -562,8 +562,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/TimKiem/Result.cshtml", model);
 
                 }
@@ -635,11 +635,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 1</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 2</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 3</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 4</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 5</th>";
             result += "<th width='25%'>Tên nhóm, loại cây trồng vật nuôi</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Giá cây trồng vật nuôi (đồng)</th>";
@@ -652,11 +647,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
             {
                 result += "<tr>";
                 result += "<td class='text-center'>" + record++ + "</td>";
-                //result += "<td class='text-center'>" + item.Cap1 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap2 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap3 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap4 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap5 + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                 result += "<td class='text-center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";

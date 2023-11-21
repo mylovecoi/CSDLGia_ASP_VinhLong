@@ -175,8 +175,11 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaVangNgoaiTe> GiaVangNgoaiTe { get; set; }
         public DbSet<GiaVangNgoaiTeCt> GiaVangNgoaiTeCt { get; set; }
         public DbSet<GiaVangNgoaiTeDm> GiaVangNgoaiTeDm { get; set; }
+
         public DbSet<GiaThueMatDatMatNuoc> GiaThueMatDatMatNuoc { get; set; }
         public DbSet<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
+        public DbSet<GiaThueMatDatMatNuocDm> GiaThueMatDatMatNuocDm { get; set; }
+
         public DbSet<GiaTaiSanTths> GiaTaiSanTths { get; set; }
         public DbSet<GiaTaiSanTthsCt> GiaTaiSanTthsCt { get; set; }
         public DbSet<GiaHhHaiQuanXnk> GiaHhHaiQuanXnk { get; set; }

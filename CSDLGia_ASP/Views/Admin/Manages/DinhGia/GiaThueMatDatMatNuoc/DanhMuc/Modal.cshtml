@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                   Danh mục loại đất
+                    Danh mục mặt đất, mặt nước
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -16,13 +16,13 @@
                 <div class="row" id="data_create">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Mã loại đất<span class="require">*</span></label>
+                            <label>Mã mặt đất mặt nước<span class="require">*</span></label>
                             <input type="text" name="maloaidat_create" id="maloaidat_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Loại đất<span class="require">*</span></label>
+                            <label>Loại mặt đất mặt nước<span class="require">*</span></label>
                             <input type="text" name="loaidat_create" id="loaidat_create" class="form-control" />
                         </div>
                     </div>
@@ -44,7 +44,7 @@
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="DmLoaiDat" asp-action="Delete">
+            <form asp-controller="GiaThueDNDm" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý xóa thông tin???
@@ -96,7 +96,7 @@
         if ($('#maloaidat_create').val() != '') {
             if ($('#loaidat_create').val() != '') {
                 $.ajax({
-                    url: '/DmLoaiDat/Store',
+                    url: '/GiaThueDNDm/Store',
                     type: 'POST',
                     data: {
                         Maloaidat: $('#maloaidat_create').val(),
@@ -127,7 +127,7 @@
     function SetEdit(id) {
 
         $.ajax({
-            url: '/DmLoaiDat/Edit',
+            url: '/GiaThueDNDm/Edit',
             type: 'POST',
             data: {
                 Id: id,
@@ -147,7 +147,7 @@
     function SetUpdate() {
 
         $.ajax({
-            url: '/DmLoaiDat/Update',
+            url: '/GiaThueDNDm/Update',
             type: 'POST',
             data: {
 

@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Systems.DmLoaiDat>
+@model IEnumerable<CSDLGia_ASP.Models.Systems.GiaThueMatDatMatNuocDm>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -27,13 +27,13 @@
                 </h3>
             </div>
             <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmloaidat", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.GiaThueMatDatMatNuocDm", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }
-
+       
         </div>
     </div>
     <hr />
@@ -43,7 +43,7 @@
                 <tr style="text-align:center">
                     <th width="3%">#</th>
                     <th width="15%">Mã số</th>
-                    <th>Loại đất</th>
+                    <th>Loại mặt đất, mặt nước</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -55,7 +55,7 @@
                         <td>@item.Maloaidat</td>
                         <td style="text-align:left">@item.Loaidat</td>
                         <td>
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.GiaThueMatDatMatNuocDm", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
                                 data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
@@ -73,4 +73,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Systems/DmLoaiDat/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/Modal.cshtml")

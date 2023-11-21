@@ -244,6 +244,12 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.trungthaudat.timkiem", Name = "ĐG - Giá trúng thầu đất - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.trungthaudat.baocao", Name = "ĐG - Giá trúng thầu đất - Báo cáo" });
 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi", Name = "ĐG - Giá cây trồng vật nuôi" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.thongtin", Name = "ĐG - Giá cây trồng vật nuôi - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", Name = "ĐG - Giá cây trồng vật nuôi - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.xetduyet", Name = "ĐG - Giá cây trồng vật nuôi - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.timkiem", Name = "ĐG - Giá cây trồng vật nuôi - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.baocao", Name = "ĐG - Giá cây trồng vật nuôi- Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
             //chức năng bình ổn giá

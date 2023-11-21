@@ -133,8 +133,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                        ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -202,8 +202,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                        ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -270,13 +270,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
-                        /*ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";*/
-                        ViewData["MenuLv1"] = "menu_hethong";
-                        ViewData["MenuLv2"] = "menu_qthethong";
-                        ViewData["MenuLv3"] = "menu_tichhop";
-                        ViewData["MenuLv4"] = "menu_tichhop_giatn";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                        ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/XetDuyet/Index.cshtml", model_join);
                     }
                 }

@@ -33,8 +33,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     var model = _db.GiaCayTrongVatNuoiNhom.ToList();
                     ViewData["Title"] = "Nhóm cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_dm";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhMuc/Nhom/Index.cshtml",model);
                 }
                 else
@@ -150,7 +150,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     model.Updated_at = DateTime.Now;
                     _db.GiaCayTrongVatNuoiNhom.Update(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);
                 }
@@ -182,7 +184,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     var model_ct = _db.GiaCayTrongVatNuoiDm.Where(p => p.Manhom == model.Manhom).ToList();
                     _db.GiaCayTrongVatNuoiDm.RemoveRange(model_ct);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
                     return RedirectToAction("Index", "GiaCayTrongVatNuoiNhom");
                 }
                 else
