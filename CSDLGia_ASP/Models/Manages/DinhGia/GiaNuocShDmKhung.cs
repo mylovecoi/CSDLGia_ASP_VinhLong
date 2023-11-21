@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
-    public class GiaNuocShDm
+    public class GiaNuocShDmKhung
     {
         [Key]
         public int Id { get; set; }

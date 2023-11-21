@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDm>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDmKhung>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -24,7 +24,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;giá nước sạch sinh hoạt</small><br />
+                Danh mục<small>&nbsp;khung giá nước sạch sinh hoạt</small><br />
             </h3>
         </div>
         <div class="card-toolbar">
@@ -44,7 +44,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="3%">STT</th>
-                    <th>Đối tượng sử dụng</th>
+                    <th>Khung sử dụng nước sạch sinh hoạt</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -76,10 +76,10 @@
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GianuocshDm" asp-action="Store">
+            <form asp-controller="GianuocshDmKhung" asp-action="Store">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Danh mục phân loại vùng
+                        Danh mục khung giá sử dụng nước sinh hoạt
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -89,7 +89,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label><b>Đối tượng sử dụng</b></label>
+                                <label><b>Khung</b></label>
                                 <input type="text" id="doituongsd_create" name="doituongsd_create" class="form-control" />
                             </div>
                         </div>
@@ -109,7 +109,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa manh mục phân loại vùng
+                    Đồng ý xóa manh mục
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -133,7 +133,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục phân loại vùng
+                    Chỉnh sửa danh mục
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -155,7 +155,7 @@
 <script>
     function GetCreate() {
         $.ajax({
-            url: '/DanhMucGiaNuocSh/Store',
+            url: '/DanhMucGiaNuocShKhung/Store',
             type: 'POST',
             data: {
                 Doituongsd: $('#doituongsd_create').val(),
@@ -181,7 +181,7 @@
     }
     function GetDelete() {
         $.ajax({
-            url: '/DanhMucGiaNuocSh/Delete',
+            url: '/DanhMucGiaNuocShKhung/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
@@ -205,7 +205,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DanhMucGiaNuocSh/Edit',
+            url: '/DanhMucGiaNuocShKhung/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -223,7 +223,7 @@
     }
     function GetEdit() {
         $.ajax({
-            url: '/DanhMucGiaNuocSh/Update',
+            url: '/DanhMucGiaNuocShKhung/Update',
             type: 'POST',
             data: {
                 Doituongsd: $('#doituongsd_edit').val(),

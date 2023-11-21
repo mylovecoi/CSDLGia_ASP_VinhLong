@@ -513,12 +513,23 @@
                                 <ul class="menu-subnav">
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dm">
-                                            <a asp-controller="GianuocshDm" asp-action="Index" class="menu-link">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dmvung">
+                                            <a asp-controller="GianuocshDmVung" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Danh mục</span>
+                                                <span class="menu-text">Danh mục phân loại vùng</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dm">
+                                            <a asp-controller="GianuocshDmKhung" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục khung tiêu thụ nước</span>
                                             </a>
                                         </li>
                                     }

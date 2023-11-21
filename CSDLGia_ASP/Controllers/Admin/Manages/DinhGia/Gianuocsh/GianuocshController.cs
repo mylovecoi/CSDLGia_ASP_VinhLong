@@ -50,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
                                        TenDv = dv.TenDv,
-                                        MaDv = dv.MaDv,
+                                       MaDv = dv.MaDv,
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
@@ -121,26 +121,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                   
+
                     };
-                    var dm = _db.GiaNuocShDm.ToList();
+                    var dm = _db.GiaNuocShDmVung.ToList();
                     foreach (var item in dm)
                     {
                         var ct = new GiaNuocShCt
                         {
                             Madoituong = item.Madoituong,
                             Doituongsd = item.Doituongsd,
-                            Mahs= model.Mahs,
+                            Mahs = model.Mahs,
                         };
-                     
+
 
                         _db.GiaNuocShCt.Add(ct);
                         _db.SaveChanges();
                     }
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();           
-                    ViewData["Danhmuc"]=_db.GiaNuocShDm.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["Danhmuc"] = _db.GiaNuocShDmVung.ToList();
                     ViewData["Chitiet"] = _db.GiaNuocShCt.Where(t => t.Mahs == model.Mahs);
                     ViewData["Title"] = "Thêm mới giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -159,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaNuocSh/Store")]
         [HttpPost]
         public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
@@ -239,15 +239,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     }
                     var model = new GiaNuocSh
                     {
-                        Mahs=request.Mahs,
+                        Mahs = request.Mahs,
                         Madv = request.Madv,
-                        Madiaban=request.Madiaban,
+                        Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
                         Mota = request.Mota,
-                        Ghichu=request.Ghichu,
-                        Tunam=request.Tunam,
-                        Dennam=request.Dennam,
+                        Ghichu = request.Ghichu,
+                        Tunam = request.Tunam,
+                        Dennam = request.Dennam,
                         Ipf1 = request.Ipf1,
                         Ipf2 = request.Ipf2,
                         Ipf3 = request.Ipf3,
@@ -262,8 +262,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     _db.SaveChanges();
 
                     //var modelct = _db.GiaNuocShCt.Where(t => t.Mahs == request.Mahs);
-                    
-                    
+
+
                     return RedirectToAction("Index", "Gianuocsh", new { request.Mahs });
                 }
                 else
@@ -277,7 +277,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaNuocSh/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -307,7 +307,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaNuocSh/Modify")]
         [HttpGet]
         public IActionResult Modify(string Mahs)
@@ -333,7 +333,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         Ipf5 = model.Ipf5,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
-                        Ghichu=model.Ghichu,
+                        Ghichu = model.Ghichu,
                     };
 
                     var model_ct = _db.GiaNuocShCt.Where(t => t.Mahs == model_new.Mahs);
@@ -364,7 +364,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaNuocSh/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
@@ -531,21 +531,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 {
 
                     var model_join = from dgct in _db.GiaNuocShCt
-                                     join dg in _db.GiaNuocSh.Where(t =>  t.Trangthai == "HT") on dgct.Mahs equals dg.Mahs
+                                     join dg in _db.GiaNuocSh.Where(t => t.Trangthai == "HT") on dgct.Mahs equals dg.Mahs
                                      select new VMDinhGiaNuocShSearch
                                      {
                                          Id = dg.Id,
                                          Mahs = dg.Mahs,
                                          Madv = dg.Macqcq,
                                          Thanhtien = dgct.Thanhtien,
-                                         Macqcq=dg.Macqcq,
-                                         Thoidiem=dg.Thoidiem,
+                                         Macqcq = dg.Macqcq,
+                                         Thoidiem = dg.Thoidiem,
                                      };
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin định giá nước sạch sinh hoạt";
-                    ViewData["Doituong"]=_db.GiaNuocShDm;
+                    ViewData["Doituong"] = _db.GiaNuocShDmVung;
                     ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
@@ -567,33 +567,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
 
         [Route("DinhGiaNuocSh/Result")]
         [HttpPost]
-        public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string dt,string madv)
+        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string dt, string madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Edit"))
                 {
                     var model = from dgct in _db.GiaNuocShCt
-                                     join dg in _db.GiaNuocSh on dgct.Mahs equals dg.Mahs
-                                     select new VMDinhGiaNuocShSearch
-                                     {
-                                         Id = dg.Id,
-                                         Mahs = dg.Mahs,
-                                         Madv = dg.Madv,
-                                         Thanhtien = dgct.Thanhtien,
-                                         Macqcq = dg.Macqcq,
-                                         Thoidiem = dg.Thoidiem,
-                                         Namchuathue=dgct.Namchuathue,
-                                         Namchuathue1=dgct.Namchuathue1,
-                                         Namchuathue2=dgct.Namchuathue2,
-                                         Namchuathue3=dgct.Namchuathue3,
-                                         Namchuathue4=dgct.Namchuathue4,
-                                         Giachuathue=dgct.Giachuathue,
-                                         Giachuathue1=dgct.Giachuathue1,
-                                         Giachuathue2=dgct.Giachuathue2,
-                                         Giachuathue3=dgct.Giachuathue3,
-                                         Giachuathue4=dgct.Giachuathue4,
-                                     };
+                                join dg in _db.GiaNuocSh on dgct.Mahs equals dg.Mahs
+                                select new VMDinhGiaNuocShSearch
+                                {
+                                    Id = dg.Id,
+                                    Mahs = dg.Mahs,
+                                    Madv = dg.Madv,
+                                    Thanhtien = dgct.Thanhtien,
+                                    Macqcq = dg.Macqcq,
+                                    Thoidiem = dg.Thoidiem,
+                                    Namchuathue = dgct.Namchuathue,
+                                    Namchuathue1 = dgct.Namchuathue1,
+                                    Namchuathue2 = dgct.Namchuathue2,
+                                    Namchuathue3 = dgct.Namchuathue3,
+                                    Namchuathue4 = dgct.Namchuathue4,
+                                    Giachuathue = dgct.Giachuathue,
+                                    Giachuathue1 = dgct.Giachuathue1,
+                                    Giachuathue2 = dgct.Giachuathue2,
+                                    Giachuathue3 = dgct.Giachuathue3,
+                                    Giachuathue4 = dgct.Giachuathue4,
+                                };
                     /*model_join.Where(t => t.Madoituong == dt
                                     && t.Macqcq == dv
                                     && t.Thoidiem >= beginTime
@@ -622,7 +622,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                     {
                         model = model.Where(t => t.Giachuathue <= endPrice);
                     }
-                    ViewData["Doituong"] = _db.GiaNuocShDm;
+                    ViewData["Doituong"] = _db.GiaNuocShDmVung;
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/TimKiem/Result.cshtml", model);
                 }

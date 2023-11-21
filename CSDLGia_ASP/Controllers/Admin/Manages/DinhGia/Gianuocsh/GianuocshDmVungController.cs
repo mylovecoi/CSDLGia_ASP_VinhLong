@@ -16,29 +16,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
 {
-    public class GianuocshDmController : Controller
+    public class GiaNuocShDmVungController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GianuocshDmController(CSDLGiaDBContext db)
+        public GiaNuocShDmVungController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("DanhMucGiaNuocSh")]
+        [Route("DanhMucGiaNuocShVung")]
         [HttpGet]
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmucvung", "Index"))
                 {
-                    var model = _db.GiaNuocShDm.ToList();
-                    ViewData["Title"] = "Danh mục giá nước sạch sinh hoạt";
+                    var model = _db.GiaNuocShDmVung.ToList();
+                    ViewData["Title"] = "Danh mục vùng sử dụng nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/Index.cshtml", model);
+                    ViewData["MenuLv3"] = "menu_dgnsh_dmvung";
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/IndexVung.cshtml", model);
                 }
                 else
                 {
@@ -51,18 +51,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        [Route("DanhMucGiaNuocSh/Create")]
+        [Route("DanhMucGiaNuocShVung/Create")]
         [HttpGet]
         public IActionResult Create()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmucvung", "Create"))
                 {
-                    ViewData["Title"] = "Thêm mới danh mục giá nước sạch sinh hoạt";
+                    ViewData["Title"] = "Thêm mới Danh mục vùng sử dụng nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_dm";
+                    ViewData["MenuLv3"] = "menu_dgnsh_dmvung";
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Create.cshtml");
                 }
                 else
@@ -76,40 +76,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        [Route("DanhMucGiaNuocSh/Store")]
+        [Route("DanhMucGiaNuocShVung/Store")]
         [HttpPost]
         public JsonResult Store(string Doituongsd)
         {
-            var model = new GiaNuocShDm
+            var model = new GiaNuocShDmVung
             {
                 Doituongsd = Doituongsd,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
-            _db.GiaNuocShDm.Add(model);
+            _db.GiaNuocShDmVung.Add(model);
             _db.SaveChanges();
 
             var data = new { status = "success" };
             return Json(data);
         }
-        
-        [Route("DanhMucGiaNuocSh/Delete")]
+
+        [Route("DanhMucGiaNuocShVung/Delete")]
         [HttpPost]
         public JsonResult Delete(int Id)
         {
-            var model = _db.GiaNuocShDm.FirstOrDefault(t => t.Id == Id); 
-            _db.GiaNuocShDm.Remove(model);
+            var model = _db.GiaNuocShDmVung.FirstOrDefault(t => t.Id == Id);
+            _db.GiaNuocShDmVung.Remove(model);
             _db.SaveChanges();
 
-            var data = new { status = "success"};
+            var data = new { status = "success" };
             return Json(data);
         }
 
-        [Route("DanhMucGiaNuocSh/Edit")]
+        [Route("DanhMucGiaNuocShVung/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-            var model = _db.GiaNuocShDm.FirstOrDefault(p => p.Id == Id);
+            var model = _db.GiaNuocShDmVung.FirstOrDefault(p => p.Id == Id);
 
             if (model != null)
             {
@@ -119,9 +119,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 result += "<div class='form-group fv-plugins-icon-container'>";
 
                 result += "<label>Đối tượng sử dụng</label>";
-                result += "<input type='text' id='doituongsd_edit' name='manhom_edit' value='"+model.Doituongsd+"' class='form-control'/>";
+                result += "<input type='text' id='doituongsd_edit' name='manhom_edit' value='" + model.Doituongsd + "' class='form-control'/>";
 
-                result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id+"' class='form-control'/>";
+                result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -135,20 +135,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                 return Json(data);
             }
         }
-        [Route("DanhMucGiaNuocSh/Update")]
+        [Route("DanhMucGiaNuocShVung/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Doituongsd)
         {
-            var model = _db.GiaNuocShDm.FirstOrDefault(t => t.Id == Id);
+            var model = _db.GiaNuocShDmVung.FirstOrDefault(t => t.Id == Id);
             model.Doituongsd = Doituongsd;
             model.Updated_at = DateTime.Now;
-            _db.GiaNuocShDm.Update(model);
+            _db.GiaNuocShDmVung.Update(model);
             _db.SaveChanges();
-           
+
             var data = new { status = "success" };
             return Json(data);
         }
 
-       
+
     }
 }

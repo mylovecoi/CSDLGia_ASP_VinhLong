@@ -43,12 +43,20 @@
                 Thông tin hồ sơ giá thuế tài nguyên
             </h3>
         </div>
-        <div class="card-toolbar">
+        <div >
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
+                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-text-o"></i>Tổng hợp
+                </a>
             }
 
         </div>

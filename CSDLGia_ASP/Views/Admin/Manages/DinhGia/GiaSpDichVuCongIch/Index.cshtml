@@ -42,12 +42,20 @@
                     Thông tin hồ sơ<small>&nbsp;giá sản phẩm, dịch vụ công ích, dịch vụ sự nghiệp công và hàng hóa, dịch vụ được địa phương đặt hàng, giao kế hoạch sản xuất, kinh doanh sử dụng ngân sách địa phương theo quy định của pháp luật</small>
                 </h3>
             </div>
-            <div class="card-toolbar">
+            <div >
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dvci.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaDichVuCongIch" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
+                </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
+                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-text-o"></i>Tổng hợp
                 </a>
             }
 

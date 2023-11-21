@@ -43,12 +43,20 @@
                 Thông tin hồ sơ<small>&nbsp;Giá tài sản trong tố tụng hình sự</small>
             </h3>
         </div>
-        <div class="card-toolbar">
+        <div >
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaTaiSanTths" asp-action="Create"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
+                </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
+                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-text-o"></i>Tổng hợp
                 </a>
             }
 
