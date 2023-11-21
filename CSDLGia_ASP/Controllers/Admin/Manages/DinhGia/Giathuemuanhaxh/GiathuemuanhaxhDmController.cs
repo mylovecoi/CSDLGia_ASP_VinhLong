@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.tmnxh.danhmuc", "Index"))
                 {
                     var model = _db.GiaThueMuaNhaXhDm.ToList();
-                    ViewData["Title"] = "Danh mục giá thuê,thuê mua nhà ở";
+                    ViewData["Title"] = "Danh mục giá cho thuê, thuê mua nhà ở xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_dm";

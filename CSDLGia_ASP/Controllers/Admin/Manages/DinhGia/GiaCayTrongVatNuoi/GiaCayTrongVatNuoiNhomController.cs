@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     ViewData["Title"] = "Nhóm cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
-                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhMuc/Nhom/Index.cshtml",model);
                 }
                 else
@@ -152,7 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     _db.SaveChanges();
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
-                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_dm";
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);
                 }
@@ -186,7 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     _db.SaveChanges();
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
-                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_tt";
+                    ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_dm";
                     return RedirectToAction("Index", "GiaCayTrongVatNuoiNhom");
                 }
                 else

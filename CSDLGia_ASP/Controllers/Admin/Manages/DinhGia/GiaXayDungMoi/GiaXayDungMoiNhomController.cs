@@ -28,13 +28,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Index"))
                 {
                     var model = _db.GiaXayDungMoiNhom.ToList();
                     ViewData["Title"] = "Nhóm xây dựng mới";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_dm";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhMuc/Nhom/Index.cshtml",model);
                 }
                 else
@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Create"))
                 {
                     var request = new GiaXayDungMoiNhom
                     {
@@ -67,7 +67,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     };
                     _db.GiaXayDungMoiNhom.Add(request);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     var data = new { status = "success", message = "Thêm mới thành công!" };
                     return Json(data);
                 }
@@ -90,7 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaXayDungMoiNhom.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -142,7 +144,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaXayDungMoiNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
@@ -150,7 +152,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     model.Updated_at = DateTime.Now;
                     _db.GiaXayDungMoiNhom.Update(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);
                 }
@@ -173,7 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Delete"))
                 {
                     var model = _db.GiaXayDungMoiNhom.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaXayDungMoiNhom.Remove(model);
@@ -182,7 +186,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     var model_ct = _db.GiaXayDungMoiDm.Where(p => p.Manhom == model.Manhom).ToList();
                     _db.GiaXayDungMoiDm.RemoveRange(model_ct);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     return RedirectToAction("Index", "GiaXayDungMoiNhom");
                 }
                 else

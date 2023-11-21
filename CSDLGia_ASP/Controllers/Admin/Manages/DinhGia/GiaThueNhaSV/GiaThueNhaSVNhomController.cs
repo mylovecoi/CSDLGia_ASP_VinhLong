@@ -28,13 +28,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Index"))
                 {
                     var model = _db.GiaThueNhaSVNhom.ToList();
-                    ViewData["Title"] = "Nhóm tài nguyên tính thuế tài nguyên";
+                    ViewData["Title"] = "Nhóm nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_dm";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else
@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Create"))
                 {
                     var request = new GiaThueNhaSVNhom
                     {
@@ -90,7 +90,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Edit"))
                 {
                     var model = _db.GiaThueNhaSVNhom.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -98,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên nhóm tài nguyên*</label>";
+                        result += "<label>Tên nhóm nhà cho sinh viên thuê*</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
                         result += "</div>";
@@ -142,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Edit"))
                 {
                     var model = _db.GiaThueNhaSVNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
@@ -173,7 +173,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Delete"))
                 {
                     var model = _db.GiaThueNhaSVNhom.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaThueNhaSVNhom.Remove(model);

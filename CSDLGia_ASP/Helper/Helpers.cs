@@ -250,6 +250,21 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.xetduyet", Name = "ĐG - Giá cây trồng vật nuôi - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.timkiem", Name = "ĐG - Giá cây trồng vật nuôi - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.baocao", Name = "ĐG - Giá cây trồng vật nuôi- Báo cáo" });
+
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi", Name = "ĐG - Giá xây dựng mới" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", Name = "ĐG - Giá xây dựng mới - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", Name = "ĐG - Giá xây dựng mới - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi.xetduyet", Name = "ĐG - Giá xây dựng mới - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi.timkiem", Name = "ĐG - Giá xây dựng mới - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.xaydungmoi.baocao", Name = "ĐG - Giá xây dựng mới- Báo cáo" });
+
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien", Name = "ĐG - Giá cho thuê nhà ở sinh viên" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", Name = "ĐG - Giá cho thuê nhà ở sinh viên - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", Name = "ĐG - Giá cho thuê nhà ở sinh viên - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.xetduyet", Name = "ĐG - Giá cho thuê nhà ở sinh viên - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.timkiem", Name = "ĐG -Giá cho thuê nhà ở sinh viên - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.baocao", Name = "ĐG - Giá cho thuê nhà ở sinh viên - Báo cáo" });
+
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
             //chức năng bình ổn giá

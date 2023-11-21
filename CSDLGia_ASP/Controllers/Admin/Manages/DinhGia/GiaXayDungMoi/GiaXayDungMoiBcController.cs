@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.baocao", "Index"))
                 {
                     var nhomtn = _db.GiaXayDungMoiNhom.Where(t => t.Theodoi == "TD").ToList();
 
@@ -42,8 +42,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/BaoCao/Index.cshtml");
                 }
                 else
@@ -64,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.baocao", "Index"))
                 {
                     var model = _db.GiaXayDungMoiDm.Where(t => t.Manhom == manhom).ToList();
 
@@ -187,8 +187,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Nambc"] = nambc;
                     ViewData["Title"] = "Báo cáo tổng hợp cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/BaoCao/Bc1.cshtml", model);
                 }
                 else

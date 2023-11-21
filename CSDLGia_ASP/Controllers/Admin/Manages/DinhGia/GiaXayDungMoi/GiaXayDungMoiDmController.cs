@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Index"))
                 {
                     var model = _db.GiaXayDungMoiDm.Where(t => t.Manhom == Manhom).ToList();
 
@@ -39,8 +39,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Tennhom"] = _db.GiaXayDungMoiNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
                     ViewData["Title"] = "Thông tin chi tiết nhóm xây dựng mới";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_dm";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhMuc/ChiTiet/Index.cshtml", model);
                 }
                 else
@@ -61,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Create"))
                 {
                     var request = new GiaXayDungMoiDm
                     {
@@ -81,7 +81,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     };
                     _db.GiaXayDungMoiDm.Add(request);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     var data = new { status = "success", message = "Thêm mới thành công!" };
                     return Json(data);
                 }
@@ -104,59 +106,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaXayDungMoiDm.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Level</label>";
-                        //result += "<select id='level_edit' name='level_edit' class='form-control'>";
-                        //for (var i = 1; i <= 5; i++)
-                        //{
-                        //    result += "<option value='" + i + "' " + ((string)model.Level == i.ToString() ? "selected" : "") + ">" + i + "</option>";
-                        //}
-                        //result += "</select>";
-                        //result += "</div>";
-                        //result += "</div>";
-
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Mã cấp I*</label>";
-                        //result += "<input type='text' id='macap1_edit' name='macap1_edit' class='form-control' value='" + model.Cap1 + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
-
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Mã cấp II*</label>";
-                        //result += "<input type='text' id='macap2_edit' name='macap2_edit' class='form-control' value='" + model.Cap2 + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
-
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Mã cấp III*</label>";
-                        //result += "<input type='text' id='macap3_edit' name='macap3_edit' class='form-control' value='" + model.Cap3 + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
-
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Mã cấp IV*</label>";
-                        //result += "<input type='text' id='macap4_edit' name='macap4_edit' class='form-control' value='" + model.Cap4 + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
-
-                        //result += "<div class='col-xl-4'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Mã cấp V*</label>";
-                        //result += "<input type='text' id='macap5_edit' name='macap5_edit' class='form-control' value='" + model.Cap5 + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -212,7 +168,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaXayDungMoiDm.FirstOrDefault(t => t.Id == Id);
                     model.Level = Level;
@@ -227,6 +183,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     model.Updated_at = DateTime.Now;
                     _db.GiaXayDungMoiDm.Update(model);
                     _db.SaveChanges();
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);
@@ -250,12 +209,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Delete"))
                 {
                     var model = _db.GiaXayDungMoiDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaXayDungMoiDm.Remove(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     return RedirectToAction("Index", "GiaXayDungMoiDm", new { Manhom = model.Manhom });
                 }
                 else
@@ -276,7 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaXayDungMoiDm.Where(t => t.Manhom == Manhom).ToList();
                     model.ForEach(t => { t.Theodoi = Theodoi; });

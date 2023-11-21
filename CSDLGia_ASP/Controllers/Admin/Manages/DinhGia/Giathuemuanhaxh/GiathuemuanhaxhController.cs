@@ -76,7 +76,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Madv"] = Madv;
-                        ViewData["Title"] = " Thông tin hồ sơ giá đất cụ thể";
+                        ViewData["Title"] = " Thông tin hồ sơ giá thuê mua nhà ở xã hội";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgtmnxh";
                         ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
@@ -84,8 +84,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     }
                     else
                     {
-                        ViewData["Title"] = "Thông tin hồ sơ giá đất cụ thể";
-                        ViewData["Messages"] = "Thông tin hồ sơ giá đất cụ thể.";
+                        ViewData["Title"] = "Thông tin hồ sơ giá thuê mua nhà ở xã hội";
+                        ViewData["Messages"] = "Thông tin hồ sơ giá thuê mua nhà ở xã hội.";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgtmnxh";
                         ViewData["MenuLv3"] = "menu_dgtmnxh_tt";

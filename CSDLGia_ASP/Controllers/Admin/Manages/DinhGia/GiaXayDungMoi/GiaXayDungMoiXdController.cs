@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi;
                     var dsdiaban = _db.DsDiaBan;
@@ -133,8 +133,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                        ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -202,8 +202,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                        ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -270,13 +270,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
-                        /*ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";*/
-                        ViewData["MenuLv1"] = "menu_hethong";
-                        ViewData["MenuLv2"] = "menu_qthethong";
-                        ViewData["MenuLv3"] = "menu_tichhop";
-                        ViewData["MenuLv4"] = "menu_tichhop_giatn";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                        ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/XetDuyet/Index.cshtml", model_join);
                     }
                 }
@@ -296,7 +292,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.xetduyet", "Approve"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Mahs == mahs);
 
@@ -357,6 +353,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     _db.GiaXayDungMoi.Update(model);
                     _db.SaveChanges();
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
 
                     return RedirectToAction("Index", "GiaXayDungMoiXd", new { Madv = madv, Nam = model.Thoidiem.Year });
                 }
@@ -435,6 +434,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     _db.GiaXayDungMoi.Update(model);
                     _db.SaveChanges();
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
 
                     return RedirectToAction("Index", "GiaXayDungMoiXd", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
                 }
@@ -463,6 +465,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     _db.GiaXayDungMoi.Update(model);
                     _db.SaveChanges();
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
 
                     return RedirectToAction("Index", "GiaXayDungMoiXd");
                 }
@@ -482,7 +487,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.xetduyet", "Approve"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Mahs == mahs_hcb);
 
@@ -493,6 +498,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaXayDungMoiXd");
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
                 }
                 else
                 {

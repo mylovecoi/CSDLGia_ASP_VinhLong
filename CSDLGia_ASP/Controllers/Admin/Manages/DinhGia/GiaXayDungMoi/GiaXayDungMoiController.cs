@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -94,8 +94,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá cây trồng vật nuôi";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                        ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhSach/Index.cshtml", model);
                     }
                     else
@@ -103,8 +103,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["Title"] = "Thông tin giá cây trồng vật nuôi";
                         ViewData["Messages"] = "Hệ thống chưa có định giá cây trồng vật nuôi.";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                        ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -127,7 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
                 {
                     var check = _db.GiaXayDungMoiCt.Where(t => t.Trangthai == "CXD");
                     if (check != null)
@@ -183,8 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhSach/Create.cshtml", model);
 
                 }
@@ -206,7 +206,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -273,7 +273,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Edit"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -285,8 +285,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Ipf1"] = model.Ipf1;*/
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhSach/Edit.cshtml", model);
 
                 }
@@ -308,7 +308,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Edit"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -357,7 +357,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Delete"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaXayDungMoi.Remove(model);
@@ -387,15 +387,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Index"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaXayDungMoiCt = _db.GiaXayDungMoiCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhSach/Show.cshtml", model);
 
                 }
@@ -417,7 +417,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Index"))
                 {
                     var model = _db.GiaXayDungMoi.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
@@ -476,7 +476,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Index"))
                 {
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -492,8 +492,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["NhomTn"] = _db.GiaXayDungMoiNhom.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/TimKiem/Index.cshtml");
 
                 }
@@ -515,7 +515,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Index"))
                 {
                     var model = (from giathuetnct in _db.GiaXayDungMoiCt
                                  join giathuetn in _db.GiaXayDungMoi on giathuetnct.Mahs equals giathuetn.Mahs
@@ -562,8 +562,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá cây trồng vật nuôi";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/TimKiem/Result.cshtml", model);
 
                 }
@@ -635,11 +635,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 1</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 2</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 3</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 4</th>";
-            //result += "<th>Mã nhóm tài nguyên cấp 5</th>";
             result += "<th width='25%'>Tên nhóm, loại cây trồng vật nuôi</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Giá cây trồng vật nuôi (đồng)</th>";
@@ -651,12 +646,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
             foreach (var item in model)
             {
                 result += "<tr>";
-                result += "<td class='text-center'>" + record++ + "</td>";
-                //result += "<td class='text-center'>" + item.Cap1 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap2 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap3 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap4 + "</td>";
-                //result += "<td class='text-center'>" + item.Cap5 + "</td>";
+                result += "<td class='text-center'>" + record++ + "</td>";   
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                 result += "<td class='text-center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";

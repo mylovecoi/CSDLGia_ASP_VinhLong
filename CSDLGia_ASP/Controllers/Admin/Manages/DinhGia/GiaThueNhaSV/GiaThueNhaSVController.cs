@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -92,19 +92,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                         ViewData["NhomTn"] = _db.GiaThueNhaSVNhom.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
-                        ViewData["Title"] = "Thông tin giá thuế tài nguyên";
+                        ViewData["Title"] = "Thông tin giá nhà cho sinh viên thuê";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                        ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/DanhSach/Index.cshtml", model);
                     }
                     else
                     {
-                        ViewData["Title"] = "Thông tin giá thuế tài nguyên";
-                        ViewData["Messages"] = "Hệ thống chưa có định giá thuế tài nguyên.";
+                        ViewData["Title"] = "Thông tin giá nhà cho sinh viên thuê";
+                        ViewData["Messages"] = "Hệ thống chưa có định giá nhà cho sinh viên thuê.";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                        ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                        ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -127,7 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Create"))
                 {
                     var check = _db.GiaThueNhaSVCt.Where(t => t.Trangthai == "CXD");
                     if(check != null)
@@ -181,10 +181,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
+                    ViewData["Title"] = "Bảng giá tính nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/DanhSach/Create.cshtml", model);
 
                 }
@@ -206,7 +206,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Create"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -273,7 +273,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueNhaSV.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -281,12 +281,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 
                     model.GiaThueNhaSVCt = model_ct.ToList();
 
-                    /*ViewData["Madv"] = model.Madv;
-                    ViewData["Ipf1"] = model.Ipf1;*/
-                    ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
+                    ViewData["Title"] = "Bảng giá tính nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/DanhSach/Edit.cshtml", model);
 
                 }
@@ -308,7 +306,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Edit"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -357,7 +355,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Delete"))
                 {
                     var model = _db.GiaThueNhaSV.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaThueNhaSV.Remove(model);
@@ -387,15 +385,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Index"))
                 {
                     var model = _db.GiaThueNhaSV.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaThueNhaSVCt = _db.GiaThueNhaSVCt.Where(t => t.Mahs == model.Mahs).ToList();
 
-                    ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
+                    ViewData["Title"] = "Bảng giá tính nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/DanhSach/Show.cshtml", model);
 
                 }
@@ -417,7 +415,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Index"))
                 {
                     var model = _db.GiaThueNhaSV.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
@@ -476,7 +474,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Index"))
                 {
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -490,10 +488,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaThueNhaSVNhom.Where(t => t.Theodoi == "TD").ToList();
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/TimKiem/Index.cshtml");
 
                 }
@@ -515,7 +513,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Index"))
                 {
                     var model = (from giathuetnct in _db.GiaThueNhaSVCt
                                  join giathuetn in _db.GiaThueNhaSV on giathuetnct.Mahs equals giathuetn.Mahs
@@ -560,10 +558,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                         model = model.Where(t => t.Gia <= gia_den);
                     }
 
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nhà cho sinh viên thuê";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/TimKiem/Result.cshtml", model);
 
                 }
@@ -592,7 +590,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                 result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá tính thuế tài nguyên (đồng)</label>";
+                result += "<label>Giá nhà cho sinh viên thuê (đồng)</label>";
                 result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
@@ -642,7 +640,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
             result += "<th>Mã nhóm tài nguyên cấp 5</th>";
             result += "<th width='25%'>Tên nhóm, loại tài nguyên</th>";
             result += "<th>Đơn vị tính</th>";
-            result += "<th>Giá tính thuế tài nguyên (đồng)</th>";
+            result += "<th>Giá tính nhà cho sinh viên thuê (đồng)</th>";
             result += "<th width='9%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";

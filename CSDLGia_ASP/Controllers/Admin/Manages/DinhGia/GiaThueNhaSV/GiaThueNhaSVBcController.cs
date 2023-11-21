@@ -34,16 +34,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.baocao", "Index"))
                 {
                     var nhomtn = _db.GiaThueNhaSVNhom.Where(t => t.Theodoi == "TD").ToList();
 
                     ViewData["NhomTn"] = nhomtn;
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp thuế tài nguyên";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá nhà cho thuê sinh viên";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/BaoCao/Index.cshtml");
                 }
                 else
@@ -64,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.baocao", "Index"))
                 {
                     var model = _db.GiaThueNhaSVDm.Where(t => t.Manhom == manhom).ToList();
 
@@ -181,10 +181,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     ViewData["TenNhom"] = _db.GiaThueNhaSVNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;
-                    ViewData["Title"] = "Báo cáo tổng hợp thuế tài nguyên";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá nhà cho thuê sinh viên";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_bc";
+                    ViewData["MenuLv2"] = "menu_dg_nhaosinhvien";
+                    ViewData["MenuLv3"] = "menu_dg_nhaosinhvien_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaThueNhaSV/BaoCao/Bc1.cshtml", model);
                 }
                 else
