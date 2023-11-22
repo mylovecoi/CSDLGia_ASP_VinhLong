@@ -3263,7 +3263,7 @@
             </div>
         </li>
     }
-   
+
     <!--1.23 Giá Trúng thầu hàng hóa dịch vụ  -->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan", "Index"))
     {
@@ -3459,10 +3459,7 @@
     <!--1.26 Quản lý CSDL về thẩm định giá tại địa phương  -->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg", "Index"))
     {
-        <li class="menu-section">
-            <h4 class="menu-text text-truncate">CSDL THẨM ĐỊNH GIÁ</h4>
-            <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-        </li>
+        
         @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg", "Index"))
         {
             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_tdg"
@@ -3566,7 +3563,44 @@
         }
     }
 
-    <!--Sản phẩm dịch vụ cụ thể-->
+    <!--1.27 Giá vật liệu xây dựng  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Giá vật liệu xây dựng</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+
+                    <li class="menu-item" aria-haspopup="true" id="menu_giagocvlxd_th">
+                        <a asp-controller="GiaGocVlxdTh" asp-action="Index" class="menu-link">
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text text-truncate">Tổng hợp hồ sơ</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+    }
+
+    <!--1.28 Sản phẩm dịch vụ cụ thể -->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe", "Index"))
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvcuthe">
@@ -3650,8 +3684,7 @@
             </div>
         </li>
     }
-
-    <!--Sản phẩm dịch vụ tối đa-->
+    <!--1.29 Giá vật liệu xây dựng  -->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida", "Index"))
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvtoida">
@@ -3736,7 +3769,7 @@
         </li>
     }
 
-    <!--Khung giá sản phẩm, dịch vụ-->
+    <!--1.30 Khung giá sản phẩm, dịch vụ -->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia", "Index"))
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvkhunggia">
@@ -3821,7 +3854,1053 @@
         </li>
     }
 
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg", "Index"))
+    {
+        <li class="menu-section">
+            <h4 class="menu-text text-truncate">TỔNG HỢP BÁO CÁO</h4>
+            <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+        </li>
+        <!--1.31 Tổng hợp báo cáo  -->
 
+        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+        {
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                                <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate">Tổng hợp báo cáo</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                                <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                                <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                                <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                                <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+        }
+
+    }
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg", "Index"))
+    {
+    <li class="menu-section">
+            <h4 class="menu-text text-truncate">TÀI LIỆU VĂN BẢN</h4>
+            <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+    </li>
+    <!--1.32 Các quyết định, văn bản quản lý, điều hành về giá  -->
+      @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các quyết định, văn bản quản lý, điều hành về giá</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.33 Các văn bản hướng dẫn, tham gia, góp ý với các đơn vị khác có liên quan đến cơ chế chính sách về giá -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các văn bản hướng dẫn, tham gia, góp ý với các đơn vị khác có liên quan đến cơ chế chính sách về giá</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.34 Báo cáo tình hình giá cả thị trương -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Báo cáo tình hình giá cả thị trương</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+
+    <!--1.35 Các báo cáo, tài liệu học tập kinh nghiệm  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các báo cáo, tài liệu học tập kinh nghiệm</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.36 Kết quả, đề tài nghiên cứu khoa học  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Kết quả, đề tài nghiên cứu khoa học</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.37 Các báo cáo, văn bản có liên quan khác  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các báo cáo, văn bản có liên quan khác</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.38 Tình hình thanh tra, kiểm tra, giải quyết khiếu nại, tố cáo và xử lý vi phạm pháp luật về giá và thẩm định giá -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các báo cáo, văn bản có liên quan khác</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.39 Quỹ bình ổn giá các mặt hàng thuộc danh mục bình ổn giá theo quy định của pháp luật  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Quỹ bình ổn giá các mặt hàng thuộc danh mục bình ổn giá theo quy định của pháp luật</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.40 Các thông tin, chỉ tiêu kinh tế vĩ mô trong nước và thế giới -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Các thông tin, chỉ tiêu kinh tế vĩ mô trong nước và thế giới</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    }
+
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg", "Index"))
+    {
+    <li class="menu-section">
+            <h4 class="menu-text text-truncate">QUẢN TRỊ HỆ THỐNG</h4>
+            <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+    </li>
+    <!--1.41 Quản trị người dùng  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Quản trị người dùng </span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.42 Quản trị hệ thống  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Quản trị hệ thống</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.43 Kết nối với các hệ thống thông tin khác  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Kết nối với các hệ thống thông tin khác</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+    <!--1.44  Cấu hình công bố giá hàng hóa, dịch vụ trên trang web công bố giá  -->
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_lp">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+                            <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <span class="menu-text text-truncate">Kết nối với các hệ thống thông tin khác</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_dm">
+                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Danh mục</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tt">
+                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_ht">
+                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_gialp_tk">
+                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </li>
+    }
+}
 
 
     <!--Giá đất-->
@@ -3983,8 +5062,6 @@
                             <div class="menu-submenu">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-
-                                    
                                 </ul>
                             </div>
                         </li>
@@ -4164,8 +5241,8 @@
 
 
 
-    
-    
+
+
 
     @*<!--Giá gốc vlxd-->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giagocvlxd", "Index"))
