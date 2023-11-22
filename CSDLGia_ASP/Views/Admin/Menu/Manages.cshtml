@@ -4,7 +4,7 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
 {
     <li class="menu-section">
-        <h4 class="menu-text">CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ</h4>
+        <h4 class="menu-text text-truncate">CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia", "Index"))
@@ -22,7 +22,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text">Giá HH - DV do UBND tỉnh định giá</span>
+                <span class="menu-text text-truncate" title="Giá HH - DV do UBND tỉnh định giá">Giá HH - DV do UBND tỉnh định giá</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
