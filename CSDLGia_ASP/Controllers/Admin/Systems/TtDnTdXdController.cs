@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdntdxd", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
@@ -50,8 +50,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                     ViewData["Madiaban"] = Madiaban;
                     ViewData["Title"] = "Thông tin doanh nghiệp xét duyệt";
-                    ViewData["MenuLv1"] = "menu_kknygia";
-                    ViewData["MenuLv2"] = "menu_ttdntdxd";
+                    ViewData["MenuLv1"] = "menu_bog";
+                    ViewData["MenuLv2"] = "menu_ttdntdxdbog";
                     return View("Views/Admin/Systems/TtDnTd/XetDuyet/Index.cshtml", model);
                 }
                 else
@@ -72,7 +72,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdntdxd", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
                     var com_join = (from com in _db.Company
                                     join db in _db.DsDiaBan on com.Madiaban equals db.MaDiaBan
@@ -166,7 +166,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdntdxd", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
                     var model = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
                     var model_ct = _db.TtDnTdCt.Where(t => t.Madv == model.Madv && t.Mahs == model.Mahs);
@@ -229,7 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdntdxd", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
                     var model = _db.TtDnTd.FirstOrDefault(t => t.Madv == madv_tralai);
                     model.Trangthai = "BTL";

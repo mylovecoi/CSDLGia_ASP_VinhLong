@@ -379,6 +379,7 @@ namespace CSDLGia_ASP.Helper
 
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
             //Chức năng giá khác
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.hhdvk", Name = "Giá HH-DV khác" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.hhdvk.dm", Name = "Giá HH-DV khác - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.hhdvk.dmdv", Name = "Giá HH-DV khác - Danh mục đơn vị" });

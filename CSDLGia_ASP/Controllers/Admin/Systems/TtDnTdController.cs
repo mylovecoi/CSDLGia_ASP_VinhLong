@@ -127,8 +127,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["TtDnTdCt"] = dnct_join;
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
-                ViewData["MenuLv1"] = "menu_kknygia";
-                ViewData["MenuLv2"] = "menu_ttdn";
+                ViewData["MenuLv1"] = "menu_bog";
+                ViewData["MenuLv2"] = "menu_phanloai";
                 return View("Views/Admin/Systems/TtDnTd/Index.cshtml", com_join);
             }
             else
