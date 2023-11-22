@@ -99,7 +99,9 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.datcuthe.timkiem", Name = "ĐG - Giá đất cụ thể - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.datcuthe.baocao", Name = "ĐG - Giá đất cụ thể - Báo cáo" });
 
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc", Name = "ĐG - Giá thuê mặt đất, mặt nước" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", Name = "ĐG - Giá thuê mặt đất, mặt nước - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", Name = "ĐG - Giá thuê mặt đất, mặt nước - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", Name = "ĐG - Giá thuê mặt đất, mặt nước - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuedatnuoc.timkiem", Name = "ĐG - Giá thuê mặt đất, mặt nước - Tìm kiếm" });
@@ -224,12 +226,12 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.timkiem", Name = "ĐG - Giá thuê mặt đất mặt nước - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.baocao", Name = "ĐG - Giá thuê mặt đất mặt nước - Báo cáo" });
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh", Name = "ĐG - Giá thuê mua nhà xã hội" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh.thongtin", Name = "ĐG - Giá thuê mua nhà xã hội - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh.danhmuc", Name = "ĐG - Giá thuê mua nhà xã hội - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh.xetduyet", Name = "ĐG - Giá thuê mua nhà xã hội - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh.timkiem", Name = "ĐG - Giá thuê mua nhà xã hội - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tmnxh.baocao", Name = "ĐG - Giá thuê mua nhà xã hội - Báo cáo" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh", Name = "ĐG - Giá thuê mua nhà xã hội" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh.thongtin", Name = "ĐG - Giá thuê mua nhà xã hội - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh.danhmuc", Name = "ĐG - Giá thuê mua nhà xã hội - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh.xetduyet", Name = "ĐG - Giá thuê mua nhà xã hội - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh.timkiem", Name = "ĐG - Giá thuê mua nhà xã hội - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanhaxh.baocao", Name = "ĐG - Giá thuê mua nhà xã hội - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetsc", Name = "ĐG - Giá thuê tài sản công" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetsc.thongtin", Name = "ĐG - Giá thuê tài sản công - Thông tin" });

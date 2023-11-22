@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Title"] = " Thông tin hồ sơ giá các loại đất";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                        ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
+                        ViewData["MenuLv3"] = "menu_dg_giadatpl_dm";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", model);
                     }
                     else
@@ -103,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Messages"] = "Thông tin hồ sơ giá các loại đất.";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                        ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
+                        ViewData["MenuLv3"] = "menu_dg_giadatpl_dm";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
