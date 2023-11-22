@@ -35,7 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.ToList();
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Index.cshtml", model);
@@ -115,7 +115,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaHhDvCnDm.Remove(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return RedirectToAction("Index", "GiaHhDvCnDm");
                 }
                 else
@@ -168,7 +170,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         result += "</select>";
                         result += "</div>";
 
-
                         result += "<div class='col-xl-1' style='padding-left: 0px;'>";
                         result += "<label class='control-label'>Thêm</label>";
                         result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
@@ -215,7 +216,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCnDm.Update(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
                     if (checkdvt == null)
                     {

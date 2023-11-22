@@ -110,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá dịch vụ giáo Giao dục đào tạo";
+                        ViewData["Title"] = "Hoàn thành định giá dịch vụ giáo dục đào tạo";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dggddt";
                         ViewData["MenuLv3"] = "menu_dggddt_ht";

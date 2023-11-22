@@ -44,7 +44,7 @@
                     Thông tin hồ sơ<small>&nbsp;Giá sản phẩm giáo dục đào tạo</small>
             </h3> 
             <div >
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Create"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">

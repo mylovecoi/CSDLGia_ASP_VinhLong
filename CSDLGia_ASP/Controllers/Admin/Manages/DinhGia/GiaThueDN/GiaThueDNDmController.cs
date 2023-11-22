@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Index"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.ToList();
                     ViewData["Title"] = "Danh mục mặt đất, mặt nước";

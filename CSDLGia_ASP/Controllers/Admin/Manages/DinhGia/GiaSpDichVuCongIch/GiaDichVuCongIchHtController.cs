@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
@@ -106,7 +106,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá Dịch vụ công ích";
+                        ViewData["Title"] = "Hoàn thành định giá dịch vụ công ích";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgdvci";
                         ViewData["MenuLv3"] = "menu_dgdvci_ht";
@@ -239,7 +239,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.dvci.ttg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                 {
                     var model = _db.GiaSpDvCi.FirstOrDefault(p => p.Mahs == mahs_complete);
 
@@ -295,7 +295,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.dvci.ttg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                 {
                     var model = _db.GiaSpDvCi.FirstOrDefault(p => p.Mahs == mahs_complete);
                     var dvcq_join = from dvcq in _db.DsDonVi
@@ -344,7 +344,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.dvci.ttg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                 {
                     var model = _db.GiaSpDvCi.FirstOrDefault(t => t.Id == id_tralai);
 
@@ -415,7 +415,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                 {
                     var model = _db.GiaSpDvCi.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -453,7 +453,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                 {
                     var model = _db.GiaSpDvCi.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

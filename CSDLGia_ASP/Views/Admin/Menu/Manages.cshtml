@@ -367,7 +367,7 @@
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dm">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dmkhung">
                                             <a asp-controller="GianuocshDmKhung" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -428,7 +428,484 @@
                         </li>
                     }
 
+                    <!--1.6 Quản lý giá cho thuê tài sản Nhà nước -->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá cho thuê tài sản Nhà nước </span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
 
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Index") )
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_dm">
+                                            <a asp-controller="GiaThueTSanCongDm" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_tt">
+                                            <a asp-controller="GiaThueTSanCong" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_ht">
+                                            <a asp-controller="GiaThueTSanCongHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_tk">
+                                            <a asp-controller="GiaThueTSanCong" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_bc">
+                                            <a asp-controller="GiaThueTSanCongBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+
+                    <!--1.7 Dịch vụ công ích-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá SP, DVCI, DVSNC, HH- DV đặt hàng</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_dm">
+                                            <a asp-controller="GiaDichVuCongIchDm" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tt">
+                                            <a asp-controller="GiaDichVuCongIch" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_ht">
+                                            <a asp-controller="GiaDichVuCongIchHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tk">
+                                            <a asp-controller="GiaDichVuCongIch" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_bc">
+                                            <a asp-controller="GiaDichVuCongIchBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    <!--1.8 Dịch vụ giáo dục đào tạo-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Dịch vụ giáo dục đào tạo</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_dm">
+                                            <a asp-controller="GiaoDucDaoTaoDm" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_tt">
+                                            <a asp-controller="GiaoDucDaoTao" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_ht">
+                                            <a asp-controller="GiaoDucDaoTaoHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_tk">
+                                            <a asp-controller="GiaoDucDaoTao" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_bc">
+                                            <a asp-controller="GiaoDucDaoTaoBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+
+
+                    <!--1.9 Dịch vụ khám chữa bệnh-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Dịch vụ khám chữa bệnh</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_dm">
+                                            <a asp-controller="DvKhamChuaBenhNhom" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_tt">
+                                            <a asp-controller="DvKhamChuaBenh" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_ht">
+                                            <a asp-controller="DvKhamChuaBenhHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_tk">
+                                            <a asp-controller="DvKhamChuaBenh" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_bc">
+                                            <a asp-controller="DvKhamChuaBenhBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    <!--1.10 Trợ giá trợ cước-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Mức trợ giá trợ cước</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_dm">
+                                            <a asp-controller="TroGiaTroCuocDm" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_tt">
+                                            <a asp-controller="TroGiaTroCuoc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_ht">
+                                            <a asp-controller="TroGiaTroCuocHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_tk">
+                                            <a asp-controller="TroGiaTroCuoc" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_bc">
+                                            <a asp-controller="TroGiaTroCuocBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    <!-- 1.11 Hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_dm">
+                                            <a asp-controller="GiaHhDvCnDm" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_tt">
+                                            <a asp-controller="GiaHhDvCn" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_xd">
+                                            <a asp-controller="GiaHhDvCnHt" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_tk">
+                                            <a asp-controller="GiaHhDvCn" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_bc">
+                                            <a asp-controller="GiaHhDvCnBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
 
                     <!--Giá giao dịch bất động sản-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds", "Index"))
@@ -742,409 +1219,7 @@
                         </li>
                     }
 
-                  
 
-                    
-
-                   
-                    <!--thuê tai sản công-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Giá cho thuê tài sản Nhà nước </span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_dm">
-                                            <a asp-controller="GiaThueTSanCongDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_tt">
-                                            <a asp-controller="GiaThueTSanCong" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_ht">
-                                            <a asp-controller="GiaThueTSanCongHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_tk">
-                                            <a asp-controller="GiaThueTSanCong" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtsc_bc">
-                                            <a asp-controller="GiaThueTSanCongBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo tổng hợp</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    <!--dịch vụ công ích-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Giá SP, DVCI, DVSNC, HH- DV đặt hàng</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_dm">
-                                            <a asp-controller="GiaDichVuCongIchDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tt">
-                                            <a asp-controller="GiaDichVuCongIch" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_ht">
-                                            <a asp-controller="GiaDichVuCongIchHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tk">
-                                            <a asp-controller="GiaDichVuCongIch" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_bc">
-                                            <a asp-controller="GiaDichVuCongIchBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo thống kê</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    <!--dịch vụ giáo dục đào tạo-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Dịch vụ giáo dục đào tạo</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_dm">
-                                            <a asp-controller="GiaoDucDaoTaoDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_tt">
-                                            <a asp-controller="GiaoDucDaoTao" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_ht">
-                                            <a asp-controller="GiaoDucDaoTaoHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_tk">
-                                            <a asp-controller="GiaoDucDaoTao" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dggddt_bc">
-                                            <a asp-controller="GiaoDucDaoTaoBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo thống kê</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    <!--dịch vụ khám chữa bệnh-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Dịch vụ khám chữa bệnh</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.nhom", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_dm">
-                                            <a asp-controller="DvKhamChuaBenhNhom" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_tt">
-                                            <a asp-controller="DvKhamChuaBenh" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_ht">
-                                            <a asp-controller="DvKhamChuaBenhHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_tk">
-                                            <a asp-controller="DvKhamChuaBenh" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgkcb_bc">
-                                            <a asp-controller="DvKhamChuaBenhBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo thống kê</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    <!--trợ giá trợ cước-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Mức trợ giá trợ cước</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.danhmuc", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_dm">
-                                            <a asp-controller="TroGiaTroCuocDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_tt">
-                                            <a asp-controller="TroGiaTroCuoc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_ht">
-                                            <a asp-controller="TroGiaTroCuocHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_tk">
-                                            <a asp-controller="TroGiaTroCuoc" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtgtc_bc">
-                                            <a asp-controller="TroGiaTroCuocBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo thống kê</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                </ul>
-                            </div>
-                        </li>
-                    }
 
                     <!--Thuế tài nguyên-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn", "Index"))
@@ -1707,82 +1782,8 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    <!-- Hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.danhmuc", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_dm">
-                                            <a asp-controller="GiaHhDvCnDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_thongtin">
-                                            <a asp-controller="GiaHhDvCn" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_ht">
-                                            <a asp-controller="GiaHhDvCnHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_tk">
-                                            <a asp-controller="GiaHhDvCn" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.baocao", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_bc">
-                                            <a asp-controller="GiaHhDvCnBc" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Báo cáo thống kê</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
+                   
 
                     <!--giá hàng hoá hải quan trong xuất nhập khẩu-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk", "Index"))

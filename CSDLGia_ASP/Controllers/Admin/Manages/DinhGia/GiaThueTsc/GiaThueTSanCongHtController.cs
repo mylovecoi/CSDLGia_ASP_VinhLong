@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetsc.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
@@ -240,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tsc.ttg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueTaiSanCong.FirstOrDefault(p => p.Mahs == mahs_complete);
 
@@ -415,7 +415,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetsc.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -453,7 +453,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetsc.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

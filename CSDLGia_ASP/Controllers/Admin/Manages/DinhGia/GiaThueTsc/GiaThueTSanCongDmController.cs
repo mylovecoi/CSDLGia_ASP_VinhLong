@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetsc.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Index"))
                 {
                     var model = _db.GiaThueTaiSanCongDm.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");

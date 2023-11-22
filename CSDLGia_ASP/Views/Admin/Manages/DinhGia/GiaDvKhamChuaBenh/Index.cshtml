@@ -44,10 +44,10 @@
                 </h3>
             </div>
             <div >
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
             {
                 <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus">Thêm mới</i>
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
