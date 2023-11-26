@@ -43,7 +43,7 @@
             </h3>
         </div>
         <div>
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
                    asp-route-Madv="@ViewData["Madv"]">
@@ -54,7 +54,7 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                <a class="btn bg-warning font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-text-o"></i>Tổng hợp
                 </a>

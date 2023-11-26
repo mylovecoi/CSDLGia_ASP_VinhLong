@@ -48,7 +48,7 @@
             </h3>
         </div>
         <div >
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaThueDN" asp-action="Create"
                    asp-route-Madv="@ViewData["Donvi"]">
