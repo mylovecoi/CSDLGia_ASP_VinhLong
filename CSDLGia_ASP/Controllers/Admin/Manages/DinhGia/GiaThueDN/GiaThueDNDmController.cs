@@ -35,8 +35,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.GiaThueMatDatMatNuocDm.ToList();
                     ViewData["Title"] = "Danh mục mặt đất, mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
-                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_dm";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/Index.cshtml", model);
                 }
                 else
@@ -69,8 +69,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Updated_at = DateTime.Now,
                     };
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
-                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_dm";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     _db.GiaThueMatDatMatNuocDm.Add(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
@@ -104,8 +104,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.GiaThueMatDatMatNuocDm.Remove(model);
                     _db.SaveChanges();
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
-                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_dm";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     return RedirectToAction("Index", "GiaThueDNDm");
                 }
                 else
@@ -130,8 +130,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Edit"))
                 {
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
-                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_dm";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -188,8 +188,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Edit"))
                 {
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giathuematdatmatnuoc";
-                    ViewData["MenuLv3"] = "menu_dg_giathuematdatmatnuoc_dm";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == Id);
 
                     model.Loaidat = Loaidat;

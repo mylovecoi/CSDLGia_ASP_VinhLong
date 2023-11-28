@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiExcel
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -34,7 +34,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Tên đường giới hạn khu vực</label>
-                        <select class="form-control">
+                        <select asp-for="Khuvuc" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -46,7 +46,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Loại đất</label>
-                        <select  class="form-control">
+                        <select asp-for="Loaidat" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -57,7 +57,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Vị trí</label>
-                        <select  class="form-control">
+                        <select asp-for="Vitri" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -68,7 +68,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Giá đất tại bảng</label>
-                        <select  class="form-control">
+                        <select asp-for="Banggiadat" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -79,7 +79,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Giá đất cụ thể</label>
-                        <select  class="form-control">
+                        <select asp-for="Giacuthe" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -90,7 +90,7 @@
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Hệ số điều chỉnh</label>
-                        <select  class="form-control">
+                        <select asp-for="Hesodc" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -105,27 +105,28 @@
             </div>
             <div class="row">
                 <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">File dữ liệu:</label>
-                        <input type="file" accept=".xlsx"  />
+                    <div class="form-group">
+                        <label>Nhận từ dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStart"  />
                     </div>
                 </div>
                 <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Sheet</label>
-                        <input class="form-control"  step="1" />
+                    <div class="form-group">
+                        <label>Nhận đến dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStop"  />
                     </div>
                 </div>
                 <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Từ dòng</label>
-                        <input class="form-control"  step="1" />
+                    <div class="form-group">
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" />
                     </div>
                 </div>
                 <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đến dòng</label>
-                        <input class="form-control"  step="1" />
+                    <div class="form-group">
+                        <label>File dữ liệu:</label><br />
+                        <input type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>

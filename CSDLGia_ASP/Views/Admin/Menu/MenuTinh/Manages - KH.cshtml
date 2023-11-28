@@ -4,7 +4,7 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
 {
     <li class="menu-section">
-        <h4 class="menu-text text-truncate">CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ</h4>
+        <h4 class="menu-text">CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia", "Index"))
@@ -22,13 +22,251 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Định giá</span>
+                <span class="menu-text">Định giá</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    <!--Thuê đất, nước-->
+
+                    <!--Giá thuê nhà sinh viên-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá cho thuê nhà ở sinh viên</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_dm">
+                                            <a asp-controller="GiaThueNhaSVNhom" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tt">
+                                            <a asp-controller="GiaThueNhaSV" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_xd">
+                                            <a asp-controller="GiaThueNhaSVXd" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tk">
+                                            <a asp-controller="GiaThueNhaSV" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_bc">
+                                            <a asp-controller="GiaThueNhaSVBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    <!--Giá xây dựng mới-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá xây dựng mới</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_dm">
+                                            <a asp-controller="GiaXayDungMoiNhom" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tt">
+                                            <a asp-controller="GiaXayDungMoi" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_xd">
+                                            <a asp-controller="GiaXayDungMoiXd" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tk">
+                                            <a asp-controller="GiaXayDungMoi" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_bc">
+                                            <a asp-controller="GiaXayDungMoiBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    <!--Cây trồng vật nuôi-->
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Cây trồng vật nuôi</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_dm">
+                                            <a asp-controller="GiaCayTrongVatNuoiNhom" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tt">
+                                            <a asp-controller="GiaCayTrongVatNuoi" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_xd">
+                                            <a asp-controller="GiaCayTrongVatNuoiXd" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_tk">
+                                            <a asp-controller="GiaCayTrongVatNuoi" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgthuetn_bc">
+                                            <a asp-controller="GiaCayTrongVatNuoiBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+
+
+                    <!--Giá Thuê mặt đất,
+                    nước-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_dgtmdmn">
@@ -36,7 +274,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá thuê mặt đất,mặt nước">Giá thuê mặt đất,mặt nước</span>
+                                <span class="menu-text">Giá thuê mặt đất,mặt nước</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -44,24 +282,12 @@
                                 <ul class="menu-subnav">
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtmdmn_dm">
-                                            <a asp-controller="GiaThueDNDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Danh mục </span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Index"))
-                                    {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgtmdmn_tt">
                                             <a asp-controller="GiaThueDN" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -73,7 +299,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ </span>
                                             </a>
                                         </li>
                                     }
@@ -85,7 +311,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -97,7 +323,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -114,7 +340,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá rừng">Giá rừng</span>
+                                <span class="menu-text">Giá rừng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -127,7 +353,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục loại rừng</span>
+                                                <span class="menu-text">Danh mục loại rừng</span>
                                             </a>
                                         </li>
                                     }
@@ -138,7 +364,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -150,7 +376,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -162,7 +388,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -174,7 +400,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -191,7 +417,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá thuê,mua nhà xã hội">Giá thuê,mua nhà xã hội</span>
+                                <span class="menu-text">Giá thuê,mua thuê nhà ở</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -204,7 +430,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -215,31 +441,31 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.xetduyet", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtmnxh_xd">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtmnxh_ht">
                                             <a asp-controller="GiathuemuanhaxhHt" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.timkiem", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgtmnxh_tk">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgr_tk">
                                             <a asp-controller="Giathuemuanhaxh" asp-action="Search" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -251,7 +477,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -268,7 +494,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá nuớc sạch sinh hoạt">Giá nuớc sạch sinh hoạt</span>
+                                <span class="menu-text">Giá nuớc sạch sinh hoạt</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -277,45 +503,34 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dm">
-                                            <a asp-controller="GiaNuocShDmKhung" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GianuocshDm" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục khung</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dm">
-                                            <a asp-controller="GianuocshDmVung" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Danh mục vùng</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_tt">
-                                            <a asp-controller="GiaNuocSh" asp-action="Index" class="menu-link">
+                                            <a asp-controller="Gianuocsh" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
 
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.xetduyet", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_xd">
-                                            <a asp-controller="GiaNuocShXd" asp-action="Index" class="menu-link">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_ht">
+                                            <a asp-controller="GianuocshHt" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -323,11 +538,11 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.timkiem", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_tk">
-                                            <a asp-controller="GiaNuocSh" asp-action="Search" class="menu-link">
+                                            <a asp-controller="Gianuocsh" asp-action="Search" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -335,11 +550,11 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.baocao", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_bc">
-                                            <a asp-controller="GiaNuocShBc" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GianuocshBc" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -356,7 +571,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá thuê tài sản công">Giá thuê tài sản công</span>
+                                <span class="menu-text">Giá thuê tài sản công</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -370,7 +585,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -382,7 +597,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -394,7 +609,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -406,7 +621,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -418,7 +633,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -435,7 +650,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá SP, DVCI, DVSNC, HH- DV đặt hàng">Giá SP, DVCI, DVSNC, HH- DV đặt hàng</span>
+                                <span class="menu-text">Giá SP, DVCI, DVSNC, HH- DV đặt hàng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -449,7 +664,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -461,7 +676,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -473,7 +688,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -485,7 +700,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -497,7 +712,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -515,7 +730,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Dịch vụ giáo dục đào tạo">Dịch vụ giáo dục đào tạo</span>
+                                <span class="menu-text">Dịch vụ giáo dục đào tạo</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -529,7 +744,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -541,7 +756,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -553,7 +768,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -565,7 +780,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -577,7 +792,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -595,7 +810,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Dịch vụ khám chữa bệnh</span>
+                                <span class="menu-text">Dịch vụ khám chữa bệnh</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -609,7 +824,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -621,7 +836,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -633,7 +848,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -645,7 +860,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -657,7 +872,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -675,7 +890,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Mức trợ giá trợ cước">Mức trợ giá trợ cước</span>
+                                <span class="menu-text">Mức trợ giá trợ cước</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -689,7 +904,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -701,7 +916,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -713,7 +928,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -725,7 +940,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -737,7 +952,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -755,7 +970,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá thuế tài nguyên">Giá thuế tài nguyên</span>
+                                <span class="menu-text">Giá thuế tài nguyên</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -768,7 +983,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -780,7 +995,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -792,7 +1007,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -804,7 +1019,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -816,7 +1031,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -843,7 +1058,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="menu-text text-truncate" title="Giá sản phẩm dịch vụ cụ thể">Giá sản phẩm dịch vụ cụ thể</span>
+                <span class="menu-text">Giá sản phẩm dịch vụ cụ thể</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -857,7 +1072,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục</span>
+                                <span class="menu-text">Danh mục</span>
                             </a>
                         </li>
                     }
@@ -869,7 +1084,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -881,7 +1096,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -893,7 +1108,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -905,7 +1120,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                <span class="menu-text">Báo cáo thống kê</span>
                             </a>
                         </li>
                     }
@@ -930,7 +1145,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="menu-text text-truncate" title="Giá sản phẩm dịch vụ tối đa">Giá sản phẩm dịch vụ tối đa</span>
+                <span class="menu-text">Giá sản phẩm dịch vụ tối đa</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -943,7 +1158,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục</span>
+                                <span class="menu-text">Danh mục</span>
                             </a>
                         </li>
                     }
@@ -954,7 +1169,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -966,7 +1181,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -978,7 +1193,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -990,7 +1205,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                <span class="menu-text">Báo cáo thống kê</span>
                             </a>
                         </li>
                     }
@@ -1013,7 +1228,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="menu-text text-truncate" title="Khung giá sản phẩm, dịch vụ">Khung giá sản phẩm, dịch vụ</span>
+                <span class="menu-text">Khung giá sản phẩm, dịch vụ</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -1027,7 +1242,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục</span>
+                                <span class="menu-text">Danh mục</span>
                             </a>
                         </li>
                     }
@@ -1039,7 +1254,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1051,7 +1266,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1063,7 +1278,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1075,7 +1290,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                <span class="menu-text">Báo cáo thống kê</span>
                             </a>
                         </li>
                     }
@@ -1097,7 +1312,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="menu-text text-truncate" title="Giá đất">Giá đất</span>
+                <span class="menu-text">Giá đất</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -1111,7 +1326,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Giá đất cụ thể</span>
+                                <span class="menu-text">Giá đất cụ thể</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1119,23 +1334,12 @@
                                 <ul class="menu-subnav">
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dgdct_dm">
-                                            <a asp-controller="DmLoaiDat" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Danh mục các loại đất</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
-                                    {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdct_tt">
                                             <a asp-controller="GiaDatPl" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1147,7 +1351,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1159,7 +1363,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1171,7 +1375,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -1188,7 +1392,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Khung giá đất">Khung giá đất</span>
+                                <span class="menu-text">Khung giá đất</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1201,7 +1405,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1213,7 +1417,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1225,7 +1429,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1237,7 +1441,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -1254,7 +1458,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Bảng giá các loại đất">Bảng giá các loại đất</span>
+                                <span class="menu-text">Bảng giá các loại đất</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1268,7 +1472,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tư giá đất địa bàn</span>
+                                                <span class="menu-text">Thông tư giá đất địa bàn</span>
                                             </a>
                                         </li>
                                     }
@@ -1281,7 +1485,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá đất theo địa bàn</span>
+                                                <span class="menu-text">Giá đất theo địa bàn</span>
                                             </a>
                                         </li>
                                     }
@@ -1293,7 +1497,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1311,7 +1515,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá trúng thầu quyền sử dụng đất">Giá trúng thầu quyền sử dụng đất</span>
+                                <span class="menu-text">Giá trúng thầu quyền sử dụng đất</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1325,7 +1529,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1337,7 +1541,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1349,7 +1553,7 @@
                                                 <i class="menu-bullet menu-bullet-line">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1376,7 +1580,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="menu-text text-truncate" title="Giá khác">Giá khác</span>
+                <span class="menu-text">Giá khác</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -1390,7 +1594,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
+                                <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1403,7 +1607,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -1414,7 +1618,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1426,7 +1630,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1438,7 +1642,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1450,7 +1654,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -1467,7 +1671,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá hàng hoá hải quan trong xuất nhập khẩu">Giá hàng hoá hải quan trong xuất nhập khẩu</span>
+                                <span class="menu-text">Giá hàng hoá hải quan trong xuất nhập khẩu</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1480,7 +1684,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
+                                                <span class="menu-text">Danh mục</span>
                                             </a>
                                         </li>
                                     }
@@ -1491,7 +1695,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thuế hải quan</span>
+                                                <span class="menu-text">Thuế hải quan</span>
                                             </a>
                                         </li>
                                     }
@@ -1502,7 +1706,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1514,7 +1718,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1526,7 +1730,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1538,7 +1742,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -1555,7 +1759,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Giá tài sản trong tố tụng hình sự">Giá tài sản trong tố tụng hình sự</span>
+                                <span class="menu-text">Giá tài sản trong tố tụng hình sự</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1568,7 +1772,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                                <span class="menu-text">Thông tin hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1580,7 +1784,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                                <span class="menu-text">Xét duyệt hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1592,72 +1796,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    <!--lệ phí trước bạ-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.lephi", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dglp">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate" title="Giá lệ phí trước bạ">Giá lệ phí trước bạ</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_dm">
-                                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-line">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Danh mục</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_tt">
-                                            <a asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-line">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_xd">
-                                            <a asp-controller="GiaLePhiHt" asp-action="Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-line">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
-                                            </a>
-                                        </li>
-                                    }
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
-                                    {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_tk">
-                                            <a asp-controller="GiaLePhi" asp-action="Search" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-line">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -1686,7 +1825,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate" title="Mặt hàng bình ổn giá">Mặt hàng bình ổn giá</span>
+                <span class="menu-text">Mặt hàng bình ổn giá</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -1700,7 +1839,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin doanh nghiệp</span>
+                                <span class="menu-text">Thông tin doanh nghiệp</span>
                             </a>
                         </li>
                     }
@@ -1712,7 +1851,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt thông tin thay đổi doanh nghiệp</span>
+                                <span class="menu-text">Xét duyệt thông tin thay đổi doanh nghiệp</span>
                             </a>
                         </li>
                     }
@@ -1724,7 +1863,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Phân loại mặt hàng</span>
+                                <span class="menu-text">Phân loại mặt hàng</span>
                             </a>
                         </li>
                     }
@@ -1736,7 +1875,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1748,7 +1887,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1760,7 +1899,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -1772,7 +1911,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                <span class="menu-text">Báo cáo tổng hợp</span>
                             </a>
                         </li>
                     }
@@ -1798,7 +1937,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate" title="Mức giá kê khai - đăng ký">Mức giá kê khai - đăng ký</span>
+                <span class="menu-text">Mức giá kê khai - đăng ký</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -1812,7 +1951,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin doanh nghiệp</span>
+                                <span class="menu-text">Thông tin doanh nghiệp</span>
                             </a>
                         </li>
                     }
@@ -1824,7 +1963,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt thông tin thay đổi doanh nghiệp</span>
+                                <span class="menu-text">Xét duyệt thông tin thay đổi doanh nghiệp</span>
                             </a>
                         </li>
                     }
@@ -1837,7 +1976,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Dịch vụ lưu trú</span>
+                                <span class="menu-text">Dịch vụ lưu trú</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1851,7 +1990,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh sách CSKD</span>
+                                                <span class="menu-text">Danh sách CSKD</span>
                                             </a>
                                         </li>
                                     }
@@ -1863,7 +2002,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -1875,7 +2014,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -1887,7 +2026,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -1899,7 +2038,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -1917,7 +2056,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Xi măng, thép xây dựng">Xi măng, thép xây dựng</span>
+                                <span class="menu-text">Xi măng, thép xây dựng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1931,7 +2070,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -1943,7 +2082,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -1955,7 +2094,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -1967,7 +2106,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -1985,7 +2124,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Sách giáo khoa</span>
+                                <span class="menu-text">Sách giáo khoa</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -1999,7 +2138,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2011,7 +2150,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2022,7 +2161,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2034,7 +2173,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2052,7 +2191,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Etanol nhiên liệu tự nhiên không biến tính;khí tự nhiên hóa lỏng(LNG);Khí thiên nhiên nén(CNG) 123</span>
+                                <span class="menu-text">Etanol nhiên liệu tự nhiên không biến tính;khí tự nhiên hóa lỏng(LNG);Khí thiên nhiên nén(CNG) 123</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2066,7 +2205,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2078,7 +2217,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2089,7 +2228,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2101,7 +2240,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2119,7 +2258,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Thực phẩm chức năng cho trẻ em 6 tuổi">Thực phẩm chức năng cho trẻ em 6 tuổi</span>
+                                <span class="menu-text">Thực phẩm chức năng cho trẻ em 6 tuổi</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2133,7 +2272,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2145,31 +2284,31 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtpcn.giakk", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giakktktpcn">
                                             <a asp-controller="KkGiaTpcn" asp-action="Search" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol.giakk", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtpcn.giakk", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giakkbcTpcn">
                                             <a asp-controller="KkGiaTpcnBc" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2187,7 +2326,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Vật liệu xây dựng: cát, sạn">Vật liệu xây dựng: cát, sạn</span>
+                                <span class="menu-text">Vật liệu xây dựng: cát, sạn</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2201,7 +2340,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2213,7 +2352,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2225,7 +2364,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2237,7 +2376,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2255,7 +2394,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Mức thu học phí đào tạo lái xe cơ giới đường bộ">Mức thu học phí đào tạo lái xe cơ giới đường bộ</span>
+                                <span class="menu-text">Mức thu học phí đào tạo lái xe cơ giới đường bộ</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2269,7 +2408,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2281,7 +2420,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2293,7 +2432,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2304,7 +2443,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2321,7 +2460,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Than</span>
+                                <span class="menu-text">Than</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2335,7 +2474,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2347,7 +2486,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2359,7 +2498,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2371,7 +2510,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2389,7 +2528,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước</span>
+                                <span class="menu-text">Giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2403,7 +2542,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2415,7 +2554,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2427,7 +2566,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2439,7 +2578,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2457,7 +2596,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thức ăn chăn nuôi</span>
+                                <span class="menu-text">Thức ăn chăn nuôi</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2471,7 +2610,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2483,7 +2622,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2495,7 +2634,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2507,7 +2646,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2525,33 +2664,33 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Vật liệu xây dựng: đất san lấp">Vật liệu xây dựng: đất san lấp</span>
+                                <span class="menu-text">Vật liệu xây dựng: đất san lấp</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakk", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giakkdatsanlap">
                                             <a asp-controller="KkGiaDatSanLap" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkxd", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giakkdatsanlapxd">
                                             <a asp-controller="KkGiaDatSanLapXd" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2563,7 +2702,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2575,7 +2714,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2593,7 +2732,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Vật liệu xây dựng: đá xây dựng</span>
+                                <span class="menu-text">Vật liệu xây dựng: đá xây dựng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2607,7 +2746,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2619,7 +2758,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2631,7 +2770,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -2643,7 +2782,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -2661,7 +2800,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Cước vận tải hành khách bằng xe buýt theo tuyến cố định</span>
+                                <span class="menu-text">Cước vận tải hành khách bằng xe buýt theo tuyến cố định</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2675,7 +2814,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2686,7 +2825,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2697,7 +2836,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -2708,7 +2847,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -2725,7 +2864,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Cước vận tải hành khách bằng ôtô tuyến cố định">Cước vận tải hành khách bằng ôtô tuyến cố định</span>
+                                <span class="menu-text">Cước vận tải hành khách bằng ôtô tuyến cố định</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2739,7 +2878,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2751,7 +2890,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2762,7 +2901,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -2773,7 +2912,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -2790,7 +2929,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Cước vận tải hành khách bằng xe taxi">Cước vận tải hành khách bằng xe taxi</span>
+                                <span class="menu-text">Cước vận tải hành khách bằng xe taxi</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2804,7 +2943,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2816,7 +2955,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2827,7 +2966,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -2838,7 +2977,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -2855,7 +2994,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate" title="Cước vận chuyển hành khách: xe buýt, xe điện, bè mảng">Cước vận chuyển hành khách: xe buýt, xe điện, bè mảng</span>
+                                <span class="menu-text">Cước vận chuyển hành khách: xe buýt, xe điện, bè mảng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2869,7 +3008,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2881,7 +3020,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2892,7 +3031,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -2903,7 +3042,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -2920,7 +3059,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Giá dịch vụ xem ca Huế trên sông Hương</span>
+                                <span class="menu-text">Giá dịch vụ xem ca Huế trên sông Hương</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -2934,7 +3073,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -2946,7 +3085,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -2957,7 +3096,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                                <span class="menu-text">Báo cáo tổng hợp</span>
                                             </a>
                                         </li>
                                     }
@@ -2968,7 +3107,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -2986,7 +3125,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Siêu thị</span>
+                                <span class="menu-text">Siêu thị</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -3000,7 +3139,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Giá kê khai</span>
+                                                <span class="menu-text">Giá kê khai</span>
                                             </a>
                                         </li>
                                     }
@@ -3012,7 +3151,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Thông tin hồ sơ xét duyệt</span>
+                                                <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -3024,7 +3163,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Tìm kiếm thông tin</span>
+                                                <span class="menu-text">Tìm kiếm thông tin</span>
                                             </a>
                                         </li>
                                     }
@@ -3036,7 +3175,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                                <span class="menu-text">Báo cáo thống kê</span>
                                             </a>
                                         </li>
                                     }
@@ -3067,7 +3206,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Giá HH-DV khác</span>
+                <span class="menu-text">Giá HH-DV khác</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3080,7 +3219,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục hàng hóa dịch vụ</span>
+                                <span class="menu-text">Danh mục hàng hóa dịch vụ</span>
                             </a>
                         </li>
                     }
@@ -3091,7 +3230,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục hàng hóa dịch vụ(đơn vị)</span>
+                                <span class="menu-text">Danh mục hàng hóa dịch vụ(đơn vị)</span>
                             </a>
                         </li>
                     }
@@ -3102,7 +3241,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3113,7 +3252,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3124,7 +3263,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tổng hợp giá hàng hóa, dịch vụ</span>
+                                <span class="menu-text">Tổng hợp giá hàng hóa, dịch vụ</span>
                             </a>
                         </li>
                     }
@@ -3135,7 +3274,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3146,7 +3285,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                <span class="menu-text">Báo cáo tổng hợp</span>
                             </a>
                         </li>
                     }
@@ -3172,7 +3311,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Giá tài sản công</span>
+                <span class="menu-text">Giá tài sản công</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3186,7 +3325,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3198,7 +3337,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3210,7 +3349,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3237,7 +3376,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Giá lệ phí trước bạ</span>
+                <span class="menu-text">Giá lệ phí trước bạ</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3250,7 +3389,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục</span>
+                                <span class="menu-text">Danh mục</span>
                             </a>
                         </li>
                     }
@@ -3261,7 +3400,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3273,7 +3412,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3285,7 +3424,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3311,7 +3450,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</span>
+                <span class="menu-text">Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3325,7 +3464,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3337,7 +3476,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3349,7 +3488,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3357,7 +3496,7 @@
                 </ul>
             </div>
         </li>
-    }
+    }*@
 
     @*<!--Giá gốc vlxd-->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giagocvlxd", "Index"))
@@ -3375,7 +3514,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Giá gốc vật liệu xây dựng</span>
+                <span class="menu-text">Giá gốc vật liệu xây dựng</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3388,7 +3527,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tổng hợp hồ sơ</span>
+                                <span class="menu-text">Tổng hợp hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3401,7 +3540,7 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg", "Index"))
 {
     <li class="menu-section">
-        <h4 class="menu-text text-truncate">CSDL THẨM ĐỊNH GIÁ</h4>
+        <h4 class="menu-text">CSDL THẨM ĐỊNH GIÁ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg", "Index"))
@@ -3422,7 +3561,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Thẩm định giá</span>
+                <span class="menu-text">Thẩm định giá</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3436,7 +3575,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục đơn vị</span>
+                                <span class="menu-text">Danh mục đơn vị</span>
                             </a>
                         </li>
                     }
@@ -3448,7 +3587,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh mục hàng hóa</span>
+                                <span class="menu-text">Danh mục hàng hóa</span>
                             </a>
                         </li>
                     }
@@ -3460,7 +3599,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                <span class="menu-text">Thông tin hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3472,7 +3611,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                <span class="menu-text">Xét duyệt hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3484,7 +3623,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                <span class="menu-text">Tìm kiếm hồ sơ</span>
                             </a>
                         </li>
                     }
@@ -3496,7 +3635,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                <span class="menu-text">Báo cáo tổng hợp</span>
                             </a>
                         </li>
                     }
@@ -3510,7 +3649,7 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp", "Index"))
 {
     <li class="menu-section">
-        <h4 class="menu-text text-truncate">VĂN BẢN QUẢN LÝ NHÀ NƯỚC VỀ GIÁ, PHÍ, LỆ PHÍ</h4>
+        <h4 class="menu-text">VĂN BẢN QUẢN LÝ NHÀ NƯỚC VỀ GIÁ, PHÍ, LỆ PHÍ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn", "Index"))
@@ -3530,7 +3669,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Văn bản quản lý nhà nước về giá - phí, lệ phí</span>
+                <span class="menu-text">Văn bản quản lý nhà nước về giá - phí, lệ phí</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3544,7 +3683,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Các quyết định, văn bản quản lý, điều hành về giá</span>
+                                <span class="menu-text">Các quyết định, văn bản quản lý, điều hành về giá</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3552,7 +3691,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Các văn bản hướng dẫn, tham gia, góp ý</span>
+                                <span class="menu-text">Các văn bản hướng dẫn, tham gia, góp ý</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3560,7 +3699,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Báo cáo tình hình giá cả thị trường</span>
+                                <span class="menu-text">Báo cáo tình hình giá cả thị trường</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3568,7 +3707,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Các báo cáo, tài liệu học tập kinh nghiệm</span>
+                                <span class="menu-text">Các báo cáo, tài liệu học tập kinh nghiệm</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3576,7 +3715,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Kết quả, đề tài nghiên cứu khoa học</span>
+                                <span class="menu-text">Kết quả, đề tài nghiên cứu khoa học</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3584,7 +3723,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Các báo cáo, văn bản có liên quan khác</span>
+                                <span class="menu-text">Các báo cáo, văn bản có liên quan khác</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -3592,7 +3731,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Các quyết định, văn bản quản lý, điều hành về giá</span>
+                                <span class="menu-text">Các quyết định, văn bản quản lý, điều hành về giá</span>
                             </a>
                         </li>
                     }
@@ -3606,7 +3745,7 @@
 @*@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg", "Index"))
 {
     <li class="menu-section">
-        <h4 class="menu-text text-truncate">Chỉ số giá tiêu dùng CPI</h4>
+        <h4 class="menu-text">Chỉ số giá tiêu dùng CPI</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csg.chisogia", "Index"))
@@ -3625,7 +3764,7 @@
                     </svg>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-text text-truncate">Chỉ số giá</span>
+                <span class="menu-text">Chỉ số giá</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
@@ -3638,7 +3777,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Nhóm hàng hoá I-IV</span>
+                                <span class="menu-text">Nhóm hàng hoá I-IV</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -3651,7 +3790,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Kỳ gốc 2019</span>
+                                                <span class="menu-text">Kỳ gốc 2019</span>
                                             </a>
                                         </li>
                                     }
@@ -3664,7 +3803,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh sách nhóm theo thông tư</span>
+                                                <span class="menu-text">Danh sách nhóm theo thông tư</span>
                                             </a>
                                         </li>
                                     }
@@ -3680,7 +3819,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Danh sách măt hàng</span>
+                                <span class="menu-text">Danh sách măt hàng</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -3693,7 +3832,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Kỳ gốc 2019</span>
+                                                <span class="menu-text">Kỳ gốc 2019</span>
                                             </a>
                                         </li>
                                     }
@@ -3704,7 +3843,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh sách mặt hàng theo thông tư</span>
+                                                <span class="menu-text">Danh sách mặt hàng theo thông tư</span>
                                             </a>
                                         </li>
                                     }
@@ -3719,7 +3858,7 @@
                                 <i class="menu-bullet menu-bullet-line">
                                     <span></span>
                                 </i>
-                                <span class="menu-text text-truncate">Hồ sơ</span>
+                                <span class="menu-text">Hồ sơ</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -3732,7 +3871,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Danh sách hồ sơ</span>
+                                                <span class="menu-text">Danh sách hồ sơ</span>
                                             </a>
                                         </li>
                                     }
@@ -3744,7 +3883,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Xét duyệt</span>
+                                                <span class="menu-text">Xét duyệt</span>
                                             </a>
                                         </li>
                                     }
@@ -3755,7 +3894,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text text-truncate">Dự đoán</span>
+                                                <span class="menu-text">Dự đoán</span>
                                             </a>
                                         </li>
                                     }

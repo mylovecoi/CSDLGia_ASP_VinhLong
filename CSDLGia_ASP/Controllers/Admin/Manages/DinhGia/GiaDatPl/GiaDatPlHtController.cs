@@ -126,9 +126,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                        ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                        ViewData["MenuLv1"] = "menu_giadat";
+                        ViewData["MenuLv2"] = "menu_dgdct";
+                        ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -196,9 +196,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                        ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                        ViewData["MenuLv1"] = "menu_giadat";
+                        ViewData["MenuLv2"] = "menu_dgdct";
+                        ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
                     }
                     else
@@ -265,9 +265,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt giá đất cụ thể";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                        ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                        ViewData["MenuLv1"] = "menu_giadat";
+                        ViewData["MenuLv2"] = "menu_dgdct";
+                        ViewData["MenuLv3"] = "menu_dgdct_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/HoanThanh/Index.cshtml", model_join);
                     }
                 }
@@ -345,9 +345,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Thoidiem_h = DateTime.Now;
                         model.Trangthai_h = "CHT";
                     }
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                    ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_ht";
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
 
@@ -432,9 +432,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Trangthai_ad = null;
                         model.Lydo = Lydo;
                     }
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                    ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_ht";
 
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
@@ -477,9 +477,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                    ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_ht";
 
                     return RedirectToAction("Index", "GiaDatPlHt");
                 }
@@ -519,9 +519,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giadatpl";
-                    ViewData["MenuLv3"] = "menu_dg_giadatpl_xd";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_ht";
 
                     return RedirectToAction("Index", "GiaDatPlHt");
                 }

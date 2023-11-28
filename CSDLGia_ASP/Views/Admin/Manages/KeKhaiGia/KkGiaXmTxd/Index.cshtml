@@ -47,22 +47,6 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @*@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Create")
-            || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-            {
-                if (check_tt == "0")
-                {
-                    <a class="btn btn-primary font-weight-bolder" asp-controller="KeKhaiGiaXmTxd" asp-action="Create"
-                       asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
-                        <i class="la la-plus"></i>Thêm mới
-                    </a>
-                }
-                <a class="btn btn-success font-weight-bolder" asp-controller="KkGiaXmTxdImportExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
-                
-            }*@
             <a class="btn btn-primary font-weight-bolder" asp-controller="KeKhaiGiaXmTxd" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
                 <i class="la la-plus"></i>Thêm mới

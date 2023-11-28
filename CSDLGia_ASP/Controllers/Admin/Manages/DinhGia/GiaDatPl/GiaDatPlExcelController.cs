@@ -23,20 +23,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         public IActionResult Index(string Madv)
         {
-
+            var model = new GiaDatPhanLoaiCt
+            {
+                Khuvuc = "1",
+                Loaidat = "2",
+                Vitri = 3,
+                Banggiadat = 4,
+                Giacuthe = 5,
+                Hesodc = 6,
+             
+                LineStart = 2,
+                LineStop = 1000,
+                Sheet = 1,
+            };
+            ViewData["MenuLv1"] = "menu_giadat";
+            ViewData["MenuLv2"] = "menu_dgdct";
+            ViewData["MenuLv3"] = "menu_dgdct_tt";
             ViewData["Madv"] = Madv;
             ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel.cshtml");
+            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel.cshtml",model);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Import(GiaDatPhanLoaiExcel request )
+        public async Task<IActionResult> Import(GiaDatPhanLoaiCt request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaDatPhanLoaiExcel>();
+                var list_add = new List<GiaDatPhanLoaiCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -50,16 +66,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaDatPhanLoaiExcel
+                            list_add.Add(new GiaDatPhanLoaiCt
                             {
                                 Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                                 Madv = request.Madv,
+                                Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Soqd = worksheet.Cells[row, Int16.Parse(request.Soqd)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Soqd)].Value.ToString().Trim() : "",
+                                Khuvuc = worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : "",
 
+                               
                             });
                         }
 
@@ -67,10 +85,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 }
                 /*return Ok(list_add);*/
-                _db.GiaDatPhanLoaiExcel.AddRange(list_add);
+                _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
 
-                return RedirectToAction("Index", "GiaDatPl" );
+                return RedirectToAction("Create", "GiaDatPl", new { Madv = request.Madv });
             }
             else
             {

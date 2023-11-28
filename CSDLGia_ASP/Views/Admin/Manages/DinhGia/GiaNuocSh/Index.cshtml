@@ -51,15 +51,15 @@
                asp-route-Madv="@ViewData["Donvi"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
-                <a class="btn btn-danger font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Printf"
+               @* <a class="btn btn-danger font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Printf"
                asp-route-Nam="@ViewData["Nam"]" asp-route-Madv="@ViewData["Donvi"]">
                     <i class="la la-print"></i>In trang
-                </a>
+                </a>*@
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                <a class="btn bg-warning font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-text-o"></i>Tổng hợp
                 </a>

@@ -74,7 +74,7 @@ namespace CSDLGia_ASP.Helper
 
             return list;
         }
-        public static List<VMRoleList> GetRoleList()
+        public static List<VMRoleList> GetRoleListKH()
         {
             List<VMRoleList> roldelist = new List<VMRoleList> { };
             //I.CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ
@@ -299,14 +299,42 @@ namespace CSDLGia_ASP.Helper
             //7.4 Giá đất giao dịch thực tế trên thị trường
             //8. Giá giao dịch bất động sản
             //9. Giá trúng thầu của hàng hóa, dịch vụ được mua sắm theo quy định của pháp luật về đấu thầu
-            //10. Gia thị trường hàng hóa, dịch vụ cần thiết khác phục vụ công tác dự báo và quản lý nhà nước về giá
+
+            //10. Giá thị trường hàng hóa, dịch vụ cần thiết khác phục vụ công tác dự báo và quản lý nhà nước về giá
             //10.1 Quản lý Giá hàng hóa thị trường theo thông tư 116 / 2018 / TT - BTC của Bộ Tài chính
             //10.2 Quản lý Giá hàng hóa thị trường khác ( giá hàng hoá tại các siêu thị)
 
             //II.Quản lý CSDL về thẩm định giá tại địa phương
+            roldelist.Add(new VMRoleList { Role = "csdltdg", Name = "CSDL THẨM ĐỊNH GIÁ" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg", Name = "Thẩm định giá" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.dv", Name = "Thẩm định giá - Danh mục đơn vị" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.hh", Name = "Thẩm định giá - Danh mục hàng hóa" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.tt", Name = "Thẩm định giá - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.xd", Name = "Thẩm định giá - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.tk", Name = "Thẩm định giá - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.bc", Name = "Thẩm định giá - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlvethamdinhgiataidiaphuong", Name = "CSDL VỀ THẨM ĐỊNH GIÁ TẠI ĐỊA PHƯƠNG" });
             //III.Các loại giá theo yêu cầu quản lý của địa phương
             roldelist.Add(new VMRoleList { Role = "cacloaigiatheoyeucauquanlytaidiaphuong", Name = "CÁC LOẠI GIÁ THEO YÊU CẦU QUẢN LÝ TẠI ĐỊA PHƯƠNG" });
+            // 1.Giá vật liệu xây dựng
+
+            // 2.Giá cụ thể đối với: sản phẩm, dịch vụ công ích thủy lợi do địa phương quản lý
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.danhmuc", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.thongtin", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.xetduyet", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.timkiem", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.baocao", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Báo cáo" });
+            // 3.Giá tối đa đối
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida", Name = "ĐG - Giá sản phẩm dịch vụ tối đa" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.danhmuc", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.thongtin", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.xetduyet", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.timkiem", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.baocao", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Báo cáo" });
+
+            //4.Khung giá đối với: dịch vụ sử dụng đò, phà được đầu tư bằng nguồn vốn ngân sách nhà nước do tỉnh quản lý
+
             //IV.Tổng hợp báo cáo
             roldelist.Add(new VMRoleList { Role = "tonghopbaocao", Name = "TỔNG HỢP BÁO CÁO" });
             //V.Văn bản quản lý nhà nước về giá
@@ -363,12 +391,6 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.dichvucongich.baocao", Name = "ĐG - Giá SP, DVCI, DVSNC, HH- DV đặt hàng - Báo cáo" });
 
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.danhmuc", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.thongtin", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.xetduyet", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.timkiem", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvcuthe.baocao", Name = "ĐG - Giá sản phẩm dịch vụ cụ thể - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvkhunggia", Name = "ĐG - Khung giá sản phẩm, dịch vụ" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvkhunggia.danhmuc", Name = "ĐG - Khung giá sản phẩm, dịch vụ - Danh mục" });
@@ -377,12 +399,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvkhunggia.timkiem", Name = "ĐG - Khung giá sản phẩm, dịch vụ - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvkhunggia.baocao", Name = "ĐG - Khung giá sản phẩm, dịch vụ - Báo cáo" });
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida", Name = "ĐG - Giá sản phẩm dịch vụ tối đa" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.danhmuc", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.thongtin", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.xetduyet", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.timkiem", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.spdvtoida.baocao", Name = "ĐG - Giá sản phẩm dịch vụ tối đa - Báo cáo" });
+          
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.hqxnk", Name = "ĐG - Giá hàng hoá hải quan trong xuất nhập khẩu" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.hqxnk.danhmuc", Name = "ĐG - Giá hàng hoá hải quan trong xuất nhập khẩu - Danh mục" });
@@ -472,14 +489,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
             //Thẩm định giá
-            roldelist.Add(new VMRoleList { Role = "csdltdg", Name = "CSDL THẨM ĐỊNH GIÁ" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg", Name = "Thẩm định giá" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.dv", Name = "Thẩm định giá - Danh mục đơn vị" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.hh", Name = "Thẩm định giá - Danh mục hàng hóa" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.tt", Name = "Thẩm định giá - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.xd", Name = "Thẩm định giá - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.tk", Name = "Thẩm định giá - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdltdg.tdg.bc", Name = "Thẩm định giá - Báo cáo" });
+           
 
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
             roldelist.Add(new VMRoleList { Role = "", Name = "---------------------------------------------------------------------" });
@@ -516,7 +526,7 @@ namespace CSDLGia_ASP.Helper
 
             return roldelist;
         }
-        public static List<VMRoleList> GetRoleListcu()
+        public static List<VMRoleList> GetRoleList()
         {
             List<VMRoleList> roldelist = new List<VMRoleList> { };
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv", Name = "CSDL VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ" });
