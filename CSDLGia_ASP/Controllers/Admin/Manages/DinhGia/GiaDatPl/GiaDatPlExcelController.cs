@@ -77,14 +77,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 Khuvuc = worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : "",
 
-                               
+                               // Vitri = worksheet.Cells[row, (request.Vitri)].Value != null ?
+                               //             worksheet.Cells[row, Int16.Parse(request.Vitri)].Value.ToString().Trim() : "",
+
+                               //Banggiadat = worksheet.Cells[row, Int16.Parse(request.Banggiadat)].Value != null ?
+                               //             worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : "",
+
+                               // Giacuthe = worksheet.Cells[row, Int16.Parse(request.Banggiadat)].Value != null ?
+                               //             worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : "",
+
+                               // Hesodc = worksheet.Cells[row, Int16.Parse(request.Hesodc)].Value != null ?
+                               //             worksheet.Cells[row, Int16.Parse(request.Hesodc)].Value.ToString().Trim() : "",
+
+
                             });
                         }
 
                     }
 
                 }
-                /*return Ok(list_add);*/
                 _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
 
