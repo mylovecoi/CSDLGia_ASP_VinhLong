@@ -1,7 +1,10 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat;
+﻿
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
+    var Madv = ViewData["Madv"];
+    var Mahs = ViewData["Mahs"];
+    var ct = (IEnumerable<GiaDatPhanLoaiCt>)ViewData["modelct"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -25,16 +28,15 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-              HỒ SƠ GIÁ CÁC LOẠI ĐẤT
+                HỒ SƠ GIÁ CÁC LOẠI ĐẤT
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaDatPl" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_dct_store">
+    <form asp-controller="GiaDatPl" asp-action="Create" method="post" enctype="multipart/form-data" id="frm_dct_store">
         <div class="card-body">
-            <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
-       
+            <input name="Madv" value="@Madv" />
+            <input name="Mahs" value="@Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -55,13 +57,13 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" id="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control"  id="Thoidiem" />
                     </div>
                 </div>
             </div>
@@ -70,7 +72,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Thông tin hồ sơ</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
+                        <input type="text" class="form-control"  />
                     </div>
                 </div>
             </div>
@@ -78,7 +80,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Ghi chú</label>
-                        <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
+                        <textarea class="form-control" rows="2" cols="50" ></textarea>
                     </div>
                 </div>
             </div>
@@ -86,12 +88,13 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png"/>
+                        <input  type="file" accept=".jpg,.jpeg,.png" />
                     </div>
                 </div>
             </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel/Detail.cshtml")
         </div>
+       
         <div class="card-footer" style="text-align:center">
             <a asp-controller="GiaDatPl" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại

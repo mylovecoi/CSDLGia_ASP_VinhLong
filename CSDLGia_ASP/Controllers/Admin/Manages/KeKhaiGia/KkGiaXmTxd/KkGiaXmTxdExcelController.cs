@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                 /*return Ok(list_add);*/
                 _db.KkGiaXmTxdCt.AddRange(list_add);
                 _db.SaveChanges();
-
+                
                 return RedirectToAction("Create", "KeKhaiGiaXmTxd", new { Madv = request.Madv });
             }
             else
