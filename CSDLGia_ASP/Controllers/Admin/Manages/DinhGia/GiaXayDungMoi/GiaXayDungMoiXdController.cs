@@ -131,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
+                        ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                         ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
@@ -200,7 +200,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
+                        ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                         ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
@@ -269,7 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Thông tin hồ sơ giá cây trồng vật nuôi";
+                        ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                         ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";

@@ -40,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     ViewData["NhomTn"] = nhomtn;
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp cây trồng vật nuôi";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá xây dựng mới";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_bc";
@@ -185,7 +185,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["TenNhom"] = _db.GiaXayDungMoiNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;
-                    ViewData["Title"] = "Báo cáo tổng hợp cây trồng vật nuôi";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá xây dựng mới";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_bc";

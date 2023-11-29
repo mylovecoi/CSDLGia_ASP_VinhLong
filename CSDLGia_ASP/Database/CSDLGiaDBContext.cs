@@ -104,7 +104,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDvKcbCt> GiaDvKcbCt { get; set; }
         public DbSet<GiaDvKcbDm> GiaDvKcbDm { get; set; }
         public DbSet<GiaDvKcbNhom> GiaDvKcbNhom { get; set; }
-        public DbSet<GiaGdBatDongSan> GiaGdBatDongSan { get; set; }
+        
         public DbSet<GiaGocVlxdTh> GiaGocVlxdTh { get; set; }
         public DbSet<GiaHhDvCn> GiaHhDvCn { get; set; }
         public DbSet<GiaHhDvCnCt> GiaHhDvCnCt { get; set; }
@@ -209,6 +209,11 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaThueNhaSVNhom> GiaThueNhaSVNhom { get; set; }
 
 
+        // Định giá giao dịch bất động sản
+        public DbSet<GiaGiaoDichBDS> GiaGiaoDichBDS { get; set; }
+        public DbSet<GiaGiaoDichBDSCt> GiaGiaoDichBDSCt { get; set; }
+        public DbSet<GiaGiaoDichBDSDm> GiaGiaoDichBDSDm { get; set; }
+       
 
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }

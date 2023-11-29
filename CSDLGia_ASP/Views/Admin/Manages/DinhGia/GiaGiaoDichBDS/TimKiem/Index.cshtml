@@ -1,0 +1,138 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDNCt>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Nam, #Mota').change(function () {
+                var current_path_url = '/DinhGiaThueMatDatMatNuoc/Search?';
+                var nam = '&Nam=' + $('#Nam').val();
+                var mota = '&Mota=' + $('#Mota').val();
+                var url = current_path_url + nam + mota;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Tìm kiếm thông tin giá<small>&nbsp;thuê mặt đất mặt nước</small>
+            </h3>
+        </div>
+    </div>
+</div>
+<hr />
+<form asp-controller="GiaThueDN" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_tmdmn_result">
+    <div class="card-body">
+        <div class="mb-3 font-weight-bold font-size-lg">
+            <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="madv" name="madv">
+                        <option value="All">--Tất cả các đơn vị--</option>
+                        @foreach (var db in dsdiaban)
+                        {
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
+                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                }
+
+                                @foreach (var item in company)
+                                {
+
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label><b>Vị trí cho thuê</b></label>
+                    <input type="number" class="form-control" name="vitri" id="vitri" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập từ</label>
+                    <input type="date" class="form-control" name="beginTime" id="beginTime" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Thời gian nhập đến</label>
+                    <input type="date" class="form-control" name="endTime" id="endTime" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá trị từ</label>
+                    <input type="text" class="form-control money" name="beginPrice" id="beginPrice" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Giá trị đến</label>
+                    <input type="text" class="form-control money" name="endPrice" id="endPrice" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="text-align:center">
+        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+        <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Tìm</button>
+    </div>
+</form>
+<script>
+    function ValidateTmdmn() {
+        var date_tu = new Date($('#beginTime').val());
+        var date_den = new Date($('#endTime').val());
+        var date_tu_int = date_tu.getTime();
+
+        var date_den_int = date_den.getTime();
+
+        if (date_tu_int > date_den_int) {
+            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
+        } else {
+            if ($('#beginPrice').val() > $('#endPrice').val()) {
+                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_tmdmn_result").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
