@@ -11,7 +11,7 @@
     <!--begin::Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    @* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" /> *@
+    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" /> *@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" /> 
     <!--end::Fonts-->
     <!--begin::Page Vendors Styles(used by this page)-->
@@ -35,6 +35,14 @@
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
     @RenderSection("custom_style", required: false)
+    <style>
+        .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-text {
+
+            font-size: 14px !important;
+
+        }
+
+    </style>
 
 </head>
 <!--end::Head-->
