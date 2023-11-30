@@ -14,51 +14,10 @@
             <div class="modal-body">
                 <div class="row">
                     <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
-                    <div class="col-xl-4">
+                    <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Level</label>
-                            <select id="level_create" name="level_create" class="form-control">
-                                @for (var i = 1; i <= 5; i++)
-                                {
-                                    <option value="@i">@i</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã cấp I*</label>
-                            <input type="text" id="macap1_create" name="macap1_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã cấp II*</label>
-                            <input type="text" id="macap2_create" name="macap2_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã cấp III*</label>
-                            <input type="text" id="macap3_create" name="macap3_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã cấp IV*</label>
-                            <input type="text" id="macap4_create" name="macap4_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã cấp V*</label>
-                            <input type="text" id="macap5_create" name="macap5_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị tính*</label>
-                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
+                            <label>Phân loại nhà</label>
+                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -68,12 +27,6 @@
                                 <option value="TD">Đang theo dõi</option>
                                 <option value="KTD">Không theo dõi</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm, loại tài nguyên*</label>
-                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -124,7 +77,7 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaThueTaiNguyenDm" asp-action="Delete">
+            <form asp-controller="GiaThueNhaSVDm" asp-action="Delete">
                 <div class="modal-body">
                     <input hidden id="id_delete" name="id_delete" />
                 </div>
@@ -319,17 +272,10 @@
             toastr.error("Tên nhóm, loại tài nguyên không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueTaiNguyenDmCt/Store',
+                url: '/GiaThueNhaSVDmCt/Store',
                 type: 'POST',
                 data: {
                     Manhom: $('#Manhom').val(),
-                    Level: $('#level_create').val(),
-                    Cap1: $('#macap1_create').val(),
-                    Cap2: $('#macap2_create').val(),
-                    Cap3: $('#macap3_create').val(),
-                    Cap4: $('#macap4_create').val(),
-                    Cap5: $('#macap5_create').val(),
-                    Dvt: $('#dvt_create').val(),
                     Tennhom: $('#tennhom_create').val(),
                     Theodoi: $('#theodoi_create').val(),
                 },
@@ -353,7 +299,7 @@
 
     function editId(id_edit) {
         $.ajax({
-            url: '/GiaThueTaiNguyenDmCt/Edit',
+            url: '/GiaThueNhaSVDmCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -372,19 +318,12 @@
 
     function Update() {
         if ($('#tennhom_edit').val().trim() == '') {
-            toastr.error("Tên nhóm tài nguyên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm nhà không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueTaiNguyenDmCt/Update',
+                url: '/GiaThueNhaSVDmCt/Update',
                 type: 'POST',
                 data: {
-                    Level: $('#level_edit').val(),
-                    Cap1: $('#macap1_edit').val(),
-                    Cap2: $('#macap2_edit').val(),
-                    Cap3: $('#macap3_edit').val(),
-                    Cap4: $('#macap4_edit').val(),
-                    Cap5: $('#macap5_edit').val(),
-                    Dvt: $('#dvt_edit').val(),
                     Tennhom: $('#tennhom_edit').val(),
                     Theodoi: $('#theodoi_edit').val(),
                     Id: $('#id_edit').val()
@@ -404,7 +343,7 @@
 
     function Lock() {
         $.ajax({
-            url: '/GiaThueTaiNguyenDmCt/Lock',
+            url: '/GiaThueNhaSVDmCt/Lock',
             type: 'POST',
             data: {
                 Manhom: $('#manhom_lock').val(),
@@ -427,12 +366,6 @@
             toastr.error("File đính kèm không được để trống!!!", "Lỗi!");
         } else {
             var file = new FormData();
-            file.append("Level", $("#level_excel").val());
-            file.append("Cap1", $("#cap1_excel").val());
-            file.append("Cap2", $("#cap2_excel").val());
-            file.append("Cap3", $("#cap3_excel").val());
-            file.append("Cap4", $("#cap4_excel").val());
-            file.append("Cap5", $("#cap5_excel").val());
             file.append("Ten", $("#ten_excel").val());
             file.append("Dvt", $("#dvt_excel").val());
             file.append("FormFile", $("#file_excel")[0].files[0]);
@@ -442,7 +375,7 @@
             file.append("Manhom", $("#Manhom").val());
 
             $.ajax({
-                url: '/GiaThueTaiNguyenDmCt/Excel',
+                url: '/GiaThueNhaSVDmCt/Excel',
                 type: 'POST',
                 data: file,
                 processData: false,

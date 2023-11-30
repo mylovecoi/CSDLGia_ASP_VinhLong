@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 
         [Route("GiaThueNhaSVDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Level, string Cap1, string Cap2, string Cap3, string Cap4, string Cap5, string Dvt, string Tennhom, string Theodoi)
+        public JsonResult Store(string Manhom,string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -66,13 +66,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     var request = new GiaThueNhaSVDm
                     {
                         Manhom = Manhom,
-                        Level = Level,
-                        Cap1 = Cap1,
-                        Cap2 = Cap2,
-                        Cap3 = Cap3,
-                        Cap4 = Cap4,
-                        Cap5 = Cap5,
-                        Dvt = Dvt,
                         Ten = Tennhom,
                         Theodoi = Theodoi,
                         Created_at = DateTime.Now,
@@ -109,53 +102,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
-                        result += "<div class='col-xl-4'>";
+
+                        result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Level</label>";
-                        result += "<select id='level_edit' name='level_edit' class='form-control'>";
-                        for (var i = 1; i <= 5; i++)
-                        {
-                            result += "<option value='" + i + "' " + ((string)model.Level == i.ToString() ? "selected" : "") + ">" + i + "</option>";
-                        }
-                        result += "</select>";
+                        result += "<label>Tên nhóm nhà*</label>";
+                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Ten + "'/>";
                         result += "</div>";
                         result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã cấp I*</label>";
-                        result += "<input type='text' id='macap1_edit' name='macap1_edit' class='form-control' value='" + model.Cap1 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã cấp II*</label>";
-                        result += "<input type='text' id='macap2_edit' name='macap2_edit' class='form-control' value='" + model.Cap2 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã cấp III*</label>";
-                        result += "<input type='text' id='macap3_edit' name='macap3_edit' class='form-control' value='" + model.Cap3 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã cấp IV*</label>";
-                        result += "<input type='text' id='macap4_edit' name='macap4_edit' class='form-control' value='" + model.Cap4 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã cấp V*</label>";
-                        result += "<input type='text' id='macap5_edit' name='macap5_edit' class='form-control' value='" + model.Cap5 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-6'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đơn vị tính*</label>";
-                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Dvt + "'/>";
-                        result += "</div>";
-                        result += "</div>";
+
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Trạng thái</label>";
@@ -163,12 +117,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                         result += "<option value='TD' " + ((string)model.Theodoi == "TD" ? "selected" : "") + ">Theo dõi</option>";
                         result += "<option value='KTD' " + ((string)model.Theodoi == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
                         result += "</select>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên nhóm, loại tài nguyên*</label>";
-                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Ten + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -199,20 +147,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 
         [Route("GiaThueNhaSVDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Level, string Cap1, string Cap2, string Cap3, string Cap4, string Cap5, string Dvt, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id,string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Edit"))
                 {
                     var model = _db.GiaThueNhaSVDm.FirstOrDefault(t => t.Id == Id);
-                    model.Level = Level;
-                    model.Cap1 = Cap1;
-                    model.Cap2 = Cap2;
-                    model.Cap3 = Cap3;
-                    model.Cap4 = Cap4;
-                    model.Cap5 = Cap5;
-                    model.Dvt = Dvt;
                     model.Ten = Tennhom;
                     model.Theodoi = Theodoi;
                     model.Updated_at = DateTime.Now;

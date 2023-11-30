@@ -75,7 +75,7 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaThueTaiNguyenNhom" asp-action="Delete">
+            <form asp-controller="GiaThueNhaSVNhom" asp-action="Delete">
                 <div class="modal-body">
                     <div class="form-group form-group-last">
                         <div class="alert alert-custom alert-default" role="alert">
@@ -118,7 +118,7 @@
             toastr.error("Tên nhà trọ sinh viên không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueTaiNguyenDm/Store',
+                url: '/GiaThueNhaSVDm/Store',
                 type: 'POST',
                 data: {
                     Tennhom: $('#tennhom_create').val(),
@@ -144,7 +144,7 @@
 
     function editId(id_edit) {
         $.ajax({
-            url: '/GiaThueTaiNguyenDm/Edit',
+            url: '/GiaThueNhaSVDm/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -166,7 +166,7 @@
             toastr.error("Tên nhà trọ sinh viên không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueTaiNguyenDm/Update',
+                url: '/GiaThueNhaSVDm/Update',
                 type: 'POST',
                 data: {
                     Tennhom: $('#tennhom_edit').val(),

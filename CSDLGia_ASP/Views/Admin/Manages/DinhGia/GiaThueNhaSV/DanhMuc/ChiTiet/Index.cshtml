@@ -28,7 +28,7 @@
                 </h3>
             </div>
             <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
                     <i class="la la-plus"></i>Thêm mới
@@ -51,16 +51,9 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th>Level</th>
-                    <th>Cấp I</th>
-                    <th>Cấp II</th>
-                    <th>Cấp III</th>
-                    <th>Cấp IV</th>
-                    <th>Cấp V</th>
-                    <th>Tên nhóm, loại tài nguyên</th>
-                    <th>Đơn vị tính</th>
+                    <th>Phân loại nhà</th>
                     <th>Theo dõi</th>
-                    <th>Thao tác</th>
+                    <th width="12%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,15 +61,8 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: left">@item.Level</td>
-                        <td style="text-align: left">@item.Cap1</td>
-                        <td style="text-align: left">@item.Cap2</td>
-                        <td style="text-align: left">@item.Cap3</td>
-                        <td style="text-align: left">@item.Cap4</td>
-                        <td style="text-align: left">@item.Cap5</td>
                         <td class="active">@item.Ten</td>
-                        <td style="text-align: center">@item.Dvt</td>
-                        <td style="text-align: center">
+                        <td  style="text-align: center">
                             @if (item.Theodoi == "TD")
                             {
                                 <span class="label font-weight-bold label-lg  label-primary label-inline">Theo dõi</span>
@@ -88,7 +74,7 @@
                         </td>
                         <td>
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
                                 data-target="#Edit_Modal" onclick="editId('@item.Id')">
@@ -96,7 +82,7 @@
                                 </button>
                             }
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
                                 data-target="#Delete_Modal" onclick="getId('@item.Id')">

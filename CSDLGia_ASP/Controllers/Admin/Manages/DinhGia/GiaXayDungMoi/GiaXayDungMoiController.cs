@@ -160,11 +160,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         chitiet.Add(new GiaXayDungMoiCt()
                         {
                             Mahs = model.Mahs,
-                            Cap1 = item.Cap1,
-                            Cap2 = item.Cap2,
-                            Cap3 = item.Cap3,
-                            Cap4 = item.Cap4,
-                            Cap5 = item.Cap5,
                             Ten = item.Ten,
                             Dvt = item.Dvt,
                             Level = item.Level,
@@ -438,19 +433,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     {
                         model.Madv_t = macqcq_chuyen;
                         model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CHT";
+                        model.Trangthai_t = "HT";
                     }
                     else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
                     {
                         model.Madv_ad = macqcq_chuyen;
                         model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CHT";
+                        model.Trangthai_ad = "HT";
                     }
                     else
                     {
                         model.Madv_h = macqcq_chuyen;
                         model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CHT";
+                        model.Trangthai_h = "HT";
                     }
                     _db.GiaXayDungMoi.Update(model);
                     _db.SaveChanges();

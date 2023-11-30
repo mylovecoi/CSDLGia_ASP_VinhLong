@@ -89,7 +89,6 @@
                     <th>Thời điểm xác định</th>
                     <th>Nội dung</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -102,20 +101,12 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td class="active">@item.TendvCh</td>
                             <td style="text-align: center">@item.Soqd</td>
-                            <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td>@item.Cqbh</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "CHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "HHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
-                                }
                                 @if (item.Trangthai == "HT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành</span>
                                 }
                                 @if (item.Trangthai == "CB")
                                 {
@@ -124,20 +115,20 @@
                                 @if (item.Trangthai == "HCB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+
                                 }
                                 @if (item.Trangthai == "CCB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-                            <td style="text-align: left">@item.Tencqcq</td>
                             <td>
                                 <a asp-controller="GiaXayDungMoi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.xetduyet", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")
                                     {
@@ -178,6 +169,7 @@
 
                                         }
                                     }
+
                                 }
 
                                 <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"

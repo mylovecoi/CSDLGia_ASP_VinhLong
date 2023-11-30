@@ -40,20 +40,20 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giáxây dựng mới
+                Thông tin hồ sơ giá xây dựng mới
             </h3>
         </div>
         <div >
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index">
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaXayDungMoiExcel" asp-action="Index">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-                <a class="btn bg-danger font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
+                <a class="btn bg-warning font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index1"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-text-o"></i>Tổng hợp
                 </a>
@@ -125,29 +125,18 @@
                             <td style="text-align: center" width="10%">@item.Soqd</td>
                             <td width="38%">@item.Cqbh</td>
                             <td style="text-align: center" width="15%">
+                                @if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã hoàn thành và gửi đi</span>
+                                }
                                 @if (item.Trangthai == "CHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
                                 }
                                 @if (item.Trangthai == "HHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "CB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
-                                }
-                                @if (item.Trangthai == "HCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
-                                }
-                                @if (item.Trangthai == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                    <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
                             @if (item.Macqcq != null)
@@ -171,13 +160,13 @@
                                 </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Edit"))
                                     {
                                         <a asp-controller="GiaXayDungMoi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Delete"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi", "Delete"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>

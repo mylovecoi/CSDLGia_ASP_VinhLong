@@ -213,7 +213,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaGiaoDichBDS> GiaGiaoDichBDS { get; set; }
         public DbSet<GiaGiaoDichBDSCt> GiaGiaoDichBDSCt { get; set; }
         public DbSet<GiaGiaoDichBDSDm> GiaGiaoDichBDSDm { get; set; }
-       
+        public DbSet<GiaGiaoDichBDSNhom> GiaGiaoDichBDSNhom { get; set; }
 
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }

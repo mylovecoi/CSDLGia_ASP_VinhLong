@@ -160,14 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                         chitiet.Add(new GiaThueNhaSVCt()
                         {
                             Mahs = model.Mahs,
-                            Cap1 = item.Cap1,
-                            Cap2 = item.Cap2,
-                            Cap3 = item.Cap3,
-                            Cap4 = item.Cap4,
-                            Cap5 = item.Cap5,
                             Ten = item.Ten,
-                            Dvt = item.Dvt,
-                            Level = item.Level,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
@@ -436,19 +429,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                     {
                         model.Madv_t = macqcq_chuyen;
                         model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CHT";
+                        model.Trangthai_t = "HT";
                     }
                     else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
                     {
                         model.Madv_ad = macqcq_chuyen;
                         model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CHT";
+                        model.Trangthai_ad = "HT";
                     }
                     else
                     {
                         model.Madv_h = macqcq_chuyen;
                         model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CHT";
+                        model.Trangthai_h = "HT";
                     }
                     _db.GiaThueNhaSV.Update(model);
                     _db.SaveChanges();
@@ -522,7 +515,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
                                  select new GiaThueNhaSVCt
                                  {
                                      Id = giathuetnct.Id,
-                                     Dvt = giathuetnct.Dvt,
                                      Gia = giathuetnct.Gia,
                                      Mahs = giathuetnct.Mahs,
                                      Madv = giathuetn.Madv,
@@ -630,17 +622,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
+
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
-            result += "<th>Mã nhóm tài nguyên cấp 1</th>";
-            result += "<th>Mã nhóm tài nguyên cấp 2</th>";
-            result += "<th>Mã nhóm tài nguyên cấp 3</th>";
-            result += "<th>Mã nhóm tài nguyên cấp 4</th>";
-            result += "<th>Mã nhóm tài nguyên cấp 5</th>";
-            result += "<th width='25%'>Tên nhóm, loại tài nguyên</th>";
-            result += "<th>Đơn vị tính</th>";
-            result += "<th>Giá tính nhà cho sinh viên thuê (đồng)</th>";
+            result += "<th width='25%'>Phân loại nhà cho thuê</th>";
+            result += "<th>Giá cho thuê (đồng)</th>";
             result += "<th width='9%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -650,14 +637,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
             {
                 result += "<tr>";
                 result += "<td class='text-center'>" + record++ + "</td>";
-                result += "<td class='text-center'>" + item.Cap1 + "</td>";
-                result += "<td class='text-center'>" + item.Cap2 + "</td>";
-                result += "<td class='text-center'>" + item.Cap3 + "</td>";
-                result += "<td class='text-center'>" + item.Cap4 + "</td>";
-                result += "<td class='text-center'>" + item.Cap5 + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
-                result += "<td class='text-center'>" + item.Dvt + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

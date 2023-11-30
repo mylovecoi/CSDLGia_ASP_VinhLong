@@ -12,15 +12,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
-        public string Mahs { get; set; }
-        public string Level { get; set; }
-        public string Cap1 { get; set; }
-        public string Cap2 { get; set; }
-        public string Cap3 { get; set; }
-        public string Cap4 { get; set; }
-        public string Cap5 { get; set; }
         public string Ten { get; set; }
-        public string Dvt { get; set; }
+        public string Mahs { get; set; }
         public double Gia { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }

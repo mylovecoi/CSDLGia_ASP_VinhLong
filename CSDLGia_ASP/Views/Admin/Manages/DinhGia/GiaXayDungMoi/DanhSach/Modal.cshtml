@@ -19,9 +19,8 @@
                 <hr />
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Đơn vị báo cáo</label>
+                        <div  class="col-xl-12">
+                            <div hidden class="form-group fv-plugins-icon-container">
                                 <select id="MadvBc" name="MadvBc" class="form-control">
                                     @foreach (var dv in dsdonvi)
                                     {
@@ -34,7 +33,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại xây dựng mới</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option value="khac">--Tất cả các loại xây dựng mới--</option>
+                                    <option>--Chọn--</option>
                                     @foreach (var nhom in nhomtn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
@@ -60,7 +59,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        Đồng ý hoàn thành hồ sơ và gửi đi?
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>

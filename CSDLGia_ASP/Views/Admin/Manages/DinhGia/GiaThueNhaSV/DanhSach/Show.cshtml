@@ -30,17 +30,9 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th style="text-align: center; font-weight: bold" colspan="5" width="36%">Mã nhóm, loại tài nguyên</th>
             <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Tên nhóm, loại tài nguyên</th>
             <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
             <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá tính thuế tài nguyên (đồng)</th>
-        </tr>
-        <tr>
-            <th style="text-align: center; font-weight: bold">Cấp I</th>
-            <th style="text-align: center; font-weight: bold">Cấp II</th>
-            <th style="text-align: center; font-weight: bold">Cấp III</th>
-            <th style="text-align: center; font-weight: bold">Cấp IV</th>
-            <th style="text-align: center; font-weight: bold">Cấp V</th>
         </tr>
     </thead>
     <tbody>
@@ -49,14 +41,8 @@
             @foreach (var item in Model.GiaThueNhaSVCt)
             {
                 <tr>
-                    <td style="text-align: center;">@item.Cap1</td>
-                    <td style="text-align: center;">@item.Cap2</td>
-                    <td style="text-align: center;">@item.Cap3</td>
-                    <td style="text-align: center;">@item.Cap4</td>
-                    <td style="text-align: center;">@item.Cap5</td>
                     <td style="text-align: left;">@item.Ten</td>
-                    <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gia)</td>
+                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gia)</td>
                 </tr>
             }
         }

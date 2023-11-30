@@ -412,7 +412,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_h = null;
                         model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
-                        model.Lydo = Lydo;
+                        
                     }
 
                     if (madv_tralai == model.Madv_t)
@@ -421,7 +421,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_t = null;
                         model.Thoidiem_t = DateTime.MinValue;
                         model.Trangthai_t = null;
-                        model.Lydo = Lydo;
+                      
                     }
 
                     if (madv_tralai == model.Madv_ad)
@@ -430,7 +430,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_ad = null;
                         model.Thoidiem_ad = DateTime.MinValue;
                         model.Trangthai_ad = null;
-                        model.Lydo = Lydo;
+                      
                     }
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
