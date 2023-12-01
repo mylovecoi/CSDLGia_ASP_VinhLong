@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 {
@@ -59,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                         }
 
 
-                        var model = _db.GiaDvGdDt.Where(t => t.Madv == Madv ).ToList();
+                        var model = _db.GiaDvGdDt.Where(t => t.Madv == Madv).ToList();
 
 
                         if (string.IsNullOrEmpty(Nam))
@@ -142,8 +137,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                         chitiet.Add(new GiaDvGdDtCt()
                         {
                             Mahs = model.Mahs,
-                            Maspdv = item.Maspdv,                          
-                            Gc = "CXD",                           
+                            Maspdv = item.Maspdv,
+                            Gc = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -153,7 +148,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
                     model.GiaDvGdDtCt = _db.GiaDvGdDtCt.Where(t => t.Mahs == model.Mahs).ToList();
 
-                    
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["GiaDvGdDtDm"] = _db.GiaDvGdDtDm.ToList();
                     ViewData["Mahs"] = model.Mahs;
@@ -206,7 +201,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     _db.GiaDvGdDtCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = request.Madv});
+                    return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = request.Madv });
                 }
                 else
                 {
@@ -330,7 +325,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     _db.GiaDvGdDtCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaoDucDaoTao", new {Madv = request.Madv });
+                    return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = request.Madv });
                 }
                 else
                 {
@@ -383,7 +378,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 {
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                 
+
                     ViewData["Tendv"] = _db.GiaDvGdDtDm.ToList();
 
                     ViewData["Title"] = "Tìm kiếm thông tin định giá giáo dục đào tạo";

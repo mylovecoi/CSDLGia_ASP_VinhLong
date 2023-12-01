@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 {
@@ -641,7 +635,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
             foreach (var item in model)
             {
                 result += "<tr>";
-                result += "<td class='text-center'>" + record++ + "</td>";   
+                result += "<td class='text-center'>" + record++ + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                 result += "<td class='text-center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";

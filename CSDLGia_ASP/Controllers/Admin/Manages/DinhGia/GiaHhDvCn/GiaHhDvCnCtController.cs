@@ -1,19 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+﻿using CSDLGia_ASP.Database;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn.GiaHhDvCnCt
 {
@@ -47,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn.GiaHhDvCnCt
             return Json(data);
         }
 
-       
+
 
 
         [Route("GiaHhDvCnCt/Edit")]
@@ -59,7 +48,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn.GiaHhDvCnCt
 
             if (model != null)
             {
-                
+
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<input  type='text' id='mahs_edit' name='mahs_edit' value='" + model.Mahs + "' class='form-control'/>";
                 result += "<div class='row text-left'>";
@@ -96,10 +85,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn.GiaHhDvCnCt
 
         [Route("GiaHhDvCnCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id,string Mahs,string Maspdv, string Dongia)
+        public JsonResult Update(int Id, string Mahs, string Maspdv, string Dongia)
         {
             var model = _db.GiaHhDvCnCt.FirstOrDefault(t => t.Id == Id);
-            model.Id= Id;
+            model.Id = Id;
             model.Maspdv = Maspdv;
             model.Dongia = Dongia;
             model.Updated_at = DateTime.Now;

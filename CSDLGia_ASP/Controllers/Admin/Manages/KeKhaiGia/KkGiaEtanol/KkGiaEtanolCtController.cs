@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
 
         [Route("KkGiaEtanolCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs,string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGiaEtanolCt
             {

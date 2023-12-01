@@ -1,20 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 {
@@ -95,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.baocao", "Index"))
                 {
                     var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                               
+
                     var modelct = (from a in _db.GiaDvGdDtCt.ToList()
                                    join b in _db.GiaDvGdDtDm on a.Maspdv equals b.Maspdv
                                    select new GiaDvGdDtCt
@@ -120,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
 
                                    }); ;
-                    
+
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = modelct;

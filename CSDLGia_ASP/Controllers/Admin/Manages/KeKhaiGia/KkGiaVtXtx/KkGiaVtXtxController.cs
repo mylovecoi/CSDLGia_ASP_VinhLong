@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
 {
@@ -47,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
-                    
+
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -442,7 +437,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("KeKhaiGiaVtXtx/Printf")]
         [HttpGet]
         public IActionResult Printf(string Nam, string Mota)
@@ -468,7 +463,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXtx
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
-                    
+
 
                     if (string.IsNullOrEmpty(Nam))
                     {

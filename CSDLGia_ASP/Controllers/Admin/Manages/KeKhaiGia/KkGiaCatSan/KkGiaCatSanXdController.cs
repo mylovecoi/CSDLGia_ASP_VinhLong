@@ -219,7 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                     var model = _db.KkGia.FirstOrDefault(t => t.Id == id_tralai);
 
                     //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq )
+                    if (madv_tralai == model.Macqcq)
                     {
                         model.Macqcq = null;
                         model.Trangthai = "BTL";
@@ -233,14 +233,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Lydo_h = Lydo;
                     }
 
-                    if (madv_tralai == model.Macqcq_t )
+                    if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "BTL";
                         model.Lydo_t = Lydo;
                     }
 
-                    if (madv_tralai == model.Macqcq_ad )
+                    if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "BTL";
@@ -260,7 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                         model.Lydo_h = Lydo;
                         model.Trangthai_h = null;
                     }
-                    
+
 
                     if (madv_tralai == model.Madv_t)
                     {

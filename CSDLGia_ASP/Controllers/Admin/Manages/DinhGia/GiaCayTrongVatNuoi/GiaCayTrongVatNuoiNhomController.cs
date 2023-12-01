@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
 {
@@ -35,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_caytrongvatnuoi";
                     ViewData["MenuLv3"] = "menu_dg_caytrongvatnuoi_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhMuc/Nhom/Index.cshtml",model);
+                    return View("Views/Admin/Manages/DinhGia/GiaCayTrongVatNuoi/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else
                 {

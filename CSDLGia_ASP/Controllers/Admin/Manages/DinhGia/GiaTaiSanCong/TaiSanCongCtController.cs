@@ -1,18 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 {
@@ -27,7 +17,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
         [Route("GiaTaiSanCongCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Tentaisan, string Dacdiem, double Giathue ,double Giaconlai , double Giapheduyet , double Giaban)
+        public JsonResult Store(string Mahs, string Tentaisan, string Dacdiem, double Giathue, double Giaconlai, double Giapheduyet, double Giaban)
         {
             var model = new GiaTaiSanCongCt
             {
@@ -78,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             result += "<th style='text-align:center'>Giá bán<br />(thanh lý)</th>";
             result += "<th style='text-align:center'>Thao tác</th>";
             result += "</tr></thead><tbody>";
-            if(model != null)
+            if (model != null)
             {
                 foreach (var item in model)
                 {

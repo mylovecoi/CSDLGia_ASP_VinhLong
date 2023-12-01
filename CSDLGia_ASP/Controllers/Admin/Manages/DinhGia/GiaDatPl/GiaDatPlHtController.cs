@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -148,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 model = model.Where(t => t.Madv_t == Madv).ToList();
                             }
                         }
-                       
+
 
                         var model_new = (from kk in model
                                          select new CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat
@@ -412,7 +406,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_h = null;
                         model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
-                        
+
                     }
 
                     if (madv_tralai == model.Madv_t)
@@ -421,7 +415,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_t = null;
                         model.Thoidiem_t = DateTime.MinValue;
                         model.Trangthai_t = null;
-                      
+
                     }
 
                     if (madv_tralai == model.Madv_ad)
@@ -430,7 +424,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         model.Madv_ad = null;
                         model.Thoidiem_ad = DateTime.MinValue;
                         model.Trangthai_ad = null;
-                      
+
                     }
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";

@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 {
@@ -75,12 +68,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                                      Thoihan = kk.Thoihan,
                                  });
 
-                    if(loaihang != "all")
+                    if (loaihang != "all")
                     {
                         model = model.Where(t => t.Loaihang == loaihang);
                     }
 
-                    if(phanloai != "all")
+                    if (phanloai != "all")
                     {
                         model = model.Where(t => t.Thoihan == phanloai);
                     }
@@ -116,11 +109,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", "Index"))
                 {
                     var model = _db.KkGiaDvLtCskd;
-                    foreach(var tt in model)
+                    foreach (var tt in model)
                     {
                         var modelkk = _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).ToList();
                         tt.Lankk = modelkk.Count;
-                        if(modelkk.Count > 0)
+                        if (modelkk.Count > 0)
                         {
                             var modelkkgn = _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).Max(t => t.Id);
                             var modelgn = _db.KkGia.FirstOrDefault(t => t.Manghe == "DVLT" && t.Id == modelkkgn);

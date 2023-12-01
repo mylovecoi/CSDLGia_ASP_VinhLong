@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 {
@@ -203,27 +196,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                     }
 
                     var model_join = (from kk in model
-                                 join com in _db.Company on kk.Madv equals com.Madv
-                                 select new VMKkMhBog
-                                 {
-                                     Id = kk.Id,
-                                     Mahs = kk.Mahs,
-                                     Thoidiem = kk.Thoidiem,
-                                     Ngayhieuluc = kk.Ngayhieuluc,
-                                     Manghe = kk.Manghe,
-                                     Socv = kk.Socv,
-                                     Socvlk = kk.Socvlk,
-                                     Ngaycvlk = kk.Ngaycvlk,
-                                     Ptnguyennhan = kk.Ptnguyennhan,
-                                     Chinhsachkm = kk.Chinhsachkm,
-                                     Dtll = kk.Dtll,
-                                     Sohsnhan = kk.Sohsnhan,
-                                     Ngaychuyen = kk.Ngaychuyen,
-                                     Ngaynhan = kk.Ngaynhan,
-                                     Trangthai = kk.Trangthai,
-                                     Madv = com.Madv,
-                                     Tendn = com.Tendn,
-                                 });
+                                      join com in _db.Company on kk.Madv equals com.Madv
+                                      select new VMKkMhBog
+                                      {
+                                          Id = kk.Id,
+                                          Mahs = kk.Mahs,
+                                          Thoidiem = kk.Thoidiem,
+                                          Ngayhieuluc = kk.Ngayhieuluc,
+                                          Manghe = kk.Manghe,
+                                          Socv = kk.Socv,
+                                          Socvlk = kk.Socvlk,
+                                          Ngaycvlk = kk.Ngaycvlk,
+                                          Ptnguyennhan = kk.Ptnguyennhan,
+                                          Chinhsachkm = kk.Chinhsachkm,
+                                          Dtll = kk.Dtll,
+                                          Sohsnhan = kk.Sohsnhan,
+                                          Ngaychuyen = kk.Ngaychuyen,
+                                          Ngaynhan = kk.Ngaynhan,
+                                          Trangthai = kk.Trangthai,
+                                          Madv = com.Madv,
+                                          Tendn = com.Tendn,
+                                      });
 
                     if (phanloai == "ngaychuyen")
                     {

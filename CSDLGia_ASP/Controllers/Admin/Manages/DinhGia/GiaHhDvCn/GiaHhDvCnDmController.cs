@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 {
@@ -210,7 +205,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(t => t.Id == Id);
-                    model.Tenspdv= Tennhom;
+                    model.Tenspdv = Tennhom;
                     model.Mota = Mota;
                     model.Dvt = Dvt;
                     model.Updated_at = DateTime.Now;

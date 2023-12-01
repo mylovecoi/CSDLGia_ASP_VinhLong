@@ -1,20 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 {
@@ -69,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/BaoCao/BcTH.cshtml",model);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/BaoCao/BcTH.cshtml", model);
                 }
                 else
                 {
@@ -92,7 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.dvci.baocao", "Index"))
                 {
                     var model = _db.GiaSpDvCi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                               
+
                     var modelct = (from a in _db.GiaSpDvCiCt.ToList()
                                    join b in _db.GiaSpDvCiDm on a.Maspdv equals b.Maspdv
                                    select new GiaSpDvCiCt
@@ -104,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["ct"] = modelct;                
+                    ViewData["ct"] = modelct;
                     ViewData["Title"] = "Báo cáo chi tiết SP, DVCI, DVSNC, HH-DV đặt hàng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";

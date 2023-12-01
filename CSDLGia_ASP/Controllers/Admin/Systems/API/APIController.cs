@@ -1,12 +1,9 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
-using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
@@ -404,7 +401,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["KetNoiAPI_HoSo_ChiTiet"] = _db.KetNoiAPI_HoSo_ChiTiet.Where(t => t.Maso == Maso).OrderBy(t => t.Stt);
                     ViewData["Stt"] = stt;
                     ViewData["Maso"] = Maso;
-                    ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x=>x.Maso==Maso).Menu;
+                    ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x => x.Maso == Maso).Menu;
                     ViewData["Title"] = "Thiết lập chung kết nối API";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
@@ -426,8 +423,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
         [Route("KetNoiAPI/ThietLapHoso/Store")]
         [HttpPost]
-        public JsonResult ThietLapHosoStore(string Tendong, string Tentruong,string Kieudl,
-            string Dinhdang, string Dodai, bool Batbuoc, string Macdinh, int Stt,string Maso)
+        public JsonResult ThietLapHosoStore(string Tendong, string Tentruong, string Kieudl,
+            string Dinhdang, string Dodai, bool Batbuoc, string Macdinh, int Stt, string Maso)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -448,7 +445,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             Stt = Stt,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
-                            Maso=Maso,
+                            Maso = Maso,
                         };
 
                         _db.KetNoiAPI_HoSo.Add(request);
@@ -575,7 +572,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
         [Route("KetNoiAPI/ThietLapHoso/Update")]
         [HttpPost]
-        public IActionResult ThietLapHosoUpdate(int Id,string Maso,string Tentruong, string Tendong, string Kieudl,
+        public IActionResult ThietLapHosoUpdate(int Id, string Maso, string Tentruong, string Tendong, string Kieudl,
             string Dinhdang, string Dodai, bool Batbuoc, string Macdinh, int Stt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -747,7 +744,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     var serverName = HttpContext.Session.GetString("ServerName");
                     foreach (var md in model)
                     {
-                        md.LinkAPI = serverName+"/api/getAPI?name=" + md.Username +
+                        md.LinkAPI = serverName + "/api/getAPI?name=" + md.Username +
                                      "&token=" + Helper.Helpers.StringtoMD5(md.Username + md.Madv) + "&maso=" + Maso;
                     }
                     ViewData["Maso"] = Maso;

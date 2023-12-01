@@ -1,18 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 {
@@ -28,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDatCt/Store")]
         [HttpPost]
         public JsonResult Store(string Mahs, string Solo, string Sothua, string Tobando, string Mota,
-            double Dientich, string Dvt , double Giakhoidiem ,double Giadaugia)
+            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia)
         {
             var model = new GiaDauGiaDatCt
             {

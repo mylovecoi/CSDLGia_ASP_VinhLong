@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
 {

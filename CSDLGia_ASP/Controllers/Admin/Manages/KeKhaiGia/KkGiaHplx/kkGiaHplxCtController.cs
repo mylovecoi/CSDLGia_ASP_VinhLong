@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaHplx
 {

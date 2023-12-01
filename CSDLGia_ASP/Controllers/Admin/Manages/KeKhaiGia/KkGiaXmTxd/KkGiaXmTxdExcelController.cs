@@ -1,12 +1,12 @@
-﻿using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System;
-using CSDLGia_ASP.Database;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 {
@@ -45,7 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                
+
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<KkGiaXmTxdCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -89,12 +89,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                         }
 
                     }
-                    
+
                 }
                 /*return Ok(list_add);*/
                 _db.KkGiaXmTxdCt.AddRange(list_add);
                 _db.SaveChanges();
-                
+
                 return RedirectToAction("Create", "KeKhaiGiaXmTxd", new { Madv = request.Madv });
             }
             else

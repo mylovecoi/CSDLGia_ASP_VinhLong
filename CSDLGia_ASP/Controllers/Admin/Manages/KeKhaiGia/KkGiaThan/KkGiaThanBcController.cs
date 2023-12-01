@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
 {
@@ -83,26 +76,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
                                      Tendn = com.Tendn,
                                  });
 
-                    if(phanloai == "ngaychuyen")
+                    if (phanloai == "ngaychuyen")
                     {
-                        if(time == "ngay")
+                        if (time == "ngay")
                         {
                             model = model.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
-                        }else if(time == "thang")
+                        }
+                        else if (time == "thang")
                         {
                             model = model.Where(t => t.Ngaychuyen.Month == int.Parse(thang) && t.Ngaychuyen.Year == int.Parse(nam));
                         }
                         else
                         {
-                            if(quy == "1")
+                            if (quy == "1")
                             {
                                 tungay = new DateTime(int.Parse(nam), 1, 1);
                                 denngay = new DateTime(int.Parse(nam), 3, 31);
-                            }else if(quy == "2")
+                            }
+                            else if (quy == "2")
                             {
                                 tungay = new DateTime(int.Parse(nam), 4, 1);
                                 denngay = new DateTime(int.Parse(nam), 6, 30);
-                            }else if(quy == "3")
+                            }
+                            else if (quy == "3")
                             {
                                 tungay = new DateTime(int.Parse(nam), 7, 1);
                                 denngay = new DateTime(int.Parse(nam), 9, 31);

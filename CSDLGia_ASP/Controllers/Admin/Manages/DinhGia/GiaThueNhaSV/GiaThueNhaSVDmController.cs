@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 {
@@ -57,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 
         [Route("GiaThueNhaSVDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom,string Tennhom, string Theodoi)
+        public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -147,7 +146,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueNhaSV
 
         [Route("GiaThueNhaSVDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id,string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

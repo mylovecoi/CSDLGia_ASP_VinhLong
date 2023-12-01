@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using System;
+using System.Collections.Generic;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -56,7 +55,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public double Giatoida { get; set; }
         public string Phanloaidv { get; set; }
         public string Dvt { get; set; }
-       
+
         public string MaDiaBan { get; set; }
         public string MaQhNs { get; set; }
         public string MaDv { get; set; }
@@ -75,11 +74,11 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string ChucNang { get; set; }
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
-       
+
         public string TenDiaBan { get; set; }
         public string Level { get; set; }
         public string GhiChu { get; set; }
-       
+
         public List<DsDonVi> DsDonVi { get; set; }
         public List<DsDiaBan> DsDiaBan { get; set; }
         public List<GiaSpDvKhungGia> GiaSpDvKhungGia { get; set; }

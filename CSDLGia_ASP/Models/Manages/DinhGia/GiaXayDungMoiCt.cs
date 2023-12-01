@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -35,7 +32,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tennhom { get; set; }
         [NotMapped]
         public DateTime Thoidiem { get; set; }
-         [NotMapped]
+        [NotMapped]
         public double Dientich { get; set; }
         [NotMapped]
         public int LineStart { get; set; }

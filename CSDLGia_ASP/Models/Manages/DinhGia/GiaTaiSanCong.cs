@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -66,5 +63,5 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Level { get; set; }
         [NotMapped]
         public List<GiaTaiSanCongCt> GiaTaiSanCongCt { get; set; }
-}
+    }
 }

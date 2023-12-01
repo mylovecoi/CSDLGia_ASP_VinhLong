@@ -1,19 +1,17 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 {
@@ -133,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 {
 
                     //hồ sơ mà chỉ đến bước hoàn thành mà quay lại thì sẽ có trạng thái CXD-- > cần xóa
-                   var check = _db.GiaSpDvKhungGiaCt.Where(t => t.Trangthai == "CXD");
+                    var check = _db.GiaSpDvKhungGiaCt.Where(t => t.Trangthai == "CXD");
                     if (check != null)
                     {
                         _db.GiaSpDvKhungGiaCt.RemoveRange(check);
@@ -185,7 +183,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     _db.GiaSpDvKhungGiaCt.AddRange(chitiet);
                     _db.SaveChanges();
 
-                    model.GiaSpDvKhungGiaCt= chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+                    model.GiaSpDvKhungGiaCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;

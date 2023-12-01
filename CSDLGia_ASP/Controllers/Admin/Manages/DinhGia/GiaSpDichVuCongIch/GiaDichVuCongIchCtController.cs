@@ -1,18 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 {
     public class GiaDichVuCongIchCtController : Controller
@@ -113,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                 result += "<select class='form-control' id='Maspdv_edit' name='Maspdv_edit'>";
                 foreach (var item in GiaSpDvCiDm)
                 {
-                    result += "<option value='" + item.Maspdv + "' " + ( item.Maspdv  ==  model.Maspdv ? "selected" :"") + ">" + item.Tenspdv + " </option>";
+                    result += "<option value='" + item.Maspdv + "' " + (item.Maspdv == model.Maspdv ? "selected" : "") + ">" + item.Tenspdv + " </option>";
                 }
                 result += "</select>";
                 result += "</div>";

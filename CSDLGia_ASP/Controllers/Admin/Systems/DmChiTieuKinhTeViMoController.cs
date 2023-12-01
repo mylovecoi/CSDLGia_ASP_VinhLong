@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         public IActionResult Index()
         {
-            
+
             var dschitieu = _db.DmChiTieuKinhTeViMo.ToList();
             ViewData["DsChiTieu"] = dschitieu;
             return View("~/Views/Admin/Systems/DmChiTieuKinhTeViMo/Index.cshtml", dschitieu);
@@ -69,7 +69,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     model.machitieu = machitieu_edit;
                     model.tenchitieu = tenchitieu_edit;
-                 
+
                     _db.DmChiTieuKinhTeViMo.Update(model);
                     _db.SaveChanges();
                     var dschitieu = _db.DmChiTieuKinhTeViMo.ToList();

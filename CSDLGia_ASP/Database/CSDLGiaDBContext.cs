@@ -1,22 +1,19 @@
 ﻿using CSDLGia_ASP.Models;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.Models.Manages.VbQlNn;
+using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
+using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
 using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Temp.TempSystems;
-using CSDLGia_ASP.Models.Temp.TempManages.TempKeKhaiGia;
-using System.Collections.Generic;
 
 namespace CSDLGia_ASP.Database
 {
     public class CSDLGiaDBContext : DbContext
     {
-       
+
 
         public CSDLGiaDBContext(DbContextOptions<CSDLGiaDBContext> options) : base(options) { }
 
@@ -104,7 +101,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDvKcbCt> GiaDvKcbCt { get; set; }
         public DbSet<GiaDvKcbDm> GiaDvKcbDm { get; set; }
         public DbSet<GiaDvKcbNhom> GiaDvKcbNhom { get; set; }
-        
+
         public DbSet<GiaGocVlxdTh> GiaGocVlxdTh { get; set; }
         public DbSet<GiaHhDvCn> GiaHhDvCn { get; set; }
         public DbSet<GiaHhDvCnCt> GiaHhDvCnCt { get; set; }
@@ -278,7 +275,7 @@ namespace CSDLGia_ASP.Database
         // Danh sách chức năng
 
         public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
-        
+
 
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/

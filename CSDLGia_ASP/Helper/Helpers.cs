@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSDLGia_ASP.ViewModels.Manages;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,14 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using CSDLGia_ASP.Database;
-using CSDLGia_ASP.ViewModels.Manages;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.Models.Systems;
-using System.Xml.Linq;
 
 namespace CSDLGia_ASP.Helper
 {
@@ -51,16 +45,16 @@ namespace CSDLGia_ASP.Helper
 
             return list;
         }
-        
+
         public static List<VMType> GetTypeData()
         {
             List<VMType> list = new List<VMType> { };
-            list.Add(new VMType { Value = "STRING", Description = "STRING"});
-            list.Add(new VMType { Value = "DATE", Description = "DATE"});
-            list.Add(new VMType { Value = "BASES64", Description = "BASES64"});
-            list.Add(new VMType { Value = "OBJECT", Description = "OBJECT"});
-            list.Add(new VMType { Value = "NUMBER", Description = "NUMBER"});
-            list.Add(new VMType { Value = "BOOLEAN", Description = "BOOLEAN"});
+            list.Add(new VMType { Value = "STRING", Description = "STRING" });
+            list.Add(new VMType { Value = "DATE", Description = "DATE" });
+            list.Add(new VMType { Value = "BASES64", Description = "BASES64" });
+            list.Add(new VMType { Value = "OBJECT", Description = "OBJECT" });
+            list.Add(new VMType { Value = "NUMBER", Description = "NUMBER" });
+            list.Add(new VMType { Value = "BOOLEAN", Description = "BOOLEAN" });
 
             return list;
         }
@@ -74,7 +68,7 @@ namespace CSDLGia_ASP.Helper
 
             return list;
         }
-   
+
         public static List<VMRoleList> GetRoleList()
         {
             List<VMRoleList> roldelist = new List<VMRoleList> { };
@@ -115,7 +109,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.rung.baocao", Name = "ĐG - Giá rừng - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha", Name = "ĐG - Giá thuê mua nhà ở" });
-             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.danhmuc", Name = "ĐG - Giá thuê mua nhà ở - Danh mục" }); 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.danhmuc", Name = "ĐG - Giá thuê mua nhà ở - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", Name = "ĐG - Giá thuê mua nhà ở - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.xetduyet", Name = "ĐG - Giá thuê mua nhà ở - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuemuanha.timkiem", Name = "ĐG - Giá thuê mua nhà ở - Tìm kiếm" });
@@ -673,7 +667,7 @@ namespace CSDLGia_ASP.Helper
                 return str;
             }
         }
-        
+
         public static string ConvertDateToStrAjax(DateTime date)
         {
 

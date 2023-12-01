@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
 {
@@ -21,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaTaiSanTthsController(CSDLGiaDBContext db,IWebHostEnvironment hostEnvironment)
+        public GiaTaiSanTthsController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
@@ -132,7 +130,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dgtths";
                     ViewData["MenuLv3"] = "menu_dgtths_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Create.cshtml",model);
+                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanTths/Create.cshtml", model);
 
                 }
                 else
@@ -414,8 +412,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
         }
         [Route("GiaTaiSanTths/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string Ten,string Tinhtrang,string Dactinh,
-            DateTime beginTime, DateTime endTime,string loaigia, double beginPrice, double endPrice)
+        public IActionResult Result(string madv, string Ten, string Tinhtrang, string Dactinh,
+            DateTime beginTime, DateTime endTime, string loaigia, double beginPrice, double endPrice)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -427,16 +425,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                                  select new GiaTaiSanTthsCt
                                  {
                                      Id = giatthsct.Id,
-                                     Tentaisan= giatthsct.Tentaisan,
-                                     Tinhtrang= giatthsct.Tinhtrang,
-                                     Dactinh= giatthsct.Dactinh,
+                                     Tentaisan = giatthsct.Tentaisan,
+                                     Tinhtrang = giatthsct.Tinhtrang,
+                                     Dactinh = giatthsct.Dactinh,
                                      Giabanbuon = giatthsct.Giabanbuon,
                                      Giabanle = giatthsct.Giabanle,
                                      Mahs = giatthsct.Mahs,
                                      Thoidiem = giatthsct.Thoidiem,
                                      Madv = giatths.Madv,
                                      Tendv = donvi.TenDv,
-                                     Ghichu= giatthsct.Ghichu,
+                                     Ghichu = giatthsct.Ghichu,
                                      Loaigia = loaigia,
                                  });
 

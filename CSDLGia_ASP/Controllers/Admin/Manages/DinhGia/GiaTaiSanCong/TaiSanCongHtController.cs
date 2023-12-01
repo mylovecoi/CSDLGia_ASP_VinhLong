@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 {
@@ -27,7 +21,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
-           
+
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.xetduyet", "Index"))
@@ -46,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-                 
+
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -57,11 +51,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).First();
-                   
+
                     if (getdonvi.Level == "ADMIN")
                     {
                         var model = _db.GiaTaiSanCong.Where(t => t.Madv_ad == Madv).ToList();
-                     
+
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -105,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         }
 
                         ViewData["DsDiaBan"] = dsdiaban.ToList();
-                      
+
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -292,7 +286,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             }
         }
 
-        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq,string madv_hientai)
+        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq, string madv_hientai)
         {
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

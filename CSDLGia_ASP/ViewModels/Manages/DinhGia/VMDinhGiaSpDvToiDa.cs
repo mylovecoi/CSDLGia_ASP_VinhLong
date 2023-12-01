@@ -1,8 +1,6 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -55,7 +53,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Lydo_ad { get; set; }
         public string Thongtin_ad { get; set; }
         public string Trangthai_ad { get; set; }
-       
+
         public List<GiaSpDvToiDa> GiaSpDvToiDa { get; set; }
         public List<GiaSpDvToiDaCt> GiaSpDvToiDaCt { get; set; }
     }

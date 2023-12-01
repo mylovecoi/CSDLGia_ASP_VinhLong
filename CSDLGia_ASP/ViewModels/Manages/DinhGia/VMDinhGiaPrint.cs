@@ -20,7 +20,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Email { get; set; }
         public string Fax { get; set; }
         public string Phanloaidv { get; set; }
-        
+
         public List<GiaNuocShCt> GiaNuocShCt { get; set; }
         public List<GiaDatPhanLoaiCt> GiaDatPhanLoaiCt { get; set; }
         public List<GiaRungCt> GiaRungCt { get; set; }

@@ -1,26 +1,23 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 {
     public class GiaSpDvCuTheController : Controller
     {
-     
+
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
 
@@ -177,7 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                             Mucgia = item.Gia,
                             Phanloaidv = item.Phanloai,
                             Trangthai = "CXD",
-                            Maspdv=item.Maspdv,
+                            Maspdv = item.Maspdv,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -485,7 +482,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     /*var model = GetThongTinKk(Mahs);*/
 
-                  
+
                     ViewData["Title"] = "In định giá đât cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";

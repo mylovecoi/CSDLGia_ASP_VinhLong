@@ -3,8 +3,8 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             var dssieuthi = _db.DmSieuThi.ToList();
             ViewData["DsSieuThi"] = dssieuthi;
-             return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
+            return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
         }
 
         public IActionResult Store(string masieuthi, string tensieuthi)
@@ -74,7 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.SaveChanges();
                     var dssieuthi = _db.DmSieuThi.ToList();
                     ViewData["Dssieuthi"] = dssieuthi;
-                     return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
+                    return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.SaveChanges();
                     var dssieuthi = _db.DmSieuThi.ToList();
                     ViewData["Dssieuthi"] = dssieuthi;
-                     return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
+                    return View("~/Views/Admin/Systems/DmSieuThi/Index.cshtml", dssieuthi);
                 }
                 else
                 {

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -58,7 +56,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Mucgia { get; set; }
         public string Phanloaidv { get; set; }
 
-        public List<GiaSpDvCuThe>GiaSpDvCuThe{ get; set; }
+        public List<GiaSpDvCuThe> GiaSpDvCuThe { get; set; }
         public List<GiaSpDvCuTheCt> GiaSpDvCuTheCt { get; set; }
     }
 }

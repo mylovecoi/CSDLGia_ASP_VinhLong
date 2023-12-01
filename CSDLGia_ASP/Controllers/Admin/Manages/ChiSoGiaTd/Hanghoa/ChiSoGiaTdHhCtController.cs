@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Systems;
-using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -55,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     var getInfo = _db.ChiSoGiaTd.FirstOrDefault(x => x.Mahs == Mahs);
                     ViewData["model"] = model;
                     ViewData["danhsach"] = _db.ChiSoGiaTd;
-                    ViewData["nhomModel"] = _db.ChiSoGiaTdDmCt.Where(x=>x.Mahs==Mahs);
+                    ViewData["nhomModel"] = _db.ChiSoGiaTdDmCt.Where(x => x.Mahs == Mahs);
                     ViewData["dvtinh"] = _db.DmDvt.ToList();
                     ViewData["mahs"] = Mahs;
                     ViewData["thang"] = getInfo.Thang;
@@ -80,15 +74,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DanhmuchanghoaChitiet/Import")]
         [HttpPost]
-        public async Task<JsonResult> Import(string Mahanghoa,double Giakychon,
-             string Mahs,int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+        public async Task<JsonResult> Import(string Mahanghoa, double Giakychon,
+             string Mahs, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hanghoa", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
-                    var list_add = _db.ChiSoGiaTdHhCt.Where(x=>x.Mahs==Mahs);
+                    var list_add = _db.ChiSoGiaTdHhCt.Where(x => x.Mahs == Mahs);
                     int sheet = Sheet == 0 ? 0 : (Sheet - 1);
                     using (var stream = new MemoryStream())
                     {
@@ -101,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                             LineStop = LineStop > rowcount ? rowcount : LineStop;
                             for (int row = LineStart; row <= LineStop; row++)
                             {
-                                foreach(var list in list_add)
+                                foreach (var list in list_add)
                                 {
                                     var checkMasohanghoa = worksheet.Cells[row, Int16.Parse(Mahanghoa)].Value.ToString() != null ?
                                                 worksheet.Cells[row, Int16.Parse(Mahanghoa)].Value.ToString().Trim() : "";

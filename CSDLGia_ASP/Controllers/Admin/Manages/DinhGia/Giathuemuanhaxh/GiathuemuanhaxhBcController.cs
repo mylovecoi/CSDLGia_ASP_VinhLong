@@ -1,19 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 {
@@ -65,28 +56,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 {
                     var tendv = _db.DsDonVi.Where(t => t.MaDv == Madv).FirstOrDefault();
                     var modelCt = from ct in _db.GiaThueMuaNhaXhCt
-                                join dm in _db.GiaThueMuaNhaXhDm on ct.Maso equals dm.Maso
-                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
-                                {
-                                    //Thoidiem = dg.Thoidiem,
-                                    Tendv = tendv.TenDv,
-                                    //Ghichu = dg.Ghichu,
-                                    Diachi = ct.Diachi,
-                                    Soqdpd = ct.Soqdpd,
-                                    Thoigianpd = ct.Thoigianpd,
-                                    Soqddg = ct.Soqddg,
-                                    Thoigiandg = ct.Thoigiandg,
-                                    Dvthue = ct.Dvthue,
-                                    Dongia = ct.Dongia,
-                                    Dongiathue = ct.Dongiathue,
-                                    Hdthue = ct.Hdthue,
-                                    Ththue = ct.Ththue,
-                                    Tungay = ct.Tungay,
-                                    Denngay = ct.Denngay,
-                                    Mahs=ct.Mahs,
-                                    Dientich = dm.Dientich,
-                                    Tennha = dm.Tennha,
-                                };
+                                  join dm in _db.GiaThueMuaNhaXhDm on ct.Maso equals dm.Maso
+                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
+                                  {
+                                      //Thoidiem = dg.Thoidiem,
+                                      Tendv = tendv.TenDv,
+                                      //Ghichu = dg.Ghichu,
+                                      Diachi = ct.Diachi,
+                                      Soqdpd = ct.Soqdpd,
+                                      Thoigianpd = ct.Thoigianpd,
+                                      Soqddg = ct.Soqddg,
+                                      Thoigiandg = ct.Thoigiandg,
+                                      Dvthue = ct.Dvthue,
+                                      Dongia = ct.Dongia,
+                                      Dongiathue = ct.Dongiathue,
+                                      Hdthue = ct.Hdthue,
+                                      Ththue = ct.Ththue,
+                                      Tungay = ct.Tungay,
+                                      Denngay = ct.Denngay,
+                                      Mahs = ct.Mahs,
+                                      Dientich = dm.Dientich,
+                                      Tennha = dm.Tennha,
+                                  };
                     var model = _db.GiaThueMuaNhaXh.AsQueryable();
                     if (tungay.ToString("yyMMdd") != "010101")
                     {

@@ -1,19 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Systems;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
@@ -42,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Title"] = "Danh mục giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_lp";
                     ViewData["MenuLv2"] = "menu_gialp_dm";
-                  
+
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhMuc/Index.cshtml", model);
                 }
                 else
@@ -113,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "<div class='col-xl-11'>";
                 result += "<label class='form-control-label'><b>Tên phân loại nhóm phí, lệ phí*</b></label>";
                 result += "<select type='text' id='Phanloai_edit' name='Phanloai_edit' class='form-control'>";
-              
+
                 foreach (var item in Phanloai)
                 {
                     result += " <option value = '" + item.Phanloai + "' >" + item.Phanloai + "</ option >";

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using System;
+using System.Collections.Generic;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {

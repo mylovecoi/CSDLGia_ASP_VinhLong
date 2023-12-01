@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 {
@@ -116,7 +113,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     var model = new VMDinhGiaThueMuaNhaXh
                     {
                         Madv = Madv,
-                        Thoidiem = DateTime.Now, 
+                        Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
@@ -124,7 +121,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     ViewData["Madv"] = model.Madv;
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Tennha"]=_db.GiaThueMuaNhaXhDm.ToList();
+                    ViewData["Tennha"] = _db.GiaThueMuaNhaXhDm.ToList();
                     ViewData["Title"] = "Thêm mới giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
@@ -142,7 +139,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaThueMuaNhaXaHoi/Store")]
         [HttpPost]
         public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
@@ -222,13 +219,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     }
                     var model = new GiaThueMuaNhaXh
                     {
-                        Mahs=request.Mahs,
+                        Mahs = request.Mahs,
                         Madv = request.Madv,
-                        Madiaban=request.Madiaban,
+                        Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
-                        Ghichu=request.Ghichu,
+                        Ghichu = request.Ghichu,
                         Ipf1 = request.Ipf1,
                         Ipf2 = request.Ipf2,
                         Ipf3 = request.Ipf3,
@@ -259,7 +256,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaThueMuaNhaXaHoi/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -289,7 +286,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaThueMuaNhaXaHoi/Modify")]
         [HttpGet]
         public IActionResult Modify(string Mahs)
@@ -312,7 +309,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         Ipf5 = model.Ipf5,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
-                        Ghichu=model.Ghichu
+                        Ghichu = model.Ghichu
                     };
 
                     var model_ct = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == model_new.Mahs);
@@ -346,7 +343,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("DinhGiaThueMuaNhaXaHoi/Update")]
         [HttpPost]
         public IActionResult Update(VMDinhGiaThueMuaNhaXh request)
@@ -537,28 +534,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         }
         [Route("DinhGiaThueMuaNhaXaHoi/Result")]
         [HttpPost]
-        public IActionResult Result(DateTime beginTime,DateTime endTime,double beginPrice,double endPrice,string tn,string madv)
+        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string tn, string madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanhaxh.timkiem", "Edit"))
                 {
                     var model = from dgct in _db.GiaThueMuaNhaXhCt
-                                     join dg in _db.GiaThueMuaNhaXh on dgct.Mahs equals dg.Mahs
-                                     join dgdm in _db.GiaThueMuaNhaXhDm on dgct.Maso equals dgdm.Maso
-                                     select new VMDinhGiaThueMuaNhaXhSearch
-                                     {
-                                         Id = dg.Id,
-                                         Mahs = dg.Mahs,
-                                         Madv = dg.Madv,
-                                         Dongia = dg.Dongia,
-                                         Macqcq = dg.Macqcq,
-                                         Thoidiem = dg.Thoidiem,
-                                         Maso=dgct.Maso,
-                                         Tennha=dgdm.Tennha,
-                                         Dvt =dgct.Dvt,
-                                         Phanloai=dgct.Phanloai,
-                                     };
+                                join dg in _db.GiaThueMuaNhaXh on dgct.Mahs equals dg.Mahs
+                                join dgdm in _db.GiaThueMuaNhaXhDm on dgct.Maso equals dgdm.Maso
+                                select new VMDinhGiaThueMuaNhaXhSearch
+                                {
+                                    Id = dg.Id,
+                                    Mahs = dg.Mahs,
+                                    Madv = dg.Madv,
+                                    Dongia = dg.Dongia,
+                                    Macqcq = dg.Macqcq,
+                                    Thoidiem = dg.Thoidiem,
+                                    Maso = dgct.Maso,
+                                    Tennha = dgdm.Tennha,
+                                    Dvt = dgct.Dvt,
+                                    Phanloai = dgct.Phanloai,
+                                };
                     /*model_join.Where(t => t.Maso == tn
                                     && t.Macqcq == dv
                                     && t.Thoidiem >= beginTime
@@ -588,7 +585,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
                     ViewData["Tennha"] = _db.GiaThueMuaNhaXhDm.ToList();
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/TimKiem/Result.cshtml",model);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/TimKiem/Result.cshtml", model);
                 }
                 else
                 {

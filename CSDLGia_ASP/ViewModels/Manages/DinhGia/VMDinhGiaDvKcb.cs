@@ -1,5 +1,4 @@
 ﻿using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.Models.Systems;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

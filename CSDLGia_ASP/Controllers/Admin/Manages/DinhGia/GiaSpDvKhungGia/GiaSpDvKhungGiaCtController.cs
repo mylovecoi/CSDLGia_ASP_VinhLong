@@ -1,20 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using System.Xml.Linq;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 {
@@ -160,7 +149,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 result += "<td style='text-align:center'>" + item.Mota + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:center'>" + item.Giatoithieu + "</td>";
-                result += "<td style='text-align:center'>" + item.Giatoida+ "</td>";
+                result += "<td style='text-align:center'>" + item.Giatoida + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

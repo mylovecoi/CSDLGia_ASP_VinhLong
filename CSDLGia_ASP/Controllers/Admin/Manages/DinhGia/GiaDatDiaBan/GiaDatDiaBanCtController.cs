@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBanCt
 {
@@ -238,7 +235,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Excel")]
         [HttpPost]
-        public async Task<JsonResult> Excel(string Maloaidat, string Maxp,string Mahs, string Khuvuc, string Diemdau, string Diemcuoi, double Giavt1, double Giavt2, double Giavt3, double Giavt4, double Hesok,
+        public async Task<JsonResult> Excel(string Maloaidat, string Maxp, string Mahs, string Khuvuc, string Diemdau, string Diemcuoi, double Giavt1, double Giavt2, double Giavt3, double Giavt4, double Hesok,
           int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -262,7 +259,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                             {
                                 list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                                 {
-                                
+
                                     Mahs = Mahs,
                                     Trangthai = "CXD",
                                     Created_at = DateTime.Now,
@@ -310,7 +307,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                     string result = GetData(Mahs);
                     var data = new { status = "success", message = result };
                     return Json(data);
-                   
+
                 }
                 else
                 {
@@ -356,7 +353,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "<td class='active'>" + item.Maxp + "</td>";
                 result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
                 result += "<td class='active'>" + item.Khuvuc + "</td>";
-                result += "<td style='text-align:center' class='active'>" + item.Diemdau + " " + "đến"+" " + item.Diemcuoi + "</td>";
+                result += "<td style='text-align:center' class='active'>" + item.Diemdau + " " + "đến" + " " + item.Diemcuoi + "</td>";
                 result += "<td style='text-align:center'>" + item.Giavt1 + "</td>";
                 result += "<td class='active'>" + item.Giavt2 + "</td>";
                 result += "<td style='text-align:center'>" + item.Giavt3 + "</td>";

@@ -1,18 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 {
@@ -27,24 +17,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 
         [Route("DinhGiaThueMuaNhaXhCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs,string Dvthue,string Diachi, string Tennha, string Soqdpd, DateTime Thoigianpd,string Soqddg,DateTime Thoigiandg,string Hdthue,string Ththue,DateTime Tungay,DateTime Denngay,string Dvt,double Dongia,double Dongiathue)
+        public JsonResult Store(string Mahs, string Dvthue, string Diachi, string Tennha, string Soqdpd, DateTime Thoigianpd, string Soqddg, DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
         {
-            
+
             var model = new GiaThueMuaNhaXhCt
             {
                 Mahs = Mahs,
-                Dvthue=Dvthue,
-                Diachi=Diachi,
-                Soqdpd=Soqdpd,
-                Maso= Tennha,
-                Thoigianpd=Thoigianpd,
+                Dvthue = Dvthue,
+                Diachi = Diachi,
+                Soqdpd = Soqdpd,
+                Maso = Tennha,
+                Thoigianpd = Thoigianpd,
                 Soqddg = Soqddg,
                 Thoigiandg = Thoigiandg,
-                Hdthue= Hdthue,
-                Ththue= Ththue,
+                Hdthue = Hdthue,
+                Ththue = Ththue,
                 Tungay = Tungay,
                 Denngay = Denngay,
-                Dongia=Dongia,
+                Dongia = Dongia,
                 Dvt = Dvt,
                 Dongiathue = Dongiathue,
                 Created_at = DateTime.Now,
@@ -71,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         public string GetData(string Mahs)
         {
             var model = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == Mahs).ToList();
-            var tennha=_db.GiaThueMuaNhaXhDm.ToList();
+            var tennha = _db.GiaThueMuaNhaXhDm.ToList();
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
@@ -89,27 +79,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             foreach (var item in model)
             {
                 result += "<tr style='text-align:center'>";
-                result += "<td style='text-align:center'>"+(record++)+"</td>";
+                result += "<td style='text-align:center'>" + (record++) + "</td>";
 
                 result += "<td style='text-align:center'>";
-                foreach (var tn in tennha){
-                    if(item.Maso == tn.Maso){
+                foreach (var tn in tennha)
+                {
+                    if (item.Maso == tn.Maso)
+                    {
                         result += "<span>" + tn.Tennha + "</span>";
                     }
                 }
                 result += "</td>";
 
-                result += "<td>"+ item.Dvthue +"</td>";
-                result += "<td>"+item.Dvt+"</td>";
-                result += "<td>"+item.Dongia+"</td>";
-                result += "<td>"+item.Dongiathue+"</td>";
+                result += "<td>" + item.Dvthue + "</td>";
+                result += "<td>" + item.Dvt + "</td>";
+                result += "<td>" + item.Dongia + "</td>";
+                result += "<td>" + item.Dongiathue + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`"+item.Id+"`)'>";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`"+item.Id+"`)'>";
+                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-trash text-danger'></i>";
                 result += "</button></td></tr>";
             }
@@ -133,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 result += "<select id='tennha_edit' name='tennha_edit' class='form-control'>";
                 foreach (var tn in tennha)
                 {
-                    result += "<option value='"+@tn.Maso+"'>"+@tn.Tennha+"</option>";
+                    result += "<option value='" + @tn.Maso + "'>" + @tn.Tennha + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -246,7 +238,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
 
                 result += "</div>"; // Đóng row
 
-                result += "<input type='hidden' id='id_edit' name='id_edit' value='"+Id+"'/>";
+                result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "'/>";
                 result += "</div>";
 
                 var data = new { status = "success", message = result };
@@ -263,20 +255,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         public JsonResult Update(int Id, string Dvthue, string Tennha, string Soqdpd, DateTime Thoigianpd, string Soqddg, DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
         {
             var model = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Id == Id);
-           
-                model.Dvthue = Dvthue;
-                model.Soqdpd = Soqdpd;
-                model.Maso = Tennha;
-                model.Thoigianpd = Thoigianpd;
-                model.Soqddg = Soqddg;
-                model.Thoigiandg = Thoigiandg;
-                model.Hdthue = Hdthue;
-                model.Ththue = Ththue;
-                model.Tungay = Tungay;
-                model.Denngay = Denngay;
-                model.Dongia = Dongia;
-                model.Dvt = Dvt;
-                model.Dongiathue = Dongiathue;
+
+            model.Dvthue = Dvthue;
+            model.Soqdpd = Soqdpd;
+            model.Maso = Tennha;
+            model.Thoigianpd = Thoigianpd;
+            model.Soqddg = Soqddg;
+            model.Thoigiandg = Thoigiandg;
+            model.Hdthue = Hdthue;
+            model.Ththue = Ththue;
+            model.Tungay = Tungay;
+            model.Denngay = Denngay;
+            model.Dongia = Dongia;
+            model.Dvt = Dvt;
+            model.Dongiathue = Dongiathue;
             model.Updated_at = DateTime.Now;
             _db.GiaThueMuaNhaXhCt.Update(model);
             _db.SaveChanges();

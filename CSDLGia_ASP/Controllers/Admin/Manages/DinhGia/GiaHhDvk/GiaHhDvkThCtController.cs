@@ -1,23 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
-using System.Net.WebSockets;
-using System.Collections;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 {
@@ -49,15 +34,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             result += "<div class='form-group'>";
             result += "<label>Loại giá</label>";
             result += "<select class='form-control' id='Loaigia' name='Loaigia'>";
-            foreach(var lg in Helpers.Loaigia())
+            foreach (var lg in Helpers.Loaigia())
             {
-                result += "<option value='"+lg+"'" + (record.Loaigia == lg ? "selected" : "") + ">"+lg+"</option>";
+                result += "<option value='" + lg + "'" + (record.Loaigia == lg ? "selected" : "") + ">" + lg + "</option>";
             }
             result += "</select></div></div>";
             result += "<div class='col-xl-6'>";
             result += "<div class='form-group'>";
             result += "<label>Giá kỳ trước</label>";
-            result += "<input data-mask='fdecimal' class='form-control' id='Gia' name='Gia' value='" + record.Gia+"'/>";
+            result += "<input data-mask='fdecimal' class='form-control' id='Gia' name='Gia' value='" + record.Gia + "'/>";
             result += "</div></div>";
             result += "<div class='col-xl-6'>";
             result += "<div class='form-group'>";
@@ -79,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         }
         [Route("GiaHhDvk/TongHopCt/Update")]
         [HttpGet]
-        public JsonResult Update(int Id,double Gia,double Gialk,string Loaigia,string Nguontt)
+        public JsonResult Update(int Id, double Gia, double Gialk, string Loaigia, string Nguontt)
         {
             var record = _db.GiaHhDvkCtTh.FirstOrDefault(x => x.Id == Id);
             record.Gia = Gia;
@@ -103,12 +88,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             foreach (var ct in modelCt)
             {
                 result += "<tr>";
-                result += "<td>"+(++record_id)+"</td>";
-                result += "<td>"+ct.Tenhhdv+"</td>";
-                result += "<td>"+ct.Gia+"</td>";
-                result += "<td>"+ct.Gialk+"</td>";
+                result += "<td>" + (++record_id) + "</td>";
+                result += "<td>" + ct.Tenhhdv + "</td>";
+                result += "<td>" + ct.Gia + "</td>";
+                result += "<td>" + ct.Gialk + "</td>";
                 result += "<td><button type='button' data-target='#modal-edit' data-toggle='modal' class='btn btn-default btn-xs mbs' onclick='editItem(`" + ct.Id + "`)'>";
-                result+= "<i class='fa fa-edit'></i>&nbsp;Kê khai</button></td></tr>";
+                result += "<i class='fa fa-edit'></i>&nbsp;Kê khai</button></td></tr>";
             }
             result += "</table>";
             var data = new { status = "success", message = result };

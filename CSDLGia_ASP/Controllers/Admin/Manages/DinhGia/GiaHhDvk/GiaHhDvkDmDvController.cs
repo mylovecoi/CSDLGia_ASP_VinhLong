@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using OfficeOpenXml;
-using CSDLGia_ASP.Models.Systems;
-using CSDLGia_ASP.ViewModels.Systems;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 {
@@ -49,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var dstt = _db.GiaHhDvkNhom.ToList();
                     if (dsdonvi.Count > 0)
                     {
-                        if(dstt.Count > 0)
+                        if (dstt.Count > 0)
                         {
                             if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                             {

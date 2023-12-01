@@ -1,21 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 {
@@ -51,7 +41,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-                   
+
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -66,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
                     var model = _db.GiaGiaoDichBDS.ToList();
 
-                    
+
 
                     if (getdonvi.Level == "H")
                     {
@@ -87,26 +77,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         }
 
                         var model_new = (from kk in model
-                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
-                                          {
-                                              Id = kk.Id,
-                                              Mahs = kk.Mahs,
-                                              MadvCh = GetMadvChuyen(Madv, kk),
-                                              Macqcq = Madv,
-                                              Madv = kk.Madv_h,
-                                              Thoidiem = kk.Thoidiem_h,
-                                              Cqbh = kk.Cqbh,
-                                              Trangthai = kk.Trangthai_h,
-                                              Soqd = kk.Soqd,
-                                              Level = getdonvi.Level,
-                                              Ipf1 = kk.Ipf1,
-                                          });
+                                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
+                                         {
+                                             Id = kk.Id,
+                                             Mahs = kk.Mahs,
+                                             MadvCh = GetMadvChuyen(Madv, kk),
+                                             Macqcq = Madv,
+                                             Madv = kk.Madv_h,
+                                             Thoidiem = kk.Thoidiem_h,
+                                             Cqbh = kk.Cqbh,
+                                             Trangthai = kk.Trangthai_h,
+                                             Soqd = kk.Soqd,
+                                             Level = getdonvi.Level,
+                                             Ipf1 = kk.Ipf1,
+                                         });
 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
                                           {
-                                              Id = kkj.Id, 
+                                              Id = kkj.Id,
                                               Mahs = kkj.Mahs,
                                               MadvCh = kkj.MadvCh,
                                               TendvCh = dv.TenDv,
@@ -225,20 +215,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         }
 
                         var model_new = (from kk in model
-                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
-                                          {
-                                              Id = kk.Id,
-                                              Mahs = kk.Mahs,
-                                              MadvCh = GetMadvChuyen(Madv, kk),
-                                              Macqcq = Madv,
-                                              Madv = kk.Madv_ad,
-                                              Thoidiem = kk.Thoidiem_ad,
-                                              Cqbh = kk.Cqbh,
-                                              Trangthai = kk.Trangthai_ad,
-                                              Soqd = kk.Soqd,
-                                              Level = getdonvi.Level,
-                                              Ipf1 = kk.Ipf1,
-                                          });
+                                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
+                                         {
+                                             Id = kk.Id,
+                                             Mahs = kk.Mahs,
+                                             MadvCh = GetMadvChuyen(Madv, kk),
+                                             Macqcq = Madv,
+                                             Madv = kk.Madv_ad,
+                                             Thoidiem = kk.Thoidiem_ad,
+                                             Cqbh = kk.Cqbh,
+                                             Trangthai = kk.Trangthai_ad,
+                                             Soqd = kk.Soqd,
+                                             Level = getdonvi.Level,
+                                             Ipf1 = kk.Ipf1,
+                                         });
 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv

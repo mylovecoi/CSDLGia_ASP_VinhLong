@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 {
@@ -92,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
-                        ViewData["Title"] = "Thông tin giá nhà cho sinh viên thuê";
+                        ViewData["Title"] = "Thông tin giá giao dịch bất động sản";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_giaodichbds";
                         ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
@@ -100,8 +94,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     }
                     else
                     {
-                        ViewData["Title"] = "Thông tin giá nhà cho sinh viên thuê";
-                        ViewData["Messages"] = "Hệ thống chưa có định giá nhà cho sinh viên thuê.";
+                        ViewData["Title"] = "Thông tin giá giao dịch bất động sản";
+                        ViewData["Messages"] = "Hệ thống chưa có định giá giao dịch bất động sản.";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dg_giaodichbds";
                         ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
@@ -130,7 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
                 {
                     var check = _db.GiaGiaoDichBDSCt.Where(t => t.Trangthai == "CXD");
-                    if(check != null)
+                    if (check != null)
                     {
                         _db.GiaGiaoDichBDSCt.RemoveRange(check);
                         _db.SaveChanges();
@@ -481,10 +475,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.Where(t => t.Theodoi == "TD").ToList();
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nhà cho sinh viên thuê";
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
-                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
+                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/TimKiem/Index.cshtml");
 
                 }
@@ -550,10 +544,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         model = model.Where(t => t.Gia <= gia_den);
                     }
 
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nhà cho sinh viên thuê";
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
-                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
+                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/TimKiem/Result.cshtml", model);
 
                 }
@@ -582,7 +576,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá nhà cho sinh viên thuê (đồng)</label>";
+                result += "<label>Giá giao dịch bất động sản (đồng)</label>";
                 result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";

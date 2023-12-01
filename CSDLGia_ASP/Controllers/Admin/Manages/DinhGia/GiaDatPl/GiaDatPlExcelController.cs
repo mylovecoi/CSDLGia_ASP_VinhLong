@@ -1,17 +1,14 @@
-﻿using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using System;
-using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using System.Numerics;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -57,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Create"))
                 {
-                   
+
                     ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
@@ -122,7 +119,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
 
-                return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs }) ;
+                return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

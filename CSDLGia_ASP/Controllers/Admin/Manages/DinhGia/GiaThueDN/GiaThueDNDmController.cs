@@ -1,16 +1,11 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {

@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 {
@@ -57,10 +54,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                             if (string.IsNullOrEmpty(Madb))
                             {
                                 Madb = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
-                               
+
                             }
                         }
-                      
+
 
                         var model = _db.GiaDauGiaDat.Where(t => t.Madiaban == Madb).ToList();
 
@@ -81,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                 model = model.ToList();
                             }
                         }
-                      
+
                         ViewData["Madb"] = Madb;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
@@ -127,11 +124,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 {
                     var model = new GiaDauGiaDat
                     {
-                        
+
                         Thoidiem = DateTime.Now,
                         Mahs = Madiaban + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
-                   
+
                     var dsdv = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI" && t.MaDiaBan == Madiaban).OrderBy(t => t.Id).Select(t => t.MaDv).First();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Madv"] = dsdv;
@@ -163,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [HttpPost]
         public async Task<IActionResult> Store(GiaDauGiaDat request, IFormFile Ipf1)
         {
-         
+
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trungthaudat.thongtin", "Create"))
@@ -197,7 +194,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Phanloai = request.Phanloai,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
-                        Ipf1=request.Ipf1,
+                        Ipf1 = request.Ipf1,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };

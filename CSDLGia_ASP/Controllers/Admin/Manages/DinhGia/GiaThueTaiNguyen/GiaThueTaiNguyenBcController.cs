@@ -1,21 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 {
@@ -72,29 +60,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
                     var modelbc = _db.GiaThueTaiNguyen.FirstOrDefault(t => t.Thoidiem.Year == nambc && t.Manhom == manhom);
 
-                    foreach(var tn in model)
+                    foreach (var tn in model)
                     {
-                        if(tn.Level == "1")
+                        if (tn.Level == "1")
                         {
-                            if(modellk != null)
+                            if (modellk != null)
                             {
-                                var modelctlk = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modellk.Mahs 
+                                var modelctlk = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modellk.Mahs
                                                                                     && t.Cap1 == tn.Cap1
                                                                                     && t.Level == "1");
                                 tn.dongialk = (modelctlk != null) && (modellk != null) ? modelctlk.Gia : 0;
                             }
-                            if(modelbc != null)
+                            if (modelbc != null)
                             {
-                                var modelctbc = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modelbc.Mahs 
+                                var modelctbc = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modelbc.Mahs
                                                                                     && t.Cap1 == tn.Cap1
                                                                                     && t.Level == "1");
                                 tn.dongiabc = (modelctbc != null) && (modelbc != null) ? modelctbc.Gia : 0;
                             }
-                        }else if(tn.Level == "2")
+                        }
+                        else if (tn.Level == "2")
                         {
                             if (modellk != null)
                             {
-                                var modelctlk = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modellk.Mahs 
+                                var modelctlk = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modellk.Mahs
                                                                                 && t.Cap1 == tn.Cap1
                                                                                 && t.Cap2 == tn.Cap2
                                                                                 && t.Level == "2");
@@ -102,13 +91,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             }
                             if (modelbc != null)
                             {
-                                var modelctbc = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modelbc.Mahs 
+                                var modelctbc = _db.GiaThueTaiNguyenCt.FirstOrDefault(t => t.Mahs == modelbc.Mahs
                                                                                 && t.Cap1 == tn.Cap1
                                                                                 && t.Cap2 == tn.Cap2
                                                                                 && t.Level == "2");
                                 tn.dongiabc = (modelctbc != null) && (modelbc != null) ? modelctbc.Gia : 0;
                             }
-                        }else if(tn.Level == "3")
+                        }
+                        else if (tn.Level == "3")
                         {
                             if (modellk != null)
                             {
@@ -128,7 +118,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                                                                 && t.Level == "3");
                                 tn.dongiabc = (modelctbc != null) && (modelbc != null) ? modelctbc.Gia : 0;
                             }
-                        }else if(tn.Level == "4")
+                        }
+                        else if (tn.Level == "4")
                         {
                             if (modellk != null)
                             {
@@ -150,7 +141,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                                                                 && t.Level == "4");
                                 tn.dongiabc = (modelctbc != null) && (modelbc != null) ? modelctbc.Gia : 0;
                             }
-                        }else if(tn.Level == "5")
+                        }
+                        else if (tn.Level == "5")
                         {
                             if (modellk != null)
                             {
@@ -175,7 +167,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                 tn.dongiabc = (modelctbc != null) && (modelbc != null) ? modelctbc.Gia : 0;
                             }
                         }
-                        
+
                     }
 
                     ViewData["TenNhom"] = _db.GiaThueTaiNguyenNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;

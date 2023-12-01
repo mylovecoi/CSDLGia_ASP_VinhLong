@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 {
@@ -59,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
 
 
-                        var model = _db.GiaThueTaiSanCong.Where(t => t.Madv == Madv ).ToList();
+                        var model = _db.GiaThueTaiSanCong.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -253,7 +248,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    
+
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
                     model.Thongtinhs = request.Thongtinhs;

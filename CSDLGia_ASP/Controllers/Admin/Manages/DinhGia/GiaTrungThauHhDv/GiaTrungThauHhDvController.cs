@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
 {
@@ -22,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaTrungThauHhDvController(CSDLGiaDBContext db,IWebHostEnvironment hostEnvironment)
+        public GiaTrungThauHhDvController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
@@ -181,11 +178,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                         Soqd = request.Soqd,
                         Manhom = request.Manhom,
                         Ngayqd = request.Ngayqd,
-                        Thoidiem=request.Ngayqd,
+                        Thoidiem = request.Ngayqd,
                         Tennhathau = request.Tennhathau,
                         Thongtinqd = request.Thongtinqd,
                         Ghichu = request.Ghichu,
-                        Ipf1=request.Ipf1,
+                        Ipf1 = request.Ipf1,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,

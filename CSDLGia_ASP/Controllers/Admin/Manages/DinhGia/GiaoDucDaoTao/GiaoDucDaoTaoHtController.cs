@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 {
@@ -61,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
                     if (getdonvi.Level == "ADMIN")
                     {
-                        var model = _db.GiaDvGdDt.Where(t => t.Madv_ad == Madv ).ToList();
+                        var model = _db.GiaDvGdDt.Where(t => t.Madv_ad == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -118,7 +113,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     }
                     else if (getdonvi.Level == "T")
                     {
-                        var model = _db.GiaDvGdDt.Where(t => t.Madv_t == Madv ).ToList();
+                        var model = _db.GiaDvGdDt.Where(t => t.Madv_t == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -175,7 +170,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     }
                     else
                     {
-                        var model = _db.GiaDvGdDt.Where(t => t.Madv_h == Madv ).ToList();
+                        var model = _db.GiaDvGdDt.Where(t => t.Madv_h == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -242,7 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-     
+
         public IActionResult HoanThanh(string mahs_complete, string Macqcq)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -284,7 +279,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     }
                     _db.GiaDvGdDt.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaoDucDaoTao", new {Madv = model.Madv, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -297,16 +292,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-    
-        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq ,  string madv_hientai)
+
+        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq, string madv_hientai)
         {
-            
+
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Approve"))
                 {
                     var model = _db.GiaDvGdDt.FirstOrDefault(p => p.Mahs == mahs_complete);
-                    
+
                     var dvcq_join = from dvcq in _db.DsDonVi
                                     join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -318,7 +313,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                         Level = db.Level,
                                     };
                     var dvchuyen = dvcq_join.FirstOrDefault(t => t.MaDv == madv_hientai);
-                   
+
 
                     model.Trangthai_ad = "CCB";
                     model.Thoidiem_ad = DateTime.Now;
@@ -335,7 +330,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     }
                     _db.GiaDvGdDt.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaoDucDaoTaoHt", new {Madv =  madv_hientai, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaoDucDaoTaoHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -355,7 +350,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Approve"))
                 {
                     var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Id == id_tralai);
-                    
+
                     //Gán trạng thái của đơn vị chuyển hồ sơ
                     if (madv_tralai == model.Macqcq)
                     {
@@ -418,7 +413,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             }
         }
 
-        public IActionResult CongBo(string mahs_cb )
+        public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -456,7 +451,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             }
         }
 
-        public IActionResult HuyCongBo(string mahs_hcb )
+        public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

@@ -1,6 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -75,7 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.SaveChanges();
 
                     ViewData["Nam"] = model.Thoigian.Year;
-                    return RedirectToAction("Index", "NhatKySuDung", new {model.Thoigian.Year});
+                    return RedirectToAction("Index", "NhatKySuDung", new { model.Thoigian.Year });
                 }
                 else
                 {

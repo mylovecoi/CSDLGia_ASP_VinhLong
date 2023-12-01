@@ -1,17 +1,13 @@
-﻿using CSDLGia_ASP.Helper;
+﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using System.IO;
-using System.Threading.Tasks;
 using System;
-using CSDLGia_ASP.Database;
-using Microsoft.AspNetCore.Hosting;
-using System.Globalization;
-using CSDLGia_ASP.Models.Systems;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+using System.IO;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
@@ -29,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         public IActionResult Index()
         {
             var tentailieu = _db.DmTaiLieuHuongDanSuDung.ToList();
-            return View("Views/Admin/Systems/DmTaiLieuHuongDanSuDung/Index.cshtml",tentailieu);
+            return View("Views/Admin/Systems/DmTaiLieuHuongDanSuDung/Index.cshtml", tentailieu);
 
         }
 
@@ -54,13 +50,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
 
                     var model = new DmTaiLieuHuongDanSuDung
-                    {  
+                    {
                         mota = request.mota,
                         Ipf1 = request.Ipf1,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                   
+
                     _db.DmTaiLieuHuongDanSuDung.Add(model);
                     _db.SaveChanges();
                     var tentailieu = _db.DmTaiLieuHuongDanSuDung.ToList();

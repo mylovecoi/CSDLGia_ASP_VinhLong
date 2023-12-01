@@ -1,20 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 //using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using OfficeOpenXml;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -26,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             _db = db;
         }
-        
+
         [Route("ChiSoGiaTieuDung/Xetduyet")]
         [HttpGet]
         public IActionResult Index(string Madv, string Matt)
@@ -65,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd> model = new List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd>();
                     if (getdonvi.Level == "H")
                     {
-                        
+
                         if (string.IsNullOrEmpty(Matt))
                         {
                             model = _db.ChiSoGiaTd.Where(x => x.Madv == Madv).ToList();
@@ -125,7 +117,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         ViewData["MenuLv3"] = "menu_csgDm";
                         return View("Views/Admin/Manages/ChiSoGiaTd/XetDuyet/Index.cshtml", model_join);
                     }
-                    else if (getdonvi.Level == "T") {
+                    else if (getdonvi.Level == "T")
+                    {
                         if (string.IsNullOrEmpty(Matt))
                         {
                             model = _db.ChiSoGiaTd.Where(x => x.Madv == Madv).ToList();
@@ -405,7 +398,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     {
                         model.Macqcq_h = null;
                         model.Madv_h = null;
-                        model.Thoidiem_h= DateTime.MinValue;
+                        model.Thoidiem_h = DateTime.MinValue;
                         model.Trangthai_h = null;
                     }
 

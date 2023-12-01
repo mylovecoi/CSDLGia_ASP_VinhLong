@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CSDLGia_ASP.ViewModels.Systems
+﻿namespace CSDLGia_ASP.ViewModels.Systems
 {
     public class VMGetAPIThietLap
     {

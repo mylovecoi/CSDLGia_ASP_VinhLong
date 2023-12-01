@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 {
@@ -59,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
 
 
 
-                        var model = _db.GiaSpDvCi.Where(t => t.Madv == Madv ).ToList();
+                        var model = _db.GiaSpDvCi.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -176,7 +171,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     _db.GiaSpDvCiCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                 
+
 
                     return RedirectToAction("Index", "GiaDichVuCongIch", new { Madv = request.Madv });
                 }
@@ -427,7 +422,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     ViewData["GiaSpDvCiDm"] = _db.GiaSpDvCiDm.ToList();
                     ViewData["dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
-                    
+
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
