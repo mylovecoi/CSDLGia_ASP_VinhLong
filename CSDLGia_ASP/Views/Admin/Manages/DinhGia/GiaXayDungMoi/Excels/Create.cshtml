@@ -4,7 +4,7 @@
     var mahs = ViewData["Mahs"];
     var Madv = ViewData["Madv"];
     var Mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaDatPhanLoaiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -28,7 +28,7 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                HỒ SƠ GIÁ CÁC LOẠI ĐẤT
+                HỒ SƠ GIÁ XÂY DỰNG MỚI
             </h3>
         </div>
     </div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Detail.cshtml")
         </div>
        
         <div class="card-footer" style="text-align:center">

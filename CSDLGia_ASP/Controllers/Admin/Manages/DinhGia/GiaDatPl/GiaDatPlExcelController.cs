@@ -42,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             ViewData["MenuLv3"] = "menu_dgdct_tt";
             ViewData["Madv"] = Madv;
             ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel.cshtml", model);
+            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excel/Excel.cshtml", model);
         }
 
 

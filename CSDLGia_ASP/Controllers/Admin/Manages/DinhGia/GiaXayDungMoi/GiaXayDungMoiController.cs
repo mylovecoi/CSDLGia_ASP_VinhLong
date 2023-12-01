@@ -156,7 +156,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                             Mahs = model.Mahs,
                             Ten = item.Ten,
                             Dvt = item.Dvt,
-                            Level = item.Level,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,

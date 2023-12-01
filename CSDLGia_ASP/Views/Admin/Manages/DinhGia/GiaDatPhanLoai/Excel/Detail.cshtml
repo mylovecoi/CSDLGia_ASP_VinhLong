@@ -29,15 +29,6 @@
                         <td style="text-align:center">@(record_id++)</td>
                         <td>@item.Khuvuc</td>
                         <td>@item.Khuvuc</td>
-                     @*   <td>
-                            @foreach (var ten in dmloaidat)
-                            {
-                                @if (ten.Maloaidat == item.Maloaidat)
-                                {
-                                    <span>@ten.Loaidat</span>
-                                }
-                            }
-                        </td>*@
                         <td>@item.Vitri</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>

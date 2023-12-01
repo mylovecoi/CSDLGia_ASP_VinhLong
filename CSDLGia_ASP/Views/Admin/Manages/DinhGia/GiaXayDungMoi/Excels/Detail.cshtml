@@ -1,8 +1,7 @@
 ﻿@{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
-    var ct = (IEnumerable<GiaDatPhanLoaiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -13,12 +12,9 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Tên đường, giới hạn, khu vực</th>
-                    <th>Loại đất</th>
-                    <th>Vị trí</th>
-                    <th>Giá đất tại bảng giá</th>
-                    <th>Giá đất cụ thể</th>
-                    <th>Hệ số điều chỉnh</th>
+                    <th>Phân loại</th>
+                    <th>Đơn vị tính</th>
+                    <th>Đơn giá</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -27,21 +23,9 @@
                 {
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>
-                        <td>@item.Khuvuc</td>
-                        <td>@item.Khuvuc</td>
-                     @*   <td>
-                            @foreach (var ten in dmloaidat)
-                            {
-                                @if (ten.Maloaidat == item.Maloaidat)
-                                {
-                                    <span>@ten.Loaidat</span>
-                                }
-                            }
-                        </td>*@
-                        <td>@item.Vitri</td>
-                        <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
-                        <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
-                        <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Hesodc)</td>
+                        <td>@item.Ten</td>
+                        <td>@item.Dvt</td>
+                        <td>@item.Gia</td>
                         <td>
                             <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                     onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
