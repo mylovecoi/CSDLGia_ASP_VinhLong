@@ -105,7 +105,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-
                                 Khuvuc = worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : ""
 

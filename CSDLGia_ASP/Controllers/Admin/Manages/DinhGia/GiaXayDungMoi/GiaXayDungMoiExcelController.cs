@@ -118,6 +118,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
+                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : ""
+
                             });
                         }
 
