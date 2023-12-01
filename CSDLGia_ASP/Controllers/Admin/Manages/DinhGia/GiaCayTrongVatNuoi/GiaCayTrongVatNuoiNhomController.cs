@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Index"))
                 {
                     var model = _db.GiaCayTrongVatNuoiNhom.ToList();
                     ViewData["Title"] = "Nhóm cây trồng vật nuôi";
@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Create"))
                 {
                     var request = new GiaCayTrongVatNuoiNhom
                     {
@@ -90,7 +90,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaCayTrongVatNuoiNhom.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -142,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaCayTrongVatNuoiNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
@@ -175,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Delete"))
                 {
                     var model = _db.GiaCayTrongVatNuoiNhom.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaCayTrongVatNuoiNhom.Remove(model);

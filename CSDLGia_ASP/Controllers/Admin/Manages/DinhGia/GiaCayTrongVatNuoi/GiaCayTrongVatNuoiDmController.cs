@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Index"))
                 {
                     var model = _db.GiaCayTrongVatNuoiDm.Where(t => t.Manhom == Manhom).ToList();
 
@@ -61,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Create"))
                 {
                     var request = new GiaCayTrongVatNuoiDm
                     {
@@ -103,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaCayTrongVatNuoiDm.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -164,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaCayTrongVatNuoiDm.FirstOrDefault(t => t.Id == Id);
                     model.Level = Level;
@@ -204,7 +204,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Delete"))
                 {
                     var model = _db.GiaCayTrongVatNuoiDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaCayTrongVatNuoiDm.Remove(model);
@@ -232,7 +232,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     var model = _db.GiaCayTrongVatNuoiDm.Where(t => t.Manhom == Manhom).ToList();
                     model.ForEach(t => { t.Theodoi = Theodoi; });
@@ -261,7 +261,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaCayTrongVatNuoi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.caytrongvatnuoi.danhmuc", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
                     var list_add = new List<GiaCayTrongVatNuoiDm>();
