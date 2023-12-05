@@ -35,6 +35,30 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Mã nhóm</label>
+                        <select asp-for="Manhom" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Tên nhóm</label>
+                        <select asp-for="Tennhom" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Phân loại</label>
@@ -78,6 +102,12 @@
             <div class="row">
                 <div class="col-xl-3">
                     <div class="form-group">
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
                         <label>Nhận từ dòng*</label>
                         <input type="number" class="form-control" asp-for="LineStart" />
                     </div>
@@ -86,12 +116,6 @@
                     <div class="form-group">
                         <label>Nhận đến dòng*</label>
                         <input type="number" class="form-control" asp-for="LineStop" />
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label>Sheet*</label>
-                        <input type="number" class="form-control" asp-for="Sheet" />
                     </div>
                 </div>
                 <div class="col-xl-3">

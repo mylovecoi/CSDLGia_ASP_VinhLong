@@ -12,11 +12,6 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="2%">STT</th>
-                  @*  <th>Mã nhóm tài nguyên cấp 1</th>
-                    <th>Mã nhóm tài nguyên cấp 2</th>
-                    <th>Mã nhóm tài nguyên cấp 3</th>
-                    <th>Mã nhóm tài nguyên cấp 4</th>
-                    <th>Mã nhóm tài nguyên cấp 5</th>*@
                     <th width="25%">Tên nhóm, loại xây dựng mới</th>
                     <th>Đơn vị tính</th>
                     <th>Giá (đồng)</th>
@@ -30,14 +25,9 @@
                     {
                         <tr>
                             <td class="text-center">@(record_id++)</td>
-                           @* <td class="text-center">@item.Cap1</td>
-                            <td class="text-center">@item.Cap2</td>
-                            <td class="text-center">@item.Cap3</td>
-                            <td class="text-center">@item.Cap4</td>
-                            <td class="text-center">@item.Cap5</td>*@
                             <td class="active" style="font-weight:bold;">@item.Ten</td>
                             <td class="text-center">@item.Dvt</td>
-                            <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
+                            <td style="text-align: right; font-weight:bold">item.Gia</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
                                 onclick="SetEdit('@item.Id')" title="Nhập Giá">

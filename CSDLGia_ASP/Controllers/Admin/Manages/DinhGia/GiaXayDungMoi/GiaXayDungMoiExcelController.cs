@@ -29,10 +29,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
                 {
                     var model = new GiaXayDungMoiCt
-                    {
-                        Ten = "1",
-                        Dvt = "2",
-                        Gia = 3,
+                    { 
+                        Manhom = "1",
+                        Tennhom = "2",
+                        Ten = "3",
+                        Dvt = "4",
+                        Gia = "5",
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
@@ -75,6 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
+                   
 
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
                 }
@@ -117,18 +120,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
+                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
+                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
                                 Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-
                                 Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : ""
+                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
                             });
                         }
-
                     }
 
                 }
-
                 _db.GiaXayDungMoiCt.AddRange(list_add);
                 _db.SaveChanges();
                 return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });

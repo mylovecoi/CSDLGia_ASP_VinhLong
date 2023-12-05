@@ -499,7 +499,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
         [Route("GiaXayDungMoi/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string manhom, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        public IActionResult Result(string madv, string manhom, DateTime ngaynhap_tu, DateTime ngaynhap_den, string gia_tu, string gia_den)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -542,11 +542,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
                     }
 
-                    model = model.Where(t => t.Gia >= gia_tu);
-                    if (gia_den > 0)
-                    {
-                        model = model.Where(t => t.Gia <= gia_den);
-                    }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá xây dựng mới";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -601,7 +596,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
         [Route("GiaXayDungMoiCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Gia)
+        public JsonResult UpdateCt(int Id, string Gia)
         {
             var model = _db.GiaXayDungMoiCt.FirstOrDefault(t => t.Id == Id);
             model.Gia = Gia;
@@ -637,7 +632,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                 result += "<td class='text-center'>" + record++ + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                 result += "<td class='text-center'>" + item.Dvt + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
