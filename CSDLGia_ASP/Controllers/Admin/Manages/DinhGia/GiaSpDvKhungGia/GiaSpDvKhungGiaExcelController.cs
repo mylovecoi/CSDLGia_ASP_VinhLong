@@ -10,13 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 {
-    public class GiathuemuanhaxhExcelController : Controller
+    public class GiaSpDvKhungGiaExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiathuemuanhaxhExcelController(CSDLGiaDBContext db)
+        public GiaSpDvKhungGiaExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
@@ -44,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Excel.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
         }
 
 
-        [Route("GiaXayDungMoiExcel/Create")]
+        [Route("GiathuemuanhaxhExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {

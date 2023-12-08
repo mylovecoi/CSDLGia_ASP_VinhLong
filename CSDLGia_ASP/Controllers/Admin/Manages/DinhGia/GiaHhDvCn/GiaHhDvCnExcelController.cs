@@ -44,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Excel.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         }
 
 
-        [Route("GiaXayDungMoiExcel/Create")]
+        [Route("GiaHhDvCnExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {

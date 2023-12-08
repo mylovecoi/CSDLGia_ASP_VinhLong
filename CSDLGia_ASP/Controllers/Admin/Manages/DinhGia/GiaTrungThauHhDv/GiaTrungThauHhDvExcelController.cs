@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
         }
 
 
-        [Route("GiaXayDungMoiExcel/Create")]
+        [Route("GiaTrungThauHhDvExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {
@@ -77,11 +77,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
-                    return Ok(ViewData["modelct"]);
-
-
-
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+           
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/Excels/Create.cshtml");
                 }
                 else
                 {

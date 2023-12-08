@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 {
-    public class GiaXayDungMoiExcelController : Controller
+    public class GiaXayDungMoiNewExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaXayDungMoiExcelController(CSDLGiaDBContext db)
+        public GiaXayDungMoiNewExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
@@ -77,10 +77,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
-                    return Ok(ViewData["modelct"]);
-
-
-
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
                 }
                 else
