@@ -35,8 +35,8 @@
     <!--begin::Form-->
     <form asp-controller="GiaXayDungMoi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_dct_store">
         <div class="card-body">
-            <input name="Madv" value="@Madv" />
-            <input name="Mahs" value="@Mahs" />
+            <input hidden name="Madv" value="@Madv" />
+            <input hidden name="Mahs" value="@Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -57,13 +57,13 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" id="Soqd" />
+                        <input type="text" class="form-control" id="Soqd" name="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control"  id="Thoidiem" />
+                        <input type="date" class="form-control" id="Thoidiem" name="Thoidiem" />
                     </div>
                 </div>
             </div>

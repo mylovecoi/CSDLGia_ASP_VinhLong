@@ -1,16 +1,20 @@
-﻿using CSDLGia_ASP.Database;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using CSDLGia_ASP.Database;
+using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 {
@@ -452,7 +456,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     // Lấy bản ghi có năm và mã đơn vị trùng với năm và mã đơn vị truyền vào ( Năm và Mã đơn vị tuyền từ Index sang )
 
-
+                 
                     var model = _db.GiaRung.Where(t => t.Trangthai == "HT").ToList();
 
 
@@ -480,7 +484,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     }
 
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgr";
+                    ViewData["MenuLv2"]  = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Print.cshtml", model);
 
@@ -507,24 +511,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
                 {
                     var model = from dgct in _db.GiaRungCt
-                                join dg in _db.GiaRung on dgct.Mahs equals dg.Mahs
-                                join dgdm in _db.GiaRungDm on dgct.Manhom equals dgdm.Manhom
-                                select new VMDinhGiaRungSearch
-                                {
-                                    Id = dg.Id,
-                                    Mahs = dg.Mahs,
-                                    Madv = dg.Madv,
-                                    Dongia = dg.Dongia,
-                                    Macqcq = dg.Macqcq,
-                                    Thoidiem = dg.Thoidiem,
-                                    Dientich = dg.Dientich,
-                                    Manhom = dgct.Manhom,
-                                    Dvt = dgct.Dvt,
-                                    Phanloai = dgct.Phanloai,
-                                    Tenvitri = dgdm.Tenvitri,
-                                    Dientichsd = dgct.Dientichsd,
-                                    Giatri = dgdm.Giatri,
-                                };
+                                     join dg in _db.GiaRung on dgct.Mahs equals dg.Mahs
+                                     join dgdm in _db.GiaRungDm on dgct.Manhom equals dgdm.Manhom
+                                     select new VMDinhGiaRungSearch
+                                     {
+                                         Id = dg.Id,
+                                         Mahs = dg.Mahs,
+                                         Madv = dg.Madv,
+                                         Dongia = dg.Dongia,
+                                         Macqcq = dg.Macqcq,
+                                         Thoidiem = dg.Thoidiem,
+                                         Dientich = dg.Dientich,
+                                         Manhom = dgct.Manhom,
+                                         Dvt = dgct.Dvt,
+                                         Phanloai = dgct.Phanloai,
+                                         Tenvitri = dgdm.Tenvitri,
+                                         Dientichsd = dgct.Dientichsd,
+                                         Giatri = dgdm.Giatri,
+                                     };
                     /*model_join.Where(t => t.Manhom == pl
                                     && t.Macqcq == dv
                                     && t.Thoidiem >= beginTime

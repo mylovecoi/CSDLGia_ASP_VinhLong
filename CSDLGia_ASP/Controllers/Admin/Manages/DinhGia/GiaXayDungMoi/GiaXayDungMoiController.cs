@@ -219,7 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         Soqd = request.Soqd,
                         Soqdlk = request.Soqdlk,
                         Thoidiemlk = request.Thoidiemlk,
-                        Cqbh = request.Cqbh,
+                        Thongtin = request.Thongtin,
                         Ghichu = request.Ghichu,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
@@ -227,6 +227,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
+            
                     _db.GiaXayDungMoi.Add(model);
                     _db.SaveChanges();
 
@@ -317,7 +318,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     model.Thoidiem = request.Thoidiem;
                     model.Soqdlk = request.Soqdlk;
                     model.Thoidiemlk = request.Thoidiemlk;
-                    model.Cqbh = request.Cqbh;
+                    model.Thongtin = request.Thongtin;
                     model.Ghichu = request.Ghichu;
                     model.Ipf1 = request.Ipf1;
                     model.Updated_at = DateTime.Now;

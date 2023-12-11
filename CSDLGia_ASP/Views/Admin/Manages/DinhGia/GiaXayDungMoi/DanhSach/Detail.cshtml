@@ -27,7 +27,7 @@
                             <td class="text-center">@(record_id++)</td>
                             <td class="active" style="font-weight:bold;">@item.Ten</td>
                             <td class="text-center">@item.Dvt</td>
-                            <td style="text-align: right; font-weight:bold">item.Gia</td>
+                            <td style="text-align: right; font-weight:bold">@item.Gia</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
                                 onclick="SetEdit('@item.Id')" title="Nhập Giá">
@@ -66,6 +66,7 @@
     </div>
 </div>
 <script>
+
     function SetEdit(id_edit) {
         $.ajax({
             url: '/GiaXayDungMoiCt/Edit',
@@ -74,14 +75,12 @@
                 Id: id_edit
             },
             dataType: 'JSON',
+
             success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Thành công!");
-                    $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
-                } else {
-                    toastr.error(data.message, "Lỗi!!!");
-                }
+                if (data.status == 'success') 
+                {$('#edit_thongtin').replaceWith(data.message);MoneyMask();} 
+                else 
+                {toastr.error(data.message, "Lỗi!!!");}
             }
         })
     }
