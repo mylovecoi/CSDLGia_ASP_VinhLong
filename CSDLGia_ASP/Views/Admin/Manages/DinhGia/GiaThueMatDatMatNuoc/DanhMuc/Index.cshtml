@@ -52,7 +52,7 @@
                 {
                     <tr style="text-align: center">
                         <td>@(record_id++)</td>
-                        <td>@item.Maloaidat</td>
+                        <td style="text-align:left">@item.Maloaidat</td>
                         <td style="text-align:left">@item.Loaidat</td>
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.GiaThueMatDatMatNuocDm", "Edit"))

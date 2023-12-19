@@ -10,13 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 {
-    public class GiaDatPlExcelController : Controller
+    public class GiaThueDNExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaDatPlExcelController(CSDLGiaDBContext db)
+        public GiaThueDNExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
@@ -42,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             ViewData["MenuLv3"] = "menu_dgdct_tt";
             ViewData["Madv"] = Madv;
             ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excels/Excel.cshtml", model);
+            return View("Views/Admin/Manages/DinhGia/GiaThueDN/Excels/Excel.cshtml", model);
         }
 
 
@@ -64,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
 
-                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaThueDN/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
 
-                return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaThueDNExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {
