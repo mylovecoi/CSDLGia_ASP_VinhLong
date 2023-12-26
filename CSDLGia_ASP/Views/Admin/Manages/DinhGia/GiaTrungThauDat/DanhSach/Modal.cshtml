@@ -221,11 +221,11 @@
                 Giadaugia: $('#Giadaugia_create').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
@@ -244,7 +244,7 @@
                 Id: id_edit
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
@@ -271,11 +271,11 @@
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");
@@ -298,10 +298,10 @@
                 Id: $('#id_delete').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");

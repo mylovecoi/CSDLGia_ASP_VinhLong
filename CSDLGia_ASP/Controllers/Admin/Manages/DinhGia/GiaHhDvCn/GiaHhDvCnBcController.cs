@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành ";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/BaoCao/Index.cshtml");
@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/BaoCao/BcTH.cshtml", model);
@@ -87,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = _db.GiaHhDvCnCt.ToList();
                     ViewData["Title"] = "Báo cáo chi tiết giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/BaoCao/BcCT.cshtml", model);

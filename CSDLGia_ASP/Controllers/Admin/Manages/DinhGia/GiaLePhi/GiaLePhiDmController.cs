@@ -32,8 +32,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.Distinct();
 
                     ViewData["Title"] = "Danh mục giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_dm";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_dglp";
+                    ViewData["MenuLv2"] = "menu_dglp_dm";
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhMuc/Index.cshtml", model);
                 }

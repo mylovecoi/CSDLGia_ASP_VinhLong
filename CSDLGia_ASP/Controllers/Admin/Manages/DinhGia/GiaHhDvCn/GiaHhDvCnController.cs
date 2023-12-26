@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_hhdvcn";
                         ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Index.cshtml", model);
@@ -102,7 +102,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     {
                         ViewData["Title"] = "Thông tin giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                         ViewData["Messages"] = "Hệ thống chưa có định giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành.";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_hhdvcn";
                         ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
@@ -143,7 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["Madv"] = MadvBc; // gửi sang create
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành ";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Create.cshtml", model);
@@ -255,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     };
                     _db.GiaHhDvCn.Add(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     //update lại Trangthai trong bảng chi tiết
@@ -291,7 +291,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         }
 
 
-
         [Route("GiaHhDvCn/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -309,9 +308,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaHhDvCn", new { model.Madv });
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_hhdvcn";
-                    ViewData["MenuLv3"] = "menu_hhdvcn_tt";
+
                 }
                 else
                 {
@@ -362,7 +359,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["Ipf4"] = model.Ipf4;
                     ViewData["Ipf5"] = model.Ipf5;
                     ViewData["Title"] = "Bảng giá tính giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Modify.cshtml", model);
@@ -472,7 +469,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
                     _db.GiaHhDvCn.Update(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     return RedirectToAction("Index", "GiaHhDvCn", new { request.Madv });
@@ -537,7 +534,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     _db.GiaHhDvCn.Update(model);
                     _db.SaveChanges();
 
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     return RedirectToAction("Index", "GiaHhDvCn", new { Madv = model.Madv });
@@ -590,7 +587,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["Ipf4"] = model.Ipf4;
                     ViewData["Ipf5"] = model.Ipf5;
                     ViewData["Title"] = "Bảng giá tính giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Show.cshtml", model);
@@ -628,7 +625,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/TimKiem/Index.cshtml");
@@ -646,73 +643,73 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             }
         }
 
-        /*[Route("GiaHhDvCn/TimKiem/KetQua")]
-        [HttpPost]
-        public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.thongtin", "Index"))
-                {
+        //[Route("GiaHhDvCn/TimKiem/KetQua")]
+        //[HttpPost]
+        //public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+        //    {
+        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.thongtin", "Index"))
+        //        {
 
-                    var model = (from giahhdvcnct in _db.GiaHhDvCnCt
-                                 join giahhdvcn in _db.GiaHhDvCn on giahhdvcnct.Mahs equals giahhdvcn.Mahs
-                                 join donvi in _db.DsDonVi on giahhdvcn.Madv equals donvi.MaDv
-                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
-                                 {
-                                     Id = giahhdvcnct.Id,
-                                     Mahs = giahhdvcnct.Mahs,
-                                     Dongia = giahhdvcnct.Dongia,
-                                     Mota = giahhdvcnct.Mota,
-                                     Maspdv = giahhdvcnct.Maspdv
-                                 });
-
-
-                    if (madv != "all")
-                    {
-                        model = model.Where(t => t.Madv == madv);
-                    }
-
-                    if (ngaynhap_tu.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
-                    }
+        //            var model = (from giahhdvcnct in _db.GiaHhDvCnCt
+        //                         join giahhdvcn in _db.GiaHhDvCn on giahhdvcnct.Mahs equals giahhdvcn.Mahs
+        //                         join donvi in _db.DsDonVi on giahhdvcn.Madv equals donvi.MaDv
+        //                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
+        //                         {
+        //                             Id = giahhdvcnct.Id,
+        //                             Mahs = giahhdvcnct.Mahs,
+        //                             Dongia = giahhdvcnct.Dongia,
+        //                             Mota = giahhdvcnct.Mota,
+        //                             Maspdv = giahhdvcnct.Maspdv
+        //                         });
 
 
+        //            if (madv != "all")
+        //            {
+        //                model = model.Where(t => t.Madv == madv);
+        //            }
 
-                    if (ngaynhap_den.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-                    }
+        //            if (ngaynhap_tu.ToString("yyMMdd") != "010101")
+        //            {
+        //                model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
+        //            }
 
-                    if (tenhanghoa != null)
-                    {
-                        model = model.Where(t => t.Mota == tenhanghoa);
-                    }
 
-                    model = model.Where(t => t.Mucgia >= gia_tu);
-                    if (gia_den > 0)
-                    {
-                        model = model.Where(t => t.Mucgia <= gia_den);
-                    }
 
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_hhdvcn";
-                    ViewData["MenuLv3"] = "menu_hhdvcn_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/TimKiem/Result.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }*/
+        //            if (ngaynhap_den.ToString("yyMMdd") != "010101")
+        //            {
+        //                model = model.Where(t => t.Thoidiem <= ngaynhap_den);
+        //            }
+
+        //            if (tenhanghoa != null)
+        //            {
+        //                model = model.Where(t => t.Mota == tenhanghoa);
+        //            }
+
+        //            model = model.Where(t => t.Mucgia >= gia_tu);
+        //            if (gia_den > 0)
+        //            {
+        //                model = model.Where(t => t.Mucgia <= gia_den);
+        //            }
+
+        //            ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
+        //            ViewData["MenuLv1"] = "menu_giakhac";
+        //            ViewData["MenuLv2"] = "menu_hhdvcn";
+        //            ViewData["MenuLv3"] = "menu_hhdvcn_tk";
+        //            return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/TimKiem/Result.cshtml", model);
+        //        }
+        //        else
+        //        {
+        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+        //            return View("Views/Admin/Error/Page.cshtml");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View("Views/Admin/Error/SessionOut.cshtml");
+        //    }
+        //}
 
         //    [Route("DinhGiaHhDvCn/Print")]
         //    [HttpGet]
@@ -758,7 +755,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
 
         //                ViewData["Title"] = "In định giá đât cụ thể";
-        //                ViewData["MenuLv1"] = "menu_dg";
+        //               ViewData["MenuLv1"] = "menu_giakhac";
         //                ViewData["MenuLv2"] = "menu_spdvcuthe";
         //                ViewData["MenuLv3"] = "menu_sandvcuthe_thongtin";
         //                return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Print.cshtml", hoso_dg);

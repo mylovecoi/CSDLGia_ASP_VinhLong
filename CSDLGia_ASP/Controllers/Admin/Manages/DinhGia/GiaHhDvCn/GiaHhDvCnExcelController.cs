@@ -39,7 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         LineStop = 1000,
                         Sheet = 1,
                     };
-                    ViewData["MenuLv1"] = "menu_dg";
+                       ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;
@@ -70,7 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 {
 
                     ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    ViewData["MenuLv1"] = "menu_dg";
+                       ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;

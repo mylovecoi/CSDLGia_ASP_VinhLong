@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_hhdvcn";
                         ViewData["MenuLv3"] = "menu_hhdvcn_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/HoanThanh/Index.cshtml");
@@ -197,7 +197,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_hhdvcn";
                         ViewData["MenuLv3"] = "menu_hhdvcn_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/HoanThanh/Index.cshtml"/*, model_join*/);
@@ -264,7 +264,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_hhdvcn";
                         ViewData["MenuLv3"] = "menu_hhdvcn_xd";
 

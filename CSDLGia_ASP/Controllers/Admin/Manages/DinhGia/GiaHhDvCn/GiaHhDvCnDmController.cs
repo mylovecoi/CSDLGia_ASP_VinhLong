@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.ToList();
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Index.cshtml", model);
@@ -43,6 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             }
             else
             {
+               
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
@@ -110,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaHhDvCnDm.Remove(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return RedirectToAction("Index", "GiaHhDvCnDm");
@@ -211,7 +212,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCnDm.Update(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
