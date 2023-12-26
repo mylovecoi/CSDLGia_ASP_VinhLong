@@ -57,9 +57,6 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-                <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
-                    <i class="la la-plus"></i>Tổng hợp hồ sơ
-                </button>
             }
 
         </div>
@@ -216,56 +213,6 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
-
-
-<!--Tổng hợp Modal-->
-<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="GiaXayDungMoi" asp-action="Create" method="get">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Tổng hợp hồ sơ giá xây dựng mới
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <hr />
-                <table class="table table-striped table-bordered table-hover" id="sample_3">
-                    <thead>
-                        <tr style="text-align:center">
-                            <th width="4%">STT</th>
-                            <th>Đơn vị báo cáo</th>
-                            <th>Chọn hồ sơ để tổng hợp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td style="text-align: center" width="3%">@(record_id++)</td>
-                                    <td style="text-align: center" width="10%">Sở tài chính</td>
-                                    <td style="text-align: center" width="12%">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 
