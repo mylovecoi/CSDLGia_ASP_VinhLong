@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         }
 
 
-        [Route("GiaXayDungMoiExcel/Create")]
+        [Route("GiaRungExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {
