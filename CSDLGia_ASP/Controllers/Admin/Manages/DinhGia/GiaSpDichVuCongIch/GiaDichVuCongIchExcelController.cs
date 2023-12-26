@@ -26,25 +26,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
+                    var model = new GiaSpDvCiCt
                     { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
+                        //Manhom = "1",
+                        //Tennhom = "2",
+                        //Ten = "3",
+                        //Dvt = "4",
+                        //Gia = "5",
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
                     };
+                    ViewData["Title"] = " Thông tin hồ sơ sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    return View("Views/Admin/Manages/DinhGia/GiaDichVuCongIch/Excels/Excel.cshtml", model);
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_tt";
+                    ViewData["Madv"] = Madv;           
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -66,22 +66,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDichVuCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
+                    ViewData["Title"] = " Thông tin hồ sơ sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
-                    return Ok(ViewData["modelct"]);
-
-
-
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+                    ViewData["modelct"] = _db.GiaSpDvCiCt.Where(t => t.Mahs == Mahs);
+                  
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Excels/Create.cshtml");
                 }
                 else
                 {

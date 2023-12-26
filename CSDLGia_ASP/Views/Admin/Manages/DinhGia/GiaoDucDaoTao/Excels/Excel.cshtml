@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoiCt
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtCt
 
 @{
     var Madv = ViewData["Madv"];
@@ -26,9 +26,9 @@
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
-                <a href="~/UpLoad/File/DinhGia/Excel/FileExcelXayDungMoi.xlsx" target="_blank" class="btn btn-link"
+                <a href="~/UpLoad/File/DinhGia/Excel/FileExcelGiaoDucDaoTao.xlsx" target="_blank" class="btn btn-link"
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                    <span style="font-weight:bold;">Link tải file mẫu FileExcelXayDungMoi.xlsx</span>
+                    <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaoDucDaoTao.xlsx</span>
                 </a>
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
@@ -38,7 +38,7 @@
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Mã nhóm</label>
-                        <select asp-for="Manhom" class="form-control">
+                        <select  class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -50,7 +50,7 @@
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Tên nhóm</label>
-                        <select asp-for="Tennhom" class="form-control">
+                        <select  class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -62,7 +62,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select asp-for="Ten" class="form-control">
+                        <select  class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -74,7 +74,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
+                        <select  class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -85,7 +85,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Gia" class="form-control">
+                        <select  class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
