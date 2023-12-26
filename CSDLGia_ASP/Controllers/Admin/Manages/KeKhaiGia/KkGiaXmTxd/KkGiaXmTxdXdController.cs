@@ -195,13 +195,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá xi măng thép xây dựng";
-                        /*ViewData["MenuLv1"] = "menu_kknygia";
+                        ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgxmtxd";
-                        ViewData["MenuLv3"] = "menu_giakkxd";*/
-                        ViewData["MenuLv1"] = "menu_hethong";
-                        ViewData["MenuLv2"] = "menu_qthethong";
-                        ViewData["MenuLv3"] = "menu_tichhop";
-                        ViewData["MenuLv4"] = "menu_tichhop_kkg";
+                        ViewData["MenuLv3"] = "menu_giakkxd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/XetDuyet/Index.cshtml", model_join);
                     }
                 }
