@@ -463,7 +463,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
-
                     return RedirectToAction("Index", "GiaXayDungMoiXd");
                 }
                 else
@@ -491,11 +490,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
 
                     _db.GiaXayDungMoi.Update(model);
                     _db.SaveChanges();
-
                     return RedirectToAction("Index", "GiaXayDungMoiXd");
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_xd";
+
                 }
                 else
                 {

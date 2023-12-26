@@ -17,7 +17,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         public string GetData(string Mahs)
         {
             var model = _db.GiaNuocShCt.Where(t => t.Mahs == Mahs).ToList();
-            //var dm=_db.GiaNuocShDm.ToList();
+           
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table - bordered table - hover' id='datatable_4'>";

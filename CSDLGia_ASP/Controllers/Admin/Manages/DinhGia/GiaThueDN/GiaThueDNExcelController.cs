@@ -24,25 +24,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         public IActionResult Index(string Madv)
         {
-            var model = new GiaDatPhanLoaiCt
+            var model = new GiaThueMatDatMatNuocCt
             {
-                Khuvuc = "1",
-                Loaidat = "2",
-                Vitri = 3,
-                Banggiadat = 4,
-                Giacuthe = 5,
-                Hesodc = 6,
-
                 LineStart = 2,
                 LineStop = 1000,
                 Sheet = 1,
             };
-            ViewData["MenuLv1"] = "menu_giadat";
-            ViewData["MenuLv2"] = "menu_dgdct";
-            ViewData["MenuLv3"] = "menu_dgdct_tt";
+            ViewData["MenuLv1"] = "menu_dg";
+            ViewData["MenuLv2"] = "menu_dgtmdmn";
+            ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
             ViewData["Madv"] = Madv;
-            ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-            return View("Views/Admin/Manages/DinhGia/GiaThueDN/Excels/Excel.cshtml", model);
+            ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
+            return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Excel.cshtml", model);
         }
 
 
@@ -52,19 +45,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_tt";
+                    ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
 
-                    return View("Views/Admin/Manages/DinhGia/GiaThueDN/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Create.cshtml");
                 }
                 else
                 {

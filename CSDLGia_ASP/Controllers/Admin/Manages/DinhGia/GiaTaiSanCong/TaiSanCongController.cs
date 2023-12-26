@@ -75,16 +75,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_tsc";
-                        ViewData["MenuLv2"] = "menu_giatsc_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_tsc";
+                        ViewData["MenuLv3"] = "menu_giatsc_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Index.cshtml", model);
                     }
                     else
                     {
                         ViewData["Messages"] = "Thông tin hồ sơ giá tài sản công.";
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_tsc";
-                        ViewData["MenuLv2"] = "menu_giatsc_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_tsc";
+                        ViewData["MenuLv3"] = "menu_giatsc_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 

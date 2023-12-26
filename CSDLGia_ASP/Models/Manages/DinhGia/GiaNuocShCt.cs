@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -28,5 +30,14 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giachuathue3 { get; set; }
         public string Namchuathue4 { get; set; }
         public double Giachuathue4 { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        [Required(ErrorMessage = "Thông tin không được bỏ trống")]
+        public IFormFile FormFile { get; set; }
     }
 }
