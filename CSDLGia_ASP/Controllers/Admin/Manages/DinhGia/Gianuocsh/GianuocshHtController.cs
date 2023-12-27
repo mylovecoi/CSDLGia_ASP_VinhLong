@@ -106,7 +106,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         ViewData["Title"] = "Hoàn thành định giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
-                        ViewData["MenuLv3"] = "menu_dgnsh_ht";
+                        ViewData["MenuLv3"] = "menu_dgnsh_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaNuocSh/HoanThanh/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -161,7 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         ViewData["Title"] = "Hoàn thành định giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
-                        ViewData["MenuLv3"] = "menu_dgnsh_ht";
+                        ViewData["MenuLv3"] = "menu_dgnsh_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaNuocSh/HoanThanh/Index.cshtml", model_join);
                     }
                     else
@@ -216,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         ViewData["Title"] = "Hoàn thành định giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
-                        ViewData["MenuLv3"] = "menu_dgnsh_ht";
+                        ViewData["MenuLv3"] = "menu_dgnsh_xd";
                         return View("Views/Admin/Manages/DinhGia/GiaNuocSh/HoanThanh/Index.cshtml", model_join);
                     }
                 }

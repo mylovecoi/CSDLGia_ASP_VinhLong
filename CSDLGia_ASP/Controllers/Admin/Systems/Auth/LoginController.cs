@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OfficeOpenXml.Drawing.Chart;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -43,28 +44,63 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                     }
                     if (md5_password == model.Password)
                     {
-                        if (model.Status == "Vô hiệu")
+                        if (model.Status == "Chờ xét duyệt") 
                         {
-                            ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
+                            ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
                             ViewData["username"] = username;
                             ViewData["password"] = password;
                             return View("Views/Admin/Systems/Auth/Login.cshtml");
-                        }
-                        else
+                        } 
+                        else 
                         {
-                            HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
-                            if (model.Chucnang == "K")
+                            if (model.Status == "Vô hiệu")
                             {
-                                var permissions = _db.Permissions.Where(p => p.Username == username);
-                                HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
+                                ViewData["username"] = username;
+                                ViewData["password"] = password;
+                                return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
                             else
                             {
-                                var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
-                                HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+                                if (model.Chucnang == "K")
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == username);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                else
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                return RedirectToAction("Index", "Home");
                             }
-                            return RedirectToAction("Index", "Home");
                         }
+                        
+                            if (model.Status == "Vô hiệu")
+                            {
+                                ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
+                                ViewData["username"] = username;
+                                ViewData["password"] = password;
+                                return View("Views/Admin/Systems/Auth/Login.cshtml");
+                            }
+                            else
+                            {
+                                HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+                                if (model.Chucnang == "K")
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == username);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                else
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                return RedirectToAction("Index", "Home");
+                            }
+                           
+                       
                     }
                     else
                     {

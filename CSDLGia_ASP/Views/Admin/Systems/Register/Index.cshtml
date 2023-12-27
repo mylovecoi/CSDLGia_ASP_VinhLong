@@ -46,6 +46,7 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label style="font-weight:bold; color:blue">Địa bàn</label>
                             <select class="form-control" id="Madiaban" name="Madiaban">
+                            <option selected value="all">--Tất cả--</option>
                                 @foreach (var item in dsdiaban)
                             {
                                 <!option value="@item.MaDiaBan" @((string)ViewData["Madiaban"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
@@ -90,6 +91,10 @@
                                         <span class="label font-weight-bold label-lg  label-light-danger label-inline">@item.Status</span><br />
                                         <span><u>Lý do: @item.Lydo</u></span>
                                     }
+                                    @if (item.Status == "Kích hoạt")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-light-primary label-inline">@item.Status</span>
+                                    }
                                 </span>
 
                                 </td>
@@ -98,9 +103,22 @@
                                     {
                                         <a asp-controller="Register" asp-action="Show" asp-route-Id="@item.Id" asp-route-Madv="@item.Madv"
                                asp-route-Madiaban="@ViewData["Madiaban"]" asp-route-Name="@item.Name" asp-route-Username="@item.Username" asp-route-Status="@item.Status"
-                               class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                               class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết">
                                             <i class="icon-lg la la-eye text-primary"></i>
                                         </a>
+ 
+
+                                    <a asp-controller="Register" asp-action="Show" asp-route-Id="@item.Id" asp-route-Madv="@item.Madv"
+                                       asp-route-Madiaban="@ViewData["Madiaban"]" asp-route-Name="@item.Name" asp-route-Username="@item.Username" asp-route-Status="@item.Status"
+                                       class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </a>
+
+                                    <a asp-controller="Register" asp-action="Show" asp-route-Id="@item.Id" asp-route-Madv="@item.Madv"
+                                       asp-route-Madiaban="@ViewData["Madiaban"]" asp-route-Name="@item.Name" asp-route-Username="@item.Username" asp-route-Status="@item.Status"
+                                       class="btn btn-sm btn-clean btn-icon" title="Reset mật khẩu">
+                                        <i class="icon-lg la la-refresh text-warning"></i>
+                                    </a>
                                     }
                             </td>
                         </tr>
