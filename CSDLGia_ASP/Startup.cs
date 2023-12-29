@@ -48,7 +48,7 @@ namespace CSDLGia_ASP
             });
             //services.AddMvc();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -89,7 +89,7 @@ namespace CSDLGia_ASP
                         new string[]{}
                     }
                 });
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,8 +98,8 @@ namespace CSDLGia_ASP
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiCsdlGia2 v1"));
+                /*app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiCsdlGia2 v1"));*/
             }
             else
             {
