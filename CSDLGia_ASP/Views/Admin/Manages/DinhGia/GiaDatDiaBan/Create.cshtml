@@ -1,7 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"]; // truyền sang từ ViewData
     var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
-     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
+    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
 }
 
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -24,70 +24,70 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    HỒ SƠ GIÁ ĐẤT THEO CÔNG BỐ ( Thêm mới )
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                HỒ SƠ GIÁ ĐẤT THEO CÔNG BỐ ( Thêm mới )
+            </h3>
         </div>
-        <!--begin::Form-->
-       @* Mã địa bàn
-        Mã hồ sơ
-        Mã đơn vị gửi hồ sơ lên*@
-        <form asp-controller="GiaDatDiaBan" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    @* Mã địa bàn
+    Mã hồ sơ
+    Mã đơn vị gửi hồ sơ lên*@
+    <form asp-controller="GiaDatDiaBan" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
+        <div class="card-body">
             <input hidden asp-for="Madv">
             <input hidden asp-for="Mahs">
-                <div class="row">
+            <div class="row">
 
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Theo thông tư quyết định</label>
-                            <input type="text" class="form-control" asp-for="Noidung" id="Noidung" />
-                        </div>
-                        <div hidden class="form-group">
-                            <label hidden>Theo thông tư quyết định</label>
-                            <input hidden type="text" class="form-control" asp-for="Soqd" id="Soqd" />
-                        </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Theo thông tư quyết định</label>
+                        <input type="text" class="form-control" asp-for="Noidung" id="Noidung" />
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Địa bàn</label>
+                    <div hidden class="form-group">
+                        <label hidden>Theo thông tư quyết định</label>
+                        <input hidden type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
                         <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                                @foreach (var item in dsdiaban)
-                                {
+                            @foreach (var item in dsdiaban)
+                            {
                                 <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
                             }
                         </select>
-                        </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Ngày áp dụng</label>
-                            <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
-                        </div>
-                    </div>
-
                 </div>
-                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
-                <div class="card-footer" style="text-align:center">
-                    <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                        <i class="la la-reply"></i>Quay lại
-                    </a>&ensp;
-                    <button type="submit" class="btn btn-primary mr-2" ><i class="la la-check"></i>Thêm mới</button>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày áp dụng</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
                 </div>
 
             </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
+            <div class="card-footer" style="text-align:center">
+                <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                    <i class="la la-reply"></i>Quay lại
+                </a>&ensp;
+                <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Thêm mới</button>
+            </div>
 
-        </form>
+        </div>
 
-    </div>
+    </form>
+
+</div>
 
 
 
-    @section Scripts{
+@section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

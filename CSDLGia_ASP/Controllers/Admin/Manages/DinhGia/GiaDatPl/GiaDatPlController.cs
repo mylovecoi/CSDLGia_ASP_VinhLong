@@ -582,6 +582,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
+        public IActionResult TrangCongBo()
+        {
+                    return View("Views/Admin/Systems/CongBo/TrangCongBo/DatPlCongBo.cshtml");  
+        }
+
 
     }
 }

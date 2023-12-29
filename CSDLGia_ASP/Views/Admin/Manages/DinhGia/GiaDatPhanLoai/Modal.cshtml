@@ -65,6 +65,18 @@
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
+                            <label><b>Địa giới - Từ</b></label>
+                            <input type="text" id="diagioitu_create" name="giact_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Địa giới - Đến</b></label>
+                            <input type="text" id="diagioiden_create" name="giact_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
                             <label><b>Hệ số điều chỉnh</b></label>
                             <input type="number" step="any" id="hs_create" name="hs_create" class="form-control" style="font-weight: bold" />
                         </div>
@@ -78,8 +90,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!--Delete Modal-->
@@ -138,6 +148,8 @@
             data: {
                 Mahs: $('#mahs_create').val(),
                 Maloaidat: $('#mld_create').val(),
+                Diagioitu: $('#diagioitu_create').val(),
+                Diagioiden: $('#diagioiden_create').val(),
                 Khuvuc: $('#tenduong_create').val(),
                 Vitri: $('#vt_create').val(),
                 Banggiadat: $('#giabg_create').val(),
