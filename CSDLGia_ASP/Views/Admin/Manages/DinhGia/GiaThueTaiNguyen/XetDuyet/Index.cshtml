@@ -133,7 +133,7 @@
                             <td style="text-align: left">@item.Tencqcq</td>
                             <td>
                                 <a asp-controller="GiaThueTaiNguyen" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
@@ -144,19 +144,19 @@
                                         @if (item.Trangthai == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                onclick="HuyCongBo('@item.Mahs')">
+                                                    onclick="HuyCongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
                                         }
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                onclick="CongBo('@item.Mahs')">
+                                                    onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -167,12 +167,12 @@
                                         @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                                    onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
                                                 <i class="icon-lg la la-check text-primary "></i>
                                             </button>
 
@@ -181,9 +181,37 @@
                                 }
 
                                 <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
                                 </a>
+
+                                <div class="dropdown dropdown-inline">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                        <i class="icon-lg la la-cog "></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <ul class="nav nav-hoverable flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Thiết lập thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Xem trước thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Truyền dữ liệu</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

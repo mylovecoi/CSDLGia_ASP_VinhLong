@@ -4,7 +4,7 @@
     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
 
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 
 }
 
@@ -12,67 +12,67 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Báo cáo tổng hợp<small>&nbsp;Định giá thuê mua nhà ở</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Báo cáo tổng hợp<small>&nbsp;Định giá thuê mua nhà ở</small><br />
+            </h3>
         </div>
-        <hr />
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group fv-plugins-icon-container">
-                        <ol>
-                            <li>
-                                <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
-                                    <span style="font-size:16px; color:blue;  font-weight: bold">
-                                        Báo cáo tổng hợp định giá thuê mua nhà ở
-                                    </span>
-                                </button>
-                            </li>
-                        </ol>
-                    </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-group fv-plugins-icon-container">
+                    <ol>
+                        <li>
+                            <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                <span style="font-size:16px; color:blue;  font-weight: bold">
+                                    Báo cáo tổng hợp định giá thuê mua nhà ở
+                                </span>
+                            </button>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!--Report Modal!-->
-    <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form asp-controller="GiathuemuanhaxhBc" asp-action="Bc" target="_blank" id="frm_report">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="card-label">
-                            Báo cáo tổng hợp định giá thuê mua nhà ở
-                        </h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group fv-plugins-icon-container">
-                                    <label style="font-weight:bold; color:blue">Đơn vị</label>
-                                    <select class="form-control" id="Madv" name="Madv">
-                                        @foreach (var db in dsdiaban)
+<!--Report Modal!-->
+<div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueMuaNhaXhBc" asp-action="Bc" target="_blank" id="frm_report">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Báo cáo tổng hợp định giá thuê mua nhà ở
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight:bold; color:blue">Đơn vị</label>
+                                <select class="form-control" id="Madv" name="Madv">
+                                    @foreach (var db in dsdiaban)
                                     {
                                         <optgroup label="@db.TenDiaBan">
                                             @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                                var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
                                             }
-                                            @foreach (var item in company)
+                                            @foreach (var item in dv)
                                             {
 
                                                 <!option value="@item.MaDv">@item.TenDv</!option>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="valedate()">Đồng ý</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="Validate()">Đồng ý</button>
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
 <script>
 
 
-    function valedate() {
+    function Validate() {
         var T1 = $('#tungay').val().trim();
         var T2 = $('#denngay').val().trim();
         if (T1 != "" && T2 != "") {

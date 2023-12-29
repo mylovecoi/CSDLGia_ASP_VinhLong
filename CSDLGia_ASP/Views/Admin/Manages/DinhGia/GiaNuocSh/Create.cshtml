@@ -1,7 +1,8 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaNuocSh;
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
+    var nam_start = DateTime.Now.Year - 10;
+    var nam_stop = DateTime.Now.Year + 10;
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -9,8 +10,6 @@
 }
 @section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -18,22 +17,17 @@
     <script>
         $(document).ready(function () {
             TableManaged4.init();
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#begin,#end").on("keyup change", function (e) {
-                //$("#nam_create").val($(this).val());
-                var begin = $("#begin").val();
-                var nam = parseInt(begin);
-                var end = $("#end").val();
-                var date = parseInt(end);
-                $("#nam_edit").val(nam);
-                (nam + 1) <= date ? $("#nam1_edit").val(nam + 1) : $("#nam1_edit").val();
-                (nam + 2) <= date ? $("#nam2_edit").val(nam + 2) : $("#nam1_edit").val();
-                (nam + 3) <= date ? $("#nam3_edit").val(nam + 3) : $("#nam1_edit").val();
-                (nam + 4) <= date ? $("#nam4_edit").val(nam + 4) : $("#nam1_edit").val();
-            });
+            // $("#Tunam,#Dennam").on("keyup change", function (e) {
+            //     var begin = $("#Tunam").val();
+            //     var nam = parseInt(begin);
+            //     var end = $("#Dennam").val();
+            //     var date = parseInt(end);
+            //     $("#nam_edit").val(nam);
+            //     (nam + 1) <= date ? $("#nam1_edit").val(nam + 1) : $("#nam1_edit").val();
+            //     (nam + 2) <= date ? $("#nam2_edit").val(nam + 2) : $("#nam1_edit").val();
+            //     (nam + 3) <= date ? $("#nam3_edit").val(nam + 3) : $("#nam1_edit").val();
+            //     (nam + 4) <= date ? $("#nam4_edit").val(nam + 4) : $("#nam1_edit").val();
+            // });
         });
     </script>
 }
@@ -41,12 +35,12 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giá<small>&nbsp;nước sinh hoạt</small><br />
+                Thêm mới hồ sơ giá<small>&nbsp;nước sinh hoạt</small><br />
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="Gianuocsh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_nsh_store">
+    <form asp-controller="GiaNuocSh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_nsh_store">
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
@@ -57,19 +51,19 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Ngày áp dụng*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn</label>
-                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
+                        <select class="form-control select2basic" asp-for="Madiaban">
                             @foreach (var item in dsdiaban)
                             {
                                 <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
@@ -83,21 +77,36 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Lộ trình từ năm*</label>
-                        <input type="number" class="form-control" asp-for="Tunam" id="begin" />
+                        <select class="form-control select2basic" asp-for="Tunam">
+                            @{
+
+                                for (var i = nam_start; i <= nam_stop; i++)
+                                {
+                                    <option value="@i">Năm @i</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Lộ trình đến năm*</label>
-                        <input type="number" class="form-control" asp-for="Dennam" id="end" />
+                        <select class="form-control select2basic" asp-for="Dennam">
+                            @{
+                                for (var i = nam_start; i <= nam_stop; i++)
+                                {
+                                    <option value="@i">Năm @i</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung hồ sơ</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
+                        <label>Nội dung*</label>
+                        <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
                     </div>
                 </div>
             </div>
@@ -105,38 +114,38 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf1upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf2upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf3upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf4upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf5upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
                     </div>
                 </div>
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaNuocSh/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="Gianuocsh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="GiaNuocSh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

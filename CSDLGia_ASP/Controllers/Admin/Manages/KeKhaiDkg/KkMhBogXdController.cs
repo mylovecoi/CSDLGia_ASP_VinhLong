@@ -245,8 +245,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
-                        ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_xetduyet";
+                        /*ViewData["MenuLv1"] = "menu_bog";
+                        ViewData["MenuLv2"] = "menu_xetduyet";*/
+                        ViewData["MenuLv1"] = "menu_hethong";
+                        ViewData["MenuLv2"] = "menu_qthethong";
+                        ViewData["MenuLv3"] = "menu_tichhop";
+                        ViewData["MenuLv4"] = "menu_tichhop_dkg";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                 }

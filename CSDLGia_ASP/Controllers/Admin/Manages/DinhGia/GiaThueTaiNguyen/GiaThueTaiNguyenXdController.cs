@@ -42,7 +42,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
                         Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                     }
                     else
                     {
@@ -65,8 +64,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                     }).FirstOrDefault();
 
                     var model = _db.GiaThueTaiNguyen.ToList();
-
-                    
 
                     if (getdonvi.Level == "H")
                     {
@@ -270,9 +267,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá thuế tài nguyên";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        /*ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";*/
+                        ViewData["MenuLv1"] = "menu_hethong";
+                        ViewData["MenuLv2"] = "menu_qthethong";
+                        ViewData["MenuLv3"] = "menu_tichhop";
+                        ViewData["MenuLv4"] = "menu_tichhop_giatn";
                         return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/XetDuyet/Index.cshtml", model_join);
                     }
                 }

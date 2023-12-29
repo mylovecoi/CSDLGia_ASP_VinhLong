@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 {
-    public class GiathuemuanhaxhBcController : Controller
+    public class GiaThueMuaNhaXhBcController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiathuemuanhaxhBcController(CSDLGiaDBContext db)
+        public GiaThueMuaNhaXhBcController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("BaoCaoDgThueMuaNhaXh")]
+        [Route("GiaThueMuaNhaXh/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,8 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tmnxh.bc", "Index"))
                 {
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Báo cáo tổng hợp định giá thuê thuê mua nhà xh";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
@@ -55,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             }
         }
 
-        [Route("BaoCaoDgThueMuaNhaXh/Bc1")]
+        [Route("GiaThueMuaNhaXh/BaoCao/Bc1")]
         [HttpPost]
         public IActionResult Bc(DateTime tungay, DateTime denngay, string Madv)
         {
@@ -65,29 +64,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 {
                     var tendv = _db.DsDonVi.Where(t => t.MaDv == Madv).FirstOrDefault();
                     var modelCt = from ct in _db.GiaThueMuaNhaXhCt
-                                join dm in _db.GiaThueMuaNhaXhDm on ct.Maso equals dm.Maso
-                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
-                                {
-                                    //Thoidiem = dg.Thoidiem,
-                                    Tendv = tendv.TenDv,
-                                    //Ghichu = dg.Ghichu,
-                                    Diachi = ct.Diachi,
-                                    Soqdpd = ct.Soqdpd,
-                                    Thoigianpd = ct.Thoigianpd,
-                                    Soqddg = ct.Soqddg,
-                                    Thoigiandg = ct.Thoigiandg,
-                                    Dvthue = ct.Dvthue,
-                                    Dongia = ct.Dongia,
-                                    Dongiathue = ct.Dongiathue,
-                                    Hdthue = ct.Hdthue,
-                                    Ththue = ct.Ththue,
-                                    Tungay = ct.Tungay,
-                                    Denngay = ct.Denngay,
-                                    Mahs=ct.Mahs,
-                                    Dientich = dm.Dientich,
-                                    Tennha = dm.Tennha,
-                                };
+                                  join dm in _db.GiaThueMuaNhaXhDm on ct.Maso equals dm.Maso
+                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
+                                  {
+                                      //Thoidiem = dg.Thoidiem,
+                                      Tendv = tendv.TenDv,
+                                      //Ghichu = dg.Ghichu,
+                                      Diachi = ct.Diachi,
+                                      Soqdpd = ct.Soqdpd,
+                                      Thoigianpd = ct.Thoigianpd,
+                                      Soqddg = ct.Soqddg,
+                                      Thoigiandg = ct.Thoigiandg,
+                                      Dvthue = ct.Dvthue,
+                                      Dongia = ct.Dongia,
+                                      Dongiathue = ct.Dongiathue,
+                                      Hdthue = ct.Hdthue,
+                                      Ththue = ct.Ththue,
+                                      Tungay = ct.Tungay,
+                                      Denngay = ct.Denngay,
+                                      Mahs = ct.Mahs,
+                                      Dientich = dm.Dientich,
+                                      Tennha = dm.Tennha,
+                                  };
+
                     var model = _db.GiaThueMuaNhaXh.AsQueryable();
+
                     if (tungay.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem >= tungay);
@@ -97,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         model = model.Where(t => t.Thoidiem <= denngay);
                     }
 
-                    ViewData["Title"] = "Báo cáo tổng hợp định giá thuê thuê mua nhà xh";
+                    ViewData["Title"] = "Báo cáo tổng hợp định giá thuê mua nhà xh";
                     ViewData["ct"] = modelCt;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";

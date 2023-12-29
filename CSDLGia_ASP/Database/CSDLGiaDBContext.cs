@@ -229,12 +229,17 @@ namespace CSDLGia_ASP.Database
         public DbSet<Users> Users { get; set; }
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<GroupPermissions> GroupPermissions { get; set; }
+        public DbSet<NhatKySuDung> NhatKySuDung { get; set; }
 
         //API
         public DbSet<KetNoiAPI> KetNoiAPI { get; set; }
         public DbSet<KetNoiAPI_HoSo> KetNoiAPI_HoSo { get; set; }
         public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
         public DbSet<DmChucnang> DmChucnang { get; set; }
+
+        // Danh sách chức năng
+
+        public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
 
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/

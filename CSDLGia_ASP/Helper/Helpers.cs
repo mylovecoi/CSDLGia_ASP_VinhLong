@@ -203,59 +203,94 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia", Name = "Mức giá kê khai - đăng ký(KKNYG)" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.ttdn", Name = "Thông tin doanh nghiệp" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.xdtttddn", Name = "Xét duyệt thông tin thay đổi doanh nghiệp" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt", Name = "KKNYG - Dịch vụ lưu trú" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", Name = "KKNYG - Dịch vụ lưu trú - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", Name = "KKNYG - Dịch vụ lưu trú - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdvlt.giakkxd", Name = "KKNYG - Dịch vụ lưu trú - Xét duyệt" });
+
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd", Name = "KKNYG - Xi măng, thép xây dựng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", Name = "KKNYG - Xi măng, thép xây dựng - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd", Name = "KKNYG - Xi măng, thép xây dựng - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "KKNYG - Sách giáo khoa" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakk", Name = "KKNYG - Sách giáo khoa - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakkbc", Name = "KKNYG - Sách giáo khoa - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakkxd", Name = "KKNYG - Sách giáo khoa - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol", Name = "KKNYG - Etanol" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakkbc", Name = "KKNYG - Etanol - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakk", Name = "KKNYG - Etanol - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgetanol.giakkxd", Name = "KKNYG - Etanol - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn", Name = "KKNYG - Thực phẩm chức năng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakk", Name = "KKNYG - Thực phẩm chức năng - Kê khai giá " });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakkbc", Name = "KKNYG - Thực phẩm chức năng - Báo cáo " });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtpcn.giakkxd", Name = "KKNYG - Thực phẩm chức năng - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan", Name = "KKNYG - Cát sạn" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan.giakk", Name = "KKNYG - Cát sạn - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan.giakkbc", Name = "KKNYG - Cát sạn - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcatsan.giakkxd", Name = "KKNYG - Cát sạn - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx", Name = "KKNYG - Học phí lái xe" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx.giakk", Name = "KKNYG - Học phí lái xe - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx.giakkbc", Name = "KKNYG - Học phí lái xe - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkghplx.giakkxd", Name = "KKNYG - Học phí lái xe - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan", Name = "KKNYG - Than" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan.giakk", Name = "KKNYG - Than - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgthan.giakkxd", Name = "KKNYG - Than - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay", Name = "KKNYG - Giấy" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay.giakk", Name = "KKNYG - Giấy - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay.giakkbc", Name = "KKNYG - Giấy - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkggiay.giakkxd", Name = "KKNYG - Giấy - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn", Name = "KKNYG - Thức ăn chăn nuôi" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn.giakk", Name = "KKNYG - Thức ăn chăn nuôi - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn.giakkbc", Name = "KKNYG - Thức ăn chăn nuôi - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgtacn.giakkxd", Name = "KKNYG - Thức ăn chăn nuôi - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap", Name = "KKNYG - Đất san lấp" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakk", Name = "KKNYG - Đất san lấp - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkbc", Name = "KKNYG - Đất san lấp - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdatsanlap.giakkxd", Name = "KKNYG - Đất san lấp - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung", Name = "KKNYG - Đá xây dựng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakk", Name = "KKNYG - Đá xây dựng - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakkbc", Name = "KKNYG - Đá xây dựng - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgdaxaydung.giakkxd", Name = "KKNYG - Đá xây dựng - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb", Name = "KKNYG - Vận tải xe buýt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", Name = "KKNYG - Vận tải xe buýt - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb.giakkbc", Name = "KKNYG - Vận tải xe buýt - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxb.giakkxd", Name = "KKNYG - Vận tải xe buýt - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk", Name = "KKNYG - Vận tải xe khách" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk.giakk", Name = "KKNYG - Vận tải xe khách - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk.giakkbc", Name = "KKNYG - Vận tải xe khách - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd", Name = "KKNYG - Vận tải xe khách - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx", Name = "KKNYG - Vận tải xe taxi" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx.giakk", Name = "KKNYG - Vận tải xe taxi - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkbc", Name = "KKNYG - Vận tải xe taxi - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgvtxtx.giakkxd", Name = "KKNYG - Vận tải xe taxi - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk", Name = "KKNYG - Cước vận chuyển hành khách" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk.giakk", Name = "KKNYG - Cước vận chuyển hành khách - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk.giakkbc", Name = "KKNYG - Cước vận chuyển hành khách - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkcvchk.giakkxd", Name = "KKNYG - Cước vận chuyển hành khách - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue", Name = "KKNYG - Ca huế" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue.giakk", Name = "KKNYG - Ca huế - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue.giakkbc", Name = "KKNYG - Ca huế - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgcahue.giakkxd", Name = "KKNYG - Ca huế - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsieuthi", Name = "KKNYG - Siêu thị" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsieuthi.giakk", Name = "KKNYG - Siêu thị - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsieuthi.giakkcb", Name = "KKNYG - Siêu thị - Báo cáo" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsieuthi.giakkxd", Name = "KKNYG - Siêu thị - Xét duyệt" });
 
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
@@ -728,7 +763,7 @@ namespace CSDLGia_ASP.Helper
 
         public static string ConvertDateTimeToStr(DateTime datetime)
         {
-            string str = datetime.Date.ToString("dd/MM/yyyy HH:mm:ss,fff tt");
+            string str = datetime.ToString("dd/MM/yyyy HH:mm:ss,fff tt");
             return str;
         }
 

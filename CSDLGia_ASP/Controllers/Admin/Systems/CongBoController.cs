@@ -139,5 +139,14 @@ namespace CSDLGia_ASP.Controllers.HeThong
                 return Json(data);
             }
         }
+
+        [Route("CongBo/MobileApp")]
+        [HttpGet]
+        public IActionResult MobileApp()
+        {
+            ViewBag.bSession = false;
+            ViewData["Title"] = "Mobile App";
+            return View("Views/Admin/Systems/CongBo/MobileApp.cshtml");
+        }
     }
 }

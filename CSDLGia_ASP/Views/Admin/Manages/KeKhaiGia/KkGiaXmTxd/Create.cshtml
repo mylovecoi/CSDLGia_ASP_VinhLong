@@ -65,7 +65,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày nhập số công văn liền kề*</label>
-                        <input type="date" class="form-control" id="Ngaycvlk" name="Ngaycvlk" />
+                        <input type="date" class="form-control" asp-for="Ngaycvlk" />
                     </div>
                 </div>
                 <div class="col-xl-12">
@@ -106,11 +106,8 @@
             if ($('#Ngayhieuluc').val().trim() == '') {
                 toastr.error("Ngày thực hiện mức giá kê khai không được để trống!", "Lỗi!!!")
             } else {
-                if ($('#Ngaycvlk').val().trim() == '') {
-                    toastr.error("Ngày nhập số công văn liền kề không được để trống!", "Lỗi!!!")
-                } else {
-                    document.getElementById("frm_xmtxd_store").submit();
-                }
+                toastr.success("Thêm mới hồ sơ kê khai giá!", "Thành công!!!")
+                document.getElementById("frm_xmtxd_store").submit();
             }
         }
     }

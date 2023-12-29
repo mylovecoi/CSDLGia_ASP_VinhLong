@@ -6935,6 +6935,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Ththue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Tungay")
                         .HasColumnType("datetime2");
 
@@ -11113,6 +11116,39 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("CompanyLvCc");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DanhMucChucNang", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Capdo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Maso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Maso_goc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Menu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DanhMucChucNang");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Districts", b =>
                 {
                     b.Property<int>("Id")
@@ -11790,6 +11826,48 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GroupPermissions");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.NhatKySuDung", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Chucnang")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Diachitruycap")
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<string>("Hanhdong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nguoisudung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Noidung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tendangnhap")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Thoigian")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NhatKySuDung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Permissions", b =>

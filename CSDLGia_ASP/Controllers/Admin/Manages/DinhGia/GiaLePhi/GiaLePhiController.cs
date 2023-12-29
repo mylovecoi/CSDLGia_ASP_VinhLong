@@ -82,8 +82,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                         ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                        ViewData["MenuLv1"] = "menu_lp";
-                        ViewData["MenuLv2"] = "menu_gialp_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dglp";
+                        ViewData["MenuLv3"] = "menu_dglp_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Index.cshtml", model);
                     }
                     else
@@ -150,8 +151,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Create.cshtml", model);
                 }
@@ -323,8 +325,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Edit.cshtml", model_new);
                 }
@@ -502,8 +505,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_tt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Show.cshtml", model_new);
                 }
@@ -534,8 +538,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                     ViewData["Title"] = " Thông tin hồ sơ lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_tk";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/TimKiem/Index.cshtml");
                 }
                 else
@@ -604,8 +609,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
 
                     ViewData["Title"] = " Thông tin hồ sơ lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_lp";
-                    ViewData["MenuLv2"] = "menu_gialp_tk";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/TimKiem/Result.cshtml", model_join);
                 }
                 else
