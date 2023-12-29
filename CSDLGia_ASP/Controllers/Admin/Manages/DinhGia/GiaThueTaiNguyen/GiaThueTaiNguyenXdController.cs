@@ -1,11 +1,21 @@
-﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.ViewModels.Systems;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using CSDLGia_ASP.Database;
+using System.Security.Cryptography;
+using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
+using Microsoft.Extensions.Hosting;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 {
@@ -32,7 +42,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
                         Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                     }
                     else
                     {
@@ -41,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-
+                   
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -55,8 +64,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                     }).FirstOrDefault();
 
                     var model = _db.GiaThueTaiNguyen.ToList();
-
-
 
                     if (getdonvi.Level == "H")
                     {
@@ -77,26 +84,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         }
 
                         var model_new = (from kk in model
-                                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
-                                         {
-                                             Id = kk.Id,
-                                             Mahs = kk.Mahs,
-                                             MadvCh = GetMadvChuyen(Madv, kk),
-                                             Macqcq = Madv,
-                                             Madv = kk.Madv_h,
-                                             Thoidiem = kk.Thoidiem_h,
-                                             Cqbh = kk.Cqbh,
-                                             Trangthai = kk.Trangthai_h,
-                                             Soqd = kk.Soqd,
-                                             Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                         });
+                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+                                          {
+                                              Id = kk.Id,
+                                              Mahs = kk.Mahs,
+                                              MadvCh = GetMadvChuyen(Madv, kk),
+                                              Macqcq = Madv,
+                                              Madv = kk.Madv_h,
+                                              Thoidiem = kk.Thoidiem_h,
+                                              Cqbh = kk.Cqbh,
+                                              Trangthai = kk.Trangthai_h,
+                                              Soqd = kk.Soqd,
+                                              Level = getdonvi.Level,
+                                              Ipf1 = kk.Ipf1,
+                                          });
 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
                                           {
-                                              Id = kkj.Id,
+                                              Id = kkj.Id, 
                                               Mahs = kkj.Mahs,
                                               MadvCh = kkj.MadvCh,
                                               TendvCh = dv.TenDv,
@@ -215,20 +222,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         }
 
                         var model_new = (from kk in model
-                                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
-                                         {
-                                             Id = kk.Id,
-                                             Mahs = kk.Mahs,
-                                             MadvCh = GetMadvChuyen(Madv, kk),
-                                             Macqcq = Madv,
-                                             Madv = kk.Madv_ad,
-                                             Thoidiem = kk.Thoidiem_ad,
-                                             Cqbh = kk.Cqbh,
-                                             Trangthai = kk.Trangthai_ad,
-                                             Soqd = kk.Soqd,
-                                             Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                         });
+                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+                                          {
+                                              Id = kk.Id,
+                                              Mahs = kk.Mahs,
+                                              MadvCh = GetMadvChuyen(Madv, kk),
+                                              Macqcq = Madv,
+                                              Madv = kk.Madv_ad,
+                                              Thoidiem = kk.Thoidiem_ad,
+                                              Cqbh = kk.Cqbh,
+                                              Trangthai = kk.Trangthai_ad,
+                                              Soqd = kk.Soqd,
+                                              Level = getdonvi.Level,
+                                              Ipf1 = kk.Ipf1,
+                                          });
 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
@@ -260,9 +267,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá thuế tài nguyên";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        /*ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgthuetn";
-                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                        ViewData["MenuLv3"] = "menu_dgthuetn_xd";*/
+                        ViewData["MenuLv1"] = "menu_hethong";
+                        ViewData["MenuLv2"] = "menu_qthethong";
+                        ViewData["MenuLv3"] = "menu_tichhop";
+                        ViewData["MenuLv4"] = "menu_tichhop_giatn";
                         return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/XetDuyet/Index.cshtml", model_join);
                     }
                 }

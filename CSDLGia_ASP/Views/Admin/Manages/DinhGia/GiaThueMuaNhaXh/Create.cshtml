@@ -1,7 +1,6 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueMuaNhaXh;
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -18,6 +17,7 @@
     <script>
         $(document).ready(function () {
             TableManaged4.init();
+            $('.select2multi').select2();
         });
     </script>
 }
@@ -30,7 +30,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="Giathuemuanhaxh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tmnxh_store">
+    <form asp-controller="GiaThueMuaNhaXh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tmnxh_store">
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
@@ -53,21 +53,21 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung hồ sơ</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
+                        <label>Nội dung*</label>
+                        <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
                     </div>
                 </div>
             </div>
@@ -75,34 +75,34 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
                  <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf2" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
 
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf3" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
 
                  <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf4" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
                
                  <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf5" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
                
@@ -111,7 +111,7 @@
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="Giathuemuanhaxh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="GiaThueMuaNhaXh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

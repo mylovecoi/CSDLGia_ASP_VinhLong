@@ -1,11 +1,19 @@
-﻿using CSDLGia_ASP.Database;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using CSDLGia_ASP.Database;
+using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
@@ -32,9 +40,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.Distinct();
 
                     ViewData["Title"] = "Danh mục giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv1"] = "menu_dglp";
-                    ViewData["MenuLv2"] = "menu_dglp_dm";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_dm";
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhMuc/Index.cshtml", model);
                 }
@@ -106,7 +114,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "<div class='col-xl-11'>";
                 result += "<label class='form-control-label'><b>Tên phân loại nhóm phí, lệ phí*</b></label>";
                 result += "<select type='text' id='Phanloai_edit' name='Phanloai_edit' class='form-control'>";
-
+              
                 foreach (var item in Phanloai)
                 {
                     result += " <option value = '" + item.Phanloai + "' >" + item.Phanloai + "</ option >";

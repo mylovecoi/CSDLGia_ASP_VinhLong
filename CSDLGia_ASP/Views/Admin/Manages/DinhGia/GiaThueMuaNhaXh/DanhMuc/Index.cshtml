@@ -24,7 +24,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;giá thuê,thuê mua nhà ở</small><br />
+                Danh mục<small>&nbsp;giá thuê,thuê mua nhà ở xã hội</small><br />
             </h3>
         </div>
         <div class="card-toolbar">
@@ -59,12 +59,12 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@(record_id++)</td>
-                            <td style="text-align: center">@item.Phanloai</td>
-                            <td class="text-center center">@item.Tennha</td>
-                            <td class="text-center center">@item.Diachi</td>
-                            <td class="text-center center">@item.Thoigian</td>
-                            <td class="text-center center">@item.Hientrang</td>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td>@item.Phanloai</td>
+                            <td class="text-center active">@item.Tennha</td>
+                            <td>@item.Diachi</td>
+                            <td>@Helpers.ConvertDateToStr(item.Thoigian)</td>
+                            <td>@item.Hientrang</td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
@@ -83,7 +83,7 @@
 
 <!--create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -125,10 +125,10 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Hiện trạng</b></label>
                                 <select id="hientrang_create" name="hientrang_create" class="form-control">
-                                    <option >Đang cho thuê</option>
-                                    <option >Đang sử dụng</option>
-                                    <option>Đã bán</option>
-                                    <option>Chưa sử dụng</option>
+                                <option value="Đang cho thuê">Đang cho thuê</option>
+                                <option value="Đang sử dụng">Đang sử dụng</option>
+                                <option value="Đã bán">Đã bán</option>
+                                <option value="Chưa sử dụng">Chưa sử dụng</option>
                                 </select>
                             </div>
                         </div>
@@ -136,17 +136,17 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Phân loại</b></label>
                                 <select id="phanloai_create" name="phanloai_create" class="form-control">
-                                    <option>Nhà ở xã hội</option>
-                                    <option>Nhà ở công vụ</option>
-                                    <option>Nhà ở thuộc sở hữu của nhà nước</option>
-                                    <option>Nhà ở khác</option>
+                                <option value="Nhà ở xã hội">Nhà ở xã hội</option>
+                                <option value="Nhà ở công vụ">Nhà ở công vụ</option>
+                                <option value="Nhà ở thuộc sở hữu của nhà nước">Nhà ở thuộc sở hữu của nhà nước</option>
+                                <option value="Nhà ở khác">Nhà ở khác</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Ghi chú</b></label>
-                                <textarea id="ghichu_create" name="ghichu_create" class="form-control" cols="2"></textarea>
+                                <textarea id="ghichu_create" name="ghichu_create" class="form-control" rows="2"></textarea>
                             </div>
                         </div>
                     </div>
@@ -158,6 +158,7 @@
         </div>
     </div>
 </div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -182,6 +183,7 @@
         </div>
     </div>
 </div>
+
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -210,7 +212,7 @@
 <script>
     function GetCreate() {
         $.ajax({
-            url: '/DanhMucGiaThueMuaNhaO/Store',
+            url: '/GiaThueMuaNhaXh/DanhMuc/Store',
             type: 'POST',
             data: {
                 Thoigian: $('#thoigian_create').val(),
@@ -237,12 +239,14 @@
             }
         })
     }
+
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
+
     function GetDelete() {
         $.ajax({
-            url: '/DanhMucGiaThueMuaNhaO/Delete',
+            url: '/GiaThueMuaNhaXh/DanhMuc/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
@@ -266,7 +270,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DanhMucGiaThueMuaNhaO/Edit',
+            url: '/GiaThueMuaNhaXh/DanhMuc/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -282,9 +286,10 @@
             }
         })
     }
+
     function GetEdit() {
         $.ajax({
-            url: '/DanhMucGiaThueMuaNhaO/Update',
+            url: '/GiaThueMuaNhaXh/DanhMuc/Update',
             type: 'POST',
             data: {
                 Thoigian: $('#thoigian_edit').val(),

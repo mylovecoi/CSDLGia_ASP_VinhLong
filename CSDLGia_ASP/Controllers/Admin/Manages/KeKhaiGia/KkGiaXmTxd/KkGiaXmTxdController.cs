@@ -47,6 +47,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
 
                     if (dsdonvi.Count > 0)
                     {
+                        
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
@@ -65,16 +67,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaXmTxd
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
 
-                        if (string.IsNullOrEmpty(Trangthai))
+                        var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe).ToList();
+
+                        if (string.IsNullOrEmpty(Trangthai) || Trangthai == "All")
                         {
-                            Trangthai = "CC";
+                            model = model.ToList();
+                        }
+                        else
+                        {
+                            model = model.Where(t => t.Trangthai == Trangthai).ToList();
                         }
 
                         var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
 
                         if (comct.Count > 0)
                         {
-                            var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Trangthai == Trangthai).ToList();
                             if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                             {
                                 ViewData["DsDonVi"] = dsdonvi;

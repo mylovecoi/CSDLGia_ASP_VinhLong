@@ -1,9 +1,8 @@
-﻿
-@{
-     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
-    var mahs = ViewData["Mahs"];
-    var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
+﻿@{
+    var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+    var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Dmtmnxh"];
 }
+
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -17,15 +16,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" value="@mahs" id="mahs_create" />
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên nhà</b></label>
                             <select id="tennha_create" name="tennha_create" class="form-control">
-                                @foreach (var tn in tennha)
+                                @foreach (var item in dmtmnxh)
                                 {
-                                    <option value="@tn.Tennha">@tn.Tennha</option>
+                                    <option value="@item.Maso">@item.Tennha</option>
                                 }
                             </select>
                         </div>
@@ -71,46 +69,38 @@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Hợp đồng số</b></label>
-                            <input type="text" id="hdso_create" name="hdso_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="hdso_create" name="hdso_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Thời hạn</b></label>
-                            <input type="text" id="thoihan_create" name="thoihan_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="thoihan_create" name="thoihan_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Từ ngày</b></label>
-                            <input type="date" id="tungay_create" name="tungay_create" class="form-control"/>
+                            <input type="date" id="tungay_create" name="tungay_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Đến ngày</b></label>
-                            <input type="date" id="tungay_create" name="tungay_create" class="form-control" />
+                            <input type="date" id="denngay_create" name="denngay_create" class="form-control" />
                         </div>
                     </div>
 
-                    <div class="col-xl-3">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="dvt_create" class="form-control select2basic" name="dvt_create" tabindex="-1" title="">
-                            @foreach (var item in dsdvt)
+                    <div class="col-xl-4">
+                        <label class="form-control-label">Đơn vị tính</label><br />
+                        <select id="dvt_create" class="form-control" name="dvt_create">
+                            @foreach (var item in dmdvt)
                             {
                                 <option value="@item.Dvt">@item.Dvt</option>
                             }
                         </select>
-
                     </div>
 
-                    <div class="col-xl-1">
-                        <label class="control-label">Thêm </label>
-                        <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
-                            <i class="la la-plus"></i>
-                        </button>
-                    </div>
-                  
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá bán*</b></label>
@@ -133,30 +123,23 @@
     </div>
 </div>
 
-<!--Thêm đơn vị tính -->
-
-<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Thông tin đơn vị tính
+                    Chỉnh sửa thông tin giá thuê mua nhà xã hội
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
-                        <input id="dvt_add" class="form-control" name="dvt_add" type="text">
-                    </div>
-                </div>
+            <div class="modal-body" id="edit_thongtin">
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -186,31 +169,36 @@
         </div>
     </div>
 </div>
-<!--Edit Modal-->
-<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+@*<!--Thêm đơn vị tính -->
+<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Chỉnh sửa thông tin giá thuê mua nhà xã hội
+                    Thông tin đơn vị tính
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body" id="edit_thongtin">
-
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
+                        <input id="dvt_add" class="form-control" name="dvt_add" type="text">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--Thêm đơn vị tính edit -->
-
 <div class="modal fade" id="Dvt_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -236,29 +224,16 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <script>
-    function Dvt() {
-        $('#Dvt_Modal').modal('hide');
-        var gt = $('#dvt_add').val();
-        $('#dvt_create').append(new Option(gt, gt, true, true));
-        $('#dvt_create').val(gt).trigger('change');
-    }
-    function Dvtedit() {
-        $('#Dvt_Modal_edit').modal('hide');
-        var gt = $('#dvt_add_edit').val();
-        $('#dvt_edit').append(new Option(gt, gt, true, true));
-        $('#dvt_edit').val(gt).trigger('change');
-    }
     function SetStore() {
-      
         $.ajax({
-            url: '/DinhGiaThueMuaNhaXhCt/Store',
+            url: '/GiaThueMuaNhaXhCt/Store',
             type: 'POST',
             data: {
-                Mahs: $('#mahs_create').val(),
-                Tennha: $('#tennha_create').val(),
+                Mahs: $('#Mahs').val(),
+                Maso: $('#tennha_create').val(),
                 Dvthue: $('#donvithue_create').val(),
                 Diachi: $('#diachi_create').val(),
                 Soqdpd: $('#sqdct_create').val(),
@@ -291,7 +266,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DinhGiaThueMuaNhaXhCt/Edit',
+            url: '/GiaThueMuaNhaXhCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -301,6 +276,7 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    MoneyMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -309,14 +285,14 @@
     }
 
     function SetUpdate() {
-     
         $.ajax({
-            url: '/DinhGiaThueMuaNhaXhCt/Update',
+            url: '/GiaThueMuaNhaXhCt/Update',
             type: 'POST',
             data: {
-                Mahs: $('#mahs_edit').val(),
-                Tennha: $('#tennha_edit').val(),
+                Mahs: $('#Mahs').val(),
+                Maso: $('#tennha_edit').val(),
                 Dvthue: $('#donvithue_edit').val(),
+                Diachi: $('#diachi_edit').val(),
                 Soqdpd: $('#sqdct_edit').val(),
                 Thoigianpd: $('#tdqdct_edit').val(),
                 Soqddg: $('#sqdg_edit').val(),
@@ -352,7 +328,7 @@
 
     function SetDelete() {
         $.ajax({
-            url: '/DinhGiaThueMuaNhaXhCt/Delete',
+            url: '/GiaThueMuaNhaXhCt/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
@@ -372,4 +348,18 @@
             }
         })
     }
+
+        //function Dvt() {
+        //    $('#Dvt_Modal').modal('hide');
+        //    var gt = $('#dvt_add').val();
+        //    $('#dvt_create').append(new Option(gt, gt, true, true));
+        //    $('#dvt_create').val(gt).trigger('change');
+        //}
+
+        //function Dvtedit() {
+        //    $('#Dvt_Modal_edit').modal('hide');
+        //    var gt = $('#dvt_add_edit').val();
+        //    $('#dvt_edit').append(new Option(gt, gt, true, true));
+        //    $('#dvt_edit').val(gt).trigger('change');
+        //}
 </script>

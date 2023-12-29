@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["Dsdonvi"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.NhatKySuDung>
+
+<br />
+<br />
+<h2 class="page-title" style="text-align: center;text-transform: uppercase">
+    Tìm kiếm nhật ký sử dụng
+</h2>
+<br />
+<br />
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th width="4%">#</th>
+            <th>Địa chỉ IP</th>
+            <th>Đơn vị</th>
+            <th>Người sử dụng</th>
+            <th>Tên đăng nhập</th>
+            <th>Thời gian</th>
+            <th>Nội dung</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center" width="3%">@(record_id++)</td>
+                    <td width="15%">@item.Diachitruycap</td>
+                    @if (item.Madv != null)
+                    {
+                        @foreach (var dv in dsdonvi)
+                        {
+                            @if (item.Madv == dv.MaDv)
+                            {
+                                <td style="text-align: center">@dv.TenDv</td>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <td style="text-align: center"></td>
+                    }
+                    <td width="15%">@item.Nguoisudung</td>
+                    <td width="15%">@item.Tendangnhap</td>
+                    <td style="text-align: center" width="25%">@Helpers.ConvertDateTimeToStr(item.Thoigian)</td>
+                    <td class="active">@item.Noidung</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,9 +1,9 @@
 ﻿@{
     int record_id = 1;
-    var doituong = (IEnumerable<GiaNuocShDmVung>)ViewData["Doituong"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var doituong = (IEnumerable<GiaNuocShDm>)ViewData["Doituong"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaNuocShSearch>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShCt>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -39,23 +39,23 @@
                     <th rowspan="2" colspan="1">Đơn vị nhập</th>
                     <th rowspan="2" colspan="1">Thời điểm</th>
                     <th rowspan="2" colspan="1">Đối tượng sử dụng</th>
-                    <th rowspan="1" colspan="2">Đơn giá</th>
-                    <th rowspan="1" colspan="2">Đơn giá</th>
-                    <th rowspan="1" colspan="2">Đơn giá</th>
-                    <th rowspan="1" colspan="2">Đơn giá</th>
-                    <th rowspan="1" colspan="2">Đơn giá</th>
+                    <th colspan="2">Đơn giá</th>
+                    <th colspan="2">Đơn giá</th>
+                    <th colspan="2">Đơn giá</th>
+                    <th colspan="2">Đơn giá</th>
+                    <th colspan="2">Đơn giá</th>
                 </tr>
                 <tr style="text-align:center">
-                    <th rowspan="1" colspan="1">Năm áp dụng</th>
-                    <th rowspan="1" colspan="1">Giá tiền</th>
-                    <th rowspan="1" colspan="1">Năm áp dụng</th>
-                    <th rowspan="1" colspan="1">Giá tiền</th>
-                    <th rowspan="1" colspan="1">Năm áp dụng</th>
-                    <th rowspan="1" colspan="1">Giá tiền</th>
-                    <th rowspan="1" colspan="1">Năm áp dụng</th>
-                    <th rowspan="1" colspan="1">Giá tiền</th>
-                    <th rowspan="1" colspan="1">Năm áp dụng</th>
-                    <th rowspan="1" colspan="1">Giá tiền</th>
+                    <th>Năm áp dụng</th>
+                    <th>Giá tiền</th>
+                    <th>Năm áp dụng</th>
+                    <th>Giá tiền</th>
+                    <th>Năm áp dụng</th>
+                    <th>Giá tiền</th>
+                    <th>Năm áp dụng</th>
+                    <th>Giá tiền</th>
+                    <th>Năm áp dụng</th>
+                    <th>Giá tiền</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,35 +63,35 @@
                 {
                     @foreach (var item in Model)
                     {
-                <tr>
-                    <td style="text-align: center">@(record_id++)</td>
-                    @foreach (var ds in dscqcq)
-                    {
-                        @if (item.Macqcq == ds.MaDv)
-                        {
-                            <td style="text-align: center">@ds.TenDv</td>
-                        }
-                    }
-                    <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td>@item.Doituongsd</td>
-                    <td>@item.Namchuathue</td>
-                    <td>@item.Giachuathue</td>
-                    <td>@item.Namchuathue1</td>
-                    <td>@item.Giachuathue1</td>
-                    <td>@item.Namchuathue2</td>
-                    <td>@item.Giachuathue2</td>
-                    <td>@item.Namchuathue3</td>
-                    <td>@item.Giachuathue3</td>
-                    <td>@item.Namchuathue4</td>
-                    <td>@item.Giachuathue4</td>
-                </tr>
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            @foreach (var dv in dsdonvi)
+                            {
+                                @if (item.Madv == dv.MaDv)
+                                {
+                                    <td>@dv.TenDv</td>
+                                }
+                            }
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td class="success">@item.Doituongsd</td>
+                            <td>@item.Namchuathue</td>
+                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
+                            <td>@item.Namchuathue1</td>
+                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
+                            <td>@item.Namchuathue2</td>
+                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
+                            <td>@item.Namchuathue3</td>
+                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
+                            <td>@item.Namchuathue4</td>
+                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
+                        </tr>
                     }
                 }
             </tbody>
         </table>
     </div>
     <div class="card-footer" style="text-align:center">
-        <a asp-controller="Gianuocsh" asp-action="Search" class="btn btn-danger">
+        <a asp-controller="GiaNuocSh" asp-action="Search" class="btn btn-danger">
             <i class="la la-reply"></i>Quay lại
         </a>
     </div>

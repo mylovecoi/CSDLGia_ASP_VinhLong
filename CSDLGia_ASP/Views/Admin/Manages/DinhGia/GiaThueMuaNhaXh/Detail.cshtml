@@ -1,8 +1,7 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueMuaNhaXh
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
 @{
     int record_id = 1;
-    var mahs = ViewData["Mahs"];
-    var tennha = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Tennha"];
+    var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Dmtmnxh"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -43,28 +42,31 @@
                         {
                             <tr>
                                 <td style="text-align:center">@(record_id++)</td>
-
-                                <td style="text-align:center">
-                                    @foreach (var tn in tennha)
+                                @if (item.Maso != null)
+                                {
+                                    @foreach (var dm in dmtmnxh)
                                     {
-                                        @if (item.Maso == tn.Maso)
+                                        @if (item.Maso == dm.Maso)
                                         {
-                                            <span>@tn.Tennha</span>
+                                            <td style="text-align: center">@dm.Tennha</td>
                                         }
                                     }
-                                </td>
-
+                                }
+                                else
+                                {
+                                    <td style="text-align: center"></td>
+                                }
                                 <td style="text-align:center">@item.Dvthue</td>
                                 <td style="text-align:center">@item.Dvt</td>
-                                <td style="text-align:center">@item.Dongia</td>
-                                <td style="text-align:center">@item.Dongiathue</td>
+                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongiathue)</td>
                                 <td style="text-align:center">
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </button>
                                     <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                            onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 </td>

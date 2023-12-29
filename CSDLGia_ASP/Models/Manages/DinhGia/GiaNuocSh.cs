@@ -1,6 +1,11 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -42,15 +47,39 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        public string Ipf1 { get; set; }
-        public string Ipf2 { get; set; }
-        public string Ipf3 { get; set; }
-        public string Ipf4 { get; set; }
-        public string Ipf5 { get; set; }
         public string Tunam { get; set; }
         public string Dennam { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
+        public string Ipf1 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
+        public string Ipf2 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf2upload { get; set; }
+        public string Ipf3 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf3upload { get; set; }
+        public string Ipf4 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf4upload { get; set; }
+        public string Ipf5 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf5upload { get; set; }
+        [NotMapped]
+        public string Level { get; set; }
+        [NotMapped]
+        public string MadvCh { get; set; }
+        [NotMapped]
+        public string TendvCh { get; set; }
+        [NotMapped]
+        public string Tencqcq { get; set; }
+        /*[NotMapped]
+        public List<DsDonVi> DsDonVi { get; set; }
+        [NotMapped]
+        public List<DsDiaBan> DsDiaBan { get; set; }*/
+        [NotMapped]
+        public List<GiaNuocShCt> GiaNuocShCt { get; set; }
 
     }
 }
