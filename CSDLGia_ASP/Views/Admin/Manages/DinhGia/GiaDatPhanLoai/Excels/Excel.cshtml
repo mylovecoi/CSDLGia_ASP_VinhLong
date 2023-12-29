@@ -95,6 +95,28 @@
                 </div>
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Địa giới từ</label>
+                        <select asp-for="Diagioitu" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Địa giới đến</label>
+                        <select asp-for="Diagioiden" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Hệ số điều chỉnh</label>
                         <select asp-for="Hesodc" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())

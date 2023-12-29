@@ -30,11 +30,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Loaidat = "2",
                 Vitri = 3,
                 Banggiadat = 4,
-                Giacuthe = 5,
-                Hesodc = 6,
-
-                LineStart = 2,
-                LineStop = 1000,
+                Giacuthe = 7, 
+                Hesodc = 8,
+                Diagioitu = "5",
+                Diagioiden = "6",
+                LineStart = 3,
+                LineStop = 10000,
                 Sheet = 1,
             };
             ViewData["MenuLv1"] = "menu_giadat";

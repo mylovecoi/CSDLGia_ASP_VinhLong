@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231229085257_updatedatcuthe")]
+    partial class updatedatcuthe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1544,11 +1546,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Diagioiden")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Diagioiden")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Diagioitu")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Diagioitu")
+                        .HasColumnType("float");
 
                     b.Property<double>("Giacuthe")
                         .HasColumnType("float");

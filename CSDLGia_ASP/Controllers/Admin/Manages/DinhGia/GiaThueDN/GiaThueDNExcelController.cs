@@ -39,7 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         }
 
 
-        [Route("GiaDatPlExcel/Create")]
+        [Route("GiaDatDNExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {
