@@ -1,0 +1,125 @@
+﻿
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var mahs = ViewData["Mahs"];
+    var Madv = ViewData["Madv"];
+    var Mahs = ViewData["Mahs"];
+    var ct = (IEnumerable<GiaGiaoDichBDSCt>)ViewData["modelct"];
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                HỒ SƠ GIÁ XÂY DỰNG MỚI
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaDatPl" asp-action="Create" method="post" enctype="multipart/form-data" id="frm_dct_store">
+        <div class="card-body">
+            <input name="Madv" value="@Madv" />
+            <input name="Mahs" value="@Mahs" />
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+        
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" id="Soqd" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control"  id="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Thông tin hồ sơ</label>
+                        <input type="text" class="form-control"  />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" cols="50" ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label class="control-label">File đính kèm</label>
+                        <input  type="file" accept=".jpg,.jpeg,.png" />
+                    </div>
+                </div>
+            </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/Excels/Detail.cshtml")
+        </div>
+       
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaDatPl" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateDct()"><i class="la la-check"></i>Thêm mới</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValidateDct() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_dct_store").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

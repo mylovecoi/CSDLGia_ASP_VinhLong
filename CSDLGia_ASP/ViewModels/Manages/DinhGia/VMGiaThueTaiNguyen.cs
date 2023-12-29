@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations.Schema;
 using System;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {

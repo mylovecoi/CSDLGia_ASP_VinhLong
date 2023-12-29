@@ -14,17 +14,17 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/DinhGiaGdDt?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -41,21 +41,23 @@
         <div class="card-title">
 
             <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;Giá sản phẩm giáo dục đào tạo</small>
-            </h3> 
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Create"))
-            {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
+                Thông tin hồ sơ<small>&nbsp;Giá sản phẩm giáo dục đào tạo</small>
+            </h3>
+        </div>
+        <div>
+            <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
-            }
-            </div>
+                <i class="la la-plus"></i>Thêm mới
+            </a>
+
+            <a class="btn btn-success font-weight-bolder" asp-controller="GiaoDucDaoTaoExcel" asp-action="Index"
+               asp-route-Madv="@ViewData["Madv"]">
+                <i class="la la-file-excel-o"></i>Nhận dữ liệu
+            </a>
 
         </div>
     </div>
-   
+
     <hr />
     <div class="card-body">
         <div class="row">
@@ -63,7 +65,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
-                          <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -140,7 +142,7 @@
                                     {
                                         @if (item.Macqcq == ds.MaDv)
                                         {
-                                        <span style="text-align: center">@ds.TenDv</span>
+                                            <span style="text-align: center">@ds.TenDv</span>
                                         }
                                     }
                                 }
@@ -149,7 +151,7 @@
                             <td>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
-                                    <a asp-controller="GiaoDucDaoTao" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" >
+                                    <a asp-controller="GiaoDucDaoTao" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Delete"))
@@ -166,7 +168,7 @@
                                 else
                                 {
                                     <a asp-controller="GiaoDucDaoTao" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                       target="_blank">
                                         <i class="icon-lg la la-eye text-success"></i>
                                     </a>
                                 }

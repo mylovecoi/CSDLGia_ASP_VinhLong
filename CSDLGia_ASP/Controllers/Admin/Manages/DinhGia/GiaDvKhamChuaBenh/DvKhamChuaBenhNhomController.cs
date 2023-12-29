@@ -1,18 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
@@ -32,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.dm", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Index"))
                 {
                     var model = _db.GiaDvKcbNhom.ToList();
                     ViewData["Title"] = "Danh mục giá dịch vụ khám chữa bệnh";
@@ -106,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<label><b>Hiện trạng*</b></label>";
                 result += "<select id='hientrang_edit' name='hientrang_edit' class='form-control'>";
                 result += "<option value='TD' " + (model.Hientrang == "TD" ? "selected" : "") + "> Đang theo dõi</ option >";
-                result += "<option value='KTD' " + ( model.Hientrang  == "KTD" ? "selected" : "") + ">  Không theo dõi</ option>";
+                result += "<option value='KTD' " + (model.Hientrang == "KTD" ? "selected" : "") + ">  Không theo dõi</ option>";
                 result += "</select>";
                 result += "</div></div>";
                 result += "</div>";

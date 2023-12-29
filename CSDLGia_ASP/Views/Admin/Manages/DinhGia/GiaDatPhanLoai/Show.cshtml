@@ -2,14 +2,11 @@
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
-    int record_id = 1;
 }
-
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-
 @section custom_script{
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
@@ -23,7 +20,6 @@
         });
     </script>
 }
-
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
@@ -48,7 +44,7 @@
                         <select class="form-control" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
+                                <!option value="@item.MaDiaBan" @(@Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
@@ -91,43 +87,33 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body" id="frm_data">
-                <table class="table table-striped table-bordered table-hover" id="datatable_4">
-                    <thead>
-                        <tr style="text-align:center">
-                            <th>STT</th>
-                            <th>Tên đường, giới hạn, khu vực</th>
-                            <th>Loại đất</th>
-                            <th>Vị trí</th>
-                            <th>Giá đất tại bảng giá</th>
-                            <th>Giá đất cụ thể</th>
-                            <th>Hệ số điều chỉnh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            @if (Model.GiaDatPhanLoaiCt != null)
-                            {
-                                @foreach (var item in Model.GiaDatPhanLoaiCt)
-                                {
-                                    <tr>
-                                        <td style="text-align:center">@(record_id++)</td>
-                                        <td class="active">@item.Khuvuc</td>
-                                        <td>@item.Maloaidat</td>
-                                        <td>@item.Vitri</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Hesodc)</td>
-                                    </tr>
-                                }
-                            }
-                        }
-                    </tbody>
-                </table>
-                <!--end: Datatable-->
-            </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaDatPl" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+
         </div>
     </form>
     <!--end::Form-->
 </div>
+<script>
+    function ValidateDct() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_dct_update").submit();
+            }
+        }
+    }
+</script>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

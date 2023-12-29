@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
@@ -254,12 +251,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Thongtin = request.Thongtin,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
-                        Mota=request.Mota,
-                        Ipf1=request.Ipf1,
-                        Ipf2=request.Ipf2,
-                        Ipf3=request.Ipf3,
-                        Ipf4=request.Ipf4,
-                        Ipf5=request.Ipf5,
+                        Mota = request.Mota,
+                        Ipf1 = request.Ipf1,
+                        Ipf2 = request.Ipf2,
+                        Ipf3 = request.Ipf3,
+                        Ipf4 = request.Ipf4,
+                        Ipf5 = request.Ipf5,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -317,7 +314,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     var model_ct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == model_new.Mahs);
                     model_new.GiaPhiLePhiCt = model_ct.ToList();
 
-                   
+
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;

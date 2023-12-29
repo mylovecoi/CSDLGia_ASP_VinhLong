@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
@@ -21,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public DvKhamChuaBenhController(CSDLGiaDBContext db,IWebHostEnvironment hostEnvironment)
+        public DvKhamChuaBenhController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
@@ -33,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.gddt.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -61,7 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
 
 
-                        var model = _db.GiaDvKcb.Where(t => t.Madv == Madv ).ToList();
+                        var model = _db.GiaDvKcb.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -120,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
 
                     var modelcxd = _db.GiaDvKcbCt.Where(t => t.Ghichu == "CXD").ToList();
@@ -147,9 +145,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                             Mahs = model.Mahs,
                             Maspdv = item.Maspdv,
                             Tenspdv = item.Tenspdv,
-                            Madichvu=item.Madichvu,
-                            Dvt=item.Dvt,
-                            Phanloai=item.Phanloai,
+                            Madichvu = item.Madichvu,
+                            Dvt = item.Dvt,
+                            Phanloai = item.Phanloai,
                             Ghichu = "CXD",
                             Giadv = 0,
                             Created_at = DateTime.Now,
@@ -188,7 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
                     var model = new GiaDvKcb
                     {
@@ -282,7 +280,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     _db.GiaDvKcbCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "DvKhamChuaBenh", new {Madv = request.Madv });
+                    return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                 }
                 else
                 {
@@ -351,7 +349,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Edit"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMDinhGiaDvKcb
@@ -406,10 +404,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Edit"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    
+
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
                     model.Mota = request.Mota;
@@ -482,7 +480,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     _db.GiaDvKcb.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "DvKhamChuaBenh", new {Madv = request.Madv });
+                    return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                 }
                 else
                 {
@@ -503,7 +501,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Delete"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaDvKcb.Remove(model);
@@ -513,7 +511,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     _db.GiaDvKcbCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "DvKhamChuaBenh", new {Madv = model.Madv });
+                    return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = model.Madv });
                 }
                 else
                 {
@@ -557,7 +555,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
                     result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                     result += "<td style='text-align:center'>" + item.Giadv + "</td>";
-
                     result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='kê khai' data-toggle='modal'";
                     result += "data-target = '#Edit_Modal' onclick = 'SetEdit(`" + item.Id + "`)'>";
                     result += "<i class='icon-lg la la-edit text-warning'></i>";
@@ -579,7 +576,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Show"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMDinhGiaDvKcb
@@ -632,11 +629,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.timkiem", "Index"))
                 {
                     ViewData["DsDiaBan"] = ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                   
+
                     ViewData["Tenspdv"] = _db.GiaDvKcbDm.ToList();
 
                     ViewData["Title"] = "Tìm kiếm thông tin định giá khám chữa bệnh";
@@ -705,7 +702,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     }
 
 
-                   
+
                     ViewData["dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin định giá khám chữa bệnh";

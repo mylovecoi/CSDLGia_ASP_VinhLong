@@ -1,22 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.ViewModels.Systems;
-//using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+//using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using OfficeOpenXml;
-using System.Drawing;
-using OfficeOpenXml.Style;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -37,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                 if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.danhmuc", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    var model = _db.ChiSoGiaTdDm.Where(x=>x.Matt=="1");
+                    var model = _db.ChiSoGiaTdDm.Where(x => x.Matt == "1");
                     ViewData["dvtinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = " Thông tin chi tiết hồ sơ";
                     ViewData["listTt"] = _db.ChiSoGiaTdDm;
@@ -70,17 +64,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     List<ChiSoGiaTdDm> model = new List<ChiSoGiaTdDm>();
                     if (string.IsNullOrEmpty(Matt))
                     {
-                        model= _db.ChiSoGiaTdDm.Where(x => x.Matt != "1").ToList();
+                        model = _db.ChiSoGiaTdDm.Where(x => x.Matt != "1").ToList();
                     }
                     else
                     {
-                        model = _db.ChiSoGiaTdDm.Where(x=>x.Matt==Matt).ToList();
+                        model = _db.ChiSoGiaTdDm.Where(x => x.Matt == Matt).ToList();
                     }
                     //var model = _db.ChiSoGiaTdDm.Where(x => x.Matt != "").ToList();
                     ViewData["dvtinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = " Thông tin chi tiết hồ sơ";
                     ViewData["matt"] = Matt;
-                    ViewData["listTt"] = _db.ChiSoGiaTdDm.Where(x=>x.Matt!="1");
+                    ViewData["listTt"] = _db.ChiSoGiaTdDm.Where(x => x.Matt != "1");
                     ViewData["MenuLv1"] = "menu_csg";
                     ViewData["MenuLv2"] = "menu_csgDm";
                     ViewData["MenuLv3"] = "menu_csgDm_group";
@@ -101,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         [Route("Danhsachnhomhanghoa/Import")]
         [HttpPost]
         public async Task<JsonResult> Import(string Mahanghoa, string Tennhomhang, string Masonhom, string Magoc,
-             string Baocao,string Nam,double Nt,double Tt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+             string Baocao, string Nam, double Nt, double Tt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -181,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             var workSheet = excel.Workbook.Worksheets.Add("Danh sách nhóm hàng hóa");
             workSheet.Cells.Style.Font.Name = "Times New Roman";
             workSheet.Cells.Style.Font.Size = 12;
-           
+
             workSheet.Cells[1, 1].Value = "Tên nhóm hàng";
             workSheet.Cells[1, 2].Value = "Mã số nhóm hàng";
             workSheet.Cells[1, 3].Value = "Mã số gốc";

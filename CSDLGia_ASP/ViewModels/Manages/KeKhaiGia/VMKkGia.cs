@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using System;
 using System.Collections.Generic;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 
 namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
 {

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -68,6 +66,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public IFormFile Ipf5upload { get; set; }
         [NotMapped]
-        public List <GiaRungCt> GiaRungCt { get; set; }
+        public List<GiaRungCt> GiaRungCt { get; set; }
     }
 }

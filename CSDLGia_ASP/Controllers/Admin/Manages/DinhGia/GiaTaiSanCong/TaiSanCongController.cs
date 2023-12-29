@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 {
@@ -30,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Index"))
                 {
 
                     var dsdonvi = (from db in _db.DsDiaBan
@@ -61,11 +54,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
-                           
+
                         }
                         else
                         {
-                            
+
                             if (Nam != "all")
                             {
                                 model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
@@ -82,16 +75,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_tsc";
-                        ViewData["MenuLv2"] = "menu_giatsc_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_tsc";
+                        ViewData["MenuLv3"] = "menu_giatsc_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Index.cshtml", model);
                     }
                     else
                     {
                         ViewData["Messages"] = "Thông tin hồ sơ giá tài sản công.";
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                        ViewData["MenuLv1"] = "menu_tsc";
-                        ViewData["MenuLv2"] = "menu_giatsc_tt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_tsc";
+                        ViewData["MenuLv3"] = "menu_giatsc_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
@@ -115,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Create"))
                 {
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
@@ -154,7 +149,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Create"))
                 {
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
                     {
@@ -194,7 +189,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Edit"))
                 {
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
@@ -239,7 +234,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Edit"))
                 {
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Madiaban = request.Madiaban;
@@ -272,7 +267,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Delete"))
                 {
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaTaiSanCong.Remove(model);
@@ -302,7 +297,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Show"))
                 {
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
@@ -343,7 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Index"))
                 {
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
@@ -372,7 +367,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.taisancong.thongtin", "Edit"))
                 {
 
                     var model_join = from dg in _db.GiaTaiSanCong

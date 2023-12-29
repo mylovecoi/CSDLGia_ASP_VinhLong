@@ -1,20 +1,20 @@
 ﻿using CSDLGia_ASP.Models;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.Models.Manages.VbQlNn;
+using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
+using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
 using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Temp.TempSystems;
-using CSDLGia_ASP.Models.Temp.TempManages.TempKeKhaiGia;
 
 namespace CSDLGia_ASP.Database
 {
     public class CSDLGiaDBContext : DbContext
     {
+
+
         public CSDLGiaDBContext(DbContextOptions<CSDLGiaDBContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,9 +82,12 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDatDiaBanTt> GiaDatDiaBanTt { get; set; }
         public DbSet<GiaDatDuAn> GiaDatDuAn { get; set; }
         public DbSet<GiaDatDuAnDm> GiaDatDuAnDm { get; set; }
+
         public DbSet<GiaDatPhanLoai> GiaDatPhanLoai { get; set; }
         public DbSet<GiaDatPhanLoaiCt> GiaDatPhanLoaiCt { get; set; }
         public DbSet<GiaDatPhanLoaiDm> GiaDatPhanLoaiDm { get; set; }
+        public DbSet<GiaDatPhanLoaiExcel> GiaDatPhanLoaiExcel { get; set; }
+
         public DbSet<GiaDatThiTruong> GiaDatThiTruong { get; set; }
         public DbSet<GiaDatThiTruongCt> GiaDatThiTruongCt { get; set; }
         public DbSet<GiaDauGiaDat> GiaDauGiaDat { get; set; }
@@ -98,7 +101,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDvKcbCt> GiaDvKcbCt { get; set; }
         public DbSet<GiaDvKcbDm> GiaDvKcbDm { get; set; }
         public DbSet<GiaDvKcbNhom> GiaDvKcbNhom { get; set; }
-        public DbSet<GiaGdBatDongSan> GiaGdBatDongSan { get; set; }
+
         public DbSet<GiaGocVlxdTh> GiaGocVlxdTh { get; set; }
         public DbSet<GiaHhDvCn> GiaHhDvCn { get; set; }
         public DbSet<GiaHhDvCnCt> GiaHhDvCnCt { get; set; }
@@ -116,10 +119,13 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaLpTbNhaCtClCl> GiaLpTbNhaCtClCl { get; set; }
         public DbSet<GiaLpTbNhaCtXdm> GiaLpTbNhaCtXdm { get; set; }
         public DbSet<GiaMuaTaiSan> GiaMuaTaiSan { get; set; }
+
         public DbSet<GiaNuocSh> GiaNuocSh { get; set; }
         public DbSet<GiaNuocShCt> GiaNuocShCt { get; set; }
         public DbSet<GiaNuocShCtDf> GiaNuocShCtDf { get; set; }
-        public DbSet<GiaNuocShDm> GiaNuocShDm { get; set; }
+        public DbSet<GiaNuocShDmVung> GiaNuocShDmVung { get; set; }
+        public DbSet<GiaNuocShDmKhung> GiaNuocShDmKhung { get; set; }
+
         public DbSet<GiaPhiChuyenGia> GiaPhiChuyenGia { get; set; }
         public DbSet<GiaPhiChuyenGiaCt> GiaPhiChuyenGiaCt { get; set; }
         public DbSet<GiaPhiChuyenGiaDm> GiaPhiChuyenGiaDm { get; set; }
@@ -169,18 +175,42 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaVangNgoaiTe> GiaVangNgoaiTe { get; set; }
         public DbSet<GiaVangNgoaiTeCt> GiaVangNgoaiTeCt { get; set; }
         public DbSet<GiaVangNgoaiTeDm> GiaVangNgoaiTeDm { get; set; }
+
         public DbSet<GiaThueMatDatMatNuoc> GiaThueMatDatMatNuoc { get; set; }
         public DbSet<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
+        public DbSet<GiaThueMatDatMatNuocDm> GiaThueMatDatMatNuocDm { get; set; }
+
         public DbSet<GiaTaiSanTths> GiaTaiSanTths { get; set; }
         public DbSet<GiaTaiSanTthsCt> GiaTaiSanTthsCt { get; set; }
         public DbSet<GiaHhHaiQuanXnk> GiaHhHaiQuanXnk { get; set; }
         public DbSet<GiaHhHaiQuanXnkCt> GiaHhHaiQuanXnkCt { get; set; }
         public DbSet<GiaHhHaiQuanXnkDm> GiaHhHaiQuanXnkDm { get; set; }
         public DbSet<GiaHhHaiQuanXnkThue> GiaHhHaiQuanXnkThue { get; set; }
-        
-        
-        
-        
+
+        // Định giá cây Trồng Vật Nuôi
+        public DbSet<GiaCayTrongVatNuoi> GiaCayTrongVatNuoi { get; set; }
+        public DbSet<GiaCayTrongVatNuoiCt> GiaCayTrongVatNuoiCt { get; set; }
+        public DbSet<GiaCayTrongVatNuoiDm> GiaCayTrongVatNuoiDm { get; set; }
+        public DbSet<GiaCayTrongVatNuoiNhom> GiaCayTrongVatNuoiNhom { get; set; }
+
+        // Định giá xây dựng mới
+        public DbSet<GiaXayDungMoi> GiaXayDungMoi { get; set; }
+        public DbSet<GiaXayDungMoiCt> GiaXayDungMoiCt { get; set; }
+        public DbSet<GiaXayDungMoiDm> GiaXayDungMoiDm { get; set; }
+        public DbSet<GiaXayDungMoiNhom> GiaXayDungMoiNhom { get; set; }
+
+        // Định giá thuê nhà ở sinh viên
+        public DbSet<GiaThueNhaSV> GiaThueNhaSV { get; set; }
+        public DbSet<GiaThueNhaSVCt> GiaThueNhaSVCt { get; set; }
+        public DbSet<GiaThueNhaSVDm> GiaThueNhaSVDm { get; set; }
+        public DbSet<GiaThueNhaSVNhom> GiaThueNhaSVNhom { get; set; }
+
+
+        // Định giá giao dịch bất động sản
+        public DbSet<GiaGiaoDichBDS> GiaGiaoDichBDS { get; set; }
+        public DbSet<GiaGiaoDichBDSCt> GiaGiaoDichBDSCt { get; set; }
+        public DbSet<GiaGiaoDichBDSDm> GiaGiaoDichBDSDm { get; set; }
+        public DbSet<GiaGiaoDichBDSNhom> GiaGiaoDichBDSNhom { get; set; }
 
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }
@@ -237,9 +267,15 @@ namespace CSDLGia_ASP.Database
         public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
         public DbSet<DmChucnang> DmChucnang { get; set; }
 
+        //Danh mục
+        public DbSet<DmChiTieuKinhTeViMo> DmChiTieuKinhTeViMo { get; set; }
+        public DbSet<DmSieuThi> DmSieuThi { get; set; }
+        public DbSet<DmTaiLieuHuongDanSuDung> DmTaiLieuHuongDanSuDung { get; set; }
+
         // Danh sách chức năng
 
         public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
+
 
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/

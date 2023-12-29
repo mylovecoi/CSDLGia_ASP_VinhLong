@@ -25,7 +25,7 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                GIÁ ĐẤT CỤ THỂ
+                HỒ SƠ GIÁ CÁC LOẠI ĐẤT
             </h3>
         </div>
     </div>
@@ -34,15 +34,15 @@
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-            <!--
+
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            -->
+
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Địa bàn</label>
+                        <label>Địa bàn áp dụng</label><br />
                         <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
@@ -86,7 +86,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png"/>
+                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
                     </div>
                 </div>
             </div>

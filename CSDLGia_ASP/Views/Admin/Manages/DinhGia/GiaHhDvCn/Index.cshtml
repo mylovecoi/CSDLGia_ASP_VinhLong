@@ -39,16 +39,21 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                GIÁ HÀNG HÓA, DỊCH VỤ KHÁC THEO QUY ĐỊNH CỦA PHÁP LUẬT CHUYÊN NGÀNH
+               Thông tin hồ sơ<small>&nbsp;hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành </small><br />
             </h3>
         </div>
-        <div class="card-toolbar">
+        <div >
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHhDvCn" asp-action="Create"
                asp-route-MadvBc="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
             }
 
         </div>
@@ -280,9 +285,6 @@
         </form>
     </div>
 </div>
-
-
-
 
 
 <!--complete Modal-->

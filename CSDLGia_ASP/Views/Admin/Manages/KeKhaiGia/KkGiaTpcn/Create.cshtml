@@ -20,7 +20,7 @@
         <div class="card-header ribbon ribbon-top ribbon-ver">
             <div class="card-title">
                 <h3 class="card-label">
-                    Thông tin kê khai hồ sơ giá<small>&nbsp;Thywcj phẩm chức năng</small><br />
+                    Thông tin kê khai hồ sơ giá<small>&nbsp;Thực phẩm chức năng</small><br />
                     <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
                 </h3>
             </div>
@@ -29,9 +29,9 @@
         <!--begin::Form-->
         <form asp-controller="KkGiaTpcn" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_sach_store">
             <div class="card-body">
-                <input  asp-for="Madv" />
-                <input  asp-for="Manghe" />
-                <input asp-for="Mahs" />
+                <input hidden asp-for="Madv" />
+                <input hidden  asp-for="Manghe" />
+                <input hidden asp-for="Mahs" />
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
                 </div>

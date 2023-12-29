@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.htg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     if (getdonvi.Level == "ADMIN")
                     {
-                        var model = _db.GiaDvKcb.Where(t => t.Madv_ad == Madv ).ToList();
+                        var model = _db.GiaDvKcb.Where(t => t.Madv_ad == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -276,7 +276,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     }
                     _db.GiaDvKcb.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "DvKhamChuaBenh", new {Madv = model.Madv, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
-        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq,  string madv_hientai)
+        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq, string madv_hientai)
         {
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -327,7 +327,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     }
                     _db.GiaDvKcb.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "DvKhamChuaBenhHt", new {Madv =  madv_hientai, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "DvKhamChuaBenhHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -418,11 +418,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
-        public IActionResult CongBo(string mahs_cb )
+        public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.htg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -456,11 +456,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
-        public IActionResult HuyCongBo(string mahs_hcb )
+        public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.htg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

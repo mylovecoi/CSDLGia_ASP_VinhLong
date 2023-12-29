@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using OfficeOpenXml;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 {
@@ -165,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         result += "<input type='text' id='dacdiemkt_edit' name='dacdiemkt_edit' class='form-control' value='" + model.Dacdiemkt + "'/>";
                         result += "</div>";
                         result += "</div>";
-                        
+
                         result += "<div class='col-xl-10'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
@@ -219,7 +214,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Edit"))
                 {
                     int check = _db.GiaHhDvkDm.Where(t => t.Manhom == Manhom && t.Matt == Matt && t.Mahhdv == Mahhdv && t.Id != Id).Count();
-                    if(check == 0)
+                    if (check == 0)
                     {
                         var model = _db.GiaHhDvkDm.FirstOrDefault(t => t.Id == Id);
                         model.Manhom = Manhom;
@@ -253,7 +248,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         var data = new { status = "error", message = "Mã hàng hóa dịch vụ đã tồn tại!!!" };
                         return Json(data);
                     }
-                    
+
                 }
                 else
                 {
@@ -280,7 +275,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.GiaHhDvkDm.Remove(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaHhDvkDm", new {Matt = model.Matt});
+                    return RedirectToAction("Index", "GiaHhDvkDm", new { Matt = model.Matt });
                 }
                 else
                 {

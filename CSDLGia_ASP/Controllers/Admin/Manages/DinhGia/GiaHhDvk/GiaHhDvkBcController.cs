@@ -56,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         }
         [Route("GiaHhDvk/Bc1")]
         [HttpPost]
-        public IActionResult Bc1(string dv, DateTime tungay,DateTime denngay,string matt)
+        public IActionResult Bc1(string dv, DateTime tungay, DateTime denngay, string matt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -66,7 +66,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                                 && x.Thoidiem >= tungay && x.Thoidiem <= denngay
                                                 && x.Trangthai == "HT").Select(x => x.Mahs).ToArray();
 
-                    var getHsCt = _db.GiaHhDvkCt.Where(x => getHs.Contains(x.Mahs) && x.Gia!=0);
+                    var getHsCt = _db.GiaHhDvkCt.Where(x => getHs.Contains(x.Mahs) && x.Gia != 0);
                     ViewData["Title"] = "Báo cáo tổng hợp";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "";
@@ -92,12 +92,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia..baocao", "Index"))
                 {
-                    var getHs = _db.GiaHhDvkCtTh.Where(x => x.Mahs==kybc);
+                    var getHs = _db.GiaHhDvkCtTh.Where(x => x.Mahs == kybc);
 
                     var getHsLk = _db.GiaHhDvkCtTh.Where(x => x.Mahs == kybclk);
-                    foreach(var hs in getHs)
+                    foreach (var hs in getHs)
                     {
-                        foreach(var hslk in getHsLk)
+                        foreach (var hslk in getHsLk)
                         {
                             if (hs.Mahhdv == hslk.Mahhdv)
                             {

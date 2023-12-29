@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 {
@@ -48,6 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             }
             else
             {
+               
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
@@ -115,7 +111,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaHhDvCnDm.Remove(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     return RedirectToAction("Index", "GiaHhDvCnDm");
                 }
                 else
@@ -168,7 +166,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         result += "</select>";
                         result += "</div>";
 
-
                         result += "<div class='col-xl-1' style='padding-left: 0px;'>";
                         result += "<label class='control-label'>Thêm</label>";
                         result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
@@ -209,13 +206,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hhdvcn.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(t => t.Id == Id);
-                    model.Tenspdv= Tennhom;
+                    model.Tenspdv = Tennhom;
                     model.Mota = Mota;
                     model.Dvt = Dvt;
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCnDm.Update(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
                     var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
                     if (checkdvt == null)
                     {

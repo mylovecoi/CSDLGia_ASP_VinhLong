@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 {
@@ -48,7 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.Madv).First();
                             }
                         }
-                        
+
                         var model = _db.KkMhBog.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
@@ -57,7 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         }
                         else
                         {
-                            if(Nam != "all")
+                            if (Nam != "all")
                             {
                                 model = model.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam)).ToList();
                             }
@@ -73,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         }
                         else
                         {
-                            if(Manghe != "all")
+                            if (Manghe != "all")
                             {
                                 model = model.Where(t => t.Manghe == Manghe).ToList();
                             }
@@ -81,24 +76,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                             {
                                 model = model.ToList();
                             }
-                            
+
                         }
 
                         var model_join = (from kkbog in model
-                                     join nghe in _db.DmNgheKd on kkbog.Manghe equals nghe.Manghe
-                                     select new VMKkMhBog
-                                     {
-                                         Id = kkbog.Id,
-                                         Tennghe = nghe.Tennghe,
-                                         Socv = kkbog.Socv,
-                                         Phanloai = kkbog.Phanloai,
-                                         Ngayhieuluc = kkbog.Ngayhieuluc,
-                                         Ngaychuyen = kkbog.Ngaychuyen,
-                                         Trangthai = kkbog.Trangthai,
-                                         Madiaban = kkbog.Madiaban,
-                                         Mahs = kkbog.Mahs,
-                                         Madv = kkbog.Madv,
-                                     }).ToList();
+                                          join nghe in _db.DmNgheKd on kkbog.Manghe equals nghe.Manghe
+                                          select new VMKkMhBog
+                                          {
+                                              Id = kkbog.Id,
+                                              Tennghe = nghe.Tennghe,
+                                              Socv = kkbog.Socv,
+                                              Phanloai = kkbog.Phanloai,
+                                              Ngayhieuluc = kkbog.Ngayhieuluc,
+                                              Ngaychuyen = kkbog.Ngaychuyen,
+                                              Trangthai = kkbog.Trangthai,
+                                              Madiaban = kkbog.Madiaban,
+                                              Mahs = kkbog.Mahs,
+                                              Madv = kkbog.Madv,
+                                          }).ToList();
 
                         var dmnghekd = (from comct in _db.CompanyLvCc.Where(t => t.Madv == Madv)
                                         join nghe in _db.DmNgheKd.Where(t => t.Manganh == "BOG") on comct.Manghe equals nghe.Manghe
@@ -528,23 +523,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.timkiem", "Index"))
                 {
                     var model = (from kkct in _db.KkMhBogCt
-                                      join kk in _db.KkMhBog.Where(t => t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
-                                      join com in _db.Company on kkct.Madv equals com.Madv
-                                      select new VMKkMhBogCt
-                                      {
-                                          Id = kkct.Id,
-                                          Mahs = kkct.Mahs,
-                                          Madv = kkct.Madv,
-                                          Manghe = kk.Manghe,
-                                          Tenhh = kkct.Tenhh,
-                                          Quycach = kkct.Plhh,
-                                          Dvt = kkct.Dvt,
-                                          Gialk = kkct.Gialk,
-                                          Giakk = kkct.Giakk,
-                                          Ghichu = kkct.Ghichu,
-                                          Tendn = com.Tendn,
-                                          Ngayhieuluc = kk.Ngayhieuluc,
-                                      });
+                                 join kk in _db.KkMhBog.Where(t => t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                 join com in _db.Company on kkct.Madv equals com.Madv
+                                 select new VMKkMhBogCt
+                                 {
+                                     Id = kkct.Id,
+                                     Mahs = kkct.Mahs,
+                                     Madv = kkct.Madv,
+                                     Manghe = kk.Manghe,
+                                     Tenhh = kkct.Tenhh,
+                                     Quycach = kkct.Plhh,
+                                     Dvt = kkct.Dvt,
+                                     Gialk = kkct.Gialk,
+                                     Giakk = kkct.Giakk,
+                                     Ghichu = kkct.Ghichu,
+                                     Tendn = com.Tendn,
+                                     Ngayhieuluc = kk.Ngayhieuluc,
+                                 });
 
                     if (madv != "all")
                     {

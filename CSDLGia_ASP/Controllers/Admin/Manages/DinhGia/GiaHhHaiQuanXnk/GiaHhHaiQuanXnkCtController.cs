@@ -1,18 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 {
@@ -27,8 +18,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 
         [Route("GiaHhHaiQuanXnkCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string TenHh, double Giachuathue, 
-            double Giasauthue, double Thue, string Dvt,string Loaithue)
+        public JsonResult Store(string Mahs, string TenHh, double Giachuathue,
+            double Giasauthue, double Thue, string Dvt, string Loaithue)
         {
             var model = new GiaHhHaiQuanXnkCt
             {
@@ -37,8 +28,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                 GiaTruocThue = Giachuathue,
                 GiaSauThue = Giasauthue,
                 PhanTramThue = Thue,
-                Dvt=Dvt,
-                MaThue= Loaithue,
+                Dvt = Dvt,
+                MaThue = Loaithue,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -64,18 +55,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
         {
             int recordId = 1;
             //var model = _db.GiaHhHaiQuanXnkCt.Where(t => t.Mahs == Mahs).ToList();
-            var model = from ct in _db.GiaHhHaiQuanXnkCt.Where(x=>x.Mahs==Mahs)
+            var model = from ct in _db.GiaHhHaiQuanXnkCt.Where(x => x.Mahs == Mahs)
                         join thue in _db.GiaHhHaiQuanXnkThue
                         on ct.MaThue equals thue.MaThue
                         select new GiaHhHaiQuanXnkCt
-                        { 
-                            TenHh=ct.TenHh,
-                            Dvt=ct.Dvt,
-                            GiaTruocThue=ct.GiaTruocThue,
-                            GiaSauThue=ct.GiaSauThue,
-                            PhanTramThue=ct.PhanTramThue,
-                            MaThue=ct.MaThue,
-                            TenThue=thue.TenThue,
+                        {
+                            TenHh = ct.TenHh,
+                            Dvt = ct.Dvt,
+                            GiaTruocThue = ct.GiaTruocThue,
+                            GiaSauThue = ct.GiaSauThue,
+                            PhanTramThue = ct.PhanTramThue,
+                            MaThue = ct.MaThue,
+                            TenThue = thue.TenThue,
                         };
 
             string result = "<div class='card-body' id='frm_data'>";
@@ -94,11 +85,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
             foreach (var item in model)
             {
                 result += "<tr>";
-                result += "<td style='text-align:center'>"+(recordId++)+"</td>";
+                result += "<td style='text-align:center'>" + (recordId++) + "</td>";
                 result += "<td class='active'>" + item.TenHh + "</td>";
                 result += "<td>" + item.Dvt + "</td>";
                 result += "<td>" + item.GiaTruocThue + "</td>";
-                result += "<td>" +item.TenThue+": "+ item.PhanTramThue + "%</td>";
+                result += "<td>" + item.TenThue + ": " + item.PhanTramThue + "%</td>";
                 result += "<td>" + item.GiaSauThue + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
@@ -164,9 +155,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn vị tính</b></label>";
                 result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
-                foreach(var dvt in Dvt)
+                foreach (var dvt in Dvt)
                 {
-                    result += "<option value='"+dvt.Dvt+"'"+ (dvt.Dvt==model.Dvt ? "selected" : "") +">"+@dvt.Dvt+"</option>";
+                    result += "<option value='" + dvt.Dvt + "'" + (dvt.Dvt == model.Dvt ? "selected" : "") + ">" + @dvt.Dvt + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";

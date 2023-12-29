@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
@@ -33,9 +28,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var model = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Danh mục loại đất";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmloaidat";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     return View("Views/Admin/Systems/DmLoaiDat/Index.cshtml", model);
                 }
                 else
@@ -67,6 +62,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     _db.DmLoaiDat.Add(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
@@ -99,7 +97,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == id_delete);
                     _db.DmLoaiDat.Remove(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     return RedirectToAction("Index", "DmLoaiDat");
                 }
                 else
@@ -123,6 +123,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
                 {
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     var model = _db.DmLoaiDat.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -178,6 +181,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
                 {
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
 
                     var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == Id);
 

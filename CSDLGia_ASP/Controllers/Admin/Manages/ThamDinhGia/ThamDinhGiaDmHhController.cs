@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using OfficeOpenXml.Style;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -221,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             workSheet.Cells[2, 5].Value = "Xuất xứ";
             workSheet.Cells[2, 6].Value = "Đơn vị tính";
             workSheet.Cells[2, 7].Value = "Đơn giá";
-            workSheet.Cells[2, 8].Value = "Ghi chú"; 
+            workSheet.Cells[2, 8].Value = "Ghi chú";
             workSheet.Cells[2, 1, 2, 8].Style.Border.Top.Style = ExcelBorderStyle.Thin;
             workSheet.Cells[2, 1, 2, 8].Style.Border.Left.Style = ExcelBorderStyle.Thin;
             workSheet.Cells[2, 1, 2, 8].Style.Border.Right.Style = ExcelBorderStyle.Thin;

@@ -1,20 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using Microsoft.Extensions.Hosting;
-using System.Net.WebSockets;
-using CSDLGia_ASP.Models.Systems;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -697,7 +692,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     {
                         model = model.Where(t => t.Giadenghi <= gia_den);
                     }
-                    
+
                     model = model.Where(t => t.Giatritstd >= giatd_tu);
                     if (giatd_den > 0)
                     {

@@ -1,23 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Systems;
-using System.ComponentModel;
-using OfficeOpenXml;
 using LicenseContext = OfficeOpenXml.LicenseContext;
-using OfficeOpenXml.Style;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -39,10 +33,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                 if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hanghoa", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    var model = _db.ChiSoGiaTdHh.Where(x=>x.Matt=="1");
+                    var model = _db.ChiSoGiaTdHh.Where(x => x.Matt == "1");
                     ViewData["model"] = model;
                     ViewData["danhsach"] = _db.ChiSoGiaTd;
-                    ViewData["nhom"] = _db.ChiSoGiaTdDm.Where(x=>x.Matt=="1");
+                    ViewData["nhom"] = _db.ChiSoGiaTdDm.Where(x => x.Matt == "1");
                     ViewData["dvtinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = " Thông tin chi tiết danh mục";
                     ViewData["MenuLv1"] = "menu_csg";
@@ -84,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     }
                     ViewData["model"] = model;
                     ViewData["danhsach"] = _db.ChiSoGiaTd;
-                    
+
                     ViewData["listTt"] = _db.ChiSoGiaTdDm.Where(x => x.Matt != "1");
                     ViewData["dvtinh"] = _db.DmDvt.ToList();
                     ViewData["Title"] = " Thông tin chi tiết danh mục";
@@ -316,7 +310,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("Danhmuchanghoa/Update")]
         [HttpPost]
-        public JsonResult Update(int Id,string Tenhanghoa, string Dvt, string Baocao)
+        public JsonResult Update(int Id, string Tenhanghoa, string Dvt, string Baocao)
         {
             var model = _db.ChiSoGiaTdHh.FirstOrDefault(x => x.Id == Id);
             model.Tenhanghoa = Tenhanghoa;
@@ -358,7 +352,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         [Route("Danhmuchanghoa/Import")]
         [HttpPost]
         public async Task<JsonResult> Import(string Mahanghoa, string Tennhomhang, string Dvt, string Magoc,
-              string Nam,string Matt,double Gia,int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+              string Nam, string Matt, double Gia, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -383,7 +377,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                                     Created_at = DateTime.Now,
                                     Updated_at = DateTime.Now,
                                     Nam = Nam,
-                                    Matt=Matt,
+                                    Matt = Matt,
                                     Masohanghoa = worksheet.Cells[row, Int16.Parse(Mahanghoa)].Value.ToString() != null ?
                                                 worksheet.Cells[row, Int16.Parse(Mahanghoa)].Value.ToString().Trim() : "",
                                     Tenhanghoa = worksheet.Cells[row, Int16.Parse(Tennhomhang)].Value.ToString() != null ?

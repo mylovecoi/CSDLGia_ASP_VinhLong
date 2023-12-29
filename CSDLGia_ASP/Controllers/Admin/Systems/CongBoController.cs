@@ -1,11 +1,8 @@
-﻿using CSDLGia_ASP.DAO;
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Linq;
-using CSDLGia_ASP.Models.Manages.VbQlNn;
 
 namespace CSDLGia_ASP.Controllers.HeThong
 {

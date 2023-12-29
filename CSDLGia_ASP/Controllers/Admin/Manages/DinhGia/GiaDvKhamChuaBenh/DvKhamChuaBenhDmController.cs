@@ -1,22 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
-using System.ComponentModel;
-using LicenseContext = OfficeOpenXml.LicenseContext;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 {
@@ -35,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.dm", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Index"))
                 {
                     var model = _db.GiaDvKcbDm.Where(t => t.Manhom == Manhom).ToList();
                     var Tennhom = _db.GiaDvKcbNhom.Where(t => t.Manhom == Manhom).FirstOrDefault();
@@ -63,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DanhMucDvKcb/Store")]
         [HttpPost]
-        public JsonResult Store(string Tenspdv , string Madichvu , string Dvt,string Manhom)
+        public JsonResult Store(string Tenspdv, string Madichvu, string Dvt, string Manhom)
         {
             var model = new GiaDvKcbDm
             {
@@ -129,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên dịch vụ*</b></label>";
-                result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' required/>";               
+                result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' required/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-11'>";
                 result += "<label class='form-control-label'><b>Đơn vị tính*</b></label>";
@@ -161,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         }
         [Route("DanhMucDvKcb/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv ,string Madichvu ,string Dvt)
+        public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Dvt)
         {
             var model = _db.GiaDvKcbDm.FirstOrDefault(t => t.Id == Id);
             model.Tenspdv = Tenspdv;
@@ -197,7 +190,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.dm", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Edit"))
                 {
                     LineStart = LineStart == 0 ? 1 : LineStart;
                     //var list_add = new List<GiaDvKcbDm>();

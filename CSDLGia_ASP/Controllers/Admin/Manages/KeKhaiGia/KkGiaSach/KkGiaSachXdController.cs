@@ -95,8 +95,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá sách giáo khoa";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgsach";
@@ -138,7 +140,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá Sách giáo khoa";
                         ViewData["MenuLv1"] = "menu_kknygia";
@@ -182,7 +186,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá Sách giáo khoa";
                         ViewData["MenuLv1"] = "menu_kknygia";

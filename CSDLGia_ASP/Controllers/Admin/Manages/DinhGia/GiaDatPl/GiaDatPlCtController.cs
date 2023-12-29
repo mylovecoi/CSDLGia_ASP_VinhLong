@@ -1,19 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Drawing;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -44,7 +34,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();
-
+            ViewData["MenuLv1"] = "menu_dg";
+            ViewData["MenuLv2"] = "menu_dg_giadatpl";
+            ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -192,10 +184,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             result += "<tbody>";
             foreach (var item in model)
             {
-                result += "<tr>";
+                result += "<tr tyle='text-align:center'> >";
                 result += "<td style='text-align:center'>" + record_id++ + "</td>";
-                result += "<td class='active'>" + item.Khuvuc + "</td>";
-                result += "<td>";
+                result += "<td style='text-align:center'>" + item.Khuvuc + "</td>";
+                result += "<td style='text-align:center'>";
                 foreach (var ten in dmloaidat)
                 {
                     if (ten.Maloaidat == item.Maloaidat)
@@ -204,10 +196,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     }
                 }
                 result += "</td>";
-                result += "<td>" + item.Vitri + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
-                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
+                result += "<td style='text-align:center' >" + item.Vitri + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

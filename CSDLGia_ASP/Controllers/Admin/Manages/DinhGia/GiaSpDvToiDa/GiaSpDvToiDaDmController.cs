@@ -1,19 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
-using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
@@ -85,7 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     _db.SaveChanges();
 
                     var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
-                    if (checkdvt==null)
+                    if (checkdvt == null)
                     {
                         var dvt = new DmDvt
                         {
@@ -97,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         _db.SaveChanges();
 
                     }
-                  
+
                     var data = new { status = "success", message = "Thêm mới thành công!" };
                     return Json(data);
                 }
@@ -192,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         result += "</div>";
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
-                       
+
 
                         var data = new { status = "success", message = result };
                         return Json(data);

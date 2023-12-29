@@ -37,9 +37,7 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <marquee>
-            <b style="color: #ff0000">Lưu ý:</b> Để thêm mới hồ sơ kê khai giá, các hồ sơ đã tạo từ trước cần được duyệt(trạng thái hồ sơ đã duyệt). Vui lòng kiểm tra lại trạng thái của hồ sơ đã tạo.
-        </marquee>
+     
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin kê khai giá<small>&nbsp;cước vận tải hành khách bằng xe buýt theo tuyến cố định</small><br />
@@ -47,18 +45,15 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb.giakk", "Create")
-            || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-            {
-                if (check_tt == "0")
-                {
-                    <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaVtXb" asp-action="Create"
+          
+            <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaVtXb" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
-                        <i class="la la-plus"></i>Thêm mới
-                    </a>
-                }
-            }
-
+                <i class="la la-plus"></i>Thêm mới
+            </a>
+            <a class="btn btn-success font-weight-bolder" asp-controller="KkGiaXmTxdExcel" asp-action="Index"
+               asp-route-Madv="@ViewData["Madv"]">
+                <i class="la la-file-excel-o"></i>Nhận dữ liệu
+            </a>
         </div>
     </div>
     <hr />
@@ -134,34 +129,60 @@
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
                             <td class="text-center active">@item.Socv</td>
                             <td style="text-align: center">@item.Socvlk</td>
-                            <td style="text-align: center">@item.Macqcq</td>
+                            @if (item.Macqcq != null)
+                            {
+                                @foreach (var ds in dscqcq)
+                                {
+                                    @if (item.Macqcq == ds.MaDv)
+                                    {
+                                        <td style="text-align: center">@ds.TenDv</td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td style="text-align: center"></td>
+                            }
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CC")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ chuyển</span>
-                                }
-                                @if (item.Trangthai == "CD")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
-
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ chuyển</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
-                                @if (item.Trangthai == "CN")
+                                @if (item.Trangthai == "CD")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ nhận</span>
-
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ duyệt</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "DD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
                                 @if (item.Trangthai == "BTL")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                    <span class="label font-weight-bold label-lg label-light-danger label-inline">Bị trả lại</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
-                                @if (item.Trangthai == "DD")
+                                @if (item.Trangthai == "HCB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
-
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }

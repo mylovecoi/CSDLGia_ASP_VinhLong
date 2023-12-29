@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd
 {

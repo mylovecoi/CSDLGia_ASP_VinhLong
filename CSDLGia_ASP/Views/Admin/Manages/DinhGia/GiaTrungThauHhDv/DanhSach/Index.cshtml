@@ -41,13 +41,21 @@
                     Thông tin hồ sơ<small>&nbsp;Giá tài sản công</small>
                 </h3>
             </div>
-            <div class="card-toolbar">
+            <div >
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.tsc.giatsc.ttg", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaTrungThauHhDv" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
+                <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
+                    <i class="la la-plus"></i>Tổng hợp hồ sơ
+                </button>
             }
 
         </div>

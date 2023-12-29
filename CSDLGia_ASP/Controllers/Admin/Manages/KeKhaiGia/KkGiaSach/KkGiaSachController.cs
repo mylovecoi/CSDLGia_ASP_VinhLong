@@ -58,6 +58,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                         }
 
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
+
                         var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
 
                         if (comct.Count > 0)
@@ -184,7 +189,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                     _db.KkGia.Add(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.KkGiaSachCt.Where(t => t.Madv == request.Madv);
+                    var modelct = _db.KkGiaSachCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {
                         foreach (var item in modelct)

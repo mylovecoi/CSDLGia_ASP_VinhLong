@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 //using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using OfficeOpenXml;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -65,14 +58,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd> model = new List<CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd>();
                         if (string.IsNullOrEmpty(Matt))
                         {
-                            model = _db.ChiSoGiaTd.Where(x=>x.Madv==Madv).ToList();
+                            model = _db.ChiSoGiaTd.Where(x => x.Madv == Madv).ToList();
                             ViewData["matt"] = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt != "1").Matt;
                             ViewData["nam"] = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt != "1").Nam;
                         }
                         else
                         {
                             var getNam = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt == Matt).Nam;
-                            model = _db.ChiSoGiaTd.Where(x => x.Nam == getNam && x.Madv==Madv).ToList();
+                            model = _db.ChiSoGiaTd.Where(x => x.Nam == getNam && x.Madv == Madv).ToList();
                             ViewData["matt"] = Matt;
                             ViewData["nam"] = getNam;
                         }
@@ -105,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                         ViewData["MenuLv3"] = "menu_csgHs_ds";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
-                    
+
 
                 }
                 else
@@ -122,27 +115,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 
         [Route("ChiSoGiaTieuDung/Store")]
         [HttpPost]
-        public JsonResult Store(string Thongtinbc, string Ghichu, DateTime Ngaybc, string Tinhtrang, string Matt,string Thang,string Diaphuong,string Donvi)
+        public JsonResult Store(string Thongtinbc, string Ghichu, DateTime Ngaybc, string Tinhtrang, string Matt, string Thang, string Diaphuong, string Donvi)
         {
             var getInfo = _db.ChiSoGiaTdDm.FirstOrDefault(x => x.Matt == Matt);
             var model = new CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTd
             {
                 Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
-                Madv=Donvi,
+                Madv = Donvi,
                 Thongtinbc = Thongtinbc,
                 Ghichu = Ghichu,
-                Thang=Thang,
-                Nam=getInfo.Nam,
+                Thang = Thang,
+                Nam = getInfo.Nam,
                 Trangthai = "CHT",
                 Congbo = "CHUACONGBO",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
-                Diaphuong=Diaphuong,
+                Diaphuong = Diaphuong,
             };
             _db.ChiSoGiaTd.Add(model);
 
             //add danhmuc by thongtu
-            var danhmucnhom = _db.ChiSoGiaTdDm.Where(x=>x.Matt==Matt);
+            var danhmucnhom = _db.ChiSoGiaTdDm.Where(x => x.Matt == Matt);
 
             foreach (var dm in danhmucnhom)
             {
@@ -164,10 +157,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                 }
                 _db.ChiSoGiaTdDmCt.Add(modelDm);
             }
-            
+
             //add hanghoa by thongtu(if have)
             var hanghoa = _db.ChiSoGiaTdHh.Where(x => x.Matt == Matt);
-            if(hanghoa!= null)
+            if (hanghoa != null)
             {
                 foreach (var hh in hanghoa)
                 {
@@ -564,9 +557,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     ViewData["MenuLv2"] = "menu_csgHs";
                     ViewData["MenuLv3"] = "menu_csgHs_ds";
 
-                    var takeInfoModel=_db.ChiSoGiaTd.FirstOrDefault(x => x.Mahs == Mahs);
-                    var model = _db.ChiSoGiaTd.Where(x => x.Madv == takeInfoModel.Madv && x.Nam==takeInfoModel.Nam);
-                    return View("Views/Admin/Manages/ChiSoGiaTd/Hoso/Index.cshtml",model);
+                    var takeInfoModel = _db.ChiSoGiaTd.FirstOrDefault(x => x.Mahs == Mahs);
+                    var model = _db.ChiSoGiaTd.Where(x => x.Madv == takeInfoModel.Madv && x.Nam == takeInfoModel.Nam);
+                    return View("Views/Admin/Manages/ChiSoGiaTd/Hoso/Index.cshtml", model);
                 }
                 else
                 {
@@ -587,7 +580,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso", "Index")) 
+                if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.hoso", "Index"))
                 {
                     var model = _db.ChiSoGiaTd.Where(x => x.Nam == nam_average);
                     double average = 0;

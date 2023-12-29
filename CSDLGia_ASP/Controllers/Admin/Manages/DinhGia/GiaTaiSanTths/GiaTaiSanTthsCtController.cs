@@ -1,18 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
 {
@@ -26,8 +17,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
         }
         [Route("GiaTaiSanTthsCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Tents, string Taisantd,string Dacdiemkt, string Tinhtrang, 
-            string Dactinh,double Giabanbuon, double Giabanle, DateTime Thoidiem,double Phantram, string Ghichu,string Mahs)
+        public JsonResult Store(string Tents, string Taisantd, string Dacdiemkt, string Tinhtrang,
+            string Dactinh, double Giabanbuon, double Giabanle, DateTime Thoidiem, double Phantram, string Ghichu, string Mahs)
         {
             var model = new GiaTaiSanTthsCt
             {
@@ -38,10 +29,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                 DacdiemKt = Dacdiemkt,
                 Tinhtrang = Tinhtrang,
                 Dactinh = Dactinh,
-                Giabanbuon=Giabanbuon,
-                Giabanle=Giabanle,
+                Giabanbuon = Giabanbuon,
+                Giabanle = Giabanle,
                 Ghichu = Ghichu,
-                Thoidiem=Thoidiem,
+                Thoidiem = Thoidiem,
                 Phantram = Phantram,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
@@ -113,10 +104,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
         {
             var model = _db.GiaTaiSanTthsCt.FirstOrDefault(p => p.Id == Id);
             var list = _db.GiaTaiSanTthsCt;
-            var tstd = (from t in list group t by t.TaisanTd into grp select new { ts=grp.Key});
+            var tstd = (from t in list group t by t.TaisanTd into grp select new { ts = grp.Key });
             //var ttrang = (from t in list group t by t.Tinhtrang into grp select new { tt=grp.Key});
             var ttrang = Helpers.TinhtrangTs();
-            var dtinh = (from t in list group t by t.Dactinh into grp select new { dt=grp.Key});
+            var dtinh = (from t in list group t by t.Dactinh into grp select new { dt = grp.Key });
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -133,9 +124,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                 result += "<label><b>Tài sản cùng loại hoặc tương đương</b></label>";
                 result += "<select id='tstd_edit' name='tstd_edit' class='form-control'>";
                 result += "<option>--Chọn tài sản tương đương--</option>";
-                foreach(var ts in tstd)
+                foreach (var ts in tstd)
                 {
-                    result += "<option value='"+ts.ts+"'"+(ts.ts==model.TaisanTd ? "selected":"")+">"+ts.ts+"</option>";
+                    result += "<option value='" + ts.ts + "'" + (ts.ts == model.TaisanTd ? "selected" : "") + ">" + ts.ts + "</option>";
                 }
                 result += "</select></div>";
                 result += "</div>";
@@ -160,7 +151,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                 }
                 result += "</select></div>";
                 result += "</div>";
-                
+
                 result += "<div class='col-xl-11'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đặc tính</b></label>";

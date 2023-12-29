@@ -1,19 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
-using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
@@ -71,7 +67,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     var request = new GiaSpDvCuTheDm
                     {
                         Manhom = Manhom,
-                        Maspdv= DateTime.Now.ToString("yyMMddfffssmmHH"),
+                        Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Dvt = Dvt,
                         Tenspdv = Tenspdv,
                         Mota = Mota,
@@ -85,7 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.SaveChanges();
 
                     var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
-                    if (checkdvt==null)
+                    if (checkdvt == null)
                     {
                         var dvt = new DmDvt
                         {
@@ -97,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         _db.SaveChanges();
 
                     }
-                  
+
                     var data = new { status = "success", message = "Thêm mới thành công!" };
                     return Json(data);
                 }
@@ -128,7 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                 group t by t.Phanloai into grp
                                 select new
                                 {
-                                    pl=grp.Key
+                                    pl = grp.Key
                                 });
                     if (model != null)
                     {
@@ -188,7 +184,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         var plspdvcuthe = _db.GiaSpDvCuTheDm.ToList();
                         foreach (var item in list)
                         {
-                            result += "<option value ='" + item.pl + "'"+(item.pl==model.Phanloai?"selected":"")+">" + item.pl + "</ option >";
+                            result += "<option value ='" + item.pl + "'" + (item.pl == model.Phanloai ? "selected" : "") + ">" + item.pl + "</ option >";
                         }
                         result += "</select>";
                         result += "</div>";
@@ -199,7 +195,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         result += "</div>";
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
-                       
+
 
                         var data = new { status = "success", message = result };
                         return Json(data);
@@ -314,7 +310,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Excel")]
         [HttpPost]
-        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten,double Gia, string Phanloai,
+        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Gia, string Phanloai,
             string Hientrang, string Dvt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -347,11 +343,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                                     Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-                                    Gia=Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) != 0 ?
+                                    Gia = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) != 0 ?
                                                 Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) : 0,
                                     Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
-                                    Hientrang= worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?
+                                    Hientrang = worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Hientrang)].Value.ToString().Trim() : "",
                                     Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",

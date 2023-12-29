@@ -1,8 +1,6 @@
-﻿using CSDLGia_ASP.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace CSDLGia_ASP.Controllers
 {

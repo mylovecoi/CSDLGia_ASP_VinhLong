@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -143,19 +137,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "<label>Tên hàng hóa*</label>";
                         result += "<input type='text' class='form-control' id='tenhh_edit' name='tenhh_edit' value='" + model.Tenhanghoa + "'/>";
                         result += "</div>";
-                        result += "</div>"; 
+                        result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Thông số kỹ thuật</label>";
                         result += "<input type='text' class='form-control' id='tskt_edit' name='tskt_edit' value='" + model.Thongsokt + "'/>";
                         result += "</div>";
-                        result += "</div>"; 
+                        result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Xuất xứ</label>";
                         result += "<input type='text' class='form-control' id='xuatxu_edit' name='xuatxu_edit' value='" + model.Xuatxu + "'/>";
                         result += "</div>";
-                        result += "</div>"; 
+                        result += "</div>";
                         result += "<div class='col-xl-10'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
@@ -166,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         result += "</select>";
                         result += "</div>";
-                        result += "</div>"; 
+                        result += "</div>";
                         result += "<div class='col-xl-2'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>&nbsp;&nbsp;&nbsp;</label>";

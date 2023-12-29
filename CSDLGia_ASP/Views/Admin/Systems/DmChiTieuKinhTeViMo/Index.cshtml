@@ -1,0 +1,172 @@
+﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.DmChiTieuKinhTeViMo>
+
+@{
+    var stt = 1;
+    var dschitieu = ViewData["DsChiTieu"] as List<DmChiTieuKinhTeViMo>;
+}
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh mục chỉ tiêu
+            </h3>
+        </div>
+        <div class="card-toolbar">
+
+            <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                <i class="la la-plus"></i>Thêm mới
+            </button>
+
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th>STT</th>
+                    <th>Mã chỉ tiêu</th>
+                    <th>Tên chỉ tiêu</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in dschitieu)
+                    {
+                        <tr>
+                            <td style="text-align: center" width="3%">@(stt++)</td>
+                            <td style="text-align: center" width="10%">@item.machitieu</td>
+                            <td style="text-align: center" width="10%">@item.tenchitieu</td>
+                            <td >
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                                        data-target="#Edit_Modal" onclick="Setedit('@item.Id','@item.machitieu','@item.tenchitieu')">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.machitieu')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="modalForm" method="post" asp-controller="DmChiTieuKinhTeViMo" asp-action="Store">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã chỉ tiêu </label>
+                                <input type="text" id="machitieu" name="machitieu" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên chỉ tiêu</label>
+                                <input type="text" id="tenchitieu" name="tenchitieu" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Thêm mới</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="modalForm" method="post" asp-controller="DmChiTieuKinhTeViMo" asp-action="Update">
+                    <div class="row">
+                        <div class="modal-header">
+                            <h3 class="card-label text-dark">
+                                Chỉnh sửa thông tin chỉ tiêu
+                            </h3>
+                        </div>
+                        <div class="col-xl-12">
+                            <input hidden id="Id_edit" name="Id_edit" type="text" class="form-control" readonly />
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã chỉ tiêu </label>
+                                <input id="machitieu_edit" name="machitieu_edit" type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên chỉ tiêu</label>
+                                <input type="text" id="tenchitieu_edit" name="tenchitieu_edit" class="form-control"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DmChiTieuKinhTeViMo" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa ?</span>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <input hidden id="machitieu_delete" name="machitieu_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+   
+    function Setedit(Id, machiteu, tenchitieu) {
+        document.getElementById("Id_edit").value = Id;
+        document.getElementById("machitieu_edit").value = machiteu;
+        document.getElementById("tenchitieu_edit").value = tenchitieu;
+    }
+    function SetDelete(machitieu) {
+        document.getElementById("machitieu_delete").value = machitieu;
+    }
+</script>

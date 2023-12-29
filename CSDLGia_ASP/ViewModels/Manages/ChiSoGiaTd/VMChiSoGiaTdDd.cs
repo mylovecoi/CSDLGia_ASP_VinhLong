@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd
 {

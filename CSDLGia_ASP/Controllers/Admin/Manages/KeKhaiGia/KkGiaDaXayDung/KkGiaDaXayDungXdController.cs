@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
 {
@@ -75,26 +70,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                                                     && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
-                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
-                                          select new VMKkGia
-                                          {
-                                              Id = kk.Id,
-                                              Tendn = dn.Tendn,
-                                              Macqcq = Madv,
-                                              Madv = kk.Madv_h,
-                                              Mahs = kk.Mahs,
-                                              Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen_h,
-                                              Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan_h,
-                                              Ngayhieuluc = kk.Ngayhieuluc,
-                                              Socv = kk.Socv,
-                                              Ttnguoinop = kk.Ttnguoinop,
-                                              Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai_h,
-                                              Level = getdonvi.Level,
-                                          };
+                                         join dn in _db.Company on kk.Madv equals dn.Madv
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
+                                         select new VMKkGia
+                                         {
+                                             Id = kk.Id,
+                                             Tendn = dn.Tendn,
+                                             Macqcq = Madv,
+                                             Madv = kk.Madv_h,
+                                             Mahs = kk.Mahs,
+                                             Ngaynhap = kk.Ngaynhap,
+                                             Ngaychuyen = kk.Ngaychuyen_h,
+                                             Ngaycvlk = kk.Ngaycvlk,
+                                             Ngaynhan = kk.Ngaynhan_h,
+                                             Ngayhieuluc = kk.Ngayhieuluc,
+                                             Socv = kk.Socv,
+                                             Ttnguoinop = kk.Ttnguoinop,
+                                             Dtll = kk.Dtll,
+                                             Trangthai = kk.Trangthai_h,
+                                             Level = getdonvi.Level,
+                                         };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -104,6 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá đá xây dựng";
@@ -118,26 +114,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                                                         && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
-                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
-                                          select new VMKkGia
-                                          {
-                                              Id = kk.Id,
-                                              Tendn = dn.Tendn,
-                                              Macqcq = Madv,
-                                              Madv = kk.Madv_t,
-                                              Mahs = kk.Mahs,
-                                              Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen_t,
-                                              Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan_t,
-                                              Ngayhieuluc = kk.Ngayhieuluc,
-                                              Socv = kk.Socv,
-                                              Ttnguoinop = kk.Ttnguoinop,
-                                              Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai_t,
-                                              Level = getdonvi.Level,
-                                          };
+                                         join dn in _db.Company on kk.Madv equals dn.Madv
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
+                                         select new VMKkGia
+                                         {
+                                             Id = kk.Id,
+                                             Tendn = dn.Tendn,
+                                             Macqcq = Madv,
+                                             Madv = kk.Madv_t,
+                                             Mahs = kk.Mahs,
+                                             Ngaynhap = kk.Ngaynhap,
+                                             Ngaychuyen = kk.Ngaychuyen_t,
+                                             Ngaycvlk = kk.Ngaycvlk,
+                                             Ngaynhan = kk.Ngaynhan_t,
+                                             Ngayhieuluc = kk.Ngayhieuluc,
+                                             Socv = kk.Socv,
+                                             Ttnguoinop = kk.Ttnguoinop,
+                                             Dtll = kk.Dtll,
+                                             Trangthai = kk.Trangthai_t,
+                                             Level = getdonvi.Level,
+                                         };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -147,6 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá đá xây dựng";
@@ -161,27 +158,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                                                          && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
-                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
-                                          select new VMKkGia
-                                          {
-                                              Id = kk.Id,
-                                              Tendn = dn.Tendn,
-                                              Macqcq = Madv,
-                                              Madv = kk.Madv_ad,
-                                              Mahs = kk.Mahs,
-                                              Ngaynhap = kk.Ngaynhap,
-                                              Ngaychuyen = kk.Ngaychuyen_ad,
-                                              Ngaycvlk = kk.Ngaycvlk,
-                                              Ngaynhan = kk.Ngaynhan_ad,
-                                              Ngayhieuluc = kk.Ngayhieuluc,
-                                              Socv = kk.Socv,
-                                              Ttnguoinop = kk.Ttnguoinop,
-                                              Dtll = kk.Dtll,
-                                              Trangthai = kk.Trangthai_ad,
-                                              Trangthai_ad = kk.Trangthai_ad,
-                                              Level = getdonvi.Level,
-                                          };
+                                         join dn in _db.Company on kk.Madv equals dn.Madv
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DAXAYDUNG") on dn.Mahs equals dnct.Mahs
+                                         select new VMKkGia
+                                         {
+                                             Id = kk.Id,
+                                             Tendn = dn.Tendn,
+                                             Macqcq = Madv,
+                                             Madv = kk.Madv_ad,
+                                             Mahs = kk.Mahs,
+                                             Ngaynhap = kk.Ngaynhap,
+                                             Ngaychuyen = kk.Ngaychuyen_ad,
+                                             Ngaycvlk = kk.Ngaycvlk,
+                                             Ngaynhan = kk.Ngaynhan_ad,
+                                             Ngayhieuluc = kk.Ngayhieuluc,
+                                             Socv = kk.Socv,
+                                             Ttnguoinop = kk.Ttnguoinop,
+                                             Dtll = kk.Dtll,
+                                             Trangthai = kk.Trangthai_ad,
+                                             Trangthai_ad = kk.Trangthai_ad,
+                                             Level = getdonvi.Level,
+                                         };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -191,6 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDaXayDung
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
+                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá đá xây dựng";

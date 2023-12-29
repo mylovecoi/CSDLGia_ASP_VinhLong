@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTH"];
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia>
 
@@ -116,15 +117,45 @@
                                 }
                             </td>
                             <td style="text-align: center">
+                                @if (item.Trangthai == "CC")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ chuyển</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
                                 @if (item.Trangthai == "CD")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ duyệt</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
                                 @if (item.Trangthai == "DD")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg label-light-danger label-inline">Bị trả lại</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "HCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }

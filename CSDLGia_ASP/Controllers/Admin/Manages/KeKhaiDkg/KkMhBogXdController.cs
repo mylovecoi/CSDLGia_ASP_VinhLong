@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 {
@@ -122,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_xetduyet";
+                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -183,7 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_xetduyet";
+                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -245,12 +239,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
-                        /*ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_xetduyet";*/
-                        ViewData["MenuLv1"] = "menu_hethong";
-                        ViewData["MenuLv2"] = "menu_qthethong";
-                        ViewData["MenuLv3"] = "menu_tichhop";
-                        ViewData["MenuLv4"] = "menu_tichhop_dkg";
+                        ViewData["MenuLv1"] = "menu_bog";
+                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                 }

@@ -1,6 +1,8 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-  var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    int record_id = 1;
+
 }
 
 <!--Trả lại Modal-->
@@ -28,6 +30,7 @@
         </form>
     </div>
 </div>
+
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

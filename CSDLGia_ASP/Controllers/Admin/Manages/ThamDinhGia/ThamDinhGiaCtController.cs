@@ -1,20 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
-using Microsoft.Extensions.Hosting;
-using System.Net.WebSockets;
-using OfficeOpenXml.Interfaces.Drawing.Text;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -110,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 result += "<label>Đơn vị tính</label>";
                 result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
                 result += "<option value=''></option>";
-                foreach(var item in dvt)
+                foreach (var item in dvt)
                 {
                     result += "<option value='" + item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + item.Dvt + "</option>";
                 }

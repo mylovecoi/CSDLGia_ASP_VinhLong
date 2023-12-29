@@ -1,7 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Models;
 using System.Collections.Generic;
 using System.Linq;
-using CSDLGia_ASP.Models;
 
 namespace CSDLGia_ASP.DAO
 {

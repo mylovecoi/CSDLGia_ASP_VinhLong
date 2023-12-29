@@ -54,7 +54,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Phanloai { get; set; }
 
 
-       
+
         public string Level { get; set; }
 
         public List<DsDonVi> DsDonVi { get; set; }

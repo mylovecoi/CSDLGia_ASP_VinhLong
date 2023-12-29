@@ -1,19 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 {
@@ -32,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tsc.bc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.baocao", "Index"))
                 {
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -57,13 +49,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
         [Route("BaoCaoDgThueTsc/Bc1")]
         [HttpPost]
-        public IActionResult Bc( DateTime tungay, DateTime denngay, string Madv)
+        public IActionResult Bc(DateTime tungay, DateTime denngay, string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tsc.bc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.baocao", "Index"))
                 {
-   
+
                     var model = from dg in _db.GiaThueTaiSanCong.Where(t => t.Trangthai == "HT" && t.Madv == Madv)
                                     //join com in _db.Company on dg.Madv equals com.Madv
                                 join ct in _db.GiaThueTaiSanCongCt on dg.Mahs equals ct.Mahs
@@ -81,7 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                                     Thoigianpd = ct.Thoigianpd,
                                     Soqddg = ct.Soqddg,
                                     Thoigiandg = ct.Thoigiandg,
-                                   
+
                                     Sotienthuenam = ct.Sotienthuenam,
                                     Hdthue = ct.Hdthue,
                                     Ththue = ct.Ththue,
@@ -104,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";
                     ViewData["MenuLv3"] = "menu_dgtsc_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueTsc/BaoCao/Bc1.cshtml" , model);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueTsc/BaoCao/Bc1.cshtml", model);
                 }
                 else
                 {

@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             _db = db;
         }
-        
+
         [Route("GiaThueMatDatMatNuoc/XetDuyet")]
         [HttpGet]
 
@@ -31,12 +31,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
+
+
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi;
-                    
+
                     var dsdiaban = _db.DsDiaBan;
-                    
+
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
@@ -49,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
-                    
+
 
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
@@ -281,6 +283,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         model.Thoidiem_h = DateTime.Now;
                         model.Trangthai_h = "CCB";
                     }
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaThueDN", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
@@ -332,6 +337,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         model.Macqcq_h = Macqcq;
                         model.Trangthai_h = "CCB";
                     }
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaThueDNHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
@@ -401,6 +409,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         model.Thoidiem_ad = DateTime.MinValue;
                         model.Trangthai_ad = null;
                     }
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
@@ -440,6 +451,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         model.Thoidiem_t = DateTime.Now;
                         model.Trangthai_t = "CB";
                     }
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
@@ -461,7 +475,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == mahs_hcb);
 
@@ -481,7 +495,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
-
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
                     return RedirectToAction("Index", "GiaThueDNHt");
                 }
                 else

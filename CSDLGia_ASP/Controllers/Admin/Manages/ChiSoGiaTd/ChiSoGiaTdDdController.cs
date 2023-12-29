@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 //using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using OfficeOpenXml;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -28,7 +21,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DuDoanChiSoGiaTieuDung")]
         [HttpGet]
-        public IActionResult Index( string Madv,string Type)
+        public IActionResult Index(string Madv, string Type)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -114,20 +107,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DuDoanChiSoGiaTieuDung/Create")]
         [HttpGet]
-        public IActionResult Create(string Madv,string Type)
+        public IActionResult Create(string Madv, string Type)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csg.chisogia.dudoan", "Create"))
                 {
                     //lấy time của sample lấy ra dự đoán=>dựa theo time mẫu lấy time sau để dự đoán
-                    var lastRecord = _db.ChiSoGiaTd.OrderBy(x=>x.Id).LastOrDefault();
-                    
+                    var lastRecord = _db.ChiSoGiaTd.OrderBy(x => x.Id).LastOrDefault();
+
                     var thangDd = (int.Parse(lastRecord.Thang) + 1).ToString();
                     var lastyear = (int.Parse(lastRecord.Nam) - 1).ToString();
-                    
+
                     ViewData["allModel"] = this.CheckType(Type);
-                    
+
                     var model = new ChiSoGiaTdDd
                     {
                         Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
@@ -149,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                     ViewData["nam"] = lastRecord.Nam;
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    
+
                     ViewData["Title"] = "Thêm mới hồ sơ dự đoán chỉ số giá";
                     ViewData["MenuLv1"] = "menu_csg";
                     ViewData["MenuLv2"] = "menu_csgHs";
@@ -171,14 +164,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         [Route("DuDoanChiSoGiaTieuDung/SetUpdate")]
         [HttpPost]
         public JsonResult SetUpdate(string[] List1, string[] List2, string[] List3,
-            string Mahs, string Thang,string ThangDd, string Nam, string Type)
+            string Mahs, string Thang, string ThangDd, string Nam, string Type)
         {
             //var thangDd = (int.Parse(Thang) - 1).ToString();
             var getDm = _db.ChiSoGiaTdDmCt.AsQueryable();
             var namDd = (int.Parse(Nam) - 1).ToString();
-            
+
             getDm = this.CheckType(Type);
-            
+
             var getDmDd = new List<ChiSoGiaTdDmCtDd>();
             string[] List;
             //dựa vào list nhóm nào sẽ xoá luôn các nhóm sau nó khi lấy sample dự đoán
@@ -228,13 +221,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 
         [Route("DuDoanChiSoGiaTieuDung/UpdateElement")]
         [HttpPost]
-        public JsonResult UpdateElement(int Id, string Xuhuong, string Tile, string[] List,string Type)
+        public JsonResult UpdateElement(int Id, string Xuhuong, string Tile, string[] List, string Type)
         {
             var info = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Id == Id);
             var record = _db.ChiSoGiaTdDd.FirstOrDefault(x => x.Mahs == info.Mahs);
             //var record = _db.ChiSoGiaTdDmCtDd.FirstOrDefault(x => x.Mahs == Mahs);
-            if(Type== "Lastmonth") { 
-                record.Noidung = "Dự đoán CPI so với tháng " + (int.Parse(record.Thang)-1) + " năm " + record.Nam; 
+            if (Type == "Lastmonth")
+            {
+                record.Noidung = "Dự đoán CPI so với tháng " + (int.Parse(record.Thang) - 1) + " năm " + record.Nam;
             }
             if (Type == "Lastyear")
             {
@@ -544,9 +538,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             var thangDd = (int.Parse(lastRecord.Thang) + 1).ToString();
             var lastyear = (int.Parse(lastRecord.Nam) - 1).ToString();
             var getDm = _db.ChiSoGiaTdDmCt.AsQueryable();
-            if(Type== "Lastmonth")
+            if (Type == "Lastmonth")
             {
-                getDm = getDm.Where(x => x.Nam == lastRecord.Nam && x.Thang == lastRecord.Thang && x.Trangthai!="tb");
+                getDm = getDm.Where(x => x.Nam == lastRecord.Nam && x.Thang == lastRecord.Thang && x.Trangthai != "tb");
             }
             if (Type == "Lastyear")
             {
@@ -558,7 +552,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
             }
             if (Type == "Average")
             {
-                var Average = (from t in _db.ChiSoGiaTdDmCt.Where(x => x.Nam == lastRecord.Nam && x.Trangthai!="tb")
+                var Average = (from t in _db.ChiSoGiaTdDmCt.Where(x => x.Nam == lastRecord.Nam && x.Trangthai != "tb")
                                group t by new
                                {
                                    t.Masohanghoa,
@@ -579,8 +573,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
                                    grp.Key.Tenhanghoa,
                                    Giakychon = grp.Sum(t => t.Giakychon) / (Convert.ToDouble(grp.Count())),
                                });
-                var checkNull = _db.ChiSoGiaTdDmCt.Where(x => x.Thang == lastRecord.Thang && x.Nam == lastRecord.Nam && x.Trangthai=="tb");
-                if (checkNull.Count() <=0)
+                var checkNull = _db.ChiSoGiaTdDmCt.Where(x => x.Thang == lastRecord.Thang && x.Nam == lastRecord.Nam && x.Trangthai == "tb");
+                if (checkNull.Count() <= 0)
                 {
                     foreach (var item in Average)
                     {
@@ -602,14 +596,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 
                     }
                 }
-                
+
                 getDm = getDm.Where(x => x.Nam == lastRecord.Nam && x.Thang == lastRecord.Thang && x.Trangthai == "tb");
                 _db.SaveChanges();
             }
             if (Type == "Kygoc")
             {
                 var checkNull = _db.ChiSoGiaTdDmCt.Where(x => x.Trangthai == "root");
-                if (checkNull.Count()<=0)
+                if (checkNull.Count() <= 0)
                 {
                     foreach (var item in _db.ChiSoGiaTdDm.Where(x => x.Matt == "1"))
                     {
@@ -631,16 +625,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 
                     }
                 }
-                
+
                 getDm = getDm.Where(x => x.Trangthai == "root");
                 _db.SaveChanges();
             }
             return (IQueryable<ChiSoGiaTdDmCt>)getDm;
         }
-        
+
         [Route("DuDoanChiSoGiaTieuDung/DropList")]
         [HttpPost]
-        public JsonResult DropList(string[] id,string nhom,string Nam,string Type)
+        public JsonResult DropList(string[] id, string nhom, string Nam, string Type)
         {
             var model = new List<ChiSoGiaTdDmCt>();
             //var modelAverage = new List<ChiSoGiaTdAverage>();

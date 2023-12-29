@@ -54,6 +54,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
                             }
                         }
 
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
+                        }
+
                         if (string.IsNullOrEmpty(Nam))
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
@@ -138,7 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
 
                     ViewData["Madv"] = Madv;
                     ViewData["Manghe"] = Manghe;
-                    ViewData["Title"] = "Thêm mới Kê khai giá cat san";
+                    ViewData["Title"] = "Thêm mới Kê khai giá cát sạn";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgcatsan";
                     ViewData["MenuLv3"] = "menu_giakkcatsan";
@@ -163,7 +168,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan.giakk", "Create") ||
+                   Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new KkGia
                     {

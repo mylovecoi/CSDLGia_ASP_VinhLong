@@ -43,13 +43,18 @@
                 Thông tin hồ sơ<small>&nbsp;giá trúng thầu quyền sd đất</small>
             </h3>
         </div>
-        <div class="card-toolbar">
+        <div >
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaTrungThauDat" asp-action="Create"
                asp-route-Madiaban="@ViewData["Madb"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+
             }
 
         </div>

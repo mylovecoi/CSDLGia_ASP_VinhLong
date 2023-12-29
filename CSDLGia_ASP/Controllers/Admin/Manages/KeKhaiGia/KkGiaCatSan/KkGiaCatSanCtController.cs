@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
 {
@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
 
         [Route("KkGiaCatSanCt/Store")]
         [HttpPost]
-        public JsonResult Store( string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
+        public JsonResult Store(string Mahs, string Madv, string Tendvcu, string Qccl, string Dvt, double Gialk, double Giakk, string Ghichu)
         {
             var model = new KkGiaCatSanCt
             {
@@ -136,9 +136,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaCatSan
             return Json(data);
         }
 
-        public string GetData(string Madv)
+        public string GetData(string Mahs)
         {
-            var model = _db.KkGiaCatSanCt.Where(t => t.Madv == Madv).ToList();
+            var model = _db.KkGiaCatSanCt.Where(t => t.Mahs == Mahs).ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";

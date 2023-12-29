@@ -1,18 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
@@ -106,9 +96,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-             var Phanloai = _db.GiaPhiLePhiDm.ToList();
-             var model = _db.GiaPhiLePhiCt.FirstOrDefault(p => p.Id == Id);
-           
+            var Phanloai = _db.GiaPhiLePhiDm.ToList();
+            var model = _db.GiaPhiLePhiCt.FirstOrDefault(p => p.Id == Id);
+
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";

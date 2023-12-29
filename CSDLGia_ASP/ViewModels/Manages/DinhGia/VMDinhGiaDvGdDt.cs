@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
     public class VMDinhGiaDvGdDt
     {
-       
+
         public int Id { get; set; }
         public string Madiaban { get; set; }
         public string Maxp { get; set; }

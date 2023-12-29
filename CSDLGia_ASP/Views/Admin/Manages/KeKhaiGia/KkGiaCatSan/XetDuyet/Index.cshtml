@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTH"];
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia>
 
@@ -114,15 +115,45 @@
                                 }
                             </td>
                             <td style="text-align: center">
+                                @if (item.Trangthai == "CC")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ chuyển</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
                                 @if (item.Trangthai == "CD")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ duyệt</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
                                 @if (item.Trangthai == "DD")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg label-light-danger label-inline">Bị trả lại vì @item.Lydo</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "HCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CCB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ công bố</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                     <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
                                 }
@@ -184,6 +215,12 @@
                                                     <i class="icon-lg la la-check text-primary "></i>
                                                 </button>
                                             }
+                                             @if (item.Trangthai == "BTL")
+                                    {
+                                        //<button type="button" class="btn btn-sm btn-clean btn-icon" title="Lý do trả lại" data-toggle="modal" data-target="#LyDo_Modal" onclick="getLyDo('@item.Lydo')">
+                                        //    <i class="icon-lg la la-search text-warning "></i>
+                                        //</button>
+                                    }
                                         }
 
 
@@ -198,4 +235,38 @@
         </table>
     </div>
 </div>
+<!--Lý Do Modal-->
+//<div class="modal fade" id="LyDo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+//    <div class="modal-dialog modal-lg" role="document">
+//        <div class="modal-content">
+//            <div class="modal-header">
+//                <h3 class="card-label">
+//                    Hồ sơ bị trả lại
+//                </h3>
+//                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//                    <i aria-hidden="true" class="ki ki-close"></i>
+//                </button>
+//            </div>
+//            <div class="modal-body">
+//                <div class="row">
+//                    <div class="col-xl-12">
+//                        <div class="form-group fv-plugins-icon-container">
+//                            <label>Lý do trả lại: </label>
+//                            <span style="font-weight:bold; color:blue" id="lydotralai_show"></span>
+//                        </div>
+//                    </div>
+//                </div>
+//            </div>
+//            <div class="modal-footer">
+//                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+//            </div>
+//        </div>
+
+//    </div>
+//</div>
+//<script>
+//    function getLyDo(Lydo) {
+//        document.getElementById("lydotralai_show").innerHTML = Lydo;
+//    }
+//</script>
 @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaCatSan/XetDuyet/Modal.cshtml")

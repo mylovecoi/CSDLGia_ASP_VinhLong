@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 {
@@ -162,7 +156,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     ViewData["Nhom"] = Manhom;
                     ViewData["DmDvt"] = _db.DmDvt;
                     ViewData["Thue"] = _db.GiaHhHaiQuanXnkThue;
-                    
+
                     ViewData["Title"] = "Thông tin giá hàng hoá hải quan trong xuất nhập khẩu";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
@@ -258,20 +252,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     var model = _db.GiaHhHaiQuanXnk.FirstOrDefault(t => t.Mahs == Mahs);
 
                     //var model_ct = _db.GiaHhHaiQuanXnkCt.Where(t => t.Mahs == model.Mahs);
-                    var model_ct = from ct in _db.GiaHhHaiQuanXnkCt.Where(x=>x.Mahs==Mahs)
-                                join thue in _db.GiaHhHaiQuanXnkThue
-                                on ct.MaThue equals thue.MaThue
-                                select new GiaHhHaiQuanXnkCt
-                                {
-                                    Id=ct.Id,
-                                    TenHh = ct.TenHh,
-                                    Dvt = ct.Dvt,
-                                    GiaTruocThue = ct.GiaTruocThue,
-                                    GiaSauThue = ct.GiaSauThue,
-                                    PhanTramThue = ct.PhanTramThue,
-                                    MaThue = ct.MaThue,
-                                    TenThue = thue.TenThue,
-                                };
+                    var model_ct = from ct in _db.GiaHhHaiQuanXnkCt.Where(x => x.Mahs == Mahs)
+                                   join thue in _db.GiaHhHaiQuanXnkThue
+                                   on ct.MaThue equals thue.MaThue
+                                   select new GiaHhHaiQuanXnkCt
+                                   {
+                                       Id = ct.Id,
+                                       TenHh = ct.TenHh,
+                                       Dvt = ct.Dvt,
+                                       GiaTruocThue = ct.GiaTruocThue,
+                                       GiaSauThue = ct.GiaSauThue,
+                                       PhanTramThue = ct.PhanTramThue,
+                                       MaThue = ct.MaThue,
+                                       TenThue = thue.TenThue,
+                                   };
 
                     model.GiaHhHaiQuanXnkCt = model_ct.ToList();
 

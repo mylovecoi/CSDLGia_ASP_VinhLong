@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
 {
@@ -29,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Index"))
                 {
                     var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
@@ -60,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
 
                     if (getdonvi.Level == "ADMIN")
                     {
-                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_ad == Madv ).ToList();
+                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_ad == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -115,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     }
                     else if (getdonvi.Level == "T")
                     {
-                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_t == Madv ).ToList();
+                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_t == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -170,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     }
                     else
                     {
-                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_h == Madv ).ToList();
+                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv_h == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -300,7 +295,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.ttg", "Approve"))
                 {
                     var model = _db.GiaTroGiaTroCuoc.FirstOrDefault(p => p.Mahs == mahs_complete);
-                   
+
                     var dvcq_join = from dvcq in _db.DsDonVi
                                     join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -329,7 +324,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     }
                     _db.GiaTroGiaTroCuoc.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "TroGiaTroCuocHt", new {Madv =  madv_hientai, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "TroGiaTroCuocHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -413,11 +408,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             }
         }
 
-        public IActionResult CongBo(string mahs_cb )
+        public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaTroGiaTroCuoc.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -451,11 +446,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             }
         }
 
-        public IActionResult HuyCongBo(string mahs_hcb )
+        public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaTroGiaTroCuoc.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

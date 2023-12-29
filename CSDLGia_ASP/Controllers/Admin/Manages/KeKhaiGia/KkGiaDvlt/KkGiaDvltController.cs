@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
@@ -62,6 +57,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             {
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.Madv).First();
                             }
+                        }
+
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
                         }
 
                         if (string.IsNullOrEmpty(Nam))
@@ -404,7 +404,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                     }
 
                     var modelcskd = _db.KkGiaDvLtCskd.FirstOrDefault(t => t.Macskd == model.Macskd);
-                    if(modelcskd != null)
+                    if (modelcskd != null)
                     {
                         hoso_kk.Tencskd = modelcskd.Tencskd;
                         hoso_kk.Diachikd = modelcskd.Diachikd;

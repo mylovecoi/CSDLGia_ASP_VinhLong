@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
 {
@@ -47,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
-                    
+
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -61,6 +56,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                             {
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.Madv).First();
                             }
+                        }
+
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "CC";
                         }
 
                         if (string.IsNullOrEmpty(Nam))
@@ -354,7 +354,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsieuthi.giakk", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-         
+
                     var model = GetThongTinKk(Mahs);
 
                     ViewData["Title"] = "Kê khai giá siêu thị";
@@ -437,7 +437,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("KeKhaiGiaSieuThi/Printf")]
         [HttpGet]
         public IActionResult Printf(string Nam, string Mota)
@@ -463,7 +463,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSieuThi
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
-                    
+
 
                     if (string.IsNullOrEmpty(Nam))
                     {

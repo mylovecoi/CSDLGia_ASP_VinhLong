@@ -1,20 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Manages.ChiSoGiaTd;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.Models.Systems;
-using OfficeOpenXml;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
 {
@@ -80,20 +71,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         public JsonResult Edit(int id)
         {
             var viewmodel = (from cpi in _db.ChiSoGiaTd
-                         join cpiDmCt in _db.ChiSoGiaTdDmCt on cpi.Mahs equals cpiDmCt.Mahs
-                         join cpiDm in _db.ChiSoGiaTdDm on cpiDmCt.Masohanghoa equals cpiDm.Masohanghoa
-                         select new VMChiSoGiaTdDm
-                         {
-                             Id=cpiDmCt.Id,
-                             Masogoc = cpiDm.Masogoc,
-                             Tenhanghoa = cpiDm.Tenhanghoa,
-                             Giagoc = cpiDmCt.Giagoc,
-                             Giakychon = cpiDmCt.Giakychon,
-                             Masonhomhanghoa = cpiDm.Masonhomhanghoa,
-                             Baocao = cpiDm.Baocao,
-                             QuyensoNt = cpiDmCt.QuyensoNt,
-                             QuyensoTt = cpiDmCt.QuyensoTt,
-                         });
+                             join cpiDmCt in _db.ChiSoGiaTdDmCt on cpi.Mahs equals cpiDmCt.Mahs
+                             join cpiDm in _db.ChiSoGiaTdDm on cpiDmCt.Masohanghoa equals cpiDm.Masohanghoa
+                             select new VMChiSoGiaTdDm
+                             {
+                                 Id = cpiDmCt.Id,
+                                 Masogoc = cpiDm.Masogoc,
+                                 Tenhanghoa = cpiDm.Tenhanghoa,
+                                 Giagoc = cpiDmCt.Giagoc,
+                                 Giakychon = cpiDmCt.Giakychon,
+                                 Masonhomhanghoa = cpiDm.Masonhomhanghoa,
+                                 Baocao = cpiDm.Baocao,
+                                 QuyensoNt = cpiDmCt.QuyensoNt,
+                                 QuyensoTt = cpiDmCt.QuyensoTt,
+                             });
             var model = viewmodel.FirstOrDefault(x => x.Id == id);
             var getMasodanhmuc = model.Mahs;
             var donvitinh = _db.DmDvt;
@@ -154,7 +145,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ChiSoGiaTd
         }
         [Route("DanhSachNhomChiSoGiaTieuDungCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, double Giagoc, double GiaKychon, double QuyensoTt, double QuyensoNt, string Thang,string Nam)
+        public JsonResult Update(int Id, string Mahs, double Giagoc, double GiaKychon, double QuyensoTt, double QuyensoNt, string Thang, string Nam)
         {
             /*var viewmodel = (from cpi in _db.ChiSoGiaTd
                              join cpiDmCt in _db.ChiSoGiaTdDmCt on cpi.Mahs equals cpiDmCt.Mahs

@@ -1,18 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 {
@@ -31,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.gddt.dm", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Index"))
                 {
                     var model = _db.GiaDvGdDtDm.ToList();
                     ViewData["Title"] = "Danh mục giá dịch vụ giáo dục đạo tạo";
@@ -60,13 +52,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             var model = new GiaDvGdDtDm
             {
                 Tenspdv = Tenspdv,
-                Maspdv = DateTime.Now.ToString("yyMMddssmmHH") ,
+                Maspdv = DateTime.Now.ToString("yyMMddssmmHH"),
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
             _db.GiaDvGdDtDm.Add(model);
             _db.SaveChanges();
-            var data = new { status = "success"};
+            var data = new { status = "success" };
             return Json(data);
         }
 
@@ -119,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             model.Updated_at = DateTime.Now;
             _db.GiaDvGdDtDm.Update(model);
             _db.SaveChanges();
-           
+
             var data = new { status = "success" };
             return Json(data);
         }

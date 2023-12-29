@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
-using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
@@ -61,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGiaDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv,double Giatoida, double Giatoithieu, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Store(string Manhom, string Tenspdv, double Giatoida, double Giatoithieu, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -224,7 +218,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGiaDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv,double Giatoithieu, double Giatoida, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Update(int Id, string Tenspdv, double Giatoithieu, double Giatoida, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

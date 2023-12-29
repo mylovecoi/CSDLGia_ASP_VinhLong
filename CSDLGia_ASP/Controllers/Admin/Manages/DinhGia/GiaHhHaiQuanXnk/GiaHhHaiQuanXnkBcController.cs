@@ -1,21 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
-using Microsoft.Extensions.Hosting;
-using CSDLGia_ASP.Models.Systems;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
 {
@@ -38,10 +28,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.baocao", "Index"))
                 {
-                    
+
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp hàng hoá hải quan trong xuất nhập khẩu";
-                    ViewData["Danhmuc"] = _db.GiaHhHaiQuanXnkDm ;
+                    ViewData["Danhmuc"] = _db.GiaHhHaiQuanXnkDm;
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dghqxnk";
                     ViewData["MenuLv3"] = "menu_dghqxnk_bc";
@@ -66,8 +56,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.hqxnk.baocao", "Index"))
                 {
-                    var model = (from pl in _db.GiaHhHaiQuanXnk.Where(t => t.Thoidiem >= beginTime 
-                                 && t.Thoidiem <= endTime && t.Trangthai == "HT" && t.Manhom==danhmuc)
+                    var model = (from pl in _db.GiaHhHaiQuanXnk.Where(t => t.Thoidiem >= beginTime
+                                 && t.Thoidiem <= endTime && t.Trangthai == "HT" && t.Manhom == danhmuc)
                                  join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhHaiQuanXnk
                                  {
