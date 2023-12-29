@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
                     var model = (from pl in _db.GiaNuocSh.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
                                  join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
-                                 select new GiaNuocSh
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
                                  {
                                      Id = pl.Id,
                                      Mahs = pl.Mahs,

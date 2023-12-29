@@ -10,13 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSh
 {
-    public class GianuocshExcelController : Controller
+    public class GiaNuocShExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GianuocshExcelController(CSDLGiaDBContext db)
+        public GiaNuocShExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
@@ -35,16 +35,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
                         //Ten = "3",
                         //Dvt = "4",
                         //Gia = "5",
-                        LineStart = 2,
-                        LineStop = 1000,
-                        Sheet = 1,
+                        //LineStart = 2,
+                        //LineStop = 1000,
+                        //Sheet = 1,
                     };
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá nước sạch sinh hoạt";
-                    return View("Views/Admin/Manages/DinhGia/Gianuocsh/Excels/Excel.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -60,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Gianuocsh
         }
 
 
-        [Route("GianuocshExcel/Create")]
+        [Route("GiaNuocShExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {

@@ -584,7 +584,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         public IActionResult TrangCongBo()
         {
-                    return View("Views/Admin/Systems/CongBo/TrangCongBo/DatPlCongBo.cshtml");  
+     return View("Views/Admin/Systems/CongBo/DatPlCongBo.cshtml");  
         }
 
 
