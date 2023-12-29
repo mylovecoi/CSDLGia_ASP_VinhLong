@@ -133,7 +133,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                         _db.SaveChanges();
                     }
 
-                    var model = new GiaNuocSh()
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
                     {
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
@@ -142,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                         Dennam = DateTime.Now.Year.ToString(),
                     };
 
-                    var dm = _db.GiaNuocShDm.ToList();
+                    var dm = _db.GiaNuocShDmVung.ToList();
                     var ct = new List<GiaNuocShCt>();
                     foreach (var item in dm)
                     {
@@ -164,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
                     ViewData["Madv"] = Madv;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Danhmuc"] = _db.GiaNuocShDm.ToList();
+                    ViewData["Danhmuc"] = _db.GiaNuocShDmVung.ToList();
                     ViewData["Title"] = "Thêm mới giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
@@ -185,7 +185,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocSh/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(GiaNuocSh request, IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
+        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh request, IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -261,7 +261,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                         request.Ipf5 = filename;
                     }
 
-                    var model = new GiaNuocSh
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
                     {
                         Mahs = request.Mahs,
                         Madv = request.Madv,
@@ -347,7 +347,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocSh/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(GiaNuocSh request, IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh request, IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -669,7 +669,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["Doituong"] = _db.GiaNuocShDm.ToList();
+                    ViewData["Doituong"] = _db.GiaNuocShDmVung.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nước sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
@@ -746,7 +746,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     }
 
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["Doituong"] = _db.GiaNuocShDm.ToList();
+                    ViewData["Doituong"] = _db.GiaNuocShDmVung.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá nước sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";

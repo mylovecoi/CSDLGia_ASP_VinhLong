@@ -6,30 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
 {
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
-    public class GianuocShDmKhungController : Controller
+    public class GiaNuocShDmKhungController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GianuocShDmKhungController(CSDLGiaDBContext db)
-========
-    public class GiaNuocShDmController : Controller
-    {
-        private readonly CSDLGiaDBContext _db;
-
-        public GiaNuocShDmController(CSDLGiaDBContext db)
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
+        public GiaNuocShDmKhungController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
         [Route("DanhMucGiaNuocShKhung")]
-========
-        [Route("GiaNuocSh/DanhMuc")]
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
         [HttpGet]
         public IActionResult Index()
         {
@@ -55,7 +43,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
         [Route("DanhMucGiaNuocShKhung/Create")]
         [HttpGet]
         public IActionResult Create()
@@ -82,16 +69,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             }
         }
         [Route("DanhMucGiaNuocShKhung/Store")]
-========
-
-        [Route("GiaNuocSh/DanhMuc/Store")]
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
         [HttpPost]
         public JsonResult Store(string Doituongsd)
         {
             var model = new GiaNuocShDmKhung
             {
-                Madoituong = DateTime.Now.ToString("yyMMddssmmHH"),
                 Doituongsd = Doituongsd,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
@@ -102,7 +84,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             var data = new { status = "success" };
             return Json(data);
         }
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
 
         [Route("DanhMucGiaNuocShKhung/Delete")]
         [HttpPost]
@@ -117,10 +98,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
         }
 
         [Route("DanhMucGiaNuocShKhung/Edit")]
-========
-
-        [Route("GiaNuocSh/DanhMuc/Edit")]
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
         [HttpPost]
         public JsonResult Edit(int Id)
         {
@@ -130,21 +107,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<div class='row'>";
-
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
+
                 result += "<label>Đối tượng sử dụng</label>";
                 result += "<input type='text' id='doituongsd_edit' name='manhom_edit' value='" + model.Doituongsd + "' class='form-control'/>";
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
 
                 result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
-========
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
                 result += "</div>";
-                result += "</div>";
-
-                result += "<input type='hidden' id='id_edit' name='id_edit' value='" + model.Id + "' class='form-control'/>";
-                
                 result += "</div>";
                 result += "</div>";
 
@@ -157,12 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 return Json(data);
             }
         }
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
         [Route("DanhMucGiaNuocShKhung/Update")]
-========
-
-        [Route("GiaNuocSh/DanhMuc/Update")]
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
         [HttpPost]
         public JsonResult Update(int Id, string Doituongsd)
         {
@@ -176,21 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             return Json(data);
         }
 
-<<<<<<<< HEAD:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GianuocShDmKhungController.cs
 
-========
-        [Route("GiaNuocSh/DanhMuc/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaNuocShDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaNuocShDm.Remove(model);
-            _db.SaveChanges();
-
-            var data = new { status = "success" };
-            return Json(data);
-        }
->>>>>>>> 667b371ba1fc84be6f9788a35273be7a8254f95b:CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaNuocSinhHoat/GiaNuocShDmController.cs
     }
 
 }
