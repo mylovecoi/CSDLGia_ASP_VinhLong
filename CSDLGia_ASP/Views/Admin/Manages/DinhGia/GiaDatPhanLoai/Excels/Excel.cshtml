@@ -51,8 +51,8 @@
                 </div>
                 <div class="col-xl-2">
                     <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Loại đất</label>
-                        <select asp-for="Loaidat" class="form-control">
+                        <label style="font-weight: bold; color: blue">Mã loại đất</label>
+                        <select asp-for="Maloaidat" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -160,7 +160,7 @@
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="QuanLyHoSoNCC" asp-action="Index" asp-route-MaHoSo="AH" class="btn btn-danger">
+            <a asp-controller="GiaDatPlExcel" asp-action="Index" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

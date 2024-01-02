@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             var model = new GiaDatPhanLoaiCt
             {
                 Khuvuc = "1",
-                Loaidat = "2",
+                Maloaidat = "2",
                 Vitri = 3,
                 Banggiadat = 4,
                 Giacuthe = 7, 
@@ -62,6 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv3"] = "menu_dgdct_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
+                    ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
 
@@ -107,7 +108,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
                                 Khuvuc = worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : ""
+                                            worksheet.Cells[row, Int16.Parse(request.Khuvuc)].Value.ToString().Trim() : "",
+
+                                Vitri = worksheet.Cells[row, Int16.Parse(request.Vitri.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Vitri.ToString())].Value) : 0,
+
+                                Maloaidat = worksheet.Cells[row, Int16.Parse(request.Maloaidat)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Maloaidat)].Value.ToString().Trim() : "",
+
+                                Diagioitu = worksheet.Cells[row, Int16.Parse(request.Diagioitu)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Diagioitu)].Value.ToString().Trim() : "",
+
+                                Diagioiden = worksheet.Cells[row, Int16.Parse(request.Diagioiden)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Diagioiden)].Value.ToString().Trim() : "",
+
+                                Banggiadat = worksheet.Cells[row, Int16.Parse(request.Banggiadat.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Banggiadat.ToString())].Value) : 0,
+
+                                Giacuthe = worksheet.Cells[row, Int16.Parse(request.Giacuthe.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giacuthe.ToString())].Value) : 0,
+
+                                Hesodc = worksheet.Cells[row, Int16.Parse(request.Hesodc.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Hesodc.ToString())].Value) : 0,
 
                             });
                         }
@@ -115,10 +137,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     }
 
                 }
-
+                
                 _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
-
                 return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else

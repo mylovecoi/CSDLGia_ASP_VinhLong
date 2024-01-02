@@ -13,7 +13,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maloaidat { get; set; }
         public string Khuvuc { get; set; }
         public int Vitri { get; set; }
-
         public double Banggiadat { get; set; }
         public string Diagioitu { get; set; }
         public string Diagioiden { get; set; }

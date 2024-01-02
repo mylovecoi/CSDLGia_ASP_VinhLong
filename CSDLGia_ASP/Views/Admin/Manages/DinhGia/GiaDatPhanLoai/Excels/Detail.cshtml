@@ -16,6 +16,8 @@
                     <th>Tên đường, giới hạn, khu vực</th>
                     <th>Loại đất</th>
                     <th>Vị trí</th>
+                    <th>Địa giới - Từ</th>
+                    <th>Địa giới - Đến</th>
                     <th>Giá đất tại bảng giá</th>
                     <th>Giá đất cụ thể</th>
                     <th>Hệ số điều chỉnh</th>
@@ -28,8 +30,18 @@
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>
                         <td>@item.Khuvuc</td>
-                        <td>@item.Khuvuc</td>
+                        <td>
+                            @foreach (var ten in dmloaidat)
+                            {
+                                @if (ten.Maloaidat == item.Maloaidat)
+                                {
+                                    <span>@ten.Loaidat</span>
+                                }
+                            }
+                        </td>
                         <td>@item.Vitri</td>
+                        <td>@item.Diagioitu</td>
+                        <td>@item.Diagioiden</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Hesodc)</td>
@@ -52,3 +64,4 @@
         <!--end: Datatable-->
     </div>
 </div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Modal.cshtml")

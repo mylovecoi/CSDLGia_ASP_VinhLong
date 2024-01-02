@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -55,7 +56,7 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-              
+
             }
 
         </div>
@@ -116,8 +117,9 @@
                 {
                     @foreach (var item in Model)
                     {
-                        <tr >
+                        <tr>
                             <td style="text-align: center">@(record_id++)</td>
+
                             @foreach (var ds in dsdiabanAll)
                             {
                                 @if (item.Madiaban == ds.MaDiaBan)
@@ -125,8 +127,11 @@
                                     <td style="text-align: center">@ds.TenDiaBan</td>
                                 }
                             }
+
                             <td style="text-align: center">@item.Thoidiem</td>
+
                             <td style="text-align: center">@item.Thongtin</td>
+
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
@@ -142,20 +147,19 @@
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var cqcq in dsdonvi)
+
+                            <td style="text-align: center">
+                                @if (item.Trangthai == "HT")
                                 {
-                                    @if (item.Macqcq == cqcq.MaDv)
+                                    @foreach (var ds in dscqcq)
                                     {
-                                        <td style="text-align: center">@cqcq.TenDv</td>
+                                        @if (item.Macqcq == ds.MaDv)
+                                        {
+                                            <span style="text-align: center">@ds.TenDv</span>
+                                        }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
+                            </td>
                             <td style="text-align: center">
 
                                 <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"

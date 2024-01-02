@@ -433,7 +433,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaDatPlHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatPlHt");
                 }
                 else
                 {
