@@ -1,4 +1,4 @@
-﻿
+﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
@@ -58,13 +58,13 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control"  id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Thông tin hồ sơ</label>
-                        <input type="text" class="form-control"  />
+                        <input type="text" class="form-control" asp-for="Thongtin" />
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Ghi chú</label>
-                        <textarea class="form-control" rows="2" cols="50" ></textarea>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label class="control-label">File đính kèm</label>
-                        <input  type="file" accept=".jpg,.jpeg,.png" />
+                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
                     </div>
                 </div>
             </div>

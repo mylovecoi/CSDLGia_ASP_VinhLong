@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -135,9 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         }
 
                     }
-
                 }
-                
                 _db.GiaDatPhanLoaiCt.AddRange(list_add);
                 _db.SaveChanges();
                 return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs });
