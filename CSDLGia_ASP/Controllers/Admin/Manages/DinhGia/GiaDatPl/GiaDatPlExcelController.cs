@@ -31,10 +31,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Maloaidat = "2",
                 Vitri = 3,
                 Banggiadat = 4,
-                Giacuthe = 7, 
-                Hesodc = 8,
                 Diagioitu = "5",
                 Diagioiden = "6",
+                Giacuthe = 7, 
+                Hesodc = 8,
                 LineStart = 3,
                 LineStop = 10000,
                 Sheet = 1,
@@ -104,6 +104,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             list_add.Add(new GiaDatPhanLoaiCt
                             {
+
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
