@@ -46,13 +46,12 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.r.ttg", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="Giathuemuanhaxh" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="Giathuemuanhaxh" asp-action="Create" asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiathuemuanhaxhExcel" asp-action="Index">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiathuemuanhaxhExcel" asp-action="Index" asp-route-Madv="@ViewData["Madv"]">
+                 <i class="la la-file-excel-o"></i>Nhận dữ liệu 
+                 </a>
             }
         </div>
     </div>
@@ -118,15 +117,15 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td class="text-center active">@item.Thongtin</td>
+                        <td style="text-align: center">@item.Ghichu</td>
                         <td style="text-align: center">
                             @if (item.Trangthai == "HT")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
+                                <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
                             }
                             @if (item.Trangthai == "CHT")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
+                                <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                             }
                             @if (item.Trangthai == "BTL")
                             {
@@ -148,8 +147,6 @@
                         {
                             <td style="text-align: center"></td>
                         }
-
-
 
                         <td>
                             @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")

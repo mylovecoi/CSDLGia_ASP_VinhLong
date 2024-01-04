@@ -119,15 +119,15 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td class="text-center active">@item.Thongtin</td>
+                        <td style="text-align: center">@item.Thongtin</td>
                         <td style="text-align: center">
                             @if (item.Trangthai == "HT")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
+                                <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
                             }
                             @if (item.Trangthai == "CHT")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
+                                <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                             }
                             @if (item.Trangthai == "BTL")
                             {

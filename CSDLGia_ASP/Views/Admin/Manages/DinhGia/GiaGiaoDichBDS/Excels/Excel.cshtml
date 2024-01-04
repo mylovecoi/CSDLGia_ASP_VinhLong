@@ -50,7 +50,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Ten" class="form-control">
+                        <select asp-for="Dvt" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>

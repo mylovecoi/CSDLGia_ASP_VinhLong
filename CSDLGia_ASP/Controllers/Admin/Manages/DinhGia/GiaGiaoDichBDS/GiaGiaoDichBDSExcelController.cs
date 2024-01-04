@@ -33,9 +33,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         //Ten = "1",
                         //Dvt = "2",
                         //Gia = 3,
-                        //LineStart = 2,
-                        //LineStop = 1000,
-                        //Sheet = 1,
+                        Sheet = 1,
+                        LineStart = 2,
+                        LineStop = 1000,
+                       
                     };
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
