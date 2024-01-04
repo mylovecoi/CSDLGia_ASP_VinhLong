@@ -29,14 +29,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
                 {
                     var model = new GiaRungCt
-                    { 
-                        //Manhom = "1",
-                        //Tennhom = "2",
-                        //Ten = "3",
-                        //Dvt = "4",
-                        //Gia = "5",
+                    {
+                        Phanloai = "1",
+                        Manhom = "2",
+                        Dvthue = "3",
+                        Noidung = "4",
+                        Dientich = 5,
+                        Dientichsd = 6,
+                        Dvt = "7",
+                        Giatri = 8 ,
                         LineStart = 2,
-                        LineStop = 1000,
+                        LineStop = 10000,
                         Sheet = 1,
                     };
                     ViewData["MenuLv1"] = "menu_dg";
@@ -68,7 +71,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
                 {
-
                     ViewData["Title"] = "Thông tin hồ sơ giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
@@ -76,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
+                    ViewData["modelct"] = _db.GiaRungCt.Where(t => t.Mahs == Mahs);
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Excels/Create.cshtml");
                 }
                 else
@@ -92,13 +94,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaRungCt request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<GiaRungCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -112,30 +114,45 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaRungCt
                             {
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
+
+                                Phanloai = worksheet.Cells[row, Int16.Parse(request.Phanloai)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Phanloai)].Value.ToString().Trim() : "",
+
                                 Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
+
+                                Dvthue = worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value.ToString().Trim() : "",
+
+                                Noidung = worksheet.Cells[row, Int16.Parse(request.Noidung)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Noidung)].Value.ToString().Trim() : "",
+
+                                Dientich = worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value) : 0,
+
+                                Dientichsd = worksheet.Cells[row, Int16.Parse(request.Dientichsd.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientichsd.ToString())].Value) : 0,
+
                                 Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+
+                                Giatri = worksheet.Cells[row, Int16.Parse(request.Giatri.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giatri.ToString())].Value) : 0,
+
                             });
                         }
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaRungCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiarungExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

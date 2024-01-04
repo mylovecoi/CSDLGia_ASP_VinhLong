@@ -36,7 +36,6 @@
     </script>
 }
 
-
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
@@ -131,7 +130,8 @@
                             }
                             @if (item.Trangthai == "BTL")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
                         @if (item.Macqcq != null)
@@ -219,7 +219,7 @@
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GiathuemuanhaxhXd" asp-action="HoanThanh">
+            <form asp-controller="GiaThueMuaNhaXaHoi" asp-action="Complete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý hoàn thành hồ sơ?
@@ -234,7 +234,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
+                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
                                     @foreach (var db in dsdiaban)
                                     {
                                         <optgroup label="@db.TenDiaBan">

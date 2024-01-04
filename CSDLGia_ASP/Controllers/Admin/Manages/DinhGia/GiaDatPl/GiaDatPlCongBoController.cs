@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPlCongBo
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/DatPlCongBo.cshtml", model_join);
+                        return View("Views/Admin/Systems/CongBo/GiaDatPlCongBo.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
                     {
@@ -197,7 +197,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPlCongBo
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/DatPlCongBo.cshtml", model_join);
+                        return View("Views/Admin/Systems/CongBo/GiaDatPlCongBo.cshtml", model_join);
                     }
                     else
                     {
@@ -267,7 +267,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPlCongBo
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/DatPlCongBo.cshtml", model_join);
+                        return View("Views/Admin/Systems/CongBo/GiaDatPlCongBo.cshtml", model_join);
                       
                     }
                 }

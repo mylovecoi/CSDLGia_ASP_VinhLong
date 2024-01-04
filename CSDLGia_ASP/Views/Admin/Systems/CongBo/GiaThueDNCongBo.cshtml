@@ -99,7 +99,7 @@
                     <th>Thời điểm xác định</th>
                     <th>Vị trí đất</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
+                  
                    
                 </tr>
             </thead>
@@ -176,55 +176,8 @@
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
                                     <br />
                                 }
-                                else if (item.Trangthai_ad == "HCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ công bố</span>
-                                    <br />
-                                }
-                                else if (item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ hoàn thành</span>
-                                    <br />
-                                }
-                                else if (item.Trangthai_ad == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa công bố</span>
-                                    <br />
-                                }
-                                else
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa hoàn thành</span>
-                                    <br />
-                                }
                             </td>
 
-                            <td style="text-align: center">
-                                @if (dsdonvi != null && item.Level != "ADMIN")
-                                {
-                                    @if (item.Trangthai_h == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_h)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                    else if (item.Trangthai_t == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_t)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
-
-                          
                         </tr>
                     }
                 }

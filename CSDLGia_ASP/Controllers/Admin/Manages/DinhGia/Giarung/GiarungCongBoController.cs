@@ -8,31 +8,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiarungCongBo
 {
-    public class GiaThueDNCongBoController : Controller
+    public class GiarungCongBoController : Controller
     {
+
 
         private readonly CSDLGiaDBContext _db;
 
-        public GiaThueDNCongBoController(CSDLGiaDBContext db)
+        public GiarungCongBoController(CSDLGiaDBContext db)
         {
             _db = db;
         }
-        [Route("GiaThueDNCongBo/CongBo")]
+
+        [Route("GiarungCongBoCongBo/CongBo")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
-
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi;
-
-                    var dsdiaban = _db.DsDiaBan;
-
+                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
@@ -46,7 +44,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                         }
                     }
 
-
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -54,6 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                                         Id = dv.Id,
                                         MaDiaBan = dv.MaDiaBan,
                                         MaDv = dv.MaDv,
+                                        TenDv = dv.TenDv,
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).First();
@@ -61,7 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
 
                     if (getdonvi.Level == "ADMIN")
                     {
-                        var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_ad == Madv).ToList();
+                        var model = _db.GiaRung.Where(t => t.Madv_ad == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -78,7 +76,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                             }
                         }
                         var model_join = from dg in model
-                                         select new VMDinhGiaThueDN
+                                         select new VMDinhGiaRung
                                          {
                                              Id = dg.Id,
                                              Macqcq = Madv,
@@ -108,16 +106,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
+                        ViewData["Title"] = "Hoàn thành định giá rừng";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
+                        ViewData["MenuLv2"] = "menu_dgr";
+                        ViewData["MenuLv3"] = "menu_dgr_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
+                        return View("Views/Admin/Systems/CongBo/GiaRungCongBo.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
                     {
-                        var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_t == Madv).ToList();
+                        var model = _db.GiaRung.Where(t => t.Madv_t == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -134,7 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                             }
                         }
                         var model_join = from dg in model
-                                         select new VMDinhGiaThueDN
+                                         select new VMDinhGiaRung
                                          {
                                              Id = dg.Id,
                                              Madv = dg.Madv,
@@ -164,16 +162,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
+                        ViewData["Title"] = "Hoàn thành định giá rừng";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
+                        ViewData["MenuLv2"] = "menu_dgr";
+                        ViewData["MenuLv3"] = "menu_dgr_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
+                        return View("Views/Admin/Systems/CongBo/GiaRungCongBo.cshtml", model_join);
                     }
                     else
                     {
-                        var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_h == Madv).ToList();
+                        var model = _db.GiaRung.Where(t => t.Madv_h == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.ToList();
@@ -190,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                             }
                         }
                         var model_join = from dg in model
-                                         select new VMDinhGiaThueDN
+                                         select new VMDinhGiaRung
                                          {
                                              Id = dg.Id,
                                              Madv = dg.Madv,
@@ -220,13 +218,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
+                        ViewData["Title"] = "Hoàn thành định giá rừng";
                         ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
+                        ViewData["MenuLv2"] = "menu_dgr";
+                        ViewData["MenuLv3"] = "menu_dgr_ht";
                         ViewBag.bSession = true;
-                        return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
-                      
+                        return View("Views/Admin/Systems/CongBo/GiaRungCongBo.cshtml", model_join);
                     }
                 }
                 else
@@ -240,7 +237,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
 
     }

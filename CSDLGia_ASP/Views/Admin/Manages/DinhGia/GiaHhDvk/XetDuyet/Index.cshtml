@@ -104,7 +104,6 @@
                     <th>Thời điểm xác định</th>
                     <th>Nhóm hàng hóa</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -147,8 +146,7 @@
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
-                            </td>
-                            <td style="text-align: left">@item.Tencqcq</td>
+                            </td>              
                             <td>
                                 <a asp-controller="GiaHhDvk" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">

@@ -51,7 +51,7 @@
             </a>
 
             <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
-               asp-route-Madv="@ViewData["Madv"]">
+               asp-route-Madv="@ViewData["Donvi"]">
                 <i class="la la-file-excel-o"></i>Nhận dữ liệu
             </a>
 
@@ -131,7 +131,8 @@
                             }
                             @if (item.Trangthai == "BTL")
                             {
-                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
                         @if (item.Macqcq != null)

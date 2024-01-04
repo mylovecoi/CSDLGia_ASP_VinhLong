@@ -62,7 +62,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).FirstOrDefault();
-
                     var model = _db.GiaThueTaiNguyen.ToList();
 
                     if (getdonvi.Level == "H")
@@ -125,6 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         {
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
+
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
@@ -235,8 +235,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                               Soqd = kk.Soqd,
                                               Level = getdonvi.Level,
                                               Ipf1 = kk.Ipf1,
-                                          });
-
+                                          }); 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
@@ -369,7 +368,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -382,24 +381,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     {
                         model.Macqcq = null;
                         model.Trangthai = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "HHT";
+                        model.Lydo = Lydo;
                     }
 
 

@@ -94,7 +94,6 @@
                     <th>Thời điểm xác định</th>
                     <th>Thông tin hồ sơ</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="18%">Thao tác</th>
                 </tr>
             </thead>
@@ -141,31 +140,6 @@
                                 @if (item.Trangthai == "CCB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
-                                }
-                            </td>
-                            <td style="text-align: center">
-                                @if (dsdonvi != null && item.Level != "ADMIN")
-                                {
-                                    @if (item.Trangthai_h == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_h)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                    else if (item.Trangthai_t == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_t)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
                                 }
                             </td>
                             <td>
