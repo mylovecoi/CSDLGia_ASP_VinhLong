@@ -35,7 +35,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                         Dvt = "3",
                         Dongia = 4,
                         Dongiathue = 5,
-
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 10000,
@@ -130,11 +129,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                                             worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
 
                                 Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value) : 0,
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
 
                                 Dongiathue = worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value) : 0,
-
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value) : 0,
                             });
                         }
                     }

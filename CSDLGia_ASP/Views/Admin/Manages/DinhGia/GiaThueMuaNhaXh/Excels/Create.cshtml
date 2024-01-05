@@ -25,7 +25,7 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giá<small>&nbsp;thuê,thuê mua nhà ở</small><br />
+                Thông tin hồ sơ giá<small>&nbsp;thuê,thuê mua nhà ở xã hội</small><br />
             </h3>
         </div>
     </div>
@@ -78,35 +78,7 @@
                         <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
                     </div>
                 </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-
-
+                
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Excels/Detail.cshtml")
         </div>

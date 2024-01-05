@@ -30,9 +30,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 {
                     var model = new GiaGiaoDichBDSCt
                     {
-                        //Ten = "1",
-                        //Dvt = "2",
-                        //Gia = 3,
+                        Ten = "1",
+                        Dvt = "2",
+                        Gia = 3,
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 1000,
@@ -57,7 +57,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [Route("GiaGiaoDichBDSExcel/Create")]
         [HttpGet]
@@ -91,6 +90,58 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             }
         }
 
-      
+        [HttpPost]
+        public async Task<IActionResult> Import(GiaGiaoDichBDSCt request, string Madv, string Mahs)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+
+                request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
+                var list_add = new List<GiaGiaoDichBDSCt>();
+                int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
+                using (var stream = new MemoryStream())
+                {
+                    await request.FormFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        var rowcount = worksheet.Dimension.Rows;
+                        request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
+                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        for (int row = request.LineStart; row <= request.LineStop; row++)
+                        {
+                            list_add.Add(new GiaGiaoDichBDSCt
+                            {
+                                Mahs = Mahs,
+                                Trangthai = "CXD",
+                                Created_at = DateTime.Now,
+                                Updated_at = DateTime.Now,
+                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
+
+                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+
+                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value) : 0,
+                             
+                            });
+                        }
+                    }
+
+                }
+                _db.GiaGiaoDichBDSCt.AddRange(list_add);
+                _db.SaveChanges();
+                return RedirectToAction("Create", "GiaGiaoDichBDSExcel", new { Madv = Madv, Mahs = Mahs });
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
+
     }
 }

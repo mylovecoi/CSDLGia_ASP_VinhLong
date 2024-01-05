@@ -9,6 +9,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
+
         public string Mataisan { get; set; }
         public double Dongiathue { get; set; }
         public string Dvthue { get; set; }
@@ -26,6 +27,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thoigiandg { get; set; }
         public DateTime Thuetungay { get; set; }
         public DateTime Thuedenngay { get; set; }
+        public string Trangthai { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
         [NotMapped]
         public int LineStart { get; set; }
         [NotMapped]
