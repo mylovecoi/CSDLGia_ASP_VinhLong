@@ -131,7 +131,7 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                 }
                                 else if (item.Trangthai_ad == "HCB")
@@ -188,9 +188,44 @@
 
 
                                 }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
+                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </a>
+                                <div class="dropdown dropdown-inline">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                        <i class="icon-lg la la-cog "></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <ul class="nav nav-hoverable flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Thiết lập thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Cấu hình công khai dữ liệu </span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Xem trước thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Truyền dữ liệu</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }
