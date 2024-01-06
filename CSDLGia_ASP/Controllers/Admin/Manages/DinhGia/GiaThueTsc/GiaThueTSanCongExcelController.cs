@@ -150,7 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
                 }
                 _db.GiaThueTaiSanCongCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaThueTSanCong", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaThueTSanCongExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {
