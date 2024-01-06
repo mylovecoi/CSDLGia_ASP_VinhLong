@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             _db = db;
         }
-        [Route("GiaThueTscHt")]
+        [Route("GiaThueTsc/XetDuyet")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
