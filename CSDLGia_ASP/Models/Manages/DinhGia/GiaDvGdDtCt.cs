@@ -32,6 +32,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giathanhthi5 { get; set; }
         public double Gianongthon5 { get; set; }
         public double Giamiennui5 { get; set; }
+
+        public string Madv{ get; set; }
+        public string Trangthai { get; set; }
+
         public string Gc { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
