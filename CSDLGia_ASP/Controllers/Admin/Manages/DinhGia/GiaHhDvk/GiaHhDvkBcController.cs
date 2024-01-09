@@ -37,10 +37,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(x => x.ChucNang != "QUANTRI");
                     ViewData["NhomHhDv"] = nhomtn;
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "";
-                    ViewData["MenuLv3"] = "";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá HH-DV khác";
+                    ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/Index.cshtml", model);
                 }
                 else
