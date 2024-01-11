@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+
+    var chitiet = (IEnumerable<GiaNuocShCt>)ViewData["Chitiet"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh>
+<br />
+<br />
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: .........</td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TÀI SẢN CÔNG</p>
+
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th rowspan="2" width="2%" style="text-align: center">STT</th>
+            <th rowspan="2" style="text-align: center">Mục đích sử dụng</th>
+            <th colspan="2" style="text-align: center">Đơn giá</th>
+            <th colspan="2" style="text-align: center">Đơn giá</th>
+            <th colspan="2" style="text-align: center">Đơn giá</th>
+            <th colspan="2" style="text-align: center">Đơn giá</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">Năm áp dụng</th>
+            <th style="text-align: center">Giá tiền</th>
+            <th style="text-align: center">Năm áp dụng</th>
+            <th style="text-align: center">Giá tiền</th>
+            <th style="text-align: center">Năm áp dụng</th>
+            <th style="text-align: center">Giá tiền</th>
+            <th style="text-align: center">Năm áp dụng</th>
+            <th style="text-align: center">Giá tiền</th>
+            <th style="text-align: center">Năm áp dụng</th>
+            <th style="text-align: center">Giá tiền</th>
+        </tr>
+    </thead>
+   
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br />
+            - Bộ tài chính;<br />
+            - Lưu: VT, QLGCS.
+        </td>
+        <td style="vertical-align: top;">
+            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
+            <i>(Ký tên, đóng dấu)</i>
+        </td>
+    </tr>
+</table>

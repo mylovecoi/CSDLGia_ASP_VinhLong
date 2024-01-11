@@ -212,6 +212,26 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaGiaoDichBDSDm> GiaGiaoDichBDSDm { get; set; }
         public DbSet<GiaGiaoDichBDSNhom> GiaGiaoDichBDSNhom { get; set; }
 
+        // Giá Giao dịch đất trên thị trường
+
+        public DbSet<GiaGiaoDichDat> GiaGiaoDichDat { get; set; }
+        public DbSet<GiaGiaoDichDatCt> GiaGiaoDichDatCt { get; set; }
+        public DbSet<GiaGiaoDichDatDm> GiaGiaoDichDatDm { get; set; }
+        public DbSet<GiaGiaoDichDatNhom> GiaGiaoDichDatNhom { get; set; }
+
+        // Giá siêu thị
+
+        public DbSet<GiaHangHoaTaiSieuThi> GiaHangHoaTaiSieuThi { get; set; }
+        public DbSet<GiaHangHoaTaiSieuThiCt> GiaHangHoaTaiSieuThiCt { get; set; }
+        public DbSet<GiaHangHoaTaiSieuThiDmHHTaiSieuThi> GiaHangHoaTaiSieuThiDmHHTaiSieuThi { get; set; }
+        public DbSet<GiaHangHoaTaiSieuThiDmSieuThi> GiaHangHoaTaiSieuThiDmSieuThi { get; set; }
+
+        // Định giá giao dịch bất động sản
+        public DbSet<GiaVatLieuXayDung> GiaVatLieuXayDung { get; set; }
+        public DbSet<GiaVatLieuXayDungCt> GiaVatLieuXayDungCt { get; set; }
+        public DbSet<GiaVatLieuXayDungDm> GiaVatLieuXayDungDm { get; set; }
+        public DbSet<GiaVatLieuXayDungNhom> GiaVatLieuXayDungNhom { get; set; }
+
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }
         public DbSet<ThamDinhGiaCt> ThamDinhGiaCt { get; set; }

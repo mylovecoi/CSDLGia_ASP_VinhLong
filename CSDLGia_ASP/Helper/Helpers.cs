@@ -272,6 +272,31 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.timkiem", Name = "ĐG - Giá giao dịch bất động sản - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.baocao", Name = "ĐG - Giá giao dịch bất động sản - Báo cáo" });
 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.thongtin", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.danhmuc", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.xetduyet", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.timkiem", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.baocao", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Báo cáo" });
+
+
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi", Name = "ĐG - Giá siêu thị" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.danhmucsieuthi", Name = "ĐG - Giá siêu thị - Danh mục siêu thị" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.danhmuchanghoataisieuthi", Name = "ĐG - Giá siêu thị - Danh mục vùng hàng hóa tại siêu thị" }); 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", Name = "ĐG - Giá siêu thị  - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.xetduyet", Name = "ĐG - Giá siêu thị  - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.timkiem", Name = "ĐG - Giá siêu thị - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", Name = "ĐG - Giá siêu thị  - Báo cáo" });
+
+
+
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung", Name = "ĐG - Giá vật liệu xây dựng" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", Name = "ĐG - Giá vật liệu xây dựng - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", Name = "ĐG - Giá vật liệu xây dựng - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.xetduyet", Name = "ĐG - Giá vật liệu xây dựng - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.timkiem", Name = "ĐG - Giá vật liệu xây dựng - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.baocao", Name = "ĐG - Giá vật liệu xây dựng - Báo cáo" });
+
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
             //chức năng bình ổn giá
