@@ -30,8 +30,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_dg_giavatlieuxaydung";
-                    ViewData["MenuLv3"] = "menu_dg_giavatlieuxaydung_bc";
+                    ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
+                    ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Index.cshtml");
                 }
                 else
@@ -65,8 +65,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     ViewData["Nambc"] = nambc;
                     ViewData["Title"] = "Báo cáo tổng hợp giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_dg_giavatlieuxaydung";
-                    ViewData["MenuLv3"] = "menu_dg_giavatlieuxaydung_bc";
+                    ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
+                    ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Bc1.cshtml", model);
                 }
                 else

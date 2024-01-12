@@ -1,7 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var doituong = (IEnumerable<GiaNuocShDmVung>)ViewData["Doituong"];
+    var doituong = (IEnumerable<GiaHangHoaTaiSieuThiDmSieuThi>)ViewData["Doituong"];
 }
 
 @section custom_style{
@@ -64,7 +64,7 @@
                         <option value="All">--Tất cả các phân loại--</option>
                         @foreach (var dt in doituong)
                         {
-                            <option value="@dt.Madoituong">@dt.Doituongsd</option>
+                            <option value="@dt.Masieuthi">@dt.Tensieuthi</option>
                         }
                     </select>
                 </div>

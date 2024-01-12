@@ -478,7 +478,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
-                    ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_tk";
+                    ViewData["MenuLv3"] = "menu_dg_giavatlieuxaydung_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/TimKiem/Index.cshtml");
 
                 }
