@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240117043647_update-login1")]
+    partial class updatelogin1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -12921,9 +12923,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("VanTaiKhachBangOtoCoDinh")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VanTaiKhachBangTaXi")
                         .HasColumnType("float");
 
                     b.Property<double>("VanTaiKhachBangXeBuyt")

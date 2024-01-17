@@ -31,6 +31,14 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public string Ma { get; set; }
         public string Pl { get; set; }
         public string Settingdvvt { get; set; }
+        /*public List<CompanyLvCc> CompanyLvCc { get; set; }*/
+        public List<VMCompanyLvCc> VMCompanyLvCc { get; set; }
+        public string Manghe { get; set; }
+        public string Chucnang { get; set; }
+        public bool Sadmin { get; set; }
+        public string Manghanh { get; set; }
+        public string Tennghe { get; set; }
+        public string Status { get; set; }
         public double Vtxk { get; set; }
         public double Vtxb { get; set; }
         public double Vtxtx { get; set; }
@@ -47,10 +55,6 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public double Duong { get; set; }
         public double Thocgao { get; set; }
         public double Thuocpcb { get; set; }
-        /*public List<CompanyLvCc> CompanyLvCc { get; set; }*/
-        public List<VMCompanyLvCc> VMCompanyLvCc { get; set; }
-
-        public string Tennghe { get; set; }
-        public string Status { get; set; }
+        public double Than { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240116021532_add-manghanh")]
+    partial class addmanghanh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -12791,9 +12793,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("CaHue")
-                        .HasColumnType("float");
-
                     b.Property<string>("Chucdanh")
                         .HasColumnType("nvarchar(max)");
 
@@ -12815,23 +12814,14 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Etanol")
-                        .HasColumnType("float");
-
                     b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ghichu")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Giay")
-                        .HasColumnType("float");
-
                     b.Property<string>("Giayphepkd")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("HocPhiDaoTaoLaiXe")
-                        .HasColumnType("float");
 
                     b.Property<double>("Khidau")
                         .HasColumnType("float");
@@ -12872,14 +12862,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Pl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SachGk")
-                        .HasColumnType("float");
-
                     b.Property<string>("Settingdvvt")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SieuThi")
-                        .HasColumnType("float");
 
                     b.Property<double>("Suate6t")
                         .HasColumnType("float");
@@ -12893,16 +12877,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Tendn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Than")
-                        .HasColumnType("float");
-
                     b.Property<double>("Thocgao")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ThucAnChanNuoi")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ThucPhamCn")
                         .HasColumnType("float");
 
                     b.Property<double>("Thuocbvtv")
@@ -12920,24 +12895,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Vacxingsgc")
                         .HasColumnType("float");
 
-                    b.Property<double>("VanTaiKhachBangOtoCoDinh")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VanTaiKhachBangTaXi")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VanTaiKhachBangXeBuyt")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdCatSan")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdDaXayDung")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdDatSanlap")
-                        .HasColumnType("float");
-
                     b.Property<double>("Vtch")
                         .HasColumnType("float");
 
@@ -12951,9 +12908,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Xangdau")
-                        .HasColumnType("float");
-
-                    b.Property<double>("XmThepXd")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -14263,9 +14217,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manghanh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manghe")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manhomtk")

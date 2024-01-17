@@ -1398,7 +1398,7 @@
     }
 
     <!--Mức giá kê khai - đăng ký-->
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN" )
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_kknygia"
             title="Giá kê khai của hàng hóa, dịch vụ thuộc danh mục Giá kê khai">
@@ -1446,7 +1446,7 @@
                     }
                 
                     <!--Dịch vụ lưu trú-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "DVLT") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgdvlt">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1526,7 +1526,7 @@
                     }
 
                     <!--Xi măng thép xây dựng-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "XmThepXd") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgxmtxd">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1594,7 +1594,7 @@
                     }
 
                     <!--Sách-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsach", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsach", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "SachGk") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgsach">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1661,7 +1661,7 @@
                     }
 
                     <!--Etanol-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgetanol", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "SachGk") == "DN")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgetanol">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1728,7 +1728,7 @@
                     }
 
                     <!--TPCN-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtpcn", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtpcn", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "ThucPhamCn") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgtpcn">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1796,7 +1796,7 @@
                     }
 
                     <!--Đá cát sạn-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdCatSan") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgcatsan">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1864,7 +1864,7 @@
                     }
 
                     <!--Học phí lái xe-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkghplx", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkghplx", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "HocPhiDaoTaoLaiXe") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkghplx">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1930,7 +1930,7 @@
                     }
 
                     <!--Than-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgthan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgthan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Than") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgthan">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1998,7 +1998,7 @@
                     }
 
                     <!--Giấy -->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkggiay", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Giay") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkggiay">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2066,7 +2066,7 @@
                     }
 
                     <!--Thức ăn chăn nuôi-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtacn", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgtacn", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "ThucAnChanNuoi") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgtacn">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2134,7 +2134,7 @@
                     }
 
                     <!--Đất san lấp-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdDatSanlap") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgdatsanlap">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2202,7 +2202,7 @@
                     }
 
                     <!--Đá xây dựng-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdaxaydung", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdaxaydung", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdDaXayDung") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgdaxaydung">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2270,7 +2270,7 @@
                     }
 
                     <!--Vận tải xe buýt-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxb", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VanTaiKhachBangXeBuyt") == "DN")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgvtxb">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2334,7 +2334,7 @@
                     }
 
                     <!--Vận tải xe khách-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VanTaiKhachBangOtoCoDinh") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgvtxk">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2399,7 +2399,7 @@
                     }
 
                     <!--Vận tải xe taxi-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxtx", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VanTaiKhachBangTaXi") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgvtxtx">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2463,7 +2463,7 @@
                         </li>
                     }
 
-                    <!--Cước vận chuyển-->
+                 @*   <!--Cước vận chuyển-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkcvchk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgvchk">
@@ -2526,10 +2526,10 @@
                                 </ul>
                             </div>
                         </li>
-                    }
+                    }*@
 
                     <!--Ca huế-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcahue", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcahue", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "CaHue") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgcahue">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2595,7 +2595,7 @@
                     }
 
                     <!--Siêu thị-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsieuthi", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsieuthi", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "SieuThi") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgsieuthi">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2668,7 +2668,7 @@
     }
 
     <!--Mặt hàng bình ổn giá-->
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+ @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN" || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Manghanh") == "BOG")
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_bog" >
             <a href="javascript:;" class="menu-link menu-toggle">
