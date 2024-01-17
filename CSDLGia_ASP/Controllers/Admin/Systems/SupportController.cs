@@ -8,30 +8,29 @@ using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
-    public class DmLoaiDatController : Controller
+    public class SupportController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public DmLoaiDatController(CSDLGiaDBContext db)
+        public SupportController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        // Lấy dữ liệu từ bảng DmLoaiDat đổ ra index
-        [Route("DmLoaiDat")]
+        [Route("DsHoTro")]
         [HttpGet]
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Index"))
                 {
-                    var model = _db.DmLoaiDat.ToList();
-                    ViewData["Title"] = "Danh mục loại đất";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_dm";
-                    return View("Views/Admin/Systems/DmLoaiDat/Index.cshtml", model);
+                    var model = _db.Supports.ToList();
+                    ViewData["Title"] = "Danh sách hỗ trợ";
+                    ViewData["MenuLv1"] = "menu_hethong";
+                    ViewData["MenuLv2"] = "menu_qthethong";
+                    ViewData["MenuLv3"] = "menu_dshotro";
+                    return View("Views/Admin/Systems/Support/Index.cshtml", model);
                 }
                 else
                 {
@@ -45,27 +44,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        // thêm dữ liệu vào bảng DmLoaiDat
-        [Route("DmLoaiDat/Store")]
+        [Route("DsHoTro/Store")]
         [HttpPost]
-        public JsonResult Store(string Maloaidat, string Loaidat)
+        public JsonResult Store(string Hoten, string Sdt, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Create"))
                 {
 
-                    var model = new DmLoaiDat
+                    var model = new Supports
                     {
-                        Maloaidat = Maloaidat,
-                        Loaidat = Loaidat,
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
+                        Hoten = Hoten,
+                        Sdt = Sdt,
+                        Phanloai = Phanloai,
                     };
 
-                    _db.DmLoaiDat.Add(model);
+                    _db.Supports.Add(model);
                     _db.SaveChanges();
-                    var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
+                    var data = new { status = "success", message = "Thêm mới loại cán bộ thành công!" };
                     return Json(data);
 
                 }
@@ -82,16 +79,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        // Lấy thông tin bản ghi cần sửa, tạo 1 frm mới sau đó đẩy vào edit trong modal
-        [Route("DmLoaiDat/Edit")]
+        [Route("DsHoTro/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Edit"))
                 {
-                    var model = _db.DmLoaiDat.FirstOrDefault(p => p.Id == Id);
+                    var model = _db.Supports.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
                         string result = "<div class='modal-body' id='frm_edit'>";
@@ -99,15 +95,41 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã loại đất<span class='require'>*</span></label>";
-                        result += "<input type='text' class='form-control' id='maloaidat_edit' name='maloaidat_edit' value='" + model.Maloaidat + "'/>";
+                        result += "<label>Họ tên<span class='require'>*</span></label>";
+                        result += "<input type='text' class='form-control' id='hoten_edit' name='hoten_edit' value='" + model.Hoten + "'/>";
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-12'>";
+                        result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Loại đất<span class='require'>*</span></label>";
-                        result += "<input type='text' class='form-control' id='loaidat_edit' name='loaidat_edit' value='" + model.Loaidat + "'/>";
+                        result += "<label>Số điện thoại<span class='require'>*</span></label>";
+                        result += "<input type='text' class='form-control' id='sdt_edit' name='sdt_edit' value='" + model.Sdt + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Phân loại<span class='require'>*</span></label>";
+                        result += "<select class='form-control' id='pl_edit' name='pl_edit'>";
+                        if (model.Phanloai == "Miền Bắc")
+                        {
+                            result += "<option value='Miền Bắc' selected>Miền Bắc</option>";
+                            result += "<option value='Miền Nam'>Dừng theo dõi</option>";
+                            result += "<option value='Phụ trách khối KT'>Phụ trách khối KT</option>";
+                        }
+                        else if(model.Phanloai == "Miền Nam")
+                        {
+                            result += "<option value='Miền Bắc'>Miền Bắc</option>";
+                            result += "<option value='Miền Nam' selected>Dừng theo dõi</option>";
+                            result += "<option value='Phụ trách khối KT'>Phụ trách khối KT</option>";
+                        }
+                        else
+                        {
+                            result += "<option value='Miền Bắc'>Miền Bắc</option>";
+                            result += "<option value='Miền Nam'>Dừng theo dõi</option>";
+                            result += "<option value='Phụ trách khối KT' selected>Phụ trách khối KT</option>";
+                        }
+                        result += "</select>";
                         result += "</div>";
                         result += "</div>";
 
@@ -137,22 +159,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        // Cập nhật thông tin mới
-        [Route("DmLoaiDat/Update")]
+        [Route("DsHoTro/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Maloaidat, string Loaidat)
+        public IActionResult Update(int Id, string Hoten, string Sdt, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hethong.dshotro", "Edit"))
                 {
 
-                    var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == Id);
+                    var model = _db.Supports.FirstOrDefault(t => t.Id == Id);
 
-                    model.Loaidat = Loaidat;
-                    model.Maloaidat = Maloaidat;
-                    model.Updated_at = DateTime.Now;
-                    _db.DmLoaiDat.Update(model);
+                    model.Hoten = Hoten;
+                    model.Sdt = Sdt;
+                    model.Phanloai = Phanloai;
+                    _db.Supports.Update(model);
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
@@ -170,20 +191,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        // Xóa bản ghi được chọn trong bảng DmLoaiDat
-
-        [Route("DmLoaiDat/Delete")]
+        [Route("DsHoTro/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Delete"))
                 {
-                    var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == id_delete);
-                    _db.DmLoaiDat.Remove(model);
+                    var model = _db.Supports.FirstOrDefault(t => t.Id == id_delete);
+                    _db.Supports.Remove(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "DmLoaiDat");
+                    return RedirectToAction("Index", "Support");
                 }
                 else
                 {

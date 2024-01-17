@@ -77,7 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                             }
                         }
                         
-                            if (model.Status == "Vô hiệu")
+                            /*if (model.Status == "Vô hiệu")
                             {
                                 ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
                                 ViewData["username"] = username;
@@ -98,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                     HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                 }
                                 return RedirectToAction("Index", "Home");
-                            }
+                            }*/
                            
                        
                     }
