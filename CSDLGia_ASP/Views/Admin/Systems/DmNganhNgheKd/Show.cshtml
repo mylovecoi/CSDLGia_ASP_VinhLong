@@ -40,7 +40,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th width="15%">Mã nghề</th>
+                    <th width="15%">Mã nghề*</th>
                     <th>Tên nghề</th>
                     <th width="20%">Theo dõi</th>
                     <th width="15%">Thao tác</th>
@@ -69,6 +69,9 @@
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
                                 onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
                         </td>
@@ -158,6 +161,32 @@
                     <span class="spinner spinner-primary mr-10"></span>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DmNgheKd" asp-action="Delete">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý xóa thông tin ?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                    <input value="@ViewData["Manganh"]" id="Manganh" name="Manganh" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -257,5 +286,9 @@
                 }
             }
         })
+    }
+
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
     }
 </script>

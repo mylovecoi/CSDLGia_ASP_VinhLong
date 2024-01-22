@@ -42,7 +42,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th width="15%">Mã ngành</th>
+                    <th width="15%">Mã ngành*</th>
                     <th>Tên ngành</th>
                     <th width="20%">Theo dõi</th>
                     <th width="15%">Thao tác</th>
@@ -74,6 +74,10 @@
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
                                 data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
                         </td>
