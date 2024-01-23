@@ -45,7 +45,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
@@ -166,13 +166,13 @@
                                 </a>
                                 @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                     {
                                         <a asp-controller="KkMhBog" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Delete"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Delete") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>
@@ -240,7 +240,7 @@
                                         }
                                     </td>
                                     <td style="text-align: center">
-                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
+                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                                         {
                                             <a class="btn btn-sm btn-clean btn-icon" title="Thêm mới" asp-controller="KkMhBog" asp-action="Create"
                                    asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@item.Manghe" asp-route-Phanloai="@item.Phanloai">

@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Index"))
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var dsdonvi = _db.Company.ToList();
 
@@ -154,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new VMKkMhBog
                     {
@@ -192,7 +192,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Create") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = new KkMhBog
                     {
@@ -246,7 +246,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkMhBog.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new VMKkMhBog
@@ -294,7 +294,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Edit") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkMhBog.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Thoidiem = request.Thoidiem;
@@ -339,7 +339,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Delete") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkMhBog.FirstOrDefault(t => t.Id == id_delete);
                     _db.KkMhBog.Remove(model);
@@ -369,7 +369,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkMhBog.FirstOrDefault(t => t.Mahs == Mahs);
                     var hoso_kk = new VMKkMhBogShow
@@ -429,7 +429,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Approve") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkMhBog.FirstOrDefault(p => p.Mahs == mahs_chuyen);
 

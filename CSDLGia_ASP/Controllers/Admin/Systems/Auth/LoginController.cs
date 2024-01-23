@@ -110,6 +110,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                     CaHue = company.CaHue,
                                     SieuThi = company.SieuThi,
 
+                                    BOG = company.BOG,
+                                    KKNYGIA = company.KKNYGIA,
+
+
+
                                 }
                             ).FirstOrDefault();
 

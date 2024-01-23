@@ -435,6 +435,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             }
         }
 
+
+        public IActionResult TongHop()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.xetduyet", "Index"))
+                {
+
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/HoanThanh/Tonghop.cshtml");
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
     }
 
 }

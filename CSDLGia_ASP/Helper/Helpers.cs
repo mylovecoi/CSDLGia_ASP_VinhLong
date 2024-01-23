@@ -567,7 +567,7 @@ namespace CSDLGia_ASP.Helper
 
                         foreach (var item in info)
                         {
-                            if (item["Roles"] == roles && item[key] == true)
+                            if (item["Roles"] == roles && item[key] == true )
                             {
                                 return true;
                             }

@@ -242,7 +242,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
 
                     var Manghe = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manghe).ToList();
+                    var Manghanh = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manganh).ToList();
 
+                    var BOG = Manghanh.Any(m => m.Contains("BOG")) ? 1 : 0;
+                    var KKNYGIA = Manghanh.Any(m => m.Contains("KKNYGIA")) ? 1 : 0;
+                    var XangDau = Manghe.Any(m => m.Contains("XD")) ? 1 : 0;
                     var XmThepXd = Manghe.Any(m => m.Contains("XMTXD")) ? 1 : 0;
                     var SachGk = Manghe.Any(m => m.Contains("SACH")) ? 1 : 0;
                     var Etanol = Manghe.Any(m => m.Contains("ETANOL")) ? 1 : 0;
@@ -260,6 +264,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                    
                     var company = new Company
                     {
+                        BOG = BOG,
+                        KKNYGIA = KKNYGIA,
+                        Xangdau = XangDau,
                         XmThepXd = XmThepXd,
                         SachGk = SachGk,
                         Etanol = XmThepXd,

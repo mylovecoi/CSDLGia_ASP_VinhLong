@@ -28,8 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index(string Madv)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
-                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
                 if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                 {

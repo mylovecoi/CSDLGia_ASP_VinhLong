@@ -70,6 +70,8 @@ namespace CSDLGia_ASP.Models.Systems
         public double VanTaiKhachBangTaXi { get; set; }
         public double CaHue { get; set; }
         public double SieuThi { get; set; }
+        public double BOG { get; set; }
+        public double KKNYGIA { get; set; }
 
     }
 }
