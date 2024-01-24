@@ -22,7 +22,9 @@ namespace CSDLGia_ASP.Controllers.HeThong
         {
             ViewBag.bSession = false;
             var serverName = Request.Host.Host;
+
             HttpContext.Session.SetString("ServerName", serverName);
+
             if (string.IsNullOrEmpty(Phanloai))
             {
                 Phanloai = "gia";
@@ -37,13 +39,19 @@ namespace CSDLGia_ASP.Controllers.HeThong
                 model = model.Where(t => t.Loaivb == Loaivb).ToList();
             }
 
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                ViewBag.bSession = true;
-                model = model.Where(t => t.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")).ToList();
-            } 
+            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            //{
+            //    ViewBag.bSession = true;
+            //    model = model.Where(t => t.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")).ToList();
+            //} 
+
             ViewData["Title"] = "Công bố thông tin";
+
+            ViewData["Phanloai"] = Phanloai;
+            ViewData["Loaivb"] = Loaivb;
+            //return Ok(model);
             return View("Views/Admin/Systems/CongBo/VanBanQLNN.cshtml", model);
+
         }
 
         [Route("CongBo/Show")]

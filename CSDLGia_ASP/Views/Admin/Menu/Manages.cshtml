@@ -4005,7 +4005,7 @@
         @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn", "Index"))
         {
             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_vbql"
-                title="Văn bản quản lý nhà nước về giá, các báo cáo tổng hợp">
+                title="Văn bản quản lý nhà nước về giá - phí, lệ phí">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
@@ -4032,7 +4032,7 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Các quyết định, văn bản quản lý, điều hành về giá</span>
+                                    <span class="menu-text text-truncate" title="Các quyết định, văn bản quản lý, điều hành về giá">Các quyết định, văn bản quản lý, điều hành về giá</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -4040,7 +4040,7 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Các văn bản hướng dẫn, tham gia, góp ý</span>
+                                    <span class="menu-text text-truncate" title="Các văn bản hướng dẫn, tham gia, góp ý">Các văn bản hướng dẫn, tham gia, góp ý</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -4048,7 +4048,7 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Báo cáo tình hình giá cả thị trường</span>
+                                    <span class="menu-text text-truncate" title="Báo cáo tình hình giá cả thị trường">Báo cáo tình hình giá cả thị trường</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -4056,7 +4056,7 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Các báo cáo, tài liệu học tập kinh nghiệm</span>
+                                    <span class="menu-text text-truncate" title="Các báo cáo, tài liệu học tập kinh nghiệm">Các báo cáo, tài liệu học tập kinh nghiệm</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -4064,7 +4064,15 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Kết quả, đề tài nghiên cứu khoa học</span>
+                                    <span class="menu-text text-truncate" title="Kết quả, đề tài nghiên cứu khoa học">Kết quả, đề tài nghiên cứu khoa học</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="qdmhbog" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các quyết định mặt hàng thực hiện bình ổn giá">Các quyết định mặt hàng thực hiện bình ổn giá</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
@@ -4072,17 +4080,11 @@
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text text-truncate">Các báo cáo, văn bản có liên quan khác</span>
+                                    <span class="menu-text text-truncate" title="Các báo cáo, văn bản có liên quan khác">Các báo cáo, văn bản có liên quan khác</span>
                                 </a>
                             </li>
-                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
-                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="quyetdinh" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-line">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text text-truncate">Các quyết định, văn bản quản lý, điều hành về giá</span>
-                                </a>
-                            </li>
+                           
+                          
                         }
 
                     </ul>

@@ -93,6 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                                               Madiaban = kkbog.Madiaban,
                                               Mahs = kkbog.Mahs,
                                               Madv = kkbog.Madv,
+                                              Lydo = kkbog.Lydo,
                                           }).ToList();
 
                         var dmnghekd = (from comct in _db.CompanyLvCc.Where(t => t.Madv == Madv)
