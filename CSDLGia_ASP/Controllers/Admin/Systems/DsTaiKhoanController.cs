@@ -218,7 +218,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             string md5_password = "";
                             using (MD5 md5Hash = MD5.Create())
                             {
-                                string change = Helpers.GetMd5Hash(md5Hash, request.Password);
+                                string change = Helpers.GetMd5Hash(md5Hash, NewPassword);
                                 md5_password = change;
                             }
                             model.Password = md5_password;
