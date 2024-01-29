@@ -171,6 +171,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                 return RedirectToAction("Index", "Home");
                             }
                         }
+                        
+                            if (model.Status == "Vô hiệu")
+                            {
+                                ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
+                                ViewData["username"] = username;
+                                ViewData["password"] = password;
+                                return View("Views/Admin/Systems/Auth/Login.cshtml");
+                            }
+                            else
+                            {
+                                HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+                                if (model.Chucnang == "K")
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == username);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                else
+                                {
+                                    var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                                }
+                                return RedirectToAction("Index", "Home");
+                            }
+                           
+                       
                     }
                     else
                     {
