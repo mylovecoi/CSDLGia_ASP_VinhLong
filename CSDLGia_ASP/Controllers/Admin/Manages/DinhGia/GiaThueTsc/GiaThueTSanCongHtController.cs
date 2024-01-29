@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         {
             _db = db;
         }
-        [Route("GiaThueTscHt")]
+        [Route("GiaThueTsc/XetDuyet")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
@@ -335,7 +335,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -349,21 +350,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
                         model.Macqcq = null;
                         model.Trangthai = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "BTL";
+                        model.Lydo = Lydo;
                     }
                     //Gán trạng thái của đơn vị tiếp nhận hồ sơ
 

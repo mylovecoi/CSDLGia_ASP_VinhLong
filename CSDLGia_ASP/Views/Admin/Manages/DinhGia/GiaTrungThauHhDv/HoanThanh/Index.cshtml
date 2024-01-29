@@ -5,22 +5,22 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/GiaTrungThauHhDvHt?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -31,26 +31,29 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hoàn thành định giá<small>&nbsp;Trúng thầu mua hàng hóa dịch vụ </small><br />
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hoàn thành định giá<small>&nbsp;Trúng thầu mua hàng hóa dịch vụ </small><br />
 
-                </h3>
-            </div>
-            <div class="card-toolbar">
-            </div>
+            </h3>
         </div>
-        <hr />
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold; color:blue">Năm</label>
-                        <select class="form-control" id="Nam" name="Nam">
-                            <option value="all">--Tất cả--</option>
-                            @{
+        <div>
+            <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
+                <i class="la la-plus"></i>Tổng hợp hồ sơ
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        <option value="all">--Tất cả--</option>
+                        @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
@@ -91,7 +94,6 @@
                     <th>Thông tin <br /> quyết định</th>
                     <th>Tên nhà thầu</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -169,7 +171,7 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                 }
                                 else if (item.Trangthai_ad == "HCB")
@@ -193,34 +195,10 @@
                                     <br />
                                 }
                             </td>
-                            <td style="text-align: center">
-                                @if (dsdonvi != null && item.Level != "ADMIN")
-                                {
-                                    @if (item.Trangthai_h == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_h)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                    else if (item.Trangthai_t == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_t)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
+
                             <td>
                                 <a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
@@ -231,7 +209,7 @@
                                         @if (item.Trangthai_ad == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                onclick="HuyCongBo('@item.Mahs')">
+                                                    onclick="HuyCongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
 
@@ -239,12 +217,12 @@
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                onclick="CongBo('@item.Mahs')">
+                                                    onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id','@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id','@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -254,19 +232,54 @@
                                         @if (item.Trangthai_ad == null || item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal"
-                                data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                                    data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
                                                 <i class="icon-lg la la-check text-primary"></i>
                                             </button>
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai( '@item.Id','@item.Macqcq')">
+                                                    onclick="TraLai( '@item.Id','@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
                                     }
                                 }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
+                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </a>
+                                <div class="dropdown dropdown-inline">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                        <i class="icon-lg la la-cog "></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <ul class="nav nav-hoverable flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Thiết lập thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Cấu hình công khai dữ liệu </span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Xem trước thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Truyền dữ liệu</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

@@ -21,7 +21,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaXayDungMoiExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+    <form asp-controller="GiathuemuanhaxhExcel" asp-action="Import" method="post" enctype="multipart/form-data">
         <input hidden name="Madv" value="@Madv" />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
@@ -35,22 +35,10 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mã nhóm</label>
-                        <select  class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Tên nhóm</label>
-                        <select  class="form-control">
+                        <label style="font-weight: bold; color: blue">Tên nhà</label>
+                        <select asp-for="Maso" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -61,8 +49,8 @@
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select  class="form-control">
+                        <label style="font-weight: bold; color: blue">Đơn vị thuê</label>
+                        <select asp-for="Dvthue" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -80,12 +68,16 @@
                                 <option value="@item.Value">@item.Key</option>
                             }
                         </select>
+
                     </div>
                 </div>
-                <div class="col-xl-4">
+            </div>
+            <div class="row">
+
+                <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select  class="form-control">
+                        <label style="font-weight: bold; color: blue">Giá bán</label>
+                        <select asp-for="Dongia" class="form-control">
                             @foreach (var item in Helpers.GetListColExcel())
                             {
                                 <option value="@item.Value">@item.Key</option>
@@ -93,7 +85,17 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Giá thuê</label>
+                        <select asp-for="Dongiathue" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">

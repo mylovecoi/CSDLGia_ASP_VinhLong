@@ -126,15 +126,16 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
                                 }
                                 @if (item.Trangthai == "CHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-primary label-inline">Chưa hoành thành</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                                 }
                                 @if (item.Trangthai == "BTL")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Huỷ hoành thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                    <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
                             <td style="text-align: center">
@@ -174,9 +175,7 @@
                                         <i class="icon-lg la la-eye text-success"></i>
                                     </a>
                                 }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
+                               
                             </td>
                         </tr>
                     }

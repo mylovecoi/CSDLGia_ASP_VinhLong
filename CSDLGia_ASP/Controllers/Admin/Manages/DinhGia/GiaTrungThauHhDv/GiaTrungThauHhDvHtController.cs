@@ -282,7 +282,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -296,21 +297,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
 
                         model.Macqcq = null;
                         model.Trangthai = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "BTL";
+                        model.Lydo = Lydo;
                     }
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "BTL";
+                        model.Lydo = Lydo;
                     }
                     //Gán trạng thái của đơn vị tiếp nhận hồ sơ
 
@@ -417,6 +422,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaTrungThauHhDvHt");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
+        public IActionResult TongHop()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.xetduyet", "Index"))
+                {
+
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/HoanThanh/Tonghop.cshtml");
+
                 }
                 else
                 {

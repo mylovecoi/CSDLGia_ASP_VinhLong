@@ -185,7 +185,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
+                        ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
                         ViewData["MenuLv1"] = "menu_spdvtoida";
                         ViewData["MenuLv2"] = "menu_spdvtoida_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
@@ -251,7 +251,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
+                        ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
                         ViewData["MenuLv1"] = "menu_spdvtoida";
                         ViewData["MenuLv2"] = "menu_spdvtoida_ht";
                         return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
@@ -493,7 +493,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-
         private static string GetMadvChuyen(string macqcq, CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa hoso)
         {
             string madv = "";
@@ -519,6 +518,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         ketthuc:
             return madv;
+        }
+
+        public IActionResult TongHop()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.xetduyet", "Index"))
+                {
+
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Tonghop.cshtml");
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
         }
 
 

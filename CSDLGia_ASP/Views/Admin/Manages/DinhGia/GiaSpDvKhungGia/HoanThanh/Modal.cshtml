@@ -9,24 +9,33 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý trả lại hồ sơ?
+                        Lý do trả lại hồ sơ*
                     </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
+
                 </div>
                 <div class="modal-body">
-                    <input id="id_tralai" name="id_tralai" type="hidden"/>
-                    <input id="madv_tralai" name="madv_tralai" type="hidden"/>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <textarea class="form-control" id="Lydo" name="Lydo" cols="12" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
+                    <input hidden id="id_tralai" name="id_tralai" />
+                    <input hidden id="madv_tralai" name="madv_tralai" />
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Trả lại hồ sơ</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Trả lại</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

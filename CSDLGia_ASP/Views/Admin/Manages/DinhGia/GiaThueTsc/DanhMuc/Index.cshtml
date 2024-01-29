@@ -86,7 +86,7 @@
         <div class="modal-content ">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin Thuê tài sản công
+                    Thông tin thuê tài sản công
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -94,10 +94,10 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Địa Bàn</b></label>
-                            <br/>
+                            <br />
                             <select id="Madv_create" name="Madv_create" class="form-control select2basic">
                                 @foreach (var item in DsDonVi)
                                 {
@@ -106,50 +106,36 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-11">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <br />
-                        <select id="Dvt_create" name="Dvt_create" class="form-control select2basic" tabindex="-1" title="">
-                            <option value="">---Select---</option>
-                            @foreach (var item in DmDvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
-                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
-                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                  
-                    <div class="col-xl-12">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Mô tả*</b></label>
                             <input type="text" id="Mota_create" name="Mota_create" class="form-control" />
                         </div>
                     </div>
 
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Diện tích*</b></label>
                             <input type="text" id="Dientich_create" name="Dientich_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-6">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên tài sản*</b></label>
                             <input type="text" id="Tentaisan_create" name="Tentaisan_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá trị*</b></label>
                             <input type="text" id="Giatri_create" name="Giatri_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Hiện trạng*</b></label>
                             <select id="HienTrang_create" name="HienTrang_create" class="form-control">
@@ -161,6 +147,28 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div  class="col-xl-11">
+                        <label class="form-control-label">Đơn vị tính</label>
+                        <br />
+                        <select style="width:100%;" id="Dvt_create" name="Dvt_create" class="form-control select2basic" tabindex="-1" title="">
+                            <option value="">---Select---</option>
+                            @foreach (var item in DmDvt)
+                            {
+                                <option value="@item.Dvt">@item.Dvt</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-xl-1" style="padding-left: 0px;">
+                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+
+                </div>
+     
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>

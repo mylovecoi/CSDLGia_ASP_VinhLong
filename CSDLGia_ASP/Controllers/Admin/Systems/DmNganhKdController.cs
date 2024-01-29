@@ -214,5 +214,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return Json(data);
             }
         }
+
+        [Route("DmNganhNghe/Delete")]
+        [HttpPost]
+        public IActionResult Delete(int id_delete)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Delete"))
+                {
+                    var model = _db.DmNganhKd.FirstOrDefault(t => t.Id == id_delete);
+                    _db.DmNganhKd.Remove(model);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "DmNganhKd");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
     }
 }

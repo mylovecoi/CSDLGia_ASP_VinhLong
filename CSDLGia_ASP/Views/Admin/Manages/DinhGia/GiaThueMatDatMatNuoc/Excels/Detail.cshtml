@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["modelct"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -12,10 +12,11 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Mã nhóm</th>
-                    <th>Tên nhóm</th>
-                    <th>Phân loại</th>
-                    <th>Đơn vị tính</th>
+                    <th>Vị trí</th>
+                    <th>Địa giới từ</th>
+                    <th>Địa giới đến</th>
+                    <th>Mô tả</th>
+                    <th>Diện tích</th>
                     <th>Đơn giá</th>
                     <th>Thao tác</th>
                 </tr>
@@ -25,11 +26,12 @@
                 {
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>
-                        <td>@item.Manhom</td>
-                        <td>@item.Tennhom</td>
-                        <td>@item.Ten</td>
-                        <td>@item.Dvt</td>
-                        <td>@item.Gia</td>
+                        <td>@item.Vitri</td>
+                        <td>@item.Diemdau</td>
+                        <td>@item.Diemcuoi</td>
+                        <td>@item.Mota</td>
+                        <td>@item.Dientich</td>
+                        <td>@item.Dongia</td>
                         <td>
                             <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                     onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -43,9 +45,9 @@
                     </tr>
                 }
 
-
             </tbody>
         </table>
         <!--end: Datatable-->
     </div>
 </div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modal.cshtml")

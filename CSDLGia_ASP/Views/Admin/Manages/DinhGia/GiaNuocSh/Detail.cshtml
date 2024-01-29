@@ -46,23 +46,22 @@
                     {
                         <tr>
                             <td style="text-align:center">@(record_id++)</td>
-                            <td class="success">@item.Doituongsd</td>
-                            <td>@item.Namchuathue</td>
-                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
-                            <td>@item.Namchuathue1</td>
-                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
-                            <td>@item.Namchuathue2</td>
-                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
-                            <td>@item.Namchuathue3</td>
-                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
-                            <td>@item.Namchuathue4</td>
-                            <td style="text-align: right;font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
+                            <td style="text-align:center">@item.Doituongsd</td>
+                            <td style="text-align:center">@item.Namchuathue</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
+                            <td style="text-align:center">@item.Namchuathue1</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
+                            <td style="text-align:center">@item.Namchuathue2</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
+                            <td style="text-align:center">@item.Namchuathue3</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
+                            <td style="text-align:center">@item.Namchuathue4</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
-
                             </td>
                         </tr>
                     }
@@ -163,18 +162,4 @@
         })
     }
 
-        // function SetEdit(id, doituongsudung) {
-        //     document.getElementById("doituongsudung").value = doituongsudung;
-        //     document.getElementById("id_edit").value = id;
-        // }
-
-        // function SetEditAd(id, tendoituong) {
-        //     document.getElementById("tendoituong").value = tendoituong;
-        //     document.getElementById("id_edit").value = id;
-        //     document.getElementById("gia_edit").value = null;
-        //     document.getElementById("gia1_edit").value = null;
-        //     document.getElementById("gia2_edit").value = null;
-        //     document.getElementById("gia3_edit").value = null;
-        //     document.getElementById("gia4_edit").value = null;
-        // }
 </script>

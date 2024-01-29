@@ -1,7 +1,8 @@
 ﻿@{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaSpDvCiCt>)ViewData["modelct"];
+    var GiaSpDvCiDm = (IEnumerable<GiaSpDvCiDm>)ViewData["GiaSpDvCiDm"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -12,10 +13,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Mã nhóm</th>
-                    <th>Tên nhóm</th>
-                    <th>Phân loại</th>
-                    <th>Đơn vị tính</th>
+                    <th>Tên sản phẩm dịch vụ</th>
                     <th>Đơn giá</th>
                     <th>Thao tác</th>
                 </tr>
@@ -25,11 +23,19 @@
                 {
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>
-                        <td>@item.Manhom</td>
-                        <td>@item.Tennhom</td>
-                        <td>@item.Ten</td>
-                        <td>@item.Dvt</td>
-                        <td>@item.Gia</td>
+                        <td style="text-align:center">
+                            @if (GiaSpDvCiDm != null)
+                            {
+                                @foreach (var sp in GiaSpDvCiDm)
+                                {
+                                    @if (item.Maspdv == sp.Maspdv)
+                                    {
+                                        <span>@sp.Tenspdv</span>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td>@item.Dongia</td>
                         <td>
                             <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                     onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -43,9 +49,9 @@
                     </tr>
                 }
 
-
             </tbody>
         </table>
         <!--end: Datatable-->
     </div>
 </div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDichVuCongIch/Modal.cshtml")

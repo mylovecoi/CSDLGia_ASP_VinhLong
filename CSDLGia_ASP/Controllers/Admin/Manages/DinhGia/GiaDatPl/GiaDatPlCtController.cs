@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc)
+        public JsonResult Store(string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = new GiaDatPhanLoaiCt
             {
@@ -28,6 +28,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Vitri = Vitri,
                 Banggiadat = Banggiadat,
                 Giacuthe = Giacuthe,
+                Diagioitu = Diagioitu,
+                Diagioiden = Diagioiden,
                 Hesodc = Hesodc,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
@@ -110,6 +112,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Địa giới - Từ</b></label>";
+                result += "<input type='text' id='diagioitu_edit' name='diagioitu_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Diagioitu + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Địa giới - Đến </b></label>";
+                result += "<input type='text' id='diagioiden_edit' name='diagioiden_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Diagioiden + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Hệ số điều chỉnh</b></label>";
                 result += "<input type='number' step='any' id='hs_edit' name='hs_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Hesodc + "'/>";
                 result += "</div>";
@@ -132,13 +148,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc)
+        public JsonResult Update(int Id, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
             model.Khuvuc = Khuvuc;
             model.Maloaidat = Maloaidat;
             model.Vitri = Vitri;
             model.Banggiadat = Banggiadat;
+            model.Diagioitu = Diagioitu;
+            model.Diagioiden = Diagioiden;
             model.Giacuthe = Giacuthe;
             model.Hesodc = Hesodc;
             model.Updated_at = DateTime.Now;
@@ -176,6 +194,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             result += "<th>Loại đất</th>";
             result += "<th>Vị trí</th>";
             result += "<th>Giá đất tại bảng giá</th>";
+            result += "<th>Địa giới - Từ</th>";
+            result += "<th>Địa giới - Đến</th>";
             result += "<th>Giá đất cụ thể</th>";
             result += "<th>Hệ số điều chỉnh</th>";
             result += "<th>Thao tác</th>";
@@ -198,6 +218,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "</td>";
                 result += "<td style='text-align:center' >" + item.Vitri + "</td>";
                 result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + item.Diagioitu + "</td>";
+                result += "<td style='text-align:center; font-weight: bold'>" + item.Diagioiden + "</td>";
                 result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
                 result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
                 result += "<td>";

@@ -12,11 +12,8 @@
                     <h3 class="card-label">
                         Lý do trả lại hồ sơ*
                     </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
 
+                </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xl-12">
@@ -25,10 +22,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-
-                <div class="modal-body">
                     <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <input hidden id="id_tralai" name="id_tralai" />
                     <input hidden id="madv_tralai" name="madv_tralai" />
@@ -43,10 +36,11 @@
     </div>
 </div>
 
+
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="GiaXayDungMoiXd" asp-action="TongHop" method="get">
+        <form asp-controller="GiaDatPlHt" asp-action="TongHop" method="get">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">

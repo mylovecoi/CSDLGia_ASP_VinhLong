@@ -54,5 +54,24 @@ namespace CSDLGia_ASP.Models.Systems
         public bool Kiemtra { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        public double Than { get; set; }
+        public double XmThepXd { get; set; }
+        public double SachGk { get; set; }
+        public double Etanol { get; set; }
+        public double ThucPhamCn { get; set; }
+        public double VlXdCatSan { get; set; }
+        public double HocPhiDaoTaoLaiXe { get; set; }
+        public double Giay { get; set; }
+        public double ThucAnChanNuoi { get; set; }
+        public double VlXdDatSanlap { get; set; }
+        public double VlXdDaXayDung { get; set; }
+        public double VanTaiKhachBangOtoCoDinh { get; set; }
+        public double VanTaiKhachBangXeBuyt { get; set; }
+        public double VanTaiKhachBangTaXi { get; set; }
+        public double CaHue { get; set; }
+        public double SieuThi { get; set; }
+        public double BOG { get; set; }
+        public double KKNYGIA { get; set; }
+
     }
 }

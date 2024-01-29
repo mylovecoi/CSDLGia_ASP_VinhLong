@@ -38,7 +38,11 @@
                 Thông tin hoàn thành định giá<small>&nbsp;Tài sản công </small><br />
             </h3>
         </div>
-        <div class="card-toolbar">
+        <div>
+            <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
+                <i class="la la-plus"></i>Tổng hợp hồ sơ
+            </button>
+
         </div>
     </div>
     <hr />
@@ -89,7 +93,6 @@
                     <th>Thời điểm<br />xác đinh</th>
                     <th>Mô tả</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -164,7 +167,7 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                 }
                                 else if (item.Trangthai_ad == "HCB")
@@ -188,31 +191,7 @@
                                     <br />
                                 }
                             </td>
-                            <td style="text-align: center">
-                                @if (dsdonvi != null && item.Level != "ADMIN")
-                                {
-                                    @if (item.Trangthai_h == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_h)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                    else if (item.Trangthai_t == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_t)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
+                          
                             <td>
                                 <a asp-controller="TaiSanCong" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
                                    target="_blank">
@@ -259,9 +238,41 @@
                                         }
                                     }
                                 }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
+                                <div class="dropdown dropdown-inline">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                        <i class="icon-lg la la-cog "></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <ul class="nav nav-hoverable flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Thiết lập thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Cấu hình công khai dữ liệu </span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Xem trước thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Truyền dữ liệu</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                               
                             </td>
                         </tr>
                     }

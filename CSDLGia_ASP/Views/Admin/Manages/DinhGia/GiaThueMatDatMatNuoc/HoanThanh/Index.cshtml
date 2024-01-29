@@ -95,7 +95,7 @@
                     <th>Thời điểm xác định</th>
                     <th>Vị trí đất</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
+                   
                     <th width="18%">Thao tác</th>
                 </tr>
             </thead>
@@ -165,11 +165,11 @@
                                 }
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-center danger">@item.Vitri</td>
+                            <td style="text-align: center">@item.Vitri</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
                                     <br />
                                 }
                                 else if (item.Trangthai_ad == "HCB")
@@ -184,41 +184,17 @@
                                 }
                                 else if (item.Trangthai_ad == "CCB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa công bố</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                                     <br />
                                 }
                                 else
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-warning">Chưa hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                                     <br />
                                 }
                             </td>
 
-                            <td style="text-align: center">
-                                @if (dsdonvi != null && item.Level != "ADMIN")
-                                {
-                                    @if (item.Trangthai_h == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_h)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                    else if (item.Trangthai_t == "CCB")
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Macqcq_t)
-                                            {
-                                                <span>@ten.TenDv</span>
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
+                       
 
                             <td style="text-align: center">
                                 <a asp-controller="GiaThueDN" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -267,9 +243,41 @@
                                         }
                                     }
                                 }
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
-                                </button>
+                                <div class="dropdown dropdown-inline">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                        <i class="icon-lg la la-cog "></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                        <ul class="nav nav-hoverable flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Thiết lập thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Cấu hình công khai dữ liệu </span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Xem trước thông điệp</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <i class="nav-icon la la-forward"></i>
+                                                    <span class="nav-text">Truyền dữ liệu</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                               
                             </td>
                         </tr>
                     }
@@ -282,11 +290,11 @@
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="GiaXayDungMoiXd" asp-action="TongHop" method="get">
+        <form asp-controller="GiaThueDNHt" asp-action="TongHop" method="get">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Tổng hợp hồ sơ giá xây dựng mới
+                        Tổng hợp hồ sơ giá thuê đất nước
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>

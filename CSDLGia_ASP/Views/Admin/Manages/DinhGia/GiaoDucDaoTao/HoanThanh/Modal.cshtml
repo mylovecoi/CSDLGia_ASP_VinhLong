@@ -2,17 +2,51 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    int record_id = 1;
+    var record_id = 1;
+
 }
+
+<!--Trả lại Modal-->
+<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaoDucDaoTaoHt" asp-action="TraLai" id="frm_tralai">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Lý do trả lại hồ sơ*
+                    </h3>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <textarea class="form-control" id="Lydo" name="Lydo" cols="12" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
+                    <input hidden id="id_tralai" name="id_tralai" />
+                    <input hidden id="madv_tralai" name="madv_tralai" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Trả lại</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="GiaXayDungMoiXd" asp-action="TongHop" method="get">
+        <form asp-controller="GiaoDucDaoTaoHt" asp-action="TongHop" method="get">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Tổng hợp hồ sơ giá SP, DVCI, DVSNC, HH- DV đặt hàng
+                        Tổng hợp hồ sơ giá 
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -36,7 +70,55 @@
                             {
                                 <tr>
                                     <td style="text-align: center" width="3%">@(record_id++)</td>
-                                    <td>@item.TendvCh</td>
+                                    <td style="text-align: center">
+
+                                        @if (dsdonvi != null)
+                                        {
+                                            @if (item.Level == "ADMIN")
+                                            {
+                                                @if (item.Trangthai_h == "CCB")
+                                                {
+                                                    @foreach (var ten in dsdonvi)
+                                                    {
+                                                        @if (ten.MaDv == item.Madv_h)
+                                                        {
+                                                            <span>@ten.TenDv</span>
+                                                        }
+                                                    }
+                                                }
+                                                else if (item.Trangthai_t == "CCB")
+                                                {
+                                                    @foreach (var ten in dsdonvi)
+                                                    {
+                                                        @if (ten.MaDv == item.Madv_t)
+                                                        {
+                                                            <span>@ten.TenDv</span>
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @foreach (var ten in dsdonvi)
+                                                    {
+                                                        @if (ten.MaDv == item.Madv)
+                                                        {
+                                                            <span>@ten.TenDv</span>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @foreach (var ten in dsdonvi)
+                                                {
+                                                    @if (ten.MaDv == item.Madv)
+                                                    {
+                                                        <span>@ten.TenDv </span>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </td>
                                     <td style="text-align: center">@item.Thoidiem</td>
                                     <td style="text-align: center" width="30%">
                                         <div class="form-group form-check">
@@ -51,31 +133,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<!--Trả lại Modal-->
-<div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form asp-controller="GiaoDucDaoTaoHt" asp-action="TraLai" id="frm_tralai">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Đồng ý trả lại hồ sơ?
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input id="id_tralai" name="id_tralai" />
-                    <input id="madv_tralai" name="madv_tralai" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Trả lại hồ sơ</button>
                 </div>
             </div>
         </form>

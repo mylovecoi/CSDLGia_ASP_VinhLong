@@ -5,8 +5,10 @@ using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -128,7 +130,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
 
-
         [Route("DangKy/DanhSach/ChiTiet")]
         [HttpGet]
         public IActionResult Show(int Id, string Madiaban, string Madv, string Name, string Username, string Status)
@@ -240,8 +241,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         request.Giayphepkd = filename;
                     }
 
+                    var Manghe = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manghe).ToList();
+                    var Manghanh = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manganh).ToList();
+
+                    var BOG = Manghanh.Any(m => m.Contains("BOG")) ? 1 : 0;
+                    var KKNYGIA = Manghanh.Any(m => m.Contains("KKNYGIA")) ? 1 : 0;
+                    var XangDau = Manghe.Any(m => m.Contains("XD")) ? 1 : 0;
+                    var XmThepXd = Manghe.Any(m => m.Contains("XMTXD")) ? 1 : 0;
+                    var SachGk = Manghe.Any(m => m.Contains("SACH")) ? 1 : 0;
+                    var Etanol = Manghe.Any(m => m.Contains("ETANOL")) ? 1 : 0;
+                    var ThucPhamCn = Manghe.Any(m => m.Contains("TPCNTE6T")) ? 1 : 0;
+                    var VlXdCatSan = Manghe.Any(m => m.Contains("CATSAN")) ? 1 : 0;
+                    var HocPhiDaoTaoLaiXe = Manghe.Any(m => m.Contains("HOCPHILX")) ? 1 : 0;
+                    var Than = Manghe.Any(m => m.Contains("THAN")) ? 1 : 0;
+                    var Giay = Manghe.Any(m => m.Contains("GIAY")) ? 1 : 0;
+                    var ThucAnChanNuoi = Manghe.Any(m => m.Contains("TACN")) ? 1 : 0;
+                    var VlXdDatSanlap = Manghe.Any(m => m.Contains("DATSANLAP")) ? 1 : 0;
+                    var VanTaiKhachBangOtoCoDinh = Manghe.Any(m => m.Contains("VTXK")) ? 1 : 0;
+                    var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
+                    var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
+                    var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
+                   
                     var company = new Company
                     {
+                        BOG = BOG,
+                        KKNYGIA = KKNYGIA,
+                        Xangdau = XangDau,
+                        XmThepXd = XmThepXd,
+                        SachGk = SachGk,
+                        Etanol = XmThepXd,
+                        ThucPhamCn = XmThepXd,
+                        VlXdCatSan = VlXdCatSan,
+                        HocPhiDaoTaoLaiXe = HocPhiDaoTaoLaiXe,
+                        Than = Than,
+                        Giay = Giay,
+                        ThucAnChanNuoi = ThucAnChanNuoi,
+                        VlXdDatSanlap = VlXdDatSanlap,
+                        VanTaiKhachBangOtoCoDinh = VanTaiKhachBangOtoCoDinh,
+                        VanTaiKhachBangTaXi = VanTaiKhachBangTaXi,
+                        CaHue = CaHue,
+                        SieuThi = SieuThi,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
                         Tendn = request.Tendn,
@@ -261,6 +300,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     };
                     _db.Company.Add(company);
                     _db.SaveChanges();
+
+
 
 
                     var model = _db.CompanyLvCc.Where(t => t.Madv == request.Madv);
@@ -364,5 +405,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
+
+
     }
 }

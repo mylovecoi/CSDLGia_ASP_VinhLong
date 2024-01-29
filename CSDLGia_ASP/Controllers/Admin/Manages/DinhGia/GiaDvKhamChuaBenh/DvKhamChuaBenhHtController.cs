@@ -340,6 +340,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -482,6 +483,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "DvKhamChuaBenhHt");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult TongHop()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Index"))
+                {
+
+                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Tonghop.cshtml");
+
                 }
                 else
                 {

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Systems
 {
@@ -44,5 +47,82 @@ namespace CSDLGia_ASP.Models.Systems
         public double Solandn { get; set; }
         public string Group { get; set; }
         public string LinkAPI { get; set; }
+        public string Manghanh { get; set; }
+        public string Manghe { get; set; }
+
+
+        [NotMapped]
+        public double Vtxk { get; set; }
+        [NotMapped]
+        public double Vtxb { get; set; }
+        [NotMapped]
+        public double Vtxtx { get; set; }
+        [NotMapped]
+        public double Vtch { get; set; }
+        [NotMapped]
+        public string Loaihinhhd { get; set; }
+        [NotMapped]
+        public double Xangdau { get; set; }
+        [NotMapped]
+        public double Dien { get; set; }
+        [NotMapped]
+        public double Khidau { get; set; }
+        [NotMapped]
+        public double Phan { get; set; }
+        [NotMapped]
+        public double Thuocbvtv { get; set; }
+        [NotMapped]
+        public double Vacxingsgc { get; set; }
+        [NotMapped]
+        public double Muoi { get; set; }
+        [NotMapped]
+        public double Suate6t { get; set; }
+        [NotMapped]
+        public double Duong { get; set; }
+        [NotMapped]
+        public double Thocgao { get; set; }
+        [NotMapped]
+        public double Thuocpcb { get; set; }
+       
+        [NotMapped]
+        public double XmThepXd { get; set; }
+        [NotMapped]
+        public double SachGk { get; set; }
+        [NotMapped]
+        public double Etanol { get; set; }
+        [NotMapped]
+        public double ThucPhamCn { get; set; }
+        [NotMapped]
+        public double VlXdCatSan { get; set; }
+        [NotMapped]
+        public double HocPhiDaoTaoLaiXe { get; set; }
+        [NotMapped]
+        public double Than { get; set; }
+        [NotMapped]
+        public double Giay { get; set; }
+        [NotMapped]
+        public double ThucAnChanNuoi { get; set; }
+        [NotMapped]
+        public double VlXdDatSanlap { get; set; }
+        [NotMapped]
+        public double VlXdDaXayDung { get; set; }
+        [NotMapped]
+        public double VanTaiKhachBangOtoCoDinh { get; set; }
+        [NotMapped]
+        public double VanTaiKhachBangXeBuyt { get; set; }
+        [NotMapped]
+        public double VanTaiKhachBangTaXi { get; set; }
+        [NotMapped]
+        public double CaHue { get; set; }
+        [NotMapped]
+        public double SieuThi { get; set; }
+
+        [NotMapped]
+        public double BOG { get; set; }
+
+        [NotMapped]
+        public double KKNYGIA { get; set; }
+
+
     }
 }

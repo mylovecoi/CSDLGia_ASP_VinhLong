@@ -8,30 +8,30 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh mục<small>&nbsp;Giá tính lệ phí trước bạ</small><br />
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.dm", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh mục<small>&nbsp;Giá tính lệ phí trước bạ</small><br />
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.dm", "Create"))
             {
-                <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus">Thêm mới</i>
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
                 </button>
             }
 
@@ -94,11 +94,14 @@
                             <input type="text" id="Stt_create" name="Stt_create" value="@ViewData["Stt"]" class="form-control" />
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
                     <div class="col-xl-11">
                         <div class="form-control-label">
                             <label><b>Tên phân loại nhóm phí, lệ phí*</b></label>
                             <select id="Phanloai_create" name="Phanloai_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
-                         
+
                                 @foreach (var item in Phanloai)
                                 {
                                     <option>@item.Phanloai</option>
@@ -107,15 +110,17 @@
                         </div>
                     </div>
                     <div class="col-xl-1">
-                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
                         <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Phanloai_Modal" data-toggle="modal">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
+                </div>
+
+                <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên phí, lệ phí*</b></label>
-                            <input type="text" id="Tennhom_create" name="Tennhom_create"  class="form-control" required/>
+                            <input type="text" id="Tennhom_create" name="Tennhom_create" class="form-control" required />
                         </div>
                     </div>
                 </div>
@@ -258,12 +263,12 @@
                 Tennhom: $('#Tennhom_create').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     location.reload();
                     toastr.success("Thêm mới thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
@@ -286,10 +291,10 @@
                 Id: $('#id_delete').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
@@ -311,7 +316,7 @@
                 Id: id_edit
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
@@ -335,11 +340,11 @@
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");

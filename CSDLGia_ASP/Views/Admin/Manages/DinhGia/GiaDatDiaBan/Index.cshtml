@@ -56,9 +56,7 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
 
-                <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
-                    <i class="la la-plus"></i>Tổng hợp hồ sơ
-                </button>
+             
             }
         </div>
     </div>
@@ -121,11 +119,12 @@
                                 }
                                 @if (item.Trangthai == "HHT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Hủy hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Bị trả lại</span>
+                                    <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                                 @if (item.Trangthai == "HT")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
                                 }
                                 @if (item.Trangthai == "CB")
                                 {

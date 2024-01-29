@@ -3,27 +3,27 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdiaban1 = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan1"];
-    
+
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
             TableManaged2.init();
         });
 
-        $(function() {
+        $(function () {
             $('#Madiaban, #Madv, #Nam').change(function () {
                 var current_path_url = '/GiaDatDiaBan/Xetduyet?';
                 var madv = '&Madv=' + $('#Madv').val();
@@ -36,14 +36,17 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin giá đất
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin giá đất
+            </h3>
+        </div>
+        <div>
+            <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
+                <i class="la la-plus"></i>Tổng hợp hồ sơ
+            </button>
 
         </div>
     </div>
@@ -70,8 +73,8 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Địa bàn</label>
                     <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                    @foreach (var item in dsdiaban1)
-                    {
+                        @foreach (var item in dsdiaban1)
+                        {
                             <!option value="@item.MaDiaBan" @((string)ViewData["Madiaban"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
                         }
                     </select>
@@ -154,19 +157,19 @@
                                         @if (item.Trangthai == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                onclick="HuyCongBo('@item.Mahs')">
+                                                    onclick="HuyCongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
                                         }
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                onclick="CongBo('@item.Mahs')">
+                                                    onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -177,25 +180,25 @@
                                         @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                                    onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
                                                 <i class="icon-lg la la-check text-primary "></i>
                                             </button>
 
                                         }
                                     }
                                 }
-                               
+
                             </td>
                         </tr>
                     }
                 }
             </tbody>
-            
+
         </table>
     </div>
 </div>

@@ -105,19 +105,23 @@
         <a asp-controller="Register" asp-action="Index" asp-route-Madiaban="@ViewData["Madiaban"]" class="btn btn-danger">
             <i class="la la-reply"></i>Quay lại
         </a>
-        @if ((string)ViewData["Status"] != "Bị trả lại")
+     @*    @if ((string)ViewData["Status"] == "Kích hoạt")
         {
-            <button type="button" class="btn btn-primary" title="Kích hoạt" data-toggle="modal" data-target="#TraLai_Modal"
-                onclick="SetDuyet('@ViewData["Id"]', '@ViewData["Name"]', '@ViewData["Username"]', '@ViewData["Madiaban"]')">
-                Kích hoạt tài khoản
-                <i class="la la-check"></i>
-            </button>
             <button type="button" class="btn btn-danger" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
                 onclick="SetTraLai('@ViewData["Id"]', '@ViewData["Name"]', '@ViewData["Username"]', '@ViewData["Madiaban"]')">
                 Trả lại hồ sơ đăng ký
                 <i class="la la-mail-forward"></i>
             </button>
+        } *@
+        @if ((string)ViewData["Status"] == "Chờ xét duyệt" || (string)ViewData["Status"] == "Bị trả lại")
+        {
+            <button type="button" class="btn btn-primary" title="Kích hoạt" data-toggle="modal" data-target="#TraLai_Modal"
+                    onclick="SetDuyet('@ViewData["Id"]', '@ViewData["Name"]', '@ViewData["Username"]', '@ViewData["Madiaban"]')">
+                Kích hoạt tài khoản
+                <i class="la la-check"></i>
+            </button>
         }
+      
     </div>
 </div>
 

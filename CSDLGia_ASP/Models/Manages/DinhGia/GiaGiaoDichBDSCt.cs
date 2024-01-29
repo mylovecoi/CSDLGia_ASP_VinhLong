@@ -11,6 +11,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int Id { get; set; }
         public string Ten { get; set; }
         public string Mahs { get; set; }
+        public string Dvt { get; set; }
         public double Gia { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }

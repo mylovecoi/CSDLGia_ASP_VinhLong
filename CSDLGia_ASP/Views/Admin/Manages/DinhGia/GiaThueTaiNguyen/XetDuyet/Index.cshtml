@@ -92,7 +92,6 @@
                     <th>Thời điểm xác định</th>
                     <th>Nội dung</th>
                     <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -103,10 +102,10 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td class="active">@item.TendvCh</td>
+                            <td style="text-align: center">@item.TendvCh</td>
                             <td style="text-align: center">@item.Soqd</td>
-                            <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td>@item.Cqbh</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@item.Cqbh</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -132,8 +131,7 @@
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
-                            </td>
-                            <td style="text-align: left">@item.Tencqcq</td>
+                            </td>     
                             <td>
                                 <a asp-controller="GiaThueTaiNguyen" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">

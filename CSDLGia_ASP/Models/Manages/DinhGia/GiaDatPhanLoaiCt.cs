@@ -14,6 +14,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Khuvuc { get; set; }
         public int Vitri { get; set; }
         public double Banggiadat { get; set; }
+        public string Diagioitu { get; set; }
+        public string Diagioiden { get; set; }
         public double Giacuthe { get; set; }
         public double Hesodc { get; set; }
         public double Sapxep { get; set; }

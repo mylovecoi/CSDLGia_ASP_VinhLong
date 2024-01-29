@@ -22,9 +22,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index()
         {
+
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.danhmuc", "Index"))
                 {
                     var model = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Danh mục loại đất";
@@ -43,6 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+
         }
 
         // thêm dữ liệu vào bảng DmLoaiDat
@@ -52,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.danhmuc", "Create"))
                 {
 
                     var model = new DmLoaiDat
@@ -62,7 +64,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     _db.DmLoaiDat.Add(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
@@ -82,6 +86,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
+        // Xóa bản ghi được chọn trong bảng DmLoaiDat
+
+        [Route("DmLoaiDat/Delete")]
+        [HttpPost]
+        public IActionResult Delete(int id_delete)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.danhmuc", "Delete"))
+                {
+                    var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == id_delete);
+                    _db.DmLoaiDat.Remove(model);
+                    _db.SaveChanges();
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
+                    return RedirectToAction("Index", "DmLoaiDat");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
         // Lấy thông tin bản ghi cần sửa, tạo 1 frm mới sau đó đẩy vào edit trong modal
         [Route("DmLoaiDat/Edit")]
         [HttpPost]
@@ -89,8 +123,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.danhmuc", "Edit"))
                 {
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
                     var model = _db.DmLoaiDat.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -144,8 +181,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.danhmuc", "Edit"))
                 {
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_dm";
 
                     var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == Id);
 
@@ -157,33 +197,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        // Xóa bản ghi được chọn trong bảng DmLoaiDat
-
-        [Route("DmLoaiDat/Delete")]
-        [HttpPost]
-        public IActionResult Delete(int id_delete)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmloaidat", "Delete"))
-                {
-                    var model = _db.DmLoaiDat.FirstOrDefault(t => t.Id == id_delete);
-                    _db.DmLoaiDat.Remove(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "DmLoaiDat");
                 }
                 else
                 {

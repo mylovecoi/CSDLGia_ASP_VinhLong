@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaXayDungMoi
                 {
                     var model = _db.GiaXayDungMoiNhom.ToList();
                     ViewData["Title"] = "Nhóm xây dựng mới";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/DanhMuc/Nhom/Index.cshtml", model);

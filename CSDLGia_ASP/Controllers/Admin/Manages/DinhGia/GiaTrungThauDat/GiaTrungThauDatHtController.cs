@@ -148,7 +148,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -160,6 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     model.Macqcq = null;
                     model.Trangthai = "BTL";
+                    model.Lydo = Lydo;
 
                     //Gán trạng thái của đơn vị tiếp nhận hồ sơ
 

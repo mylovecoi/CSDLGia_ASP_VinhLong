@@ -19,17 +19,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DoanhNghiep/DangKy/Lvkd/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Manghe, string Madiaban)
+        public JsonResult Store(string Madv, string Manghe, string Manghanh, string Madiaban)
         {
             var model = new CompanyLvCc
             {
                 Madv = Madv,
                 Manghe = Manghe,
+                Manganh = Manghanh,
                 Macqcq = Madiaban,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
+
             _db.CompanyLvCc.Add(model);
             _db.SaveChanges();
             string result = this.GetData(Madv);

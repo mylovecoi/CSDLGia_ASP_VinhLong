@@ -1,19 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
 {
     public class GiaThueMuaNhaXhXdController : Controller
     {
@@ -24,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             _db = db;
         }
         
-        [Route("GiaThueMuaNhaXh/XetDuyet")]
+        [Route("GiaThueMuaNhaXhXd/XetDuyet")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {
@@ -34,6 +28,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                 {
                     var dsdonvi = _db.DsDonVi;
                     var dsdiaban = _db.DsDiaBan;
+
+                    // Lấy mã đơn vị chuyển hồ sơ
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
@@ -59,7 +55,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                                         Level = db.Level,
                                     }).FirstOrDefault();
 
+                    // Hết phần lấy mã đơn vị ( Nếu đăng nhập bằng SA thì mã đơn vị có Level = ADMIN )
+
                     var model = _db.GiaThueMuaNhaXh.ToList();
+
+                    // Nếu đơn vị chuyển lên có level huyện thì lấy trong phần huyện
 
                     if (getdonvi.Level == "H")
                     {
@@ -201,7 +201,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                                               Ipf4 = kkj.Ipf4,
                                               Ipf5 = kkj.Ipf5,
                                           });
-
+                      
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -221,6 +221,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     }
                     else
                     {
+
                         if (string.IsNullOrEmpty(Nam))
                         {
                             model = model.Where(t => t.Madv_ad == Madv).ToList();
@@ -236,6 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                                 model = model.Where(t => t.Madv_ad == Madv).ToList();
                             }
                         }
+
 
                         var model_new = (from kk in model
                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
@@ -257,7 +259,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                                              Ipf4 = kk.Ipf4,
                                              Ipf5 = kk.Ipf5,
                                          });
-
+  
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
@@ -280,7 +282,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                                               Ipf4 = kkj.Ipf4,
                                               Ipf5 = kkj.Ipf5,
                                           });
-
+                        
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -289,6 +291,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                         {
                             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
+
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
@@ -390,7 +393,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -403,24 +406,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giathuemuanhaxh
                     {
                         model.Macqcq = null;
                         model.Trangthai = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "HHT";
+                         model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "HHT";
+                        model.Lydo = Lydo;
                     }
 
 

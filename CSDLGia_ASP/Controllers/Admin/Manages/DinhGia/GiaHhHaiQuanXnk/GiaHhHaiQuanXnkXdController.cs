@@ -338,7 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai)
+        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -351,24 +351,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhHaiQuanXnk
                     {
                         model.Macqcq = null;
                         model.Trangthai = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_h)
                     {
                         model.Macqcq_h = null;
                         model.Trangthai_h = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_t)
                     {
                         model.Macqcq_t = null;
                         model.Trangthai_t = "HHT";
+                        model.Lydo = Lydo;
                     }
 
                     if (madv_tralai == model.Macqcq_ad)
                     {
                         model.Macqcq_ad = null;
                         model.Trangthai_ad = "HHT";
+                        model.Lydo = Lydo;
                     }
 
 
