@@ -1,0 +1,177 @@
+﻿<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Danh sách hỗ trợ
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="data_create">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Họ và tên<span class="require">*</span></label>
+                            <input type="text" name="hoten_create" id="hoten_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Số điện thoại<span class="require">*</span></label>
+                            <input type="tel" name="sdt_create" id="sdt_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Phân loại</label>
+                            <select name="pl_create" id="pl_create" class="form-control">
+                                <option value="Miền Bắc">Miền Bắc</option>
+                                <option value="Miền Nam">Miền Nam</option>
+                                <option value="Phụ trách khối KT">Phụ trách khối KT</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()" id="btn_store">Thêm mới</button>
+                <div id="loading_store" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="Support" asp-action="Delete">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý xóa thông tin???
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Store() {
+        if ($('#hoten_create').val() != '') {
+            if ($('#sdt_create').val() != '') {
+                $.ajax({
+                    url: '/DsHoTro/Store',
+                    type: 'POST',
+                    data: {
+                        Hoten: $('#hoten_create').val(),
+                        Sdt: $('#sdt_create').val(),
+                        Phanloai: $('#pl_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                    }
+                })
+            } else {
+                toastr.error("Họ tên không được để trống", "Lỗi!");
+            }
+        } else {
+            toastr.error("Số điện thoại không được để trống", "Lỗi!");
+        }
+    }
+
+    function SetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetEdit(id) {
+        $.ajax({
+            url: '/DsHoTro/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {
+        $.ajax({
+            url: '/DsHoTro/Update',
+            type: 'POST',
+            data: {
+
+                Id: $('#id_edit').val(),
+                Hoten: $('#hoten_edit').val(),
+                Sdt: $('#sdt_edit').val(),
+                Phanloai: $('#pl_edit').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+
+            }
+        })
+    }
+
+</script>

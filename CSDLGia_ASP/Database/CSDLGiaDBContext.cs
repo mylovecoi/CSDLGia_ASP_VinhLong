@@ -280,6 +280,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<GroupPermissions> GroupPermissions { get; set; }
         public DbSet<NhatKySuDung> NhatKySuDung { get; set; }
+        public DbSet<Supports> Supports { get; set; }
 
         //API
         public DbSet<KetNoiAPI> KetNoiAPI { get; set; }

@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240116082701_Add_Systems_Support")]
+    partial class Add_Systems_Support
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1544,12 +1546,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Diagioiden")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Diagioitu")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Giacuthe")
                         .HasColumnType("float");
 
@@ -2486,9 +2482,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Giathanhthi5")
                         .HasColumnType("float");
 
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -2511,9 +2504,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Namapdung5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
@@ -2966,9 +2956,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Gia")
                         .HasColumnType("float");
 
@@ -3071,264 +3058,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GiaGiaoDichBDSNhom");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Congbo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cqbh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Ghichu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lichsu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madiaban")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqdlk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Thoidiem")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_ad")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_h")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_t")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiemlk")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Thongtin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tinhtrang")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaGiaoDichDat");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatCt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Gia")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaGiaoDichDatCt");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatDm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cap1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Level")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sapxep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaGiaoDichDatDm");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatNhom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sapxep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tennhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaGiaoDichDatNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGocVlxdTh", b =>
@@ -3476,267 +3205,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GiaGocVlxdTh");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Congbo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Dennam")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ghichu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lichsu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madiaban")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Thoidiem")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_ad")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_h")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_t")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Thongtin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tunam")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaHangHoaTaiSieuThi");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Doituongsd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Giachuathue")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giachuathue1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giachuathue2")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giachuathue3")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giachuathue4")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Giacothue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madoituong")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Namchuathue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Namchuathue1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Namchuathue2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Namchuathue3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Namchuathue4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phibvmt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phibvmttyle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thanhtien")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thuevat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaHangHoaTaiSieuThiCt");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDmHHTaiSieuThi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Doituongsd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahanghoa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tenhanghoa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaHangHoaTaiSieuThiDmHHTaiSieuThi");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDmSieuThi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Masieuthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tensieuthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaHangHoaTaiSieuThiDmSieuThi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn", b =>
@@ -5978,9 +5446,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Thuetungay")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -6180,9 +5645,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
@@ -7766,9 +7228,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -8798,9 +8257,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Thuetungay")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -9248,264 +8704,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GiaVangNgoaiTeDm");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Congbo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cqbh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Ghichu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ipf5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lichsu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lydo_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Macqcq_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madiaban")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqdlk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Thoidiem")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_ad")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_h")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiem_t")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Thoidiemlk")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Thongtin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thongtin_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tinhtrang")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_h")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai_t")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaVatLieuXayDung");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Gia")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaVatLieuXayDungCt");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungDm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cap1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cap5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Level")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sapxep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaVatLieuXayDungDm");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungNhom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sapxep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tennhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaVatLieuXayDungNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoi", b =>
@@ -12791,12 +11989,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("BOG")
-                        .HasColumnType("float");
-
-                    b.Property<double>("CaHue")
-                        .HasColumnType("float");
-
                     b.Property<string>("Chucdanh")
                         .HasColumnType("nvarchar(max)");
 
@@ -12818,26 +12010,14 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Etanol")
-                        .HasColumnType("float");
-
                     b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ghichu")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Giay")
-                        .HasColumnType("float");
-
                     b.Property<string>("Giayphepkd")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("HocPhiDaoTaoLaiXe")
-                        .HasColumnType("float");
-
-                    b.Property<double>("KKNYGIA")
-                        .HasColumnType("float");
 
                     b.Property<double>("Khidau")
                         .HasColumnType("float");
@@ -12878,14 +12058,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Pl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SachGk")
-                        .HasColumnType("float");
-
                     b.Property<string>("Settingdvvt")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SieuThi")
-                        .HasColumnType("float");
 
                     b.Property<double>("Suate6t")
                         .HasColumnType("float");
@@ -12899,16 +12073,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Tendn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Than")
-                        .HasColumnType("float");
-
                     b.Property<double>("Thocgao")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ThucAnChanNuoi")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ThucPhamCn")
                         .HasColumnType("float");
 
                     b.Property<double>("Thuocbvtv")
@@ -12926,24 +12091,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Vacxingsgc")
                         .HasColumnType("float");
 
-                    b.Property<double>("VanTaiKhachBangOtoCoDinh")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VanTaiKhachBangTaXi")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VanTaiKhachBangXeBuyt")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdCatSan")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdDaXayDung")
-                        .HasColumnType("float");
-
-                    b.Property<double>("VlXdDatSanlap")
-                        .HasColumnType("float");
-
                     b.Property<double>("Vtch")
                         .HasColumnType("float");
 
@@ -12957,9 +12104,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Xangdau")
-                        .HasColumnType("float");
-
-                    b.Property<double>("XmThepXd")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -14287,12 +13431,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahuyen")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manghanh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manghe")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manhomtk")
