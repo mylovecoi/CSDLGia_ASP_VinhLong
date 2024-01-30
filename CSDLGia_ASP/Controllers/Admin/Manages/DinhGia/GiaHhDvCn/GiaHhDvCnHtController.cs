@@ -19,9 +19,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         }
 
 
-        // Xuất ra các bản ghi dựa vào mã đơn vị và năm 
-        // Madv là nơi nhận hồ sơ
-        // Index của chức năng xét duyệt
         [Route("HtGiaHhDvCn")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)

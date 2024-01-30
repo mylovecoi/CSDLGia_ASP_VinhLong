@@ -44,10 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //GiaSpDvToiDa
-        //GiaSpDvToiDaCt
-        //GiaSpDvToiDaNhom
-        //GiaSpDvToiDaDm
+        
         [Route("BaoCaoDgSpDvToiDa/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay)

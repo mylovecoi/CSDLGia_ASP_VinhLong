@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
                     ViewData["Manhom"] = Manhom;
                     ViewData["Tennhom"] = _db.GiaSpDvKhungGiaNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
-                    ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ khung giá";
+                    ViewData["Title"] = "Thông tin chi tiết nhóm sản phẩm dịch vụ khung giá";
                     ViewData["MenuLv1"] = "menu_spdvkhunggia";
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_dm";
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();

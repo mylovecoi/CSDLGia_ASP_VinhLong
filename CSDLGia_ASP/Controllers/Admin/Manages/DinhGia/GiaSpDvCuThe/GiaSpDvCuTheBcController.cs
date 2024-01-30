@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,10 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //GiaSpDvCuThe
-        //GiaSpDvCuTheCt
-        //GiaSpDvCuTheNhom
-        //GiaSpDvCuTheDm
+      
         [Route("BaoCaoDgSpDvCuThe/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay)
@@ -55,18 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvcuthe.baocao", "Index"))
                 {
-
-                    var model = (from pl in _db.GiaSpDvCuThe.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join db in _db.DsDiaBan on pl.Madv equals db.MaDiaBan
-                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
-                                 {
-                                     Id = pl.Id,
-                                     Mahs = pl.Mahs,
-                                     Tendiaban = db.TenDiaBan,
-                                     Soqd = pl.Soqd,
-                                     Thoidiem = pl.Thoidiem,
-                                 });
-
+                    var model = _db.GiaSpDvCuThe.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ cụ thể";

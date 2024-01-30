@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá sản phẩm dịch vụ cụ thể (đồng)</label>";
+                result += "<label>Giá </label>";
                 result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
