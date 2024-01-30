@@ -40,6 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             {
                 var model = _db.Users.FirstOrDefault(u => u.Username == username);
 
+
                 if(model.Level != "DN")
                 {
                     if (model != null)
@@ -104,8 +105,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 }
                 else
                 {
-                    var model1 = _db.Users.FirstOrDefault(u => u.Username == username);
-
                     var model2 = _db.Users
                                 .Where(u => u.Username == username)
                                 .Join(
@@ -157,7 +156,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         Duong = company.Duong,
                                         Thocgao = company.Thocgao,
                                         Thuocpcb = company.Thuocpcb,
-
+                                        Dvlt = company.Dvlt,
                                         XmThepXd = company.XmThepXd,
                                         SachGk = company.SachGk,
                                         Etanol = company.Etanol,
@@ -173,22 +172,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
                                         CaHue = company.CaHue,
                                         SieuThi = company.SieuThi,
-
                                         BOG = company.BOG,
                                         KKNYGIA = company.KKNYGIA,
                                     }
                                 ).FirstOrDefault();
 
-                    if (model1 != null && !string.IsNullOrEmpty(model1.Madv))
-                    {
-                        model = model2;
-                    }
-                    else
-                    {
-                        model = model1;
-                    }
-
-                    if (model != null)
+                    if (model2 != null)
                     {
                         string md5_password = "";
                         using (MD5 md5Hash = MD5.Create())
@@ -198,7 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                         }
                         if (md5_password == model.Password)
                         {
-                            if (model.Status == "Chờ xét duyệt")
+                            if (model2.Status == "Chờ xét duyệt")
                             {
                                 ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
                                 ViewData["username"] = username;
@@ -217,16 +206,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                 else
                                 {
 
-                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model2));
 
-                                    if (model.Chucnang == "K")
+                                    if (model2.Chucnang == "K")
                                     {
                                         var permissions = _db.Permissions.Where(p => p.Username == username);
                                         HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
                                     else
                                     {
-                                        var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                        var permissions = _db.Permissions.Where(p => p.Username == model2.Chucnang);
                                         HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
                                     return RedirectToAction("Index", "Home");
@@ -249,7 +238,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                     }
                 }
 
-                
+
             }
             else
             {

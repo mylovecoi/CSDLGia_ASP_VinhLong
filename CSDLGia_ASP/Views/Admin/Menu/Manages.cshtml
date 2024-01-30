@@ -4,7 +4,7 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
 {
     <li class="menu-section">
-        <h4 class="menu-text text-truncate">CƠ SỞ DỮ LIỆU VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ***</h4>
+        <h4 class="menu-text text-truncate">*CƠ SỞ DỮ LIỆU VỀ MỨC GIÁ HÀNG HÓA, DỊCH VỤ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
 
@@ -1207,7 +1207,7 @@
                     }
 
                     <!--Dịch vụ lưu trú-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "DVLT") == "1")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Dvlt") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgdvlt">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -3241,91 +3241,6 @@
                                     <span></span>
                                 </i>
                                 <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </li>
-    }
-
-    <!--Sản phẩm dịch vụ tối đa-->
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida", "Index"))
-    {
-        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvtoida">
-            <a href="javascript:;" class="menu-link menu-toggle">
-                <span class="svg-icon menu-icon">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                            <path d="M10,4 L21,4 C21.5522847,4 22,4.44771525 22,5 L22,7 C22,7.55228475 21.5522847,8 21,8 L10,8 C9.44771525,8 9,7.55228475 9,7 L9,5 C9,4.44771525 9.44771525,4 10,4 Z M10,10 L21,10 C21.5522847,10 22,10.4477153 22,11 L22,13 C22,13.5522847 21.5522847,14 21,14 L10,14 C9.44771525,14 9,13.5522847 9,13 L9,11 C9,10.4477153 9.44771525,10 10,10 Z M10,16 L21,16 C21.5522847,16 22,16.4477153 22,17 L22,19 C22,19.5522847 21.5522847,20 21,20 L10,20 C9.44771525,20 9,19.5522847 9,19 L9,17 C9,16.4477153 9.44771525,16 10,16 Z" fill="#000000"></path>
-                            <rect fill="#000000" opacity="0.3" x="2" y="4" width="5" height="16" rx="1"></rect>
-                        </g>
-                    </svg>
-                    <!--end::Svg Icon-->
-                </span>
-                <span class="menu-text text-truncate" title="Giá sản phẩm dịch vụ tối đa">Giá sản phẩm dịch vụ tối đa</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="menu-submenu">
-                <i class="menu-arrow"></i>
-                <ul class="menu-subnav">
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.danhmuc", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_dm">
-                            <a asp-controller="GiaSpDvToiDaNhom" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate">Danh mục</span>
-                            </a>
-                        </li>
-                    }
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.thongtin", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_thongtin">
-                            <a asp-controller="GiaSpDvToiDa" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate">Thông tin hồ sơ</span>
-                            </a>
-                        </li>
-                    }
-
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.xetduyet", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_ht">
-                            <a asp-controller="GiaSpDvToiDaHt" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
-                            </a>
-                        </li>
-                    }
-
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.timkiem", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_tk">
-                            <a asp-controller="GiaSpDvToiDa" asp-action="Search" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
-                            </a>
-                        </li>
-                    }
-
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.baocao", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_bc">
-                            <a asp-controller="GiaSpDvToiDaBc" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
                             </a>
                         </li>
                     }
