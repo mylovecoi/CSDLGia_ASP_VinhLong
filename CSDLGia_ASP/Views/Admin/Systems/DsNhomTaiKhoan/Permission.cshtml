@@ -1,5 +1,5 @@
 ﻿@model CSDLGia_ASP.ViewModels.Systems.VMGroupPermissions
-@{ 
+@{
     int record_id = 1;
 
 }
@@ -40,7 +40,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                       
+                        @if (Model.Permissions != null)
+                        {
                             @foreach (var item in Model.Permissions)
                             {
                                 <tr>
@@ -48,33 +49,53 @@
                                     <td style="font-weight:bold;color:blue">@item.Roles</td>
                                     <td style="text-align:center">
                                         @if (item.Index)
-                                        {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
                                         else
-                                        {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
                                     </td>
                                     <td style="text-align:center">
                                         @if (item.Create)
-                                        {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
                                         else
-                                        {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
                                     </td>
                                     <td style="text-align:center">
                                         @if (item.Edit)
-                                        {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
                                         else
-                                        {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
                                     </td>
                                     <td style="text-align:center">
                                         @if (item.Delete)
-                                        {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
                                         else
-                                        {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
                                     </td>
                                     <td style="text-align:center">
                                         @if (item.Approve)
-                                        {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
                                         else
-                                        {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
                                     </td>
                                     <td>
                                         <button type="button" onclick="editId('@item.Id')" data-target="#Edit_Modal" data-toggle="modal"
