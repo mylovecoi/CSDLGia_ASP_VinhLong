@@ -86,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         ViewData["NhomTn"] = _db.GiaVatLieuXayDungNhom.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
-                        ViewData["Title"] = "Thông tin giá vật liệu xây dựng";
+                        ViewData["Title"] = " Danh mục nhóm vật liệu xây dựng";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
                         ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_tt";
@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     }
                     else
                     {
-                        ViewData["Title"] = "Thông tin giá vật liệu xây dựng";
+                        ViewData["Title"] = "Danh mục nhóm liệu xây dựng";
                         ViewData["Messages"] = "Hệ thống chưa có định giá vật liệu xây dựng.";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
@@ -123,12 +123,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
                 {
+                    // Xóa những cái chưa xác định
                     var check = _db.GiaVatLieuXayDungCt.Where(t => t.Trangthai == "CXD");
+
                     if (check != null)
                     {
                         _db.GiaVatLieuXayDungCt.RemoveRange(check);
                         _db.SaveChanges();
                     }
+
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung
                     {
@@ -137,7 +140,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         Manhom = Manhom,
                     };
 
+                    // lấy danh mục theo mã nhóm truyền sang
                     var danhmuc = _db.GiaVatLieuXayDungDm.ToList();
+
                     if (Manhom != "all")
                     {
                         danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
@@ -148,7 +153,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     }
 
                     var chitiet = new List<GiaVatLieuXayDungCt>();
-
                     foreach (var item in danhmuc)
                     {
                         chitiet.Add(new GiaVatLieuXayDungCt()
@@ -160,6 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                             Updated_at = DateTime.Now,
                         });
                     }
+
                     _db.GiaVatLieuXayDungCt.AddRange(chitiet);
                     _db.SaveChanges();
 

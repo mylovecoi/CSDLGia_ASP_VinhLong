@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin bất động sản
-                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhà trọ sinh viên</span>
+                    Thông tin chi tiết vật liệu xây dựng
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới vật liệu xây dựng</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -16,7 +16,7 @@
                     <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Phân loại bất động sản</label>
+                            <label>Phân loại vật liệu xây dựng</label>
                             <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
                     </div>
@@ -45,8 +45,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhà trọ sinh viên
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa nhà trọ sinh viên</span>
+                    Thông tin vật liệu xây dựng
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa vật liệu xây dựng</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -70,14 +70,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhà trọ sinh viên
-                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin nhà trọ sinh viên???</span>
+                    Thông tin vật liệu xây dựng
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin vật liệu xây dựng???</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaGiaoDichBDSDm" asp-action="Delete">
+            <form asp-controller="GiaVatLieuXayDungDm" asp-action="Delete">
                 <div class="modal-body">
                     <input hidden id="id_delete" name="id_delete" />
                 </div>
@@ -131,7 +131,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhà trọ sinh viên
+                    Thông tin vật liệu xây dựng
                     <span class="d-block text-muted pt-2 font-size-sm">Nhận dữ liệu từ file excel</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -272,7 +272,7 @@
             toastr.error("Tên nhóm, loại tài nguyên không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaGiaoDichBDSDmCt/Store',
+                url: '/GiaVatLieuXayDungDmCt/Store',
                 type: 'POST',
                 data: {
                     Manhom: $('#Manhom').val(),
@@ -299,7 +299,7 @@
 
     function editId(id_edit) {
         $.ajax({
-            url: '/GiaGiaoDichBDSDmCt/Edit',
+            url: '/GiaVatLieuXayDungDmCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -321,7 +321,7 @@
             toastr.error("Tên nhóm nhà không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaGiaoDichBDSDmCt/Update',
+                url: '/GiaVatLieuXayDungDmCt/Update',
                 type: 'POST',
                 data: {
                     Tennhom: $('#tennhom_edit').val(),
@@ -343,7 +343,7 @@
 
     function Lock() {
         $.ajax({
-            url: '/GiaGiaoDichBDSDmCt/Lock',
+            url: '/GiaVatLieuXayDungDmCt/Lock',
             type: 'POST',
             data: {
                 Manhom: $('#manhom_lock').val(),
@@ -375,7 +375,7 @@
             file.append("Manhom", $("#Manhom").val());
 
             $.ajax({
-                url: '/GiaGiaoDichBDSDmCt/Excel',
+                url: '/GiaVatLieuXayDungDmCt/Excel',
                 type: 'POST',
                 data: file,
                 processData: false,

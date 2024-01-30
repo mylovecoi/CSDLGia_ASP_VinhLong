@@ -43,7 +43,7 @@
                 </h3>
             </div><br />
             <div >
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.ttg", "Create"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaLePhi" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]">
@@ -155,7 +155,7 @@
                                     <a asp-controller="GiaLePhi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" >
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dvci.ttg", "Delete"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
                                     {
 
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">

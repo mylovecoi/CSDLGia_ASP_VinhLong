@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
                     var model = _db.GiaHhDvCnDm.ToList();
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
-                    ViewData["Title"] = "Nhóm sản phẩm dịch vụ cụ thể";
+                    ViewData["Title"] = "Nhóm hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";

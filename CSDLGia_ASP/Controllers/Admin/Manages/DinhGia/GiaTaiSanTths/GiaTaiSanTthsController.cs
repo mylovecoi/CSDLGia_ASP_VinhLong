@@ -81,7 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
-                        ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
+                        ViewData["Title"] = " Thông tin hồ sơ giá tài sản trong tố tụng hình sự";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dgtths";
                         ViewData["MenuLv3"] = "menu_dgtths_tt";
@@ -89,8 +89,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanTths
                     }
                     else
                     {
-                        ViewData["Messages"] = "Thông tin hồ sơ giá tài sản công.";
-                        ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
+                        ViewData["Messages"] = "Thông tin hồ sơ giá tài sản trong tố tụng hình sự.";
+                        ViewData["Title"] = " Thông tin hồ sơ giá tài sản trong tố tụng hình sự";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dgtths";
                         ViewData["MenuLv3"] = "menu_dgtths_tt";

@@ -27,11 +27,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
             _hostEnvironment = hostEnvironment;
         }
 
-
-        //1.Sau khi chọn menu chuyển vào đây
-        //2.Thêm mới
-        //3.Kiểm tra Nam/DsDv của tài khoản đăng nhập xuất bản nghi ra nếu không có thì năm lấy năm hiện tại và đơn vị đầu tiên trong DsDonVi
-        //4.Donvi lấy dữ liệu từ dsdiaban lấy tất cả bản ghi
         [Route("GiaSpDvKhungGia")]
         [HttpGet]
         public IActionResult Index(string Nam, string Madv)

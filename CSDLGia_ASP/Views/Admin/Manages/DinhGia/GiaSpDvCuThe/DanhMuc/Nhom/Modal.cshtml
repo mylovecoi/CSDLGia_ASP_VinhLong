@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm tài nguyên
-                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm tài nguyên</span>
+                    Thông tin nhóm sản phẩm dịch vụ cụ thể
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm sản phẩm dịch vụ cụ thể</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm tài nguyên*</label>
+                            <label>Tên nhóm</label>
                             <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
                     </div>
@@ -43,8 +43,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm tài nguyên
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin nhóm tài nguyên</span>
+                    Thông tin nhóm sản phẩm dịch vụ cụ thể
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin nhóm sản phẩm dịch vụ cụ thể</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -68,8 +68,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm tài nguyên
-                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin nhóm tài nguyên???</span>
+                    Thông tin nhóm sản phẩm dịch vụ cụ thể
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin ???</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -115,7 +115,7 @@
 <script>
     function Store() {
         if ($('#tennhom_create').val().trim() == '') {
-            toastr.error("Tên nhóm tài nguyên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaSpDvCuTheDm/Store',
@@ -163,7 +163,7 @@
 
     function Update() {
         if ($('#tennhom_edit').val().trim() == '') {
-            toastr.error("Tên nhóm tài nguyên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaSpDvCuTheDm/Update',

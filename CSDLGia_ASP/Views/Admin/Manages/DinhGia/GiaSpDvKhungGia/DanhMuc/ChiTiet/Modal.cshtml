@@ -485,7 +485,7 @@
 
     function Store() {
         if ($('#tennhom_create').val().trim() == '') {
-            toastr.error("Tên nhóm, loại tài nguyên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaSpDvKhungGiaDmCt/Store',

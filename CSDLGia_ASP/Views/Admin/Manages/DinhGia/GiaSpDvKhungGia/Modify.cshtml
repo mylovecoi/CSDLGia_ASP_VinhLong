@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -20,20 +20,23 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    GIÁ SẢN PHẨM DỊCH VỤ KHUNG GIÁ
-                </h3>
-            </div>
+
+
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                GIÁ SẢN PHẨM DỊCH VỤ KHUNG GIÁ
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaSpDvKhungGia" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaSpDvKhungGia" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
+        <div class="card-body">
             <input hidden asp-for="Madv" value="@Model.Madv">
             <input hidden asp-for="Madv" value="@Model.Madv">
             <input hidden asp-for="Mahs" value="@Model.Mahs">
-        <input hidden asp-for="Ipf1" value="@ViewData["Ipf1"]">
+            <input hidden asp-for="Ipf1" value="@ViewData["Ipf1"]">
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
@@ -58,49 +61,53 @@
                 </div>
             </div>
 
-             <div class="col-xl-6">
-                <div class="form-group">
-                    <label>
-                        File đính kèm
-                        @if (!string.IsNullOrEmpty(Model.Ipf1))
-                        {
-                            <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf1"]" target="_blank"
-                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                File đính kèm hiện tại
-                            </a>
-                        }
-                    </label>
-                    <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>
+                            File đính kèm
+                            @if (!string.IsNullOrEmpty(Model.Ipf1))
+                            {
+                                <a href="~/UpLoad/File/DinhGia/@ViewData["Ipf1"]" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    File đính kèm hiện tại
+                                </a>
+                            }
+                        </label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                    </div>
                 </div>
             </div>
+
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Detail.cshtml")
-        </form>
-        <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaSpDvKhungGia" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                <i class="la la-reply"></i>Quay lại
-            </a>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateSpDvKhungGia()"><i class="la la-check"></i>Hoàn thành</button>
+            <div class="card-footer" style="text-align:center">
+                <a asp-controller="GiaSpDvKhungGia" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                    <i class="la la-reply"></i>Quay lại
+                </a>&ensp;
+                <button type="button" class="btn btn-primary mr-2" onclick="ValidateSpDvKhungGia()"><i class="la la-check"></i>Hoàn thành</button>
+            </div>
         </div>
+    </form>
 
-    </div>
+</div>
 
-    <!--end::Form-->
+<!--end::Form-->
 
-    <script>
-        function ValidateSpDvKhungGia() {
-            if ($('#Soqd').val().trim() == '') {
-                toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+<script>
+    function ValidateSpDvKhungGia() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
             } else {
-                if ($('#Thoidiem').val().trim() == '') {
-                    toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
-                } else {
-                    document.getElementById("frm_spdvkhunggia_store").submit();
-                }
+                document.getElementById("frm_spdvkhunggia_store").submit();
             }
         }
-    </script>
-    @section Scripts{
+    }
+</script>
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

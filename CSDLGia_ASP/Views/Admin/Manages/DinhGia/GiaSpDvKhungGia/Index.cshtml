@@ -7,6 +7,7 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia>
 
+
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -43,7 +44,7 @@
                 </h3>
             </div>
             <div >
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvcuthe.thongtin", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvkhunggia.thongtin", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
@@ -165,14 +166,14 @@
                                     <i class="icon-lg la la-print text-info"></i>
                                 </a>
 
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvkhunggia.thongtin", "Edit"))
                                 {
                                     <a asp-controller="GiaSpDvKhungGia" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                 }
 
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Delete"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvkhunggia.thongtin", "Delete"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                         <i class="icon-lg la la-trash text-danger"></i>
@@ -205,7 +206,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Thêm mới hồ sơ giá sản phẩm giá sản phẩm dịch vụ cụ thể
+                        Thêm mới hồ sơ giá sản phẩm dịch vụ khung giá
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -229,7 +230,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option value="khac">--Tất cả các loại sản phẩm dịch vụ cụ thể--</option>
+                                    <option value="khac">--Chọn--</option>
                                     @foreach (var nhom in nhomtn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
