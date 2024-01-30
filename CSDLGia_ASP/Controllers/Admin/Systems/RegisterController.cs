@@ -261,16 +261,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
                     var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
                     var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
-                   
+                    var Dvlt = Manghe.Any(m => m.Contains("DVLT")) ? 1 : 0;
+
+
                     var company = new Company
                     {
                         BOG = BOG,
                         KKNYGIA = KKNYGIA,
+                        Dvlt = Dvlt,
                         Xangdau = XangDau,
                         XmThepXd = XmThepXd,
                         SachGk = SachGk,
-                        Etanol = XmThepXd,
-                        ThucPhamCn = XmThepXd,
+                        Etanol = Etanol,
+                        ThucPhamCn = ThucPhamCn,
                         VlXdCatSan = VlXdCatSan,
                         HocPhiDaoTaoLaiXe = HocPhiDaoTaoLaiXe,
                         Than = Than,
@@ -300,9 +303,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     };
                     _db.Company.Add(company);
                     _db.SaveChanges();
-
-
-
 
                     var model = _db.CompanyLvCc.Where(t => t.Madv == request.Madv);
                     if (model != null)

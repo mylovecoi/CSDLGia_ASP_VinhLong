@@ -116,7 +116,8 @@ namespace CSDLGia_ASP.Models.Systems
         public double CaHue { get; set; }
         [NotMapped]
         public double SieuThi { get; set; }
-
+        [NotMapped]
+        public double Dvlt { get; set; }
         [NotMapped]
         public double BOG { get; set; }
 
