@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Permissions>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -68,33 +68,53 @@
                             <td style="font-weight:bold;color:blue">@item.Roles</td>
                             <td style="text-align:center">
                                 @if (item.Index)
-                                {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
                                 else
-                                {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                {
+                                    <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                }
                             </td>
                             <td style="text-align:center">
                                 @if (item.Create)
-                                {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
                                 else
-                                {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                {
+                                    <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                }
                             </td>
                             <td style="text-align:center">
                                 @if (item.Edit)
-                                {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
                                 else
-                                {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                {
+                                    <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                }
                             </td>
                             <td style="text-align:center">
                                 @if (item.Delete)
-                                {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
                                 else
-                                {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                {
+                                    <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                }
                             </td>
                             <td style="text-align:center">
                                 @if (item.Approve)
-                                {<i class="la la-check icon-2x text-info mr-5"></i>}
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
                                 else
-                                {<i class="la la-remove icon-2x text-danger mr-5"></i>}
+                                {
+                                    <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                }
                             </td>
                             <td>
                                 <button type="button" onclick="editId('@item.Id')" data-target="#Edit_Modal" data-toggle="modal"
@@ -309,33 +329,29 @@
     }
 
     function UpdatePermission() {
-        if ($('#roles').val() != '') {
-            $.ajax({
-                url: '/Permissions/Update',
-                type: 'POST',
-                data: {
-                    Index: $('#Index_edit').is(":checked"),
-                    Create: $('#Create_edit').is(":checked"),
-                    Edit: $('#Edit_edit').is(":checked"),
-                    Delete: $('#Delete_edit').is(":checked"),
-                    Approve: $('#Approve_edit').is(":checked"),
-                    Username: $('#KeyLink').val(),
-                    Status: 'Disable',
-                    Id: $('#Id_edit').val(),
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success("Cập nhật thông tin thành công!", "Thành công!!!");
-                        location.reload();
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
+        $.ajax({
+            url: '/Permissions/Update',
+            type: 'POST',
+            data: {
+                Index: $('#Index_edit').is(":checked"),
+                Create: $('#Create_edit').is(":checked"),
+                Edit: $('#Edit_edit').is(":checked"),
+                Delete: $('#Delete_edit').is(":checked"),
+                Approve: $('#Approve_edit').is(":checked"),
+                Username: $('#KeyLink').val(),
+                Status: 'Disable',
+                Id: $('#Id_edit').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công!!!");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
                 }
-            })
-        } else {
-            toastr.error("Chức năng không được để trống!!!", "Lỗi!");
-        }
+            }
+        })
     }
 
     function getId(id, roles) {

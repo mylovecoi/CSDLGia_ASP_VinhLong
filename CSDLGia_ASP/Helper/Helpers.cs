@@ -82,7 +82,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat", Name = "Giá đất" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn", Name = "ĐG - Giá thuế tài nguyên" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", Name = "ĐG - Giá thuế tài nguyên, mặt nước - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", Name = "ĐG - Giá thuế tài nguyên - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.thongtin", Name = "ĐG - Giá thuế tài nguyên - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", Name = "ĐG - Giá thuế tài nguyên - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.thuetn.timkiem", Name = "ĐG - Giá thuế tài nguyên - Tìm kiếm" });

@@ -120,10 +120,7 @@ namespace CSDLGia_ASP.Models.Systems
         public double Dvlt { get; set; }
         [NotMapped]
         public double BOG { get; set; }
-
         [NotMapped]
         public double KKNYGIA { get; set; }
-
-
     }
 }
