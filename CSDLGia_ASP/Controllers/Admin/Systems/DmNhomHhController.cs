@@ -232,5 +232,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return Json(data);
             }
         }
+
+        [Route("DmNhomHh/Delete")]
+        [HttpPost]
+        public IActionResult Delete(int id_delete)
+        {
+            var model = _db.DmNhomHh.FirstOrDefault(t => t.Id == id_delete);
+            _db.DmNhomHh.Remove(model);
+            _db.SaveChanges();
+            var AllBanGhiDmNhomHh = _db.DmNhomHh.ToList();
+            return View("Views/Admin/Systems/DmNhomHh/Index.cshtml", AllBanGhiDmNhomHh);
+        }
     }
 }

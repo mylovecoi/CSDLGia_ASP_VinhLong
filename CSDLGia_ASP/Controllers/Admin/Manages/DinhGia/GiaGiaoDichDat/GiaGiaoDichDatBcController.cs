@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["NhomTn"] = nhomtn;
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất giao dịch thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/BaoCao/Index.cshtml");
@@ -64,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất giao dịch thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_bc";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/BaoCao/Bc1.cshtml", model);

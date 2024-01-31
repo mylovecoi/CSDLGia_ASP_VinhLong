@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["Manhom"] = Manhom;
                     ViewData["Tennhom"] = _db.GiaGiaoDichDatNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
                     ViewData["Title"] = "Thông tin chi tiết giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhMuc/ChiTiet/Index.cshtml", model);

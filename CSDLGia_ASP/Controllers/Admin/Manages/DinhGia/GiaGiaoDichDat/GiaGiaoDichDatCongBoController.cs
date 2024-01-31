@@ -122,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                         ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_xd";
                         ViewBag.bSession = true;
@@ -192,7 +192,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                         ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_xd";
                         ViewBag.bSession = true;
@@ -262,7 +262,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                         ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_xd";
                         ViewBag.bSession = true;
