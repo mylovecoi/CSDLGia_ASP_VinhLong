@@ -144,6 +144,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         /*ViewData["nhaplieu"] = nhaplieu;
                         ViewData["tonghop"] = tonghop;
                         ViewData["quantri"] = quantri;*/
+                        ViewData["ChucNang"] = _db.GroupPermissions.ToList();
                         ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == request.Madv).ToList();
                         ViewData["MaDv"] = request.Madv;
                         ViewData["Title"] = "Thêm mới thông tin tài khoản";

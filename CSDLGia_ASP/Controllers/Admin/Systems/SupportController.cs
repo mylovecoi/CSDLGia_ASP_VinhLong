@@ -17,7 +17,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             _db = db;
         }
 
-        [Route(" ")]
+        [Route("DsHoTro")]
         [HttpGet]
         public IActionResult Index()
         {

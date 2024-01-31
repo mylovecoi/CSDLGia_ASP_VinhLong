@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -17,30 +17,31 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin tài khoản<small>&nbsp;thêm mới</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin tài khoản<small>&nbsp;thêm mới</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="DsTaiKhoan" asp-action="Store" method="post" enctype="multipart/form-data">
-            <div class="card-body">
-                <input hidden asp-for="Madv" />
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="DsTaiKhoan" asp-action="Store" method="post" enctype="multipart/form-data">
+        <div class="card-body">
 
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Đơn vị</label>
-                            <select asp-for="Madv" class="form-control">
-                                @foreach (var item in dsdonvi)
+            <input hidden asp-for="Madv" />
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn vị</label>
+                        <select asp-for="Madv" class="form-control">
+                            @foreach (var item in dsdonvi)
                             {
                                 <option value="@item.MaDv">@item.TenDv</option>
                             }
@@ -68,23 +69,23 @@
                         </select>
                         @*<label>Phân loại chức năng (Tài khoản không đồng thời có chức năng: Quản trị và Tổng hợp/Nhập liệu)</label>
                         <div class="col-12 col-form-label">
-                            <div class="checkbox-inline">
-                                <label class="checkbox">
-                                    <input type="checkbox" onchange="setTongHop()" id="nhaplieu" name="nhaplieu" @(!string.IsNullOrEmpty((string)ViewData["nhaplieu"]) ? "checked" : "")/>
-                                    <span></span>
-                                    Nhập liệu
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" onchange="setTongHop()" id="tonghop" name="tonghop" @(!string.IsNullOrEmpty((string)ViewData["tonghop"]) ? "checked" : "")/>
-                                    <span></span>
-                                    Tổng hợp
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" onchange="setQuanTri()" id="quantri" name="quantri" @(!string.IsNullOrEmpty((string)ViewData["quantri"]) ? "checked" : "")/>
-                                    <span></span>
-                                    Quản trị
-                                </label>
-                            </div>
+                        <div class="checkbox-inline">
+                        <label class="checkbox">
+                        <input type="checkbox" onchange="setTongHop()" id="nhaplieu" name="nhaplieu" @(!string.IsNullOrEmpty((string)ViewData["nhaplieu"]) ? "checked" : "")/>
+                        <span></span>
+                        Nhập liệu
+                        </label>
+                        <label class="checkbox">
+                        <input type="checkbox" onchange="setTongHop()" id="tonghop" name="tonghop" @(!string.IsNullOrEmpty((string)ViewData["tonghop"]) ? "checked" : "")/>
+                        <span></span>
+                        Tổng hợp
+                        </label>
+                        <label class="checkbox">
+                        <input type="checkbox" onchange="setQuanTri()" id="quantri" name="quantri" @(!string.IsNullOrEmpty((string)ViewData["quantri"]) ? "checked" : "")/>
+                        <span></span>
+                        Quản trị
+                        </label>
+                        </div>
                         </div>*@
                     </div>
                 </div>
@@ -115,6 +116,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="DsTaiKhoan" asp-action="Index" asp-route-MaDv="@ViewData["MaDv"]" class="btn btn-danger">
@@ -139,8 +141,8 @@
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
