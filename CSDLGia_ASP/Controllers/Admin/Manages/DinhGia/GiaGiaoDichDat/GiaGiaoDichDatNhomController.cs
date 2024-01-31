@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 {
                     var model = _db.GiaGiaoDichDatNhom.ToList();
                     ViewData["Title"] = "Nhóm đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhMuc/Nhom/Index.cshtml", model);

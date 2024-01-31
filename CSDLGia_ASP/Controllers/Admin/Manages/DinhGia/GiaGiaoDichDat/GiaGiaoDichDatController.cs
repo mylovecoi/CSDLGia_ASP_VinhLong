@@ -87,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá giao dịch đất thực tế trên thị trường";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                         ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Index.cshtml", model);
@@ -96,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     {
                         ViewData["Title"] = "Thông tin giá giao dịch đất thực tế trên thị trường";
                         ViewData["Messages"] = "Hệ thống chưa có định giá giao dịch đất thực tế trên thị trường.";
-                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                         ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
@@ -169,7 +169,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Create.cshtml", model);
@@ -269,7 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     model.GiaGiaoDichDatCt = model_ct.ToList();
 
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Edit.cshtml", model);
@@ -378,7 +378,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Show.cshtml", model);
@@ -476,7 +476,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaGiaoDichDatNhom.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/Index.cshtml");
@@ -545,7 +545,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
-                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/Result.cshtml", model);

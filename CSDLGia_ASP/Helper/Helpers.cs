@@ -442,6 +442,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.trungthaudat.baocao", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.danhmuc", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.thongtin", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.xetduyet", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.timkiem", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Tìm kiếm" });
