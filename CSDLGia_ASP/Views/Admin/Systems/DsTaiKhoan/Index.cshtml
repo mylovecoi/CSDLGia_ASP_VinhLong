@@ -1,25 +1,26 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var gp = (IEnumerable<GroupPermissions>)ViewData["GroupPer"];
     int record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Systems.VMUsers>
-@section custom_style{
+@model IEnumerable<CSDLGia_ASP.Models.Systems.Users>
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#MaDv').change(function() {
+        $(function () {
+            $('#MaDv').change(function () {
                 var current_path_url = '/DsTaiKhoan?';
                 var madv = '&MaDv=' + $('#MaDv').val();
                 var url = current_path_url + madv;
@@ -29,18 +30,18 @@
 
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh sách tài khoản<small>&nbsp;đơn vị</small>
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh sách tài khoản<small>&nbsp;đơn vị</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="DsTaiKhoan" asp-action="Create"
-               asp-route-MaDv="@ViewData["MaDv"]">
+                   asp-route-MaDv="@ViewData["MaDv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -113,26 +114,29 @@
                         <i class="la la-check icon-2x text-info mr-5"></i>
                         }
                         </td>*@
+                            @{
+                                var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
+                            }
                             <td style="text-align:center">
-                                @if (item.TenChucnang == "NHAPLIEU")
+                                @if (tenchucnang == "NHAPLIEU")
                                 {
                                     <i class="la la-check icon-2x text-info mr-5"></i>
                                 }
                             </td>
                             <td style="text-align:center">
-                                @if (item.TenChucnang == "TONGHOP")
+                                @if (tenchucnang == "TONGHOP")
                                 {
                                     <i class="la la-check icon-2x text-info mr-5"></i>
                                 }
                             </td>
                             <td style="text-align:center">
-                                @if (item.TenChucnang == "QUANTRI")
+                                @if (tenchucnang == "QUANTRI")
                                 {
                                     <i class="la la-check icon-2x text-info mr-5"></i>
                                 }
                             </td>
                             <td style="text-align:center">
-                                @if (item.TenChucnang == "K")
+                                @if (string.IsNullOrEmpty(tenchucnang))
                                 {
                                     <i class="la la-check icon-2x text-info mr-5"></i>
                                 }
@@ -163,15 +167,16 @@
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Delete"))
                                 {
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.Name', '@item.Username')">
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.Username', '@item.Name')">
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 }
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
                                 {
-                                    @if (item.TenChucnang == "K")
+                                    @if (string.IsNullOrEmpty(tenchucnang))
                                     {
-                                        <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
+
+                                        <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
                                             <i class="icon-lg la la-user-cog text-dark"></i>
                                         </a>
                                     }
@@ -184,11 +189,12 @@
         </div>
     </div>
 </div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="DsTaiKhoan" asp-action="Delete" method="post">
+            <form asp-controller="DsTaiKhoan" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         @ViewData["Title"]
@@ -203,17 +209,17 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên tài khoản: </label>
-                                <span style="font-weight:bold; color:blue" id="tentk_delete"></span>
+                                <span style="font-weight:bold; color:blue" id="tentk_delete" name="tentk_delete"></span>
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tài khoản truy cập: </label>
-                                <span style="font-weight:bold; color:blue" id="tktruycap_delete"></span>
+                                <span style="font-weight:bold; color:blue" id="username_delete" name="username_delete"></span>
                             </div>
                         </div>
                     </div>
-                    <input id="id_delete" name="id_delete" type="hidden" />
+                    <input id="id_delete" name="id_delete" @* type="hidden" *@ />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -223,10 +229,11 @@
         </div>
     </div>
 </div>
-@*<script>
-    function SetDelete(id, tentk, tktruycap) {
+
+<script>
+    function SetDelete(id, username, tentk) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("username_delete").innerHTML = username;
         document.getElementById("tentk_delete").innerHTML = tentk;
-        document.getElementById("tktruycap_delete").innerHTML = tktruycap;
     }
-</script>*@
+</script>

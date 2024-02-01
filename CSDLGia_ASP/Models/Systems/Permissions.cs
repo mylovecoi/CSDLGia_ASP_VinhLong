@@ -9,6 +9,8 @@ namespace CSDLGia_ASP.Models.Systems
 
         [Required]
         public string Username { get; set; }
+        public string Tendangnhap { get; set; }
+        public string Madv { get; set; }
 
         [Required]
         public string Roles { get; set; }

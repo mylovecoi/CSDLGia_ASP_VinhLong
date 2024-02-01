@@ -35,7 +35,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         MaDv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                     }
                     var model = _db.Users.Where(t => t.Madv == MaDv).ToList();
-                    var model_join = (from user in model
+
+
+                    /*var model_join = (from user in model
                                       join nhom in _db.GroupPermissions on user.Chucnang equals nhom.KeyLink
                                       select new VMUsers
                                       {
@@ -46,16 +48,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                           Chucnang = user.Chucnang,
                                           TenChucnang = nhom.ChucNang,
                                           Status = user.Status
-                                      });
+                                      });*/
 
                     ViewData["DsDonVi"] = dsdonvi;
                     ViewData["DsDiaBan"] = dsdiaban;
                     ViewData["MaDv"] = MaDv;
+                    ViewData["GroupPer"] = _db.GroupPermissions;
                     ViewData["Title"] = "Danh sách tài khoản đơn vị";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
                     ViewData["MenuLv3"] = "menu_dstaikhoan";
-                    return View("Views/Admin/Systems/DsTaiKhoan/Index.cshtml", model_join);
+                    return View("Views/Admin/Systems/DsTaiKhoan/Index.cshtml", model);
                 }
                 else
                 {
@@ -121,21 +124,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         chucnang += !string.IsNullOrEmpty(nhaplieu) ? "NHAPLIEU;" : "";
                         chucnang += !string.IsNullOrEmpty(tonghop) ? "TONGHOP;" : "";
                         chucnang += !string.IsNullOrEmpty(quantri) ? "QUANTRI;" : "";*/
-
-                        var model = new Users
+                        if (string.IsNullOrEmpty(request.Chucnang))
                         {
-                            Madv = request.Madv,
-                            Name = request.Name,
-                            Status = request.Status,
-                            Chucnang = request.Chucnang,
-                            Username = request.Username,
-                            Password = md5_password,
-                            Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
-                        };
-                        _db.Users.Add(model);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });
+                            var model = new Users
+                            {
+                                Madv = request.Madv,
+                                Name = request.Name,
+                                Status = request.Status,
+                                Chucnang = "PerS_" + DateTime.Now.ToString("yymmssfff"),
+                                Username = request.Username,
+                                Password = md5_password,
+                                Created_at = DateTime.Now,
+                                Updated_at = DateTime.Now,
+                            };
+                            _db.Users.Add(model);
+                            _db.SaveChanges();
+                            return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });
+                        }
+                        else
+                        {
+                            var model = new Users
+                            {
+                                Madv = request.Madv,
+                                Name = request.Name,
+                                Status = request.Status,
+                                Chucnang = request.Chucnang,
+                                Username = request.Username,
+                                Password = md5_password,
+                                Created_at = DateTime.Now,
+                                Updated_at = DateTime.Now,
+                            };
+                            _db.Users.Add(model);
+                            _db.SaveChanges();
+                            return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });
+                        }
                     }
                     else
                     {
@@ -277,6 +299,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Delete"))
                 {
                     var model = _db.Users.FirstOrDefault(t => t.Id == id_delete);
+                    /*return Ok(model);*/
                     _db.Users.Remove(model);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = model.Madv });
@@ -295,14 +318,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan/Permission")]
         [HttpGet]
-        public IActionResult Permissions(string Username, string Chucnang)
+        public IActionResult Permissions(string Username, string Madv, string Chucnang)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
                 {
-                    var model = _db.Permissions.Where(t => t.Username == Chucnang);
+                    var model = _db.Permissions.Where(t => t.Username == Chucnang && t.Tendangnhap == Username && t.Madv == Madv);
+                    
                     ViewData["Username"] = Username;
+                    ViewData["Madv"] = Madv;
                     ViewData["Chucnang"] = Chucnang;
                     ViewData["Title"] = "Thông tin quyền truy cập";
                     ViewData["MenuLv1"] = "menu_hethong";
