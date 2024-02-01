@@ -62,6 +62,7 @@
                     <div class="form-group">
                         <label>Phân loại nhóm tài khoản</label>
                         <select asp-for="Chucnang" class="form-control">
+                            <option value="">Khác</option>
                             @foreach (var item in chucnang)
                             {
                                 <option value="@item.KeyLink">@item.TenNhomQ</option>
