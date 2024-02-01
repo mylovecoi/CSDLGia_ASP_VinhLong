@@ -29,8 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Index"))
                 {
-                    var model = _db.GiaHhDvkDm.Where(t => t.Matt == Matt).ToList();
-
+                    var model = _db.GiaHhDvkDm.Where(t => t.Matt == Matt);
                     ViewData["Matt"] = Matt;
                     ViewData["Tentt"] = _db.GiaHhDvkNhom.FirstOrDefault(t => t.Matt == Matt).Tentt;
                     ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC").ToList();

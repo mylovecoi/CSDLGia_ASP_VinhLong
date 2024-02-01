@@ -3072,6 +3072,18 @@
                                         </li>
                                     }
 
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.baocao", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_giadgd_bc">
+                                            <a asp-controller="GiaTrungThauDatBc" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-line">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+
                                 </ul>
                             </div>
                         </li>
@@ -3233,6 +3245,7 @@
                             </a>
                         </li>
                     }
+
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_bc">
@@ -3244,6 +3257,7 @@
                             </a>
                         </li>
                     }
+
                 </ul>
             </div>
         </li>
@@ -3498,7 +3512,7 @@
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
                                     {
-                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_tk">
+                                        <li class="menu-item" aria-haspopup="true" id="menu_dglp_bc">
                                             <a asp-controller="GiaLePhiBc" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>

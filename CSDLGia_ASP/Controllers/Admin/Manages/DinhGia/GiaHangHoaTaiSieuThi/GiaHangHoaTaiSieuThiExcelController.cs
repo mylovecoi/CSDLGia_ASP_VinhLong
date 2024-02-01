@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 {
-    public class GiaNuocShExcelController : Controller
+    public class GiaHangHoaTaiSieuThiExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaNuocShExcelController(CSDLGiaDBContext db)
+        public GiaHangHoaTaiSieuThiExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
