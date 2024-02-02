@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
@@ -120,6 +121,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             md5_password = change;
                         }
 
+                        var checkper = _db.Permissions.Where(t => t.Status == "Disable");
+                        if (checkper != null)
+                        {
+                            _db.Permissions.RemoveRange(checkper);
+                            _db.SaveChanges();
+                        }
+
                         /*string chucnang = "";
                         chucnang += !string.IsNullOrEmpty(nhaplieu) ? "NHAPLIEU;" : "";
                         chucnang += !string.IsNullOrEmpty(tonghop) ? "TONGHOP;" : "";
@@ -139,6 +147,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             };
                             _db.Users.Add(model);
                             _db.SaveChanges();
+
+                            var role = Helpers.GetRoleList().ToList();
+                            var per = new List<Permissions>();
+
+                            foreach (var item in role)
+                            {
+                                per.Add(new Permissions()
+                                {
+                                    Username = model.Chucnang,
+                                    Tendangnhap = model.Username,
+                                    Madv = model.Madv,
+                                    Roles = item.Role,
+                                    Status = "Disable",
+                                });
+                            }
+                            _db.Permissions.AddRange(per);
+                            _db.SaveChanges();
+
                             return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });
                         }
                         else
@@ -324,8 +350,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
                 {
-                    var model = _db.Permissions.Where(t => t.Username == Chucnang && t.Tendangnhap == Username && t.Madv == Madv);
-                    
+                    /*var check = _db.Permissions.Where(t => t.Status == "Disable");
+                    if (check != null)
+                    {
+                        _db.Permissions.RemoveRange(check);
+                        _db.SaveChanges();
+                    }*/
+                    var model = _db.Permissions.Where(t => t.Username == Chucnang && t.Tendangnhap == Username && t.Madv == Madv).ToList();
+
                     ViewData["Username"] = Username;
                     ViewData["Madv"] = Madv;
                     ViewData["Chucnang"] = Chucnang;
@@ -334,6 +366,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
                     ViewData["MenuLv3"] = "menu_dstaikhoan";
                     return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("DsTaiKhoan/Permission/Update")]
+        [HttpPost]
+        public IActionResult Update(string KeyLink, string Username, string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Edit"))
+                {
+                    var model = _db.Permissions.Where(t => t.Username == KeyLink && t.Tendangnhap == Username && t.Madv == Madv);
+                    foreach (var item in model)
+                    {
+                        item.Status = "Enable";
+                    }
+                    _db.Permissions.UpdateRange(model);
+                    _db.SaveChanges();
+                    ViewData["Title"] = "Thông tin quyền truy cập";
+                    ViewData["MenuLv1"] = "menu_hethong";
+                    ViewData["MenuLv2"] = "menu_qtnguoidung";
+                    ViewData["MenuLv3"] = "menu_dstaikhoan";
+                    return RedirectToAction("Index", "DsTaiKhoan", new {Madv = Madv});
                 }
                 else
                 {

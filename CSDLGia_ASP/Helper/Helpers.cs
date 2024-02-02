@@ -524,7 +524,6 @@ namespace CSDLGia_ASP.Helper
             }
         }
 
-
         public static string GetThongTinDonVi(ISession session, string key)
         {
             if (!string.IsNullOrEmpty(session.GetString("ThongTinDonVi")))
@@ -1273,6 +1272,7 @@ namespace CSDLGia_ASP.Helper
            };
             return phanloai;
         }
+
         public static string[] Loaigia()
         {
             string[] loaigia = new string[]
@@ -1284,6 +1284,7 @@ namespace CSDLGia_ASP.Helper
             };
             return loaigia;
         }
+
         public static string[] Nguonthongtin()
         {
             string[] nguontt = new string[]
@@ -1296,6 +1297,7 @@ namespace CSDLGia_ASP.Helper
             };
             return nguontt;
         }
+
         public static string[] TinhtrangTs()
         {
             string[] ttrang = new string[]
