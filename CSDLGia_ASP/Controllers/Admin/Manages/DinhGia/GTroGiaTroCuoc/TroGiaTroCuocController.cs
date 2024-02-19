@@ -164,6 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
+
                     _db.GiaTroGiaTroCuoc.Add(model);
                     _db.SaveChanges();
 

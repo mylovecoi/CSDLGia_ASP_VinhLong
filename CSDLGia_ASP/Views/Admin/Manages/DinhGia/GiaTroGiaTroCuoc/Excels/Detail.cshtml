@@ -1,7 +1,8 @@
 ﻿@{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaTroGiaTroCuocCt>)ViewData["modelct"];
+    var dmsanpham = (IEnumerable<GiaTroGiaTroCuocDm>)ViewData["DmSanPhamDichVu"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -12,12 +13,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Mã nhóm</th>
-                    <th>Tên nhóm</th>
-                    <th>Phân loại</th>
-                    <th>Đơn vị tính</th>
+                    <th>Tên sản phẩm dịch vụ</th>
                     <th>Đơn giá</th>
-                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,21 +22,16 @@
                 {
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>
-                        <td>@item.Manhom</td>
-                        <td>@item.Tennhom</td>
-                        <td>@item.Ten</td>
-                        <td>@item.Dvt</td>
-                        <td>@item.Gia</td>
                         <td>
-                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                <i class="icon-lg la la-edit text-primary"></i>
-                            </button>
-                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                    onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                <i class="icon-lg la la-trash text-danger"></i>
-                            </button>
+                            @foreach (var ds in dmsanpham)
+                            {
+                                @if (item.Maspdv == ds.Maspdv)
+                                {
+                                    <span style="text-align: center">@ds.Tenspdv</span>
+                                }
+                            }
                         </td>
+                        <td>@item.Dongia</td>
                     </tr>
                 }
 

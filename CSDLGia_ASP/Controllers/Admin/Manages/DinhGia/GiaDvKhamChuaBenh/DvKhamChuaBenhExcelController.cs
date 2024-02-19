@@ -29,12 +29,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
                     var model = new GiaDvKcbCt
-                    { 
-                        //Manhom = "1",
-                        //Tennhom = "2",
-                        //Ten = "3",
-                        //Dvt = "4",
-                        //Gia = "5",
+                    {
+                        Maspdv = "1",
+                        Tenspdv = "2",
+                        Dvt = "3",
+                        Giadv = 4, 
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
@@ -90,13 +89,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaDvKcbCt request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<GiaDvKcbCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -110,30 +109,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaDvKcbCt
                             {
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
+
+                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+
+                                Tenspdv = worksheet.Cells[row, Int16.Parse(request.Tenspdv)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Tenspdv)].Value.ToString().Trim() : "",
+
                                 Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+
+                                Giadv = worksheet.Cells[row, Int16.Parse(request.Giadv.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giadv.ToString())].Value) : 0,
+
                             });
                         }
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaDvKcbCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "DvKhamChuaBenhExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

@@ -26,32 +26,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
                 {
                     var model = new GiaNuocShCt
                     {
-                        Doituongsd = "1",
-                        Namchuathue = "2",
-                        Giachuathue = 3,
-                        Namchuathue1 = "4",
-                        Giachuathue1 = 5,
-                        Namchuathue2 = "6",
-                        Giachuathue2 = 7,
-                        Namchuathue3 = "8",
-                        Giachuathue3 = 9,
-                        Namchuathue4 = "10",
-                        Giachuathue4 = 11,
-
+                       
                         Sheet = 1,
                         LineStart = 3,
                         LineStop = 1000,  
                     };
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
+                    ViewData["MenuLv2"] = "menu_dgsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgsieuthi_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá nước sạch sinh hoạt";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Excels/Excel.cshtml", model);
+                    ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa tại siêu thị";
+                    return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -73,13 +62,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá nước sạch sinh hoạt";
+                    ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
+                    ViewData["MenuLv2"] = "menu_dgsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgsieuthi_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();

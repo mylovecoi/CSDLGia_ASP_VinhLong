@@ -97,9 +97,18 @@
 <script>
     function SetEdit(id_edit) {
         var begin = $("#Tunam").val();
+       
         var datebegin = parseInt(begin);
         var end = $("#Dennam").val();
         var dateend = parseInt(end);
+        // console.log("Id: ", id_edit);
+        // console.log("Date Begin: ", datebegin);
+        // console.log("Date End: ", dateend);
+        // console.log("Nam: ", datebegin);
+        // console.log("Nam1: ", datebegin + 1 <= dateend ? datebegin + 1 : "");
+        // console.log("Nam2: ", datebegin + 2 <= dateend ? datebegin + 2 : "");
+        // console.log("Nam3: ", datebegin + 3 <= dateend ? datebegin + 3 : "");
+        // console.log("Nam4: ", datebegin + 4 <= dateend ? datebegin + 4 : "");
         $.ajax({
             url: '/GiaNuocShCt/Edit',
             type: 'POST',
@@ -109,10 +118,11 @@
                 Nam1: datebegin + 1 <= dateend ? datebegin + 1 : "",
                 Nam2: datebegin + 2 <= dateend ? datebegin + 2 : "",
                 Nam3: datebegin + 3 <= dateend ? datebegin + 3 : "",
-                Nam4: datebegin + 4 <= dateend ? datebegin + 4 : "",
+                Nam4: datebegin + 4 <= dateend ? datebegin + 4 : "", 
             },
             dataType: 'JSON',
             success: function (data) {
+                console.log("Status: ", data.status);
                 if (data.status == 'success') {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
