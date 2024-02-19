@@ -26,25 +26,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
-                    { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
+                    var model = new GiaTroGiaTroCuocCt
+                    {
+                        Tenspdv = "1",
+                        Dongia = 2,
+
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
                     };
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+                    ViewData["MenuLv2"] = "menu_dgtgtc";
+                    ViewData["MenuLv3"] = "menu_dgtgtc_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    return View("Views/Admin/Manages/DinhGia/TroGiaTroCuoc/Excels/Excel.cshtml", model);
+                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ được trợ giá trợ cước";
+                    return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -66,22 +64,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
+                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ được trợ giá trợ cước";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+                    ViewData["MenuLv2"] = "menu_dgtgtc";
+                    ViewData["MenuLv3"] = "menu_dgtgtc_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
-                    /*return Ok(ViewData["modelct"]);*/
+                    ViewData["modelct"] = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs);
+                    ViewData["DmSanPhamDichVu"] = _db.GiaTroGiaTroCuocDm.ToList();
 
-
-
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -96,13 +92,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaTroGiaTroCuocCt request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+
+                var list_add = new List<GiaTroGiaTroCuocCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -116,30 +113,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaTroGiaTroCuocCt
                             {
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+
+                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+
+                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
                             });
                         }
+
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaTroGiaTroCuocCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "TroGiaTroCuocExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

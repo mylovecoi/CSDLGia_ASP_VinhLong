@@ -28,5 +28,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
+        public string Trangthai { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
     }
 }

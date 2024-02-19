@@ -38,12 +38,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 1</label>";
                 result += "<input type='number' id='nam_edit' name='nam_edit' class='form-control' value='" + (model.Namchuathue == null ? Nam : model.Namchuathue) + "'  />";
-                /*result += "<select id='nam_edit' name='nam_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue == i.ToString() ? "selected" : (Nam == null ? i : Nam)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
                 result += "</div>";
                 result += "</div>";
 
@@ -58,12 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 2</label>";
                 result += "<input type='number' id='nam1_edit' name='nam1_edit' class='form-control' value='" + (model.Namchuathue1 == null ? Nam1 : model.Namchuathue1) + "' />";
-                /*result += "<select id='nam1_edit' name='nam1_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue1 == i.ToString() ? "selected" : (Nam1 == null ? i : Nam1)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+
                 result += "</div>";
                 result += "</div>";
 
@@ -78,12 +67,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 3</label>";
                 result += "<input type='number' id='nam2_edit' name='nam2_edit' class='form-control' value='" + (model.Namchuathue2 == null ? Nam2 : model.Namchuathue2) + "' />";
-                /*result += "<select id='nam2_edit' name='nam2_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue2 == i.ToString() ? "selected" : (Nam2 == null ? i : Nam2)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
                 result += "</div>";
                 result += "</div>";
 
@@ -98,12 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 4</label>";
                 result += "<input type='number' id='nam3_edit' name='nam3_edit' class='form-control' value='" + (model.Namchuathue3 == null ? Nam3 : model.Namchuathue3) + "' />";
-                /*result += "<select id='nam3_edit' name='nam3_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue3 == i.ToString() ? "selected" : (Nam3 == null ? i : Nam3)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+
                 result += "</div>";
                 result += "</div>";
 
@@ -118,12 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 5</label>";
                 result += "<input type='number' id='nam4_edit' name='nam4_edit' class='form-control' value='" + (model.Namchuathue4 == null ? Nam4 : model.Namchuathue4) + "'/>";
-                /*result += "<select id='nam4_edit' name='nam4_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue4 == i.ToString() ? "selected" : (Nam4 == null ? i : Nam4)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+              
                 result += "</div>";
                 result += "</div>";
 
@@ -134,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "</div>";
                 result += "</div>";
 
-                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                result += "<input type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                 result += "</div>";
                 result += "</div>";
 

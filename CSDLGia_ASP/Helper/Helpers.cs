@@ -151,8 +151,6 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.trogiatrocuoc.timkiem", Name = "ĐG - Mức trợ giá trợ cước - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.trogiatrocuoc.baocao", Name = "ĐG - Mức trợ giá trợ cước - Báo cáo" });
 
-         
-
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tths", Name = "ĐG - Giá tài sản trong tố tụng hình sự" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tths.thongtin", Name = "ĐG - Giá tài sản trong tố tụng hình sự - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.tths.xetduyet", Name = "ĐG - Giá tài sản trong tố tụng hình sự - Xét duyệt" });
@@ -223,9 +221,6 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.xetduyet", Name = "ĐG - Giá siêu thị  - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.timkiem", Name = "ĐG - Giá siêu thị - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", Name = "ĐG - Giá siêu thị  - Báo cáo" });
-
-
-         
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong", Name = "Giá tài sản công" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.thongtin", Name = "Giá tài sản công - Thông tin" });

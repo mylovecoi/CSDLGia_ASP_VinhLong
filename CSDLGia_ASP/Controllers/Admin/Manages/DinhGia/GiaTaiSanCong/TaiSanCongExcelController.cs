@@ -28,23 +28,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
+                    var model = new GiaTaiSanCongCt
                     { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
+                        Tentaisan = "1",
+                        Dacdiem = "2",
+                        Giathue = 3,
+                        Giaconlai = 4,
+                        Giapheduyet = 5,
+                        Giaban = 6,
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
                     };
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+                    ViewData["MenuLv2"] = "menu_tsc";
+                    ViewData["MenuLv3"] = "menu_giatsc_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
-                    return View("Views/Admin/Manages/DinhGia/TaiSanCong/Excels/Excel.cshtml", model);
+                    ViewData["Title"] = "Thông tin hồ sơ giá tài sản công";
+                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -69,19 +70,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
+                    ViewData["Title"] = "Thông tin hồ sơ giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+                    ViewData["MenuLv2"] = "menu_tsc";
+                    ViewData["MenuLv3"] = "menu_giatsc_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaXayDungMoiCt.Where(t => t.Mahs == Mahs);
-                    /*return Ok(ViewData["modelct"]);*/
+                    ViewData["modelct"] = _db.GiaTaiSanCongCt.Where(t => t.Mahs == Mahs);
 
-
-
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -96,13 +94,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaTaiSanCongCt request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<GiaTaiSanCongCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -116,30 +114,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaTaiSanCongCt
                             {
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+                                Tentaisan = worksheet.Cells[row, Int16.Parse(request.Tentaisan)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Tentaisan)].Value.ToString().Trim() : "",
+
+                                Dacdiem = worksheet.Cells[row, Int16.Parse(request.Dacdiem)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dacdiem)].Value.ToString().Trim() : "",
+
+
+                                Giathue = worksheet.Cells[row, Int16.Parse(request.Giathue.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathue.ToString())].Value) : 0,
+
+
+                                Giapheduyet = worksheet.Cells[row, Int16.Parse(request.Giapheduyet.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giapheduyet.ToString())].Value) : 0,
+
+
+                                Giaban = worksheet.Cells[row, Int16.Parse(request.Giaban.ToString())].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giaban.ToString())].Value) : 0,
+
+
                             });
                         }
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaTaiSanCongCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "TaiSanCongExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {
