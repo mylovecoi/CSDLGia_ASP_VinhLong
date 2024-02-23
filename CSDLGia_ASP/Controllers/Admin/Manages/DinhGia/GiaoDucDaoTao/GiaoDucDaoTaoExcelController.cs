@@ -87,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs);
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -132,41 +132,49 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                 Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
 
-                                Namapdung1 = worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value.ToString().Trim() : "",
 
-                                Giathanhthi1 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value) : 0,
 
-                                Gianongthon1 = worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value) : 0,
+                                //Namapdung1 = worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value != null ?
+                                //            worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value.ToString().Trim() : "",
 
-                                Giamiennui1 = worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value) : 0,
+                                //Giathanhthi1 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value) : 0,
 
-                                Namapdung2 = worksheet.Cells[row, Int16.Parse(request.Namapdung2)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value.ToString().Trim() : "",
+                                //Gianongthon1 = worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value) : 0,
 
-                                Giathanhthi2 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi2.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value) : 0,
+                                //Giamiennui1 = worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value) : 0,
 
-                                Gianongthon2 = worksheet.Cells[row, Int16.Parse(request.Gianongthon2.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value) : 0,
 
-                                Giamiennui2 = worksheet.Cells[row, Int16.Parse(request.Giamiennui2.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value) : 0,
 
-                                Namapdung3 = worksheet.Cells[row, Int16.Parse(request.Namapdung3)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Namapdung1)].Value.ToString().Trim() : "",
 
-                                Giathanhthi3 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi3.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi1.ToString())].Value) : 0,
+                                //Namapdung2 = worksheet.Cells[row, Int16.Parse(request.Namapdung2)].Value != null ?
+                                //            worksheet.Cells[row, Int16.Parse(request.Namapdung2)].Value.ToString().Trim() : "",
 
-                                Gianongthon3 = worksheet.Cells[row, Int16.Parse(request.Gianongthon3.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon1.ToString())].Value) : 0,
+                                //Giathanhthi2 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi2.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi2.ToString())].Value) : 0,
 
-                                Giamiennui3 = worksheet.Cells[row, Int16.Parse(request.Giamiennui3.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui1.ToString())].Value) : 0,
+                                //Gianongthon2 = worksheet.Cells[row, Int16.Parse(request.Gianongthon2.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon2.ToString())].Value) : 0,
+
+                                //Giamiennui2 = worksheet.Cells[row, Int16.Parse(request.Giamiennui2.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui2.ToString())].Value) : 0,
+
+
+
+
+                                //Namapdung3 = worksheet.Cells[row, Int16.Parse(request.Namapdung3)].Value != null ?
+                                //            worksheet.Cells[row, Int16.Parse(request.Namapdung3)].Value.ToString().Trim() : "",
+
+                                //Giathanhthi3 = worksheet.Cells[row, Int16.Parse(request.Giathanhthi3.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathanhthi3.ToString())].Value) : 0,
+
+                                //Gianongthon3 = worksheet.Cells[row, Int16.Parse(request.Gianongthon3.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gianongthon3.ToString())].Value) : 0,
+
+                                //Giamiennui3 = worksheet.Cells[row, Int16.Parse(request.Giamiennui3.ToString())].Value != null ?
+                                //           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giamiennui3.ToString())].Value) : 0,
 
 
 
@@ -177,7 +185,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 }
                 _db.GiaDvGdDtCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaoDucDaoTaoExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

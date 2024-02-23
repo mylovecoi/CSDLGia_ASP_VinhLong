@@ -60,6 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                             ViewData["DsDonVi"] = dsdonvi;
+                            model = _db.GiaRung.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
                         }
                         else
                         {

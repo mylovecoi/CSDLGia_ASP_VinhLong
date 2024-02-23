@@ -1,7 +1,9 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Linq;
 
 
@@ -24,8 +26,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 var check = _db.Permissions.Where(t => t.Username == Username && t.Roles == Roles);
                 if (check.Count() == 0)
                 {
+
+                    var Name = Helpers.GetRoleList().Where(t => t.Role == Roles).Select(t => t.Name).FirstOrDefault();
                     var request = new Permissions
                     {
+                        Name = Name,
                         Username = Username,
                         Roles = Roles,
                         Index = Index,
@@ -310,7 +315,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "<td style='text-align:center'>" + (record_id++) + "</td>";
 
 
-                    result += "<td style='font-weight:bold;color:blue'>" + item.Roles + "</td>";
+                    result += "<td style='font-weight:bold;color:blue'>" + item.Name + "</td>";
 
 
                     result += "<td style=text-align:center'>";
@@ -406,7 +411,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "<td style='text-align:center'>" + (record_id++) + "</td>";
 
 
-                    result += "<td style='font-weight:bold;color:blue'>" + item.Roles + "</td>";
+                    result += "<td style='font-weight:bold;color:blue'>" + item.Name + "</td>";
 
 
                     result += "<td style=text-align:center'>";

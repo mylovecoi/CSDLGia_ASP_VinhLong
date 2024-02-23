@@ -13893,6 +13893,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Madv")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Roles")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

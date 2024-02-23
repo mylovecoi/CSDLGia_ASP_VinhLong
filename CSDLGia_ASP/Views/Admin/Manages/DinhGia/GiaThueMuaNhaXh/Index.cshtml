@@ -25,7 +25,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/DinhGiaThueMuaNhaXaHoi?';
+                var current_path_url = '/GiaThueMuaNhaXh?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -44,7 +44,7 @@
             </h3>
         </div>
         <div>
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.r.ttg", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="Giathuemuanhaxh" asp-action="Create" asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
@@ -133,6 +133,7 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
+
                         @if (item.Macqcq != null)
                         {
                             @foreach (var ds in dscqcq)

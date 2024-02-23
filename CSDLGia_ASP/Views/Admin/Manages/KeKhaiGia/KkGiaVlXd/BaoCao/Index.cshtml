@@ -1,0 +1,230 @@
+﻿@{
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+}
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function() {
+            //$('.select2multi').select2();
+
+            $("#radio1").click(function() {
+                if (this.checked) {
+                    $("#option2").css("display", "none");
+                    $("#option1").css("display", "block");
+                }
+            });
+
+            $("#radio2").click(function() {
+                if (this.checked) {
+                    $("#option1, .quy").css("display", "none");
+                    $("#option2, .thang").css("display", "block");
+                }
+            });
+
+            $("#radio3").click(function() {
+                if (this.checked) {
+                    $("#option1, .thang").css("display", "none");
+                    $("#option2, .quy").css("display", "block");
+                }
+            });
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Báo cáo tổng hợp<small>&nbsp;kê khai giá vật liệu xây dựng</small><br />
+                </h3>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <ol>
+                            <li>
+                                <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                    <span style="font-size:16px; color:blue;  font-weight: bold">
+                                        Báo cáo tổng hợp giá kê khai giá vật liệu xây dựng
+                                    </span>
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Report Modal!-->
+    <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form asp-controller="KkGiaVlXdBc" target="_blank" id="frm_report">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="card-label">
+                            Báo cáo tổng hợp kê khai giá vật liệu xây dựng
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b>Phân loại</b></label>
+                                    <select class="form-control" id="phanloai" name="phanloai">
+                                        <option value="ngaychuyen">Ngày chuyển</option>
+                                        <option value="ngayduyet">Ngày duyệt</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <label><b>Thời điểm</b></label>
+                                <div class="radio-inline">
+                                    <label class="radio">
+                                        <input type="radio" checked="checked" id="radio1" name="time" value="ngay" />
+                                        <span></span>
+                                        Theo ngày
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" id="radio2" name="time" value="thang" />
+                                        <span></span>
+                                        Theo tháng
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" id="radio3" name="time" value="quy" />
+                                        <span></span>
+                                        Theo quý
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="option1">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label><b>Từ ngày</b></label>
+                                        <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label><b>Đến ngày</b></label>
+                                        <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="option2" style="display: none">
+                            <div class="row">
+                                <div class="col-xl-6 thang">
+                                    <div class="form-group">
+                                        <label><b>Tháng</b></label>
+                                        <select class="form-control" name="thang" id="thang">
+                                            @{
+                                            for (var month = 1; month <= 12; month++)
+                                            {
+                                                <option value="@month">Tháng @month</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 quy">
+                                <div class="form-group">
+                                    <label><b>Quý</b></label>
+                                    <select class="form-control" name="quy" id="quy">
+                                        @{
+                                            for (var quarter = 1; quarter <= 4; quarter++)
+                                            {
+                                                <option value="@quarter">Quý @quarter</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label><b>Năm</b></label>
+                                    <select class="form-control" name="nam" id="nam">
+                                        @{
+                                            var nam_start = DateTime.Now.Year - 5;
+                                            var nam_stop = DateTime.Now.Year + 1;
+                                            for (var year = nam_start; year <= nam_stop; year++)
+                                            {
+                                                <option value="@year">Năm @year</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC1('BaoCaoKkGiaThan/Bc1')">BC Tổng hợp</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC2('BaoCaoKkGiaThan/Bc2')">BC Chi tiết</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function ClickBC1(url) {
+        $('#frm_report').attr('action', url);
+
+        if (document.querySelector('input[name="time"]:checked').value == "ngay") {
+            var date_tu = new Date($('#tungay').val());
+            var date_den = new Date($('#denngay').val());
+            var date_tu_int = date_tu.getTime();
+            var date_den_int = date_den.getTime();
+            if (date_tu_int > date_den_int) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            } else {
+                $('#frm_report').submit();
+            }
+        } else {
+            $('#frm_report').submit();
+        }
+    }
+
+    function ClickBC2(url) {
+        $('#frm_report').attr('action', url);
+
+        if (document.querySelector('input[name="time"]:checked').value == "ngay") {
+            var date_tu = new Date($('#tungay').val());
+            var date_den = new Date($('#denngay').val());
+            var date_tu_int = date_tu.getTime();
+            var date_den_int = date_den.getTime();
+            if (date_tu_int > date_den_int) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            } else {
+                $('#frm_report').submit();
+            }
+        } else {
+            $('#frm_report').submit();
+        }
+    }
+</script>

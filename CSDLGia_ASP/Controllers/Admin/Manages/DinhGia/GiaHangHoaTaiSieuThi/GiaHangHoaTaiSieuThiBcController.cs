@@ -18,29 +18,29 @@ using CSDLGia_ASP.Models.Manages.DinhGia;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 {
-    public class GiaNuocShBcController : Controller
+    public class GiaHangHoaTaiSieuThiBcController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaNuocShBcController(CSDLGiaDBContext db)
+        public GiaHangHoaTaiSieuThiBcController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("GiaNuocSh/BaoCao")]
+        [Route("GiaHangHoaTaiSieuThi/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", "Index"))
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp nước sinh hoạt";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/BaoCao/Index.cshtml");
+                    ViewData["MenuLv2"] = "menu_dgsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgsieuthi_bc";
+                    return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/BaoCao/Index.cshtml");
                 }
                 else
                 {
@@ -54,18 +54,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             }
         }
 
-        [Route("GiaNuocSh/BaoCao/BcTH")]
+        [Route("GiaHangHoaTaiSieuThi/BaoCao/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkbc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", "Index"))
                 {
 
-                    var model = (from pl in _db.GiaNuocSh.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    var model = (from pl in _db.GiaHangHoaTaiSieuThi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
                                  join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
-                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                  {
                                      Id = pl.Id,
                                      Mahs = pl.Mahs,
@@ -75,11 +75,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                  });
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá nước sinh hoạt";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/BaoCao/BcTH.cshtml", model);
+                    ViewData["MenuLv2"] = "menu_dgsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgsieuthi_bc";
+                    return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/BaoCao/BcTH.cshtml", model);
                 }
                 else
                 {
@@ -93,24 +93,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             }
         }
 
-        [Route("GiaNuocSh/BaoCao/BcCT")]
+        [Route("GiaHangHoaTaiSieuThi/BaoCao/BcCT")]
         [HttpPost]
         public IActionResult BcCT(DateTime tungay, DateTime denngay)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkbc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", "Index"))
                 {
-                    var model = _db.GiaNuocSh.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+                    var model = _db.GiaHangHoaTaiSieuThi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                             
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["Chitiet"] = _db.GiaNuocShCt;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá nước sinh hoạt";
+                    ViewData["Chitiet"] = _db.GiaHangHoaTaiSieuThiCt;
+                    ViewData["Title"] = "Báo cáo tổng hợp giá giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/BaoCao/BcCT.cshtml", model);
+                    ViewData["MenuLv2"] = "menu_dgsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgsieuthi_bc";
+                    return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/BaoCao/BcCT.cshtml", model);
                 }
                 else
                 {

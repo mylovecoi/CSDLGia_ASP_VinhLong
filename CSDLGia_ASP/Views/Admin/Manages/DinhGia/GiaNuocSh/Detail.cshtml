@@ -101,16 +101,9 @@
         var datebegin = parseInt(begin);
         var end = $("#Dennam").val();
         var dateend = parseInt(end);
-        // console.log("Id: ", id_edit);
-        // console.log("Date Begin: ", datebegin);
-        // console.log("Date End: ", dateend);
-        // console.log("Nam: ", datebegin);
-        // console.log("Nam1: ", datebegin + 1 <= dateend ? datebegin + 1 : "");
-        // console.log("Nam2: ", datebegin + 2 <= dateend ? datebegin + 2 : "");
-        // console.log("Nam3: ", datebegin + 3 <= dateend ? datebegin + 3 : "");
-        // console.log("Nam4: ", datebegin + 4 <= dateend ? datebegin + 4 : "");
+   
         $.ajax({
-            url: '/GiaNuocShCt/Edit',
+            url: '/GiaNuocShCtNew/Edit',
             type: 'POST',
             data: {
                 Id: id_edit,
@@ -122,16 +115,19 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                console.log("Status: ", data.status);
-                if (data.status == 'success') {
+                if (data.status == 'success') 
+                {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
                     MoneyMask();
-                } else {
+                } else 
+                {
                     toastr.error(data.message, "Lỗi!!!");
                 }
             }
         })
+
+
     }
 
     function SetUpdate() {
@@ -141,7 +137,7 @@
         var gia3 = $('#gia3_edit').val().replace(',', '');
         var gia4 = $('#gia4_edit').val().replace(',', '');
         $.ajax({
-            url: '/GiaNuocShCt/Update',
+            url: '/GiaNuocShCtNew/Update',
             type: 'POST',
             data: {
                 Namchuathue: $('#nam_edit').val(),

@@ -6,22 +6,22 @@ using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 {
-    public class GiaNuocShCtController : Controller
+    public class GiaHangHoaTaiSieuThiCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaNuocShCtController(CSDLGiaDBContext db)
+        public GiaHangHoaTaiSieuThiCtController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("GiaNuocShCt/Edit")]
+        [Route("GiaHangHoaTaiSieuThiCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id, string Nam, string Nam1, string Nam2, string Nam3, string Nam4)
         {
             var nam_start = DateTime.Now.Year - 10;
             var nam_stop = DateTime.Now.Year + 10;
-            var model = _db.GiaNuocShCt.FirstOrDefault(p => p.Id == Id);
+            var model = _db.GiaHangHoaTaiSieuThiCt.FirstOrDefault(p => p.Id == Id);
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đối tượng</label>";
+                result += "<label>Tên sản phẩm</label>";
                 result += "<input type='text' id='doituongsd' name='doituongsd' value='" + model.Doituongsd + "' class='form-control' readonly />";
                 result += "</div>";
                 result += "</div>";
@@ -38,12 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 1</label>";
                 result += "<input type='number' id='nam_edit' name='nam_edit' class='form-control' value='" + (model.Namchuathue == null ? Nam : model.Namchuathue) + "'  />";
-                /*result += "<select id='nam_edit' name='nam_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue == i.ToString() ? "selected" : (Nam == null ? i : Nam)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+              
                 result += "</div>";
                 result += "</div>";
 
@@ -58,12 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 2</label>";
                 result += "<input type='number' id='nam1_edit' name='nam1_edit' class='form-control' value='" + (model.Namchuathue1 == null ? Nam1 : model.Namchuathue1) + "' />";
-                /*result += "<select id='nam1_edit' name='nam1_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue1 == i.ToString() ? "selected" : (Nam1 == null ? i : Nam1)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+            
                 result += "</div>";
                 result += "</div>";
 
@@ -78,12 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 3</label>";
                 result += "<input type='number' id='nam2_edit' name='nam2_edit' class='form-control' value='" + (model.Namchuathue2 == null ? Nam2 : model.Namchuathue2) + "' />";
-                /*result += "<select id='nam2_edit' name='nam2_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue2 == i.ToString() ? "selected" : (Nam2 == null ? i : Nam2)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+           
                 result += "</div>";
                 result += "</div>";
 
@@ -98,12 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 4</label>";
                 result += "<input type='number' id='nam3_edit' name='nam3_edit' class='form-control' value='" + (model.Namchuathue3 == null ? Nam3 : model.Namchuathue3) + "' />";
-                /*result += "<select id='nam3_edit' name='nam3_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue3 == i.ToString() ? "selected" : (Nam3 == null ? i : Nam3)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+              
                 result += "</div>";
                 result += "</div>";
 
@@ -118,12 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Năm áp dụng 5</label>";
                 result += "<input type='number' id='nam4_edit' name='nam4_edit' class='form-control' value='" + (model.Namchuathue4 == null ? Nam4 : model.Namchuathue4) + "'/>";
-                /*result += "<select id='nam4_edit' name='nam4_edit' class='form-control'>";
-                for (var i = nam_start; i <= nam_stop; i++)
-                {
-                    result += "<option value='" + i + "' " + ((string)model.Namchuathue4 == i.ToString() ? "selected" : (Nam4 == null ? i : Nam4)) + ">Năm " + i + "</option>";
-                }
-                result += "</select>";*/
+               
                 result += "</div>";
                 result += "</div>";
 
@@ -148,12 +123,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             }
         }
 
-        [Route("GiaNuocShCt/Update")]
+        [Route("GiaHangHoaTaiSieuThiCt/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Namchuathue, string Namchuathue1, string Namchuathue2, string Namchuathue3, string Namchuathue4,
             double Giachuathue, double Giachuathue1, double Giachuathue2, double Giachuathue3, double Giachuathue4)
         {
-            var model = _db.GiaNuocShCt.FirstOrDefault(t => t.Id == Id);
+            var model = _db.GiaHangHoaTaiSieuThiCt.FirstOrDefault(t => t.Id == Id);
             model.Namchuathue = Namchuathue;
             model.Namchuathue1 = Namchuathue1;
             model.Namchuathue2 = Namchuathue2;
@@ -166,7 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             model.Giachuathue4 = Giachuathue4;
             model.Updated_at = DateTime.Now;
 
-            _db.GiaNuocShCt.Update(model);
+            _db.GiaHangHoaTaiSieuThiCt.Update(model);
             _db.SaveChanges();
             string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
@@ -175,14 +150,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
         public string GetData(string Mahs)
         {
-            var model = _db.GiaNuocShCt.Where(t => t.Mahs == Mahs).ToList();
+            var model = _db.GiaHangHoaTaiSieuThiCt.Where(t => t.Mahs == Mahs).ToList();
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th rowspan='2'>STT</th>";
-            result += "<th rowspan='2'>Mục đích sử dụng</th>";
+            result += "<th rowspan='2'>Tên sản phẩm</th>";
             result += "<th colspan='2'>Đơn giá</th>";
             result += "<th colspan='2'>Đơn giá</th>";
             result += "<th colspan='2'>Đơn giá</th>";
