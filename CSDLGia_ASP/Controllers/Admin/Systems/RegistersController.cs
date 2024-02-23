@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
+// Đăng ký phần kê khai giá
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
     public class RegistersController : Controller

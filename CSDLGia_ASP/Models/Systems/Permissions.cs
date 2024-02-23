@@ -14,6 +14,7 @@ namespace CSDLGia_ASP.Models.Systems
 
         [Required]
         public string Roles { get; set; }
+        public string Name { get; set; }
 
         public bool Index { get; set; }
 

@@ -190,7 +190,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["DmNganhKd"] = _db.DmNganhKd.ToList();
-            ViewData["DmNgheKd"] = _db.DmNgheKd.ToList();
+            ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
             ViewData["Title"] = "Đăng ký";
             return View("Views/Admin/Systems/Register/Register.cshtml");
         }

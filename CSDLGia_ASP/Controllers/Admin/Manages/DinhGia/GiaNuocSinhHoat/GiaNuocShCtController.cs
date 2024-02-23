@@ -15,7 +15,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             _db = db;
         }
 
-        [Route("GiaNuocShCt/Edit")]
+
+        [Route("GiaNuocShCtNew/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id, string Nam, string Nam1, string Nam2, string Nam3, string Nam4)
         {
@@ -107,7 +108,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "</div>";
                 result += "</div>";
 
-                result += "<input type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -121,7 +122,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             }
         }
 
-        [Route("GiaNuocShCt/Update")]
+ 
+
+        [Route("GiaNuocShCtNew/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Namchuathue, string Namchuathue1, string Namchuathue2, string Namchuathue3, string Namchuathue4,
             double Giachuathue, double Giachuathue1, double Giachuathue2, double Giachuathue3, double Giachuathue4)

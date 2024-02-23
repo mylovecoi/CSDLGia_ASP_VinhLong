@@ -70,6 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                         }
 
                         var model_cskd = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);
+
                         if (string.IsNullOrEmpty(Macskd))
                         {
                             Macskd = model_cskd.Select(t => t.Macskd).First();

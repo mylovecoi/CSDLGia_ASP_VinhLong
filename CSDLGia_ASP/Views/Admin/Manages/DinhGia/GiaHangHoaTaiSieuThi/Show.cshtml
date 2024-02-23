@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     int record_id = 1;
@@ -24,7 +24,7 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giá<small>&nbsp;nước sạch sinh hoạt</small>
+                Thông tin hồ sơ giá<small>&nbsp;hàng hóa tại siêu thị</small>
             </h3>
         </div>
     </div>
@@ -194,9 +194,9 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.GiaNuocShCt != null)
+                @if (Model.GiaHangHoaTaiSieuThiCt != null)
                 {
-                    @foreach (var item in Model.GiaNuocShCt)
+                    @foreach (var item in Model.GiaHangHoaTaiSieuThiCt)
                     {
                         <tr style="text-align:center">
                             <td>@(record_id++)</td>

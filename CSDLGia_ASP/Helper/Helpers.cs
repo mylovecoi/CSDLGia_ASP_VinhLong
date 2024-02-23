@@ -282,6 +282,10 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", Name = "KKNYG - Xi măng, thép xây dựng - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkxd", Name = "KKNYG - Xi măng, thép xây dựng - Xét duyệt" });
 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd", Name = "KKNYG - Vật liệu xây dựng" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd.giakk", Name = "KKNYG - Vật liệu xây dựng - Kê khai giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd.giakkxd", Name = "KKNYG - Vật liệu xây dựng - Xét duyệt" });
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "KKNYG - Sách giáo khoa" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakk", Name = "KKNYG - Sách giáo khoa - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakkbc", Name = "KKNYG - Sách giáo khoa - Báo cáo" });
@@ -386,6 +390,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtin", Name = "Bảng giá các loại đất - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.xetduyet", Name = "Bảng giá các loại đất - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.timkiem", Name = "Bảng giá các loại đất - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.baocao", Name = "Bảng giá các loại đất - Tìm kiếm" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat", Name = "ĐG - Giá trúng thầu quyền sử dụng đất" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.thongtin", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Thông tin" });

@@ -46,7 +46,7 @@
                             {
                                 <tr>
                                     <td style="text-align:center">@(record_id++)</td>
-                                    <td style="font-weight:bold;color:blue">@item.Roles</td>
+                                    <td style="font-weight:bold;color:blue">@item.Name</td>
                                     <td style="text-align:center">
                                         @if (item.Index)
                                         {
@@ -145,9 +145,12 @@
                                 @foreach (var roles in Helpers.GetRoleList())
                                 {
                                     <option value="@roles.Role">@roles.Name</option>
+                                  
                                 }
                             </select>
                         </div>
+
+
                         <!--end::Input-->
                     </div>
                 </div>
@@ -276,6 +279,7 @@
                     Delete: $('#Delete').is(":checked"),
                     Approve: $('#Approve').is(":checked"),
                     Status: 'Disable'
+                   
                 },
                 dataType: 'JSON',
                 success: function (data) {
