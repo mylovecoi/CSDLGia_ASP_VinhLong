@@ -246,6 +246,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
+
             result += "<tr style = 'text-align:center' >";
             result += "<th rowspan='2'> STT </ th >";
             result += "<th rowspan='2'> Tên sản phẩm <br />dịch vụ</th>";
@@ -269,6 +270,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             result += "<th>Nông thôn</th>";
             result += "<th>Miền núi</th>";
             result += "</tr>";
+
             result += "</thead>";
             result += "<tbody>";
             if (Model != null)
