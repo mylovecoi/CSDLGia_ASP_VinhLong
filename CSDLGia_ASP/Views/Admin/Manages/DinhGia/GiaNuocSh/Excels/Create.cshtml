@@ -46,10 +46,11 @@
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Ngày áp dụng*</label>
+                        <label>Thời điểm</label>
                         <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
+              
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn</label>
@@ -64,7 +65,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-4">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Lộ trình từ năm*</label>
                         <select class="form-control select2basic" asp-for="Tunam">
@@ -78,7 +87,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Lộ trình đến năm*</label>
                         <select class="form-control select2basic" asp-for="Dennam">
@@ -92,14 +101,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Nội dung*</label>
-                        <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
-                    </div>
-                </div>
-            </div>
+          
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">

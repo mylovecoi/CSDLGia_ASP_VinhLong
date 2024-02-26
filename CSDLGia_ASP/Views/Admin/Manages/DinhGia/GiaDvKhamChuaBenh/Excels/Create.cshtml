@@ -40,18 +40,18 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input asp-for="Madv" />
-            <input asp-for="Manhom" />
-            <input asp-for="Mahs" />
+            <input hidden  asp-for="Madv" />
+            <input hidden asp-for="Manhom" />
+            <input hidden asp-for="Mahs" />
 
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="form-group">
                         <label>Số QĐ*</label>
                         <input type="text" class="form-control" asp-for="Soqd" />
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="form-group">
                         <label>Thời điểm*</label>
                         <input type="date" class="form-control" asp-for="Thoidiem" />
