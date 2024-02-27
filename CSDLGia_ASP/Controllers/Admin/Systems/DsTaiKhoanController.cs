@@ -260,6 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var check = _db.Users.FirstOrDefault(u => u.Username == request.Username && u.Id != request.Id);
                     if (check == null)
                     {
+                        return Ok(NewPassword);
                         var model = _db.Users.FirstOrDefault(t => t.Id == request.Id);
 
                         if (!string.IsNullOrEmpty(NewPassword))
@@ -283,7 +284,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         model.Chucnang = request.Chucnang;
                         model.Username = request.Username;
                         model.Updated_at = DateTime.Now;
-
+                        /*return Ok(model.Password);*/
                         _db.Users.Update(model);
                         _db.SaveChanges();
                         return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });

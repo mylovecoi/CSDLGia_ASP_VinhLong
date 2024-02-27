@@ -205,6 +205,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/TongHop/Store")]
         [HttpPost]
         public IActionResult Store(string Mahs, string Matt, string Thang, string Nam, string Sobc, DateTime Ngaybc, DateTime Ngaychotbc, string Ghichu)

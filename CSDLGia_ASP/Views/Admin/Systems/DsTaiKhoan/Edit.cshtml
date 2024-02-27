@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -17,32 +17,32 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin tài khoản<small>&nbsp;chỉnh sửa</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin tài khoản<small>&nbsp;chỉnh sửa</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="DsTaiKhoan" asp-action="Update" method="post" enctype="multipart/form-data">
-            <div class="card-body">
-                <input hidden asp-for="Madv" />
-                <input hidden asp-for="Id" />
-                <input hidden asp-for="Password" />
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="DsTaiKhoan" asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Id" />
+            <input hidden asp-for="Password" />
 
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Đơn vị</label>
-                            <select asp-for="Madv" class="form-control">
-                                @foreach (var item in dsdonvi)
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn vị</label>
+                        <select asp-for="Madv" class="form-control">
+                            @foreach (var item in dsdonvi)
                             {
                                 <option value="@item.MaDv">@item.TenDv</option>
                             }
@@ -120,8 +120,8 @@
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
