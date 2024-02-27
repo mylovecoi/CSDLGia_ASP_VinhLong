@@ -26,7 +26,8 @@ namespace CSDLGia_ASP.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                return RedirectToAction("Index", "CongBo");
+                /*return RedirectToAction("Index", "CongBo");*/
+                return RedirectToAction("Login", "Login");
             }
             else
             {
@@ -52,6 +53,7 @@ namespace CSDLGia_ASP.Controllers
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("ChangePassword")]
         [HttpPost]
         public IActionResult ChangePassword(string current_password, string new_password, string verify_password)

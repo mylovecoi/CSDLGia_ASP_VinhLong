@@ -1,11 +1,107 @@
 ﻿@{
+    int record_id = 1;
     var dsnhom = (IEnumerable<GiaHhDvkNhom>)ViewData["Dsnhom"];
     var hoso = (IEnumerable<GiaHhDvk>)ViewData["Hoso"];
-
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh>
-<!--Create Modal-->
+<!--Tổng hợp HH-DV Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form asp-controller="GiaHhDvkTh" asp-action="Create" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Tổng hợp giá hàng hóa dịch vụ tháng
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <hr />
+
+                <div class="modal-body">
+                    <div class="row">
+                        <input id="Hoso" name="Hoso" value="@ViewData["Hoso"]" />
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label>Theo thông tư quyết định</label>
+                                <select class="form-control" disabled="disabled">
+                                    @foreach (var item in dsnhom)
+                                    {
+                                        <!option value="@item.Matt" @((string)ViewData["Matt"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label>Tháng</label>
+                                <select class="form-control" disabled="disabled">
+                                    @for (var i = 1; i <= 12; i++)
+                                    {
+                                        <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label>Năm</label>
+                                <select class="form-control" disabled="disabled">
+                                    @{
+                                        var nam_start = DateTime.Now.Year - 5;
+                                        var nam_stop = DateTime.Now.Year + 1;
+                                        for (var i = nam_start; i <= nam_stop; i++)
+                                        {
+                                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="sample_3">
+                        <thead>
+                            <tr style="text-align:center">
+                                <th width="4%">#</th>
+                                <th>Số quyết định</th>
+                                <th>Ngày nhập</th>
+                                <th>Tên đơn vị cập nhật</th>
+                                <th>Tên đơn vị tiếp nhận hồ sơ</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (hoso != null)
+                            {
+                                @foreach (var item in hoso)
+                                {
+                                    <tr>
+                                        <td style="text-align: center">@(record_id++)</td>
+                                        <td style="text-align: center">
+                                            @item.Soqd<br />Tháng @item.Thang năm @item.Nam
+                                        </td>
+                                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                                        <td>@item.Madv</td>
+                                        <td>@item.Macqcq</td>
+                                        <td style="text-align: center">
+                                            <input type="checkbox" value="@item.Mahs" checked />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -56,7 +152,7 @@
     </div>
 </div>
 @*create hs modal*@
-<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Create2_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form asp-controller="GiaHhDvk" asp-action="Create" method="get">
             <div class="modal-content">
