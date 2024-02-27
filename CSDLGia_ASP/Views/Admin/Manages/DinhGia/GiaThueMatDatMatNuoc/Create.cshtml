@@ -1,6 +1,7 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
     var mahs = ViewData["Mahs"];
 }
 @section custom_style {
@@ -70,7 +71,7 @@
                         <label>Mô tả</label>
                         <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
-                </div>
+                </div> 
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Detail.cshtml")
         </div>

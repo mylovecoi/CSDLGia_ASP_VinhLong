@@ -24,7 +24,7 @@
 
         $(function () {
             $('#Madv, #Nam, #Trangthai').change(function () {
-                var current_path_url = '/KeKhaiGiaThan?';
+                var current_path_url = '/KeKhaiGiaVatLieuXayDung?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var tt = '&Trangthai=' + $('#Trangthai').val();
@@ -40,13 +40,13 @@
     
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin kê khai giá<small>&nbsp;than</small><br />
+                Thông tin kê khai giá<small>&nbsp;vật liệu xây dựng</small><br />
                 <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
             </h3>
         </div>
         <div class="card-toolbar">
             
-            <a class="btn btn-primary font-weight-bolder" asp-controller="KeKhaiGiaThan" asp-action="Create"
+            <a class="btn btn-primary font-weight-bolder" asp-controller="KeKhaiGiaVatLieuXayDung" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
                 <i class="la la-plus"></i>Thêm mới
             </a>
@@ -316,7 +316,7 @@
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="KeKhaiGiaThan" asp-action="Delete">
+            <form asp-controller="KeKhaiGiaVatLieuXayDung" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý xóa thông tin???

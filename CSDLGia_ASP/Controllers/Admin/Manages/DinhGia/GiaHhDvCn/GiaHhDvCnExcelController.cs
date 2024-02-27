@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     {
                         Maspdv = "1",
                         Dongia = "2",
-   
+
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
@@ -73,9 +73,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DanhMucSanPhamDichVu"] = _db.GiaHhDvCnDm.ToList();
                     ViewData["modelct"] = _db.GiaHhDvCnCt.Where(t => t.Mahs == Mahs);
-                    
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
+
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -116,7 +117,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                              
+
+                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+
+                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dongia)].Value.ToString().Trim() : "",
                             });
                         }
                     }

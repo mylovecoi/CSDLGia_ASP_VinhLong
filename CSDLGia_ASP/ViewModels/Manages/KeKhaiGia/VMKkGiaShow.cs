@@ -49,5 +49,6 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public List<KkCuocVcHkCt> KkCuocVcHkCt { get; set; }
         public List<KkGiaDvLtCt> KkGiaDvLtCt { get; set; }
         public List<KkGiaSieuThiCt> KkGiaSieuThiCt { get; set; }
+        public List<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
     }
 }

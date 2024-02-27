@@ -169,7 +169,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                     ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                     ViewData["Manghe"] = Manghe;
                     ViewData["Tennghe"] = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == t.Manghe).Tennghe;
-                    ViewData["Title"] = "Giá kê khai mặt hàng BOG";
+                    ViewData["Title"] = "Giá kê khai mặt hàng bình ổn giá";
                     ViewData["MenuLv1"] = "menu_bog";
                     ViewData["MenuLv2"] = "menu_thongtin";
 

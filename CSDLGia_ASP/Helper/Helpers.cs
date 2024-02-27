@@ -285,6 +285,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd", Name = "KKNYG - Vật liệu xây dựng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd.giakk", Name = "KKNYG - Vật liệu xây dựng - Kê khai giá" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd.giakkxd", Name = "KKNYG - Vật liệu xây dựng - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.vlxd.giakkbc", Name = "KKNYG - Vật liệu xây dựng - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach", Name = "KKNYG - Sách giáo khoa" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgsach.giakk", Name = "KKNYG - Sách giáo khoa - Kê khai giá" });

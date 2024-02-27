@@ -28,10 +28,10 @@
     <!--begin::Form-->
     <form asp-controller="KkMhBog" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_bog_store">
         <div class="card-body">
-            <input hidden asp-for="Madv" />
-            <input hidden asp-for="Manghe" />
-            <input hidden asp-for="Phanloai" />
-            <input hidden asp-for="Mahs" />
+            <input  asp-for="Madv" />
+            <input  asp-for="Manghe" />
+            <input  asp-for="Phanloai" />
+            <input  asp-for="Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDkg/KkMhBog/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDkg/KkMhBog/Excels/Detail.cshtml")
 
         </div>
         <div class="card-footer" style="text-align:center">

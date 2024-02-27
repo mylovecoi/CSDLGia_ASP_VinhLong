@@ -1,9 +1,8 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN
 @{
-    var mahs = ViewData["Mahs"]; 
-
+    var mahs = ViewData["Mahs"];
+    var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
 }
-
 
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -17,15 +16,25 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
+
             <div class="modal-body">
                 <input type="hidden" value="@mahs" id="mahs_create" />
+
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Vị trí*</b></label>
+                          @*   <select style="width: 100%;" class="form-control select2basic" id="vitri_create" name="vitri_create">
+                                @foreach (var item in danhMucMatDatMatNuoc)
+                                {
+                                    <option value="@item.Loaidat">@item.Loaidat</option>
+
+                                }
+                            </select> *@
                             <input type="number" id="vitri_create" name="vitri_create" class="form-control" />
                         </div>
                     </div>
+
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Địa giới từ</b></label>
@@ -38,9 +47,8 @@
                             <input type="text" id="diemcuoi_create" name="diemcuoi_create" class="form-control" />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-12">
+
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Mô tả</b></label>
                             <input type="text" id="mota_create" name="mota_create" class="form-control" />
@@ -58,12 +66,17 @@
                             <input type="text" id="dongia_create" name="dongia_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
+
                 </div>
+
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -82,7 +95,7 @@
             </div>
             <div class="modal-body">
                 <div class="row text-left">
-                    <input id="id_delete" name="id_delete" type="hidden"/>
+                    <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -106,7 +119,6 @@
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
