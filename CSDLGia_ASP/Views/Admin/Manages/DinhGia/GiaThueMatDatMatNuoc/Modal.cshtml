@@ -2,9 +2,7 @@
 @{
     var mahs = ViewData["Mahs"];
     var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
-
 }
-
 
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,13 +24,14 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Vị trí*</b></label>
-                            <select style="width=100%" class="form-control select2basic" asp-for="Vitri">
+                          @*   <select style="width: 100%;" class="form-control select2basic" id="vitri_create" name="vitri_create">
                                 @foreach (var item in danhMucMatDatMatNuoc)
                                 {
                                     <option value="@item.Loaidat">@item.Loaidat</option>
 
                                 }
-                            </select>
+                            </select> *@
+                            <input type="number" id="vitri_create" name="vitri_create" class="form-control" />
                         </div>
                     </div>
 
