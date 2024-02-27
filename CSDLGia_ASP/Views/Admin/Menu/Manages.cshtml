@@ -1277,7 +1277,7 @@
                         </li>
                     }
 
-
+@* 
                     <!--Giá vật liệu xây dựng-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "XmThepXd") == "1")
                     {
@@ -1345,7 +1345,7 @@
                             </div>
                         </li>
                     }
-
+ *@
                     <!--Sách-->
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgsach", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "SachGk") == "1")
                     {
