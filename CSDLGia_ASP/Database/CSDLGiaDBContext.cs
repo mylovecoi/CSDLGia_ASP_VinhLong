@@ -55,8 +55,9 @@ namespace CSDLGia_ASP.Database
         public DbSet<KkGiaTaCnCt> KkGiaTaCnCt { get; set; }
         public DbSet<KkGiaThanCt> KkGiaThanCt { get; set; }
         public DbSet<KkGiaVeTqKdlCt> KkGiaVeTqKdlCt { get; set; }
-        public DbSet<KkGiaVlXd> KkGiaVlXd { get; set; }
-        public DbSet<KkGiaVlXdDm> KkGiaVlXdDm { get; set; }
+        //public DbSet<KkGiaVlXd> KkGiaVlXd { get; set; }
+        //public DbSet<KkGiaVlXdDm> KkGiaVlXdDm { get; set; }
+        public DbSet<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
         public DbSet<KkGiaVtXbCt> KkGiaVtXbCt { get; set; }
         public DbSet<KkGiaVtXkCt> KkGiaVtXkCt { get; set; }
         public DbSet<KkGiaVtXtxCt> KkGiaVtXtxCt { get; set; }
@@ -64,7 +65,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
         public DbSet<KkGsCt> KkGsCt { get; set; }
         public DbSet<KkGiaSieuThiCt> KkGiaSieuThiCt { get; set; }
-        public DbSet<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
+      
 
         //Kê khai đăng ký giá
         public DbSet<KkDkg> KkDkg { get; set; }

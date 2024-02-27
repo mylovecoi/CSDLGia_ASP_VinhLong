@@ -85,11 +85,11 @@
                 </div>
             </div>
 
-            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaThan/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/Detail.cshtml")
 
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="KeKhaiGiaThan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="KkGiaVlXd" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
