@@ -43,6 +43,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        public string Ipf1 { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
         [NotMapped]
@@ -59,6 +60,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Dongia { get; set; }
         [NotMapped]
         public string PhanLoaiDatNuoc { get; set; }
+
 
     }
 }
