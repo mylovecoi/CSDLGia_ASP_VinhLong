@@ -20,7 +20,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             _db = db;
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung")]
+        [Route("KkGiaVlXd")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam, string Trangthai)
         {
@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd.giakk", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    var Manghe = "THAN";
+                    var Manghe = "VLXD";
                     var dsdonvi = (from com in _db.Company
                                    join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == Manghe) on com.Mahs equals lvkd.Mahs
                                    select new VMCompany
@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                             ViewData["MenuLv1"] = "menu_kknygia";
                             ViewData["MenuLv2"] = "menu_kkgvlxd";
                             ViewData["MenuLv3"] = "menu_giakkvlxd";
-                            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/Index.cshtml", model);
+                            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/Index.cshtml", model);
                         }
                         else
                         {
@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Create")]
+        [Route("KkGiaVlXd/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Manghe)
         {
@@ -153,7 +153,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     ViewData["MenuLv2"] = "menu_kkgvlxd";
                     ViewData["MenuLv3"] = "menu_giakkvlxd";
 
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/Create.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/Create.cshtml", model);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Store")]
+        [Route("KkGiaVlXd/Store")]
         [HttpPost]
         public IActionResult Store(VMKkGia request)
         {
@@ -207,7 +207,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     _db.KkGiaVlXdCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaVatLieuXayDung", new { request.Madv });
+                    return RedirectToAction("Index", "KkGiaVlXd", new { request.Madv });
                 }
                 else
                 {
@@ -221,7 +221,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Edit")]
+        [Route("KkGiaVlXd/Edit")]
         [HttpGet]
         public IActionResult Edit(string Mahs)
         {
@@ -255,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     ViewData["MenuLv2"] = "menu_kkgvlxd";
                     ViewData["MenuLv3"] = "menu_giakkvlxd";
 
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/Edit.cshtml", model_new);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/Edit.cshtml", model_new);
                 }
                 else
                 {
@@ -269,7 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Update")]
+        [Route("KkGiaVlXd/Update")]
         [HttpPost]
         public IActionResult Update(VMKkGia request)
         {
@@ -301,7 +301,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     _db.KkGiaVlXdCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaVatLieuXayDung", new { request.Madv });
+                    return RedirectToAction("Index", "KkGiaVlXd", new { request.Madv });
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Delete")]
+        [Route("KkGiaVlXd/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
@@ -332,7 +332,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     _db.KkGiaVlXdCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KeKhaiGiaVatLieuXayDung", new { model.Madv });
+                    return RedirectToAction("Index", "KkGiaVlXd", new { model.Madv });
                 }
                 else
                 {
@@ -346,7 +346,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Show")]
+        [Route("KkGiaVlXd/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
         {
@@ -361,7 +361,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvlxd";
                     ViewData["MenuLv3"] = "menu_giakkvlxd";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/Show.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/Show.cshtml", model);
 
                 }
                 else
@@ -376,7 +376,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Search")]
+        [Route("KkGiaVlXd/Search")]
         [HttpGet]
         public IActionResult Search(string Nam, string Mota)
         {
@@ -386,7 +386,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                 {
 
                     var model_join = from kkct in _db.KkGiaVlXdCt
-                                     join kk in _db.KkGia.Where(t => t.Manghe == "THAN" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "VLXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                      join com in _db.Company on kk.Madv equals com.Madv
                                      select new VMKkGiaCt
                                      {
@@ -423,7 +423,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvlxd";
                     ViewData["MenuLv3"] = "menu_giakkvlxdtk";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/TimKiem/Index.cshtml", model_join);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/TimKiem/Index.cshtml", model_join);
 
                 }
                 else
@@ -438,7 +438,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
             }
         }
 
-        [Route("KeKhaiGiaVatLieuXayDung/Printf")]
+        [Route("KkGiaVlXd/Printf")]
         [HttpGet]
         public IActionResult Printf(string Nam, string Mota)
         {
@@ -448,7 +448,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                 {
 
                     var model_join = from kkct in _db.KkGiaVlXdCt
-                                     join kk in _db.KkGia.Where(t => t.Manghe == "THAN" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "VLXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                      join com in _db.Company on kk.Madv equals com.Madv
                                      select new VMKkGiaCt
                                      {
@@ -485,7 +485,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgvlxd";
                     ViewData["MenuLv3"] = "menu_giakktk";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/TimKiem/Printf.cshtml", model_join);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/TimKiem/Printf.cshtml", model_join);
 
                 }
                 else

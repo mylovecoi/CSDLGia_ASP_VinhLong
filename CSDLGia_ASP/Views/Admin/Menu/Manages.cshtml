@@ -1879,7 +1879,7 @@
                     }
 
                     <!--Vật liệu xây dựng-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdCatSan") == "1")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXd") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgcatsan">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -1947,7 +1947,7 @@
                     }
 
                     <!--Dịch vụ khám chữa bệnh cho người tại cơ sở khám chữa bệnh tư nhân; khám chữa bệnh theo yêu cầu tại cơ sở khám chữa bệnh của nhà nước-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdDatSanlap") == "1")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdatsanlap", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "KhamChuaBenh") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgdatsanlap">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2015,7 +2015,7 @@
                     }
 
                     <!--Dịch vụ hỗ trợ hoạt động thương mại tại cửa khẩu-->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "VlXdCatSan") == "1")
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgcatsan", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "DvThuongMai") == "1")
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_kkgcatsan">
                             <a href="javascript:;" class="menu-link menu-toggle">

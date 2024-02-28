@@ -262,10 +262,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
                     var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
                     var Dvlt = Manghe.Any(m => m.Contains("DVLT")) ? 1 : 0;
-
+                    var VlXd= Manghe.Any(m => m.Contains("VLXD")) ? 1 : 0;
+                    var KhamChuaBenh = Manghe.Any(m => m.Contains("KCBTN")) ? 1 : 0;
+                    var DvThuongMai = Manghe.Any(m => m.Contains("DVHDTMCK")) ? 1 : 0;
 
                     var company = new Company
                     {
+                        DvThuongMai = DvThuongMai,
+                        KhamChuaBenh = KhamChuaBenh,
+                        VlXd = VlXd,
                         BOG = BOG,
                         KKNYGIA = KKNYGIA,
                         Dvlt = Dvlt,

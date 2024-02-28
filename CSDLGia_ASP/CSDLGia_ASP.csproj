@@ -28,22 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Bc1.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Bc2.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Index.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Create.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Detail.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Edit.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Index.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Modal.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Show.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\TimKiem\Index.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\TimKiem\Printf.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\XetDuyet\Index.cshtml" />
-    <Content Remove="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\XetDuyet\Modal.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.0.7" />
     <PackageReference Include="Handsontable" Version="12.3.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
@@ -228,19 +212,6 @@
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaTaCn\TimKiem\Printf.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaTaCn\XetDuyet\Index.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaTaCn\XetDuyet\Modal.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Bc1.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Bc2.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\BaoCao\Index.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Create.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Detail.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Edit.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Index.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Modal.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\Show.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\TimKiem\Index.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\TimKiem\Printf.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\XetDuyet\Index.cshtml" />
-    <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVlXd\XetDuyet\Modal.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaThan\BaoCao\Bc1.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaThan\BaoCao\Bc2.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaThan\BaoCao\Index.cshtml" />

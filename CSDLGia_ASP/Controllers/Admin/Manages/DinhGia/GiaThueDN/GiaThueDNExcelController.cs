@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             var model = new GiaThueMatDatMatNuocCt
             {
-                Vitri = 1,
+                Vitri = "1",
                 Diemdau = "2",
                 Diemcuoi = "3",
                 Mota = "4",
@@ -103,8 +103,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Vitri = worksheet.Cells[row, Int16.Parse(request.Vitri.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Vitri.ToString())].Value) : 0,
+                                Vitri = worksheet.Cells[row, Int16.Parse(request.Vitri)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Vitri)].Value.ToString().Trim() : "",
 
                                 Diemdau = worksheet.Cells[row, Int16.Parse(request.Diemdau)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Diemdau)].Value.ToString().Trim() : "",
@@ -137,7 +137,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         }
 
 
-       
+
 
     }
 }
