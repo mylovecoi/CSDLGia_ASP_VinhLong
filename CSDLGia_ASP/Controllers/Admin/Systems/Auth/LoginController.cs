@@ -174,6 +174,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         SieuThi = company.SieuThi,
                                         BOG = company.BOG,
                                         KKNYGIA = company.KKNYGIA,
+                                        VlXd = company.VlXd,
+                                        KhamChuaBenh = company.KhamChuaBenh,
+                                        DvThuongMai = company.DvThuongMai,
                                     }
                                 ).FirstOrDefault();
 

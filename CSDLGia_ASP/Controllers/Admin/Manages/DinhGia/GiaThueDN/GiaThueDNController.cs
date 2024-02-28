@@ -53,7 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                             model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv == Madv && t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            ViewData["DsDonVi"] = dsdonvi;  
+                            ViewData["DsDonVi"] = dsdonvi;
                         }
                         else
                         {
@@ -74,7 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Donvi"] = Madv;
-                        ViewData["Title"] = " Thông tin hồ sơ giá thuê mặt dất mặt nước";
+                        ViewData["Title"] = " Thông tin hồ sơ giá thuê mặt đất mặt nước";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgtmdmn";
                         ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
@@ -83,7 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     else
                     {
                         ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
-                        ViewData["Messages"] = "Thông tin hồ sơ giá thuê mặt dất mặt nước.";
+                        ViewData["Messages"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước.";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgtmdmn";
                         ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
@@ -208,7 +208,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
                     return View("Views/Admin/Error/Page.cshtml");
                 }
-               
+
             }
             else
             {
@@ -247,6 +247,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                    ViewData["DanhMucMatDatMatNuoc"] = _db.GiaThueMatDatMatNuocDm.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modify.cshtml", model_new);
                 }
                 else
@@ -315,31 +316,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new VMDinhGiaThueDN
+                    var modelct = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Mahs == Mahs);
+
+                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
                     {
-                        Madv = model.Madv,
                         Mahs = model.Mahs,
+                        Madv = model.Madv,
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu
+                        Vitri = modelct.Vitri,
+                        Diemdau = modelct.Diemdau,
+                        Diemcuoi = modelct.Diemcuoi,
+                        Mota = modelct.Mota,
+                        Dientich = modelct.Dientich,
+                        Dongia = modelct.Dongia,
+                        Macqcq = model.Macqcq,
+                        PhanLoaiDatNuoc = modelct.PhanLoaiDatNuoc,
                     };
 
-
-                    var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == model_new.Mahs);
-
-                    model_new.GiaThueMatDatMatNuocCt = model_ct.ToList();
-
-                    ViewData["Madv"] = model.Madv;
-                    ViewData["Mahs"] = model.Mahs;
-
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", viewModel);
                 }
                 else
                 {
@@ -421,15 +423,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                     Diemdau = dgct.Diemdau,
                                     Diemcuoi = dgct.Diemcuoi,
                                     Dientich = dgct.Dientich,
+                                    PhanLoaiDatNuoc = dgct.PhanLoaiDatNuoc,
                                 };
                     if (madv != "All")
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-                    if (vitri != 0)
-                    {
-                        model = model.Where(t => t.Vitri == vitri);
-                    }
+
                     if (beginTime.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem >= beginTime);
@@ -444,6 +444,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     {
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["Title"] = " Tìm kiếm thông tin định giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tk";

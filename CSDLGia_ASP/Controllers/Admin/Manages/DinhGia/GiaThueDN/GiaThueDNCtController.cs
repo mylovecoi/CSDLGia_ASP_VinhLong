@@ -27,10 +27,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuocCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, int Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
+        public JsonResult Store(string Mahs, string Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia, string PhanLoaiDatNuoc)
         {
             var model = new GiaThueMatDatMatNuocCt
             {
+                PhanLoaiDatNuoc = PhanLoaiDatNuoc,
                 Mahs = Mahs,
                 Vitri = Vitri,
                 Diemdau = Diemdau,
@@ -48,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             var data = new { status = "success", message = result };
             return Json(data);
         }
-        
+
         [Route("GiaThueMatDatMatNuocCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
@@ -121,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuocCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, int Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
+        public JsonResult Update(int Id, string Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
         {
             var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
 

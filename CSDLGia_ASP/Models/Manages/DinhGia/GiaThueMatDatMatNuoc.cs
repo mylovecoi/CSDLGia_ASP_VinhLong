@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -44,5 +45,20 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
+        [NotMapped]
+        public string Diemdau { get; set; }
+        [NotMapped]
+        public string Diemcuoi { get; set; }
+        [NotMapped]
+        public string Vitri { get; set; }
+        [NotMapped]
+        public string Mota { get; set; }
+        [NotMapped]
+        public double Dientich { get; set; }
+        [NotMapped]
+        public double Dongia { get; set; }
+        [NotMapped]
+        public string PhanLoaiDatNuoc { get; set; }
+
     }
 }

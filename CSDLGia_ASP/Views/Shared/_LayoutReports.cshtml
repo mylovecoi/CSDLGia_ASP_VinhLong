@@ -139,7 +139,7 @@
         function exportTableToExcel() {
             var downloadLink;
             var dataType = 'application/vnd.ms-excel';
-            var tableSelect = document.getElementById('data_render');
+            var tableSelect = document.getElementById('data');
             var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
             // Specify file name

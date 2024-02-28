@@ -122,5 +122,11 @@ namespace CSDLGia_ASP.Models.Systems
         public double BOG { get; set; }
         [NotMapped]
         public double KKNYGIA { get; set; }
+        [NotMapped]
+        public double VlXd { get; set; }
+        [NotMapped]
+        public double KhamChuaBenh { get; set; }
+        [NotMapped]
+        public double DvThuongMai { get; set; }
     }
 }

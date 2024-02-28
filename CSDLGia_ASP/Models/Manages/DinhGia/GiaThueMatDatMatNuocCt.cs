@@ -9,10 +9,11 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
+        public string PhanLoaiDatNuoc { get; set; }
         public string Mahs { get; set; }
         public string Diemdau { get; set; }
         public string Diemcuoi { get; set; }
-        public int Vitri { get; set; }
+        public string Vitri { get; set; }
         public string Mota { get; set; }
         public double Dientich { get; set; }
         public string Trangthai { get; set; }

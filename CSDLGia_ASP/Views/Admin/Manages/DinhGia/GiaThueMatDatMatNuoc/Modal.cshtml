@@ -23,15 +23,20 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Vị trí*</b></label>
-                          @*   <select style="width: 100%;" class="form-control select2basic" id="vitri_create" name="vitri_create">
+                            <label><b>Loại mặt đất, mặt nước</b></label>
+                            <select style="width: 100%;" class="form-control select2basic" id="loaidn_create" name="loaidn_create">
                                 @foreach (var item in danhMucMatDatMatNuoc)
                                 {
                                     <option value="@item.Loaidat">@item.Loaidat</option>
-
                                 }
-                            </select> *@
-                            <input type="number" id="vitri_create" name="vitri_create" class="form-control" />
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Vị trí*</b></label>
+                            <input type="text" id="vitri_create" name="vitri_create" class="form-control" />
                         </div>
                     </div>
 
@@ -136,6 +141,7 @@
             data: {
                 Mahs: $('#mahs_create').val(),
                 Vitri: $('#vitri_create').val(),
+                PhanLoaiDatNuoc: $('#loaidn_create').val(),
                 Diemdau: $('#diemdau_create').val(),
                 Diemcuoi: $('#diemcuoi_create').val(),
                 Mota: $('#mota_create').val(),

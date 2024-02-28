@@ -65,6 +65,7 @@ namespace CSDLGia_ASP.Models.Systems
         public double ThucAnChanNuoi { get; set; }
         public double VlXdDatSanlap { get; set; }
         public double VlXdDaXayDung { get; set; }
+        public double VlXd { get; set; }
         public double VanTaiKhachBangOtoCoDinh { get; set; }
         public double VanTaiKhachBangXeBuyt { get; set; }
         public double VanTaiKhachBangTaXi { get; set; }
@@ -73,6 +74,8 @@ namespace CSDLGia_ASP.Models.Systems
         public double Dvlt { get; set; }
         public double BOG { get; set; }
         public double KKNYGIA { get; set; }
+        public double DvThuongMai { get; set; }
+        public double KhamChuaBenh { get; set; }
 
     }
 }
