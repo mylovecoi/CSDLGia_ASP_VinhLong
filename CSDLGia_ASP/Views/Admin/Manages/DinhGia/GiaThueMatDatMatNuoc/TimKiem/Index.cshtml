@@ -2,7 +2,6 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDNCt>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -44,19 +43,18 @@
 <form asp-controller="GiaThueDN" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_tmdmn_result">
     <div class="card-body">
         <div class="mb-3 font-weight-bold font-size-lg">
-            <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            <label style="color: red; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
         </div>
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="madv" name="madv">
+                    <select style ="width: 100%;" class="form-control select2basic" id="madv" name="madv">
                         <option value="All">--Tất cả các đơn vị--</option>
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
                                 @{
-                                    //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
                                     var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
                                 }
 
@@ -70,24 +68,19 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label><b>Vị trí cho thuê</b></label>
-                    <input type="number" class="form-control" name="vitri" id="vitri" />
-                </div>
-            </div>
+          
         </div>
 
         <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Thời gian nhập từ</label>
+                    <label style="font-weight:bold; color:blue">Thời gian nhập từ</label>
                     <input type="date" class="form-control" name="beginTime" id="beginTime" />
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Thời gian nhập đến</label>
+                    <label style="font-weight:bold; color:blue">Thời gian nhập đến</label>
                     <input type="date" class="form-control" name="endTime" id="endTime" />
                 </div>
             </div>
@@ -95,13 +88,13 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Giá trị từ</label>
+                    <label style="font-weight:bold; color:blue">Giá trị từ</label>
                     <input type="text" class="form-control money" name="beginPrice" id="beginPrice" />
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Giá trị đến</label>
+                    <label style="font-weight:bold; color:blue">Giá trị đến</label>
                     <input type="text" class="form-control money" name="endPrice" id="endPrice" />
                 </div>
             </div>

@@ -298,24 +298,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.thongtin", "Show"))
                 {
-                    var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
-                    {
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                    };
-                    var model_ct = _db.GiaTaiSanCongCt.Where(t => t.Mahs == Mahs);
 
-                    model_new.GiaTaiSanCongCt = model_ct.ToList();
+                    var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
+                    var modelct = _db.GiaTaiSanCongCt.FirstOrDefault(t => t.Mahs == Mahs);
+
+                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
+                    {
+                        // Thông tin hồ sơ
+                        Soqd = model.Soqd,
+                        Mahs = model.Mahs,
+                        Madv = model.Madv,
+                        Madiaban = model.Madiaban,
+                        Thoidiem = model.Thoidiem,
+                        Macqcq = model.Macqcq,
+
+                        // Thông tin hồ sơ chi tiết
+                        Tentaisan = modelct.Tentaisan,
+                        Dacdiem = modelct.Tentaisan,
+                        Giathue = modelct.Giathue,
+                        Giaconlai = modelct.Giaconlai,
+                        Giapheduyet = modelct.Giapheduyet,
+                        Giaban = modelct.Giaban,
+                    };
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Show.cshtml", viewModel);
                 }
                 else
                 {

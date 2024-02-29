@@ -312,7 +312,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
-
         [Route("GiaRung/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -352,43 +351,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
                 {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new VMDinhGiaRung
+                    var modelct = _db.GiaRungCt.FirstOrDefault(t => t.Mahs == Mahs);
+
+                    var viewModel = new GiaRung
                     {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
+                        // Thông tin hồ sơ
                         Soqd = model.Soqd,
-                        Ipf1 = model.Ipf1,
-                        Ipf2 = model.Ipf2,
-                        Ipf3 = model.Ipf3,
-                        Ipf4 = model.Ipf4,
-                        Ipf5 = model.Ipf5,
+                        Mahs = model.Mahs,
+                        Madv = model.Madv,
+                        Madiaban = model.Madiaban,
                         Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu
+                        Macqcq = model.Macqcq,
+
+                        // Thông tin hồ sơ chi tiết
+                        Manhom = modelct.Manhom,
+                        Phanloai = modelct.Phanloai,
+                        Dvthue = modelct.Dvthue,
+                        Noidung = modelct.Noidung,
+                        Dientich = modelct.Dientich,
+                        Dvt = modelct.Dvt,
+                        Dongia = modelct.Dongia,
                     };
-
-                    var model_ct = _db.GiaRungCt.Where(t => t.Mahs == model_new.Mahs);
-
-                    model_new.GiaRungCt = model_ct.ToList();
-
-                    ViewData["Madv"] = model.Madv;
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["Ipf1"] = model.Ipf1;
-                    ViewData["Ipf2"] = model.Ipf2;
-                    ViewData["Ipf3"] = model.Ipf3;
-                    ViewData["Ipf4"] = model.Ipf4;
-                    ViewData["Ipf5"] = model.Ipf5;
-                    ViewData["Madv"] = model.Madv;
-                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["DmLoaiRung"] = _db.GiaRungDm.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Loairung"] = _db.GiaRungDm.ToList();
-                    ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["Title"] = "Chi tiết giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_nhomhhdv";
                     ViewData["MenuLv3"] = "menu_dgr";
                     ViewData["MenuLv4"] = "menu_dgr_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaRung/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/Show.cshtml", viewModel);
                 }
                 else
                 {
@@ -402,49 +394,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
-        [Route("GiaRung/Search")]
-        [HttpGet]
-        public IActionResult Search()
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
-                {
-
-                    /*var model_join = from dgct in _db.GiaRungCt
-                                     join dg in _db.GiaRung.Where(t =>  t.Trangthai == "HT") on dgct.Mahs equals dg.Mahs
-                                     select new VMDinhGiaRungCt
-                                     {
-                                         Id = dg.Id,
-                                         Mahs = dg.Mahs,
-                                         Madv = dg.Madv,
-                                         Dongia = dgct.Dongia,
-                                         Macqcq=dg.Macqcq,
-                                         Thoidiem=dg.Thoidiem,
-                                         Dientich=dgct.Dientich,
-                                     };*/
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["Loairung"] = _db.GiaRungDm.ToList();
-                    ViewData["Title"] = "Tìm kiếm thông tin định giá rừng";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgr";
-                    ViewData["MenuLv3"] = "menu_dgr_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Index.cshtml");
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
 
         [Route("GiaRung/Printf")]
         [HttpGet]
@@ -502,10 +451,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
+        [Route("GiaRung/Search")]
+        [HttpGet]
+        public IActionResult Search()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
+                {
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["Loairung"] = _db.GiaRungDm.ToList();
+                    ViewData["Title"] = "Tìm kiếm thông tin định giá rừng";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgr";
+                    ViewData["MenuLv3"] = "menu_dgr_tk";
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Index.cshtml");
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         [Route("GiaRung/Result")]
         [HttpPost]
-        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string pl, string madv)
+        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -530,21 +508,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                          Dientichsd = dgct.Dientichsd,
                                          Giatri = dgdm.Giatri,
                                      };
-                    /*model_join.Where(t => t.Manhom == pl
-                                    && t.Macqcq == dv
-                                    && t.Thoidiem >= beginTime
-                                    && t.Thoidiem <= endTime
-                                    && t.Dongia >= beginPrice
-                                    && t.Dongia <= endPrice);
-                    ViewData["Loairung"] = _db.GiaRungDm.ToList();*/
+
                     if (madv != "All")
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-                    if (pl != "All")
-                    {
-                        model = model.Where(t => t.Phanloai == pl);
-                    }
+
                     if (beginTime.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem >= beginTime);
@@ -554,11 +523,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     {
                         model = model.Where(t => t.Thoidiem <= endTime);
                     }
+
                     model = model.Where(t => t.Dongia >= beginPrice);
                     if (endPrice > 0)
                     {
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
+
+                    ViewData["DmLoaiRung"] = _db.GiaRungDm.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Result.cshtml", model);
                 }
                 else

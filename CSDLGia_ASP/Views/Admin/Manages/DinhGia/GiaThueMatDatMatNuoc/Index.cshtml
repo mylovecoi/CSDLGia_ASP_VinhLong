@@ -164,6 +164,10 @@
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
+                                    <a href="~/UpLoad/File/DinhGia/GiaThueDN/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                       onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                        <i class="icon-lg la la-cloud-download text-warning"></i>
+                                    </a>
                                     <a asp-controller="GiaThueDN" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>

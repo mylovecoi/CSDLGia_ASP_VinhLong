@@ -50,7 +50,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }
         public List<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
         public int Vitri { get; set; }
-        public int Ipf1 { get; set; }
+
+        public string Ipf1 { get; set; }
         [NotMapped]
         public IFormFile Ipf1upload { get; set; }
     }

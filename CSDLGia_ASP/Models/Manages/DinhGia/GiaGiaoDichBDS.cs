@@ -65,6 +65,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tencqcq { get; set; }
         [NotMapped]
         public string Level { get; set; }
+        [NotMapped]
+        public string Ten { get; set; }
+        [NotMapped]
+        public string Dvt { get; set; }
+        [NotMapped]
+        public double Gia { get; set; }
 
     }
 }

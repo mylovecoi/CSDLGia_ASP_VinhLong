@@ -67,5 +67,33 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public IFormFile Ipf5upload { get; set; }
         [NotMapped]
         public List<GiaRungCt> GiaRungCt { get; set; }
+
+        [NotMapped]
+        public string Phanloai { get; set; }
+        [NotMapped]
+        public string Noidung { get; set; }
+        [NotMapped]
+        public double Dientichsd { get; set; }
+        [NotMapped]
+        public double Giatri { get; set; }
+        [NotMapped]
+        public double Giakhoidiem { get; set; }
+        [NotMapped]
+        public string Dvthue { get; set; }
+        [NotMapped]
+        public string Diachi { get; set; }
+        [NotMapped]
+        public string Soqdpd { get; set; }
+        [NotMapped]
+        public DateTime Thoigianpd { get; set; }
+        [NotMapped]
+        public string Soqdgkd { get; set; }
+        [NotMapped]
+        public DateTime Thoigiangkd { get; set; }
+        [NotMapped]
+        public DateTime Thuetungay { get; set; }
+        [NotMapped]
+        public DateTime Thuedenngay { get; set; }
+
     }
 }
