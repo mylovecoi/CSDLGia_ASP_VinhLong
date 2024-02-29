@@ -1,152 +1,59 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong;
-@{
-   int record_id = 1;
+﻿@{
+    Layout = "_LayoutReports";
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["GiaThueMuaNhaXhDm"];
 }
 
-@section custom_style {
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
-}
-    @section custom_script{
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+<br />
+<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong;
 
-    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
-    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-    <script>
-        $(document).ready(function() {
-            TableManaged4.init();
-        });
-    </script>
-}
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;Giá tài sản công</small><br />
-                </h3>
-            </div>
-        </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaTaiSanCong" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">
-                <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Dịa bàn</label>
-                            <select class="form-control" asp-for="Madiaban">
-                                @foreach (var item in dsdiaban)
-                            {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Thôn tin quyết định</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
-                    </div>
-                </div>
-            </div>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
+<p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
+<p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
+    @foreach (var dsonvi in dsdonvi)
+    {
+        @if (Model.Macqcq == dsonvi.MaDv)
+        {
+            @dsonvi.TenDv
+        }
+    }
+</p>
 
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
-              <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-            </div>
+    <tr >
+        <th style="text-align:center">Tên tài sản</th>
+        <th style="text-align:center">Đặc điểm</th>
+        <th style="text-align:center">Nguyên giá</th>
+        <th style="text-align:center">Giá còn lại</th>
+        <th style="text-align:center">Giá phê duyệt</th>
+        <th style="text-align:center">Giá bán <br />(Thanh lý)</th>
+    </tr>
+    <tr>
+        <td style="text-align:center">@Model.Tentaisan</td>
+        <td style="text-align:center">@Model.Dacdiem</td>
+        <td style="text-align:center">@Model.Giathue</td>
+        <td style="text-align:center">@Model.Giaconlai</td>
+        <td style="text-align:center">@Model.Giapheduyet</td>
+        <td style="text-align:center">@Model.Giaban</td>
 
-        </div>
+    </tr>
 
-
-
-    </form>
-    <!--end::Form-->
-</div>
-   <div class="card-body" id="frm_data">
-        <table class="table table-striped table-bordered table-hover" id="datatable_4">
-            <thead>
-                <tr style="text-align:center">
-                    <th>STT</th>
-                    <th>Tên tài sản</th>
-                    <th>Đặc điểm</th>
-                    <th>Nguyên giá</th>
-                    <th>Giá còn lại</th>
-                    <th>Giá phê duyệt</th>
-                    <th>Giá bán <br />(Thanh lý)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    @if (Model.GiaTaiSanCongCt != null)
-                    {
-                        @foreach (var item in Model.GiaTaiSanCongCt)
-                        {
-                            <tr>
-                                <td style="text-align:center">@(record_id++)</td>
-                                <td style="text-align:center">@item.Tentaisan</td>
-                                <td style="text-align:center">@item.Dacdiem</td>
-                                <td style="text-align:center">@item.Giathue</td>
-                                <td style="text-align:center">@item.Giaconlai</td>
-                                <td style="text-align:center">@item.Giapheduyet</td>
-                                <td style="text-align:center">@item.Giaban</td>
-
-                            </tr>
-                        }
-
-                    }
-                }
-            </tbody>
-        </table>
-        <!--end: Datatable-->
-    </div>
+</table>

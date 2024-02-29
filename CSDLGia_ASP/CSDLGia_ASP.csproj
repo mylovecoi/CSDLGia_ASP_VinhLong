@@ -48,6 +48,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\data\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaRung\" />
+    <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueDN\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />
   </ItemGroup>

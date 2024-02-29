@@ -375,13 +375,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Index"))
                 {
                     var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
-                    model.GiaGiaoDichBDSCt = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == model.Mahs).ToList();
+                    var modelct = _db.GiaGiaoDichBDSCt.FirstOrDefault(t => t.Mahs == Mahs);
 
+                    var viewModel = new GiaGiaoDichBDS
+                    {
+                        // Thông tin hồ sơ
+                        Soqd = model.Soqd,
+                        Mahs = model.Mahs,
+                        Madv = model.Madv,
+                        Madiaban = model.Madiaban,
+                        Thoidiem = model.Thoidiem,
+                        Macqcq = model.Macqcq,
+
+                        // Thông tin hồ sơ chi tiết
+                        Ten = modelct.Ten,
+                        Dvt = modelct.Dvt,
+                        Gia = modelct.Gia,
+                    };
+
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Bảng giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
                     ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", viewModel);
 
                 }
                 else
@@ -505,17 +523,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     var model = (from giathuetnct in _db.GiaGiaoDichBDSCt
                                  join giathuetn in _db.GiaGiaoDichBDS on giathuetnct.Mahs equals giathuetn.Mahs
                                  join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 /*join nhomtn in _db.GiaGiaoDichBDSNhom on giathuetn.Manhom equals nhomtn.Manhom*/
                                  select new GiaGiaoDichBDSCt
                                  {
-                                     Id = giathuetnct.Id,
-                                     Gia = giathuetnct.Gia,
-                                     Mahs = giathuetnct.Mahs,
+
                                      Madv = giathuetn.Madv,
-                                     Manhom = giathuetn.Manhom,
                                      Thoidiem = giathuetn.Thoidiem,
-                                     Tendv = donvi.TenDv,
-                                     /*Tennhom = nhomtn.Tennhom,*/
+
+                                     Ten = giathuetnct.Ten,
+                                     Dvt = giathuetnct.Dvt,
+                                     Gia = giathuetnct.Gia,
+
                                  });
 
                     if (madv != "all")
@@ -544,6 +561,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         model = model.Where(t => t.Gia <= gia_den);
                     }
 
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";

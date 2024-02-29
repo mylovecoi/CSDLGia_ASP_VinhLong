@@ -83,5 +83,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }*/
         [NotMapped]
         public List<GiaThueMuaNhaXhCt> GiaThueMuaNhaXhCt { get; set; }
+        [NotMapped]
+        public string Dvthue { get; set; }
+
     }
 }

@@ -1,7 +1,9 @@
 ﻿using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -48,5 +50,9 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }
         public List<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
         public int Vitri { get; set; }
+
+        public string Ipf1 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
     }
 }

@@ -71,8 +71,15 @@
                         <label>Mô tả</label>
                         <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
-                </div> 
+                </div>
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                    </div>
+                </div>
             </div>
+
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">

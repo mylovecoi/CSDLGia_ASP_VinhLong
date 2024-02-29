@@ -500,36 +500,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMuaNhaXh.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
+                    var modelct = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Mahs == Mahs);
+
+                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
                     {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
+                        // Thông tin hồ sơ
                         Soqd = model.Soqd,
+                        Mahs = model.Mahs,
+                        Madv = model.Madv,
+                        Madiaban = model.Madiaban,
                         Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu,
-                        Mota = model.Mota,
-                        Ipf1 = model.Ipf1,
-                        Ipf2 = model.Ipf2,
-                        Ipf3 = model.Ipf3,
-                        Ipf4 = model.Ipf4,
-                        Ipf5 = model.Ipf5,
+                        Macqcq = model.Macqcq,
+
+                        // Thông tin hồ sơ chi tiết
+                        Maso = modelct.Maso,
+                        Phanloai = modelct.Phanloai,
+                        Dvt = modelct.Dvt,
+                        Dongia = modelct.Dongia,
+                        Dongiathue = modelct.Dongiathue,
                     };
 
-                    var model_ct = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == model_new.Mahs);
-
-                    model_new.GiaThueMuaNhaXhCt = model_ct.ToList();
-
-                    ViewData["Madv"] = model.Madv;
-                    ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Dmtmnxh"] = _db.GiaThueMuaNhaXhDm.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+
                     ViewData["Title"] = "Chi tiết giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Show.cshtml", viewModel);
                 }
                 else
                 {

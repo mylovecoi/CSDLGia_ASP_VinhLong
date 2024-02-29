@@ -63,5 +63,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Level { get; set; }
         [NotMapped]
         public List<GiaTaiSanCongCt> GiaTaiSanCongCt { get; set; }
+       
     }
 }
