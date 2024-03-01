@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             _db = db;
         }
 
-        [Route("DanhMucLePhi")]
+        [Route("GiaTrungThauHhDv")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -34,10 +34,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Index"))
                 {
-                    var model = _db.GiaPhiLePhiDm.ToList();
+                    var model = _db.GiaMuaTaiSanDm.ToList();
 
                     ViewData["Stt"] = model.Count() + 1;
-                    ViewData["Phanloai"] = _db.GiaPhiLePhiDm.Distinct();
+                    ViewData["Phanloai"] = _db.GiaMuaTaiSanDm.Distinct();
 
                     ViewData["Title"] = "Danh mục giá giá trúng thầu hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_giakhac";
@@ -59,12 +59,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
         }
 
 
-        [Route("DanhMucLePhi/Store")]
+        [Route("GiaTrungThauHhDv/Store")]
         [HttpPost]
-        public JsonResult Store(GiaPhiLePhiDm request)
+        public JsonResult Store(GiaMuaTaiSanDm request)
         {
 
-            var model = new GiaPhiLePhiDm
+            var model = new GiaMuaTaiSanDm
             {
                 Stt = request.Stt,
                 Tennhom = request.Tennhom,
@@ -73,7 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
-            _db.GiaPhiLePhiDm.Add(model);
+            _db.GiaMuaTaiSanDm.Add(model);
             _db.SaveChanges();
 
             var data = new { status = "success" };
@@ -81,24 +81,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
         }
 
 
-        [Route("DanhMucLePhi/Delete")]
+        [Route("GiaTrungThauHhDv/Delete")]
         [HttpPost]
         public JsonResult Delete(int Id)
         {
-            var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaPhiLePhiDm.Remove(model);
+            var model = _db.GiaMuaTaiSanDm.FirstOrDefault(t => t.Id == Id);
+            _db.GiaMuaTaiSanDm.Remove(model);
             _db.SaveChanges();
             var data = new { status = "success" };
             return Json(data);
         }
 
 
-        [Route("DanhMucLePhi/Edit")]
+        [Route("GiaTrungThauHhDv/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-            var model = _db.GiaPhiLePhiDm.FirstOrDefault(p => p.Id == Id);
-            var Phanloai = _db.GiaPhiLePhiDm.ToList();
+            var model = _db.GiaMuaTaiSanDm.FirstOrDefault(p => p.Id == Id);
+            var Phanloai = _db.GiaMuaTaiSanDm.ToList();
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -145,16 +145,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 return Json(data);
             }
         }
-        [Route("DanhMucLePhi/Update")]
+        [Route("GiaTrungThauHhDv/Update")]
         [HttpPost]
-        public JsonResult Update(GiaPhiLePhiDm request)
+        public JsonResult Update(GiaMuaTaiSanDm request)
         {
-            var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == request.Id);
+            var model = _db.GiaMuaTaiSanDm.FirstOrDefault(t => t.Id == request.Id);
             model.Stt = request.Stt;
             model.Tennhom = request.Tennhom;
             model.Phanloai = request.Phanloai;
             model.Updated_at = DateTime.Now;
-            _db.GiaPhiLePhiDm.Update(model);
+            _db.GiaMuaTaiSanDm.Update(model);
             _db.SaveChanges();
 
             var data = new { status = "success" };

@@ -210,12 +210,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Địa bàn</label>
                                 <select id="madiaban" name="madiaban" class="form-control">
-                                    @foreach (var db in dsdiaban)
+                                    @foreach (var db in dsdiaban1)
                                     {
-                                        @if (db.MaDiaBan == (string)ViewData["MaDiaBan"])
-                                        {
-                                            <option value="@db.MaDiaBan">@db.TenDiaBan</option>
-                                        }
+                                        <option value="@db.MaDiaBan">@db.TenDiaBan</option>
                                     }
                                 </select>
                             </div>

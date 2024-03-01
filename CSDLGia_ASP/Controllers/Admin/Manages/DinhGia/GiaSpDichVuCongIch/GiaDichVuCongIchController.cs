@@ -313,6 +313,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     {
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
+                        Macqcq = model.Macqcq,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
                     };
@@ -321,7 +322,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDichVuCongIch
                     model_new.GiaSpDvCiCt = model_ct.ToList();
 
                     ViewData["GiaSpDvCiDm"] = _db.GiaSpDvCiDm.ToList();
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = " Thông tin hồ sơ sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";

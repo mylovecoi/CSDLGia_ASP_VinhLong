@@ -319,15 +319,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     {
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
+                        Madv = model.Madv,
+                        Macqcq = model.Macqcq,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
                     };
+                  
                     var model_ct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs);
 
                     model_new.GiaThueTaiSanCongCt = model_ct.ToList();
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["GiaThueTaiSanCongDm"] = _db.GiaThueTaiSanCongDm.ToList();
-
                     ViewData["Title"] = " Thông tin hồ sơ thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";
@@ -360,7 +363,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
 
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = " Thông tin hồ sơ thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";

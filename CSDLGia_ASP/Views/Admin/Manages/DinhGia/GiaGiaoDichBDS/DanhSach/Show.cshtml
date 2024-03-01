@@ -9,7 +9,16 @@
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
-
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -27,16 +36,20 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
     <tr>
-        <th style="text-align: center;">Phân loại bất động sản</th>
-        <th style="text-align: center;">Đơn vị tính</th>
-        <th style="text-align: center;">Giá giao dịch (đồng)</th>
-        
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Phân loại bất động sản</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Phân loại bất động sản</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
     </tr>
     <tr>
         <td style="text-align: center;">@Model.Ten</td>
         <td style="text-align: center;">@Model.Dvt</td>
         <td style="text-align: center;">@Helpers.ConvertDbToStr(Model.Gia)</td>
-      
+        <th style="text-align: center;">Phân loại bất động sản</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
+        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
     </tr>
 
 </table>

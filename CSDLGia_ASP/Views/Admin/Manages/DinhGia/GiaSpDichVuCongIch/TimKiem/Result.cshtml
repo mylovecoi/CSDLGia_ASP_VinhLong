@@ -1,91 +1,69 @@
 ﻿@{
+    Layout = "_LayoutReports";
     int record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var GiaSpDvCiDm = (IEnumerable<GiaSpDvCiDm>)ViewData["GiaSpDvCiDm"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["dsdonvi"];
+   
 
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDvCi>
+<br />
+<br />
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+<br />
+<br />
 
-@section custom_style{
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
-}
-
-    @section custom_script{
-    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
-    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-
-}
-    <script>
-        $(document).ready(function() {
-            TableManaged.init();
-        });
-    </script>
-
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                   Kết quả tìm kiếm thông tin Dịch vụ công ích
-                </h3>
-            </div>
-        </div>
-        <hr />
-        <div class="card-body">
-            <table class="table table-striped table-bordered table-hover" id="sample_3">
-                <thead>
-                    <tr style="text-align:center">
-                        <th>STT</th>
-                        <td>Đơn vị nhập</td>
-                        <td>Thời điểm</td>
-                        <th>Tên sản phẩm, dịch vụ</th>
-                        <th>Thông tin hồ sơ</th>
-                        <td>đơn giá</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null)
-                {
-                    @foreach (var item in Model)
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th style="text-align: center">STT</th>
+            <td style="text-align: center">Đơn vị nhập</td>
+            <td style="text-align: center">Thời điểm</td>
+            <th style="text-align: center">Tên sản phẩm, dịch vụ</th>
+            <th style="text-align: center">Thông tin hồ sơ</th>
+            <td style="text-align: center">đơn giá</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    @foreach (var dv in dsdonvi)
                     {
-                        <tr>
-                            <td style="text-align: center">@(record_id++)</td>
-                            @foreach (var dv in dsdonvi)
+                        @if (dv.MaDv == item.Madv)
+                        {
+                            <td style="text-align: center">@dv.TenDv</td>
+                        }
+                    }
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+
+                    <td style="text-align: center">
+                        @if (GiaSpDvCiDm != null)
+                        {
+                            @foreach (var dm in GiaSpDvCiDm)
                             {
-                                @if (dv.MaDv == item.Madv)
+                                @if (item.Maspdv == dm.Maspdv)
                                 {
-                                    <td style="text-align: center">@dv.TenDv</td>
+                                    <span>@dm.Tenspdv</span>
                                 }
                             }
-                            <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                           
-                            <td style="text-align: center">
-                                @if (GiaSpDvCiDm != null)
-                                {
-                                    @foreach (var dm in GiaSpDvCiDm)
-                                    {
-                                        @if (item.Maspdv == dm.Maspdv)
-                                        {
-                                            <span>@dm.Tenspdv</span>
-                                        }
-                                    }
-                                }
+                        }
 
-                            </td>
-                            <td style="text-align: center"></td>
-                            <td style="text-align: center">@item.Dongia</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="card-footer" style="text-align:center">
-        <a asp-controller="GiaDichVuCongIch" asp-action="Search" class="btn btn-danger">
-            <i class="la la-reply"></i>Quay lại
-        </a>
-    </div>
+                    </td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center">@item.Dongia</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div class="card-footer" style="text-align:center">
+    <a asp-controller="GiaDichVuCongIch" asp-action="Search" class="btn btn-danger">
+        <i class="la la-reply"></i>Quay lại
+    </a>
 </div>
 
 

@@ -1,7 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var doituong = (IEnumerable<GiaNuocShDmVung>)ViewData["Doituong"];
+
 }
 
 @section custom_style{
@@ -31,7 +31,7 @@
     </div>
 </div>
 <hr />
-<form asp-controller="GiaNuocSh" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_nsh_result">
+<form asp-controller="GiaHangHoaTaiSieuThi" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_nsh_result">
     <div class="card-body">
         <div class="mb-3 font-weight-bold font-size-lg">
             <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
@@ -57,18 +57,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label><b>Đối tượng sử dụng*</b></label>
-                    <select class="form-control" id="Madoituong" name="Madoituong">
-                        <option value="All">--Tất cả các phân loại--</option>
-                        @foreach (var dt in doituong)
-                        {
-                            <option value="@dt.Madoituong">@dt.Doituongsd</option>
-                        }
-                    </select>
-                </div>
-            </div>
+         
         </div>
         <div class="row">
             <div class="col-xl-6">

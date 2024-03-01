@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "_LayoutReports";
+    int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["GiaThueMuaNhaXhDm"];
 }
 
 <br />
@@ -38,22 +38,37 @@
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
-    <tr >
-        <th style="text-align:center">Tên tài sản</th>
-        <th style="text-align:center">Đặc điểm</th>
-        <th style="text-align:center">Nguyên giá</th>
-        <th style="text-align:center">Giá còn lại</th>
-        <th style="text-align:center">Giá phê duyệt</th>
-        <th style="text-align:center">Giá bán <br />(Thanh lý)</th>
-    </tr>
-    <tr>
-        <td style="text-align:center">@Model.Tentaisan</td>
-        <td style="text-align:center">@Model.Dacdiem</td>
-        <td style="text-align:center">@Model.Giathue</td>
-        <td style="text-align:center">@Model.Giaconlai</td>
-        <td style="text-align:center">@Model.Giapheduyet</td>
-        <td style="text-align:center">@Model.Giaban</td>
+    <thead>
+        <tr >
+            <th style="text-align:center">STT</th>
+            <th style="text-align:center">Tên tài sản</th>
+            <th style="text-align:center">Đặc điểm</th>
+            <th style="text-align:center">Nguyên giá</th>
+            <th style="text-align:center">Giá còn lại</th>
+            <th style="text-align:center">Giá phê duyệt</th>
+            <th style="text-align:center">Giá bán <br />(Thanh lý)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @if (Model.GiaTaiSanCongCt != null)
+            {
+                @foreach (var item in Model.GiaTaiSanCongCt)
+                {
+                    <tr>
+                        <td style="text-align:center">@(record_id++)</td>
+                        <td style="text-align:center">@item.Tentaisan</td>
+                        <td style="text-align:center">@item.Dacdiem</td>
+                        <td style="text-align:center">@item.Giathue</td>
+                        <td style="text-align:center">@item.Giaconlai</td>
+                        <td style="text-align:center">@item.Giapheduyet</td>
+                        <td style="text-align:center">@item.Giaban</td>
 
-    </tr>
+                    </tr>
+                }
 
+            }
+        }
+    </tbody>
 </table>
