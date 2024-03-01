@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -32,16 +32,15 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaHhDvkTh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giahhdvkTh_store">
-
+    <form asp-controller="GiaHhDvkTh" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giahhdvkth_store">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input name="Mahs" id="Mahs" value="@ViewData["Mahs"]" hidden/>
-            <input name="Matt" id="Matt" value="@ViewData["Matt"]" type="hidden" />
-            <input name="Thang" id="Thang" value="@ViewData["Thang"]" type="hidden" />
-            <input name="Nam" id="Nam" value="@ViewData["Nam"]" type="hidden" />
+            <input name="Mahs" id="Mahs" value="@ViewData["Mahs"]" hidden />
+            <input name="Matt" id="Matt" value="@ViewData["Matt"]" />
+            <input name="Thang" id="Thang" value="@ViewData["Thang"]" />
+            <input name="Nam" id="Nam" value="@ViewData["Nam"]"  />
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
@@ -105,7 +104,7 @@
             <a asp-controller="GiaHhDvkTh" asp-action="Index" asp-route-Matt="@ViewData["Matt"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValThueTn()"><i class="la la-check"></i>Hoàn Thành</button>
+            <button type="button" class="btn btn-primary mr-2" onclick="ValGiaHhDvkTh()"><i class="la la-check"></i>Hoàn Thành</button>
         </div>
     </form>
     <!--end::Form-->
@@ -134,7 +133,7 @@
     <!-- /.modal-dialog -->
 </div>
 <script>
-    function ValThueTn() {
+    function ValGiaHhDvkTh() {
         if ($('#Sobc').val().trim() == '') {
             toastr.error("Số báo cáo không được để trống!", "Lỗi!!!")
         } else {
@@ -144,12 +143,7 @@
                 if ($('#Ngaychotbc').val().trim() == '') {
                     toastr.error("Ngày chốt báo cáo không được để trống!", "Lỗi!!!")
                 } else {
-                    if ($('#Ghichu').val().trim() == '') {
-                        toastr.error("Ghi chú không được để trống!", "Lỗi!!!")
-                    } else {
-                        document.getElementById("frm_giahhdvkTh_store").submit();
-                    }
-
+                    document.getElementById("frm_giahhdvkth_store").submit();
                 }
             }
         }
@@ -201,7 +195,7 @@
         })
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
