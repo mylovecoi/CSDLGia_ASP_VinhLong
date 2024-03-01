@@ -80,6 +80,30 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }*/
         [NotMapped]
         public List<GiaNuocShCt> GiaNuocShCt { get; set; }
+        [NotMapped]
+        public string Madoituong { get; set; }
+        [NotMapped]
+        public string Doituongsd { get; set; }
+        [NotMapped]
+        public string Namchuathue { get; set; }
+        [NotMapped]
+        public double Giachuathue { get; set; }
+        [NotMapped]
+        public string Namchuathue1 { get; set; }
+        [NotMapped]
+        public double Giachuathue1 { get; set; }
+        [NotMapped]
+        public string Namchuathue2 { get; set; }
+        [NotMapped]
+        public double Giachuathue2 { get; set; }
+        [NotMapped]
+        public string Namchuathue3 { get; set; }
+        [NotMapped]
+        public double Giachuathue3 { get; set; }
+        [NotMapped]
+        public string Namchuathue4 { get; set; }
+        [NotMapped]
+        public double Giachuathue4 { get; set; }
 
     }
 }

@@ -300,26 +300,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 {
 
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
-                    var modelct = _db.GiaTaiSanCongCt.FirstOrDefault(t => t.Mahs == Mahs);
 
-                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
-                    {
-                        // Thông tin hồ sơ
-                        Soqd = model.Soqd,
-                        Mahs = model.Mahs,
-                        Madv = model.Madv,
-                        Madiaban = model.Madiaban,
-                        Thoidiem = model.Thoidiem,
-                        Macqcq = model.Macqcq,
-
-                        // Thông tin hồ sơ chi tiết
-                        Tentaisan = modelct.Tentaisan,
-                        Dacdiem = modelct.Tentaisan,
-                        Giathue = modelct.Giathue,
-                        Giaconlai = modelct.Giaconlai,
-                        Giapheduyet = modelct.Giapheduyet,
-                        Giaban = modelct.Giaban,
-                    };
+                    model.GiaTaiSanCongCt = _db.GiaTaiSanCongCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
@@ -327,7 +309,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Show.cshtml", viewModel);
+                    return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Show.cshtml", model);
                 }
                 else
                 {

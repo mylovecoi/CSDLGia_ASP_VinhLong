@@ -385,7 +385,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                 {
                     var model = _db.GiaThueTaiNguyen.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaThueTaiNguyenCt = _db.GiaThueTaiNguyenCt.Where(t => t.Mahs == model.Mahs).ToList();
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";

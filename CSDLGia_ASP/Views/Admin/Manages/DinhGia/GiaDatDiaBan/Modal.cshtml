@@ -24,7 +24,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input asp-for="Mahs">
+                <input hidden asp-for="Mahs">
                 <div class="row">
 
                     <div class="col-xl-6">
@@ -55,6 +55,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-xl-11">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Khu vực tên đường phố</label>
@@ -124,6 +125,12 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí IV</label>
                             <input type="text" id="giavt4_create" name="giavt4_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Giá vị trí V</label>
+                            <input type="text" id="giavt5_create" name="giavt5_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -482,6 +489,7 @@
                 Giavt2: $('#giavt2_create').val(),
                 Giavt3: $('#giavt3_create').val(),
                 Giavt4: $('#giavt4_create').val(),
+                Giavt5: $('#giavt5_create').val(),
                 Mota: $('#mota_create').val(),
             },
             dataType: 'JSON',
@@ -580,6 +588,7 @@
                 Giavt2: $('#giavt2_edit').val(),
                 Giavt3: $('#giavt3_edit').val(),
                 Giavt4: $('#giavt4_edit').val(),
+                Giavt5: $('#giavt5_edit').val(),
                 Mota: $('#ghichu_edit').val(),
             },
             dataType: 'JSON',
@@ -639,6 +648,7 @@
             file.append("Giavt2", $("#giavt2_excel").val());
             file.append("Giavt3", $("#giavt3_excel").val());
             file.append("Giavt4", $("#giavt4_excel").val());
+            file.append("Giavt5", $("#giavt5_excel").val());
             file.append("Hesok", $("#hesok_excel").val());
 
             file.append("FormFile", $("#file_excel")[0].files[0]);

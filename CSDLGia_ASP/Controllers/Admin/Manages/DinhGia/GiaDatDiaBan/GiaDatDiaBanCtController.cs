@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Mota, string Maloaidat, string Khuvuc, string Maxp, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4)
+        public JsonResult Store(string Mahs, string Mota, string Maloaidat, string Khuvuc, string Maxp, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5)
         {
             // Tạo 1 bản nghi mới trang thái CXD nếu thêm chi tiết xong quay lại
             var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
@@ -39,6 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 Giavt2 = Giavt2,
                 Giavt3 = Giavt3,
                 Giavt4 = Giavt4,
+                Giavt5 = Giavt5,
                 Mota = Mota,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
@@ -182,6 +183,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "</div>";
                 result += "</div>";
 
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá vị trí V</label>";
+                result += "<input type='text' id='giavt5_edit' name='giavt5_edit' value='" + model.Giavt5 + "' class='form-control'>";
+                result += "</div>";
+                result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Ghi chú</label>";
@@ -205,7 +213,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Maloaidat, string Maxp, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4)
+        public JsonResult Update(int Id, string Maloaidat, string Maxp, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5)
         {
             //Tìm id cần sửa
             //Update dữ liệu mới
@@ -221,6 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             model.Giavt2 = Giavt2;
             model.Giavt3 = Giavt3;
             model.Giavt4 = Giavt4;
+            model.Giavt5 = Giavt5;
             model.Updated_at = DateTime.Now;
             _db.GiaDatDiaBanCt.Update(model);
             _db.SaveChanges();
@@ -340,6 +349,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             result += "<th>VT2</th>";
             result += "<th>VT3</th>";
             result += "<th>VT4</th>";
+            result += "<th>VT5</th>";
             result += "<th>Thao tác</th>";
 
             result += "</tr>";
@@ -350,14 +360,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "<tr>";
 
                 result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td class='active'>" + item.Maxp + "</td>";
+                result += "<td style='text-align:center'>" + item.Maxp + "</td>";
                 result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
-                result += "<td class='active'>" + item.Khuvuc + "</td>";
-                result += "<td style='text-align:center' class='active'>" + item.Diemdau + " " + "đến" + " " + item.Diemcuoi + "</td>";
+                result += "<td style='text-align:center'>" + item.Khuvuc + "</td>";
+                result += "<td style='text-align:center'>" + item.Diemdau + " " + "đến" + " " + item.Diemcuoi + "</td>";
                 result += "<td style='text-align:center'>" + item.Giavt1 + "</td>";
-                result += "<td class='active'>" + item.Giavt2 + "</td>";
+                result += "<td style='text-align:center'>" + item.Giavt2 + "</td>";
                 result += "<td style='text-align:center'>" + item.Giavt3 + "</td>";
-                result += "<td class='active'>" + item.Giavt4 + "</td>";
+                result += "<td style='text-align:center'>" + item.Giavt4 + "</td>";
+                result += "<td style='text-align:center'>" + item.Giavt5 + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

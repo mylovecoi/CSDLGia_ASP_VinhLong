@@ -504,11 +504,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 {
                     var model = _db.GiaNuocSh.FirstOrDefault(t => t.Mahs == Mahs);
 
-                    var model_ct = _db.GiaNuocShCt.Where(t => t.Mahs == model.Mahs);
-
-                    model.GiaNuocShCt = model_ct.ToList();
-
+                    model.GiaNuocShCt = _db.GiaNuocShCt.Where(t => t.Mahs == model.Mahs).ToList();
+                    
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Xem chi tiết giá nước sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";

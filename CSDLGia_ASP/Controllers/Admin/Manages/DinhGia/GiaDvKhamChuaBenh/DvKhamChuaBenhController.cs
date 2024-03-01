@@ -601,6 +601,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá dịch vụ khám chữa bệnh";
                     ViewData["Ipf2"] = model.Ipf2;
                     ViewData["Ipf3"] = model.Ipf3;
