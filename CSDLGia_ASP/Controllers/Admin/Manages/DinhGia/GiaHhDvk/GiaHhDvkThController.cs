@@ -108,7 +108,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Matt"] = Matt;
                         ViewData["Dsnhom"] = dsnhom;
                         ViewData["Hoso"] = hoso;
-                        ViewData["model"] = model_join;
+                        /*ViewData["model"] = model_join;*/
                         ViewData["DsDiaBan"] = _db.DsDiaBan;
                         ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";
@@ -179,7 +179,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         _db.GiaHhDvkCtTh.Add(modelCt);
                     }
                     _db.SaveChanges();
-                    ViewBag.model = model;
+                    /*ViewBag.model = model;*/
                     ViewData["modelCt"] = _db.GiaHhDvkCtTh.Where(x => x.Mahs == model.Mahs);
                     ViewData["modelNhom"] = _db.GiaHhDvkNhom.FirstOrDefault(x => x.Matt == Matt);
                     ViewData["modelHh"] = modelHh;
@@ -237,6 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/TongHop/Edit")]
         [HttpGet]
         public IActionResult Edit(int Id)
@@ -267,6 +268,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/TongHop/Update")]
         [HttpPost]
         public IActionResult Update(string Mahs, string Matt, string Thang, string Nam, string Sobc, DateTime Ngaybc, DateTime Ngaychotbc, string Ghichu)
@@ -298,6 +300,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/TongHop/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -326,6 +329,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/TongHop/CreateHs")]
         [HttpGet]
         public IActionResult CreateHs(string Mahs, string Madv)
