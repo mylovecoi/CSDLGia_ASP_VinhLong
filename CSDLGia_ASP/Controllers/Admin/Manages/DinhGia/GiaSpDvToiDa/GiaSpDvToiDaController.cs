@@ -355,6 +355,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Ipf1"] = model.Ipf1;
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Show.cshtml", model);
 
                 }

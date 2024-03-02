@@ -351,8 +351,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                         Thongtinqd = model.Thongtinqd,
                     };
 
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "T");
-
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_mts";
                     ViewData["MenuLv2"] = "menu_giamts_tt";

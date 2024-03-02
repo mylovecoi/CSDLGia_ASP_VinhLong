@@ -62,6 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan1"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDv"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;
@@ -300,7 +301,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                     ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();  
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Title"] = "Bảng giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";

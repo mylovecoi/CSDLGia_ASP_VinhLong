@@ -363,6 +363,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCuTheCt.ToList();
                     ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";

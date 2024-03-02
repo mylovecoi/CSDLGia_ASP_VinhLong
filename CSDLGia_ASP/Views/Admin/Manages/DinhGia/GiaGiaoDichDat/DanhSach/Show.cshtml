@@ -1,38 +1,44 @@
 ﻿@{
     Layout = "_LayoutReports";
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsnhom = (IEnumerable<GiaDvKcbNhom>)ViewData["GiaDvKcbNhom"];
 }
+<br />
+<br />
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
+<p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
+    @foreach (var dsonvi in dsdonvi)
+    {
+        @if (Model.Macqcq == dsonvi.MaDv)
+        {
+            @dsonvi.TenDv
+        }
+    }
+</p>
 
-<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
-    <tr>
-        <td width="40%" style="vertical-align: top;">
-            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
-        </td>
-        <td style="vertical-align: top;">
-            <b>
-                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
-                Độc lập - Tự do - Hạnh phúc
-            </b>
-            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
-        </td>
-    </tr>
-    <tr>
-        <td style="vertical-align: top;">Số:......</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày..@Model.Thoidiem.Day..tháng..@Model.Thoidiem.Month..năm..@Model.Thoidiem.Year..</i></td>
-    </tr>
-</table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
-    BẢNG GIÁ GIAO DỊCH ĐẤT THỰC TẾ TRÊN THỊ TRƯỜNG
-</p>
-<p style="text-align: center; font-size: 16px; font-style:italic">
-    (Ban hành kèm theo Quyết định số 1 ngày 12 tháng 08 năm 2022)
-</p>
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Tên nhóm, loại tài nguyên</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá tính thuế tài nguyên (đồng)</th>
+            <th style="text-align: center;" rowspan="2" width="50%">Tên loại đất</th>
+            <th style="text-align: center;" rowspan="2" width="4%">Đơn vị tính</th>
+            <th style="text-align: center;" rowspan="2" width="10%">Giá </th>
         </tr>
     </thead>
     <tbody>
@@ -41,31 +47,10 @@
             @foreach (var item in Model.GiaGiaoDichDatCt)
             {
                 <tr>
-                    <td style="text-align: left;">@item.Ten</td>
-                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gia)</td>
+                    <td style="text-align: center;">@item.Ten</td>
+                    <td style="text-align: center">@Helpers.ConvertDbToStr(item.Gia)</td>
                 </tr>
             }
         }
     </tbody>
-</table>
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
-    <tr>
-        <td width="45%" style="text-align: left">
-            <br /><br /><br /><br />
-            <span style="font-style:italic; font-weight: bold">Nơi nhận</span><br />
-            <span>- UBND tỉnh;</span><br />
-            <span>- Bộ tài chính;</span><br />
-            <span>- Lưu: VT, QLGCS.</span>
-        </td>
-        <td width="55%" style="text-align: center">
-            <span style="font-weight: bold">
-                THỦ TRƯỞNG ĐƠN VỊ
-            </span><br />
-            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
-        </td>
-    </tr>
-    <tr style="text-align: center; height:100px">
-        <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
-        <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
-    </tr>
 </table>

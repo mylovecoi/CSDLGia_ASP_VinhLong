@@ -370,6 +370,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
+                    ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Show.cshtml", model);
 
                 }

@@ -359,9 +359,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Ghichu = model.Ghichu,
 
                     };
-
+                
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvKhungGiaCt.ToList();
                     ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ khung giá";
                     ViewData["Ipf1"] = model.Ipf1;

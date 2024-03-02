@@ -502,9 +502,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                       ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_tt";
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
 
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Show.cshtml", model_new);
                 }
