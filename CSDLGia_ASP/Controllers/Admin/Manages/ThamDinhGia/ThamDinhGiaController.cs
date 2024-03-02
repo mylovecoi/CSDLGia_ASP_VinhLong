@@ -460,6 +460,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     ViewData["Madv"] = model.Madv;
                     ViewData["TdgDonvi"] = _db.ThamDinhGiaDv.ToList();
                     ViewData["TdgDmHh"] = _db.ThamDinhGiaDmHh.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Dvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Hồ sơ thẩm định giá";
                     ViewData["MenuLv1"] = "menu_tdg";

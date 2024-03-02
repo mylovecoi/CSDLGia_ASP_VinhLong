@@ -1,104 +1,61 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan;
-@{
+﻿@{
+   
+    Layout = "_LayoutReports";
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
+<br />
+<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan;
 
-@section custom_style {
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
-}
-    @section custom_script{
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
+<p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
+    @foreach (var dsonvi in dsdonvi)
+    {
+        @if (Model.Macqcq == dsonvi.MaDv)
+        {
+            @dsonvi.TenDv
+        }
+    }
+</p>
 
-    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
-    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-    <script>
-        $(document).ready(function() {
-            TableManaged4.init();
-        });
-    </script>
-}
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu hàng hóa dịch vụ</small><br />
-                </h3>
-            </div>
-        </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaTrungThauHhdv" asp-action="" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">
-                <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Dịa bàn</label>
-                            <select class="form-control" asp-for="Madiaban" disabled>
-                                @foreach (var item in dsdiaban)
-                            {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Nhóm hàng hóa dịch vụ</label>
-                        <input type="text" class="form-control" asp-for="Manhom" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
-                        <input type="text" class="form-control" asp-for="Soqd" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Ngày quyết định</label>
-                        <input type="date" class="form-control" asp-for="Ngayqd" />
-                    </div>
-                </div>
-                <div class="col-xl-8">
-                    <div class="form-group">
-                        <label>Thôn tin quyết định</label>
-                        <input type="text" class="form-control" asp-for="Thongtinqd" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Tên nhà thầu</label>
-                        <input type="text" class="form-control" asp-for="Tennhathau" />
-                    </div>
-                </div>
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <input type="text" class="form-control" asp-for="Ghichu" />
-                    </div>
-                </div>
-            </div>
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label class="control-label">File đính kèm</label>
-                    <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
-                </div>
-            </div>
+    <tr>
 
-        </div>
+        <th style="text-align:center">Nhóm hàng hóa dịch vụ</th>
+        <th style="text-align:center">Số QĐ kết quả lựa trọn nhà thầu*</th>
+        <th style="text-align:center">Ngày quyết định</th>
+        <th style="text-align:center">Thông tin quyết định</th>
+        <th style="text-align:center">Tên nhà thầu</th>
+        <th style="text-align:center">Ghi chú</th>
 
-    </form>
-    <!--end::Form-->
-</div>
+    </tr>
+    <tr>
+
+        <th style="text-align:center">@Model.Manhom</th>
+        <th style="text-align:center">@Model.Soqd</th>
+        <th style="text-align:center">@Model.Ngayqd</th>
+        <th style="text-align:center">@Model.Thongtin</th>
+        <th style="text-align:center">@Model.Tennhathau/th>
+        <th style="text-align:center">@Model.Ghichu</th>
+
+    </tr>
+
+</table>

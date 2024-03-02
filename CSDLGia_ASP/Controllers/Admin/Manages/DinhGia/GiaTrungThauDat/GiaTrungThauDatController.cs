@@ -374,7 +374,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Phanloai = model.Phanloai
                     };
                     var model_ct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
                     ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
