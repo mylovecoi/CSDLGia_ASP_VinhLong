@@ -59,10 +59,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         }
                     }
 
+                    //test
+                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
+                                   select new VMDsDonVi
+                                   {
+                                       Id = dv.Id,
+                                       TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = dv.MaDiaBan,
+                                       TenDv = dv.TenDv,
+                                       MaDv = dv.MaDv,
+                                   }).ToList();
+                 
+                    //test
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan1"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+
+                    //test
+                  
+                    ViewData["DsDonVi"] = dsdonvi;
+                    //test
+
+
                     ViewData["DsDv"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;

@@ -1,11 +1,15 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban1 = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan1"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDv"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    // var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
+
+    //test
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 
@@ -283,7 +287,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban1)
+                                    @foreach (var db in dsdiaban)
                                     {
                                         <optgroup label="@db.TenDiaBan">
                                             @{
