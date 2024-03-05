@@ -81,13 +81,12 @@
             </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <label style="font-weight:bold; color:blue">Đơn vị tạo hồ sơ</label>
                     <select class="form-control select2basic" id="Madiaban" name="Madiaban">
                         @foreach (var item in dsdiaban1)
                         {
                             <!option value="@item.MaDiaBan" @((string)ViewData["madiaban"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
                         }
-
                     </select>
                 </div>
             </div>

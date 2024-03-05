@@ -2623,7 +2623,7 @@
                     }
 
                     <!-- Bảng giá các loại đất  -->
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb", "Index"))
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -2637,7 +2637,7 @@
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtu", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtu", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban_t4">
                                             <a asp-controller="TtGiaDatDiaBan" asp-action="Index" class="menu-link">
@@ -2650,7 +2650,7 @@
                                     }
 
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.thongtin", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban_tt">
                                             <a asp-controller="GiaDatDiaBan" asp-action="Index" class="menu-link">
@@ -2662,7 +2662,7 @@
                                         </li>
                                     }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.xetduyet", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban_xd">
                                             <a asp-controller="GiaDatDiaBanXd" asp-action="Index" class="menu-link">
@@ -2674,7 +2674,18 @@
                                         </li>
                                     }
 
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giadatdb.baocao", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.timkiem", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban_tk">
+                                            <a asp-controller="GiaDatDiaBan" asp-action="Search" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-line">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text text-truncate">Tim kiếm thống kê</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.baocao", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giadatdiaban_bc">
                                             <a asp-controller="GiaDatDiaBanBc" asp-action="Index" class="menu-link">

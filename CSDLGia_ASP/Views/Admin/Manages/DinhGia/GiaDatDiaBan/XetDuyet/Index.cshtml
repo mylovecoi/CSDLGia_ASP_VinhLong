@@ -71,7 +71,7 @@
             </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Địa bàn</label>
+                    <label style="font-weight:bold; color:blue">Địa bàn đơn vị nhập liệu quản lý</label>
                     <select class="form-control select2basic" id="Madiaban" name="Madiaban">
                         @foreach (var item in dsdiaban1)
                         {
@@ -83,7 +83,7 @@
 
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <label style="font-weight:bold; color:blue">Đơn vị gửi hồ sơ</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
@@ -93,10 +93,11 @@
                                 }
                                 @foreach (var item in donvi)
                                 {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                                    <!option value="@item.MaDv" >@item.TenDv</!option>
                                 }
                             </optgroup>
                         }
+
                     </select>
                 </div>
             </div>
