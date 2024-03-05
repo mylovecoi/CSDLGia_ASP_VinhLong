@@ -69,6 +69,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                         Level = db.Level,
                                     }).First();
 
+                   
                     var model = _db.GiaDatDiaBan.Where(t => t.Madiaban == Madiaban).ToList();
 
                     if (getdonvi.Level == "T")
@@ -229,37 +230,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             }
         }
 
-        public IActionResult ChuyenXd(string mahs, string madv, string macqcq)
+        public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Index"))
                 {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs);
-
-                    if (madv == model.Madv)
-                    {
-                        model.Macqcq = macqcq;
-                        model.Trangthai = "HT";
-                    }
-
-                    if (madv == model.Madv_h)
-                    {
-                        model.Macqcq_h = macqcq;
-                        model.Trangthai_h = "HT";
-                    }
-
-                    if (madv == model.Madv_t)
-                    {
-                        model.Macqcq_t = macqcq;
-                        model.Trangthai_t = "HT";
-                    }
-
-                    if (madv == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = macqcq;
-                        model.Trangthai_ad = "HT";
-                    }
+                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
                     var dvcq_join = from dvcq in _db.DsDonVi
                                     join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
@@ -271,31 +248,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                         TenDv = dvcq.TenDv,
                                         Level = db.Level,
                                     };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq);
-
+                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
+                    model.Macqcq = macqcq_chuyen;
+                    model.Trangthai = "HT";
                     if (chk_dvcq != null && chk_dvcq.Level == "T")
                     {
-                        model.Madv_t = macqcq;
+                        model.Madv_t = macqcq_chuyen;
                         model.Thoidiem_t = DateTime.Now;
                         model.Trangthai_t = "CHT";
                     }
-                    if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
                     {
-                        model.Madv_ad = macqcq;
+                        model.Madv_ad = macqcq_chuyen;
                         model.Thoidiem_ad = DateTime.Now;
                         model.Trangthai_ad = "CHT";
                     }
-                    if (chk_dvcq != null && chk_dvcq.Level == "H")
+                    else
                     {
-                        model.Madv_h = macqcq;
+                        model.Madv_h = macqcq_chuyen;
                         model.Thoidiem_h = DateTime.Now;
                         model.Trangthai_h = "CHT";
                     }
-
                     _db.GiaDatDiaBan.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaDatDiaBanXd", new { Madv = madv, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatDiaBan", new { model.Madv, Nam = model.Thoidiem.Year });
+
                 }
                 else
                 {
