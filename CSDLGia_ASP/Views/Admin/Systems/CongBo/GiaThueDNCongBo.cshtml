@@ -1,8 +1,6 @@
-﻿@{
-    Layout = "_LayoutCongBo.cshtml";
-}
-
+﻿
 @{
+    Layout = "_LayoutCongBo.cshtml";
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
@@ -95,8 +93,8 @@
                     <th>Thời điểm xác định</th>
                     <th>Vị trí đất</th>
                     <th>Trạng thái</th>
+                    <th>Thao tác</th>
                   
-                   
                 </tr>
             </thead>
             <tbody>
@@ -171,7 +169,18 @@
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
                                     <br />
+
                                 }
+                            </td>
+                            <td>
+                                <a asp-controller="GiaThueDN" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                <a href="~/UpLoad/File/DinhGia/GiaThueDN/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </a>
                             </td>
 
                         </tr>
