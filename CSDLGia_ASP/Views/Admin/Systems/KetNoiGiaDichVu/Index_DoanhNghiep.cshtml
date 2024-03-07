@@ -1,0 +1,115 @@
+﻿@using CSDLGia_ASP.Models.Systems
+@model IEnumerable<CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.DoanhNghiepDVLT>
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh sách doanh nghiệp từ phần mềm kê khai giá dịch vụ lưu trú</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+
+            <button type="button" data-target="#NhanDuLieu-Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Nhận dữ liệu">
+                <i class="la la-plus"></i>Nhận dữ liệu
+            </button>
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="mb-12">
+
+            <table class="table table-striped table-bordered table-hover" id="sample_3">
+                <thead>
+                    <tr style="text-align:center">
+                        <th width="5%">#</th>
+                        <th>Mã số thuế</th>
+                        <th>Tên doanh nghiệp</th>
+                        <th>Tên địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th width="10%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center" width="5%"></td>
+                            <td class="text-center">@item.masothue</td>
+                            <td class="active">@item.tendn</td>
+                            <td class="active">@item.diachidn</td>
+                            <td class="active">@item.trangthai</td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--Create Modal-->
+<!--begin::Form-->
+<form asp-controller="KetNoiGiaDichVu" asp-action="LayDanhSachDoanhNghiepDVLT" method="post">
+    <div class="modal fade" id="NhanDuLieu-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin chi tiết
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Link API kết nối<span class="require">*</span></label>
+                                <input type="text" name="linkAPI" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Danh sách tham số</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã phân loại tài khoản (SADMIN)<span class="require">*</span></label>
+                                <input type="text" name="sadmin" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã cơ quan chủ quản (CQCQ)</label>
+                                <input type="text" name="cqcq" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Nhận dữ liệu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--end::Form-->

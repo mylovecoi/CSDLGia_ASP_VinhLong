@@ -7,6 +7,7 @@ using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
+using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Database
@@ -299,7 +300,12 @@ namespace CSDLGia_ASP.Database
 
         public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }
 
+        //Kết nối giá dịch vụ lưu trú
+        public DbSet<DoanhNghiepDVLT> DoanhNghiepDVLT { get; set; }
+        public DbSet<CoSoKinhDoanhDVLT> CoSoKinhDoanhDVLT { get; set; }
 
+        public DbSet<HoSoKeKhaiGia> HoSoKeKhaiGia {  get; set; }
+        public DbSet<HoSoKeKhaiGia_ChiTiet> HoSoKeKhaiGia_ChiTiet { get; set; }
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
     }
