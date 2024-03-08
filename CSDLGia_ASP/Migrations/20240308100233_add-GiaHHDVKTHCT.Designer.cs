@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240308100233_add-GiaHHDVKTHCT")]
+    partial class addGiaHHDVKTHCT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6515,10 +6517,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Mucgiaden")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Mucgiatu")
+                    b.Property<double>("Mucgia")
                         .HasColumnType("float");
 
                     b.Property<string>("Phanloaidv")
@@ -6548,6 +6547,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Gia")
+                        .HasColumnType("float");
+
                     b.Property<string>("Hientrang")
                         .HasColumnType("nvarchar(max)");
 
@@ -6559,12 +6561,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Mucgiaden")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Mucgiatu")
-                        .HasColumnType("float");
 
                     b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
