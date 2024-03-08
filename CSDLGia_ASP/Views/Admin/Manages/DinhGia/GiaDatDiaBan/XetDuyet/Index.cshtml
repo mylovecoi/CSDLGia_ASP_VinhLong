@@ -110,7 +110,7 @@
                     <th>Thời điểm</th>
                     <th>Thông tư, quyết định</th>
                     <th>Trạng thái</th>
-                    <th width="15%">Thao tác</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -120,10 +120,10 @@
                     {
                         <tr>
                             <td style="text-align: center" width="3%">@(record_id++)</td>
-                            <td style="text-align: center" width="10%">@item.Madiaban</td>
-                            <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center" width="10%">@item.Soqd</td>
-                            <td style="text-align: center" width="15%">
+                            <td style="text-align: center" >@item.Madiaban</td>
+                            <td style="text-align: center" >@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center" >@item.Soqd</td>
+                            <td style="text-align: center" >
                                 @if (item.Trangthai == "CHT")
                                 {
                                     <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
@@ -153,6 +153,14 @@
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
                                 {
+                                    <a href="~/UpLoad/File/DinhGia/GiaDatDiaBan/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                       onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                        <i class="icon-lg la la-cloud-download text-warning"></i>
+                                    </a>
+                                    <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                       target="_blank">
+                                        <i class="icon-lg la la-eye text-success"></i>
+                                    </a>
                                     @if (item.Level == "ADMIN")
                                     {
                                         @if (item.Trangthai == "CB")

@@ -1,10 +1,10 @@
 ﻿@{
     Layout = "_LayoutReports";
     var record_id = 1;
-  
-    var cts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaCt>)ViewData["ct"];
+    
+    var cts = (IEnumerable<GiaDatDiaBanCt>)ViewData["ct"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 <br />
 <br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -26,19 +26,16 @@
     </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT</p>
-
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
-
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Phân loại sản phẩm dịch vụ</th>
-            <th style="text-align: center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align: center">Đơn vị tính</th>
-            <th style="text-align: center">Mức giá tối thiểu</th>
-            <th style="text-align: center">Mức giá tối đa</th>
-
+            <th style="text-align: center">Khu vực</th>
+            <th style="text-align: center">Địa giới từ</th>
+            <th style="text-align: center">Địa giới đến</th>
+            <th style="text-align: center">Mô tả</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -46,28 +43,23 @@
         {
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
-
-                 <td colspan="7">
-
-                    Mã hồ sơ:@item.Mahs
-
+                <td colspan="7">
+                    <b>Mã hồ sơ: </b>@item.Mahs
                 </td>
-
             </tr>
             var record_id_ct = 1;
             foreach (var ct in cts.Where(t => t.Mahs == item.Mahs))
             {
                 <tr>
-                    <td style="text-align: center">@(record_id - 1).@(record_id_ct++)</td>
-                    <td style="text-align: center">@ct.Phanloaidv</td>
-                    <td style="text-align: center">@ct.Maspdv</td>
-                    <td style="text-align: center">@ct.Dvt</td>
-                    <td style="text-align: center">@ct.Giatoithieu</td>
-                    <td style="text-align: center">@ct.Giatoida</td>
-
-
+                      <td style="text-align: center">@(record_id - 1).@(record_id_ct++)</td>
+                    <td style="text-align: left">@ct.Khuvuc</td>
+                    <td style="text-align: left">@ct.Diemdau</td>
+                    <td style="text-align: center">@ct.Diemcuoi</td>
+                    <td style="text-align: center">@ct.Mota</td>
+                    
                 </tr>
             }
+
         }
     </tbody>
 </table>

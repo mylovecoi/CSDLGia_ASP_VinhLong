@@ -22,12 +22,11 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        @* <input type="hidden" name="Mahs" id="Mahs"> *@
-                        @* <input id="Hoso" name="Hoso" value="@ViewData["Hoso"]" /> *@
+                 
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Theo thông tư quyết định</label>
-                                <select class="form-control" disabled="disabled">
+                                <select class="form-control" name="Matt">
                                     @foreach (var item in dsnhom)
                                     {
                                         <!option value="@item.Matt" @((string)ViewData["Matt"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
@@ -38,7 +37,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Tháng</label>
-                                <select class="form-control" disabled="disabled">
+                                <select class="form-control" name="Thang">
                                     @for (var i = 1; i <= 12; i++)
                                     {
                                         <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
@@ -49,7 +48,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Năm</label>
-                                <select class="form-control" disabled="disabled">
+                                <select class="form-control" name="Nam">
                                     @{
                                         var nam_start = DateTime.Now.Year - 5;
                                         var nam_stop = DateTime.Now.Year + 1;
@@ -87,7 +86,7 @@
                                         <td>@item.Madv</td>
                                         <td>@item.Macqcq</td>
                                         <td style="text-align: center">
-                                            <input type="checkbox" value="@item.Mahs" checked />
+                                            <input type="checkbox" value="@item.Mahs" name="Hoso" checked />
                                         </td>
                                     </tr>
                                 }

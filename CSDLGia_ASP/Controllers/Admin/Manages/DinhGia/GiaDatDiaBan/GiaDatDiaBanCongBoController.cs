@@ -10,21 +10,18 @@ using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 {
-    public class GiaDatDiaBanXdController : Controller
+    public class GiaDatDiaBanCongBoController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaDatDiaBanXdController(CSDLGiaDBContext db)
+        public GiaDatDiaBanCongBoController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("GiaDatDiaBan/XetDuyet")]
+        [Route("GiaDatDiaBan/CongBo")]
         [HttpGet]
-
-
         //Lấy ra bản ghi có Nam, Madv, Madiaban sau khi được lấy từ ulr xuống
-
         public IActionResult Index(string Madv, string Nam, string Madiaban)
         {
 
@@ -69,7 +66,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                         Level = db.Level,
                                     }).First();
 
-                   
+
                     var model = _db.GiaDatDiaBan.Where(t => t.Madiaban == Madiaban).ToList();
 
                     if (getdonvi.Level == "T")
@@ -98,9 +95,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_t,
-                                             Ipf1 = kk.Ipf1,
                                              Madiaban = kk.Madiaban,
-                                             Thoidiem = kk.Thoidiem_t,  
+                                             Thoidiem = kk.Thoidiem_t,
+                                             Ipf1 = kk.Ipf1,
                                              Trangthai = kk.Trangthai_t,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
@@ -141,7 +138,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
-                        return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);
+                        ViewBag.bSession = true;
+                        return View("Views/Admin/Systems/CongBo/GiaDatDiaBanCongBo.cshtml", model_join);
                     }
                     else
                     {
@@ -213,205 +211,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_xd";
-                        return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Index.cshtml", model_join);
+                        ViewBag.bSession = true;
+                        return View("Views/Admin/Systems/CongBo/GiaDatDiaBanCongBo.cshtml", model_join);
                     }
 
 
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Index"))
-                {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_chuyen);
-
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dvcq.Id,
-                                        MaDiaBan = dvcq.MaDiaBan,
-                                        MaDv = dvcq.MaDv,
-                                        TenDv = dvcq.TenDv,
-                                        Level = db.Level,
-                                    };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
-                    model.Macqcq = macqcq_chuyen;
-                    model.Trangthai = "HT";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = macqcq_chuyen;
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CHT";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = macqcq_chuyen;
-                        model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CHT";
-                    }
-                    else
-                    {
-                        model.Madv_h = macqcq_chuyen;
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CHT";
-                    }
-                    _db.GiaDatDiaBan.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaDatDiaBan", new { model.Madv, Nam = model.Thoidiem.Year });
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Id == id_tralai);
-
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
-                    {
-                        model.Macqcq = null;
-                        model.Trangthai = "HHT";
-                        model.Lydo = Lydo;
-                    }
-
-                    if (madv_tralai == model.Macqcq_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Trangthai_h = "HHT";
-                        model.Lydo = Lydo;
-                    }
-
-                    if (madv_tralai == model.Macqcq_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Trangthai_t = "HHT";
-                        model.Lydo = Lydo;
-                    }
-
-                    if (madv_tralai == model.Macqcq_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Trangthai_ad = "HHT";
-                        model.Lydo = Lydo;
-                    }
-
-
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-
-                    if (madv_tralai == model.Madv_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Madv_h = null;
-                        model.Thoidiem_h = DateTime.MinValue;
-                        model.Trangthai_h = null;
-                    }
-
-                    if (madv_tralai == model.Madv_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Madv_t = null;
-                        model.Thoidiem_t = DateTime.MinValue;
-                        model.Trangthai_t = null;
-                    }
-
-                    if (madv_tralai == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Madv_ad = null;
-                        model.Thoidiem_ad = DateTime.MinValue;
-                        model.Trangthai_ad = null;
-                    }
-
-                    _db.GiaDatDiaBan.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaDatDiaBanXd", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult CongBo(string mahs_cb)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_cb);
-
-                    model.Trangthai_ad = "CB";
-                    model.Congbo = "DACONGBO";
-
-                    _db.GiaDatDiaBan.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaDatDiaBanXd");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult HuyCongBo(string mahs_hcb)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_hcb);
-
-                    model.Trangthai_ad = "HCB";
-                    model.Congbo = "CHUACONGBO";
-
-                    _db.GiaDatDiaBan.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaDatDiaBanXd");
                 }
                 else
                 {
@@ -450,28 +254,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             }
         ketthuc:
             return madv;
-        }
-
-        public IActionResult TongHop()
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Index"))
-                {
-
-                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Tonghop.cshtml");
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
         }
     }
 }

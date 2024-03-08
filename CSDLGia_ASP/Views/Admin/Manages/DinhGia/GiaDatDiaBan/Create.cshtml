@@ -69,6 +69,12 @@
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                    </div>
+                </div>
 
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
