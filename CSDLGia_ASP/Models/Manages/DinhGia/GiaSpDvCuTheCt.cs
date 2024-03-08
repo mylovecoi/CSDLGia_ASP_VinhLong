@@ -13,7 +13,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Mota { get; set; }
         public string Dvt { get; set; }
-        public double Mucgia { get; set; }
+        public double Mucgiatu { get; set; }
+        public double Mucgiaden { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Phanloaidv { get; set; }

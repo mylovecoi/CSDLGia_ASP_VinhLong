@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
 }
 <br />
 <br />
@@ -40,10 +41,10 @@
     <thead>
         <tr >
             <th style="text-align:center">STT</th>
-            <th style="text-align:center">Phân loại sản phẩm dịch vụ</th>
-            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Mức giá</th>
+            <th style="text-align:center">Vùng</th>
+            <th style="text-align:center">Biện pháp công trình</th>
+            <th style="text-align:center">Mức giá từ</th>
+            <th style="text-align:center">Mức giá đến</th>
 
         </tr>
     </thead>
@@ -56,10 +57,18 @@
                 {
                     <tr>
                         <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:center">@item.Phanloaidv</td>
-                        <td style="text-align:center">@item.Mota</td>
-                        <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@item.Mucgia</td>
+                        <td style="text-align:left">
+                                @foreach (var ds in spcuthedanhmuc)
+                                {
+                                    @if (item.Maspdv == ds.Maspdv)
+                                    {
+                                        @ds.Tenspdv
+                                    }
+                                }
+                        </td>
+                        <td style="text-align:left">@item.Mota</td>
+                        <td style="text-align:center">@item.Mucgiatu</td>
+                        <td style="text-align:center">@item.Mucgiaden</td>
                     </tr>
                 }
             }

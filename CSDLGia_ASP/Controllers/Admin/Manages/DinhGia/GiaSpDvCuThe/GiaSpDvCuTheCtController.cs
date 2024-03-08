@@ -29,8 +29,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá </label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<label>Mức giá từ</label>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgiatu + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Mức giá đến</label>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgiaden + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -51,10 +57,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Gia)
+        public JsonResult UpdateCt(int Id, double Mucgiatu, double Mucgiaden)
         {
             var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
-            model.Mucgia = Gia;
+            model.Mucgiatu = Mucgiatu;
+            model.Mucgiaden = Mucgiaden;
             model.Updated_at = DateTime.Now;
             _db.GiaSpDvCuTheCt.Update(model);
             _db.SaveChanges();
@@ -67,6 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         public string GetDataCt(string Mahs)
         {
             var model = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs).ToList();
+            var modeldanhmuc = _db.GiaSpDvCuTheDm.ToList();
 
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
@@ -76,10 +84,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>STT</th>";
-            result += "<th>Phân loại sản phẩm dịch vụ</th>";
-            result += "<th>Tên sản phẩm dịch vụ</th>";
-            result += "<th>Đơn vị tính</th>";
-            result += "<th>Mức giá tối đa</th>";
+
+            result += "<th>Vùng</th>";
+
+            result += "<th>Biện pháp công trình</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -90,10 +98,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td class='active'>" + item.Phanloaidv + "</td>";
-                result += "<td style='text-align:center'>" + item.Mota + "</td>";
-                result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-                result += "<td style='text-align:center'>" + item.Mucgia + "</td>";
+                result += "<td style='text-align:left'>";
+                foreach (var dm in modeldanhmuc)
+                {
+                    if (item.Maspdv == dm.Maspdv)
+                    {
+                        result += "<td style='text-align:center'>" + dm.Tenspdv + "</td>";
+                    }
+                } 
+            
+                result += "<td style='text-align:left'>" + item.Mota + "</td>";
+
+                result += "<td style='text-align:center'>" + item.Mucgiatu + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

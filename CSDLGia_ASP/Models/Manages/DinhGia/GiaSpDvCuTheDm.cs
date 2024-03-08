@@ -11,7 +11,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Tenspdv { get; set; }
         public string Mota { get; set; }
-        public double Gia { get; set; }
+        public double Mucgiatu { get; set; }
+        public double Mucgiaden { get; set; }
         public string Dvt { get; set; }
         public string Phanloai { get; set; }
         public string Hientrang { get; set; }
