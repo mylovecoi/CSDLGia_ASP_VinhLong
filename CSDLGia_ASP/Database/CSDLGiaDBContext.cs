@@ -113,8 +113,10 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhDvkDmDv> GiaHhDvkDmDv { get; set; }
         public DbSet<GiaHhDvk> GiaHhDvk { get; set; }
         public DbSet<GiaHhDvkCt> GiaHhDvkCt { get; set; }
+        public DbSet<GiaHhDvkCtTh> GiaHhDvkCtTh { get; set; }//Tổng hợp chi tiết cho báo cáo
         public DbSet<GiaHhDvkTh> GiaHhDvkTh { get; set; }
-        public DbSet<GiaHhDvkCtTh> GiaHhDvkCtTh { get; set; }
+        public DbSet<GiaHhDvkThCt> GiaHhDvkThCt { get; set; }
+        
         public DbSet<GiaKhungGiaDat> GiaKhungGiaDat { get; set; }
         public DbSet<GiaKhungGiaDatCt> GiaKhungGiaDatCt { get; set; }
         public DbSet<GiaLpTbNha> GiaLpTbNha { get; set; }

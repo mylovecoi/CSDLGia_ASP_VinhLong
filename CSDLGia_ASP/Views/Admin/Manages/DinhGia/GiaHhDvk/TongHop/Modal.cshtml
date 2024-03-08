@@ -9,6 +9,7 @@
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form asp-controller="GiaHhDvkTh" asp-action="Create" method="get">
+            <input type="hidden" name="maDV" value="@((string)ViewData["maDV"])" />
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">

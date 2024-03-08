@@ -2,6 +2,8 @@
     int record_id = 1;
     var dsnhom = (IEnumerable<GiaHhDvkNhom>)ViewData["Dsnhom"];
     var hoso = (IEnumerable<GiaHhDvk>)ViewData["Hoso"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh>
 
@@ -24,12 +26,12 @@
         });
 
         $(function () {
-            $('#Nam, #Thang, #Matt').change(function () {
+            $('#Nam, #Thang, #Madv').change(function () {
                 var current_path_url = '/GiaHhDvk/TongHop?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var thang = '&Thang=' + $('#Thang').val();
-                var matt = '&Matt=' + $('#Matt').val();
-                var url = current_path_url + nam + thang + matt;
+                var Madv = '&Madv=' + $('#Madv').val();
+                var url = current_path_url + nam + thang + Madv;
                 window.location.href = url;
             })
         });
@@ -63,7 +65,7 @@
                         <option value="all">--Tất cả--</option>
                         @for (var i = 1; i <= 12; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                            <!option value="@i" @((string)ViewData["thang"] == i.ToString() ? "selected" : "")>@i</!option>
                         }
                     </select>
                 </div>
@@ -78,19 +80,28 @@
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                <!option value="@i" @((string)ViewData["nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
                             }
                         }
                     </select>
                 </div>
             </div>
+           
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Nhóm hàng hóa</label>
-                    <select class="form-control" id="Matt" name="Matt">
-                        @foreach (var item in dsnhom)
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        @foreach (var db in dsdiaban.OrderBy(t => t.Level))
                         {
-                            <!option value="@item.Matt" @((string)ViewData["Matt"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
+                                }
+                                @foreach (var item in dv)
+                                {
+                                    <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                }
+                            </optgroup>
                         }
                     </select>
                 </div>

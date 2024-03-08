@@ -33,10 +33,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Matt"] = Matt;
                     ViewData["Tentt"] = _db.GiaHhDvkNhom.FirstOrDefault(t => t.Matt == Matt).Tentt;
                     ViewData["Dmnhomhh"] = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC").ToList();
+                    var dmDvts = _db.DmDvt.ToList();
                     ViewData["Dvt"] = _db.DmDvt;
                     ViewData["Title"] = "Thông tin chi tiết hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_dm";
+                    foreach(var item in model)
+                    {                      
+                        var foundItem = dmDvts.FirstOrDefault(x => x.Madvt == item.Dvt);
+                        if (foundItem != null)
+                        {
+                            item.Dvt = foundItem.Dvt;
+                        }
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/DanhMuc/ChiTiet/Index.cshtml", model);
                 }
                 else
@@ -166,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
                         foreach (var item in dvt)
                         {
-                            result += "<option value='" + item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + item.Dvt + "</option>";
+                            result += "<option value='" + item.Madvt + "' " + ((string)model.Dvt == item.Madvt ? "selected" : "") + ">" + item.Dvt + "</option>";
                         }
                         result += "</select>";
                         result += "</div>";
