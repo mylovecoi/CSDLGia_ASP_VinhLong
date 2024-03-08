@@ -145,9 +145,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Create"))
                 {
-                    //var model = _db.GiaHhDvk.Where(t => Hoso.Contains(t.Mahs)).ToList();
-                    var hhCt = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
-                    var modelHh = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+
+                    var modelcthskk = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
+                    var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+
                     var model = new GiaHhDvkTh
                     {
                         Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
@@ -159,36 +160,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Mahstonghop = string.Join(",", Hoso)
                     };
                     _db.GiaHhDvkTh.Add(model);
-                    foreach (var hh in modelHh)
-                    {
-                        //double ttgia = modelCt.Where(x => x.Mahhdv == dm.mah).Select(x => x.Gia).Average();
-                        var modelCt = new GiaHhDvkCtTh();
-                        modelCt.Mahs = model.Mahs;
-                        modelCt.Mahhdv = hh.Mahhdv;
-                        modelCt.Tenhhdv = hh.Tenhhdv;
-                        modelCt.Dacdiemkt = hh.Dacdiemkt;
-                        modelCt.Xuatxu = hh.Xuatxu;
-                        modelCt.Dvt = hh.Dvt;
-                        modelCt.Loaigia = "Giá bán lẻ";
-                        modelCt.Nguontt = "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định";
-                        modelCt.Created_at = DateTime.Now;
-                        modelCt.Updated_at = DateTime.Now;
-                        modelCt.Gia = hhCt.Where(x => x.Mahhdv == hh.Mahhdv).Average(x => x.Gia);
-                        modelCt.Gialk = hhCt.Where(x => x.Mahhdv == hh.Mahhdv).Average(x => x.Gialk);
-
-                        _db.GiaHhDvkCtTh.Add(modelCt);
-                    }
                     _db.SaveChanges();
-                    /*ViewBag.model = model;*/
-                    ViewData["modelCt"] = _db.GiaHhDvkCtTh.Where(x => x.Mahs == model.Mahs);
-                    return Ok (ViewData["modelCt"]);
-                    ViewData["modelNhom"] = _db.GiaHhDvkNhom.FirstOrDefault(x => x.Matt == Matt);
-                    ViewData["modelHh"] = modelHh;
-                    //ViewBag.Mahs = Hoso.ToArray();
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["Thang"] = model.Thang;
-                    ViewData["Nam"] = model.Nam;
-                    ViewData["Matt"] = model.Matt;
+
+                    List<object> a_dm = new List<object>();
+
+                   // Làm tiếp
+
+                
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
