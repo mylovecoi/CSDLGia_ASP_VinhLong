@@ -181,6 +181,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
                     /*ViewBag.model = model;*/
                     ViewData["modelCt"] = _db.GiaHhDvkCtTh.Where(x => x.Mahs == model.Mahs);
+                    return Ok (ViewData["modelCt"]);
                     ViewData["modelNhom"] = _db.GiaHhDvkNhom.FirstOrDefault(x => x.Matt == Matt);
                     ViewData["modelHh"] = modelHh;
                     //ViewBag.Mahs = Hoso.ToArray();
