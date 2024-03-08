@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Store(string Manhom, string Tenspdv, string Mota, string Dvt, double Mucgiatu, double Mucgiaden, string Hientrang, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -71,7 +71,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Dvt = Dvt,
                         Tenspdv = Tenspdv,
                         Mota = Mota,
-                        Gia = Gia,
+                        Mucgiatu = Mucgiatu,
+                        Mucgiaden = Mucgiaden,
                         Phanloai = Phanloai,
                         Hientrang = Hientrang,
                         Created_at = DateTime.Now,
@@ -142,10 +143,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         result += "<input type='text' id='mota_edit' name='mota_edit' class='form-control' value='" + model.Mota + "'/>";
                         result += "</div>";
                         result += "</div>";
+
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Giá</label>";
-                        result += "<input type='text' id='gia_edit' name='gia_edit' class='form-control' value='" + model.Gia + "'/>";
+                        result += "<input type='text' id='gia_edit' name='giatu_edit' class='form-control' value='" + model.Mucgiatu + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-4'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Giá</label>";
+                        result += "<input type='text' id='gia_edit' name='giaden_edit' class='form-control' value='" + model.Mucgiaden + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -221,7 +230,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Update(int Id, string Tenspdv, string Mota, string Dvt, double Mucgiatu, double Mucgiaden,string Hientrang, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -231,7 +240,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     model.Tenspdv = Tenspdv;
                     model.Mota = Mota;
                     model.Dvt = Dvt;
-                    model.Gia = Gia;
+                    model.Mucgiatu = Mucgiatu;
+                    model.Mucgiaden = Mucgiaden;
                     model.Phanloai = Phanloai;
                     model.Hientrang = Hientrang;
                     model.Updated_at = DateTime.Now;
@@ -310,7 +320,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Excel")]
         [HttpPost]
-        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Gia, string Phanloai,
+        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Mucgiatu, double Mucgiaden, string Phanloai,
             string Hientrang, string Dvt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -343,8 +353,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                                     Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-                                    Gia = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) != 0 ?
-                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) : 0,
+
+                                    Mucgiatu = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiatu.ToString())].Value) != 0 ?
+                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiatu.ToString())].Value) : 0,
+
+                                    Mucgiaden = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiaden.ToString())].Value) != 0 ?
+                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiaden.ToString())].Value) : 0,
                                     Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
                                     Hientrang = worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?

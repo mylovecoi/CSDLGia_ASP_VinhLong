@@ -53,7 +53,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Mota { get; set; }
         public string Dvt { get; set; }
-        public string Mucgia { get; set; }
+        public string Mucgiatu { get; set; }
+        public string Mucgiaden { get; set; }
         public string Phanloaidv { get; set; }
 
         public List<GiaSpDvCuThe> GiaSpDvCuThe { get; set; }

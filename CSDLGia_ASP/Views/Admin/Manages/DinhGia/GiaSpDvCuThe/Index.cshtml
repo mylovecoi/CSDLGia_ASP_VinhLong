@@ -154,11 +154,6 @@
                             @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
 
                             {
-                                <a asp-controller="GiaSpDvCuThe" asp-action="Print" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="In hồ sơ"
-                       target="_blank">
-                                    <i class="icon-lg la la-print text-info"></i>
-                                </a>
-
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Edit"))
                                 {
                                     <a asp-controller="GiaSpDvCuThe" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

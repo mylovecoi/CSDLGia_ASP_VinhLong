@@ -171,7 +171,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                             Mota = item.Mota,
                             Tendv = item.Tenspdv,
                             Dvt = item.Dvt,
-                            Mucgia = item.Gia,
+                            Mucgiatu = item.Mucgiatu,
+                            Mucgiaden = item.Mucgiaden,
                             Phanloaidv = item.Phanloai,
                             Trangthai = "CXD",
                             Maspdv = item.Maspdv,
@@ -187,6 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
@@ -317,6 +319,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
@@ -364,6 +367,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCuTheCt.ToList();
                     ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
@@ -617,7 +621,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Thoidiem = giaspdvcuthe.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Soqd = giaspdvcuthe.Soqd,
-                                     Mucgia = giaspdvcuthect.Mucgia,
+                                     Mucgiatu = giaspdvcuthect.Mucgiatu,
+                                     Mucgiaden = giaspdvcuthect.Mucgiaden,
                                      Mota = giaspdvcuthect.Mota,
 
                                  });
@@ -647,11 +652,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     if (beginPrice != 0)
                     {
-                        model = model.Where(t => t.Mucgia >= beginPrice);
+                        model = model.Where(t => t.Mucgiatu >= beginPrice);
                     }
                     if (endPrice != 0)
                     {
-                        model = model.Where(t => t.Mucgia <= endPrice);
+                        model = model.Where(t => t.Mucgiaden <= endPrice);
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
