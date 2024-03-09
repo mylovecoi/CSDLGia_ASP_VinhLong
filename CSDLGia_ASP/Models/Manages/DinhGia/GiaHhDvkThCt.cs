@@ -18,5 +18,13 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; } = DateTime.Parse("0001-01-01");
         public DateTime Updated_at { get; set; } = DateTime.Parse("0001-01-01");
+        [NotMapped]
+        public string Manhom { get; set; }
+        [NotMapped]
+        public string Tenhhdv { get; set; }
+        [NotMapped]
+        public string Dacdiemkt { get; set; }
+        [NotMapped]
+        public string Dvt { get; set; }
     }
 }

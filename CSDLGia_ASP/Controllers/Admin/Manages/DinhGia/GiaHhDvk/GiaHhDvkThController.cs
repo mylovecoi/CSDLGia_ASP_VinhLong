@@ -12,7 +12,9 @@ using Microsoft.Extensions.Hosting;
 using OfficeOpenXml.Packaging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 {
@@ -155,7 +157,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         var ct = dsHoSoChiTiet.Where(x => x.Mahhdv == item.Mahhdv);
                         var Gia = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
                         var Gialk = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
-                        
+
                         chiTiet.Add(new GiaHhDvkThCt
                         {
                             Mahs = model.Mahs,
@@ -167,7 +169,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.GiaHhDvkTh.Add(model);
                     _db.GiaHhDvkThCt.AddRange(chiTiet);
                     _db.SaveChanges();
+                    //Đẩy dữ liệu qua view
+                    var modelct_join = (from ct in chiTiet
+                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        select new GiaHhDvkThCt
+                                        {
+                                            Id = ct.Id,
+                                            Manhom = ct.Manhom,
+                                            Mahhdv = ct.Mahhdv,
+                                            Mahs = ct.Mahs,
+                                            Gia = ct.Gia,
+                                            Gialk = ct.Gialk,
+                                            Loaigia = ct.Loaigia,
+                                            Nguontt = ct.Nguontt,
+                                            Ghichu = ct.Ghichu,
+                                            Created_at = ct.Created_at,
+                                            Updated_at = ct.Updated_at,
+                                            Tenhhdv = dm.Tenhhdv,
+                                            Dacdiemkt = dm.Dacdiemkt,
+                                            Dvt = dm.Dvt,
+                                        }).ToList();
 
+                    model.GiaHhDvkThCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
@@ -220,21 +243,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/TongHop/Edit")]
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(string maHS)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Create"))
                 {
-                    var model = _db.GiaHhDvkTh.FirstOrDefault(x => x.Id == Id);
-                    var modelCt = _db.GiaHhDvkCtTh.Where(x => x.Mahs == model.Mahs);
-                    ViewBag.model = model;
-                    ViewData["modelCt"] = modelCt;
+                    var model = _db.GiaHhDvkTh.FirstOrDefault(x => x.Mahs == maHS);
+                    var modelCt = _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs);
+
+                    var modelct_join = (from ct in modelCt
+                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        select new GiaHhDvkThCt
+                                        {
+                                            Id = ct.Id,
+                                            Manhom = ct.Manhom,
+                                            Mahhdv = ct.Mahhdv,
+                                            Mahs = ct.Mahs,
+                                            Gia = ct.Gia,
+                                            Gialk = ct.Gialk,
+                                            Loaigia = ct.Loaigia,
+                                            Nguontt = ct.Nguontt,
+                                            Ghichu = ct.Ghichu,                                            
+                                            Tenhhdv = dm.Tenhhdv,
+                                            Dacdiemkt = dm.Dacdiemkt,
+                                            Dvt = dm.Dvt,
+                                        }).ToList();
+
+                    model.GiaHhDvkThCt = modelct_join.ToList();
+
+                    ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+
                     ViewData["Matt"] = model.Matt;
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác chỉnh sửa";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Edit.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Edit.cshtml",model);
 
                 }
                 else
@@ -251,23 +296,96 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/TongHop/Update")]
         [HttpPost]
-        public IActionResult Update(string Mahs, string Matt, string Thang, string Nam, string Sobc, DateTime Ngaybc, DateTime Ngaychotbc, string Ghichu)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh request, IFormFile ipf_excel, IFormFile ipf_pdf, IFormFile ipf_word)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Edit"))
                 {
+                    if (ipf_excel != null && ipf_excel.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(ipf_excel.FileName);
+                        string extension = Path.GetExtension(ipf_excel.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await ipf_excel.CopyToAsync(FileStream);
+                        }
+                        // Đọc dữ liệu từ IFormFile
+                       
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            ipf_excel.CopyTo(memoryStream);
+                            // Chuyển đổi dữ liệu sang chuỗi base64
+                            request.ipf_excel_base64 = Convert.ToBase64String(memoryStream.ToArray());                            
+                        }
 
-                    var modelSave = _db.GiaHhDvkTh.FirstOrDefault(x => x.Mahs == Mahs);
-                    modelSave.Sobc = Sobc;
-                    modelSave.Ngaybc = Ngaybc;
-                    modelSave.Ngaychotbc = Ngaychotbc;
-                    modelSave.Ghichu = Ghichu;
-                    _db.GiaHhDvkTh.Update(modelSave);
+                        request.ipf_excel = filename;
+                    }
+
+                    if (ipf_word != null && ipf_word.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(ipf_word.FileName);
+                        string extension = Path.GetExtension(ipf_word.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await ipf_word.CopyToAsync(FileStream);
+                        }
+                        // Đọc dữ liệu từ IFormFile
+                        
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            ipf_word.CopyTo(memoryStream);
+                            // Chuyển đổi dữ liệu sang chuỗi base64
+                            request.ipf_word_base64 = Convert.ToBase64String(memoryStream.ToArray());
+                        }
+                        request.ipf_word = filename;
+                    }
+
+                    if (ipf_pdf != null && ipf_pdf.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(ipf_pdf.FileName);
+                        string extension = Path.GetExtension(ipf_pdf.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await ipf_pdf.CopyToAsync(FileStream);
+                        }
+                        // Đọc dữ liệu từ IFormFile
+                        
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            ipf_pdf.CopyTo(memoryStream);
+                            // Chuyển đổi dữ liệu sang chuỗi base64
+                            request.ipf_pdf_base64 = Convert.ToBase64String(memoryStream.ToArray());
+                        }
+                        request.ipf_pdf = filename;
+                    }
+
+                    var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == request.Mahs);
+                    model.Sobc = request.Sobc;
+                    model.Ngaybc = request.Ngaybc;                   
+                    model.Ttbc = request.Ttbc;
+                    model.Ghichu = request.Ghichu;
+                    model.ipf_pdf = request.ipf_pdf;
+                    model.ipf_word = request.ipf_word;
+                    model.ipf_excel = request.ipf_excel;
+                    model.ipf_excel_base64 = request.ipf_excel_base64;
+                    model.ipf_word_base64 = request.ipf_word_base64;
+                    model.ipf_pdf_base64 = request.ipf_pdf_base64;
+                    model.Updated_at = DateTime.Now;
+
+                    _db.GiaHhDvkTh.Update(model);
                     _db.SaveChanges();
-                    var model = _db.GiaHhDvkTh.Where(x => x.Matt == Matt);
-                    return RedirectToAction("Index", "GiaHhDvkTh", new { Thang = Thang, Nam = Nam, Matt = Matt });
 
+                    return RedirectToAction("Index", "GiaHhDvkTh", new { request.Madv });
                 }
                 else
                 {
@@ -357,6 +475,177 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+        [Route("GiaHhDvkThCt/Edit")]
+        [HttpPost]
+        public JsonResult EditCt(int Id)
+        {
+            var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Id == Id)
+                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         select new GiaHhDvkThCt
+                         {
+                             Id = ct.Id,
+                             Mahhdv = ct.Mahhdv,
+                             Mahs = ct.Mahs,
+                             Gia = ct.Gia,
+                             Gialk = ct.Gialk,
+                             Loaigia = ct.Loaigia,
+                             Nguontt = ct.Nguontt,
+                             Ghichu = ct.Ghichu,
+                             Tenhhdv = dm.Tenhhdv,
+                             Dacdiemkt = dm.Dacdiemkt,
+                             Dvt = dm.Dvt,
+                         }).First();
+
+            if (model != null)
+            {
+                string result = "<div class='modal-body' id='edit_thongtin'>";
+
+                result += "<div class='row text-left'>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Tên hàng hóa, dịch vụ</label>";
+                result += "<select class='form-control' disabled='disabled'>";
+                result += "<option>" + model.Tenhhdv + "</option>";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Loại giá</label>";
+                result += "<select id='loaigia_edit' name='loaigia_edit' class='form-control'>";
+                result += "<option value='Giá bán buôn' " + ((string)model.Loaigia == "Giá bán buôn" ? "selected" : "") + ">Giá bán buôn</option>";
+                result += "<option value='Giá bán lẻ' " + ((string)model.Loaigia == "Giá bán lẻ" ? "selected" : "") + ">Giá bán lẻ</option>";
+                result += "<option value='Giá kê khai' " + ((string)model.Loaigia == "Giá kê khai" ? "selected" : "") + ">Giá kê khai</option>";
+                result += "<option value='Giá đăng ký' " + ((string)model.Loaigia == "Giá đăng ký" ? "selected" : "") + ">Giá đăng ký</option>";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá kỳ trước</label>";
+                result += "<input type='text' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá kỳ trước</label>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Nguồn thông tin</label>";
+                result += "<select id='nguontt_edit' name='nguontt_edit' class='form-control'>";
+                result += "<option value='Do trực tiếp điều tra, thu thập' " + ((string)model.Nguontt == "Do trực tiếp điều tra, thu thập" ? "selected" : "") + ">Do trực tiếp điều tra, thu thập</option>";
+                result += "<option value='Hợp đồng mua tin' " + ((string)model.Nguontt == "Hợp đồng mua tin" ? "selected" : "") + ">Hợp đồng mua tin</option>";
+                result += "<option value='Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định' " + ((string)model.Nguontt == "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định" ? "selected" : "") + ">Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định</option>";
+                result += "<option value='Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp' " + ((string)model.Nguontt == "Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp" ? "selected" : "") + ">Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp</option>";
+                result += "<option value='Các nguồn thông tin khác' " + ((string)model.Nguontt == "Các nguồn thông tin khác" ? "selected" : "") + ">Các nguồn thông tin khác</option>";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "</div>";
+
+                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
+        }
+
+        [Route("GiaHhDvkThCt/Update")]
+        [HttpPost]
+        public JsonResult UpdateCt(int Id, double Gia, double Gialk, string Nguontt, string Loaigia)
+        {
+            var model = _db.GiaHhDvkThCt.FirstOrDefault(t => t.Id == Id);
+            model.Gia = Gia;
+            model.Gialk = Gialk;
+            model.Loaigia = Loaigia;
+            model.Nguontt = Nguontt;
+            model.Updated_at = DateTime.Now;
+            _db.GiaHhDvkThCt.Update(model);
+            _db.SaveChanges();
+            string result = GetDataCt(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        public string GetDataCt(string Mahs)
+        {
+            var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == Mahs)
+                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         select new GiaHhDvkThCt
+                         {
+                             Id = ct.Id,
+                             Mahhdv = ct.Mahhdv,
+                             Mahs = ct.Mahs,
+                             Gia = ct.Gia,
+                             Gialk = ct.Gialk,
+                             Loaigia = ct.Loaigia,
+                             Nguontt = ct.Nguontt,
+                             Ghichu = ct.Ghichu,
+                             Created_at = ct.Created_at,
+                             Updated_at = ct.Updated_at,
+                             Tenhhdv = dm.Tenhhdv,
+                             Dacdiemkt = dm.Dacdiemkt,
+                             Dvt = dm.Dvt,
+                         });
+
+            int record = 1;
+            string result = "<div class='card-body' id='frm_data'>";
+            result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
+            result += "<thead>";
+            result += "<tr style='text-align:center'>";
+            result += "<th width='2%'>STT</th>";
+            result += "<th>Mã hàng hóa dịch vụ</th>";
+            result += "<th>Tên hàng hóa dịch vụ</th>";
+            result += "<th>Đặc điểm kỹ thuật</th>";
+            result += "<th>Đơn vị tính</th>";
+            result += "<th>Giá kỳ trước</th>";
+            result += "<th>Giá kỳ này</th>";
+            result += "<th width='9%'>Thao tác</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            foreach (var item in model)
+            {
+                result += "<tr>";
+                result += "<td class='text-center'>" + record++ + "</td>";
+                result += "<td class='text-center'>" + item.Mahhdv + "</td>";
+                result += "<td class='text-left active'>" + item.Tenhhdv + "</td>";
+                result += "<td class='text-left'>" + item.Dacdiemkt + "</td>";
+                result += "<td class='text-center'>" + item.Dvt + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gialk) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
+                result += "<td>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-edit text-primary'></i>";
+                result += "</button>";
+                result += "</td>";
+                result += "</tr>";
+            }
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+
+            return result;
+
         }
     }
 }
