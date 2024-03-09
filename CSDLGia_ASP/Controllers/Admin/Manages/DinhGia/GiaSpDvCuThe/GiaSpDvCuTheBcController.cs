@@ -82,6 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
                     var model = _db.GiaSpDvCuThe.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["ct"] = _db.GiaSpDvCuTheCt.ToList();

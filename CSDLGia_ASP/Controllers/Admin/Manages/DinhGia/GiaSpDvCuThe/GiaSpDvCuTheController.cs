@@ -580,6 +580,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     {
                         ViewData["Madv"] = "";
                     }
+               
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
@@ -624,10 +625,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Mucgiatu = giaspdvcuthect.Mucgiatu,
                                      Mucgiaden = giaspdvcuthect.Mucgiaden,
                                      Mota = giaspdvcuthect.Mota,
-
+                                     Maspdv = giaspdvcuthect.Maspdv,
                                  });
 
-
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm;
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);

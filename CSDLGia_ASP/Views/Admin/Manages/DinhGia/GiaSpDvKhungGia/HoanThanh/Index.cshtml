@@ -89,11 +89,9 @@
                 <tr style="text-align:center">
                     <th width="4%">STT</th>
                     <th>Cơ quan chuyển hồ sơ</th>
-                    <th>Địa bàn áp dụng</th>
                     <th>Thời điểm xác định</th>
-                    <th>Nội dung</th>
                     <th>Trạng thái</th>
-                    <th width="20%">Thao tác</th>
+                    <th >Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,10 +102,8 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center" class="active">@item.TendvCh</td>
-                            <td style="text-align: center">@item.Madiaban</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center">@item.Tencqcq</td>
-                            <td>
+                            <td style="text-align:center">
                                 @if (item.Trangthai == "CHT")
                                 {
                                     <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>

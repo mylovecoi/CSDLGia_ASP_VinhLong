@@ -30,13 +30,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá từ</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgiatu + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgiatu_edit' name='Mucgiatu_edit' value='" + model.Mucgiatu + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá đến</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Mucgiaden + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgiaden_edit' name='Mucgiaden_edit' value='" + model.Mucgiaden + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -88,6 +88,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             result += "<th>Vùng</th>";
 
             result += "<th>Biện pháp công trình</th>";
+            result += "<th>Mức giá từ</th>";
+            result += "<th>Mức giá đến</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -98,7 +100,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td style='text-align:left'>";
+        
                 foreach (var dm in modeldanhmuc)
                 {
                     if (item.Maspdv == dm.Maspdv)
@@ -110,6 +112,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<td style='text-align:left'>" + item.Mota + "</td>";
 
                 result += "<td style='text-align:center'>" + item.Mucgiatu + "</td>";
+                result += "<td style='text-align:center'>" + item.Mucgiaden + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

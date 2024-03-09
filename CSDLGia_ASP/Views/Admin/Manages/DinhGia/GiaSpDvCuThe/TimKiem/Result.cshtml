@@ -2,6 +2,7 @@
     Layout = "_LayoutReports";
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var giaSpDvCuTheDm = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt>
 <br />
@@ -15,10 +16,11 @@
         <tr >
             <th style="text-align:center" width="4%">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
-            <th style="text-align:center">Thời điểm</th>
             <th style="text-align:center">Số quyết định</th>
+            <th style="text-align:center">Vùng</th>
             <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center">Mức giá</th>
+            <th style="text-align:center">Mức giá từ</th>
+            <th style="text-align:center">Mức giá đến</th>
 
         </tr>
     </thead>
@@ -30,9 +32,23 @@
                 <tr style="text-align: center">
                     <td style="text-align:center">@(record_id++)</td>
                     <td style="text-align:center"> @item.Tendv</td>
-                    <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align:center">@item.Soqd</td>
-                    <td style="text-align:center">@item.Mota</td>
+
+                    @if (giaSpDvCuTheDm != null)
+                    {
+                        @foreach (var dm in giaSpDvCuTheDm)
+                        {
+                            @if (item.Maspdv == dm.Maspdv)
+                            {
+                                <td style="text-align: center">@dm.Tenspdv</td>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <td style="text-align: center"></td>
+                    }
+                    <td style="text-align:left">@item.Mota</td>
                     <td style="text-align:center">@item.Mucgiatu</td>
                     <td style="text-align:center">@item.Mucgiaden</td>
                 </tr>

@@ -1,0 +1,112 @@
+﻿@using CSDLGia_ASP.Helper
+@{
+    Layout = "_LayoutCongBo.cshtml";
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<CSDLGia_ASP.Models.Systems.DsDonVi>)ViewData["DsDonVi"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#MaDv, #Nam').change(function () {
+                var current_path_url = '/HoanThanhDinhGiaSpDvCuThe?';
+                var madv = '&MaDv=' + $('#MaDv').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var url = current_path_url + madv + nam;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hoàn thành định giá<small>&nbsp;sản phẩm dịch vụ cụ thể</small><br />
+            </h3>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        <option value="all">--Tất cả--</option>
+                        @{
+                            var nam_start = DateTime.Now.Year - 5;
+                            var nam_stop = DateTime.Now.Year + 1;
+                            for (var i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+           
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Thời điểm </th>
+                    <th>Thông tư quyết định</th>
+                    <th>Trạng thái</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@item.Soqd</td>
+                            <td style="text-align: center">
+                            
+                                @if (item.Trangthai == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
+                                }
+                              
+                            </td>
+
+                            <td>
+                                <a asp-controller="GiaSpDvCuThe" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

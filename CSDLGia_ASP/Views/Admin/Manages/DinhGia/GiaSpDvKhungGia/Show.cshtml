@@ -4,6 +4,7 @@
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdvt = ViewData["Donvitinh"];
+    var giaSpDvCuTheNhom = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
 }
 <br />
 <br />
@@ -41,8 +42,8 @@
     <thead>
         <tr style="text-align:center">
             <th style="text-align:center">STT</th>
-            <th style="text-align:center">Phân loại sản phẩm dịch vụ</th>
-            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center">Nhóm sản phẩm dịch vụ khung giá</th>
+            <th style="text-align:center">Đối tượng cụ thể</th>
             <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá tối thiểu</th>
             <th style="text-align:center">Mức giá tối đa</th>
@@ -52,8 +53,8 @@
 
         <tr style="text-align:center">
             <td style="text-align:center">@(record_id++)</td>
+            <td style="text-align:center">@Model.Manhom</td>
             <td style="text-align:center">@Model.Phanloaidv</td>
-            <td style="text-align:center">@Model.Mota</td>
             <td style="text-align:center">@Model.Dvt</td>
             <td style="text-align:center">@Model.Giatoithieu</td>
             <td style="text-align:center">@Model.Giatoida</td>

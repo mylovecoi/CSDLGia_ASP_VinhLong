@@ -186,12 +186,14 @@
 
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        var giatu = $('#Mucgiatu_edit').val().replace(',', '');
+        var giaden = $('#Mucgiaden_edit').val().replace(',', '');
         $.ajax({
             url: '/GiaSpDvCuTheCt/Update',
             type: 'POST',
             data: {
-                Gia: gia,
+                Mucgiatu: giatu,
+                Mucgiaden: giaden,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

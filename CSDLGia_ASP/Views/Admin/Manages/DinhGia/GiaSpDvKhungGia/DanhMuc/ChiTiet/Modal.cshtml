@@ -22,28 +22,10 @@
                 <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
 
                 <div class="row">
-                    <div class="col-xl-3">
+                    <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên sản phẩm</label>
+                            <label>Đối tượng cụ thể</label>
                             <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mô tả</label>
-                            <input type="text" id="mota_create" name="mota_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá tối thiểu</label>
-                            <input type="text" id="giatoithieu_create" name="gia_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá tối đa</label>
-                            <input type="text" id="giatoida_create" name="gia_create" class="form-control" />
                         </div>
                     </div>
 
@@ -51,7 +33,7 @@
 
                 <div class="row">
 
-                    <div class="col-xl-4">
+                    <div class="col-xl-11">
                         <label class="form-control-label">Đơn vị tính</label>
                         <select id="dvt_create" class="form-control select2me select2-offscreen" name="dvt_create" tabindex="-1" title="">
                             @foreach (var item in dsdvt)
@@ -68,35 +50,7 @@
                         </button>
                     </div>
 
-                    <div class="col-xl-7">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="hientrang_create" name="hientrang_create" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-11">
-                        <label class="control-label">Phân loại sản phẩm, dịch vụ</label>
-                        <select id="plspdv_create" class="form-control" name="plspdv_create">
-                            @foreach (var item in plspdv)
-                            {
-                                <option value="@item.Phanloai">@item.Phanloai</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-xl-1">
-                        <label class="control-label">Thêm </label>
-                        <button type="button" class="btn btn-default" data-target="#Plspdv_Modal" data-toggle="modal">
-                            <i class="la la-plus"></i>
-                        </button>
-                    </div>
-
+                  
                 </div>
 
             </div>

@@ -6,24 +6,7 @@
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe>
 <br />
 <br />
-<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
-    <tr>
-        <td width="40%" style="vertical-align: top;">
-            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
-        </td>
-        <td style="vertical-align: top;">
-            <b>
-                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
-                Độc lập - Tự do - Hạnh phúc
-            </b>
-            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
-        </td>
-    </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
-    </tr>
-</table>
+
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ SP DỊCH VỤ CỤ THỂ</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
@@ -32,7 +15,6 @@
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Phân loại sản phẩm dịch vụ</th>
             <th style="text-align: center">Tên sản phẩm dịch vụ</th>
             <th style="text-align: center">Mức giá từ</th>
             <th style="text-align: center">Mức giá đến</th>
@@ -57,7 +39,6 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id - 1).@(record_id_ct++)</td>
-                    <td style="text-align: center">@ct.Phanloaidv</td>
                     <td style="text-align: center">@ct.Maspdv</td>
                     <td style="text-align: center">@ct.Mucgiatu</td>
                     <td style="text-align: center">@ct.Mucgiaden</td>
