@@ -115,6 +115,7 @@
                     <th>Thông tin báo cáo</th>
                     <th>Ngày báo cáo</th>
                     <th>Số báo cáo</th>
+                    <th>Nội dung báo cáo</th>
                     <th>Trạng thái</th>
                     <th width="20%">Thao tác</th>
                 </tr>
@@ -130,6 +131,7 @@
                             <td>@item.Ttbc</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaybc)</td>
                             <td style="text-align: center">@item.Sobc</td>
+                            <td style="text-align: center">@item.Ttbc</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -161,7 +163,7 @@
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Edit"))
                                     {
-                                        <a asp-controller="GiaHhDvkTh" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <a asp-controller="GiaHhDvkTh" asp-action="Edit" asp-route-maHS="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-warning"></i>
                                         </a>
                                     }
