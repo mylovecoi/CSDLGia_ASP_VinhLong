@@ -1,110 +1,89 @@
-﻿
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
-    var Madv = ViewData["Madv"];
-    var Mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
+    var dsdvt = ViewData["Donvitinh"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
+
 }
+
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                HỒ SƠ GIÁ XÂY DỰNG MỚI
+                GIÁ SẢN PHẨM DỊCH VỤ KHUNG GIÁ
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaDatPl" asp-action="Create" method="post" enctype="multipart/form-data" id="frm_dct_store">
+    <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
         <div class="card-body">
-            <input name="Madv" value="@Madv" />
-            <input name="Mahs" value="@Mahs" />
-            <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-            </div>
-        
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Địa bàn áp dụng</label>
-                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
+            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
+            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
 
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
+            <div class="row">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
-                <div class="col-xl-4">
+
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control"  id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung</label>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Thông tin hồ sơ</label>
-                        <input type="text" class="form-control"  />
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea class="form-control" rows="2" cols="50" ></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input  type="file" accept=".jpg,.jpeg,.png" />
-                    </div>
-                </div>
-            </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Detail.cshtml")
-        </div>
-       
-        <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaDatPl" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                <i class="la la-reply"></i>Quay lại
-            </a>&ensp;
-            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateDct()"><i class="la la-check"></i>Thêm mới</button>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Detail.cshtml")
         </div>
     </form>
-    <!--end::Form-->
+    <div class="card-footer" style="text-align:center">
+        <a asp-controller="GiaSpDvKhungGia" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <i class="la la-reply"></i>Quay lại
+        </a>&ensp;
+        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+        <button type="button" class="btn btn-primary mr-2" onclick="ValidateDct()"><i class="la la-check"></i>Thêm mới</button>
+    </div>
+
 </div>
+
+<!--end::Form-->
+
 <script>
     function ValidateDct() {
         if ($('#Soqd').val().trim() == '') {
@@ -113,12 +92,12 @@
             if ($('#Thoidiem').val().trim() == '') {
                 toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
             } else {
-                document.getElementById("frm_dct_store").submit();
+                document.getElementById("frm_spdvkhunggia_store").submit();
             }
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

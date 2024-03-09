@@ -151,8 +151,7 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Success!");
+                if (data.status == 'success') {  
                     $('#edit_thongtin').replaceWith(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!!!");

@@ -4,6 +4,7 @@
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var nhomtn = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["NhomTn"];
+    
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe>
 
@@ -48,7 +49,7 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvCuTheExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -101,7 +102,6 @@
         <thead>
             <tr style="text-align:center">
                 <th>STT</th>
-                <th>Địa bàn áp dụng</th>
                 <th>Thời điểm áp dụng</th>
                 <th>Số quyết định</th>
                 <th>Trạng thái</th>
@@ -115,8 +115,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: center">@item.Madiaban</td>
+                        <td style="text-align: center">@(record_id++)</td>    
                         <td style="text-align: center">@item.Thoidiem</td>
                         <td class="text-center active">@item.Soqd</td>
                         <td style="text-align: center">
@@ -134,7 +133,22 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
-                        <td style="text-align: center" width="15%">@item.Macqcq</td>
+
+                        @if (item.Macqcq != null)
+                        {
+                            @foreach (var cqcq in dsdonvi)
+                            {
+                                @if (item.Macqcq == cqcq.MaDv)
+                                {
+                                    <td style="text-align: center">@cqcq.TenDv</td>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td style="text-align: center"></td>
+                        }
+
                         <td width="20%">
 
                             @if (item.Trangthai == "HT")

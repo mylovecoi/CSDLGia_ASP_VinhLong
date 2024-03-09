@@ -120,33 +120,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-                        result += "<div class='col-xl-4'>";
+                        result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên Sản Phẩm</label>";
+                        result += "<label>Đối tượng cụ thể</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tenspdv + "'/>";
                         result += "</div>";
                         result += "</div>";
-                        result += "<div class='col-xl-3'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mô tả</label>";
-                        result += "<input type='text' id='mota_edit' name='mota_edit' class='form-control' value='" + model.Mota + "'/>";
-                        result += "</div>";
-                        result += "</div>";
 
-                        result += "<div class='col-xl-3'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Giá tối thiểu</label>";
-                        result += "<input type='text' id='giatoithieu_edit' name='gia_edit' class='form-control' value='" + model.Giatoithieu + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-3'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Giá tối đa</label>";
-                        result += "<input type='text' id='giatoida_edit' name='gia_edit' class='form-control' value='" + model.Giatoida + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-3'>";
+                        result += "<div class='col-xl-11'>";
                         result += "<label class='form-control-label'>Đơn vị tính</label>";
                         result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
 
@@ -161,16 +142,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         result += "<label class='control-label'>Thêm</label>";
                         result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
                         result += "</button>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-7'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Trạng thái</label>";
-                        result += "<select id='hientrang_edit' name='hientrang_edit' class='form-control'>";
-                        result += "<option value='TD' " + ((string)model.Hientrang == "TD" ? "selected" : "") + ">Theo dõi</option>";
-                        result += "<option value='KTD' " + ((string)model.Hientrang == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
-                        result += "</select>";
-                        result += "</div>";
                         result += "</div>";
 
 

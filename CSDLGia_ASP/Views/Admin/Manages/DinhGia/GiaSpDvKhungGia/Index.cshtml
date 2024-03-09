@@ -49,7 +49,7 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvKhungExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -135,7 +135,21 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
-                        <td style="text-align: center" width="15%">@item.Macqcq</td>
+
+                        @if (item.Macqcq != null)
+                        {
+                            @foreach (var cqcq in dsdonvi)
+                            {
+                                @if (item.Macqcq == cqcq.MaDv)
+                                {
+                                    <td style="text-align: center">@cqcq.TenDv</td>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td style="text-align: center"></td>
+                        }
 
 
                         <td width="20%">
@@ -158,10 +172,7 @@
                             @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
 
                             {
-                                <a asp-controller="GiaSpDvKhungGia" asp-action="Print" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="In hồ sơ"
-                       target="_blank">
-                                    <i class="icon-lg la la-print text-info"></i>
-                                </a>
+                        
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Edit"))
                                 {

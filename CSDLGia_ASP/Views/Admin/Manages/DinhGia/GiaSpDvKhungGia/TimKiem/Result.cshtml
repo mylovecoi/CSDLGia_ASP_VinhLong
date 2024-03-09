@@ -15,10 +15,9 @@
         <tr >
             <th style="text-align:center">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
-            <th style="text-align:center">Thời điểm</th>
-            <th style="text-align:center">Phân loại</th>
-            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center">Thông tin hồ sơ</th>
+            <th style="text-align:center">Nhóm sản phẩm dịch vụ khung giá</th>
+            <th style="text-align:center">Đối tượng cụ thể</th>
+            <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá tối thiểu</th>
             <th style="text-align:center">Mức giá tối đa</th>
         </tr>
@@ -31,10 +30,9 @@
                 <tr>
                     <td style="text-align:center">@(record_id++)</td>
                     <td style="text-align:center">@item.Tendv</td>
-                    <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align:center">@item.Manhom</td>
                     <td style="text-align:center">@item.Phanloaidv</td>
-                    <td style="text-align:center">@item.Mota</td>
-                    <td style="text-align:center">@item.Ttqd</td>
+                    <td style="text-align:center">@item.Dvt</td>
                     <td style="text-align:center">@item.Giatoithieu</td>
                     <td style="text-align:center">@item.Giatoida</td>
                 </tr>

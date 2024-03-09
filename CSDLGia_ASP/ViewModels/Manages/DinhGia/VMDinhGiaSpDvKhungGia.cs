@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Models.Systems;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 {
@@ -78,6 +79,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string TenDiaBan { get; set; }
         public string Level { get; set; }
         public string GhiChu { get; set; }
+        [NotMapped]
+        public string Manhom { get; set; }
 
         public List<DsDonVi> DsDonVi { get; set; }
         public List<DsDiaBan> DsDiaBan { get; set; }

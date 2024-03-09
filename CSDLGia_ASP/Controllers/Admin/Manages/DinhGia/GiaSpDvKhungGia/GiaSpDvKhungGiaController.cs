@@ -357,9 +357,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
                         Ghichu = model.Ghichu,
+                        Dvt = model_ct.Dvt,
+                        Maspdv = model_ct.Maspdv,
+                        Manhom = model.Manhom,
 
                     };
-                
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom;
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
@@ -618,6 +621,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                      Giatoithieu = giaspdvkhunggiact.Giatoithieu,
                                      Ttqd = giaspdvkhunggia.Ttqd,
                                      Mota = giaspdvkhunggiact.Mota,
+                                     Phanloaidv = giaspdvkhunggiact.Phanloaidv,
+                                     Manhom = giaspdvkhunggia.Manhom,
                                  });
 
                     if (madv != "all")
