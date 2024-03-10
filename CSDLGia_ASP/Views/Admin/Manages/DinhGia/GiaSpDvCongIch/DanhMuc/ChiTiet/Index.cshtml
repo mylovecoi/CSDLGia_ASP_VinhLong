@@ -1,0 +1,102 @@
+﻿@{
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    int record_id = 1;
+    
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchDm>
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+    @section custom_script{
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
+
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Danh mục chi tiết nhóm sản phẩm dịch vụ công ích<br />
+                    <small style="color: blue;text-transform:uppercase;">@ViewData["Tennhom"]</small><br />
+                </h3>
+            </div>
+            <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }&ensp;
+            <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+                <i class="la la-file-excel-o"></i>Nhận dữ liệu
+            </button>&ensp;
+            <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
+                <i class="la la-lock"></i>Khóa/Mở khóa
+            </button>&ensp;
+            <a asp-controller="GiaSpDvCongIChNhom" asp-action="Index" class="btn btn-light-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr >
+                    <th width="4%">STT</th>
+                    <th style="text-align:center">Mã số</th>
+                    <th style="text-align:left">Tên</th>
+                    <th style="text-align:center">Mã gốc</th>
+                    <th style="text-align:center">Cấp độ</th>
+                    <th style="text-align:center">Hiển thị</th>
+                    <th style="text-align:center">Đơn vị tính</th>
+                    <th style="text-align:center">Theo tác</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.Maso</td>
+                        <td style="text-align: center">@item.Ten</td>
+                        <td style="text-align: center">@item.Magoc</td>
+                        <td style="text-align: center">@item.Capdo</td>
+                        <td style="text-align: center">@item.HienThi</td>
+                        <td style="text-align: center">@item.Dvt</td>
+                        <td style="text-align: center">Thao tác</td>
+                        <td>
+
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                            }
+
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Delete"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
+                                data-target="#Delete_Modal" onclick="getId('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongICh/DanhMuc/ChiTiet/Modal.cshtml")

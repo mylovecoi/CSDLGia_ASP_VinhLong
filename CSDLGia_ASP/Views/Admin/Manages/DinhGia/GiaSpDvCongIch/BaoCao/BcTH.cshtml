@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch>
+<br />
+<br />
+
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ SẢN PHẨM DỊCH VỤ CÔNG ÍCH</p>
+
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Doanh nghiệp</th>  @*Đơn vị chuyển*@
+            <th style="text-align: center">Số QĐ</th>
+            <th style="text-align: center">Ngày chuyển hồ sơ</th>
+            <th style="text-align: center">Ngày xét duyệt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center">@(record_id++)</td>
+                <td>
+                    @item.Tendiaban<br />
+                    <b>Mã hồ sơ: </b>@item.Mahs
+                </td>
+                <td style="text-align: center">@item.Soqd</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+  
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>
+        </tr>
+    </tbody>
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br />
+            - Bộ tài chính;<br />
+            - Lưu: VT, QLGCS.
+        </td>
+        <td style="vertical-align: top;">
+            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
+            <i>(Ký tên, đóng dấu)</i>
+        </td>
+    </tr>
+</table>
