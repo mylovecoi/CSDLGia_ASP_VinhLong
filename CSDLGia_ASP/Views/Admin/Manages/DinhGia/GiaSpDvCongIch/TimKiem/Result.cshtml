@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var GiaSpDvCongIchDm = (IEnumerable<GiaSpDvCongIchDm>)ViewData["GiaSpDvCongIchDm"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchCt>
+<br />
+<br />
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM</p>
+<br />
+<br />
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr >
+            <th style="text-align:center" width="4%">STT</th>
+            <th style="text-align:center">Đơn vị nhập</th>
+            <th style="text-align:center">Số quyết định</th>
+            <th style="text-align:center">Vùng</th>
+            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center">Mức giá từ</th>
+            <th style="text-align:center">Mức giá đến</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr style="text-align: center">
+                    <td style="text-align:center">@(record_id++)</td>
+                    <td style="text-align:center"> @item.Tendv</td>
+                    <td style="text-align:center">@item.Soqd</td>
+
+                    @if (GiaSpDvCongIchDm != null)
+                    {
+                        @foreach (var dm in GiaSpDvCongIchDm)
+                        {
+                            @if (item.Maspdv == dm.Maspdv)
+                            {
+                                <td style="text-align: center">@dm.Tenspdv</td>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <td style="text-align: center"></td>
+                    }
+                    <td style="text-align:left">@item.Mota</td>
+                    <td style="text-align:center">@item.Mucgiatu</td>
+                    <td style="text-align:center">@item.Mucgiaden</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div class="card-footer" style="text-align:center">
+    <a asp-controller="GiaSpDvCongIch" asp-action="Search" class="btn btn-danger">
+        <i class="la la-reply"></i>Quay lại
+    </a>&ensp;
+</div>
+
+
+
+

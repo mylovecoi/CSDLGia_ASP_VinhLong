@@ -605,11 +605,10 @@
                             <div class="menu-submenu">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_dm">
-                                            <a asp-controller="GiaDichVuCongIchDm" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaSpDvCongIchNhom" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -621,7 +620,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tt">
-                                            <a asp-controller="GiaDichVuCongIch" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaSpDvCongIch" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -633,7 +632,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_ht">
-                                            <a asp-controller="GiaDichVuCongIchHt" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaSpDvCongIchHt" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -645,7 +644,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.timkiem", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_tk">
-                                            <a asp-controller="GiaDichVuCongIch" asp-action="Search" class="menu-link">
+                                            <a asp-controller="GiaSpDvCongIch" asp-action="Search" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -657,7 +656,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.baocao", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgdvci_bc">
-                                            <a asp-controller="GiaDichVuCongIchBc" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaSpDvCongIchBc" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>

@@ -1,7 +1,8 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch
+
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdvt = ViewData["Donvitinh"];
+
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -19,80 +20,91 @@
             TableManaged4.init();
         });
     </script>
-
 }
+
 
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                GIÁ SẢN PHẨM DỊCH VỤ KHUNG GIÁ
+                GIÁ SẢN PHẨM DỊCH VỤ CÔNG ÍCH
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
+    @*sau khi thêm load lại chỗ này*@
+    <form asp-controller="GiaSpDvCongIch" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvcuthe_store">
         <div class="card-body">
-            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
-            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
-            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
-
+            <input asp-for="Madv" value="@ViewData["Madv"]">
+            <input asp-for="Manhom" value="@ViewData["Manhom"]">
+            <input asp-for="Mahs" value="@ViewData["Mahs"]">
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
                         <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
-
-                <div class="col-xl-6">
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm*</label>
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung</label>
-                        <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                        <input type="file" asp-for="Ipf1" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
             </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Excels/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Excels/Detail.cshtml")
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaSpDvCongIch" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateGiaSpDvCongIch()"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
-    <div class="card-footer" style="text-align:center">
-        <a asp-controller="GiaSpDvKhungGia" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-            <i class="la la-reply"></i>Quay lại
-        </a>&ensp;
-        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-        <button type="button" class="btn btn-primary mr-2" onclick="ValidateDct()"><i class="la la-check"></i>Thêm mới</button>
-    </div>
-
+    <!--end::Form-->
 </div>
 
-<!--end::Form-->
+
 
 <script>
-    function ValidateDct() {
+    function ValidateGiaSpDvCongIch() {
         if ($('#Soqd').val().trim() == '') {
             toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
         } else {
             if ($('#Thoidiem').val().trim() == '') {
                 toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
             } else {
-                document.getElementById("frm_spdvkhunggia_store").submit();
+                document.getElementById("frm_spdvcuthe_store").submit();
             }
         }
     }

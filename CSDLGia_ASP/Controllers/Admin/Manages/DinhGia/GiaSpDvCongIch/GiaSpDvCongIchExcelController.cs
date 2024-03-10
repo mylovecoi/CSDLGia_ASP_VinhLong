@@ -10,13 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 {
-    public class GiaSpDvCuTheExcelController : Controller
+    public class GiaSpDvCongIchExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaSpDvCuTheExcelController(CSDLGiaDBContext db)
+        public GiaSpDvCongIchExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
                 {
-                    var model = new GiaSpDvCuTheCt
+                    var model = new GiaSpDvCongIchCt
                     {
                         Maspdv = "1",
                         Mota = "2",
@@ -39,11 +39,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         LineStop = 1000,
                         Sheet = 1,
                     };
-                    ViewData["MenuLv1"] = "menu_spdvcuthe";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Excel.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -59,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         }
 
 
-        [Route("GiaSpDvCuTheExcel/Create")]
+        [Route("GiaSpDvCongIchExcel/Create")]
         [HttpGet]
         public IActionResult Create(string Madv, string Mahs)
         {
@@ -69,16 +70,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 {
 
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_spdvcuthe";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_tt";
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs);
+                    ViewData["modelct"] = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs);
                 
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                    ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
 
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Create.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -93,13 +95,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaSpDvCuTheCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaSpDvCongIchCt request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaSpDvCuTheCt>();
+                var list_add = new List<GiaSpDvCongIchCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -113,7 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaSpDvCuTheCt
+                            list_add.Add(new GiaSpDvCongIchCt
                             {
                                 Mahs = Mahs,      
                                 Trangthai = "CXD",
@@ -132,9 +134,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     }
 
                 }
-                _db.GiaSpDvCuTheCt.AddRange(list_add);
+                _db.GiaSpDvCongIchCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaSpDvCuTheExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaSpDvCongIchExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {

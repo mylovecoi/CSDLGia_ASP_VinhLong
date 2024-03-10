@@ -191,6 +191,12 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhHaiQuanXnkCt> GiaHhHaiQuanXnkCt { get; set; }
         public DbSet<GiaHhHaiQuanXnkDm> GiaHhHaiQuanXnkDm { get; set; }
         public DbSet<GiaHhHaiQuanXnkThue> GiaHhHaiQuanXnkThue { get; set; }
+        // Giá sản phẩm dịch vụ công ích 
+
+        public DbSet<GiaSpDvCongIch> GiaSpDvCongIch { get; set; }
+        public DbSet<GiaSpDvCongIchCt> GiaSpDvCongIchCt { get; set; }
+        public DbSet<GiaSpDvCongIchDm> GiaSpDvCongIchDm { get; set; }
+        public DbSet<GiaSpDvCongIchNhom> GiaSpDvCongIchNhom { get; set; }
 
         // Định giá cây Trồng Vật Nuôi
         public DbSet<GiaCayTrongVatNuoi> GiaCayTrongVatNuoi { get; set; }

@@ -29,6 +29,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 {
                     var model = new GiaSpDvKhungGiaCt
                     {
+                        Manhom = "1",
+                        Tennhom = "2",
                         Phanloaidv = "3",
                         Dvt = "4",
                         Giatoithieu = 5,
@@ -76,7 +78,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["modelct"] = _db.GiaSpDvKhungGiaCt.Where(t => t.Mahs == Mahs);
 
                     ViewData["GiaSpDvKhungGiaDm"] = _db.GiaSpDvKhungGiaDm.ToList();
-
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Excels/Create.cshtml");
                 }
                 else
@@ -112,18 +113,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
+  
+
                             list_add.Add(new GiaSpDvKhungGiaCt
                             {
+                              
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
 
-                                Mota = worksheet.Cells[row, Int16.Parse(request.Mota)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Mota)].Value.ToString().Trim() : "",
+                                Phanloaidv = worksheet.Cells[row, Int16.Parse(request.Phanloaidv)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Phanloaidv)].Value.ToString().Trim() : "",
+
+                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
 
                                 Giatoithieu = worksheet.Cells[row, Int16.Parse(request.Giatoithieu.ToString())].Value != null ?
                                            Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giatoithieu.ToString())].Value) : 0,
@@ -137,7 +144,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 }
                 _db.GiaSpDvKhungGiaCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaSpDvKhungGiaExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaSpDvKhungExcel", new { Madv = Madv, Mahs = Mahs });
             }
             else
             {
