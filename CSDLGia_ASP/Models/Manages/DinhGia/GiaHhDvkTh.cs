@@ -36,6 +36,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         //Index
         [NotMapped]
         public string Tentt { get; set; }
+        [NotMapped]
         public string Tendv { get; set; }
     }
 }

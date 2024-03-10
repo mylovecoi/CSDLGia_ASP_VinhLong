@@ -1,0 +1,91 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                HỒ SƠ GIÁ PHÍ, LỆ PHÍ
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="PhiLePhi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giakhunggd_store">
+
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <input hidden asp-for="Mahs" value="@Model.Mahs">
+            <input hidden asp-for="Madv" value="@Model.Madv">
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" asp-for="Soqd" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày ban hành*</label>
+                        <input type="date" asp-for="Thoidiem" class="form-control" />
+                        
+                    </div>
+                </div>
+                
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung</label>
+                        <textarea class="form-control" rows="2" asp-for="Ttqd"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="PhiLePhi" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+    @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Modal.cshtml")
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
