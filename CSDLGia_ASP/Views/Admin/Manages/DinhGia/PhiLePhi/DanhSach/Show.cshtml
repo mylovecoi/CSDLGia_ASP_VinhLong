@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    int record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
+}
+<br />
+<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
+    @foreach (var dsonvi in dsdonvi)
+    {
+        @if (Model.Macqcq == dsonvi.MaDv)
+        {
+            @dsonvi.TenDv
+        }
+    }
+</p>
+
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+
+    <thead>
+        <tr style="text-align:center">
+            <th>STT</th>
+            <th></th>
+            <th colspan="2">Xã đồng bằng</th>
+            <th colspan="2">Xã trung du</th>
+            <th colspan="2">Xã miền núi</th>
+        </tr>
+        <tr>
+            <th>Vùng kinh tế</th>
+            <th>Giá tối thiểu</th>
+            <th>Giá tối đa</th>
+            <th>Giá tối thiểu</th>
+            <th>Giá tối đa</th>
+            <th>Giá tối thiểu</th>
+            <th>Giá tối đa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @if (Model.GiaKhungGiaDatCt != null)
+            {
+                @foreach (var item in Model.GiaKhungGiaDatCt)
+                {
+                    <tr>
+                        <td style="text-align:center">@(record_id++)</td>
+                        <td class="active">@item.Vungkt</td>
+                        @*<td>@item.Loaixa</td>*@
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giattdb)</td>
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatddb)</td>
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatttd)</td>
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatdtd)</td>
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giattmn)</td>
+                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatdmn)</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

@@ -308,6 +308,11 @@ namespace CSDLGia_ASP.Database
 
         public DbSet<HoSoKeKhaiGia> HoSoKeKhaiGia {  get; set; }
         public DbSet<HoSoKeKhaiGia_ChiTiet> HoSoKeKhaiGia_ChiTiet { get; set; }
+
+        //Hồ sơ phí, lệ phí
+        public DbSet<PhiLePhi> PhiLePhi { get; set; }
+        public DbSet<PhiLePhiCt> PhiLePhiCt { get; set; }
+
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
     }
