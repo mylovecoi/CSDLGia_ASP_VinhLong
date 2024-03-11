@@ -75,7 +75,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             var model = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs).ToList();
             var modeldanhmuc = _db.GiaSpDvCongIchDm.ToList();
-
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
 
@@ -84,10 +83,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>STT</th>";
-
-            result += "<th>Vùng</th>";
-
-            result += "<th>Biện pháp công trình</th>";
+            result += "<th>Hiển thị</th>";
+            result += "<th>Danh mục</th>";
+            result += "<th>Đơn vị tính</th>";
             result += "<th>Mức giá từ</th>";
             result += "<th>Mức giá đến</th>";
             result += "<th>Thao tác</th>";
@@ -95,22 +93,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             result += "</thead>";
 
             result += "<tbody>";
-            foreach (var item in model)
+            foreach (var item in model.Where(t => t.Capdo == "1"))
             {
 
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + record++ + "</td>";
-        
-                foreach (var dm in modeldanhmuc)
-                {
-                    if (item.Maspdv == dm.Maspdv)
-                    {
-                        result += "<td style='text-align:center'>" + dm.Tenspdv + "</td>";
-                    }
-                } 
-            
-                result += "<td style='text-align:left'>" + item.Mota + "</td>";
-
+                result += "<td style='text-align:center'>" + item.HienThi + "</td>";
+                result += "<td style='text-align:left'>" + item.Ten + "</td>";
+                result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:center'>" + item.Mucgiatu + "</td>";
                 result += "<td style='text-align:center'>" + item.Mucgiaden + "</td>";
 
@@ -125,11 +115,56 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "</button>";
                 result += "</td>";
                 result += "</tr>";
+                foreach (var item1 in model.Where(t => t.Magoc == item.Maso))
+                {
+
+                    result += "<tr>";
+                    result += "<td style='text-align:center'>" + record++ + "</td>";
+                    result += "<td style='text-align:center'>" + item1.HienThi + "</td>";
+                    result += "<td style='text-align:left'>" + item1.Ten + "</td>";
+                    result += "<td style='text-align:center'>" + item1.Dvt + "</td>";
+                    result += "<td style='text-align:center'>" + item1.Mucgiatu + "</td>";
+                    result += "<td style='text-align:center'>" + item1.Mucgiaden + "</td>";
+
+                    result += "<td>";
+                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                    result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item1.Id + "`)'>";
+                    result += "<i class='icon-lg la la-edit text-primary'></i>";
+                    result += "</button>";
+                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
+                    result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item1.Id + "`)'>";
+                    result += "<i class='icon-lg la la-trash text-danger'></i>";
+                    result += "</button>";
+                    result += "</td>";
+                    result += "</tr>";
+                    foreach (var item2 in model.Where(t => t.Magoc == item1.Maso))
+                    {
+
+                        result += "<tr>";
+                        result += "<td style='text-align:center'>" + record++ + "</td>";
+                        result += "<td style='text-align:center'>" + item2.HienThi + "</td>";
+                        result += "<td style='text-align:left'>" + item2.Ten + "</td>";
+                        result += "<td style='text-align:center'>" + item2.Dvt + "</td>";
+                        result += "<td style='text-align:center'>" + item2.Mucgiatu + "</td>";
+                        result += "<td style='text-align:center'>" + item2.Mucgiaden + "</td>";
+
+                        result += "<td>";
+                        result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                        result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item2.Id + "`)'>";
+                        result += "<i class='icon-lg la la-edit text-primary'></i>";
+                        result += "</button>";
+                        result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
+                        result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item2.Id + "`)'>";
+                        result += "<i class='icon-lg la la-trash text-danger'></i>";
+                        result += "</button>";
+                        result += "</td>";
+                        result += "</tr>";
+                    }
+                }
             }
             result += "</tbody>";
 
             result += "</table>";
-
             result += "</div>";
 
             return result;

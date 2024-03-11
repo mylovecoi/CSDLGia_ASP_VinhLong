@@ -54,7 +54,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
-                    var model = _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+                    var model = (from pl in _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch
+                                 {
+                                     Id = pl.Id,
+                                     Mahs = pl.Mahs,
+                                     Tendiaban = db.TenDiaBan,
+                                     Soqd = pl.Soqd,
+                                     Thoidiem = pl.Thoidiem,
+                                 });
+
+            
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";

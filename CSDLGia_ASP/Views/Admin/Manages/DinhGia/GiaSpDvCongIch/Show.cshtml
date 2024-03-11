@@ -39,10 +39,11 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
     <thead>
-        <tr >
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Vùng</th>
-            <th style="text-align:center">Biện pháp công trình</th>
+        <tr>
+
+            <th style="text-align:center">Hiển thị</th>
+            <th style="text-align:center">Danh mục</th>
+            <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá từ</th>
             <th style="text-align:center">Mức giá đến</th>
 
@@ -53,23 +54,43 @@
         {
             @if (Model.GiaSpDvCongIchCt != null)
             {
-                @foreach (var item in Model.GiaSpDvCongIchCt)
+                @foreach (var item in Model.GiaSpDvCongIchCt.Where(t => t.Capdo == "1"))
                 {
                     <tr>
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:left">
-                                @foreach (var ds in spcuthedanhmuc)
-                                {
-                                    @if (item.Maspdv == ds.Maspdv)
-                                    {
-                                        @ds.Tenspdv
-                                    }
-                                }
-                        </td>
-                        <td style="text-align:left">@item.Mota</td>
+   
+                        <td style="text-align:center">@item.HienThi</td>
+                        <td style="text-align:left">@item.Ten</td>
+                        <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:center">@item.Mucgiatu</td>
                         <td style="text-align:center">@item.Mucgiaden</td>
+                       
                     </tr>
+                    @foreach (var item1 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso))
+                    {
+                        <tr>
+                
+                            <td style="text-align:center">@item1.HienThi</td>
+                            <td style="text-align:left">@item1.Ten</td>
+                            <td style="text-align:center">@item1.Dvt</td>
+                            <td style="text-align:center">@item1.Mucgiatu</td>
+                            <td style="text-align:center">@item1.Mucgiaden</td>
+                           
+                        </tr>
+                        @foreach (var item2 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item1.Maso))
+                        {
+                            <tr>
+                              
+                                <td style="text-align:center">@item2.HienThi</td>
+                                <td style="text-align:left">@item2.Ten</td>
+                                <td style="text-align:center">@item2.Dvt</td>
+                                <td style="text-align:center">@item2.Mucgiatu</td>
+                                <td style="text-align:center">@item2.Mucgiaden</td>
+                                
+                            </tr>
+
+                        }
+                    }
+
                 }
             }
         }
