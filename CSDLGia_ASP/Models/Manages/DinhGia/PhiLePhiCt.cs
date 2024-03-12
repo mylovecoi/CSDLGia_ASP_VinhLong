@@ -16,7 +16,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int STT { get; set; }//Số thứ tự theo mã gốc
         public int CapDo { get; set; }//Bắt đầu từ 1
         public string ChiTieu { get; set; }
-        public double Dongia { get; set; } 
+        public string Dvt { get; set; }
+        public double Dongia { get; set; } = 0;
         [NotMapped]
         public string Madv { get; set; }
         [NotMapped]

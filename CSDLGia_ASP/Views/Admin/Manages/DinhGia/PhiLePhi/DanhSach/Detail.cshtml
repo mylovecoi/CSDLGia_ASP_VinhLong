@@ -26,35 +26,113 @@
                     <th width="4%">STT</th>
                     <th>Mã số</th>
                     <th>Mã số gốc</th>
+                    <th>Hiển thị<br>báo cáo</th>
                     <th>Cấp độ</th>
                     <th>Nội dung</th>
+                    <th>Đơn vị<br/>tính</th>
+                    <th>Mức giá</th>
                     <th width="8%">Thao tác</th>
-                </tr>                
+                </tr>
             </thead>
             <tbody>
                 @if (Model != null)
                 {
                     @if (Model.PhiLePhiCt != null)
                     {
-                        @foreach (var item in Model.PhiLePhiCt)
+                        @foreach (var item in Model.PhiLePhiCt.Where(x => x.CapDo == 1).OrderBy(x => x.STT))
                         {
                             <tr>
                                 <td style="text-align:center">@(record_id++)</td>
                                 <td class="active">@item.MaSo</td>
                                 <td>@item.MaSoGoc</td>
+                                <td>@item.HienThi</td>
                                 <td>@item.CapDo</td>
                                 <td>@item.ChiTieu</td>
+                                <td>@item.Dvt</td>
+                                <td>@item.Dongia</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                            onclick="SetEdit('@item.Id','@item.MaSo','@item.ChiTieu','@item.STT','@item.HienThi','@item.CapDo','@item.MaSoGoc','@item.Dongia')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </button>
                                     <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                            onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xóa">
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 </td>
                             </tr>
+                            @* Vòng 2 *@
+                            @foreach (var item1 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item.MaSo).OrderBy(x => x.STT))
+                            {
+                                <tr>
+                                    <td style="text-align:center">@(record_id++)</td>
+                                    <td class="active">@item1.MaSo</td>
+                                    <td>@item1.MaSoGoc</td>
+                                    <td>@item1.HienThi</td>
+                                    <td>@item1.CapDo</td>
+                                    <td>@item1.ChiTieu</td>
+                                    <td>@item1.Dvt</td>
+                                    <td>@item1.Dongia</td>
+                                    <td>
+                                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                onclick="SetEdit(@item1.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
+                                        <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                onclick="GetDelete('@item1.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @* Vòng 3 *@
+                                @foreach (var item2 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item1.MaSo).OrderBy(x => x.STT))
+                                {
+                                    <tr>
+                                        <td style="text-align:center">@(record_id++)</td>
+                                        <td class="active">@item2.MaSo</td>
+                                        <td>@item2.MaSoGoc</td>
+                                        <td>@item2.HienThi</td>
+                                        <td>@item2.CapDo</td>
+                                        <td>@item2.ChiTieu</td>
+                                        <td>@item2.Dvt</td>
+                                        <td>@item2.Dongia</td>
+                                        <td>
+                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                    onclick="SetEdit(@item2.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                <i class="icon-lg la la-edit text-primary"></i>
+                                            </button>
+                                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                    onclick="GetDelete('@item2.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                                <i class="icon-lg la la-trash text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @* Vòng 4 *@
+                                    @foreach (var item3 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item2.MaSo).OrderBy(x => x.STT))
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">@(record_id++)</td>
+                                            <td class="active">@item3.MaSo</td>
+                                            <td>@item3.MaSoGoc</td>
+                                            <td>@item3.HienThi</td>
+                                            <td>@item3.CapDo</td>
+                                            <td>@item3.ChiTieu</td>
+                                            <td>@item3.Dvt</td>
+                                            <td>@item3.Dongia</td>
+                                            <td>
+                                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                        onclick="SetEdit(@item3.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                    <i class="icon-lg la la-edit text-primary"></i>
+                                                </button>
+                                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                        onclick="GetDelete('@item3.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                                    <i class="icon-lg la la-trash text-danger"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -1,4 +1,5 @@
-﻿<!--Delete Modal-->
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
+<!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -37,7 +38,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="edit_thongtin">
-                    <input type="hidden" value="@ViewData["Mahs"]" id="mahs_create" name="mahs_create" />
+                    <input type="hidden" value="@Model.Mahs" id="Mahs" name="Mahs" />
                     <input type="hidden" id="id" name="Id" />
                     <div class="row">
                         <div class="col-xl-3">
@@ -75,7 +76,7 @@
                         <div class="col-xl-3">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cấp độ</label>
-                                <input type="text" id="CapDo" name="CapDo" class="form-control " style="font-weight: bold" />
+                                <input type="number" id="CapDo" name="CapDo" min="1" max="4" class="form-control" />
                             </div>
                         </div>
                         <div class="col-xl-9">
@@ -87,6 +88,12 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Mức thu</b></label>
+                                <input type="text" id="DVT" name="DVT" class="form-control" style="font-weight: bold" />
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Mức thu</b></label>
@@ -104,15 +111,48 @@
     </div>
 </form>
 <script>
-    function SetEdit(Id, maSo, chiTieu, sTT, hienThi, capDo, maSoGoc, donGia) {
-
+    function SetEdit(Id) {
+        $('#frm_philephict').find("[name='Id']").val(Id);
+        $.ajax({
+            url: '/PhiLePhiCt/Edit',
+            type: 'POST',
+            data: {
+                Id: Id
+            },
+            dataType: 'JSON',
+            success: function (data) {              
+                //console.log(data);
+                var form = $('#frm_philephict');
+                form.find("[name='Id']").val(data.id);
+                form.find("[name='MaSo']").val(data.maSo);
+                form.find("[name='ChiTieu']").val(data.chiTieu);
+                form.find("[name='STT']").val(data.stt);
+                form.find("[name='HienThi']").val(data.hienThi);
+                form.find("[name='CapDo']").val(data.capDo);
+                form.find("[name='MaSoGoc']").val(data.maSoGoc);
+                form.find("[name='DVT']").val(data.dvt);
+                form.find("[name='Dongia']").val(data.dongia);
+            }
+        })
     }
 
-    function Add(Id) {
-        $('#frm_philephict').find("[name='Id']").val(Id);
+    function Add(Id) {        
+        var form = $('#frm_philephict');
+        form.find("[name='Id']").val(Id);
+        form.find("[name='MaSo']").val('');
+        form.find("[name='ChiTieu']").val('');
+        form.find("[name='STT']").val(1);
+        form.find("[name='HienThi']").val(1);
+        form.find("[name='CapDo']").val(1);
+        form.find("[name='MaSoGoc']").val('');
+        form.find("[name='DVT']").val('');
+        form.find("[name='Dongia']").val(0);
+
     }
 
     function SetUpdate() {
+        var dongGia = $('#frm_philephict').find("[name='Dongia']").val().replace(",", "");        
+        $('#frm_philephict').find("[name='Dongia']").val(dongGia);
         var formData = new FormData($('#frm_philephict')[0]);
         $.ajax({
             url: '/PhiLePhiCt/Update',

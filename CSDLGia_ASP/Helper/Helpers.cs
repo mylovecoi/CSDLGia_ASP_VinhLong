@@ -226,6 +226,14 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.thongtin", Name = "Giá tài sản công - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.xetduyet", Name = "Giá tài sản công - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.timkiem", Name = "Giá tài sản công - Tìm kiếm" });
+            
+            //Giá phí lệ phí
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi", Name = "Giá phí lệ phí" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", Name = "ĐG - Giá phí lệ phí - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.thongtin", Name = "ĐG - Giá phí lệ phí  - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.xetduyet", Name = "ĐG - Giá phí lệ phí  - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.timkiem", Name = "ĐG - Giá phí lệ phí - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.baocao", Name = "ĐG - Giá phí lệ phí  - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
