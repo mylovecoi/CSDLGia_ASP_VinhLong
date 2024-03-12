@@ -5,6 +5,7 @@
     var GiaSpDvCongIchDm = (IEnumerable<GiaSpDvCongIchDm>)ViewData["GiaSpDvCongIchDm"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchCt>
+
 <br />
 <br />
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM</p>
@@ -17,8 +18,8 @@
             <th style="text-align:center" width="4%">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
             <th style="text-align:center">Số quyết định</th>
-            <th style="text-align:center">Vùng</th>
-            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center">Danh mục</th>
+            <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá từ</th>
             <th style="text-align:center">Mức giá đến</th>
 
@@ -27,31 +28,48 @@
     <tbody>
         @if (Model != null)
         {
-            @foreach (var item in Model)
+            @foreach (var item in Model.Where(t => t.Capdo == "1"))
             {
-                <tr style="text-align: center">
-                    <td style="text-align:center">@(record_id++)</td>
-                    <td style="text-align:center"> @item.Tendv</td>
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align:center">@item.Tendv</td>
                     <td style="text-align:center">@item.Soqd</td>
-
-                    @if (GiaSpDvCongIchDm != null)
-                    {
-                        @foreach (var dm in GiaSpDvCongIchDm)
-                        {
-                            @if (item.Maspdv == dm.Maspdv)
-                            {
-                                <td style="text-align: center">@dm.Tenspdv</td>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <td style="text-align: center"></td>
-                    }
-                    <td style="text-align:left">@item.Mota</td>
+                    <td style="text-align:left">@item.Ten</td>
+                    <td style="text-align:center">@item.Dvt</td>
                     <td style="text-align:center">@item.Mucgiatu</td>
                     <td style="text-align:center">@item.Mucgiaden</td>
+                    
                 </tr>
+                @foreach (var item1 in Model.Where(t => t.Magoc == item.Maso))
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align:center">@item.Tendv</td>
+                        <td style="text-align:center">@item.Soqd</td>
+                        <td style="text-align:center">@item1.HienThi</td>
+                        <td style="text-align:left">@item1.Ten</td>
+                        <td style="text-align:center">@item1.Dvt</td>
+                        <td style="text-align:center">@item1.Mucgiatu</td>
+                        <td style="text-align:center">@item1.Mucgiaden</td>
+                       
+                    </tr>
+                    @foreach (var item2 in Model.Where(t => t.Magoc == item1.Maso))
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align:center">@item.Tendv</td>
+                            <td style="text-align:center">@item.Soqd</td>
+                            <td style="text-align:center">@item2.HienThi</td>
+                            <td style="text-align:left">@item2.Ten</td>
+                            <td style="text-align:center">@item2.Dvt</td>
+                            <td style="text-align:center">@item2.Mucgiatu</td>
+                            <td style="text-align:center">@item2.Mucgiaden</td>
+                           
+                        </tr>
+
+                    }
+                }
+
             }
         }
     </tbody>

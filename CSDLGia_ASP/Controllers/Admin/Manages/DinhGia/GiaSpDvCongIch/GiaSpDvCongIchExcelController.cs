@@ -26,14 +26,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Create"))
                 {
                     var model = new GiaSpDvCongIchCt
                     {
-                        Maspdv = "1",
-                        Mota = "2",
-                        Mucgiatu = 3,
-                        Mucgiaden = 4,
+                        HienThi = "1",
+                        Ten = "2",
+                        Dvt = "3",
+                        Mucgiatu = 4,
+                        Mucgiaden = 5,
 
                         LineStart = 2,
                         LineStop = 1000,
@@ -43,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
+                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ công ích";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Excels/Excel.cshtml", model);
 
                 }
@@ -66,10 +67,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Create"))
                 {
 
-                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
+                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
@@ -77,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["Mahs"] = Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["modelct"] = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs);
-                
+
                     ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
 
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Excels/Create.cshtml");
@@ -117,16 +118,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         {
                             list_add.Add(new GiaSpDvCongIchCt
                             {
-                                Mahs = Mahs,      
+                                Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
-                                Mota = worksheet.Cells[row, Int16.Parse(request.Mota)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Mota)].Value.ToString().Trim() : "",
+
+                                HienThi = worksheet.Cells[row, Int16.Parse(request.HienThi)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.HienThi)].Value.ToString().Trim() : "",
+
+                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
+
+                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+
                                 Mucgiatu = worksheet.Cells[row, Int16.Parse(request.Mucgiatu.ToString())].Value != null ?
                                            Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Mucgiatu.ToString())].Value) : 0,
+
                                 Mucgiaden = worksheet.Cells[row, Int16.Parse(request.Mucgiaden.ToString())].Value != null ?
                                            Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Mucgiaden.ToString())].Value) : 0,
                             });
