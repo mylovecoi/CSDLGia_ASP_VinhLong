@@ -75,6 +75,7 @@ namespace CSDLGia_ASP.Migrations
                     STT = table.Column<int>(type: "int", nullable: false),
                     CapDo = table.Column<int>(type: "int", nullable: false),
                     ChiTieu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dvt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dongia = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

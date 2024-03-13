@@ -1,26 +1,14 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
 }
 <br />
 <br />
-@model CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
+@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
 
-<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
-<p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
-<p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
-</p>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ GIÁ PHÍ, LỆ PHÍ</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -40,39 +28,59 @@
     <thead>
         <tr style="text-align:center">
             <th>STT</th>
-            <th></th>
-            <th colspan="2">Xã đồng bằng</th>
-            <th colspan="2">Xã trung du</th>
-            <th colspan="2">Xã miền núi</th>
-        </tr>
-        <tr>
-            <th>Vùng kinh tế</th>
-            <th>Giá tối thiểu</th>
-            <th>Giá tối đa</th>
-            <th>Giá tối thiểu</th>
-            <th>Giá tối đa</th>
-            <th>Giá tối thiểu</th>
-            <th>Giá tối đa</th>
-        </tr>
+            <th>Nội dung</th>
+            <th>Đơn vị<br />tính</th>
+            <th>Mức giá</th>
+            <th>Ghi chú</th>
+        </tr>        
     </thead>
     <tbody>
         @if (Model != null)
         {
-            @if (Model.GiaKhungGiaDatCt != null)
+            @if (Model.PhiLePhiCt != null)
             {
-                @foreach (var item in Model.GiaKhungGiaDatCt)
+                @foreach (var item in Model.PhiLePhiCt.Where(x => x.CapDo == 1).OrderBy(x => x.STT))
                 {
                     <tr>
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td class="active">@item.Vungkt</td>
-                        @*<td>@item.Loaixa</td>*@
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giattdb)</td>
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatddb)</td>
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatttd)</td>
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatdtd)</td>
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giattmn)</td>
-                        <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatdmn)</td>
+                        <td>@item.HienThi</td>
+                        <td>@item.ChiTieu</td>
+                        <td>@item.Dvt</td>
+                        <td>@item.Dongia</td>
+                        <td></td>
                     </tr>
+                    @* Vòng 2 *@
+                    @foreach (var item1 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item.MaSo).OrderBy(x => x.STT))
+                    {
+                        <tr>
+                            <td>@item1.HienThi</td>
+                            <td>@item1.ChiTieu</td>
+                            <td>@item1.Dvt</td>
+                            <td>@item1.Dongia</td>
+                            <td></td>
+                        </tr>
+                        @* Vòng 3 *@
+                        @foreach (var item2 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item1.MaSo).OrderBy(x => x.STT))
+                        {
+                            <tr>
+                                <td>@item2.HienThi</td>
+                                <td>@item2.ChiTieu</td>
+                                <td>@item2.Dvt</td>
+                                <td>@item2.Dongia</td>
+                                <td></td>
+                            </tr>
+                            @* Vòng 4 *@
+                            @foreach (var item3 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item2.MaSo).OrderBy(x => x.STT))
+                            {
+                                <tr>
+                                    <td>@item3.HienThi</td>
+                                    <td>@item3.ChiTieu</td>
+                                    <td>@item3.Dvt</td>
+                                    <td>@item3.Dongia</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    }
                 }
             }
         }

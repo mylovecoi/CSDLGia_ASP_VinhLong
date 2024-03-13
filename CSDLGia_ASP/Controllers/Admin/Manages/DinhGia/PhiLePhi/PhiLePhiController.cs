@@ -173,7 +173,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     }
 
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    if(model != null)
+                    if (model != null)
                     {
                         model.Soqd = request.Soqd;
                         model.Thoidiem = request.Thoidiem;
@@ -181,7 +181,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         model.Thongtin = request.Thongtin;
                         model.Ghichu = request.Ghichu;
                         model.Ipf1 = request.Ipf1;
-                        model.Updated_at = DateTime.Now;                        
+                        model.Updated_at = DateTime.Now;
                     }
                     else
                     {
@@ -202,7 +202,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
                         _db.PhiLePhi.Add(mPhiLePhi);
                     }
-                    
+
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "PhiLePhi", new { request.Madv });
@@ -231,11 +231,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
                     var model_ct = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs);
 
-                    model.PhiLePhiCt = model_ct.ToList();
+                    model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     /*ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;*/
-                    ViewData["Title"] = "Bảng giá xây dựng mới";
+                    ViewData["Title"] = "Bảng giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
                     ViewData["MenuLv3"] = "menu_plp_tt";
@@ -342,7 +342,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
-
+                    
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Bảng giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
@@ -522,23 +524,59 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             }
         }
 
+        [Route("PhiLePhiCt/Edit")]
+        [HttpPost]
+        public JsonResult Edit(int Id)
+        {
+            var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
+            // Trả về JSON cho JavaScript
+            return Json(model);
+        }
 
         [Route("PhiLePhiCt/Update")]
         [HttpPost]
         public JsonResult UpdateCt(CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt request)
         {
+
+            if (request.CapDo <= 0 || request.CapDo > 4)
+            {
+                request.CapDo = 1;
+            }
+            //Kiểm tra mã trước khi nhập
+            if (request.CapDo > 1)
+            {
+                //Kiểm tra mã gốc xem tồn tại ko
+                var chk = _db.PhiLePhiCt.Where(x => x.Mahs == request.Mahs && x.MaSo == request.MaSoGoc);
+                if (!chk.Any())
+                {                    
+                    return Json(new { status = "error", message = "Mã gốc không tồn tại. Bạn hãy kiểm tra lại !!!" });
+                }
+            }
+
+            //Kiểm tra mã trước khi nhập
+            if (request.CapDo == 1)
+            {
+                //Kiểm tra mã cấp 1 không nhập mã gốc
+                var chk = _db.PhiLePhiCt.Where(x => x.Mahs == request.Mahs && x.MaSo == request.MaSoGoc);
+                if (request.MaSoGoc != null && request.MaSoGoc != "")
+                {
+                    return Json(new { status = "error", message = "Mã số cấp 1 không nhập mã gốc. Bạn hãy kiểm tra lại !!!" });
+                }
+            }
+
             //Kiêm tra id = =-1 =>thêm mới
             if (request.Id == -1)
             {
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt
                 {
                     Mahs = request.Mahs,
-                    MaSo = request.Mahs,
-                    MaSoGoc = request.Mahs,
+                    MaSo = request.MaSo,
+                    MaSoGoc = request.MaSoGoc,
                     HienThi = request.HienThi,//HIện thị dữ liệu ra màn hình
                     STT = request.STT,//Số thứ tự theo mã gốc
                     CapDo = request.CapDo,//Bắt đầu từ 1
                     ChiTieu = request.ChiTieu,
+                    Dvt = request.Dvt,
                     Dongia = request.Dongia,
                 };
 
@@ -548,13 +586,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             else
             {
                 var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == request.Id);
-                model.Dongia = request.Dongia;
-                model.MaSo = request.Mahs;
-                model.MaSoGoc = request.Mahs;
+                
+                model.MaSo = request.MaSo;
+                model.MaSoGoc = request.MaSoGoc;
                 model.HienThi = request.HienThi;//HIện thị dữ liệu ra màn hình
                 model.STT = request.STT;//Số thứ tự theo mã gốc
                 model.CapDo = request.CapDo;//Bắt đầu từ 1
                 model.ChiTieu = request.ChiTieu;
+                model.Dvt = request.Dvt;
                 model.Dongia = request.Dongia;
                 _db.PhiLePhiCt.Update(model);
                 _db.SaveChanges();
@@ -563,6 +602,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
 
             string result = GetDataCt(request.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        [Route("PhiLePhiCt/Delete")]
+        [HttpPost]
+        public JsonResult DeleteCt(int Id)
+        {
+            var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
+            _db.PhiLePhiCt.Remove(model);
+            _db.SaveChanges();
+            var result = GetDataCt(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -577,26 +628,114 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='4%'>#</th>";
-            result += "<th width='25%'>Mã số</th>";
-          
-            result += "<th>Đơn giá</th>";
-            result += "<th width='8%'>Thao tác</th>";
+            result += "<th>Mã số</th>";
+            result += "<th>Mã số gốc</th>";
+            result += "<th>Hiển thị<br>báo cáo</th>";
+            result += "<th>Cấp độ </th>";
+            result += "<th>Nội dung </th>";
+            result += "<th>Đơn vị<br/>tính</th>";
+            result += "<th>Mức giá </th>";
+            result += "<th width = '8%'>Thao tác </th>";
+
+
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
 
-            foreach (var item in model)
+            foreach (var item in model.Where(x => x.CapDo == 1).OrderBy(x => x.STT))
             {
                 result += "<tr>";
                 result += "<td class='text-center'>" + record++ + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.MaSo + "</td>";
+                result += "<td>" + @item.MaSoGoc + "</td>";
+                result += "<td>" + @item.HienThi + "</td>";
+                result += "<td>" + @item.CapDo + "</td>";
+                result += "<td>" + @item.ChiTieu + "</td>";
+                result += "<td>" + @item.Dvt + "</td>";
+                result += "<td>" + @item.Dongia + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit('" + item.Id + "','"+ item.MaSo + "')'>";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(" + item.Id + ")'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
+                result += "</button>";
+                result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                result += " onclick='GetDelete(" + item.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                result += "<i class='icon-lg la la-trash text-danger'></i>";
                 result += "</button>";
                 result += "</td>";
                 result += "</tr>";
+                //Vòng 2
+                foreach (var item1 in model.Where(x => x.MaSoGoc == item.MaSo).OrderBy(x => x.STT))
+                {
+                    result += "<tr>";
+                    result += "<td class='text-center'>" + record++ + "</td>";
+                    result += "<td class='active' style='font-weight:bold'>" + item1.MaSo + "</td>";
+                    result += "<td>" + item1.MaSoGoc + "</td>";
+                    result += "<td>" + item1.HienThi + "</td>";
+                    result += "<td>" + item1.CapDo + "</td>";
+                    result += "<td>" + item1.ChiTieu + "</td>";
+                    result += "<td>" + item1.Dvt + "</td>";
+                    result += "<td>" + item1.Dongia + "</td>";
+                    result += "<td>";
+                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                    result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(" + item1.Id + ")'>";
+                    result += "<i class='icon-lg la la-edit text-primary'></i>";
+                    result += "</button>";
+                    result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                    result += " onclick='GetDelete(" + item1.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                    result += "<i class='icon-lg la la-trash text-danger'></i>";
+                    result += "</button>";
+                    result += "</td>";
+                    result += "</tr>";
+                    //Vòng 3
+                    foreach (var item2 in model.Where(x => x.MaSoGoc == item1.MaSo).OrderBy(x => x.STT))
+                    {
+                        result += "<tr>";
+                        result += "<td class='text-center'>" + record++ + "</td>";
+                        result += "<td class='active' style='font-weight:bold'>" + item2.MaSo + "</td>";
+                        result += "<td>" + item2.MaSoGoc + "</td>";
+                        result += "<td>" + item2.HienThi + "</td>";
+                        result += "<td>" + item2.CapDo + "</td>";
+                        result += "<td>" + item2.ChiTieu + "</td>";
+                        result += "<td>" + item2.Dvt + "</td>";
+                        result += "<td>" + item2.Dongia + "</td>";
+                        result += "<td>";
+                        result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                        result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(" + item2.Id + ")'>";
+                        result += "<i class='icon-lg la la-edit text-primary'></i>";
+                        result += "</button>";
+                        result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                        result += " onclick='GetDelete(" + item2.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                        result += "<i class='icon-lg la la-trash text-danger'></i>";
+                        result += "</button>";
+                        result += "</td>";
+                        result += "</tr>";
+                        //Vòng 4
+                        foreach (var item3 in model.Where(x => x.MaSoGoc == item2.MaSo).OrderBy(x => x.STT))
+                        {
+                            result += "<tr>";
+                            result += "<td class='text-center'>" + record++ + "</td>";
+                            result += "<td class='active' style='font-weight:bold'>" + item3.MaSo + "</td>";
+                            result += "<td>" + item3.MaSoGoc + "</td>";
+                            result += "<td>" + item3.HienThi + "</td>";
+                            result += "<td>" + item3.CapDo + "</td>";
+                            result += "<td>" + item3.ChiTieu + "</td>";
+                            result += "<td>" + item3.Dvt + "</td>";
+                            result += "<td>" + item3.Dongia + "</td>";
+                            result += "<td>";
+                            result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                            result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(" + item3.Id + ")'>";
+                            result += "<i class='icon-lg la la-edit text-primary'></i>";
+                            result += "</button>";
+                            result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                            result += " onclick='GetDelete(" + item3.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                            result += "<i class='icon-lg la la-trash text-danger'></i>";
+                            result += "</button>";
+                            result += "</td>";
+                            result += "</tr>";
+                        }
+                    }
+                }
             }
             result += "</tbody>";
             result += "</table>";
