@@ -4,7 +4,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt>
 <br />
 <br />
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM</p>
@@ -18,7 +18,6 @@
             <td style="text-align:center">Đơn vị nhập</td>
             <td style="text-align:center">Thời điểm</td>
             <td style="text-align:center">Mô tả</td>
-            <td style="text-align:center">Phan loại</td>
             <th style="text-align:center">Tên phí, lệ phí</th>
             <td style="text-align:center">Đơn vị tính</td>
             <th style="text-align:center">Mức thu</th>
@@ -43,6 +42,8 @@
                     </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align: center">@item.Ttqd</td>                    
+                    <td style="text-align: center">@item.Dvt</td>                    
+                    <td style="text-align: center">@Helpers.ConvertDbToStr( @item.Dongia)</td>                    
 
                 </tr>
             }
@@ -50,7 +51,7 @@
     </tbody>
 </table>
 <div class="card-footer" style="text-align:center">
-    <a asp-controller="GiaLePhi" asp-action="Search" class="btn btn-danger">
+    <a asp-controller="PhiLePhi" asp-action="Search" class="btn btn-danger">
         <i class="la la-reply"></i>Quay lại
     </a>
 </div>

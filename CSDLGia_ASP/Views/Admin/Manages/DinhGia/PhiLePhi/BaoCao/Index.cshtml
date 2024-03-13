@@ -3,7 +3,6 @@
     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
 
-    var nhomtn = (IEnumerable<GiaThueTaiNguyenNhom>)ViewData["NhomTn"];
     var nam_start = DateTime.Now.Year - 7;
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();

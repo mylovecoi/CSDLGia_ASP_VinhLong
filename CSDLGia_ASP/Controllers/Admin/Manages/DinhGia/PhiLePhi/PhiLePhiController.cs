@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -82,6 +82,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+                        //Gán các thông tin ở bảng khác
+                        foreach (var item in model)
+                        {
+                            item.Tencqcq = dsdonvi.Where(x=>x.MaDv == item.Macqcq).FirstOrDefault().TenDv;
+                        }
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
@@ -120,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
                 {
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
@@ -156,7 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -225,7 +230,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -260,7 +265,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -308,7 +313,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Delete"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Id == id_delete);
                     _db.PhiLePhi.Remove(model);
@@ -338,7 +343,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
@@ -370,7 +375,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
@@ -429,7 +434,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -441,8 +446,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         ViewData["Madv"] = "";
                     }
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["NhomTn"] = _db.GiaXayDungMoiNhom.Where(t => t.Theodoi == "TD").ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");                    
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
@@ -468,7 +472,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
                     var model = (from PhiLePhiCt in _db.PhiLePhiCt
                                  join PhiLePhi in _db.PhiLePhi on PhiLePhiCt.Mahs equals PhiLePhi.Mahs
