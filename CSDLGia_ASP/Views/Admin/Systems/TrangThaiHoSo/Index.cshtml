@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+
+<br />
+<br />
+
+@model IEnumerable<CSDLGia_ASP.Models.Systems.TrangThaiHoSo>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">TRẠNG THÁI HỒ SƠ </p>
+
+<br />
+
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th style="text-align: center">STT</th>
+            <th style="text-align: center">Mã hồ sơ</th>
+            <th style="text-align: center">Đơn vị thao tác</th>
+            <th style="text-align: center">Thời gian thao tác</th>
+            <th style="text-align: center">Trạng thái hồ sơ</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: center">@item.MaHoSo</td>
+                    <td style="text-align: center">
+                        @item.TenDangNhap
+                    </td>
+                    <td style="text-align: center">@item.ThoiGian</td>
+                    <td style="text-align: center">
+                        @if (item.TrangThai == "CHT")
+                        {
+                            <span>Chưa hoàn thành</span>
+                        }
+                        @if (item.TrangThai == "BTL")
+                        {
+                            <span>Bị trả lại</span>
+                        }
+                        @if (item.TrangThai == "HT")
+                        {
+
+                            <span>Đã hoàn thành và gửi đi</span>
+                        }
+                        @if (item.TrangThai == "CB")
+                        {
+                            <span>Công bố</span>
+                        }
+                        @if (item.TrangThai == "HCB")
+                        {
+                            <span>Hủy công bố</span>
+                        }
+                        @if (item.TrangThai == "CCB")
+                        {
+                            <span>Chưa công bố</span>
+                        }
+                    </td>
+                   
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+

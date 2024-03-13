@@ -451,7 +451,6 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.lephi.timkiem", Name = "Giá lệ phí trước bạ - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.lephi.baocao", Name = "Giá lệ phí trước bạ - Báo cáo" });
 
-
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung", Name = "ĐG - Giá vật liệu xây dựng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.thongtin", Name = "ĐG - Giá vật liệu xây dựng - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.danhmuc", Name = "ĐG - Giá vật liệu xây dựng - Danh mục" });

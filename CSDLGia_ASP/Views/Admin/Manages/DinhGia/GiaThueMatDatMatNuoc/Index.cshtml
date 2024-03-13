@@ -8,11 +8,11 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -43,7 +43,7 @@
                 Thông tin hồ sơ<small>&nbsp;giá thuê mặt đất mặt nước</small><br />
             </h3>
         </div>
-        <div >
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaThueDN" asp-action="Create"
@@ -162,12 +162,19 @@
 
 
                             <td style="text-align: center">
+
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a href="~/UpLoad/File/DinhGia/GiaThueDN/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
                                        onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                         <i class="icon-lg la la-cloud-download text-warning"></i>
                                     </a>
+
                                     <a asp-controller="GiaThueDN" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
@@ -188,8 +195,10 @@
                                        target="_blank">
                                         <i class="icon-lg la la-eye text-success"></i>
                                     </a>
+
+
                                 }
-                               
+
                             </td>
                         </tr>
                     }

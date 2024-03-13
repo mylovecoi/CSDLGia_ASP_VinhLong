@@ -12,6 +12,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 {
@@ -344,6 +345,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
+
+
+                    //Xử lý phần lịch sử hồ sơ 
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs_complete,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        MaDonViNhan = Macqcq,
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CCB",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
                     return RedirectToAction("Index", "GiaThueDNHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -422,6 +440,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
 
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "BTL",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
                     return RedirectToAction("Index", "GiaThueDNHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -463,6 +496,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs_cb,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CB",
+
+                    };
+
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
                     return RedirectToAction("Index", "GiaThueDNHt");
                 }
                 else

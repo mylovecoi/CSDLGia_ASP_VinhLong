@@ -164,6 +164,7 @@
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
+                               
                                 @if (item.Trangthai_ad == "CB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
@@ -191,9 +192,13 @@
                                 }
                             </td>
 
-                       
-
                             <td style="text-align: center">
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                                 <a asp-controller="GiaThueDN" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>

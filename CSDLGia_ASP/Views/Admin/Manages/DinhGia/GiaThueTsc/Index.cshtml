@@ -147,6 +147,11 @@
                             </td>
 
                             <td>
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="GiaThueTSanCong" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
