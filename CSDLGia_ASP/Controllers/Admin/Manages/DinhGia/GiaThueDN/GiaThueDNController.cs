@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 {
@@ -183,6 +184,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     _db.GiaThueMatDatMatNuoc.Add(model);
                     _db.SaveChanges();
 
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = request.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CHT",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == request.Mahs);
                     _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
@@ -307,8 +323,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             item.Mahs = model.Mahs;
                         }
                     }
+
                     _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
+
+
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";

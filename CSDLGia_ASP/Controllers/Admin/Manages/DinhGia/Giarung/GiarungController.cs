@@ -190,6 +190,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     _db.GiaRung.Add(model);
                     _db.SaveChanges();
 
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = request.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CHT",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
+
                     var modelct = _db.GiaRungCt.Where(t => t.Mahs == request.Mahs);
                     _db.GiaRungCt.UpdateRange(modelct);
                     _db.SaveChanges();
