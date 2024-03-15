@@ -80,6 +80,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }*/
         [NotMapped]
         public List<GiaHangHoaTaiSieuThiCt> GiaHangHoaTaiSieuThiCt { get; set; }
+        public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
+        public string CodeExcel { get; set; }
 
     }
 }

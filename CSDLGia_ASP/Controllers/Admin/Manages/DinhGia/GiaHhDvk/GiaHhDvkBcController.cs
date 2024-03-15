@@ -53,6 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaHhDvk/Bc1")]
         [HttpPost]
         public IActionResult Bc1(string dv, DateTime tungay, DateTime denngay, string matt)

@@ -85,6 +85,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public List<GiaThueMuaNhaXhCt> GiaThueMuaNhaXhCt { get; set; }
         [NotMapped]
         public string Dvthue { get; set; }
+        public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
+        public string CodeExcel { get; set; }
 
     }
 }
