@@ -45,7 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-      
+
         [Route("BcGiaSpDvCongIch/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay)
@@ -64,10 +64,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Soqd = pl.Soqd,
                                      Thoidiem = pl.Thoidiem,
                                  });
-
-            
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -95,10 +94,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
                     var model = _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+                    List<string> list = model.Select(t => t.Mahs).ToList();
+                    var modelct = _db.GiaSpDvCongIchCt.Where(t=>list.Contains(t.Mahs));
+                    ViewData["GiaSpDvCongIchCt"] = modelct;
 
+
+
+
+
+                    // Group mã nhóm để sang bên view for 
+                    var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(t=>t.Manhom);
+                    return Ok(groupmanhom1);
+                    List<string> groupmanhom;
+              
+                    ViewData["GroupMaNhom"] = groupmanhom;
+                    // End Group mã nhóm để sang bên view for 
+
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["ct"] = _db.GiaSpDvCongIchCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
