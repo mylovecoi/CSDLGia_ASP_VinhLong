@@ -1,7 +1,12 @@
 ﻿@{
     Layout = "_LayoutReports";
     var cts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchCt>)ViewData["ct"];
+    int record_id = 1;
+    var dmNhomSpDvCongIch = (IEnumerable<GiaSpDvCongIchNhom>)ViewData["GiaSpDvCongIchNhom"];
+    var dmMaHoSo = (IEnumerable<GiaSpDvCongIchCt>)ViewData["GroupMaHoSo"];
+
 }
+
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch>
 <br />
 <br />
@@ -12,34 +17,38 @@
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr >
-            <th style="text-align:center">Hiển thị</th>
+        <tr>
+            <th style="text-align:center">STT</th>
             <th style="text-align:center">Danh mục</th>
             <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá từ</th>
             <th style="text-align:center">Mức giá đến</th>
         </tr>
     </thead>
-   <tbody>
-        @foreach (var item in Model)
+    <tbody>
+        @foreach (var t in Model)
         {
             <tr>
                 <td style="text-align:left" colspan="7">
 
-                    Mã hồ sơ:@item.Mahs
+                    Mã hồ sơ:@t.Mahs
 
-                </td> 
+                </td>
             </tr>
 
-            foreach (var ct in cts.Where(t => t.Mahs == item.Mahs))
+            @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
+
             {
-                <tr>
-                    <td style="text-align:left">@ct.HienThi</td>
-                    <td style="text-align:left">@ct.Ten</td>
-                    <td style="text-align:left">@ct.Dvt</td>
-                    <td style="text-align:center">@ct.Mucgiatu</td>
-                    <td style="text-align:center">@ct.Mucgiaden</td>
-                </tr>
+
+                @foreach (var dm in dmNhomSpDvCongIch)
+                {
+                    @if (manhom == dm.Manhom)
+                    {
+                        <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
+                    }
+                }
+
+               
             }
         }
     </tbody>

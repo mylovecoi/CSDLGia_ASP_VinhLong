@@ -64,10 +64,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Soqd = pl.Soqd,
                                      Thoidiem = pl.Thoidiem,
                                  });
-
-            
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -96,9 +95,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var model = _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
 
+                    var groupmanhom1 = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
+
+                   List<string> groupmanhom;
+                   groupmanhom = groupmanhom1;
+
+                   ViewData["GroupMaNhom"] = groupmanhom;
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                  
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["ct"] = _db.GiaSpDvCongIchCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
