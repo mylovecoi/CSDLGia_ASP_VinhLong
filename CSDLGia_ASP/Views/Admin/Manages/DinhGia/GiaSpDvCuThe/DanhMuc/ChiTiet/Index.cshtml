@@ -3,6 +3,7 @@
     int record_id = 1;
     
 }
+
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheDm>
 
 @section custom_style{
@@ -36,12 +37,7 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
-            <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </button>&ensp;
-            <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
-                <i class="la la-lock"></i>Khóa/Mở khóa
-            </button>&ensp;
+           
             <a asp-controller="GiaSpDvCuTheNhom" asp-action="Index" class="btn btn-light-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
@@ -53,8 +49,12 @@
             <thead>
                 <tr >
                     <th width="4%">STT</th>
-                    <th style="text-align:center">Vùng</th>
                     <th style="text-align:center">Biện pháp công trình</th>
+                    <th style="text-align:center">Đơn vị tính</th>
+                    <th style="text-align:center">Mức giá 1</th>
+                    <th style="text-align:center">Mức giá 2</th>
+                    <th style="text-align:center">Thao tác</th>
+             
                     
                 </tr>
             </thead>
@@ -62,9 +62,12 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: left">@item.Tenspdv</td>
-                        <td style="text-align: left">@item.Mota</td>
+                        <td style="text-align: center">@item.Tt</td>
+                        <td style="text-align: center">@item.Tenspdv</td>
+                        <td style="text-align: center">@item.Dvt</td>
+                        <td style="text-align: center">@item.Mucgia1</td>
+                        <td style="text-align: center">@item.Mucgia2</td>
+                      
                         <td>
 
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.danhmuc", "Edit"))

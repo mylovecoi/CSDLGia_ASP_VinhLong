@@ -168,12 +168,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         chitiet.Add(new GiaSpDvCuTheCt()
                         {
                             Mahs = model.Mahs,
-                            Mota = item.Mota,
+              
                             Tendv = item.Tenspdv,
                             Dvt = item.Dvt,
-                            Mucgiatu = item.Mucgiatu,
-                            Mucgiaden = item.Mucgiaden,
-                            Phanloaidv = item.Phanloai,
+                       
                             Trangthai = "CXD",
                             Maspdv = item.Maspdv,
                             Created_at = DateTime.Now,
