@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -379,6 +380,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     }
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
+
+
                     return RedirectToAction("Index", "GiaThueMuaNhaXhXd", new { Madv = madv, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -461,6 +464,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
 
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "BTL",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
                     return RedirectToAction("Index", "GiaThueMuaNhaXhXd", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -488,6 +507,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
 
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs_cb,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CB",
+
+                    };
+
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
                     return RedirectToAction("Index", "GiaThueMuaNhaXhXd");
                 }
                 else

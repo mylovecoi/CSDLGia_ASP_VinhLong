@@ -9,22 +9,22 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/DinhGiaDvKcb?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -36,14 +36,14 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;Giá sản phẩm khám chữa bệnh</small>
-                </h3>
-            </div>
-            <div >
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ<small>&nbsp;Giá sản phẩm khám chữa bệnh</small>
+            </h3>
+        </div>
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
             {
                 <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
@@ -54,7 +54,7 @@
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-             
+
             }
 
         </div>
@@ -66,7 +66,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control " id="Nam" name="Nam">
-                          <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -106,7 +106,7 @@
                     <th>STT</th>
                     <th>Số QĐ</th>
                     <th>Thời điểm</th>
-                    <th >Danh mục thông tư <br />quyết định</th>
+                    <th>Danh mục thông tư <br />quyết định</th>
                     <th>Mô tả</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận</th>
@@ -165,6 +165,10 @@
                             </td>
 
                             <td>
+                                <a asp-controller="DvKhamChuaBenh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="DvKhamChuaBenh" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -181,14 +185,8 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                else
-                                {
-                                    <a asp-controller="DvKhamChuaBenh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
-                                }
-                               
+
+
                             </td>
                         </tr>
                     }

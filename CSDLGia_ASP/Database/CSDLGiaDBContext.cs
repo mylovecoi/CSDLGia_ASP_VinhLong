@@ -66,7 +66,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
         public DbSet<KkGsCt> KkGsCt { get; set; }
         public DbSet<KkGiaSieuThiCt> KkGiaSieuThiCt { get; set; }
-      
+
 
         //Kê khai đăng ký giá
         public DbSet<KkDkg> KkDkg { get; set; }
@@ -116,7 +116,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhDvkCtTh> GiaHhDvkCtTh { get; set; }//Tổng hợp chi tiết cho báo cáo
         public DbSet<GiaHhDvkTh> GiaHhDvkTh { get; set; }
         public DbSet<GiaHhDvkThCt> GiaHhDvkThCt { get; set; }
-        
+
         public DbSet<GiaKhungGiaDat> GiaKhungGiaDat { get; set; }
         public DbSet<GiaKhungGiaDatCt> GiaKhungGiaDatCt { get; set; }
         public DbSet<GiaLpTbNha> GiaLpTbNha { get; set; }
@@ -293,6 +293,10 @@ namespace CSDLGia_ASP.Database
         public DbSet<NhatKySuDung> NhatKySuDung { get; set; }
         public DbSet<Supports> Supports { get; set; }
 
+        // Trạng Thái Hồ Sơ
+        public DbSet<TrangThaiHoSo> TrangThaiHoSo { get; set; }
+
+
         //API
         public DbSet<KetNoiAPI> KetNoiAPI { get; set; }
         public DbSet<KetNoiAPI_HoSo> KetNoiAPI_HoSo { get; set; }
@@ -312,7 +316,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<DoanhNghiepDVLT> DoanhNghiepDVLT { get; set; }
         public DbSet<CoSoKinhDoanhDVLT> CoSoKinhDoanhDVLT { get; set; }
 
-        public DbSet<HoSoKeKhaiGia> HoSoKeKhaiGia {  get; set; }
+        public DbSet<HoSoKeKhaiGia> HoSoKeKhaiGia { get; set; }
         public DbSet<HoSoKeKhaiGia_ChiTiet> HoSoKeKhaiGia_ChiTiet { get; set; }
 
         //Hồ sơ phí, lệ phí

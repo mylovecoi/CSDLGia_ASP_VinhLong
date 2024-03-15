@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
     var mahs = ViewData["Mahs"];
-    var ct = (IEnumerable<GiaXayDungMoiCt>)ViewData["modelct"];
+    var ct = (IEnumerable<GiaSpDvToiDaCt>)ViewData["modelct"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -27,9 +27,7 @@
                         <td style="text-align:center">@(record_id++)</td>
                         <td>@item.Manhom</td>
                         <td>@item.Tennhom</td>
-                        <td>@item.Ten</td>
-                        <td>@item.Dvt</td>
-                        <td>@item.Gia</td>
+                  
                         <td>
                             <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                     onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

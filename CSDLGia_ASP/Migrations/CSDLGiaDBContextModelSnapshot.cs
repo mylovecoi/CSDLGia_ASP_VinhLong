@@ -6515,6 +6515,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Manhom")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Maso")
                         .HasColumnType("nvarchar(max)");
 
@@ -7112,6 +7115,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Hientrang")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Manhom")
                         .HasColumnType("nvarchar(max)");
 
@@ -7123,6 +7129,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Stt")
+                        .HasColumnType("float");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");
@@ -10358,6 +10367,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Dongia")
                         .HasColumnType("float");
+
+                    b.Property<string>("Dvt")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HienThi")
                         .HasColumnType("nvarchar(max)");
@@ -14791,6 +14803,45 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Towns");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.TrangThaiHoSo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LyDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaDonVi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaDonViNhan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaHoSo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhanLoai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenDangNhap")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ThoiGian")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ThongTin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrangThai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrangThaiHoSo");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.TtDnTd", b =>

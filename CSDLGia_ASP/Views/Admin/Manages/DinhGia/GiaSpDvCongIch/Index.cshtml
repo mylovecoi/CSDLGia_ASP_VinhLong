@@ -151,13 +151,21 @@
 
                         <td width="20%">
 
+                            <a asp-controller="GiaSpDvCongIch" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+
+                            <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                               target="_blank">
+                                <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                            </a>
+
                             @if (item.Trangthai == "HT")
                             {
 
-                                <a asp-controller="GiaSpDvCongIch" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                       target="_blank">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
+                        
                                 <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
@@ -236,7 +244,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option value="khac">--Tất cả các loại sản phẩm dịch vụ CÔNG ÍCH--</option>
+                                    <option value="all">--Chọn tất cả các nhóm--</option>
                                     @foreach (var nhom in nhomtn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
