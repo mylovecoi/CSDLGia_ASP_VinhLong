@@ -55,6 +55,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ipf3 { get; set; }
         public string Ipf4 { get; set; }
         public string Ipf5 { get; set; }
+        public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
+        public string CodeExcel { get; set; }
 
         [NotMapped]
         public List<GiaPhiLePhiCt> GiaPhiLePhiCt { get; set; }

@@ -51,7 +51,7 @@
                     <i class="la la-plus"></i>Thêm mới
                 </a>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaThueDNExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaThueDN" asp-action="NhanExcel"
                    asp-route-Madv="@ViewData["Donvi"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -162,6 +162,11 @@
 
 
                             <td style="text-align: center">
+
+                                <a asp-controller="GiaThueDN" target="_blank" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem hồ sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
 
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">

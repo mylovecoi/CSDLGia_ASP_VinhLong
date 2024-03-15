@@ -126,6 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
@@ -137,6 +138,45 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv3"] = "menu_dgr_tt";
 
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Create.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("GiaRung/NhanExcel")]
+        [HttpGet]
+        public IActionResult NhanExcel(string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
+                {
+
+                    var model = new VMDinhGiaRung
+                    {
+                        Madv = Madv,
+                        Thoidiem = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        PhanLoaiHoSo = "HOSONHANEXCEL",
+                        
+                    };
+                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
+                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();                   
+                    ViewData["Title"] = "Thêm mới giá rừng";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgr";
+                    ViewData["MenuLv3"] = "menu_dgr_tt";
+
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/NhanExcel.cshtml", model);
                 }
                 else
                 {
@@ -171,6 +211,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         }
                         request.Ipf1 = filename;
                     }
+                    // 2024.03.15 Gộp Update và phần nhận cho Excel
+                    if (_db.GiaThueMatDatMatNuoc.Where(x => x.Mahs == request.Mahs).Any())
+                    {
+                        //Xử lý hồ sơ
+                        var modelExcel = _db.GiaRung.FirstOrDefault(t => t.Mahs == request.Mahs);
+                        modelExcel.Madiaban = request.Madiaban;
+                        modelExcel.Soqd = request.Soqd;
+                        modelExcel.Thoidiem = request.Thoidiem;
+                        modelExcel.Thongtin = request.Thongtin;
+                        modelExcel.Ghichu = request.Ghichu;
+                        modelExcel.CodeExcel = request.CodeExcel;
+                        modelExcel.Updated_at = DateTime.Now;
+                        _db.GiaRung.Update(modelExcel);
+
+                        // Xử lý phần lịch sử hồ sơ 
+                        var lichSu = new TrangThaiHoSo
+                        {
+                            MaHoSo = request.Mahs,
+                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                            ThongTin = "Thay đổi thông tin hồ sơ",
+                            ThoiGian = DateTime.Now,
+                            TrangThai = "CHT",
+                        };
+                        _db.TrangThaiHoSo.Add(lichSu);
+                        _db.SaveChanges();
+
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgtmdmn";
+                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        return RedirectToAction("Index", "GiaRung", new { request.Madv });
+                    }
 
                     var model = new GiaRung
                     {
@@ -182,6 +253,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Thongtin = request.Thongtin,
                         Ipf1 = request.Ipf1,
                         Ghichu = request.Ghichu,
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
+                        CodeExcel = request.CodeExcel,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -196,6 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     {
                         MaHoSo = request.Mahs,
                         TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
                         ThoiGian = DateTime.Now,
                         TrangThai = "CHT",
 
@@ -256,6 +330,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
+                    if (model.CodeExcel != "")
+                    {
+                        return View("Views/Admin/Manages/DinhGia/GiaRung/NhanExcel.cshtml", model_new);
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Modify.cshtml", model_new);
                 }
                 else
@@ -367,6 +445,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
                 {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == Mahs);
+                    if (model.CodeExcel != "")
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                        ViewData["Title"] = "Chi tiết giá rừng";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgtmdmn";
+                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        return View("Views/Admin/Manages/DinhGia/GiaRung/ShowExcel.cshtml", model);
+                    }
                     var modelct = _db.GiaRungCt.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var viewModel = new GiaRung

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+@section custom_script {    
+    
+    <script>
+        $(document).ready(function () {
+
+            var codeExcel = @Html.Raw(@Model.CodeExcel);
+            var table = document.getElementById("dulieuExcel");
+
+            // Duyệt qua mỗi phần tử trong mảng JSON và tạo một hàng mới cho mỗi phần tử
+            codeExcel.forEach(function (item) {
+                var row = table.insertRow();
+
+                // Duyệt qua mỗi cặp key-value trong phần tử JSON và tạo một ô mới cho mỗi cặp
+                Object.keys(item).forEach(function (key) {
+                    var cell = row.insertCell();
+                    cell.innerHTML = item[key];
+                });
+            });
+
+            //TableManaged4.init();
+        });
+    </script>
+}
+<br />
+<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;text-transform:uppercase">THÔNG TIN HỒ SƠ giá thuê mặt đất mặt nước</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Nội dung: @Model.Ghichu</p>
+
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="dulieuExcel">
+    </table>
+    
