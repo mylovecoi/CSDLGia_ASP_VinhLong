@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240314095027_1.1.17-giaspdvkhunggia")]
+    partial class _1117giaspdvkhunggia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6515,9 +6517,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Maso")
                         .HasColumnType("nvarchar(max)");
 
@@ -7129,9 +7128,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Stt")
-                        .HasColumnType("float");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");
