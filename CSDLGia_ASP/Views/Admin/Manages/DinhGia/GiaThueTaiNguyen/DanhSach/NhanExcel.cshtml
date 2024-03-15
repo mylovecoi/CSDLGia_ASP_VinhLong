@@ -1,0 +1,135 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var codeExcel = @Html.Raw(@Model.CodeExcel);
+            var table = document.getElementById("dulieuExcel");
+
+            // Duyệt qua mỗi phần tử trong mảng JSON và tạo một hàng mới cho mỗi phần tử
+            codeExcel.forEach(function (item) {
+                var row = table.insertRow();
+
+                // Duyệt qua mỗi cặp key-value trong phần tử JSON và tạo một ô mới cho mỗi cặp
+                Object.keys(item).forEach(function (key) {
+                    var cell = row.insertCell();
+                    cell.innerHTML = item[key];
+                });
+            });
+
+            //TableManaged4.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;thuế tài nguyên</small><br />
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaThueTaiNguyen" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_philephi">
+
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <input hidden asp-for="Mahs" value="@Model.Mahs">
+            <input hidden asp-for="Madv" value="@Model.Madv">
+            <input hidden asp-for="CodeExcel" value="@Model.CodeExcel">
+            <input hidden asp-for="PhanLoaiHoSo" value="@Model.PhanLoaiHoSo">
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" asp-for="Soqd" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày ban hành*</label>
+                        <input type="date" asp-for="Thoidiem" class="form-control" />
+
+                    </div>
+                </div>                
+
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <input type="text" class="form-control" asp-for="Cqbh" />
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/_DungChung/ChiTiet_Excel.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaThueTaiNguyen" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="submit" class="btn btn-primary mr-2" onclick="ValHhDvk()"><i class="la la-check"></i>Hoàn Thành</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValHhDvk() {
+        // Lấy thẻ table
+        var table = document.getElementById("dulieuExcel");
+
+        // Khởi tạo mảng để lưu dữ liệu
+        var jsonData = [];
+
+        // Lặp qua từng hàng trong bảng
+        for (var i = 0; i < table.rows.length; i++) {
+            var row = table.rows[i];
+            var rowData = {};
+
+            // Lặp qua từng ô trong hàng
+            for (var j = 0; j < row.cells.length; j++) {
+                // Lấy nội dung của ô và gán vào thuộc tính tương ứng của đối tượng JSON
+                var cell = row.cells[j];
+                //var header = table.rows[0].cells[j].textContent; // Sử dụng tiêu đề của cột làm key
+                // rowData[header] = cell.textContent;
+                rowData[j] = cell.textContent;
+            }
+
+            // Thêm dữ liệu của hàng vào mảng
+            jsonData.push(rowData);
+        }
+
+        // Chuyển đổi mảng JSON thành chuỗi JSON
+        document.getElementById("CodeExcel").value = JSON.stringify(jsonData);
+
+        // Hiển thị chuỗi JSON trong console để kiểm tra
+        console.log(jsonString);
+    }
+</script>
+@* @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@

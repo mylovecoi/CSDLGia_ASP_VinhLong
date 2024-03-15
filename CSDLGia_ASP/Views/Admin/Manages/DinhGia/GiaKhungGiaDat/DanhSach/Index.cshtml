@@ -5,13 +5,13 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 
-    }
+}
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -42,19 +42,17 @@
                 Thông tin hồ sơ giá khung giá đất
             </h3>
         </div>
-        <div >
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="GiaKhungGiaDat" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
+                   asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaKhungGiaDat" asp-action="NhanExcel"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-
-              
             }
 
         </div>
@@ -151,7 +149,7 @@
                             </td>
                             <td style="text-align: left" width="15%">@item.Tencqcq</td>
                             <td width="12%">
-                                <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"target="_blank">
+                                <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")

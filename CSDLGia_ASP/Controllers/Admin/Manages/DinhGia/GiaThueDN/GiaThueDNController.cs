@@ -217,6 +217,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         modelExcel.Ghichu = request.Ghichu;
                         modelExcel.CodeExcel = request.CodeExcel;
                         modelExcel.Updated_at = DateTime.Now;
+                        modelExcel.Ipf1 = request.Ipf1;
                         _db.GiaThueMatDatMatNuoc.Update(modelExcel);                        
 
                         // Xử lý phần lịch sử hồ sơ 
@@ -230,10 +231,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         };
                         _db.TrangThaiHoSo.Add(lichSu);
                         _db.SaveChanges();
-
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                     
                         return RedirectToAction("Index", "GiaThueDN", new { request.Madv });
                     }
                     //Phần cũ
@@ -438,10 +436,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     {
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        ViewData["Title"] = "Chi tiết giá thuê mặt đất mặt nước";                       
                         return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ShowExcel.cshtml", model);
                     }
                     var modelct = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Mahs == Mahs);
