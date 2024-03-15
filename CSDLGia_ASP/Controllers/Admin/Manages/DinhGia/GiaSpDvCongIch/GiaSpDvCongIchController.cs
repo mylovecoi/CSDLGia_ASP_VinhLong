@@ -7,6 +7,7 @@ using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -161,7 +162,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         danhmuc = danhmuc.ToList();
                     }
 
-
                     var chitiet = new List<GiaSpDvCongIchCt>();
 
 
@@ -178,6 +178,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                             Dvt = item.Dvt,
                             Mucgiatu = item.Mucgiatu,
                             Mucgiaden = item.Mucgiaden,
+                            Manhom = item.Manhom,
+
+
                             Phanloaidv = item.Phanloai,
                             Trangthai = "CXD",
                             Maspdv = item.Maspdv,
@@ -189,6 +192,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     _db.SaveChanges();
 
 
+                    var groupmanhom = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+                 
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
 
                     model.GiaSpDvCongIchCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     foreach ( var item in model.GiaSpDvCongIchCt)
@@ -203,6 +210,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                             item.NhapGia= true;
                         }
                     }
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
@@ -339,11 +347,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
                     ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
+                    var groupmanhom = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Modify.cshtml", model);
 
                 }
