@@ -421,8 +421,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
 
-
                     model.GiaSpDvCongIchCt = model_ct.Where(t => t.Mahs == model.Mahs).ToList();
+
                     foreach (var item in model.GiaSpDvCongIchCt)
                     {
                         var List = model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso).ToList();
