@@ -152,6 +152,13 @@
                                 }
                             </td>
                             <td width="12%">
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Edit"))
+                                {
+                                    <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                       target="_blank">
+                                        <i class="icon-lg la la-eye text-success"></i>
+                                    </a>
+                                }
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
@@ -180,17 +187,7 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Edit"))
-                                    {
-                                        <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                            <i class="icon-lg la la-eye text-success"></i>
-                                        </a>
-                                    }
-
-                                }
+                              
 
                         </tr>
                     }

@@ -51,14 +51,13 @@
     </thead>
     <tbody>
 
-        <tr style="text-align:center">
-            <td style="text-align:center">@(record_id++)</td>
-            <td style="text-align:center">@Model.Manhom</td>
-            <td style="text-align:center">@Model.Phanloaidv</td>
-            <td style="text-align:center">@Model.Dvt</td>
-            <td style="text-align:center">@Model.Giatoithieu</td>
-            <td style="text-align:center">@Model.Giatoida</td>
-
+        <tr>
+            <td class="text-center">@(record_id++)</td>
+            <td class="text-center" style="@(Model.Manhom == "240130164808" ? "font-style:italic;" : "")">@Model.Manhom</td>
+            <td class="text-center">@Model.Phanloaidv</td>
+            <td class="text-center">@Model.Dvt</td>
+            <td class="text-center">@Model.Giatoithieu</td>
+            <td class="text-center">@Model.Giatoida</td>
         </tr>
 
     </tbody>

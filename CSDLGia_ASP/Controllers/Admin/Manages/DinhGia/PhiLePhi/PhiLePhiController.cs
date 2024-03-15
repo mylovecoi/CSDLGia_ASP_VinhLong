@@ -85,7 +85,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         //Gán các thông tin ở bảng khác
                         foreach (var item in model)
                         {
-                            item.Tencqcq = dsdonvi.Where(x=>x.MaDv == item.Macqcq).FirstOrDefault().TenDv;
+                            if (item.Macqcq != null)
+                            {
+                                item.Tencqcq = dsdonvi.Where(x => x.MaDv == item.Macqcq).FirstOrDefault().TenDv;
+                            }
+                            else
+                            {
+                                item.Tencqcq = "";
+                            }
+
                         }
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
@@ -133,6 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         Mahs = maDV + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = maDV,
                         Thoidiem = DateTime.Now,
+                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
 
                     ViewData["Mahs"] = model.Mahs;
@@ -141,6 +150,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     ViewData["MenuLv2"] = "menu_plp";
                     ViewData["MenuLv3"] = "menu_plp_tt";
                     return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Create.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        public IActionResult NhanExcel(string maDV)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
+                {
+
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
+                    {
+                        Mahs = maDV + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Madv = maDV,
+                        Thoidiem = DateTime.Now,
+                        PhanLoaiHoSo = "HOSONHANEXCEL",
+                    };
+
+
+                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["Title"] = "Giá phí, lệ phí";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_plp";
+                    ViewData["MenuLv3"] = "menu_plp_tt";
+                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
+                    return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/NhanExcel.cshtml", model);
 
                 }
                 else
@@ -176,7 +222,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         }
                         request.Ipf1 = filename;
                     }
+                    
 
+                    if (request.CodeExcel != "")
+                    {                        
+                        request.CodeExcel = request.CodeExcel.Replace("<meta charset=\"utf-8\">", "");                        
+                    }
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == request.Mahs);
                     if (model != null)
                     {
@@ -186,6 +237,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         model.Thongtin = request.Thongtin;
                         model.Ghichu = request.Ghichu;
                         model.Ipf1 = request.Ipf1;
+                        model.PhanLoaiHoSo = request.PhanLoaiHoSo;
+                        model.CodeExcel = request.CodeExcel;
                         model.Updated_at = DateTime.Now;
                     }
                     else
@@ -198,6 +251,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                             Soqd = request.Soqd,
                             Ttqd = request.Ttqd,
                             Ghichu = request.Ghichu,
+                            PhanLoaiHoSo = request.PhanLoaiHoSo,
+                            CodeExcel = request.CodeExcel,
                             Trangthai = "CHT",
                             Congbo = "CHUACONGBO",
                             Ipf1 = request.Ipf1,
@@ -244,6 +299,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
                     ViewData["MenuLv3"] = "menu_plp_tt";
+                    if (model.PhanLoaiHoSo == "HOSONHANEXCEL")
+                    {
+                        //model.CodeExcel = model.CodeExcel.Replace("[", "");
+                        //model.CodeExcel = model.CodeExcel.Replace("]", "");
+                        return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/NhanExcel.cshtml", model);
+                    }
                     return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Create.cshtml", model);
 
                 }
@@ -347,13 +408,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
-                    
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Bảng giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
                     ViewData["MenuLv3"] = "menu_plp_tt";
+                    if (model.PhanLoaiHoSo == "HOSONHANEXCEL")
+                    {
+                        return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/ShowExcel.cshtml", model);
+                    }
                     return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Show.cshtml", model);
 
                 }
@@ -446,7 +511,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         ViewData["Madv"] = "";
                     }
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");                    
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
@@ -552,7 +617,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 //Kiểm tra mã gốc xem tồn tại ko
                 var chk = _db.PhiLePhiCt.Where(x => x.Mahs == request.Mahs && x.MaSo == request.MaSoGoc);
                 if (!chk.Any())
-                {                    
+                {
                     return Json(new { status = "error", message = "Mã gốc không tồn tại. Bạn hãy kiểm tra lại !!!" });
                 }
             }
@@ -590,7 +655,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             else
             {
                 var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == request.Id);
-                
+
                 model.MaSo = request.MaSo;
                 model.MaSoGoc = request.MaSoGoc;
                 model.HienThi = request.HienThi;//HIện thị dữ liệu ra màn hình

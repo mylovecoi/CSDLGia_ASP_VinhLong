@@ -166,13 +166,10 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                else
-                                {
-                                    <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
-                                }
+                                <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
                                     <i class="icon-lg la la-download text-warning"></i>
                                 </button>

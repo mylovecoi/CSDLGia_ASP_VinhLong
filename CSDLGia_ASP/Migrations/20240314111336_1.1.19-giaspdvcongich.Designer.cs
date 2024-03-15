@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240314111336_1.1.19-giaspdvcongich")]
+    partial class _1119giaspdvcongich
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -530,9 +532,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -558,9 +557,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tenduan")
@@ -592,9 +588,6 @@ namespace CSDLGia_ASP.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
@@ -672,9 +665,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -872,9 +862,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -945,9 +932,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -1070,9 +1054,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1131,9 +1112,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Noidung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -1298,9 +1276,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -1323,9 +1298,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Qdgiadatmuoi")
@@ -1424,9 +1396,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1509,9 +1478,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -1766,9 +1732,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1842,9 +1805,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqddaugia")
@@ -1997,9 +1957,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -2073,9 +2030,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -2204,9 +2158,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -2223,9 +2174,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqddaugia")
@@ -2354,9 +2302,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -2436,9 +2381,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nam")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -2624,9 +2566,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -2709,9 +2648,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -2894,9 +2830,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -2973,9 +2906,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -3158,9 +3088,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -3237,9 +3164,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -3422,9 +3346,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -3509,9 +3430,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Noidung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Quy")
                         .HasColumnType("nvarchar(max)");
 
@@ -3574,9 +3492,6 @@ namespace CSDLGia_ASP.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
@@ -3654,9 +3569,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -3842,9 +3754,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -3915,9 +3824,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -4052,9 +3958,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -4131,9 +4034,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nam")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -4544,9 +4444,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -4623,9 +4520,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -4784,9 +4678,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -4867,9 +4758,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<DateTime>("Ngayapdung")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Thoidiem")
                         .HasColumnType("datetime2");
@@ -4973,9 +4861,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -4996,9 +4881,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<DateTime>("Ngaybh")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
                         .HasColumnType("nvarchar(max)");
@@ -5093,9 +4975,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -5173,9 +5052,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<DateTime>("Ngayqd")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
                         .HasColumnType("nvarchar(max)");
@@ -5273,9 +5149,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -5352,9 +5225,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -5579,9 +5449,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -5655,9 +5522,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -5804,9 +5668,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -5889,9 +5750,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ngayapdung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -6023,9 +5881,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -6111,9 +5966,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -6290,9 +6142,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -6363,9 +6212,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -6512,9 +6358,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -6588,9 +6431,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -6821,9 +6661,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -6897,9 +6734,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -7085,9 +6919,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -7161,9 +6992,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -7355,9 +7183,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -7431,9 +7256,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -7610,9 +7432,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -7707,9 +7526,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -7868,9 +7684,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -7947,9 +7760,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -8069,9 +7879,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -8092,9 +7899,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<DateTime>("Ngaybc")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobc")
                         .HasColumnType("nvarchar(max)");
@@ -8255,9 +8059,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -8316,9 +8117,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -8420,9 +8218,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -8511,9 +8306,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -8690,9 +8482,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
@@ -8715,9 +8504,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tenduan")
@@ -8749,9 +8535,6 @@ namespace CSDLGia_ASP.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
@@ -8829,9 +8612,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -9011,9 +8791,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -9090,9 +8867,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -9290,9 +9064,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -9351,9 +9122,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -9524,9 +9292,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -9582,9 +9347,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -9722,9 +9484,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -9780,9 +9539,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -9938,9 +9694,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -10017,9 +9770,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -10202,9 +9952,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CodeExcel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -10281,9 +10028,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
