@@ -121,6 +121,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
@@ -130,6 +131,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
                     ViewData["DanhMucMatDatMatNuoc"] = _db.GiaThueMatDatMatNuocDm.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Create.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("GiaThueMatDatMatNuoc/NhanExcel")]
+        [HttpGet]
+        public IActionResult NhanExcel(string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
+                {
+
+                    var model = new VMDinhGiaThueDN
+                    {
+                        Madv = Madv,
+                        Thoidiem = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        PhanLoaiHoSo = "HOSONHANEXCEL",
+                    };
+                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtmdmn";
+                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+
+                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/NhanExcel.cshtml", model);
                 }
                 else
                 {
@@ -166,6 +205,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         request.Ipf1 = filename;
                     }
 
+                    // 2024.03.15 Gộp Update và phần nhận cho Excel
+                    if (_db.GiaThueMatDatMatNuoc.Where(x=>x.Mahs ==  request.Mahs).Any())
+                    {
+                        //Xử lý hồ sơ
+                        var modelExcel = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == request.Mahs);
+                        modelExcel.Madiaban = request.Madiaban;
+                        modelExcel.Soqd = request.Soqd;
+                        modelExcel.Thoidiem = request.Thoidiem;
+                        modelExcel.Thongtin = request.Thongtin;
+                        modelExcel.Ghichu = request.Ghichu;
+                        modelExcel.CodeExcel = request.CodeExcel;
+                        modelExcel.Updated_at = DateTime.Now;
+                        _db.GiaThueMatDatMatNuoc.Update(modelExcel);                        
+
+                        // Xử lý phần lịch sử hồ sơ 
+                        var lichSu = new TrangThaiHoSo
+                        {
+                            MaHoSo = request.Mahs,
+                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                            ThongTin = "Thay đổi thông tin hồ sơ",
+                            ThoiGian = DateTime.Now,
+                            TrangThai = "CHT",
+                        };
+                        _db.TrangThaiHoSo.Add(lichSu);
+                        _db.SaveChanges();
+
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgtmdmn";
+                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        return RedirectToAction("Index", "GiaThueDN", new { request.Madv });
+                    }
+                    //Phần cũ
                     var model = new GiaThueMatDatMatNuoc
                     {
                         Mahs = request.Mahs,
@@ -176,6 +247,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Thongtin = request.Thongtin,
                         Ghichu = request.Ghichu,
                         Ipf1 = request.Ipf1,
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
+                        CodeExcel = request.CodeExcel,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -190,6 +263,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     {
                         MaHoSo = request.Mahs,
                         TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
                         ThoiGian = DateTime.Now,
                         TrangThai = "CHT",
 
@@ -268,7 +342,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu
+                        Ghichu = model.Ghichu,
+                        PhanLoaiHoSo = model.PhanLoaiHoSo,
+                        CodeExcel = model.CodeExcel,
                     };
 
                     var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
@@ -283,6 +359,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
                     ViewData["DanhMucMatDatMatNuoc"] = _db.GiaThueMatDatMatNuocDm.ToList();
+                    if(model.CodeExcel != "")
+                    {
+                        return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/NhanExcel.cshtml", model_new);
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modify.cshtml", model_new);
                 }
                 else
@@ -354,6 +434,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
+                    if (model.CodeExcel != "")
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                        ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgtmdmn";
+                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                        return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ShowExcel.cshtml", model);
+                    }
                     var modelct = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
@@ -379,6 +469,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
+                    
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", viewModel);
                 }
                 else
