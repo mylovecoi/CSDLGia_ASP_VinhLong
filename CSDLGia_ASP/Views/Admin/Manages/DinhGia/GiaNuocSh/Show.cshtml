@@ -37,51 +37,34 @@
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-    
-        <thead>
-            <tr style="text-align:center">
-                <th rowspan="2">STT</th>
-                <th rowspan="2">Mục đích sử dụng</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-            </tr>
-            <tr style="text-align:center">
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.GiaNuocShCt != null)
+
+    <thead>
+        <tr>
+            <th style="text-align:center">STT</th>
+            <th style="text-align:center">Mục đích sử dụng</th>
+            <th style="text-align:center">Tỷ trọng tiêu thụ (%)</th>
+            <th style="text-align:center">Sản lượng (m3)</th>
+            <th style="text-align:center">Đơn giá chưa bao gồm thuế GTGT <br />(đồng/m3)</th>
+            <th style="text-align:center">Đơn giá đã bao gồm thuế GTGT <br />(đồng/m3)</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @if (Model.GiaNuocShCt != null)
+        {
+            @foreach (var item in Model.GiaNuocShCt.OrderBy(t=>t.STTSapxep))
             {
-                @foreach (var item in Model.GiaNuocShCt)
-                {
-                    <tr style="text-align:center">
-                        <td>@(record_id++)</td>
-                        <td>@item.Doituongsd</td>
-                        <td>@item.Namchuathue</td>
-                        <td font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
-                        <td>@item.Namchuathue1</td>
-                        <td font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
-                        <td>@item.Namchuathue2</td>
-                        <td font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
-                        <td>@item.Namchuathue3</td>
-                        <td font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
-                        <td>@item.Namchuathue4</td>
-                        <td font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
-                    </tr>
-                }
+                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                <tr>
+                    <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
+                    <td style="text-align:left; @HtmlStyle">@item.Doituongsd</td>
+                    <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
+                    <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
+                    <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
+                    <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia2)</td>
+                </tr>
             }
-        </tbody>
-  
+        }
+    </tbody>
+
 </table>

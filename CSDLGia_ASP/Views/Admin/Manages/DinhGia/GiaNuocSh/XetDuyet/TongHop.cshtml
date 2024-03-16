@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var dsdonvi = (IEnumerable<CSDLGia_ASP.Models.Systems.DsDonVi>)ViewData["DonVis"];
+    var hosoct = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShCt>)ViewData["GiaNuocShCt"];
+
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh>
+
+@foreach (var donvi in dsdonvi)
+{
+    <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
+    <p style="text-align: center; font-size: 16px;">@donvi.TenDv</p>
+
+    var hosodonvi = Model.Where(t => t.Madv == donvi.MaDv);
+    foreach (var hoso in hosodonvi)
+    {
+        <p style="text-align: center; font-size: 16px;">@hoso.Mota</p>
+        <p style="text-align: center; font-size: 16px;">Số quyết định:@hoso.Soqd</p>
+        var data_ct = hosoct.Where(t => t.Mahs == hoso.Mahs);
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+            <thead>
+                <tr>
+                    <th style="text-align:center">STT</th>
+                    <th style="text-align:center">Mục đích sử dụng</th>
+                    <th style="text-align:center">Tỷ trọng tiêu thụ (%)</th>
+                    <th style="text-align:center">Sản lượng (m3)</th>
+                    <th style="text-align:center">Đơn giá chưa bao gồm thuế GTGT <br />(đồng/m3)</th>
+                    <th style="text-align:center">Đơn giá đã bao gồm thuế GTGT <br />(đồng/m3)</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (data_ct.Any())
+            {
+                @foreach (var item in data_ct.OrderBy(t => t.STTSapxep))
+                {
+                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                    <tr>
+                        <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
+                        <td style="text-align:left; @HtmlStyle">@item.Doituongsd</td>
+                        <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
+                        <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
+                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
+                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia2)</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    }
+}
+
+
+

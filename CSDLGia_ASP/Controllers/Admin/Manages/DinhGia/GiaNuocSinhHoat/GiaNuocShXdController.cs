@@ -554,5 +554,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
         ketthuc:
             return madv;
         }
+
+        [HttpPost]
+        public IActionResult TongHop(DateTime TuNgay, DateTime DenNgay)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.xetduyet", "Index"))
+                {
+                    var model = _db.GiaNuocSh.Where(t => t.Thoidiem >= TuNgay && t.Thoidiem <= DenNgay && t.Trangthai == "HT");
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    List<string> list_madonvi = model.Select(t=>t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madonvi.Contains(t.MaDv));
+                    var modelct = _db.GiaNuocShCt.Where(t => list_mahs.Contains(t.Mahs));
+                    ViewData["GiaNuocShCt"] = modelct;
+                    ViewData["DonVis"] = model_donvi;
+
+                    ViewData["Title"] = "Tổng hợp giá nước sạch sinh hoạt";
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/XetDuyet/Tonghop.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
     }
 }

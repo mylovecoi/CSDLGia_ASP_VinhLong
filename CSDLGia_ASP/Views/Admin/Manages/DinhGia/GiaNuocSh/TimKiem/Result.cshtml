@@ -15,28 +15,15 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr >
-            <th style="text-align: center;" rowspan="2" colspan="1">STT</th>
-            <th style="text-align: center;" rowspan="2" colspan="1">Đơn vị nhập</th>
-            <th style="text-align: center;" rowspan="2" colspan="1">Thời điểm</th>
-            <th style="text-align: center;" rowspan="2" colspan="1">Đối tượng sử dụng</th>
-            <th style="text-align: center;" colspan="2">Đơn giá</th>
-            <th style="text-align: center;" colspan="2">Đơn giá</th>
-            <th style="text-align: center;" colspan="2">Đơn giá</th>
-            <th style="text-align: center;" colspan="2">Đơn giá</th>
-            <th style="text-align: center;" colspan="2">Đơn giá</th>
-        </tr>
-        <tr >
-            <th style="text-align: center;">Năm áp dụng</th>
-            <th style="text-align: center;">Giá tiền</th>
-            <th style="text-align: center;">Năm áp dụng</th>
-            <th style="text-align: center;">Giá tiền</th>
-            <th style="text-align: center;">Năm áp dụng</th>
-            <th style="text-align: center;">Giá tiền</th>
-            <th style="text-align: center;">Năm áp dụng</th>
-            <th style="text-align: center;">Giá tiền</th>
-            <th style="text-align: center;">Năm áp dụng</th>
-            <th style="text-align: center;">Giá tiền</th>
-        </tr>
+            <th style="text-align: center;" colspan="1">STT</th>
+            <th style="text-align: center;" colspan="1">Đơn vị nhập</th>
+            <th style="text-align: center;" colspan="1">Thời điểm</th>
+            <th style="text-align:center">Mục đích sử dụng</th>
+            <th style="text-align:center">Tỷ trọng tiêu thụ (%)</th>
+            <th style="text-align:center">Sản lượng (m3)</th>
+            <th style="text-align:center">Đơn giá chưa bao gồm thuế GTGT <br />(đồng/m3)</th>
+            <th style="text-align:center">Đơn giá đã bao gồm thuế GTGT <br />(đồng/m3)</th>
+        </tr>      
     </thead>
     <tbody>
         @if (Model != null)
@@ -45,25 +32,13 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    @foreach (var dv in dsdonvi)
-                    {
-                        @if (item.Madv == dv.MaDv)
-                        {
-                            <td>@dv.TenDv</td>
-                        }
-                    }
+                    <td>@item.Namchuathue</td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align: center">@item.Doituongsd</td>
-                    <td style="text-align: center">@item.Namchuathue</td>
-                    <td style="text-align: center">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
-                    <td style="text-align: center">@item.Namchuathue1</td>
-                    <td style="text-align: center">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
-                    <td style="text-align: center">@item.Namchuathue2</td>
-                    <td style="text-align: center">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
-                    <td style="text-align: center">@item.Namchuathue3</td>
-                    <td style="text-align: center">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
-                    <td style="text-align: center">@item.Namchuathue4</td>
-                    <td style="text-align: center">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
+                    <td style="text-align: center">@item.TyTrongTieuThu</td>
+                    <td style="text-align: center">@item.SanLuong</td>                   
+                    <td style="text-align: center">@(@item.DonGia1 != 0 ? Helpers.ConvertDbToStr(item.DonGia1) : "")</td>
+                    <td style="text-align: center">@(@item.DonGia1 != 0 ? Helpers.ConvertDbToStr(item.DonGia1) : "")</td>
                 </tr>
             }
         }
