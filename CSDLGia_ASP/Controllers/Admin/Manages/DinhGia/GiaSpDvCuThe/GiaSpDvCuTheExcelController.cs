@@ -28,16 +28,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
                 {
-                    var model = new GiaSpDvCuTheCt
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
                     {
-                        Maspdv = "1",
-                        Mota = "2",
-                        Mucgiatu = 3,
-                        Mucgiaden = 4,
-
-                        LineStart = 2,
-                        LineStop = 1000,
+                        Madv = Madv,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Thoidiem = DateTime.Now,
                         Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 3000,
                     };
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";

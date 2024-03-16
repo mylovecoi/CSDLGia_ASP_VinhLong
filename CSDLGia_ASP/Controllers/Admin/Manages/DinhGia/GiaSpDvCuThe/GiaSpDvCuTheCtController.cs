@@ -90,65 +90,79 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         {
             var model = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs).ToList();
             var modeldanhmuc = _db.GiaSpDvCuTheDm.ToList();
-
+            var modeldanhmucnhom = _db.GiaSpDvCuTheNhom.ToList();
             int record = 1;
+
+            var groupmanhom1 = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+
+
+
             string result = "<div class='card-body' id='frm_data'>";
 
-            result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
+            foreach (var manhom in groupmanhom1)
 
-            result += "<thead>";
-            result += "<tr style='text-align:center'>";
-            result += "<th width='2%'>STT</th>";
-            result += "<th width='2%'>Hiển thị</th>";
-
-            result += "<th>Tên sản phẩm dịch vụ</th>";
-
-            result += "<th>Đơn vị tính</th>";
-            result += "<th>Mức giá từ</th>";
-            result += "<th>Mức giá đến</th>";
-            result += "<th>Thao tác</th>";
-            result += "</tr>";
-            result += "</thead>";
-
-            result += "<tbody>";
-            foreach (var item in model)
             {
 
-                result += "<tr>";
-                result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td style='text-align:left'>" + item.Tt + "</td>";
-
-                foreach (var dm in modeldanhmuc)
+                foreach (var dm in modeldanhmucnhom)
                 {
-                    if (item.Maspdv == dm.Maspdv)
+                    if (manhom == dm.Manhom)
                     {
-                        result += "<td style='text-align:center'>" + dm.Tenspdv + "</td>";
+                        result += "<p style='text-align:center'>" + dm.Tennhom + "</p>";
                     }
                 }
 
-                result += "<td style='text-align:center'>" + item.Dvt + "</td>";
+                result += "<table class='table table-striped table-bordered table-hover dulieubang'>";
 
-                result += "<td style='text-align:center'>" + item.Mucgia1 + "</td>";
-                result += "<td style='text-align:center'>" + item.Mucgia2 + "</td>";
-
-                result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-edit text-primary'></i>";
-                result += "</button>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button>";
-                result += "</td>";
+                result += "<thead>";
+                result += "<tr style='text-align:center'>";
+                result += "<th width='2%'>STT</th>";
+                result += "<th>Tên sản phẩm dịch vụ</th>";
+                result += "<th>Đơn vị tính</th>";
+                result += "<th>Mức giá từ</th>";
+                result += "<th>Mức giá đến</th>";
+                result += "<th>Thao tác</th>";
                 result += "</tr>";
+                result += "</thead>";
+
+                result += "<tbody>";
+                foreach (var item in model)
+                {
+
+                    result += "<tr>";
+                    result += "<td style='text-align:center'>" + record++ + "</td>";
+                    result += "<td style='text-align:left'>" + item.Tt + "</td>";
+
+                    foreach (var dm in modeldanhmuc)
+                    {
+                        if (item.Maspdv == dm.Maspdv)
+                        {
+                            result += "<td style='text-align:center'>" + dm.Tenspdv + "</td>";
+                        }
+                    }
+
+                    result += "<td style='text-align:center'>" + item.Dvt + "</td>";
+
+                    result += "<td style='text-align:center'>" + item.Mucgia1 + "</td>";
+                    result += "<td style='text-align:center'>" + item.Mucgia2 + "</td>";
+
+                    result += "<td>";
+                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                    result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                    result += "<i class='icon-lg la la-edit text-primary'></i>";
+                    result += "</button>";
+                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
+                    result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
+                    result += "<i class='icon-lg la la-trash text-danger'></i>";
+                    result += "</button>";
+                    result += "</td>";
+                    result += "</tr>";
+                }
+                result += "</tbody>";
+
+                result += "</table>";
+
             }
-            result += "</tbody>";
-
-            result += "</table>";
-
             result += "</div>";
-
             return result;
         }
         [Route("DinhGiaSpDvCuTheCt/Delete")]
