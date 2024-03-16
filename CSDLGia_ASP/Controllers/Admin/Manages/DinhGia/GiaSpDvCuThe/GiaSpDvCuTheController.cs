@@ -185,6 +185,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.GiaSpDvCuTheCt.AddRange(chitiet);
                     _db.SaveChanges();
 
+                    var groupmanhom = _db.GiaSpDvCongIchDm.Select(item => item.Manhom);
+                    ViewData["GroupMaNhom"] = groupmanhom;
+
                     model.GiaSpDvCuTheCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Manhom"] = Manhom;
