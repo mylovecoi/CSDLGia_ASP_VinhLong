@@ -122,12 +122,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
 
-                    var modelcxd = _db.GiaDvKcbCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv).ToList();
+                    /*var modelcxd = _db.GiaDvKcbCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv).ToList();
                     if (modelcxd != null)
                     {
                         _db.GiaDvKcbCt.RemoveRange(modelcxd);
                         _db.SaveChanges();
-                    }
+                    }*/
 
                     var model = new VMDinhGiaDvKcb
                     {
