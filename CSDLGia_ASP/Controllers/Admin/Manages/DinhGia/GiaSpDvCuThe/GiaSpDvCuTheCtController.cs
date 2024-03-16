@@ -15,7 +15,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         }
 
 
-        [Route("GiaSpDvCuTheCt/Edit")]
+        [Route("DinhGiaSpDvCuTheCt/Edit")]
         [HttpPost]
 
         public JsonResult EditCt(int Id)
@@ -54,6 +54,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             }
         }
 
+        [Route("GiaSpDvCuTheCt/GetMaxSapXep")]
+        [HttpPost]
+
+        public JsonResult GetMaxSapXep(string Manhom)
+        {
+            var i = 0;
+            var data = _db.GiaSpDvCuTheDm.Where(t => t.Manhom == Manhom);
+
+            if (data.Any())
+            {
+                i = data.Max(x=>x.Sapxep);
+            }
+
+            return Json(i);
+        }
 
         [Route("GiaSpDvCuTheCt/Update")]
         [HttpPost]
@@ -70,17 +85,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             return Json(data);
         }
 
-        [Route("GiaSpDvCuTheCt/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
-            _db.GiaSpDvCuTheCt.Remove(model);
-            _db.SaveChanges();
-            var result = GetDataCt(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
 
         public string GetDataCt(string Mahs)
         {
@@ -146,6 +150,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             result += "</div>";
 
             return result;
-        } 
+        }
+        [Route("DinhGiaSpDvCuTheCt/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
+            _db.GiaSpDvCuTheCt.Remove(model);
+            _db.SaveChanges();
+            var result = GetDataCt(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
     }
 }
