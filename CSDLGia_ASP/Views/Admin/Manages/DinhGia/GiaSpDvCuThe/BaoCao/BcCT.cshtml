@@ -2,6 +2,7 @@
     Layout = "_LayoutReports";
     var record_id = 1;
     var cts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt>)ViewData["ct"];
+    var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe>
 <br />
@@ -40,7 +41,15 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id - 1).@(record_id_ct++)</td>
-                    <td style="text-align: center">@ct.Maspdv</td>
+                    <td style="text-align:left">
+                        @foreach (var ds in spcuthedanhmuc)
+                        {
+                            @if (ct.Maspdv == ds.Maspdv)
+                            {
+                                @ds.Tenspdv
+                            }
+                        }
+                    </td>
                     <td style="text-align: center">@ct.Dvt</td>
                     <td style="text-align: center">@ct.Mucgia1</td>
                     <td style="text-align: center">@ct.Mucgia2</td>
