@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240315174022_1.1.20-giaspdvcuthe")]
+    partial class _1120giaspdvcuthe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7022,11 +7024,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maspdv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mucgia1")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Mucgia1")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Mucgia2")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Mucgia2")
+                        .HasColumnType("float");
 
                     b.Property<string>("Sapxep")
                         .HasColumnType("nvarchar(max)");

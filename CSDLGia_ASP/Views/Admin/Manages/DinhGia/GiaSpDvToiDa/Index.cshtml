@@ -48,7 +48,7 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvToiDaExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvToiDa" asp-action="NhanExcel"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -118,7 +118,7 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@item.Thoidiem</td>
-                            <td style="text-align: center">@item.Ghichu</td>
+                            <td style="text-align: center">@item.Ttqd</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
@@ -143,20 +143,16 @@
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
 
                                 </a>
-
+                                <a asp-controller="GiaSpDvToiDa" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 @if (item.Trangthai == "HT")
-                                {
-                             
-
-                                    <a asp-controller="GiaSpDvToiDa" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
+                                {   
                                     <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
                                        onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                         <i class="icon-lg la la-cloud-download text-warning"></i>
                                     </a>
-
                                 }
 
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")

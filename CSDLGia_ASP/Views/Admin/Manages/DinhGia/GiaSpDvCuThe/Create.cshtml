@@ -38,6 +38,9 @@
             <input hidden asp-for="Madv" value="@ViewData["Madv"]">
                 <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
             <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="PhanLoaiHoSo" />
+            <input hidden asp-for="CodeExcel" />
+            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
                 <div class="row">
                     <div class="col-xl-4">
                         <div class="form-group">
@@ -68,7 +71,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Ghi chú</label>
+                        <label>Nội dung</label>
                         <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
                 </div>

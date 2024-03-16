@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
@@ -135,6 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Madv = Madv,
                         Manhom = Manhom,
                         Thoidiem = DateTime.Now,
+                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
                     var nhom = _db.GiaDvKcbDm.Where(t => t.Manhom == Manhom);
                     var chitiet = new List<GiaDvKcbCt>();
@@ -179,6 +181,52 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
+        [Route("DinhGiaDvKcb/NhanExcel")]
+        [HttpGet]
+        public IActionResult NhanExcel(string Madv, string Manhom)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
+                {
+
+                    var modelcxd = _db.GiaDvKcbCt.Where(t => t.Ghichu == "CXD").ToList();
+                    if (modelcxd != null)
+                    {
+
+                        _db.GiaDvKcbCt.RemoveRange(modelcxd);
+
+                        _db.SaveChanges();
+                    }
+                    var model = new VMDinhGiaDvKcb
+                    {
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Madv = Madv,
+                        Manhom = Manhom,
+                        Thoidiem = DateTime.Now,
+                        PhanLoaiHoSo = "HOSOCHITIET",
+                    };                   
+
+
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
+                    ViewData["Title"] = "Thêm mới giá dịch vụ khám chữa bệnh";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgkcb";
+                    ViewData["MenuLv3"] = "menu_dgkcb_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/NhanExcel.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         [Route("DinhGiaDvKcb/Store")]
         [HttpPost]
@@ -188,6 +236,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
+                    // 2024.03.15 Gộp Update và phần nhận cho Excel (chưa update file đính kèm)
+                    if (_db.GiaDvKcb.Where(x => x.Mahs == request.Mahs).Any())
+                    {
+                        //Xử lý hồ sơ
+                        var modelExcel = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == request.Mahs);
+                        modelExcel.Madiaban = request.Madiaban;
+                        modelExcel.Soqd = request.Soqd;
+                        modelExcel.Thoidiem = request.Thoidiem;
+                        modelExcel.Thongtin = request.Thongtin;
+                        modelExcel.Ghichu = request.Ghichu;
+                        modelExcel.CodeExcel = request.CodeExcel;
+                        modelExcel.Updated_at = DateTime.Now;
+                        _db.GiaDvKcb.Update(modelExcel);
+
+                        // Xử lý phần lịch sử hồ sơ 
+                        var lichSu = new TrangThaiHoSo
+                        {
+                            MaHoSo = request.Mahs,
+                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                            ThongTin = "Thay đổi thông tin hồ sơ",
+                            ThoiGian = DateTime.Now,
+                            TrangThai = "CHT",
+                        };
+                        _db.TrangThaiHoSo.Add(lichSu);
+                        _db.SaveChanges();
+
+                        return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
+                    }
+                    //Phần cũ
                     var model = new GiaDvKcb
                     {
                         Mahs = request.Mahs,
@@ -196,6 +273,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
                         Mota = request.Mota,
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
+                        CodeExcel = request.CodeExcel,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -266,6 +345,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         }
                         model.Ipf5 = filename;
                     }
+                    
                     _db.GiaDvKcb.Add(model);
                     _db.SaveChanges();
 
@@ -384,6 +464,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
+                    if (model.CodeExcel != "")
+                    {
+                        return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/NhanExcel.cshtml", model_new);
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Edit.cshtml", model_new);
                 }
                 else
@@ -579,6 +663,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Show"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == Mahs);
+                    if (model.CodeExcel != "")
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                        ViewData["Title"] = "Chi tiết giá dịch vụ khám chữa bệnh";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgkcb";
+                        ViewData["MenuLv3"] = "menu_dgkcb_tt";
+                        return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/ShowExcel.cshtml", model);
+                    }
                     var model_new = new VMDinhGiaDvKcb
                     {
                         Madv = model.Madv,
@@ -611,7 +705,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model);
                 }
                 else
                 {

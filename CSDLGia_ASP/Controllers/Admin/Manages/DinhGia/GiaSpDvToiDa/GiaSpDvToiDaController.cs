@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
@@ -141,6 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
                         Manhom = Manhom,
+                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
 
                     var danhmuc = _db.GiaSpDvToiDaDm.ToList(); // lấy dữ liệu trong bảng GiaSpDvToiDaDm
@@ -202,7 +204,53 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
+        [Route("GiaSpDvToiDa/NhanExcel")]
+        [HttpGet]
+        public IActionResult NhanExcel(string Madv)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Create"))
+                {
 
+                    // hồ sơ mà chỉ đến bước hoàn thành mà quay lại thì sẽ có trạng thái CXD --> cần xóa
+                    var check = _db.GiaSpDvToiDaCt.Where(t => t.Trangthai == "CXD");
+                    if (check != null)
+                    {
+                        _db.GiaSpDvToiDaCt.RemoveRange(check);
+                        _db.SaveChanges();
+                    }
+
+                    // Thông tin của bộ hồ sơ
+
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa
+                    {
+                        Madv = Madv,
+                        Thoidiem = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        PhanLoaiHoSo = "HOSONHANEXCEL",
+                    };
+
+                    
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
+                    ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/NhanExcel.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         [Route("GiaSpDvToiDa/Store")]
         [HttpPost]
@@ -226,6 +274,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         request.Ipf1 = filename;
                     }
 
+                    // 2024.03.15 Gộp Update và phần nhận cho Excel
+                    if (_db.GiaSpDvToiDa.Where(x => x.Mahs == request.Mahs).Any())
+                    {
+                        //Xử lý hồ sơ
+                        var modelExcel = _db.GiaSpDvToiDa.FirstOrDefault(t => t.Mahs == request.Mahs);
+                        modelExcel.Madiaban = request.Madiaban;
+                        modelExcel.Soqd = request.Soqd;
+                        modelExcel.Thoidiem = request.Thoidiem;
+                        modelExcel.Thongtin = request.Thongtin;
+                        modelExcel.Ghichu = request.Ghichu;
+                        modelExcel.CodeExcel = request.CodeExcel;
+                        modelExcel.Updated_at = DateTime.Now;
+                        modelExcel.Ipf1 = request.Ipf1;
+                        _db.GiaSpDvToiDa.Update(modelExcel);
+
+                        // Xử lý phần lịch sử hồ sơ 
+                        var lichSu = new TrangThaiHoSo
+                        {
+                            MaHoSo = request.Mahs,
+                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                            ThongTin = "Thay đổi thông tin hồ sơ",
+                            ThoiGian = DateTime.Now,
+                            TrangThai = "CHT",
+                        };
+                        _db.TrangThaiHoSo.Add(lichSu);
+                        _db.SaveChanges();
+
+                        return RedirectToAction("Index", "GiaSpDvToiDa", new { request.Madv });
+                    }
+                    //Phần cũ
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa
                     {
                         Mahs = request.Mahs,
@@ -238,6 +316,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         Ipf1 = request.Ipf1,
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
+                        CodeExcel = request.CodeExcel,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -324,6 +404,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
+                    if (model.CodeExcel != "")
+                    {
+                        return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/NhanExcel.cshtml", model);
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Modify.cshtml", model);
 
                 }
@@ -349,6 +433,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Index"))
                 {
                     var model = _db.GiaSpDvToiDa.FirstOrDefault(t => t.Mahs == Mahs);
+                    if (model.CodeExcel != "")
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                        ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
+                        return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/ShowExcel.cshtml", model);
+                    }
                     model.GiaSpDvToiDaCt = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";

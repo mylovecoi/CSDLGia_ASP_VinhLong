@@ -49,7 +49,7 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvCuTheExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvCuThe" asp-action="NhanExcel"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -104,6 +104,7 @@
                 <th>STT</th>
                 <th>Thời điểm áp dụng</th>
                 <th>Số quyết định</th>
+                <th>Nội dung</th>
                 <th>Trạng thái</th>
                 <th>Cơ quan tiếp nhận</th>
                 <th width="20%">Thao tác</th>
@@ -118,6 +119,7 @@
                         <td style="text-align: center">@(record_id++)</td>    
                         <td style="text-align: center">@item.Thoidiem</td>
                         <td class="text-center active">@item.Soqd</td>
+                        <td class="text-center active">@item.Ghichu</td>
                         <td style="text-align: center">
                             @if (item.Trangthai == "HT")
                             {
