@@ -15,7 +15,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         }
 
 
-        [Route("DinhGiaSpDvCuTheCt/Edit")]
+        [Route("GiaSpDvCuTheCt/Edit")]
         [HttpPost]
 
         public JsonResult EditCt(int Id)
@@ -54,7 +54,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             }
         }
 
-
         [Route("GiaSpDvCuTheCt/Update")]
         [HttpPost]
         public JsonResult UpdateCt(int Id, double Mucgiatu, double Mucgiaden)
@@ -70,6 +69,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             return Json(data);
         }
 
+        [Route("GiaSpDvCuTheCt/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
+            _db.GiaSpDvCuTheCt.Remove(model);
+            _db.SaveChanges();
+            var result = GetDataCt(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
 
         public string GetDataCt(string Mahs)
         {
@@ -133,17 +143,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             result += "</div>";
 
             return result;
-        }
-        [Route("DinhGiaSpDvCuTheCt/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
-            _db.GiaSpDvCuTheCt.Remove(model);
-            _db.SaveChanges();
-            var result = GetDataCt(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
+        } 
     }
 }

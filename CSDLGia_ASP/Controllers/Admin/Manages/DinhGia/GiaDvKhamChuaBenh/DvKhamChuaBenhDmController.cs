@@ -56,15 +56,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DanhMucDvKcb/Store")]
         [HttpPost]
-        public JsonResult Store(string Tenspdv, string Madichvu, string Dvt, string Manhom)
+        public JsonResult Store(string Manhom, string Tenspdv, string Madichvu, string Dvt,  string Ghichu, int Sapxep)
         {
             var model = new GiaDvKcbDm
             {
-                Tenspdv = Tenspdv,
-                Madichvu = Madichvu,
-                Dvt = Dvt,
                 Manhom = Manhom,
+                Madichvu = Madichvu,
                 Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
+                Tenspdv = Tenspdv,
+                Dvt = Dvt,
+                Ghichu = Ghichu,
+                Sapxep = Sapxep,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -90,19 +92,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             var data = new { status = "success" };
             return Json(data);
         }
-
-
-        [Route("DanhMucDvKcb/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaDvKcbDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaDvKcbDm.Remove(model);
-            _db.SaveChanges();
-            var data = new { status = "success" };
-            return Json(data);
-        }
-
 
         [Route("DanhMucDvKcb/Edit")]
         [HttpPost]
@@ -152,6 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return Json(data);
             }
         }
+
         [Route("DanhMucDvKcb/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Dvt)
@@ -182,6 +172,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             return Json(data);
         }
 
+        [Route("DanhMucDvKcb/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaDvKcbDm.FirstOrDefault(t => t.Id == Id);
+            _db.GiaDvKcbDm.Remove(model);
+            _db.SaveChanges();
+            var data = new { status = "success" };
+            return Json(data);
+        }
 
         [Route("DanhMucDvKcb/Excel")]
         [HttpPost]
@@ -250,11 +250,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
                 return Json(data);
             }
-
         }
-
-
-
-
     }
 }
