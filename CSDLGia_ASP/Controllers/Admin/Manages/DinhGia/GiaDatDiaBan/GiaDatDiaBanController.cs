@@ -520,7 +520,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Mahs = dg.Mahs,
                                     Madv = dg.Madv,
                                     Vitri = dgct.Vitri,
-                                    Dongia = dgct.Dongia,
+                                    Dongia = dgct.Dongia1,
                                     Macqcq = dg.Macqcq,
                                     Thoidiem = dg.Thoidiem,
                                     Diemdau = dgct.Diemdau,

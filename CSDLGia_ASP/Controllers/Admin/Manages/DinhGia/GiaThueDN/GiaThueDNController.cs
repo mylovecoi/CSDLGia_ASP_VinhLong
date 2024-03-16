@@ -452,8 +452,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Diemdau = modelct.Diemdau,
                         Diemcuoi = modelct.Diemcuoi,
                         Mota = modelct.Mota,
-                        Dientich = modelct.Dientich,
-                        Dongia = modelct.Dongia,
+                        Dientich = modelct.Dientich,                        
                         Macqcq = model.Macqcq,
                         PhanLoaiDatNuoc = modelct.PhanLoaiDatNuoc,
                     };
@@ -525,7 +524,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                     Mahs = dg.Mahs,
                                     Madv = dg.Madv,
                                     Vitri = dgct.Vitri,
-                                    Dongia = dgct.Dongia,
+                                    Dongia1 = dgct.Dongia1,
                                     Macqcq = dg.Macqcq,
                                     Thoidiem = dg.Thoidiem,
                                     Diemdau = dgct.Diemdau,
@@ -547,10 +546,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     {
                         model = model.Where(t => t.Thoidiem <= endTime);
                     }
-                    model = model.Where(t => t.Dongia >= beginPrice);
+                    model = model.Where(t => t.Dongia1 >= beginPrice);
                     if (endPrice > 0)
                     {
-                        model = model.Where(t => t.Dongia <= endPrice);
+                        model = model.Where(t => t.Dongia1 <= endPrice);
                     }
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = " Tìm kiếm thông tin định giá thuê mặt đất mặt nước";
