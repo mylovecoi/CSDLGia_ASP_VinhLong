@@ -31,7 +31,8 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="Getmasapxep(@ViewData["Manhom"])"
+                class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
@@ -130,6 +131,12 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Ghi chú</b></label>
                             <input type="text" id="ghichu_create" name="ghichu_create" class="form-control" row="2" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Sắp xếp</label>
+                            <input type="int" id="sapxep_create" name="sapxep_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -406,6 +413,7 @@
                 Madichvu: $('#madichvu_create').val(),
                 Tenspdv: $('#tenspdv_create').val(),
                 Ghichu: $('#ghichu_create').val(),
+                Sapxep: $('#sapxep_create').val(),
                 @* Dvt: $('#Dvt_create').val(), *@
                 Manhom: $('#manhom_create').val(),
             },
@@ -498,6 +506,20 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+            }
+        })
+    }
+
+    function Getmasapxep(manhom) {
+        $.ajax({
+            url: '/DanhMucDvKcb/GetMaSapXep',
+            type: 'POST',
+            data: {
+                Manhom: $('#manhom_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                $('#sapxep_create').val(data + 1)
             }
         })
     }

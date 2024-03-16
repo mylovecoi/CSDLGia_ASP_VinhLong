@@ -138,6 +138,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaPhiLePhi> GiaPhiLePhi { get; set; }
         public DbSet<GiaPhiLePhiCt> GiaPhiLePhiCt { get; set; }
         public DbSet<GiaPhiLePhiDm> GiaPhiLePhiDm { get; set; }
+        public DbSet<GiaPhiLePhiNhom> GiaPhiLePhiNhom { get; set; }
         public DbSet<GiaRung> GiaRung { get; set; }
         public DbSet<GiaRungCt> GiaRungCt { get; set; }
         public DbSet<GiaRungDm> GiaRungDm { get; set; }
