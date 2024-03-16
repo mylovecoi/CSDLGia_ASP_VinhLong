@@ -13,6 +13,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
@@ -52,7 +53,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th>Đối tượng cụ thể</th>
+                    <th>STT báo cáo</th>
+                    <th>Tên đối tượng</th>
                     <th>Đơn vị tính</th>
                     <th>Thao tác</th>
                 </tr>
@@ -61,7 +63,8 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.SapXep</td>
+                        <td style="text-align: center">@item.HienThi</td>
                         <td style="text-align: center">@item.Tenspdv</td>
                         <td style="text-align: center">@item.Dvt</td>
                         

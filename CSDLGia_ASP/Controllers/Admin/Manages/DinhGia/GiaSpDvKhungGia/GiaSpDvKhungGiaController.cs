@@ -163,12 +163,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         chitiet.Add(new GiaSpDvKhungGiaCt()
                         {
                             Mahs = model.Mahs,
-                            Mota = item.Mota,
-                            Phanloaidv = item.Tenspdv,
-                            Tendv = item.Tenspdv,
-                            Dvt = item.Dvt,                            
-                            Trangthai = "CXD",
+                            Tenspdv = item.Tenspdv,
+                            Dvt = item.Dvt,
                             Maspdv = item.Maspdv,
+                            SapXep = item.SapXep,
+                            HienThi = item.HienThi,
+                            Manhom = item.Manhom,
+                            Giatoithieu = 0,
+                            Giatoida = 0,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
