@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 Diemcuoi = Diemcuoi,
                 Mota = Mota,
                 Dientich = Dientich,
-                Dongia = Dongia,
+                Dongia1 = Dongia,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -100,7 +100,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia + "'/>";
+                result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia1 + "'/>";
 
                 result += "</div>";
                 result += "</div>";
@@ -131,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             model.Diemcuoi = Diemcuoi;
             model.Mota = Mota;
             model.Dientich = Dientich;
-            model.Dongia = Dongia;
+            model.Dongia1 = Dongia;
             model.Updated_at = DateTime.Now;
             _db.GiaThueMatDatMatNuocCt.Update(model);
             _db.SaveChanges();
@@ -180,7 +180,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 result += "<td style='text-align:left;'>" + item.Diemcuoi + "</td>";
                 result += "<td style='text-align:left;'>" + item.Mota + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + item.Dientich + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + item.Dongia + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + item.Dongia1 + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
