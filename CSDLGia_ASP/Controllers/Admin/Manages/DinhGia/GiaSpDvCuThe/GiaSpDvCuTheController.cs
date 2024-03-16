@@ -152,6 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
 
                     // Khi bấm đồng ý trong moda thì add dữ liệu GiaSpDvCuTheDm -> bản GiaSpDvCuTheCt
+
                     if (Manhom != "all")
                     {
                         danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
@@ -162,7 +163,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     }
 
 
-                    var chitiet = new List<GiaSpDvCuTheCt>();
+                   var chitiet = new List<GiaSpDvCuTheCt>();
 
 
                     foreach (var item in danhmuc)
@@ -174,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                             Tt = item.Tt,
                             Mucgia1 = item.Mucgia1,
                             Mucgia2 = item.Mucgia2,
-                            Manhom = model.Manhom,
+                            Manhom = item.Manhom,
                             Maspdv = item.Maspdv,
 
                             Trangthai = "CXD",
@@ -185,15 +186,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.GiaSpDvCuTheCt.AddRange(chitiet);
                     _db.SaveChanges();
 
-                    var groupmanhom = _db.GiaSpDvCongIchDm.Select(item => item.Manhom);
+
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom1 = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom2 = _db.GiaSpDvCuTheCt.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).Distinct().ToList();
+
+                    List<string> groupmanhom;
+
+                    if (Manhom != "all")
+                    {
+                        groupmanhom = groupmanhom2;
+                    }
+                    else
+                    {
+                        groupmanhom = groupmanhom1;
+                    }
+
                     ViewData["GroupMaNhom"] = groupmanhom;
+
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                    // End xử lý phần Forech theo mã nhóm khi chọn
 
                     model.GiaSpDvCuTheCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                  
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
@@ -307,7 +328,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         };
                         _db.TrangThaiHoSo.Add(lichSu);
                         _db.SaveChanges();
-
+                        // End Xử lý phần lịch sử hồ sơ 
                         return RedirectToAction("Index", "GiaSpDvCuThe", new { request.Madv });
                     }
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
@@ -339,6 +360,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     }
                     _db.GiaSpDvCuTheCt.UpdateRange(modelct);
                     _db.SaveChanges();
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = request.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CHT",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
 
                     return RedirectToAction("Index", "GiaSpDvCuThe", new { request.Madv });
                 }
@@ -393,21 +430,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Edit"))
                 {
                     var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
-
                     var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
-
                     model.GiaSpDvCuTheCt = model_ct.ToList();
+                    ViewData["Madv"] = model.Madv;
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                    // End xử lý phần Forech theo mã nhóm khi chọn
+
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    if (model.CodeExcel != "")
-                    {
-                        return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/NhanExcel.cshtml", model);
-                    }
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin"; 
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Modify.cshtml", model);
 
                 }
@@ -423,6 +463,62 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             }
         }
 
+        //[Route("DinhGiaSpDvCuThe/Show")]
+        //[HttpGet]
+        //public IActionResult Show(string Mahs)
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+        //    {
+        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Edit"))
+        //        {
+        //            var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
+        //            if (model.CodeExcel != "")
+        //            {
+        //                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+        //                ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+        //                ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";                      
+        //                return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/ShowExcel.cshtml", model);
+        //            }
+        //            var model_new = new VMDinhGiaSpDvCuThe
+        //            {
+        //                Madv = model.Madv,
+        //                Mahs = model.Mahs,
+        //                Madiaban = model.Madiaban,
+        //                Soqd = model.Soqd,
+        //                Phanloaidv = model.Phanloai,
+        //                Thoidiem = model.Thoidiem,
+        //                Thongtin = model.Thongtin,
+        //                Ghichu = model.Ghichu
+        //            };
+
+        //            var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model_new.Mahs);
+
+        //            model_new.GiaSpDvCuTheCt = model_ct.ToList();
+
+        //            ViewData["Madv"] = model.Madv;
+        //            ViewData["Mahs"] = model.Mahs;
+        //            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+        //            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+        //            ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+        //            ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCuTheCt.ToList();
+        //            ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ cụ thể";
+        //            ViewData["MenuLv1"] = "menu_spdvcuthe";
+        //            ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
+        //            return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Show.cshtml", model_new);
+        //        }
+        //        else
+        //        {
+        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+        //            return View("Views/Admin/Error/Page.cshtml");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View("Views/Admin/Error/SessionOut.cshtml");
+        //    }
+        //}
+
+
         [Route("DinhGiaSpDvCuThe/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
@@ -432,39 +528,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Edit"))
                 {
                     var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
-                    if (model.CodeExcel != "")
-                    {
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";                      
-                        return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/ShowExcel.cshtml", model);
-                    }
-                    var model_new = new VMDinhGiaSpDvCuThe
-                    {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Phanloaidv = model.Phanloai,
-                        Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu
-                    };
-
-                    var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model_new.Mahs);
-
-                    model_new.GiaSpDvCuTheCt = model_ct.ToList();
-
+                    var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
+                    model.GiaSpDvCuTheCt = model_ct.ToList();
                     ViewData["Madv"] = model.Madv;
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
                     ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
-                    ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCuTheCt.ToList();
-                    ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ cụ thể";
+                    // End xử lý phần Forech theo mã nhóm khi chọn
+
+                    model.GiaSpDvCuTheCt = model_ct.ToList();             
+                   
+                    ViewData["Ipf1"] = model.Ipf1;
+                    ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Show.cshtml", model);
+
                 }
                 else
                 {

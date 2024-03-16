@@ -80,16 +80,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             int record = 1;
 
             var groupmanhom1 = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
-          
+
             string result = "<div class='card-body' id='frm_data'>";
 
-            foreach(var manhom in groupmanhom1)
+            foreach (var manhom in groupmanhom1)
 
-        {
+            {
 
-                foreach(var dm in modeldanhmucnhom)
+                foreach (var dm in modeldanhmucnhom)
                 {
-                    if(manhom == dm.Manhom)
+                    if (manhom == dm.Manhom)
                     {
                         result += "<p style='text-align:center'>" + dm.Tennhom + "</p>";
                     }
@@ -188,6 +188,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
             return result;
         }
+
+
         [Route("DinhGiaSpDvCongIchCt/Delete")]
         [HttpPost]
         public JsonResult Delete(int Id)
