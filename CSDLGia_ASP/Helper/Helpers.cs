@@ -1498,5 +1498,31 @@ namespace CSDLGia_ASP.Helper
 
             return sb.ToString();
         }
+
+        public static string ConvertStrToStyle(string strStyle)
+        {
+            if (string.IsNullOrEmpty(strStyle))
+            {
+                return "";
+            }
+            else
+            {
+                string HtmlStyle = "";
+                List<string> list_style = strStyle.Split(",").ToList();
+                if (list_style.Contains("Chữ in hoa"))
+                {
+                    HtmlStyle += "text-transform: uppercase;";
+                }
+                if (list_style.Contains("Chữ in đậm"))
+                {
+                    HtmlStyle += "font-weight:bold;";
+                }
+                if (list_style.Contains("Chữ in nghiêng"))
+                {
+                    HtmlStyle += "font-style:italic;";
+                }
+                return HtmlStyle;
+            }
+        }
     }
 }

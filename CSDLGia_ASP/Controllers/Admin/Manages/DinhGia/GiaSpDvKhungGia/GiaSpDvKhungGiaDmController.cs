@@ -39,6 +39,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_dm";
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvKhungGiaDm.ToList();
+                    var chkSTT = _db.GiaSpDvKhungGiaDm.Where(t => t.Manhom == Manhom);
+                    if (chkSTT.Any())
+                    {
+                        ViewData["STT"] = chkSTT.Max(x=>x.SapXep) + 1;
+                    }
+                    else
+                    {
+                        ViewData["STT"] = 1;
+                    }
+                    
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/DanhMuc/ChiTiet/Index.cshtml", model.ToList());
                 }
                 else
@@ -55,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGiaDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, double Giatoida, double Giatoithieu, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string Hientrang, string HienThi, double SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -66,27 +76,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Manhom = Manhom,
                         Dvt = Dvt,
                         Tenspdv = Tenspdv,
-                        Mota = Mota,
-                        
+                        HienTrang = Hientrang,
+                        HienThi = HienThi,
+                        SapXep = SapXep,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
                     _db.GiaSpDvKhungGiaDm.Add(request);
                     _db.SaveChanges();
-
-                    var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
-                    if (checkdvt == null)
-                    {
-                        var dvt = new DmDvt
-                        {
-                            Dvt = Dvt,
-                            Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
-                        };
-                        _db.DmDvt.Add(dvt);
-                        _db.SaveChanges();
-
-                    }
 
                     var data = new { status = "success", message = "Thêm mới thành công!" };
                     return Json(data);
@@ -120,26 +117,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đối tượng cụ thể</label>";
-                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-11'>";
+                        result += "<div class='col-xl-12'>";
                         result += "<label class='form-control-label'>Đơn vị tính</label>";
                         result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
 
                         var dvt = _db.DmDvt.ToList();
+                        result += "<option value =''>--Chọn đơn vị tính--</option>";
                         foreach (var item in dvt)
                         {
-                            result += "<option value ='" + @item.Dvt + "'>" + @item.Dvt + "</ option >";
+                            if(model.Dvt == item.Dvt)
+                            {
+                                result += "<option value ='" + @item.Dvt + "' selected >" + @item.Dvt + "</ option >";
+                            }
+                            else
+                            {
+                                result += "<option value ='" + @item.Dvt + "' >" + @item.Dvt + "</ option >";
+                            }                           
                         }
                         result += "</select>";
                         result += "</div>";
-                        result += "<div class='col-xl-1' style='padding-left: 0px;'>";
-                        result += "<label class='control-label'>Thêm</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
-                        result += "</button>";
+
+                       
+                        result += "<div class='col -xl-6'>";
+                        result += "<div class='form -group fv-plugins-icon-container'>";
+                        result += "<label>STT báo cáo</label>";
+                        result += "<input type='text' id='hienthi_edit' name='hienthi_edit' class='form-control' value='" + model.HienThi + "'/>";
                         result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col -xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Sắp xếp</label>";
+                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.SapXep + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                       
 
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
@@ -169,16 +184,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGiaDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, double Giatoithieu, double Giatoida, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public JsonResult Update(int Id, string Tenspdv, string Dvt, string Hientrang, string HienThi, double SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.danhmuc", "Edit"))
                 {
                     var model = _db.GiaSpDvKhungGiaDm.FirstOrDefault(t => t.Id == Id);
-                    model.Tenspdv = Tenspdv;
-                    model.Mota = Mota;
-                    model.Dvt = Dvt;                   
+                    model.Tenspdv = Tenspdv;                   
+                    model.Dvt = Dvt;
+                    model.HienThi = HienThi;
+                    model.SapXep = SapXep;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvKhungGiaDm.Update(model);
                     _db.SaveChanges();

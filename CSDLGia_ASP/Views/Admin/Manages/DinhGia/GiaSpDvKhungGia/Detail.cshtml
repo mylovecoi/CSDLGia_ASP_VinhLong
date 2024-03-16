@@ -20,7 +20,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Đối tượng cụ thể</th>
+                    <th>Tên đối tượng</th>
                     <th>Đơn vị tính</th>
                     <th>Mức giá tối thiểu</th>
                     <th>Mức giá tối đa</th>
@@ -32,14 +32,14 @@
                 {
                     @if (Model.GiaSpDvKhungGiaCt != null)
                     {
-                        @foreach (var item in Model.GiaSpDvKhungGiaCt)
+                        @foreach (var item in Model.GiaSpDvKhungGiaCt.OrderBy(x=>x.SapXep))
                         {
                             <tr style="text-align:center">
-                                <td >@(record_id++)</td>
-                                <td class="active">@item.Phanloaidv</td>
+                                <td>@item.SapXep</td>
+                                <td class="active">@item.Tenspdv</td>
                                 <td>@item.Dvt</td>
-                                <td>@item.Giatoithieu</td>
-                                <td>@item.Giatoida</td>
+                                <td>@Helpers.ConvertDbToStr(item.Giatoithieu)</td>
+                                <td>@Helpers.ConvertDbToStr(item.Giatoida)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                 onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

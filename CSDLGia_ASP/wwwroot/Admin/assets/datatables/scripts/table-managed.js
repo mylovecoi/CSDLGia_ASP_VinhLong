@@ -296,7 +296,8 @@ var TableManaged = function () {
             }, {
                 "searchable": false,
                 "targets": [0]
-            }],
+                }],
+            "bSort": false
             //"order": [
             //    [0, "asc"]
             //] // set first column as a default sort by asc

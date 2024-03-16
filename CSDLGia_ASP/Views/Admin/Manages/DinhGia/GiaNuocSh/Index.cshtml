@@ -2,15 +2,16 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -21,10 +22,10 @@
         });
 
         $(function () {
-            $('#Donvi, #Nam').change(function () {
-                var current_path_url = '/GiaNuocSh?';
-                var madv = '&Madv=' + $('#Donvi').val();
-                var nam = '&Nam=' + $('#Nam').val();
+            $('#MaDv_Search, #Nam_Search').change(function () {
+                var current_path_url = '/GiaNuocSinhHoat?';
+                var madv = '&Madv=' + $('#MaDv_Search').val();
+                var nam = '&Nam=' + $('#Nam_Search').val();
                 var url = current_path_url + madv + nam;
                 window.location.href = url;
             })
@@ -44,15 +45,19 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
+                @if (ViewData["MaDv"].ToString() != "all")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Create"
+                    asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
+                    <span>&ensp;</span>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaNuocSh" asp-action="NhanExcel"
+                    asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-            }&ensp;
-            <a class="btn btn-success font-weight-bolder" asp-controller="GiaNuocSh" asp-action="NhanExcel"
-               asp-route-Madv="@ViewData["Madv"]">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a>
+                }
+            }
 
         </div>
     </div>
@@ -62,14 +67,14 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                    <select class="form-control" id="Nam_Search" name="Nam_Search">
+                        <option value="0">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int year = nam_start; year <= nam_stop; year++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                <!option value="@year" @(Nam == year ? "selected" : "")>Năm @year</!option>
                             }
                         }
                     </select>
@@ -78,20 +83,29 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="Donvi" name="Donvi">
-                        @foreach (var db in dsdiaban)
-                        {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in dv)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
+                    @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Madv") == null)
+                    {
+                        <select class="form-control select2basic" id="MaDv_Search" name="MaDv_Search">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var db in dsdiaban)
+                            {
+                                <optgroup label="@db.TenDiaBan">
+                                    @{
+                                        var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                    }
+                                    @foreach (var item in dv)
+                                    {
+                                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <lable class="form-controll">@ViewData["TenDv"]</lable>
+                        <input hidden id="MaDv_Search" name="MaDv_Search" value="@ViewData["MaDv"]" />
+                    }
                 </div>
             </div>
         </div>
@@ -144,22 +158,18 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var dv in dsdonvi)
+                            <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
                                 {
-                                    @if (item.Macqcq == dv.MaDv)
+                                    @foreach (var dv in dsdonvi)
                                     {
-                                        <td style="text-align: center">@dv.TenDv</td>
+                                        @if (item.Macqcq == dv.MaDv)
+                                        {
+                                            @dv.TenDv
+                                        }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
-
+                            </td>
                             <td>
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">

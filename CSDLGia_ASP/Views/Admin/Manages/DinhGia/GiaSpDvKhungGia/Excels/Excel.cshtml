@@ -1,9 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaCt
-
-@{
-    var Madv = ViewData["Madv"];
-
-}
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -23,7 +18,8 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaSpDvKhungExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+        <input hidden asp-for="Madv">
+        <input hidden asp-for="Mahs">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -38,74 +34,42 @@
 
             <div class="row">
                 <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mã nhóm</label>
-                        <select asp-for="Manhom" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
-
                 </div>
-              
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
+                </div>
             </div>
             <div class="row">
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đối tượng thu</label>
-                        <select asp-for="Phanloaidv" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mức giá từ</label>
-                        <select asp-for="Giatoithieu" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mức giá đến</label>
-                        <select asp-for="Giatoida" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung</label>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
+
             <div class="row">
                 <div class="col-xl-3">
                     <div class="form-group">
@@ -142,7 +106,6 @@
             <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
         </div>
     </form>
-    <!--end::Form-->
     <!--end::Form-->
 </div>
 @section Scripts {

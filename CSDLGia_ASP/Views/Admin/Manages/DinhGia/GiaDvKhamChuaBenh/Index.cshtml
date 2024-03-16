@@ -209,7 +209,6 @@
                 </button>
             </div>
             <form asp-controller="DvKhamChuaBenh" asp-action="Create" method="get" enctype="multipart/form-data">
-
                 <div class="modal-body">
                     <div class="row">
                         <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
@@ -217,6 +216,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nhóm Danh mục giá khám bệnh, chữa bệnh*</b></label>
                                 <select id="Manhom" name="Manhom" class="form-control">
+                                    <option value="all">--Chọn tất cả các nhóm--</option>
                                     @foreach (var item in dsnhom)
                                     {
                                         <option value="@item.Manhom">@item.Tennhom</option>

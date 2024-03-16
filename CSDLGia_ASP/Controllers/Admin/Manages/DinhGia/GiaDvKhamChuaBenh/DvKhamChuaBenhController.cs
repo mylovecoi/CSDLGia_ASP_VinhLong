@@ -122,14 +122,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
 
-                    var modelcxd = _db.GiaDvKcbCt.Where(t => t.Ghichu == "CXD").ToList();
+                    var modelcxd = _db.GiaDvKcbCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv).ToList();
                     if (modelcxd != null)
                     {
-
                         _db.GiaDvKcbCt.RemoveRange(modelcxd);
-
                         _db.SaveChanges();
                     }
+
                     var model = new VMDinhGiaDvKcb
                     {
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
@@ -138,20 +137,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Thoidiem = DateTime.Now,
                         PhanLoaiHoSo = "HOSOCHITIET",
                     };
-                    var nhom = _db.GiaDvKcbDm.Where(t => t.Manhom == Manhom);
+
+                    var danhmuc = _db.GiaDvKcbDm.ToList();
+                    if (Manhom != "all")
+                    {
+                        danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
+                    }
+                    else
+                    {
+                        danhmuc = danhmuc.ToList();
+                    }
+
                     var chitiet = new List<GiaDvKcbCt>();
-                    foreach (var item in nhom)
+
+                    foreach (var item in danhmuc)
                     {
                         chitiet.Add(new GiaDvKcbCt()
                         {
                             Mahs = model.Mahs,
+                            Madv = model.Madv,
                             Maspdv = item.Maspdv,
                             Tenspdv = item.Tenspdv,
                             Madichvu = item.Madichvu,
                             Dvt = item.Dvt,
                             Phanloai = item.Phanloai,
-                            Ghichu = "CXD",
-                            Giadv = 0,
+                            Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -161,6 +171,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     model.GiaDvKcbCt = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).ToList();
 
 
+                    var groupmanhom1 = _db.GiaDvKcbCt.Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom2 = _db.GiaDvKcbCt.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).Distinct().ToList();
+
+                    List<string> groupmanhom;
+
+                    if (Manhom != "all")
+                    {
+                        groupmanhom = groupmanhom2;
+                    }
+                    else
+                    {
+                        groupmanhom = groupmanhom1;
+                    }
+
+                    ViewData["GroupMaNhom"] = groupmanhom;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
                     ViewData["Title"] = "Thêm mới giá dịch vụ khám chữa bệnh";
@@ -205,7 +230,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Manhom = Manhom,
                         Thoidiem = DateTime.Now,
                         PhanLoaiHoSo = "HOSOCHITIET",
-                    };                   
+                    };
 
 
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -345,7 +370,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         }
                         model.Ipf5 = filename;
                     }
-                    
+
                     _db.GiaDvKcb.Add(model);
                     _db.SaveChanges();
 
@@ -373,7 +398,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [Route("DinhGiaDvKcb/EditCt")]
         [HttpPost]
@@ -421,7 +445,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             var data = new { status = "success", message = result };
             return Json(data);
         }
-
 
         [Route("DinhGiaDvKcb/Edit")]
         [HttpGet]

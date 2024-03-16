@@ -135,6 +135,12 @@
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
+                            <label>Hiển thị</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
                             <input type="int" id="sapxep_create" name="sapxep_create" class="form-control" />
                         </div>
@@ -413,6 +419,7 @@
                 Madichvu: $('#madichvu_create').val(),
                 Tenspdv: $('#tenspdv_create').val(),
                 Ghichu: $('#ghichu_create').val(),
+                Hienthi: $('#hienthi_create').val(),
                 Sapxep: $('#sapxep_create').val(),
                 @* Dvt: $('#Dvt_create').val(), *@
                 Manhom: $('#manhom_create').val(),
@@ -427,7 +434,6 @@
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
-
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

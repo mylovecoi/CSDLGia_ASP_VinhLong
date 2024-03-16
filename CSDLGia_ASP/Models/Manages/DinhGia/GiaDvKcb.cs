@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -55,5 +57,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Manhom { get; set; }
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
+        [NotMapped]
+        public List<GiaDvKcbCt> GiaDvKcbCt { get; set; }
     }
 }

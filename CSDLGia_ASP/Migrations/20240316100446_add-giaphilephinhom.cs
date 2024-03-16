@@ -8,6 +8,12 @@ namespace CSDLGia_ASP.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
+                name: "Tenspdv",
+                table: "GiaSpDvKhungGiaCt",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
                 name: "Hienthi",
                 table: "GiaDvKcbDm",
                 type: "nvarchar(max)",
@@ -40,6 +46,10 @@ namespace CSDLGia_ASP.Migrations
             migrationBuilder.DropColumn(
                 name: "Hienthi",
                 table: "GiaDvKcbDm");
+
+            migrationBuilder.DropColumn(
+                name: "Tenspdv",
+                table: "GiaSpDvKhungGiaCt");
         }
     }
 }
