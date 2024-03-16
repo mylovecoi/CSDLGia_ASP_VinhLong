@@ -39,17 +39,18 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
     <thead>
-        <tr>
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Xã phường</th>
-            <th style="text-align:center">Loại đất</th>
-            <th style="text-align:center">Khu vực tên đường phố</th>
-            <th style="text-align:center">Địa giới</th>
-            <th style="text-align:center">VT1</th>
-            <th style="text-align:center">VT2</th>
-            <th style="text-align:center">VT3</th>
-            <th style="text-align:center">VT4</th>
-            <th style="text-align:center">VT5</th>
+        <tr style="text-align:center">
+            <th>STT</th>
+            <th>Tên đường phố</th>
+            <th>Loại đường</th>
+            <th>Điểm đầu</th>
+            <th>Điểm cuối</th>
+            <th>Hệ số K</th>
+            <th>VT1</th>
+            <th>VT2</th>
+            <th>VT3</th>
+            <th>VT4</th>
+            <th>VT5</th>
         </tr>
     </thead>
     <tbody>
@@ -58,20 +59,21 @@
             @if (Model.GiaDatDiaBanCt != null)
             {
 
-                @foreach (var item in Model.GiaDatDiaBanCt)
+                @foreach (var item in Model.GiaDatDiaBanCt.OrderBy(x=>x.Sapxep))
                 {
                     <tr style="text-align:center">
 
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:center">@item.Maxp</td>
-                        <td style="text-align:center">@item.Maloaidat</td>
-                        <td style="text-align:center">@item.Khuvuc</td>
-                        <td style="text-align:center">@item.Diemdau đến @item.Diemcuoi </td>
-                        <td style="text-align:center">@item.Giavt1</td>
-                        <td style="text-align:center">@item.Giavt2</td>
-                        <td style="text-align:center">@item.Giavt3</td>
-                        <td style="text-align:center">@item.Giavt4</td>
-                        <td style="text-align:center">@item.Giavt5</td>
+                        <td style="text-align:center">@item.HienThi</td>
+                        <td class="active">@item.Mota</td>
+                        <td class="active">@item.Loaiduong</td>
+                        <td class="active">@item.Diemdau</td>
+                        <td class="active">@item.Diemcuoi </td>
+                        <td class="active">@item.Hesok </td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt5)</td>
                     </tr>
                 }
 

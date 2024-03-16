@@ -2,8 +2,10 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
     public class GiaDatDiaBanExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaDatDiaBanExcelController(CSDLGiaDBContext db)
+        public GiaDatDiaBanExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
 
@@ -44,7 +48,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                    ViewData["Madv"] = Madv;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                    ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Excels/Excel.cshtml", model);
 
                 }
@@ -94,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan request)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan request, IFormFile Ipf1upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -117,12 +122,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         {
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                             {
-                                Mahs = request.Mahs,
-       
-                                Trangthai = "CXD",
+                                Mahs = request.Mahs,                                
                                 Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                                Sapxep = worksheet.Cells[row, 1].Value != null ?  Helpers.ConvertStrToDb(worksheet.Cells[row, 1].Value.ToString().Trim()) : 1,
+                                Sapxep = stt++,
+                                HienThi = worksheet.Cells[row, 1].Value != null ?  worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                 Mota = worksheet.Cells[row, 2].Value != null ?  worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                 Diemdau = worksheet.Cells[row, 3].Value != null ?  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                 Diemcuoi = worksheet.Cells[row, 4].Value != null ?  worksheet.Cells[row, 4].Value.ToString().Trim() : "",
@@ -137,10 +140,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     }
 
                 }
+                if (Ipf1upload != null && Ipf1upload.Length > 0)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
+                    string extension = Path.GetExtension(Ipf1upload.FileName);
+                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaDatDiaBan", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Ipf1upload.CopyToAsync(FileStream);
+                    }
+                    request.Ipf1 = filename;
+                }
 
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
+                {
+                    Mahs = request.Mahs,
+                    Madv = request.Madv,
+                    Soqd = request.Soqd,
+                    Madiaban = request.Madiaban,
+                    Thoidiem = request.Thoidiem,
+                    Ipf1 = request.Ipf1,
+
+                    Trangthai = "CHT",
+                    Congbo = "CHUACONGBO",
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+
+                _db.GiaDatDiaBan.Add(model);
                 _db.GiaDatDiaBanCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaDatDiaBan", new { Madv = request.Madv, Mahs = request.Mahs });
+                return RedirectToAction("Edit", "GiaDatDiaBan", new { Mahs = request.Mahs });
             }
             else
             {

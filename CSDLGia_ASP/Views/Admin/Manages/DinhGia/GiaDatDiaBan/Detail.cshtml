@@ -11,9 +11,9 @@
         <button type="button" data-target="#Modal_Create" data-toggle="modal" class="btn btn-light-primary">
             <i class="la la-plus"></i>Thêm mới
         </button>
-        <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+        @* <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
             <i class="la la-file-excel-o"></i>Nhận dữ liệu
-        </button>&ensp;
+        </button>&ensp; *@
         <button type="button" data-target="#Delete_Modal2" data-toggle="modal" class="btn btn-light-warning">
             <i class="la la-lock"></i>Xóa chi tiết
         </button>&ensp;
@@ -26,16 +26,17 @@
         <thead>
             <tr style="text-align:center">
                 <th>STT</th>
-                <th>Loại đất</th>
-                <th>Khu vực tên đường phố</th>
-                <th>Địa giới</th>
+                <th>Tên đường phố</th>
+                <th>Loại đường</th>
+                <th>Điểm đầu</th>
+                <th>Điểm cuối</th>
+                <th>Hệ số K</th>
                 <th>VT1</th>
                 <th>VT2</th>
                 <th>VT3</th>
                 <th>VT4</th>
                 <th>VT5</th>
                 <th>Thao tác</th>
-
             </tr>
         </thead>
         <tbody>
@@ -44,19 +45,21 @@
                 @if (Model.GiaDatDiaBanCt != null)
                 {
 
-                    @foreach (var item in Model.GiaDatDiaBanCt)
+                    @foreach (var item in Model.GiaDatDiaBanCt.OrderBy(x => x.Sapxep))
                     {
                         <tr style="text-align:center">
 
-                            <td>@(record_id++)</td>
-                            <td class="active">@item.Maloaidat</td>
-                            <td class="active">@item.Khuvuc</td>
-                            <td class="active">@item.Diemdau đến @item.Diemcuoi </td>
-                            <td class="active">@item.Giavt1</td>
-                            <td class="active">@item.Giavt2</td>
-                            <td class="active">@item.Giavt3</td>
-                            <td class="active">@item.Giavt4</td>
-                            <td class="active">@item.Giavt5</td>
+                            <td>@item.Sapxep</td>
+                            <td class="active">@item.Mota</td>
+                            <td class="active">@item.Loaiduong</td>
+                            <td class="active">@item.Diemdau</td>
+                            <td class="active">@item.Diemcuoi </td>
+                            <td class="active">@item.Hesok </td>
+                            <td class="active">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                            <td class="active">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                            <td class="active">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                            <td class="active">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                            <td class="active">@Helpers.ConvertDbToStr(item.Giavt5)</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                             onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

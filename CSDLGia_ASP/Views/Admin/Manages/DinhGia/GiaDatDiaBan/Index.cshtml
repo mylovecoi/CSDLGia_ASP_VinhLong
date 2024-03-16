@@ -9,7 +9,7 @@
 
     //test
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 
@@ -30,11 +30,11 @@
         });
 
         $(function () {
-            $('#Madiaban, #Nam').change(function () {
-                var current_path_url = '/GiaDatDiaBan?';
-                var madiaban = '&Madiaban=' + $('#Madiaban').val();
+            $('#Madv, #Nam').change(function () {
+                var current_path_url = '/GiaDatDiaBan?';                
+                var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madiaban + nam;
+                var url = current_path_url + madv + nam;
                 window.location.href = url;
             })
         });
@@ -58,9 +58,7 @@
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatDiaBanExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
-
-             
+                </a>             
             }
         </div>
     </div>
@@ -85,12 +83,21 @@
             </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị tạo hồ sơ</label>
-                    <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                        @foreach (var item in dsdiaban)
+                    <label style="font-weight:bold; color:blue">Tên đơn vị</label>
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        @foreach (var db in dsdiaban)
                         {
-                            <!option value="@item.MaDiaBan" @((string)ViewData["madiaban"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                            <optgroup label="@db.TenDiaBan">
+                                @{
+                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                }
+                                @foreach (var item in donvi)
+                                {
+                                    <!option value="@item.MaDv" >@item.TenDv</!option>
+                                }
+                            </optgroup>
                         }
+
                     </select>
                 </div>
             </div>
@@ -216,7 +223,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị nhập liệu</label>
-                                <select id="madv" name="madv" class="form-control">
+                                <select name="madv" class="form-control">
                                     @foreach (var db in dsdv)
                                     {
                                         <!option value="@db.MaDv">@db.TenDv</!option>
@@ -227,7 +234,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Địa bàn</label>
-                                <select id="madiaban" name="madiaban" class="form-control">
+                                <select name="madiaban" class="form-control">
                                     @foreach (var db in dsdiabanhuyen)
                                     {
                                         <option value="@db.MaDiaBan">@db.TenDiaBan</option>
@@ -238,7 +245,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Số quyết định</label>
-                                <select id="soqd" name="soqd" class="form-control">
+                                <select name="soqd" class="form-control">
                                     @foreach (var qd in soqd)
                                     {
                                         <!option value="@qd.Soqd">@qd.Mota</!option>
