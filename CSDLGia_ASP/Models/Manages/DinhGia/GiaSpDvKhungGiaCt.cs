@@ -19,6 +19,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }
         public string Phanloaidv { get; set; }
         public string Dvt { get; set; }
+
+        public double SapXep { get; set; }
+        public string HienThi { get; set; }
+        public string Style { get; set; }
         [NotMapped]
         public string Madv { get; set; }
         [NotMapped]

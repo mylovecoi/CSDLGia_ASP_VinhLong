@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.danhmuc", "Index"))
                 {
-                    var model = _db.GiaSpDvKhungGiaDm.Where(t => t.Manhom == Manhom).ToList();
+                    var model = _db.GiaSpDvKhungGiaDm.Where(t => t.Manhom == Manhom);
 
                     ViewData["Manhom"] = Manhom;
                     ViewData["Tennhom"] = _db.GiaSpDvKhungGiaNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
@@ -39,7 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_dm";
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["PhanLoaiDichVu"] = _db.GiaSpDvKhungGiaDm.ToList();
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/DanhMuc/ChiTiet/Index.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/DanhMuc/ChiTiet/Index.cshtml", model.ToList());
                 }
                 else
                 {
@@ -67,10 +67,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Dvt = Dvt,
                         Tenspdv = Tenspdv,
                         Mota = Mota,
-                        Giatoida = Giatoida,
-                        Giatoithieu = Giatoithieu,
-                        Phanloai = Phanloai,
-                        Hientrang = Hientrang,
+                        
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -144,23 +141,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         result += "</button>";
                         result += "</div>";
 
-
-                        result += "<div class='col-xl-11'>";
-                        result += "<label class='form-control-label'>Phân loại sản phẩm, dịch vụ</label>";
-                        result += "<select id='plspdv_edit' name='plspdv_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-
-                        var plspdvcuthe = _db.GiaSpDvKhungGiaDm.ToList();
-                        foreach (var item in plspdvcuthe)
-                        {
-                            result += "<option value ='" + @item.Phanloai + "'>" + @item.Phanloai + "</ option >";
-                        }
-                        result += "</select>";
-                        result += "</div>";
-                        result += "<div class='col-xl-1' style='padding-left: 0px;'>";
-                        result += "<label class='control-label'>Thêm</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Plspdv_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
-                        result += "</button>";
-                        result += "</div>";
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -198,11 +178,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     var model = _db.GiaSpDvKhungGiaDm.FirstOrDefault(t => t.Id == Id);
                     model.Tenspdv = Tenspdv;
                     model.Mota = Mota;
-                    model.Dvt = Dvt;
-                    model.Giatoithieu = Giatoithieu;
-                    model.Giatoida = Giatoida;
-                    model.Phanloai = Phanloai;
-                    model.Hientrang = Hientrang;
+                    model.Dvt = Dvt;                   
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvKhungGiaDm.Update(model);
                     _db.SaveChanges();
@@ -258,7 +234,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.danhmuc", "Edit"))
                 {
                     var model = _db.GiaSpDvKhungGiaDm.Where(t => t.Manhom == Manhom).ToList();
-                    model.ForEach(t => { t.Hientrang = Theodoi; });
+                    model.ForEach(t => { t.HienTrang = Theodoi; });
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Khóa/mở khóa danh mục thành công!" };
