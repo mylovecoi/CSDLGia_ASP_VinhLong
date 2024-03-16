@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 {
     public class GiaSpDvCuTheExcelController : Controller
     {
-        private readonly CSDLGiaDBContext _db;
 
-        public GiaSpDvCuTheExcelController(CSDLGiaDBContext db)
+        private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public GiaSpDvCuTheExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
-
-
         public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -34,12 +36,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Thoidiem = DateTime.Now,
                         Sheet = 1,
-                        LineStart = 4,
+                        LineStart = 2,
                         LineStop = 3000,
                     };
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    ViewData["Madv"] = Madv;
+                
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Excel.cshtml", model);
 
@@ -91,13 +93,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaSpDvCuTheCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe request, IFormFile Ipf1upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaSpDvCuTheCt>();
+                var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -105,34 +107,62 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     using (var package = new ExcelPackage(stream))
                     {
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        //ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[request.Sheet - 1];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                      
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaSpDvCuTheCt
+                            list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt
                             {
-                                Mahs = Mahs,      
-                                Trangthai = "CXD",
+
+                                Mahs = request.Mahs,
                                 Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
-                                Mota = worksheet.Cells[row, Int16.Parse(request.Mota)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Mota)].Value.ToString().Trim() : "",
-                                Mucgiatu = worksheet.Cells[row, Int16.Parse(request.Mucgiatu.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Mucgiatu.ToString())].Value) : 0,
-                                Mucgiaden = worksheet.Cells[row, Int16.Parse(request.Mucgiaden.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Mucgiaden.ToString())].Value) : 0,
+                                Manhom = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Tt = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Mota = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Mucgia1 = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Mucgia2 = worksheet.Cells[row, 5].Value != null ? worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+              
                             });
                         }
                     }
 
                 }
                 _db.GiaSpDvCuTheCt.AddRange(list_add);
+
+                if (Ipf1upload != null && Ipf1upload.Length > 0)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
+                    string extension = Path.GetExtension(Ipf1upload.FileName);
+                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaSpDvCuThe", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Ipf1upload.CopyToAsync(FileStream);
+                    }
+                    request.Ipf1 = filename;
+                }
+
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
+                {
+                    Mahs = request.Mahs,
+                    Madv = request.Madv,
+                    Soqd = request.Soqd,
+                    Thoidiem = request.Thoidiem,
+                    Ipf1 = request.Ipf1,
+
+                    Trangthai = "CHT",
+                    Congbo = "CHUACONGBO",
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+
+                _db.GiaSpDvCuThe.Add(model);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaSpDvCuTheExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Edit", "GiaSpDvCuThe", new { Mahs = request.Mahs });
             }
             else
             {
