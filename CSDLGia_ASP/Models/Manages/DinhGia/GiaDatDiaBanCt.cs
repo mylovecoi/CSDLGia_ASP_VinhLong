@@ -25,6 +25,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Hesok { get; set; }
         public double Sapxep { get; set; }
         public string Trangthai { get; set; }
+        public string HienThi { get; set; }
+        public string Style { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }

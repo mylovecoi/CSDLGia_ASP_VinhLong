@@ -28,8 +28,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
             {
                 Mahs = Mahs,
-                Maloaidat = Maloaidat,
-                Maxp = Maxp,
+                //Maloaidat = Maloaidat,
+                //Maxp = Maxp,
                 Khuvuc = Khuvuc,
                 Loaiduong = Loaiduong,
                 Diemdau = Diemdau,
@@ -93,25 +93,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
                 result += "<div class='row'>";
 
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Loại đất</label>";
-                result += "<select id='maloaidat_edit' name='maloaidat_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-                var dsloaidat = _db.DmLoaiDat.ToList();
-                foreach (var item in dsloaidat)
-                {
-                    result += "<option value ='" + @item.Maloaidat + "'>" + @item.Loaidat + "</ option >";
-                }
-                result += "</select>";
-                result += "</div>";
-                result += "</div>";
+                //result += "<div class='col-xl-6'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Loại đất</label>";
+                //result += "<select id='maloaidat_edit' name='maloaidat_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
+                //var dsloaidat = _db.DmLoaiDat.ToList();
+                //foreach (var item in dsloaidat)
+                //{
+                //    result += "<option value ='" + @item.Maloaidat + "'>" + @item.Loaidat + "</ option >";
+                //}
+                //result += "</select>";
+                //result += "</div>";
+                //result += "</div>";
 
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Xã phường</label>";
-                result += "<input type='text' id='xaphuong_edit' name='xaphuong_edit' value='" + model.Maxp + "' class='form-control'>";
-                result += "</div>";
-                result += "</div>";
+                //result += "<div class='col-xl-6'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Xã phường</label>";
+                //result += "<input type='text' id='xaphuong_edit' name='xaphuong_edit' value='" + model.Maxp + "' class='form-control'>";
+                //result += "</div>";
+                //result += "</div>";
 
                 result += "<div class='col-xl-10'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -219,8 +219,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             //Update dữ liệu mới
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             model.Id = Id;
-            model.Maloaidat = Maloaidat;
-            model.Maxp = Maxp;
+            //model.Maloaidat = Maloaidat;
+            //model.Maxp = Maxp;
             model.Loaiduong = Loaiduong;
             model.Diemdau = Diemdau;
             model.Diemcuoi = Diemcuoi;
@@ -275,11 +275,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                                     Updated_at = DateTime.Now,
 
 
-                                    Maloaidat = worksheet.Cells[row, Int16.Parse(Maloaidat)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Maloaidat)].Value.ToString().Trim() : "",
+                                    //Maloaidat = worksheet.Cells[row, Int16.Parse(Maloaidat)].Value.ToString() != null ?
+                                    //            worksheet.Cells[row, Int16.Parse(Maloaidat)].Value.ToString().Trim() : "",
 
-                                    Maxp = worksheet.Cells[row, Int16.Parse(Maxp)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Maxp)].Value.ToString().Trim() : "",
+                                    //Maxp = worksheet.Cells[row, Int16.Parse(Maxp)].Value.ToString() != null ?
+                                    //            worksheet.Cells[row, Int16.Parse(Maxp)].Value.ToString().Trim() : "",
 
                                     Khuvuc = worksheet.Cells[row, Int16.Parse(Khuvuc)].Value.ToString() != null ?
                                                 worksheet.Cells[row, Int16.Parse(Khuvuc)].Value.ToString().Trim() : "",
@@ -341,8 +341,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             result += "<tr style='text-align:center'>";
 
             result += "<th width='2%'>STT</th>";
-            result += "<th>Xã phường</th>";
-            result += "<th>Loại đất</th>";
+            //result += "<th>Xã phường</th>";
+            //result += "<th>Loại đất</th>";
             result += "<th>Khu vực tên đường phố</th>";
             result += "<th>Địa giới</th>";
             result += "<th>VT1</th>";
@@ -360,8 +360,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "<tr>";
 
                 result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td style='text-align:center'>" + item.Maxp + "</td>";
-                result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
+                //result += "<td style='text-align:center'>" + item.Maxp + "</td>";
+                //result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
                 result += "<td style='text-align:center'>" + item.Khuvuc + "</td>";
                 result += "<td style='text-align:center'>" + item.Diemdau + " " + "đến" + " " + item.Diemcuoi + "</td>";
                 result += "<td style='text-align:center'>" + item.Giavt1 + "</td>";

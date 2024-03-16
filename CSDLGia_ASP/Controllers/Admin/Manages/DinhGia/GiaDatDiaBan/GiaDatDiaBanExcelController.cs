@@ -1,11 +1,13 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,22 +30,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
-                    { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
-                        LineStart = 2,
-                        LineStop = 1000,
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
+                    {
+                        Madv = Madv,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Thoidiem = DateTime.Now,
                         Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 3000,
                     };
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-                    ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+
+                    ViewData["Title"] = "Bảng giá các loại đất";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_giadatdiaban";
+                    ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Excels/Excel.cshtml", model);
 
                 }
@@ -93,13 +94,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -107,36 +108,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     using (var package = new ExcelPackage(stream))
                     {
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        //ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[request.Sheet - 1];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        int stt = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                             {
-                                Mahs = Mahs,
+                                Mahs = request.Mahs,
+                                Mahs = request.Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+                                Sapxep = worksheet.Cells[row, 1].Value != null ?  Helpers.ConvertStrToDb(worksheet.Cells[row, 1].Value.ToString().Trim()) : 1,
+                                Mota = worksheet.Cells[row, 2].Value != null ?  worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Diemdau = worksheet.Cells[row, 3].Value != null ?  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Diemcuoi = worksheet.Cells[row, 4].Value != null ?  worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Hesok = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row,5].Value.ToString().Trim()) : 0,
+                                Giavt1 = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,
+                                Giavt2 = worksheet.Cells[row, 7].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString().Trim()) : 0,
+                                Giavt3 = worksheet.Cells[row, 8].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString().Trim()) : 0,
+                                Giavt4 = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
+                                Giavt5 = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,                                
                             });
                         }
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+
+                _db.GiaDatDiaBanCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "GiaDatDiaBan", new { Madv = request.Madv, Mahs = request.Mahs });
             }
             else
             {

@@ -11,6 +11,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Key]
         public int Id { get; set; }
         public string Mahs { get; set; }
+        public string SoQDTT { get; set; }//Lấy số quyết định trong bảng GiaDatDiaBanTt
         public string Madiaban { get; set; }
         public string Soqd { get; set; }
         public string Nam { get; set; }
@@ -45,6 +46,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
+        public string GhiChu { get; set; }
+        public string MaLoaiDat { get; set; }
         [NotMapped]
         public List<GiaDatDiaBanCt> GiaDatDiaBanCt { get; set; }
         [NotMapped]
@@ -61,5 +64,16 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public IFormFile Ipf1upload { get; set; }
         [NotMapped]
         public string Khuvuc { get; set; }
+        [NotMapped]
+        public string NoiDungQDTT { get; set; }
+        //Nhận excel
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
     }
 }
