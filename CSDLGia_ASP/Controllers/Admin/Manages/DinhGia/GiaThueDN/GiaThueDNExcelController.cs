@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         public IActionResult Index(string Madv)
         {
-            var model = new GiaThueMatDatMatNuocCt
+            var model = new GiaThueMatDatMatNuoc
             {
                 Vitri = "1",
                 Diemdau = "2",
@@ -78,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaThueMatDatMatNuocCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaThueMatDatMatNuoc request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -95,12 +95,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                       
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaThueMatDatMatNuocCt
                             {
-                                Mahs = Mahs,
+                                Mahs = request.Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
@@ -120,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                 Dientich = worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value != null ?
                                            Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value) : 0,
 
-                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
+                                Dongia1 = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
                                            Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
 
                             });
@@ -130,7 +130,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 _db.GiaThueMatDatMatNuocCt.AddRange(list_add);
                 _db.SaveChanges();
 
-                return RedirectToAction("Create", "GiaThueDNExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Edit", "GiaThueDN", new { Mahs = request.Mahs });
             }
             else
             {

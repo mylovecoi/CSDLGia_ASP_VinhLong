@@ -185,6 +185,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaThueMatDatMatNuoc> GiaThueMatDatMatNuoc { get; set; }
         public DbSet<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
         public DbSet<GiaThueMatDatMatNuocDm> GiaThueMatDatMatNuocDm { get; set; }
+        public DbSet<GiaThueMatDatMatNuocNhom> GiaThueMatDatMatNuocNhom { get; set; }
 
         public DbSet<GiaTaiSanTths> GiaTaiSanTths { get; set; }
         public DbSet<GiaTaiSanTthsCt> GiaTaiSanTthsCt { get; set; }
