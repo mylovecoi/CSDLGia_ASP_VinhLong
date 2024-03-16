@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
     public class GiaSpDvKhungExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-        public GiaSpDvKhungExcelController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public GiaSpDvKhungExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
-
 
         public IActionResult Index(string Madv)
         {
@@ -27,19 +31,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Create"))
                 {
-                    var model = new GiaSpDvKhungGiaCt
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
                     {
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Phanloaidv = "3",
-                        Dvt = "4",
-                        Giatoithieu = 5,
-                        Giatoida = 6,
-
-                        LineStart = 2,
-                        LineStop = 1000,
+                        Madv = Madv,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Thoidiem = DateTime.Now,
                         Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 3000,
                     };
+
                     ViewData["MenuLv1"] = "menu_spdvkhunggia";
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_thongtin";
                     ViewData["Madv"] = Madv;
@@ -93,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaSpDvKhungGiaCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -103,6 +104,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
+
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
+                    {
+                        Mahs = request.Mahs,
+                        Madv = request.Madv,
+                        Manhom = request.Manhom,
+                        Madiaban = request.Madiaban,
+                        Soqd = request.Soqd,
+                        Ghichu = request.Ghichu,
+                        Thoidiem = request.Thoidiem,
+                        Ttqd = request.Ttqd,
+                        Ipf1 = request.Ipf1,
+                        Trangthai = "CHT",
+                        Congbo = "CHUACONGBO",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.GiaSpDvKhungGia.Add(model);
+
+                    //Xử lý nhận excel
                     await request.FormFile.CopyToAsync(stream);
                     using (var package = new ExcelPackage(stream))
                     {
@@ -110,33 +144,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+
+                        int stt = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-  
-
                             list_add.Add(new GiaSpDvKhungGiaCt
                             {
-                              
-                                Mahs = Mahs,
-                                Trangthai = "CXD",
+                                Mahs = request.Mahs,
+                                SapXep = stt++,
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-
-                                Phanloaidv = worksheet.Cells[row, Int16.Parse(request.Phanloaidv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Phanloaidv)].Value.ToString().Trim() : "",
-
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-
-                                Giatoithieu = worksheet.Cells[row, Int16.Parse(request.Giatoithieu.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giatoithieu.ToString())].Value) : 0,
-
-                                Giatoida = worksheet.Cells[row, Int16.Parse(request.Giatoida.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giatoida.ToString())].Value) : 0,
+                                HienThi = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Manhom = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Tenspdv = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 4].Value != null ?worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Giatoithieu = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,
+                                Giatoida = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,                               
                             });
                         }
                     }
@@ -144,7 +167,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 }
                 _db.GiaSpDvKhungGiaCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaSpDvKhungExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Edit", "GiaSpDvKhungGia", new { Mahs = request.Mahs });
             }
             else
             {

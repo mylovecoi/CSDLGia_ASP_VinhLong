@@ -20,7 +20,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaDatDiaBanExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+    <form asp-controller="GiaDatDiaBanExcel" asp-action="Import" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
         <input hidden asp-for="Madv">
         <input hidden asp-for="Mahs">
         <div class="card-body">
@@ -82,7 +82,6 @@
                         <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
-
             </div>
 
             <div class="row">
@@ -133,7 +132,6 @@
                 <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
             </div>
     </form>
-    <!--end::Form-->
     <!--end::Form-->
 </div>
 @section Scripts {
