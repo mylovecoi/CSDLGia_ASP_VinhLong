@@ -112,7 +112,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
                 {
-                    var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Ghichu == "CXD").ToList();
+                    var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv).ToList();
                     if (modelcxd != null)
                     {
                         _db.GiaPhiLePhiCt.RemoveRange(modelcxd);
@@ -131,9 +131,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     {
                         chitiet.Add(new GiaPhiLePhiCt()
                         {
+                            Madv = model.Madv,
                             Mahs = model.Mahs,
                             Phanloai = item.Phanloai,
                             Ptcp = item.Tennhom,
+                            Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -267,7 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     {
                         foreach (var item in modelct)
                         {
-                            item.Ghichu = "XD";
+                            item.Trangthai = "XD";
                         }
                     }
                     _db.GiaPhiLePhiCt.UpdateRange(modelct);
