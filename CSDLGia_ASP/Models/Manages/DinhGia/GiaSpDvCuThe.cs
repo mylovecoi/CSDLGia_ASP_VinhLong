@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ttqd { get; set; }
         public string Congbo { get; set; }
         public string Thaotac { get; set; }
-        public string Ghichu { get; set; }
+
         public string Lichsu { get; set; }
         public string Tinhtrang { get; set; }
         public string Phanloai { get; set; }
@@ -56,6 +56,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
         public string GhiChu { get; set; }
+        public string Noidung { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
         [NotMapped]
@@ -79,6 +80,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int LineStart { get; set; }
         [NotMapped]
         public int LineStop { get; set; }
+
+
 
 
 

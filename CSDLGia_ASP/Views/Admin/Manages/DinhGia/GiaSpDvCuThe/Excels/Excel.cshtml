@@ -20,7 +20,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaDatDiaBanExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+    <form asp-controller="GiaSpDvCuTheExcel" asp-action="Import" method="post" enctype="multipart/form-data">
         <input hidden asp-for="Madv">
         <input hidden asp-for="Mahs">
         <div class="card-body">
@@ -39,7 +39,7 @@
                 <div class="col-xl-12">
                     <div class="form-group fv-plugins-icon-container">
                         <label>Số quyết định</label>
-                        <input type="date" class="form-control" asp-for="Soqd" />
+                        <input type="text" class="form-control" id="soqd" name="soqd" />
                     </div>
                 </div>
             </div>
@@ -47,11 +47,18 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem"  />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung chi tiết</label>
+                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xl-2">
                     <div class="form-group">
@@ -59,17 +66,8 @@
                         <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
-
             </div>
 
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>

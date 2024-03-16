@@ -311,7 +311,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         modelExcel.Soqd = request.Soqd;
                         modelExcel.Thoidiem = request.Thoidiem;
                         modelExcel.Thongtin = request.Thongtin;
-                        modelExcel.Ghichu = request.Ghichu;
+                        modelExcel.GhiChu = request.GhiChu;
                         modelExcel.CodeExcel = request.CodeExcel;
                         modelExcel.Updated_at = DateTime.Now;
                         modelExcel.Ipf1 = request.Ipf1;
@@ -338,7 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Manhom = request.Manhom,
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
-                        Ghichu = request.Ghichu,
+                        GhiChu = request.GhiChu,
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
                         Ipf1 = request.Ipf1,
@@ -591,7 +591,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     model.Thoidiem = request.Thoidiem;
                     model.Thongtin = request.Thongtin;
                     model.Ipf1 = request.Ipf1;
-                    model.Ghichu = request.Ghichu;
+                    model.GhiChu = request.GhiChu;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCuThe.Update(model);
                     _db.SaveChanges();
@@ -639,7 +639,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = model.Mahs,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
-                        Ghichu = model.Ghichu,
+                        Ghichu = model.GhiChu,
                     };
 
                     var modeldv = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Madv);
