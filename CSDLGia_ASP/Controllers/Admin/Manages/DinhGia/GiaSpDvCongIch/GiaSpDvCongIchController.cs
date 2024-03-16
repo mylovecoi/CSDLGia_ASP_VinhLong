@@ -358,9 +358,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var model_ct = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == model.Mahs);
-
                     model.GiaSpDvCongIchCt = model_ct.ToList();
-
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;

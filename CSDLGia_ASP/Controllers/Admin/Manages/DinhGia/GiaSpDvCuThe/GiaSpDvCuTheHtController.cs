@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -340,7 +341,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     _db.GiaSpDvCuThe.Update(model);
                     _db.SaveChanges();
+                    // Xử lý phần lịch sử hồ sơ 
 
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "HT",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
                     return RedirectToAction("Index", "GiaSpDvCuThe", new { model.Mahs, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -368,6 +383,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     _db.GiaSpDvCuThe.Update(model);
                     _db.SaveChanges();
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs_cb,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CB",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
 
                     return RedirectToAction("Index", "GiaSpDvCuTheHt");
                 }
@@ -480,6 +511,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.GiaSpDvCuThe.Update(model);
                     _db.SaveChanges();
 
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThongTin = "Thay đổi thông tin hồ sơ",
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "HHT",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
                     return RedirectToAction("Index", "GiaSpDvCuTheHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
                 }
                 else

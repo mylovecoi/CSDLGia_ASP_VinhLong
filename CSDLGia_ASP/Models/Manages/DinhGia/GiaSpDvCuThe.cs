@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -54,7 +55,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
-
+        public string GhiChu { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
         [NotMapped]
@@ -67,5 +68,21 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tencqcq { get; set; }
         [NotMapped]
         public string Level { get; set; }
+
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
+
+
+
+
+
     }
 }

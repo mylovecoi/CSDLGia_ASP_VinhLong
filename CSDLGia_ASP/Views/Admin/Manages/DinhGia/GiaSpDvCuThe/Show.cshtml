@@ -4,10 +4,11 @@
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
+    var dmNhomSpDvCuThe = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
 }
 <br />
 <br />
-@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaSpDvCuThe;
+
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
@@ -22,7 +23,7 @@
     }
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -36,43 +37,79 @@
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<div class="card card-custom" style="border: 1px solid #60aee4;">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+            </h3>
+        </div>
 
-    <thead>
-        <tr >
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Sản phẩm dịch vụ</th>
-            <th style="text-align:center">Đơn vị tính</th> 
-            <th style="text-align:center">Mức giá từ</th>
-            <th style="text-align:center">Mức giá đến</th>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <div class="card-body" id="frm_data">
+            @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
 
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        {
-            @if (Model.GiaSpDvCuTheCt != null)
             {
-                @foreach (var item in Model.GiaSpDvCuTheCt)
+                @foreach (var dm in dmNhomSpDvCuThe)
                 {
-                    <tr>
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:left">
-                                @foreach (var ds in spcuthedanhmuc)
-                                {
-                                    @if (item.Maspdv == ds.Maspdv)
-                                    {
-                                        @ds.Tenspdv
-                                    }
-                                }
-                        </td>
-                        <td style="text-align:left">@item.Mota</td>
-                        <td style="text-align:center">@item.Mucgia1</td>
-                        <td style="text-align:center">@item.Mucgia2</td>
-                    </tr>
-                }
-            }
-        }
-    </tbody>
+                    @if (manhom == dm.Manhom)
+                    {
+                        <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
+                    }
 
-</table>
+                }
+                <table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" dulieubang">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>STT</th>
+                            <th>Tên sản phẩm dịch vụ</th>
+                            <th>Đơn vị tính</th>
+                            <th>Mức giá từ</th>
+                            <th>Mức giá đến</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @if (Model.GiaSpDvCuTheCt != null)
+                            {
+                                @foreach (var item in Model.GiaSpDvCuTheCt)
+                                {
+                                    <tr>
+                                        <td style="text-align:center">@(record_id++)</td>
+                                        <td style="text-align:left">
+                                            @foreach (var ds in spcuthedanhmuc)
+                                            {
+                                                @if (item.Maspdv == ds.Maspdv)
+                                                {
+                                                    @ds.Tenspdv
+                                                }
+                                            }
+                                        </td>
+                                        <td style="text-align:left">@item.Dvt</td>
+                                        <td style="text-align:center">@item.Mucgia1</td>
+                                        <td style="text-align:center">@item.Mucgia2</td>
+                                        <td>
+                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                <i class="icon-lg la la-edit text-primary"></i>
+                                            </button>
+                                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                    onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
+                                                <i class="icon-lg la la-trash text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            <!--end: Datatable-->
+        </div>
+        <!--end: Datatable-->
+    </div>
+</div>
