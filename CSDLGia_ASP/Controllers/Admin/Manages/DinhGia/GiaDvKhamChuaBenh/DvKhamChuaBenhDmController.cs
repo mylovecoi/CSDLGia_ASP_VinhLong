@@ -62,7 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 Manhom = Manhom,
                 Madichvu = Madichvu,
-                Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
+                Maspdv = Manhom + DateTime.Now.ToString("yyMMddfffssmmHH"),
                 Tenspdv = Tenspdv,
                 Dvt = Dvt,
                 Ghichu = Ghichu,
