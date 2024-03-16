@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string manhom, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, string sapxep)
+        public JsonResult Store(string manhom, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, int sapxep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -182,7 +182,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, string sapxep)
+        public JsonResult Update(int Id, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, int sapxep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

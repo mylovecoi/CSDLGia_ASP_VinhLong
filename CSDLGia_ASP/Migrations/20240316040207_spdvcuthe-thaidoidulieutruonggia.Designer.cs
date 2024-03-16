@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240316040207_spdvcuthe-thaidoidulieutruonggia")]
+    partial class spdvcuthethaidoidulieutruonggia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5567,15 +5569,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Madoituong")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -5614,12 +5607,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<int>("STT")
                         .HasColumnType("int");
-
-                    b.Property<string>("SttHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
@@ -6079,12 +6066,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<int>("Stt")
                         .HasColumnType("int");
-
-                    b.Property<string>("SttHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tennhom")
                         .HasColumnType("nvarchar(max)");
