@@ -341,38 +341,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Edit"))
                 {
                     var model = _db.GiaSpDvKhungGia.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_ct = _db.GiaSpDvKhungGiaCt.FirstOrDefault(t => t.Mahs == Mahs);
+                    var model_ct = _db.GiaSpDvKhungGiaCt.Where(t => t.Mahs == Mahs);
 
-                    var model_new = new VMDinhGiaSpDvKhungGia
-                    {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Soqd = model.Soqd,
-                        Ttqd = model.Ttqd,
-                        Mota = model_ct.Mota,
-                        Ipf1 = model.Ipf1,
-                        Giatoida = model_ct.Giatoida,
-                        Giatoithieu = model_ct.Giatoithieu,
-                        Phanloaidv = model_ct.Phanloaidv,
-                        Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu,
-                        Dvt = model_ct.Dvt,
-                        Maspdv = model_ct.Maspdv,
-                        Manhom = model.Manhom,
-
-                    };
-                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom;
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["PhanLoaiDichVu"] = _db.GiaSpDvKhungGiaCt.ToList();
+                    model.GiaSpDvKhungGiaCt = model_ct.ToList();                    
                     ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ khung giá";
-                    ViewData["Ipf1"] = model.Ipf1;
-                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
-                    ViewData["MenuLv2"] = "menu_spdvkhunggia_thongtin";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Show.cshtml", model);
                 }
                 else
                 {

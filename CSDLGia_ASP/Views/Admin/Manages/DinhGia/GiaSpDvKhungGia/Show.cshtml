@@ -1,38 +1,15 @@
-﻿@{
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia;
+@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    int record_id = 1;
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dsdvt = ViewData["Donvitinh"];
-    var giaSpDvCuTheNhom = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
 }
-<br />
-<br />
-@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaSpDvKhungGia;
-
-<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ GIÁ SẢN PHẨM DỊCH VỤ THEO KHUNG GIÁ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
+
 <p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
-</p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
+    Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem) </p>
+<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Ttqd</p>
 <p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
+    Cơ quan tiếp nhận: @Model.Tencqcq
 </p>
 
 <br />
@@ -42,24 +19,27 @@
     <thead>
         <tr style="text-align:center">
             <th style="text-align:center">STT</th>
-            <th style="text-align:center">Nhóm sản phẩm dịch vụ khung giá</th>
-            <th style="text-align:center">Đối tượng cụ thể</th>
+            <th style="text-align:center">Đối tượng thu</th>
             <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Mức giá tối thiểu</th>
-            <th style="text-align:center">Mức giá tối đa</th>
+            <th style="text-align:center">Mức giá dịch vụ <br /> (đã bao gồm thuế VAT)</th>
         </tr>
     </thead>
     <tbody>
-
-        <tr>
-            <td class="text-center">@(record_id++)</td>
-            <td class="text-center" style="@(Model.Manhom == "240130164808" ? "font-style:italic;" : "")">@Model.Manhom</td>
-            <td class="text-center">@Model.Phanloaidv</td>
-            <td class="text-center">@Model.Dvt</td>
-            <td class="text-center">@Model.Giatoithieu</td>
-            <td class="text-center">@Model.Giatoida</td>
-        </tr>
-
+            @if (Model != null)
+            {
+                @if (Model.GiaSpDvKhungGiaCt != null)
+                {
+                    @foreach (var item in Model.GiaSpDvKhungGiaCt.OrderBy(x => x.SapXep))
+                    {
+                    <tr>
+                        <td style="text-align:center">@item.SapXep</td>
+                        <td class="active">@item.Tenspdv</td>
+                        <td style="text-align:center">@item.Dvt</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoithieu) @(item.Giatoithieu > 0 ? " - " : "") @Helpers.ConvertDbToStr(item.Giatoida)</td>
+                    </tr>
+                    }
+                }
+            }
     </tbody>
 </table>
 
