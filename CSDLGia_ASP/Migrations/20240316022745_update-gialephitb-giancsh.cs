@@ -112,6 +112,16 @@ namespace CSDLGia_ASP.Migrations
                 table: "GiaNuocShCt",
                 type: "nvarchar(max)",
                 nullable: true);
+            migrationBuilder.AddColumn<string>(
+                name: "HienThi",
+                table: "GiaDatDiaBanCt",
+                type: "nvarchar(max)",
+                nullable: true);
+            migrationBuilder.AddColumn<string>(
+                name: "Style",
+                table: "GiaDatDiaBanCt",
+                type: "nvarchar(max)",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -183,6 +193,12 @@ namespace CSDLGia_ASP.Migrations
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "int");
+            migrationBuilder.DropColumn(
+                name: "HienThi",
+                table: "GiaDatDiaBanCt");
+            migrationBuilder.DropColumn(
+                name: "Style",
+                table: "GiaDatDiaBanCt");
         }
     }
 }
