@@ -19,6 +19,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string HienThi { get; set; }//HIện thị dữ liệu ra màn hình
         public int Stt { get; set; } //Số thứ tự theo mã gốc
         public int CapDo { get; set; }//Bắt đầu từ 1
+        public string SttHienthi { get; set; }
+        public string Style { get; set; }
 
     }
 }
