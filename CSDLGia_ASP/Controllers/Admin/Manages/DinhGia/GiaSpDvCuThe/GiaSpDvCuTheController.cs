@@ -170,12 +170,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         chitiet.Add(new GiaSpDvCuTheCt()
                         {
                             Mahs = model.Mahs,
-              
-                            Tendv = item.Tenspdv,
                             Dvt = item.Dvt,
-                       
-                            Trangthai = "CXD",
+                            Tt = item.Tt,
+                            Mucgia1 = item.Mucgia1,
+                            Mucgia2 = item.Mucgia2,
+                            Manhom = model.Manhom,
                             Maspdv = item.Maspdv,
+
+                            Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -709,8 +711,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Thoidiem = giaspdvcuthe.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Soqd = giaspdvcuthe.Soqd,
-                                     Mucgiatu = giaspdvcuthect.Mucgiatu,
-                                     Mucgiaden = giaspdvcuthect.Mucgiaden,
+                                     Mucgia1 = giaspdvcuthect.Mucgia1,
+                                     Mucgia2 = giaspdvcuthect.Mucgia2,
                                      Mota = giaspdvcuthect.Mota,
                                      Maspdv = giaspdvcuthect.Maspdv,
                                  });
@@ -738,14 +740,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         model = model.Where(t => t.Mota == tenhanghoa);
                     }
 
-                    if (beginPrice != 0)
-                    {
-                        model = model.Where(t => t.Mucgiatu >= beginPrice);
-                    }
-                    if (endPrice != 0)
-                    {
-                        model = model.Where(t => t.Mucgiaden <= endPrice);
-                    }
+                
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
