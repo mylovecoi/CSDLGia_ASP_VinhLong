@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CSDLGia_ASP.Helper
 {
@@ -743,15 +744,16 @@ namespace CSDLGia_ASP.Helper
 
         public static double ConvertStrToDb(string str)
         {
-            if (str == "")
+            double val = 0;
+            if (!string.IsNullOrEmpty(str))
             {
-                return 0;
+                string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                if (double.TryParse(numericString, out double result))
+                {
+                    val = result;
+                }
             }
-            else
-            {
-                double db = double.Parse(str.Replace(",", ""));
-                return db;
-            }
+           return val;
         }
 
         public static string ConvertYearToStr(int year)

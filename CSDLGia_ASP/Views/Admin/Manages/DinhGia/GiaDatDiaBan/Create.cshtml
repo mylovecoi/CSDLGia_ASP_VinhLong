@@ -1,6 +1,6 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"]; // truyền sang từ ViewData
-    var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"]; // truyền sang từ ViewData
+                                                                     //var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
 }
 
@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -28,7 +28,7 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                HỒ SƠ GIÁ ĐẤT THEO CÔNG BỐ
+                HỒ SƠ GIÁ ĐẤT ĐỊA BÀN THEO CÔNG BỐ
             </h3>
         </div>
     </div>
@@ -45,13 +45,15 @@
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Theo thông tư quyết định</label>
-                        <input type="text" class="form-control" asp-for="Noidung" id="Noidung" />
+                        <input type="text" class="form-control" value="@Model.NoiDungQDTT" />
                     </div>
                     <div hidden class="form-group">
                         <label hidden>Theo thông tư quyết định</label>
-                        <input hidden type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input hidden type="text" class="form-control" asp-for="SoQDTT" />
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
@@ -69,6 +71,16 @@
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung chi tiết</label>
+                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xl-2">
                     <div class="form-group">
                         <label>File đính kèm</label>
@@ -78,6 +90,15 @@
 
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
             <div class="card-footer" style="text-align:center">
                 <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                     <i class="la la-reply"></i>Quay lại
@@ -93,8 +114,8 @@
 
 
 
-@section Scripts{
+@section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        //await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

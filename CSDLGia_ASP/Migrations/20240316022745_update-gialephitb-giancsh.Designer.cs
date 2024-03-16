@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240316022745_update-gialephitb-giancsh")]
+    partial class updategialephitbgiancsh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1134,9 +1136,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhanLoaiHoSo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SoQDTT")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
@@ -7025,20 +7024,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Maspdv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Mucgia1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Mucgia2")
-                        .HasColumnType("float");
 
                     b.Property<double>("Mucgiaden")
                         .HasColumnType("float");
@@ -7050,9 +7040,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Trangthai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
@@ -7088,8 +7075,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mucgia2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sapxep")
-                        .HasColumnType("int");
+                    b.Property<string>("Sapxep")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");

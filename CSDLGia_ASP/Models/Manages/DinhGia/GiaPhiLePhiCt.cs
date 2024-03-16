@@ -14,9 +14,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Phantram { get; set; }
         public double Mucthutu { get; set; }
         public double Mucthuden { get; set; }
+        public double Giatu { get; set; }
+        public double Giaden { get; set; }
         public string Ghichu { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban1 = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan1"];
+    var dsdiabanhuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
     // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDv"];
     // var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
@@ -54,8 +54,8 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-               
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatDiaBanExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -87,7 +87,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị tạo hồ sơ</label>
                     <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                        @foreach (var item in dsdiaban1)
+                        @foreach (var item in dsdiaban)
                         {
                             <!option value="@item.MaDiaBan" @((string)ViewData["madiaban"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
                         }
@@ -228,7 +228,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Địa bàn</label>
                                 <select id="madiaban" name="madiaban" class="form-control">
-                                    @foreach (var db in dsdiaban1)
+                                    @foreach (var db in dsdiabanhuyen)
                                     {
                                         <option value="@db.MaDiaBan">@db.TenDiaBan</option>
                                     }
