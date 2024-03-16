@@ -77,9 +77,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-
                         ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                           ViewData["MenuLv1"] = "menu_giakhac";
+                        ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dglp";
                         ViewData["MenuLv3"] = "menu_dglp_tt";
                         return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Index.cshtml", model);
@@ -148,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                       ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_tt";
 
@@ -322,7 +321,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
 
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
-                       ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_tt";
 
@@ -537,7 +536,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
                     ViewData["Title"] = " Thông tin hồ sơ lệ phí trước bạ";
-                       ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/TimKiem/Index.cshtml");
@@ -608,7 +607,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
 
                     ViewData["Title"] = " Thông tin hồ sơ lệ phí trước bạ";
-                       ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/TimKiem/Result.cshtml", model_join);
