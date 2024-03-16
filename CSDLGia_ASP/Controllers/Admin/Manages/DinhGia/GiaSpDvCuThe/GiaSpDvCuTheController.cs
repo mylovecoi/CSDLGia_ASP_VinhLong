@@ -152,6 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
 
                     // Khi bấm đồng ý trong moda thì add dữ liệu GiaSpDvCuTheDm -> bản GiaSpDvCuTheCt
+
                     if (Manhom != "all")
                     {
                         danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
@@ -162,7 +163,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     }
 
 
-                    var chitiet = new List<GiaSpDvCuTheCt>();
+                   var chitiet = new List<GiaSpDvCuTheCt>();
 
 
                     foreach (var item in danhmuc)
@@ -174,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                             Tt = item.Tt,
                             Mucgia1 = item.Mucgia1,
                             Mucgia2 = item.Mucgia2,
-                            Manhom = model.Manhom,
+                            Manhom = item.Manhom,
                             Maspdv = item.Maspdv,
 
                             Trangthai = "CXD",
@@ -185,15 +186,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.GiaSpDvCuTheCt.AddRange(chitiet);
                     _db.SaveChanges();
 
-                    var groupmanhom = _db.GiaSpDvCongIchDm.Select(item => item.Manhom);
+
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom1 = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom2 = _db.GiaSpDvCuTheCt.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).Distinct().ToList();
+
+                    List<string> groupmanhom;
+
+                    if (Manhom != "all")
+                    {
+                        groupmanhom = groupmanhom2;
+                    }
+                    else
+                    {
+                        groupmanhom = groupmanhom1;
+                    }
+
                     ViewData["GroupMaNhom"] = groupmanhom;
+
+                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                    // End xử lý phần Forech theo mã nhóm khi chọn
 
                     model.GiaSpDvCuTheCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                  
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
@@ -396,18 +417,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
 
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+
+                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
+                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+
+                    // End xử lý phần Forech theo mã nhóm khi chọn
+
                     model.GiaSpDvCuTheCt = model_ct.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    if (model.CodeExcel != "")
-                    {
-                        return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/NhanExcel.cshtml", model);
-                    }
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin"; 
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Modify.cshtml", model);
 
                 }

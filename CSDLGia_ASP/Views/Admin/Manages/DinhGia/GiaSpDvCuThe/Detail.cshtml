@@ -4,8 +4,8 @@
     int record_id = 1;
     var mahs = ViewData["Mahs"];
     var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
+    var dmNhomSpDvCuThe = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
 }
-
 
 @*Nhận khi thêm*@
 <div class="mb-3 font-weight-bold font-size-lg">
@@ -17,61 +17,78 @@
             <h3 class="card-label">
             </h3>
         </div>
-     
+
     </div>
     <hr />
     <div class="card-body" id="frm_data">
-        <table class="table table-striped table-bordered table-hover" id="datatable_4">
-            <thead>
-                <tr style="text-align:center">
-                    <th>STT</th>
-                    <th>Tên sản phẩm dịch vụ</th>
-                    <th>Đơn vị tính</th>
-                    <th>Mức giá từ</th>
-                    <th>Mức giá đến</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
+        <div class="card-body" id="frm_data">
+            @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
+
+            {
+                @foreach (var dm in dmNhomSpDvCuThe)
                 {
-
-
-                    @if (Model.GiaSpDvCuTheCt != null)
+                    @if (manhom == dm.Manhom)
                     {
-                        @foreach (var item in Model.GiaSpDvCuTheCt)
-                        {
-                            <tr>
-                                <td style="text-align:center">@(record_id++)</td>
-                                <td style="text-align:left">
-                                    @foreach (var ds in spcuthedanhmuc)
-                                    {
-                                        @if (item.Maspdv == ds.Maspdv)
-                                        {
-                                            @ds.Tenspdv
-                                        }
-                                    }
-                                </td>
-                                <td style="text-align:left" >@item.Dvt</td>
-                                <td style="text-align:center" >@item.Mucgia1</td>
-                                <td style="text-align:center">@item.Mucgia2</td>
-                                <td>
-                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </button>
-                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                            onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
-                                        <i class="icon-lg la la-trash text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
+                        <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
                     }
+
                 }
-            </tbody>
-        </table>
-        
+
+                <table class="table table-striped table-bordered table-hover dulieubang">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>STT</th>
+                            <th>Tên sản phẩm dịch vụ</th>
+                            <th>Đơn vị tính</th>
+                            <th>Mức giá từ</th>
+                            <th>Mức giá đến</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @if (Model.GiaSpDvCuTheCt != null)
+                            {
+                                @foreach (var item in Model.GiaSpDvCuTheCt)
+                                {
+                                    <tr>
+                                        <td style="text-align:center">@(record_id++)</td>
+                                        <td style="text-align:left">
+                                            @foreach (var ds in spcuthedanhmuc)
+                                            {
+                                                @if (item.Maspdv == ds.Maspdv)
+                                                {
+                                                    @ds.Tenspdv
+                                                }
+                                            }
+                                        </td>
+                                        <td style="text-align:left">@item.Dvt</td>
+                                        <td style="text-align:center">@item.Mucgia1</td>
+                                        <td style="text-align:center">@item.Mucgia2</td>
+                                        <td>
+                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                <i class="icon-lg la la-edit text-primary"></i>
+                                            </button>
+                                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                    onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
+                                                <i class="icon-lg la la-trash text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            <!--end: Datatable-->
+        </div>
+
+
+
+
         <!--end: Datatable-->
     </div>
 </div>
