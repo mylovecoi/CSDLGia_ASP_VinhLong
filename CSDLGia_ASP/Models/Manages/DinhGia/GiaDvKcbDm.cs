@@ -15,6 +15,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Hientrang { get; set; }
         public string Ghichu { get; set; }
         public int Sapxep { get; set; }
+        public string Hienthi { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Manhom { get; set; }

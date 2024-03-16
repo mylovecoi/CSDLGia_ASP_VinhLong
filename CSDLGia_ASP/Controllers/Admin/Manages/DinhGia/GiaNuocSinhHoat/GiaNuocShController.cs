@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Create"))
                 {
-                    var check = _db.GiaNuocShCt.Where(t => t.Trangthai == "CXD");
+                    var check = _db.GiaNuocShCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
                     if (check != null)
                     {
                         _db.GiaNuocShCt.RemoveRange(check);
@@ -149,6 +149,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     {
                         ct.Add(new GiaNuocShCt()
                         {
+                            Madv = model.Madv,
                             Mahs = model.Mahs,
                             Madoituong = item.Madoituong,
                             Doituongsd = item.Doituongsd,

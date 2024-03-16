@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240316084657_update-gialephitrcba")]
+    partial class updategialephitrcba
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2847,9 +2849,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ghichu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Hienthi")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hientrang")
@@ -6133,36 +6132,6 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("GiaPhiLePhiDm");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tennhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaPhiLePhiNhom");
-                });
-
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaRung", b =>
                 {
                     b.Property<int>("Id")
@@ -7397,9 +7366,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Giatoithieu")
                         .HasColumnType("float");
 
-                    b.Property<string>("HienThi")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -7413,12 +7379,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloaidv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SapXep")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Trangthai")
@@ -7439,28 +7399,25 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Capdo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HienThi")
+                    b.Property<double>("Giatoida")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giatoithieu")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Hientrang")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HienTrang")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Magoc")
+                    b.Property<string>("Level")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manhom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maso")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maspdv")
@@ -7469,11 +7426,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SapXep")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Style")
+                    b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Stt")
+                        .HasColumnType("float");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");

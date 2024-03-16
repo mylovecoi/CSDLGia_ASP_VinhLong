@@ -53,6 +53,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
+        [Route("DanhMucDvKcb/GetMaSapXep")]
+        [HttpPost]
+        public JsonResult GetMaSapXep(string Manhom)
+        {
+            var i = 0;
+            var data = _db.GiaDvKcbDm.Where(t => t.Manhom == Manhom);
+
+            if (data.Any())
+            {
+                i = data.Max(x => x.Sapxep);
+            }
+
+            return Json(i);
+        }
 
         [Route("DanhMucDvKcb/Store")]
         [HttpPost]
@@ -62,7 +76,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 Manhom = Manhom,
                 Madichvu = Madichvu,
-                Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
+                Maspdv = Manhom + DateTime.Now.ToString("yyMMddfffssmmHH"),
                 Tenspdv = Tenspdv,
                 Dvt = Dvt,
                 Ghichu = Ghichu,

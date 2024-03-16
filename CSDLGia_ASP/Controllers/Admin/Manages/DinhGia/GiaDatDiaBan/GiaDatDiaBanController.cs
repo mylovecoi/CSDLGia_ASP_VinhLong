@@ -27,26 +27,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("GiaDatDiaBan")]
         [HttpGet]
-        public IActionResult Index(string Nam, string madiaban)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "T")
                 {
-                    // Check madiaban
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "madiaban") != null)
+                    //Check Madv lần đầu tiên nếu không có thì lấy Madv đầu tiên trong bảng DsDonVi
+                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
+
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
-                        madiaban = Helpers.GetSsAdmin(HttpContext.Session, "madiaban");
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+
                     }
                     else
                     {
-                        if (string.IsNullOrEmpty(madiaban))
+                        if (string.IsNullOrEmpty(Madv))
                         {
-                            madiaban = _db.DsDiaBan.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
+                            Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                         }
                     }
 
-                    var model = _db.GiaDatDiaBan.Where(t => t.Madiaban == madiaban).ToList();
+                    var model = _db.GiaDatDiaBan.Where(t => t.Madv == Madv).ToList();
 
 
                     //Check nam
@@ -66,35 +70,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         }
                     }
 
-                    //test
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
-                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                                   select new VMDsDonVi
-                                   {
-                                       Id = dv.Id,
-                                       TenDiaBan = db.TenDiaBan,
-                                       MaDiaBan = dv.MaDiaBan,
-                                       TenDv = dv.TenDv,
-                                       MaDv = dv.MaDv,
-                                   }).ToList();
+                    // Lấy tên đơn vị từ Madv
+                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
+                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
+                                    select new VMDsDonVi
+                                    {
+                                        Id = dv.Id,
+                                        MaDiaBan = dv.MaDiaBan,
+                                        MaDv = dv.MaDv,
+                                        TenDv = dv.TenDv,
+                                        ChucNang = dv.ChucNang,
+                                        Level = db.Level,
+                                    }).First();
 
-                    //test
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    {
+                        ViewData["DsDonVi"] = dsdonvi;
+                    }
+                    else
+                    {
+                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                    }
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-
-                    //test
-
-                    ViewData["DsDonVi"] = dsdonvi;
-                    //test
-
-
                     ViewData["DsDv"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;
-                    ViewData["madiaban"] = madiaban;
+                    ViewData["MaDV"] = Madv;
                     ViewData["Title"] = " Thông tin hồ sơ";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";

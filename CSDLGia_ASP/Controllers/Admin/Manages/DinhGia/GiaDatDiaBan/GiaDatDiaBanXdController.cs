@@ -49,8 +49,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         }
                     }
 
-
-
                     if (string.IsNullOrEmpty(Madiaban))
                     {
                         Madiaban = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
@@ -70,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     }).First();
 
                    
-                    var model = _db.GiaDatDiaBan.Where(t => t.Madiaban == Madiaban).ToList();
+                    var model = _db.GiaDatDiaBan.ToList();
 
                     if (getdonvi.Level == "T")
                     {

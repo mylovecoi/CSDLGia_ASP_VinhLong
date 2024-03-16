@@ -7,6 +7,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
+        public string Madv { get; set; }
         public string Mahs { get; set; }
         public string Phanloai { get; set; }
         public string Ptcp { get; set; }
@@ -17,8 +18,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giatu { get; set; }
         public double Giaden { get; set; }
         public string Ghichu { get; set; }
+        public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        public int STTSapxep { get; set; }
+        public string STTHienthi { get; set; }
+        public string Style { get; set; }
 
 
     }

@@ -4,12 +4,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbDm>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -31,10 +31,11 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.danhmuc", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="Getmasapxep(@ViewData["Manhom"])"
+                class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-            }
+            }&ensp;
             <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
                 <i class="la la-file-excel-o"></i>Nhận dữ liệu
             </button>&ensp;
@@ -46,10 +47,9 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="5%">STT</th>
-                    <th>Mã số</th>
+                    <th>Mã dịch vụ</th>
                     <th width="50%">Tên dịch vụ</th>
-                    <th>Phân loại</th>
-                    <th>Đơn vị <br /> tính</th>
+                    <th>Ghi chú</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -61,10 +61,8 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Madichvu</td>
-                            <td style="text-align: left">@item.Tenspdv</td>
-                            <td style="text-align: center">@item.Phanloai</td>
-                            <td style="text-align: center">@item.Dvt</td>
-
+                            <td>@item.Tenspdv</td>
+                            <td>@item.Ghichu</td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
@@ -78,18 +76,13 @@
                 }
             </tbody>
         </table>
-
-
-
     </div>
-
     <div class="card-footer" style="text-align:center">
         <a asp-controller="DvKhamChuaBenhNhom" asp-action="Index" class="btn btn-danger">
             <i class="la la-reply"></i>Quay lại
         </a>
     </div>
 </div>
-
 
 <!--create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,7 +101,7 @@
                     <input id="manhom_create" name="manhom_create" value="@ViewData["Manhom"]" hidden />
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Mã dịch vụ*</b></label>
+                            <label><b>Mã dịch vụ</b></label>
                             <input type="text" id="madichvu_create" name="madichvu_create" class="form-control" />
                         </div>
                     </div>
@@ -118,7 +111,7 @@
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" required />
                         </div>
                     </div>
-                    <div class="col-xl-11">
+                    @* <div class="col-xl-11">
                         <label class="form-control-label">Đơn vị tính</label>
                         <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
                             <option value="">---Chọn đơn vị tính---</option>
@@ -133,6 +126,18 @@
                         <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
                             <i class="fa fa-plus"></i>
                         </button>
+                    </div> *@
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Ghi chú</b></label>
+                            <input type="text" id="ghichu_create" name="ghichu_create" class="form-control" row="2" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Sắp xếp</label>
+                            <input type="int" id="sapxep_create" name="sapxep_create" class="form-control" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,32 +148,6 @@
         </div>
     </div>
 </div>
-
-<!--Delete Modal-->
-<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Đồng ý xóa thông tin???
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row text-left">
-                    <input id="id_delete" name="id_delete" type="hidden" />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -295,6 +274,7 @@
         </div>
     </div>
 </div>
+
 <!--Dvt create Modal-->
 <div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -351,8 +331,32 @@
     </div>
 </div>
 
-<script>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
     function Dvt() {
         $('#Dvt_Modal').modal('hide');
         var gt = $('#dvt_add').val();
@@ -401,15 +405,16 @@
         }
     }
 
-
     function SetCreate() {
         $.ajax({
             url: '/DanhMucDvKcb/Store',
             type: 'POST',
             data: {
-                Tenspdv: $('#tenspdv_create').val(),
                 Madichvu: $('#madichvu_create').val(),
-                Dvt: $('#Dvt_create').val(),
+                Tenspdv: $('#tenspdv_create').val(),
+                Ghichu: $('#ghichu_create').val(),
+                Sapxep: $('#sapxep_create').val(),
+                @* Dvt: $('#Dvt_create').val(), *@
                 Manhom: $('#manhom_create').val(),
             },
             dataType: 'JSON',
@@ -433,6 +438,7 @@
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
+
     function GetDelete() {
         $.ajax({
             url: '/DanhMucDvKcb/Delete',
@@ -457,7 +463,6 @@
         })
     }
 
-
     function SetEdit(id_edit) {
         $.ajax({
             url: '/DanhMucDvKcb/Edit',
@@ -468,7 +473,7 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                   
+
                     $('#edit_thongtin').replaceWith(data.message);
 
                 } else {
@@ -477,7 +482,6 @@
             }
         })
     }
-
 
     function GetEdit() {
         $.ajax({
@@ -502,6 +506,20 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+            }
+        })
+    }
+
+    function Getmasapxep(manhom) {
+        $.ajax({
+            url: '/DanhMucDvKcb/GetMaSapXep',
+            type: 'POST',
+            data: {
+                Manhom: $('#manhom_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                $('#sapxep_create').val(data + 1)
             }
         })
     }

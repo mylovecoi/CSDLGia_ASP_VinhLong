@@ -12,6 +12,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
+        public string Madv { get; set; }
         public string Mahs { get; set; }
         public string Madoituong { get; set; }
         public string Doituongsd { get; set; }
@@ -33,8 +34,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        [NotMapped]
-        public string Madv { get; set; }
+        /*[NotMapped]
+        public string Madv { get; set; }*/
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
@@ -52,6 +53,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string SanLuong { get; set; }
         public double DonGia1 { get; set; }
         public double DonGia2 { get; set; }
+        public int STTSapxep { get; set; }
+        public string STTHienthi { get; set; }
+        public string Style { get; set; }
 
     }
 }

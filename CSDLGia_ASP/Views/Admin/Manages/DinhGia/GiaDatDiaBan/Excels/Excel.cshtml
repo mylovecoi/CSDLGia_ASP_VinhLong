@@ -1,9 +1,8 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
-
 @{
-    var Madv = ViewData["Madv"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
 }
-
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -22,7 +21,8 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaDatDiaBanExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+        <input hidden asp-for="Madv">
+        <input hidden asp-for="Mahs">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -32,7 +32,66 @@
                 </a>
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+
+                <div class="col-xl-12">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Số quyết định</label>
+                        <select id="soqd" name="soqd" class="form-control">
+                                    @foreach (var qd in soqd)
+                                    {
+                                <!option value="@qd.Soqd">@qd.Mota</!option>
+                                    }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control select2basic" id="Madiaban" name="Madiaban">
+                                    @foreach (var item in dsdiaban)
+                                    {
+                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                                    }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày áp dụng</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung chi tiết</label>
+                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="mb-3 font-weight-bold font-size-lg">
@@ -67,7 +126,7 @@
                 </div>
             </div>
             <div class="card-footer" style="text-align:center">
-                <a asp-controller="GiaDatPl" asp-action="Index" class="btn btn-danger">
+                <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                     <i class="la la-reply"></i>Quay lại
                 </a>&ensp;
                 <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
