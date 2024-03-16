@@ -31,7 +31,7 @@
                   
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Vùng và biện pháp công trình</label>
+                            <label>Tên sản phẩn dịch vụ</label>
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
                         </div>
                     </div>
@@ -176,6 +176,21 @@
                 }
             }
         })
+    }
+
+    function getmaxsapxep(manhom) {
+        $.ajax({
+            url: '/GiaSpDvCuTheCt/GetMaxSapXep',
+            type: 'POST',
+            data: {               
+                Manhom: $('#manhom_create').val(),               
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                $('#sapxep_create').val(data+1)
+            }
+        })
+       
     }
 
     function getId(id, tennhom) {

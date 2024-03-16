@@ -14,7 +14,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Dvt { get; set; }
         public string Mucgia1 { get; set; }
         public string Mucgia2 { get; set; }
-        public string Sapxep { get; set; }
+        public int Sapxep { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }
