@@ -25,8 +25,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Vùng</th>
-                    <th>Biện pháp công trình</th>
+                    <th>Tên sản phẩm dịch vụ</th>
+                    <th>Đơn vị tính</th>
                     <th>Mức giá từ</th>
                     <th>Mức giá đến</th>
                     <th>Thao tác</th>
@@ -50,9 +50,9 @@
                                         }
                                     }
                                 </td>
-                                <td style="text-align:left" >@item.Mota</td>
-                                <td style="text-align:center" >@item.Mucgiatu</td>
-                                <td style="text-align:center">@item.Mucgiaden</td>
+                                <td style="text-align:left" >@item.Dvt</td>
+                                <td style="text-align:center" >@item.Mucgia1</td>
+                                <td style="text-align:center">@item.Mucgia2</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                             onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -69,6 +69,7 @@
                 }
             </tbody>
         </table>
+        
         <!--end: Datatable-->
     </div>
 </div>

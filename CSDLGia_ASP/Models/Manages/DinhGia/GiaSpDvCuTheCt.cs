@@ -45,8 +45,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Manhom { get; set; }
         public string Dvt { get; set; }
-        public double Mucgia1 { get; set; }
-        public double Mucgia2 { get; set; }
+        public string Mucgia1 { get; set; }
+        public string Mucgia2 { get; set; }
         //
 
     }
