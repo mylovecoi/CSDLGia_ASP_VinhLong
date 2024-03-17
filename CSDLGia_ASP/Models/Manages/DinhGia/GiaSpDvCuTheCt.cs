@@ -30,6 +30,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thoidiem { get; set; }
         [NotMapped]
         public string Soqd { get; set; }
+
+        //Excel
         [NotMapped]
         public int LineStart { get; set; }
         [NotMapped]

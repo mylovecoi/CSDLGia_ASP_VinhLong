@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.baocao", "Index"))
                 {
 
                     ViewData["Nam"] = DateTime.Now.Year;
@@ -52,7 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.baocao", "Index"))
                 {
                     var model = (from pl in _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
                                  join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
@@ -85,34 +85,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-        [Route("BcGiaSpDvCongIch/BcCT")]
+        [Route("BaoCaoDgSpDvCongIch/BcCT")]
         [HttpPost]
         public IActionResult BcCT(DateTime tungay, DateTime denngay)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvci.baocao", "Index"))
                 {
                     var model = _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                    List<string> list = model.Select(t => t.Mahs).ToList();
-                    var modelct = _db.GiaSpDvCongIchCt.Where(t=>list.Contains(t.Mahs));
-                    ViewData["GiaSpDvCongIchCt"] = modelct;
-
-
-
-
-
-                    // Group mã nhóm để sang bên view for 
-                    var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(t=>t.Manhom);
-                    return Ok(groupmanhom1);
-                    List<string> groupmanhom;
-              
-                    ViewData["GroupMaNhom"] = groupmanhom;
-                    // End Group mã nhóm để sang bên view for 
-
-                    ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["ct"] = _db.GiaSpDvCongIchCt.ToList();
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";

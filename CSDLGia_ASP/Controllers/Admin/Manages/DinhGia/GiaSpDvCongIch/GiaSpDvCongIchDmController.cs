@@ -59,7 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Mota, string Dvt, double Mucgiatu, double Mucgiaden, string Hientrang, string Maso, string Ten, string HienThi, string Magoc, string Capdo)
+        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -68,8 +68,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var request = new GiaSpDvCongIchDm
                     {
                         Manhom = Manhom,
-
+                        Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
+                        Tenspdv = Tenspdv,
                         Dvt = Dvt,
+                        HienThi = HienThi,
+                        Sapxep = Sapxep,
+
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -121,7 +125,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Hiển thị</label>";
@@ -133,6 +136,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
                         result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Dvt + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-4'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Đơn vị tính</label>";
+                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-4'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Đơn vị tính</label>";
+                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Sapxep + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -282,6 +299,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 return Json(data);
             }
 
+        }
+
+       
+        [Route("GiaSpDvCongIchDmCt/GetMaxSapXep")]
+        [HttpPost]
+        public JsonResult GetMaxSapXep(string Manhom)
+        {
+            var i = 0;
+            var data = _db.GiaSpDvCuTheDm.Where(t => t.Manhom == Manhom);
+
+            if (data.Any())
+            {
+                i = data.Max(x => x.Sapxep);
+            }
+
+            return Json(i);
         }
     }
 }
