@@ -47,7 +47,7 @@
                             @foreach (var item in Model.GiaDvKcbCt.Where(t => t.Manhom == manhom).OrderBy(t=>t.Sapxep))
                             {
                                 <tr>
-                                    <td style="text-align:center">@item.Sapxep</td>
+                                    <td style="text-align:center">@(record_id++)</td>
                                     <td style="text-align:center">@item.Hienthi</td>
                                     <td style="text-align:center">@item.HienthiTT37</td>
                                     <td style="text-align:center">@item.Madichvu</td>

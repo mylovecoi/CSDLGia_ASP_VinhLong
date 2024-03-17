@@ -786,7 +786,8 @@ var TableManaged4 = function () {
             }],
             "order": [
                 [0, "asc"]
-            ] // set first column as a default sort by asc
+            ], // set first column as a default sort by asc
+            "bSort": false
         });
 
         var tableWrapper = jQuery('#datatable_4_wrapper');

@@ -60,7 +60,7 @@
             {
                 @if (Model.GiaDvKcbCt != null)
                 {
-                    @foreach (var item in Model.GiaDvKcbCt.Where(t => t.Manhom == manhom))
+                    @foreach (var item in Model.GiaDvKcbCt.Where(t => t.Manhom == manhom).OrderBy(t => t.Sapxep))
                     {
                         <tr>
                             <td style="text-align:center">@(record_id++)</td>
