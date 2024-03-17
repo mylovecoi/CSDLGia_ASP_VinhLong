@@ -51,9 +51,7 @@
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
-
-                
+                </a>                
             }
 
         </div>
@@ -160,10 +158,13 @@
                                 }
                             </td>
                             <td>
+                                <a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
-
                                 </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
@@ -180,13 +181,6 @@
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
-                                }
-                                else
-                                {
-                                    <a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
                                 }
                                 <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
