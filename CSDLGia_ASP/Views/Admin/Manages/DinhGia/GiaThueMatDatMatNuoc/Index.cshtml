@@ -2,7 +2,6 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    //var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var nhomtn = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["NhomTn"];
@@ -33,7 +32,6 @@
                 window.location.href = url;
             })
         });
-
     </script>
 }
 
@@ -194,13 +192,7 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                else
-                                {
-                                    <a asp-controller="GiaThueDN" target="_blank" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                                       target="_blank">
-                                        <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
-                                }
+                                
 
                             </td>
                         </tr>

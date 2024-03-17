@@ -351,8 +351,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             //result += "<th>Xã phường</th>";
             //result += "<th>Loại đất</th>";
             result += "<th>Tên đường phố</th>";
-            result += "<th>Loại đường</th>";
-            result += "<th>Địa giới</th>";
+            result += "<th>Loại đường</th>";  
             result += "<th>Điểm đầu</th>";
             result += "<th>Điểm cuối</th>";
             result += "<th>Hệ số</th>";
