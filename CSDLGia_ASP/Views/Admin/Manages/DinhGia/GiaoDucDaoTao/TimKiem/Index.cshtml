@@ -4,22 +4,22 @@
     var tendv = (IEnumerable<GiaDvGdDtDm>)ViewData["tendv"];
 }
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
-        $(function() {
-            $('#Nam, #Mota').change(function() {
+        $(function () {
+            $('#Nam, #Mota').change(function () {
                 var current_path_url = '/GiaoDucDaoTao/Search?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var mota = '&Mota=' + $('#Mota').val();
@@ -29,28 +29,28 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Tìm kiếm thông tin giá<small>&nbsp;dịch vụ giáo dục đào tạo</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Tìm kiếm thông tin giá<small>&nbsp;dịch vụ giáo dục đào tạo</small>
+            </h3>
         </div>
     </div>
-    <hr />
-    <form asp-controller="GiaoDucDaoTao" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_search">
-        <div class="card-body">
-            <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-            </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold; color:blue">Đơn vị</label>
+</div>
+<hr />
+<form asp-controller="GiaoDucDaoTao" asp-action="Result" method="post" enctype="multipart/form-data" id="frm_search">
+    <div class="card-body">
+        <div class="mb-3 font-weight-bold font-size-lg">
+            <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="dv" name="dv">
-                            <option value="All">--Tất cả các đơn vị--</option>
-                            @foreach (var db in dsdiaban)
+                        <option value="All">--Tất cả các đơn vị--</option>
+                        @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
                                 @{
@@ -71,13 +71,7 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label><b>Tên Sản phẩm dịch vụ</b></label>
-                    <select class="form-control" id="tsp" name="tsp">
-                        <option value="All" >--Tất cả các phân loại--</option>
-                        @foreach (var tn in tendv)
-                        {
-                            <option value="@tn.Maspdv">@tn.Tenspdv</option>
-                        }
-                    </select>
+                    <input class="form-control" id="text_search" name="text_search" />
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -59,7 +59,7 @@
                     <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
                     <td style="text-align:left; @HtmlStyle">@item.Doituongsd</td>
                     <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
-                    <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
+                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(Helpers.ConvertStrToDb(item.SanLuong))</td>
                     <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
                     <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia2)</td>
                 </tr>

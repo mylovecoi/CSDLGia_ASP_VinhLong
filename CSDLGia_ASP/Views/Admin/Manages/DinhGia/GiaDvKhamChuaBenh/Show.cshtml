@@ -21,7 +21,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời gian áp dụng: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -46,13 +46,13 @@
     }
     <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
         <thead>
-            <tr style="text-align:center">
-                <th>STT</th>
-                <th>STT TT37</th>
-                <th>Mã dịch vụ</th>
-                <th>Tên dịch vụ</th>
-                <th>Đơn giá</th>
-                <th>Ghi chú</th>
+            <tr>
+                <th style="text-align:center">STT</th>
+                <th style ="text-align:center">STT TT37</th>
+                <th style="text-align:center">Mã dịch vụ</th>
+                <th style="text-align:center">Tên dịch vụ</th>
+                <th style="text-align:center">Đơn giá</th>
+                <th style="text-align:center">Ghi chú</th>
             </tr>
         </thead>
         <tbody>
@@ -66,9 +66,9 @@
                             <td style="text-align:center">@(record_id++)</td>
                             <td style="text-align:center"></td>
                             <td style="text-align:center">@item.Madichvu</td>
-                            <td style="text-align:center">@item.Tenspdv</td>
-                            <td style="text-align:center">@item.Giadv</td>
-                            <td style="text-align:center">@item.Ghichu</td>
+                            <td>@item.Tenspdv</td>
+                            <td style="text-align:right; font-weight:bold">@item.Giadv</td>
+                            <td>@item.Ghichu</td>
                         </tr>
                     }
                 }
