@@ -1,5 +1,5 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
@@ -24,20 +24,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
         // Lấy dữ liệu từ bảng GiaThueDNDm đổ ra index
-        [Route("GiaThueDNDm")]
+        [Route("GiaThueDNDMCT")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Index"))
                 {
-                    var model = _db.GiaThueMatDatMatNuocDm.ToList();
+                    var model = _db.GiaThueMatDatMatNuocDm.Where(x => x.Manhom == Manhom).ToList();
                     ViewData["Title"] = "Danh mục mặt đất, mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/Index.cshtml", model);
+                    ViewData["Manhom"] = Manhom;
+                    var chkSTT = _db.GiaThueMatDatMatNuocDm.Where(t => t.Manhom == Manhom);
+                    if (chkSTT.Any())
+                    {
+                        ViewData["STT"] = chkSTT.Max(x => x.SapXep) + 1;
+                    }
+                    else
+                    {
+                        ViewData["STT"] = 1;
+                    }
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/ChiTiet/Index.cshtml", model);
                 }
                 else
                 {
@@ -52,25 +62,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
         // thêm dữ liệu vào bảng GiaThueDNDm
-        [Route("GiaThueDNDm/Store")]
+        [Route("GiaThueDNDMCT/Store")]
         [HttpPost]
-        public JsonResult Store(string Maloaidat, string Loaidat)
+        public JsonResult Store(string Maloaidat, string Loaidat, string maNhom, string hienThi, double sapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Create"))
                 {
 
-                    var model = new GiaThueMatDatMatNuocDm
+                    var model = new Models.Manages.DinhGia.GiaThueMatDatMatNuocDm
                     {
+                        Manhom = maNhom,
+                        HienThi = hienThi,
+                        SapXep = sapXep,
                         Maloaidat = Maloaidat,
                         Loaidat = Loaidat,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     _db.GiaThueMatDatMatNuocDm.Add(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
@@ -92,13 +102,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         // Xóa bản ghi được chọn trong bảng GiaThueDNDm
 
-        [Route("GiaThueDNDm/Delete")]
+        [Route("GiaThueDNDMCT/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaThueMatDatMatNuocDm.Remove(model);
@@ -121,17 +131,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
         // Lấy thông tin bản ghi cần sửa, tạo 1 frm mới sau đó đẩy vào edit trong modal
-        [Route("GiaThueDNDm/Edit")]
+        [Route("GiaThueDNDMCT/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
                 {
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
+
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -140,19 +148,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã loại mặt đất mặt nước<span class='require'>*</span></label>";
-                        result += "<input type='text' class='form-control' id='maloaidat_edit' name='maloaidat_edit' value='" + model.Maloaidat + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Loại mặt đất mặt nước<span class='require'>*</span></label>";
                         result += "<input type='text' class='form-control' id='loaidat_edit' name='loaidat_edit' value='" + model.Loaidat + "'/>";
                         result += "</div>";
                         result += "</div>";
-
                         result += "</div>";
+
+                        result += "<div class='row'>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>STT báo cáo</label>";
+                        result += "<input type='text' id='hienthi_edit' name='hienthi_edit' class='form-control' value='" + model.HienThi + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += " <label>Sắp xếp</label>";
+                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.SapXep + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "</div>";
+
                         result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -179,13 +195,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
         // Cập nhật thông tin mới
-        [Route("GiaThueDNDm/Update")]
+        [Route("GiaThueDNDMCT/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Maloaidat, string Loaidat)
+        public IActionResult Update(int Id, string Maloaidat, string Loaidat, string hienThi, double sapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.GiaThueDNDm", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
                 {
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -193,7 +209,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == Id);
 
                     model.Loaidat = Loaidat;
-                    model.Maloaidat = Maloaidat;
+                    model.HienThi = hienThi;
+                    model.SapXep = sapXep;
                     model.Updated_at = DateTime.Now;
                     _db.GiaThueMatDatMatNuocDm.Update(model);
                     _db.SaveChanges();
