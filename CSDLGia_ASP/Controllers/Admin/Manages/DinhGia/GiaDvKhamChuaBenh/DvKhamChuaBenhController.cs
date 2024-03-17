@@ -161,6 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                             Madichvu = item.Madichvu,
                             Dvt = item.Dvt,
                             Phanloai = item.Phanloai,
+                            Manhom = item.Manhom,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
@@ -171,8 +172,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     model.GiaDvKcbCt = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).ToList();
 
 
-                    var groupmanhom1 = _db.GiaDvKcbCt.Select(item => item.Manhom).Distinct().ToList();
-                    var groupmanhom2 = _db.GiaDvKcbCt.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom1 = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom2 = _db.GiaDvKcbCt.Where(item => item.Manhom == Manhom && item.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
 
                     List<string> groupmanhom;
 
@@ -370,6 +371,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     var model_ct = _db.GiaDvKcbCt.Where(t => t.Mahs == model_new.Mahs);
 
                     model_new.GiaDvKcbCt = model_ct.ToList();
+                    // Xử lý phần Forech theo mã nhóm khi chọn
+                    var groupmanhom = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+                    // End xử lý phần Forech theo mã nhóm khi chọn
 
                     //ViewData["Madv"] = model.Madv;
                     //ViewData["Mahs"] = model.Mahs;
@@ -479,16 +484,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Show"))
                 {
                     var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == Mahs);
-                    if (model.CodeExcel != "")
-                    {
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = "Chi tiết giá dịch vụ khám chữa bệnh";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgkcb";
-                        ViewData["MenuLv3"] = "menu_dgkcb_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/ShowExcel.cshtml", model);
-                    }
                     var model_new = new VMDinhGiaDvKcb
                     {
                         Madv = model.Madv,
@@ -496,11 +491,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Manhom = model.Manhom,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
-                        Ipf1 = model.Ipf1,
-                        Ipf2 = model.Ipf2,
-                        Ipf3 = model.Ipf3,
-                        Ipf4 = model.Ipf4,
-                        Ipf5 = model.Ipf5,
                         Mota = model.Mota
 
                     };
@@ -509,19 +499,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     model_new.GiaDvKcbCt = model_ct.ToList();
 
+                    var groupmanhom = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
+                    ViewData["GroupMaNhom"] = groupmanhom;
+
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá dịch vụ khám chữa bệnh";
-                    ViewData["Ipf2"] = model.Ipf2;
-                    ViewData["Ipf3"] = model.Ipf3;
-                    ViewData["Ipf4"] = model.Ipf4;
-                    ViewData["Ipf5"] = model.Ipf5;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model_new);
                 }
                 else
                 {
