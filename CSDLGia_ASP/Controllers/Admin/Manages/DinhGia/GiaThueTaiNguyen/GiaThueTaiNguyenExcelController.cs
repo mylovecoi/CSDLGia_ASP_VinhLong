@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -15,12 +17,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
     public class GiaThueTaiNguyenExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiaThueTaiNguyenExcelController(CSDLGiaDBContext db)
+        public GiaThueTaiNguyenExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
-
 
         public IActionResult Index(string Madv)
         {
@@ -89,13 +92,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
+                if (Ipf1 != null && Ipf1.Length > 0)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                    string extension = Path.GetExtension(Ipf1.FileName);
+                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaThueTn/", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Ipf1.CopyToAsync(FileStream);
+                    }
+                    request.Ipf1 = filename;
+                }
+
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<GiaThueTaiNguyenCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -106,33 +123,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        int stt = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaThueTaiNguyenCt
                             {
-                                Mahs = Mahs,
-                                Trangthai = "CXD",
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
-                            });
+                                Mahs = request.Mahs,
+                                Cap1= worksheet.Cells[row, 2].Value != null ?worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Cap2 = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Cap3 = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Cap4 = worksheet.Cells[row, 5].Value != null ? worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                Cap5 = worksheet.Cells[row, 6].Value != null ? worksheet.Cells[row, 6].Value.ToString().Trim() : "",
+                                Ten = worksheet.Cells[row, 7].Value != null ? worksheet.Cells[row, 7].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 8].Value != null ? worksheet.Cells[row, 8].Value.ToString().Trim() : "",
+                                Gia = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
+                                SapXep = stt++,        
+                            }); 
                         }
                     }
 
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaThueTaiNguyenCt.AddRange(list_add);
+                //Thông tin hồ sơ
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+                {
+                    Mahs = request.Mahs,
+                    Manhom = request.Manhom,
+                    Madv = request.Madv,
+                    Thoidiem = request.Thoidiem,
+                    Soqd = request.Soqd,
+                    Soqdlk = request.Soqdlk,
+                    Thoidiemlk = request.Thoidiemlk,
+                    Cqbh = request.Cqbh,
+                    Ghichu = request.Ghichu,
+                    Trangthai = "CHT",
+                    Congbo = "CHUACONGBO",
+                    Ipf1 = request.Ipf1,
+                    PhanLoaiHoSo = request.PhanLoaiHoSo,
+                    CodeExcel = request.CodeExcel,
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+                _db.GiaThueTaiNguyen.Add(model);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Edit", "GiaThueTaiNguyen", new { Mahs =  request.Mahs });
             }
             else
             {

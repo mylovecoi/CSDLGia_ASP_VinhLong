@@ -136,7 +136,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
                         Manhom = Manhom,
-                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
 
                     var danhmuc = _db.GiaThueTaiNguyenDm.ToList();

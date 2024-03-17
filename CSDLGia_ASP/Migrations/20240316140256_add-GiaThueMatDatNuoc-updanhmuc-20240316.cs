@@ -7,19 +7,6 @@ namespace CSDLGia_ASP.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<double>(
-                           name: "SapXep",
-                           table: "GiaThueTaiNguyenCt",
-                           type: "float",
-                           nullable: false,
-                           defaultValue: 0.0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Style",
-                table: "GiaThueTaiNguyenCt",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.RenameColumn(
                 name: "Dongia",
                 table: "GiaThueMatDatMatNuocCt",
@@ -220,14 +207,6 @@ namespace CSDLGia_ASP.Migrations
                 table: "GiaThueMatDatMatNuocCt",
                 newName: "Dongia");
 
-            migrationBuilder.DropColumn(
-                name: "Style",
-                table: "GiaThueTaiNguyenCt");
-
-            migrationBuilder.RenameColumn(
-                name: "SapXep",
-                table: "GiaThueTaiNguyenCt",
-                newName: "Dongia");
         }
     }
 }
