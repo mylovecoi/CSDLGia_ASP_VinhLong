@@ -42,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
-                    ViewData["Madv"] = Madv;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
                     return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Excel.cshtml", model);
 

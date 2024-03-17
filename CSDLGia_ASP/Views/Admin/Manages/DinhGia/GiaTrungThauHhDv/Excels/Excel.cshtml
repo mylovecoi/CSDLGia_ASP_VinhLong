@@ -1,7 +1,7 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoiCt
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan
 
 @{
-    var Madv = ViewData["Madv"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 
 @section custom_style {
@@ -21,8 +21,9 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaXayDungMoiExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+    <form asp-controller="GiaTrungThauHhDvExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+        <input hidden asp-for="Madv" />
+        <input hidden asp-for="Mahs" />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -35,65 +36,59 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mã nhóm</label>
-                        <select asp-for="Manhom" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Tên nhóm</label>
-                        <select asp-for="Tennhom" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
                 <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select asp-for="Ten" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" asp-for="Madiaban">
+                            @foreach (var item in dsdiaban)
                             {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Gia" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
                 </div>
 
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
+                        <input type="text" class="form-control" asp-for="Soqd" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Ngày quyết định</label>
+                        <input type="date" class="form-control" asp-for="Ngayqd" />
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="form-group">
+                        <label>Thông tin quyết định</label>
+                        <input type="text" class="form-control" asp-for="Thongtinqd" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Tên nhà thầu</label>
+                        <input type="text" class="form-control" asp-for="Tennhathau" />
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <input type="text" class="form-control" asp-for="Ghichu" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label class="control-label">File đính kèm</label>
+                    <input asp-for="Ipf1" type="file" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" />
+                </div>
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">

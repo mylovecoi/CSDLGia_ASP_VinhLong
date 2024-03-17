@@ -495,14 +495,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             }
         }
 
-        public IActionResult TongHop()
+        public IActionResult TongHop(DateTime tungay, DateTime denngay)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.xetduyet", "Index"))
                 {
+                    var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+                    List<string> list_hoso = model.Select(t=>t.Mahs).ToList();
+                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    var model_hosoct = _db.GiaDvGdDtCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_donvis = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+                    ViewData["HoSoCt"] = model_hosoct;
+                    ViewData["DonVis"] = model_donvis;
+                    ViewData["Title"] = "Tổng hợp";
 
-                    return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Tonghop.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else

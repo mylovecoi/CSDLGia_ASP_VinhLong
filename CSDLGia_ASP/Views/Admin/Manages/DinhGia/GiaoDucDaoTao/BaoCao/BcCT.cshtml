@@ -27,32 +27,16 @@
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT MỨC GIÁ DỊCH VỤ ĐÀO TẠO</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
-
+<p style="text-align:right">Đơn vị tính: nghìn đồng/học sinh/tháng</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th rowspan="2" width="2%" style="text-align: center">STT</th>
-            <th rowspan="2" style="text-align: center">Tên sản phẩm dịch vụ</th>
-            <th colspan="4" style="text-align: center">Mức thu học phí 1</th>
-            <th colspan="4" style="text-align: center">Mức thu học phí 2</th>
-            <th colspan="4" style="text-align: center">Mức thu học phí 3</th>
-        </tr>
-
-        <tr>
-            <th style="text-align: center">Năm học</th>
+            <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Tên sản phẩm dịch vụ</th>
             <th style="text-align: center">Thành thị</th>
             <th style="text-align: center">Nông thôn</th>
             <th style="text-align: center">Miền núi</th>
-            <th style="text-align: center">Năm học</th>
-            <th style="text-align: center">Thành thị</th>
-            <th style="text-align: center">Nông thôn</th>
-            <th style="text-align: center">Miền núi</th>
-            <th style="text-align: center">Năm học</th>
-            <th style="text-align: center">Thành thị</th>
-            <th style="text-align: center">Nông thôn</th>
-            <th style="text-align: center">Miền núi</th>
-
-        </tr>
+        </tr>     
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -60,34 +44,19 @@
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
 
-                <td colspan="7">
-
+                <td colspan="7" style="font-weight:bold">
                     Mã hồ sơ:@item.Mahs
-
                 </td>
-
             </tr>
             var record_id_ct = 1;
             foreach (var ct in cts.Where(t => t.Mahs == item.Mahs))
             {
                 <tr>
                     <td style="text-align: center">@(record_id - 1).@(record_id_ct++)</td>
-                    <td style="text-align: center">@ct.Tenspdv</td>
-
-                    <td style="text-align: left">@ct.Namapdung1</td>
-                    <td style="text-align: left">@ct.Giathanhthi1</td>
-                    <td style="text-align: left">@ct.Gianongthon1</td>
-                    <td style="text-align: left">@ct.Giamiennui1</td>
-
-                    <td style="text-align: left">@ct.Namapdung2</td>
-                    <td style="text-align: left">@ct.Giathanhthi2</td>
-                    <td style="text-align: left">@ct.Gianongthon2</td>
-                    <td style="text-align: left">@ct.Giamiennui2</td>
-
-                    <td style="text-align: left">@ct.Namapdung3</td>
-                    <td style="text-align: left">@ct.Giathanhthi3</td>
-                    <td style="text-align: left">@ct.Gianongthon3</td>
-                    <td style="text-align: left">@ct.Giamiennui3</td>
+                    <td style="text-align: left">@ct.Tenspdv</td>
+                    <td style="text-align: center">@ct.Giathanhthi1</td>
+                    <td style="text-align: center">@ct.Gianongthon1</td>
+                    <td style="text-align: center">@ct.Giamiennui1</td>                    
 
                 </tr>
             }

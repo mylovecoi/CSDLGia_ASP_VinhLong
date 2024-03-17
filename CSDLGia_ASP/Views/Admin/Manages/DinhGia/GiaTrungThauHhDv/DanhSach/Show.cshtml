@@ -1,5 +1,4 @@
 ﻿@{
-   
     Layout = "_LayoutReports";
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
@@ -20,8 +19,9 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Ngayqd)</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Thongtinqd</p>
+<p style="text-align: left; font-size: 16px;">Tên nhà thầu: @Model.Tennhathau</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -37,25 +37,39 @@
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
+    <thead>
+        <tr style="text-align:center">
+            <th width="4%">STT</th>
+            <th>Tên công tác</th>
+            <th>Đơn vị</th>
+            <th>Khối lượng<br>mời thầu</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GiaMuaTaiSanCt.OrderBy(x => x.SapXep))
+        {
+            <tr>
+                <td style="text-align:center">@item.HienThi</td>
+                <td class="active">@item.Mota</td>
+                <td>@item.Dvt</td>
+                <td> @Helpers.ConvertDbToStr(item.KhoiLuong)</td>
+                <td> @Helpers.ConvertDbToStr(item.DonGia)</td>
+                <td> @Helpers.ConvertDbToStr(item.DonGia * item.KhoiLuong)</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
     <tr>
-
-        <th style="text-align:center">Nhóm hàng hóa dịch vụ</th>
-        <th style="text-align:center">Số QĐ kết quả lựa trọn nhà thầu*</th>
-        <th style="text-align:center">Ngày quyết định</th>
-        <th style="text-align:center">Thông tin quyết định</th>
-        <th style="text-align:center">Tên nhà thầu</th>
-        <th style="text-align:center">Ghi chú</th>
-
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span>
+        </td>
+        <td style="vertical-align: top;">
+            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
+            <i>(Ký tên, đóng dấu)</i>
+        </td>
     </tr>
-    <tr>
-
-        <th style="text-align:center">@Model.Manhom</th>
-        <th style="text-align:center">@Model.Soqd</th>
-        <th style="text-align:center">@Model.Ngayqd</th>
-        <th style="text-align:center">@Model.Thongtin</th>
-        <th style="text-align:center">@Model.Tennhathau/th>
-        <th style="text-align:center">@Model.Ghichu</th>
-
-    </tr>
-
 </table>

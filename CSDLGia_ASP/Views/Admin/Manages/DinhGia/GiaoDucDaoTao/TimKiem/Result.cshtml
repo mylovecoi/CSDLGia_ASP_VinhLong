@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
     int record_id = 1;
-    var tendv = (IEnumerable<GiaDvGdDtDm>)ViewData["Tendv"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["dsdonvi"];
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDvGdDt>
@@ -14,26 +13,10 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr style="text-align:center">
-            <th style="text-align: center" rowspan="2">STT</th>
-            <td style="text-align: center" rowspan="2">Đơn vị nhập</td>
-            <td style="text-align: center" rowspan="2">Thời điểm</td>
-            <th style="text-align: center" rowspan="2">Tên sản phẩm <br />dịch vụ</th>
-            <td style="text-align: center" colspan="4">Mức thu học phí 1</td>
-            <td style="text-align: center" colspan="4">Mức thu học phí 2</td>
-            <td style="text-align: center" colspan="4">Mức thu học phí 3</td>
-        </tr>
-        <tr>
-            <th style="text-align: center">Năm học</th>
-            <th style="text-align: center">Thành thị</th>
-            <th style="text-align: center">Nông thôn</th>
-            <th style="text-align: center">Miền núi</th>
-
-            <th style="text-align: center">Năm học</th>
-            <th style="text-align: center">Thành thị</th>
-            <th style="text-align: center">Nông thôn</th>
-            <th style="text-align: center">Miền núi</th>
-
-            <th style="text-align: center">Năm học</th>
+            <th style="text-align: center">STT</th>
+            <td style="text-align: center">Đơn vị nhập</td>
+            <td style="text-align: center">Thời điểm</td>
+            <th style="text-align: center">Tên sản phẩm <br />dịch vụ</th>
             <th style="text-align: center">Thành thị</th>
             <th style="text-align: center">Nông thôn</th>
             <th style="text-align: center">Miền núi</th>
@@ -46,36 +29,12 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    @foreach (var dv in dsdonvi)
-                    {
-                        @if (dv.MaDv == item.Madv)
-                        {
-                            <td style="text-align: center">@dv.TenDv</td>
-                        }
-                    }
-                    <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-
-                    @foreach (var tn in tendv)
-                    {
-                        if (item.Maspdv == tn.Maspdv)
-                        {
-                            <td style="text-align: left">@tn.Tenspdv</td>
-                        }
-                    }
-                    <td style="text-align: center">@item.Namapdung1</td>
+                    <td>@item.TenDv</td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: left">@item.Mota</td>
                     <td style="text-align: center">@item.Giathanhthi1</td>
                     <td style="text-align: center">@item.Gianongthon1</td>
                     <td style="text-align: center">@item.Giamiennui1</td>
-
-                    <td style="text-align: center">@item.Namapdung2</td>
-                    <td style="text-align: center">@item.Giathanhthi2</td>
-                    <td style="text-align: center">@item.Gianongthon2</td>
-                    <td style="text-align: center">@item.Giamiennui2</td>
-
-                    <td style="text-align: center">@item.Namapdung3</td>
-                    <td style="text-align: center">@item.Giathanhthi3</td>
-                    <td style="text-align: center">@item.Gianongthon3</td>
-                    <td style="text-align: center">@item.Giamiennui3</td>
                 </tr>
             }
         }

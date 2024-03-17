@@ -87,28 +87,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 {
                     var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
 
-                    var modelct = (from a in _db.GiaDvGdDtCt.ToList()
-                                   join b in _db.GiaDvGdDtDm on a.Maspdv equals b.Maspdv
+                    var modelct = (from a in _db.GiaDvGdDtCt                             
                                    select new GiaDvGdDtCt
                                    {
-
-                                       Tenspdv = b.Tenspdv,
+                                       Tenspdv = a.Mota,
                                        Mahs = a.Mahs,
                                        Namapdung1 = a.Namapdung1,
                                        Giamiennui1 = a.Giamiennui1,
                                        Giathanhthi1 = a.Giathanhthi1,
-                                       Gianongthon1 = a.Gianongthon1,
-
-                                       Namapdung2 = a.Namapdung2,
-                                       Giamiennui2 = a.Giamiennui2,
-                                       Giathanhthi2 = a.Giathanhthi2,
-                                       Gianongthon2 = a.Gianongthon2,
-
-                                       Namapdung3 = a.Namapdung3,
-                                       Giamiennui3 = a.Giamiennui3,
-                                       Giathanhthi3 = a.Giathanhthi3,
-                                       Gianongthon3 = a.Gianongthon3,
-
+                                       Gianongthon1 = a.Gianongthon1,                                     
 
                                    }); ;
 

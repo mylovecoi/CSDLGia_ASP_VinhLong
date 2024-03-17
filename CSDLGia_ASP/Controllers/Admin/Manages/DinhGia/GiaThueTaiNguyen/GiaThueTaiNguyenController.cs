@@ -321,11 +321,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         }
                         request.Ipf1 = filename;
                     }
-
-                    if (request.CodeExcel != "")
-                    {
-                        request.CodeExcel = request.CodeExcel.Replace("<meta charset=\"utf-8\">", "");
-                    }
+                                      
 
                     var model = _db.GiaThueTaiNguyen.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
@@ -334,9 +330,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     model.Thoidiemlk = request.Thoidiemlk;
                     model.Cqbh = request.Cqbh;
                     model.Ghichu = request.Ghichu;
-                    model.Ipf1 = request.Ipf1;
-                    model.CodeExcel = request.CodeExcel;
-                    model.PhanLoaiHoSo = request.PhanLoaiHoSo;
+                    model.Ipf1 = request.Ipf1;                    
                     model.Updated_at = DateTime.Now;
 
                     _db.GiaThueTaiNguyen.Update(model);

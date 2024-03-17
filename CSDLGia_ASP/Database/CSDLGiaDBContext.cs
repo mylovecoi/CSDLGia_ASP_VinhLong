@@ -124,6 +124,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaLpTbNhaCtXdm> GiaLpTbNhaCtXdm { get; set; }
         public DbSet<GiaMuaTaiSan> GiaMuaTaiSan { get; set; }
         public DbSet<GiaMuaTaiSanDm> GiaMuaTaiSanDm { get; set; }
+        public DbSet<GiaMuaTaiSanCt> GiaMuaTaiSanCt { get; set; }
 
         public DbSet<GiaNuocSh> GiaNuocSh { get; set; }
         public DbSet<GiaNuocShCt> GiaNuocShCt { get; set; }

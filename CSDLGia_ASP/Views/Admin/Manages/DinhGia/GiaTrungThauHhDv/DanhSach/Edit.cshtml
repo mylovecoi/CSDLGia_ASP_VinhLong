@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -16,50 +16,40 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu hàng hóa dịch vụ</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu hàng hóa dịch vụ</small><br />
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaTrungThauHhdv" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaTrungThauHhdv" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
+        <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Dịa bàn</label>
-                            <select class="form-control" asp-for="Madiaban">
-                                @foreach (var item in dsdiaban)
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Dịa bàn</label>
+                        <select class="form-control" asp-for="Madiaban">
+                            @foreach (var item in dsdiaban)
                             {
                                 <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
                 </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Nhóm hàng hóa dịch vụ</label>
-                        <select class="form-control" asp-for="Manhom">
-                            @foreach (var item in DmNhomHh)
-                            {
-                                <!option value="@item.Manhom" @(item.Manhom == Model.Manhom ? "selected" : "")>@item.Tennhom</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
+
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
@@ -102,7 +92,7 @@
                     <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
                 </div>
             </div>
-
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="GiaTrungThauHhdv" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
@@ -112,6 +102,7 @@
             <button type="button" class="btn btn-primary mr-2" onclick="Validatemts()"><i class="la la-check"></i>Lưu lại</button>
         </div>
     </form>
+    @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Modal.cshtml")
     <!--end::Form-->
 </div>
 <script>

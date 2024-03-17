@@ -126,8 +126,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
 
                     //ViewData["Madb"] = _db.GiaMuaTaiSan.Where(t => t.Madv == Madv).OrderBy(t => t.Id).Select(t => t.Madiaban).First();
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "T");
-                    ViewData["DmNhomHh"] = _db.DmNhomHh.ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                    //ViewData["DmNhomHh"] = _db.DmNhomHh.ToList();
 
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_mts";
@@ -216,18 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Edit"))
                 {
                     var model = _db.GiaMuaTaiSan.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new GiaMuaTaiSan
-                    {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Manhom = model.Manhom,
-                        Ngayqd = model.Ngayqd,
-                        Tennhathau = model.Tennhathau,
-                        Ghichu = model.Ghichu,
-                        Thongtinqd = model.Thongtinqd,
-                    };
+                    model.GiaMuaTaiSanCt = _db.GiaMuaTaiSanCt.Where(t => t.Mahs == Mahs).ToList();
 
                     ViewData["DmNhomHh"] = _db.DmNhomHh.ToList();
                     ViewData["Madv"] = model.Madv;
@@ -238,7 +227,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["MenuLv1"] = "menu_mts";
                     ViewData["MenuLv2"] = "menu_giamts_tt";
 
-                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Edit.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Edit.cshtml", model);
                 }
                 else
                 {
@@ -338,19 +327,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Show"))
                 {
                     var model = _db.GiaMuaTaiSan.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new GiaMuaTaiSan
-                    {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Manhom = model.Manhom,
-                        Ngayqd = model.Ngayqd,
-                        Tennhathau = model.Tennhathau,
-                        Ghichu = model.Ghichu,
-                        Thongtinqd = model.Thongtinqd,
-                    };
-
+                    model.GiaMuaTaiSanCt = _db.GiaMuaTaiSanCt.Where(t => t.Mahs== Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "T");
@@ -358,7 +335,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["MenuLv1"] = "menu_mts";
                     ViewData["MenuLv2"] = "menu_giamts_tt";
 
-                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Show.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Show.cshtml", model);
                 }
                 else
                 {
@@ -402,6 +379,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("GiaTrungThauHhDv/Result")]
         [HttpPost]
         public IActionResult Result(DateTime beginTime, DateTime endTime, string ten, string dv)
@@ -458,6 +436,106 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+        
+        [Route("GiaTrungThauHhDvCt/Edit")]
+        [HttpPost]
+        public JsonResult Edit(int Id)
+        {
+            var model = _db.GiaMuaTaiSanCt.FirstOrDefault(t => t.Id == Id);
+            model.ThanhTien = model.KhoiLuong * model.DonGia;
+            // Trả về JSON cho JavaScript
+            return Json(model);
+        }
+
+        [Route("GiaTrungThauHhDvCt/Update")]
+        [HttpPost]
+        public JsonResult UpdateCt(GiaMuaTaiSanCt requets)
+        {
+            //Kiêm tra id = =-1 =>thêm mới
+            if (requets.Id == -1)
+            {
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt
+                {
+                    Mahs = requets.Mahs,
+                    Mota = requets.Mota,
+                    KhoiLuong = requets.KhoiLuong,
+                    DonGia = requets.DonGia,
+                    SapXep = requets.SapXep,
+                    HienThi = requets.HienThi,
+                };
+
+                _db.GiaMuaTaiSanCt.Add(model);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var model = _db.GiaMuaTaiSanCt.FirstOrDefault(t => t.Id == requets.Id);
+                model.DonGia = requets.DonGia;
+                model.Mota = requets.Mota;
+                model.KhoiLuong = requets.KhoiLuong;
+                model.DonGia = requets.DonGia;
+                model.SapXep = requets.SapXep;
+                model.HienThi = requets.HienThi;
+                model.Updated_at = DateTime.Now;
+                _db.GiaMuaTaiSanCt.Update(model);
+                _db.SaveChanges();
+            }
+
+
+            string result = GetDataCt(requets.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        public string GetDataCt(string Mahs)
+        {
+            var model = _db.GiaMuaTaiSanCt.Where(t => t.Mahs == Mahs).ToList();
+
+            int record = 1;
+            string result = "<div class='card-body' id='frm_data'>";
+            result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
+            result += "<thead>";
+            result += "<tr style='text-align:center'>";
+            result += "<th width='2%'>#</th>";
+            result += "<th>Tên công tác</th>";
+            result += "<th>Đơn vị</th>";
+            result += "<th>Khối lượng<br>mời thầu</th>";
+            result += "<th>Đơn giá</th>";
+            result += "<th>Thành tiền</th>";
+            result += "<th width='10%'>Thao tác</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            foreach (var item in model)
+            {
+                result += "<tr>";
+                result += "<td class='text-center'>" + record++ + "</td>";
+                result += "<td class='text-center'>" + item.Mota + "</td>";
+                result += "<td class='text-center'>" + item.Dvt + "</td>";
+                result += "<td class='text-center'>" + Helpers.ConvertDbToStr(item.KhoiLuong) + "</td>";
+                result += "<td class='text-center'>" + Helpers.ConvertDbToStr(item.DonGia) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.KhoiLuong * item.DonGia) + "</td>";
+                result += "<td>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-edit text-primary'></i>";
+                result += "</button>";
+                result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                result += " onclick='GetDelete(" + item.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                result += "<i class='icon-lg la la-trash text-danger'></i>";
+                result += "</button>";
+                result += "</td>";
+                result += "</tr>";
+            }
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+
+            return result;
+
         }
     }
 }
