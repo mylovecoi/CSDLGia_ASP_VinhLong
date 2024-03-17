@@ -39,48 +39,15 @@
         {
             @if (Model.PhiLePhiCt != null)
             {
-                @foreach (var item in Model.PhiLePhiCt.Where(x => x.CapDo == 1).OrderBy(x => x.STT))
+                @foreach (var item in Model.PhiLePhiCt.OrderBy(x => x.STT))
                 {
                     <tr>
-                        <td>@item.HienThi</td>
-                        <td>@item.ChiTieu</td>
+                        <td style="text-align:center">@item.HienThi</td>
+                        <td>@item.Tendv</td>
                         <td>@item.Dvt</td>
                         <td>@item.Dongia</td>
                         <td></td>
                     </tr>
-                    @* Vòng 2 *@
-                    @foreach (var item1 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item.MaSo).OrderBy(x => x.STT))
-                    {
-                        <tr>
-                            <td>@item1.HienThi</td>
-                            <td>@item1.ChiTieu</td>
-                            <td>@item1.Dvt</td>
-                            <td>@item1.Dongia</td>
-                            <td></td>
-                        </tr>
-                        @* Vòng 3 *@
-                        @foreach (var item2 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item1.MaSo).OrderBy(x => x.STT))
-                        {
-                            <tr>
-                                <td>@item2.HienThi</td>
-                                <td>@item2.ChiTieu</td>
-                                <td>@item2.Dvt</td>
-                                <td>@item2.Dongia</td>
-                                <td></td>
-                            </tr>
-                            @* Vòng 4 *@
-                            @foreach (var item3 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item2.MaSo).OrderBy(x => x.STT))
-                            {
-                                <tr>
-                                    <td>@item3.HienThi</td>
-                                    <td>@item3.ChiTieu</td>
-                                    <td>@item3.Dvt</td>
-                                    <td>@item3.Dongia</td>
-                                    <td></td>
-                                </tr>
-                            }
-                        }
-                    }
                 }
             }
         }

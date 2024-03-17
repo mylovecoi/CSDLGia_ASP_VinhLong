@@ -1,4 +1,9 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi;
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var danhMucPhiLePhi = (IEnumerable<PhiLePhiDm>)ViewData["DanhMucPhiLePhi"];
+    var mahs = ViewData["Mahs"];
+}
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -10,6 +15,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged4.init();
@@ -20,72 +26,84 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                HỒ SƠ GIÁ PHÍ, LỆ PHÍ
+                Thông tin hồ sơ giá<small>&nbsp; phí, lệ phí</small><br />
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="PhiLePhi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_giakhunggd_store">
-
+    <form asp-controller="PhiLePhi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tmdmn_store">
         <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input hidden asp-for="Mahs" value="@Model.Mahs">
-            <input hidden asp-for="Madv" value="@Model.Madv">
-            <input hidden asp-for="PhanLoaiHoSo" value="@Model.PhanLoaiHoSo">
-            <input hidden asp-for="CodeExcel" value="@Model.CodeExcel">
-
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" asp-for="Soqd" class="form-control" />
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
-
-                <div class="col-xl-6">
+                <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Ngày ban hành*</label>
-                        <input type="date" asp-for="Thoidiem" class="form-control" />
-                        
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
-                
+            </div>
+            <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung</label>
-                        <textarea class="form-control" rows="2" asp-for="Ttqd"></textarea>
+                        <label>Mô tả</label>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
                     </div>
                 </div>
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
-                    </div>
-                </div>
-                <div class="col-xl-6">
+                <div class="col-xl-2">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                        <input type="file" asp-for="Ipf1" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
             </div>
 
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Detail.cshtml")
-
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="PhiLePhi" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Hoàn Thành</button>
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->
-    @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Modal.cshtml")
 </div>
-
+<script>
+    function ValidateTmdmn() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_tmdmn_store").submit();
+            }
+        }
+    }
+</script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

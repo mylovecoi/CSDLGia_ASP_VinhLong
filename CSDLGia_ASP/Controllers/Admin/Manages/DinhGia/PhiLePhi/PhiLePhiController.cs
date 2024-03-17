@@ -95,9 +95,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                             }
 
                         }
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
-                        ViewData["Madv"] = Madv;
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["DsDiaBanAll"] = _db.DsDiaBan;
+                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["Donvi"] = Madv;
+                        ViewData["NhomTn"] = _db.PhiLePhiNhom.ToList();
                         ViewData["Title"] = "Thông tin giá phí, lệ phí";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_plp";
@@ -129,28 +132,62 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
         [Route("PhiLePhi/Create")]
         [HttpGet]
-        public IActionResult Create(string maDV)
+        public IActionResult Create(string Madv, string maNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi", "Create"))
                 {
 
-                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
+                    var model = new Models.Manages.DinhGia.PhiLePhi
                     {
-                        Mahs = maDV + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                        Madv = maDV,
+                        Madv = Madv,
                         Thoidiem = DateTime.Now,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         PhanLoaiHoSo = "HOSOCHITIET",
                     };
+                    var danhmuc = _db.PhiLePhiDm.ToList();
+
+
+                    
+                    if (maNhom != "all")
+                    {
+                        danhmuc = danhmuc.Where(t => t.Manhom == maNhom).ToList();
+                    }
+                    else
+                    {
+                        danhmuc = danhmuc.ToList();
+                    }
+
+
+                    var chitiet = new List<PhiLePhiCt>();
+
+
+                    foreach (var item in danhmuc)
+                    {
+                        chitiet.Add(new PhiLePhiCt()
+                        {
+                            Mahs = model.Mahs,
+                            SapXep = item.SapXep,
+                            HienThi = item.HienThi,
+                            Style = item.Style,
+                            Tendv = item.Tenspdv,
+                            Dvt = item.Dvt
+                        });
+                    }
+                    _db.PhiLePhiCt.AddRange(chitiet);
+                    _db.SaveChanges();
+
+                    model.PhiLePhiCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Mahs"] = model.Mahs;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
                     ViewData["MenuLv3"] = "menu_plp_tt";
+                    ViewData["DanhMucPhiLePhi"] = danhmuc;
                     return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Create.cshtml", model);
-
                 }
                 else
                 {
@@ -163,6 +200,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
 
         public IActionResult NhanExcel(string maDV)
         {
@@ -597,82 +635,55 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-            var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
-            // Trả về JSON cho JavaScript
-            return Json(model);
+           
+            var model = _db.PhiLePhiCt.FirstOrDefault(p => p.Id == Id);
+
+            if (model != null)
+            {
+                string result = "<div class='modal-body' id='edit_thongtin'>";
+
+                result += "<div class='row'>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn Giá</b></label>";
+                result += "<input type='text' id='dongia_edit' name='dongia_edit' value='" + model.Dongia + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
+                result += "<input hidden type='text' id='tenDv_edit' name='tenDv_edit' value='" + model.Tendv + "' class='form-control'/>";
+
+                result += "</div>";
+                result += "</div>";
+
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
         }
 
         [Route("PhiLePhiCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt request)
+        public JsonResult Update(int Id, double donGia, string tenDv)
         {
+            var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
 
-            if (request.CapDo <= 0 || request.CapDo > 4)
-            {
-                request.CapDo = 1;
-            }
-            //Kiểm tra mã trước khi nhập
-            if (request.CapDo > 1)
-            {
-                //Kiểm tra mã gốc xem tồn tại ko
-                var chk = _db.PhiLePhiCt.Where(x => x.Mahs == request.Mahs && x.MaSo == request.MaSoGoc);
-                if (!chk.Any())
-                {
-                    return Json(new { status = "error", message = "Mã gốc không tồn tại. Bạn hãy kiểm tra lại !!!" });
-                }
-            }
-
-            //Kiểm tra mã trước khi nhập
-            if (request.CapDo == 1)
-            {
-                //Kiểm tra mã cấp 1 không nhập mã gốc
-                var chk = _db.PhiLePhiCt.Where(x => x.Mahs == request.Mahs && x.MaSo == request.MaSoGoc);
-                if (request.MaSoGoc != null && request.MaSoGoc != "")
-                {
-                    return Json(new { status = "error", message = "Mã số cấp 1 không nhập mã gốc. Bạn hãy kiểm tra lại !!!" });
-                }
-            }
-
-            //Kiêm tra id = =-1 =>thêm mới
-            if (request.Id == -1)
-            {
-                var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt
-                {
-                    Mahs = request.Mahs,
-                    MaSo = request.MaSo,
-                    MaSoGoc = request.MaSoGoc,
-                    HienThi = request.HienThi,//HIện thị dữ liệu ra màn hình
-                    STT = request.STT,//Số thứ tự theo mã gốc
-                    CapDo = request.CapDo,//Bắt đầu từ 1
-                    ChiTieu = request.ChiTieu,
-                    Dvt = request.Dvt,
-                    Dongia = request.Dongia,
-                };
-
-                _db.PhiLePhiCt.Add(model);
-                _db.SaveChanges();
-            }
-            else
-            {
-                var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == request.Id);
-
-                model.MaSo = request.MaSo;
-                model.MaSoGoc = request.MaSoGoc;
-                model.HienThi = request.HienThi;//HIện thị dữ liệu ra màn hình
-                model.STT = request.STT;//Số thứ tự theo mã gốc
-                model.CapDo = request.CapDo;//Bắt đầu từ 1
-                model.ChiTieu = request.ChiTieu;
-                model.Dvt = request.Dvt;
-                model.Dongia = request.Dongia;
-                _db.PhiLePhiCt.Update(model);
-                _db.SaveChanges();
-            }
-
-
-
-            string result = GetDataCt(request.Mahs);
+            model.Dongia = donGia;
+            model.Tendv = tenDv;
+            
+            _db.PhiLePhiCt.Update(model);
+            _db.SaveChanges();
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
+            //model.PhiLePhiCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
             return Json(data);
+
         }
 
         [Route("PhiLePhiCt/Delete")]
@@ -685,6 +696,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             var result = GetDataCt(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
+        }
+
+        public string GetData(string Mahs)
+        {
+            var model = _db.PhiLePhiCt.Where(t => t.Mahs == Mahs).ToList();
+
+            string result = "<div class='card-body' id='frm_data'>";
+            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
+            result += "<thead>";
+            result += "<tr style='text-align:center'>";
+            result += "<th rowspan='2'>STT</th>";
+            result += "<th rowspan='2'>Nội dung</th>";
+            result += "<th rowspan='2'>Đơn vị tính</th>";
+            result += "<th rowspan='2'>Mức Thu</th>";
+            result += "<th rowspan='2'>Thao tác</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            foreach (var item in model.OrderBy(x => x.SapXep))
+            {
+                result += "<tr  style='text-align:center'>";
+                result += "<td>" + item.SapXep + "</td>";
+                result += "<td class='active'>" + item.Tendv + "</td>";
+                result += "<td>" + item.Dvt + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStrDecimal(item.Dongia) + "</td>";
+                result += "<td>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-edit text-primary'></i>";
+                result += "</button>";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
+                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
+                result += "<i class='icon-lg la la-trash text-danger'></i>";
+                result += "</button></td></tr>";
+            }
+            result += "</tbody>";
+            return result;
         }
 
         public string GetDataCt(string Mahs)
