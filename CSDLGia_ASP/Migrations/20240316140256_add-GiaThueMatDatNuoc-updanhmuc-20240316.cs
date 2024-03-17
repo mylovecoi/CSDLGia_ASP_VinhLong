@@ -112,7 +112,7 @@ namespace CSDLGia_ASP.Migrations
                 name: "Style",
                 table: "GiaThueMatDatMatNuocCt",
                 type: "nvarchar(max)",
-                nullable: true);            
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "GiaThueMatDatMatNuocNhom",
@@ -200,12 +200,13 @@ namespace CSDLGia_ASP.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Style",
-                table: "GiaThueMatDatMatNuocCt");            
+                table: "GiaThueMatDatMatNuocCt");
 
             migrationBuilder.RenameColumn(
                 name: "SapXep",
                 table: "GiaThueMatDatMatNuocCt",
                 newName: "Dongia");
+
         }
     }
 }
