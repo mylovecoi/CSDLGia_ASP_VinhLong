@@ -123,18 +123,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                                 Sapxep = stt++,
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
+                                Maspdv = request.Mahs + DateTime.Now.ToString("yyMMddssmmHH"),
+                                
 
-                                Manhom = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Madichvu = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                Maspdv = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Tenspdv = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
 
-                                Tenspdv = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Giadv = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,
 
-                                Madichvu = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Ghichu = worksheet.Cells[row, 6].Value != null ? worksheet.Cells[row, 6].Value.ToString().Trim() : "",
 
-                                Ghichu = worksheet.Cells[row, 5].Value != null ? worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-
-                                Giadv = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,
+                                Manhom = worksheet.Cells[row, 7].Value != null ? worksheet.Cells[row, 7].Value.ToString().Trim() : "",
 
                             });
                         }
@@ -174,7 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                 _db.GiaDvKcb.Add(model);
                 _db.GiaDvKcbCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "DvKhamChuaBenhExcel", new { Mahs = request.Mahs });
+                return RedirectToAction("Edit", "DvKhamChuaBenh", new { Mahs = request.Mahs });
             }
             else
             {
