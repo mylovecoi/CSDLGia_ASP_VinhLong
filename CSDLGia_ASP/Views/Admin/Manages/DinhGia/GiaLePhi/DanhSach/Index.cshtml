@@ -4,26 +4,28 @@
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 
     var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
-
+    int Nam = Int32.Parse(ViewData["Nam"].ToString());
+    var dmNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>)ViewData["NhomDm"];
 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/DinhGiaLePhi?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -35,24 +37,26 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;giá lệ phí trước bạ</small>
-                </h3>
-            </div><br />
-            <div >
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ<small>&nbsp;giá lệ phí trước bạ</small>
+            </h3>
+        </div><br />
+        <div>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaLePhi" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaLePhiMoiExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
 
             }
 
@@ -65,13 +69,13 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
-                          <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int year = nam_start; year <= nam_stop; year++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                <!option value="@year" @(Nam == year ? "selected" : "")>Năm @year</!option>
                             }
                         }
                     </select>
@@ -143,7 +147,7 @@
                                     {
                                         @if (item.Macqcq == ds.MaDv)
                                         {
-                                        <span style="text-align: center">@ds.TenDv</span>
+                                            <span style="text-align: center">@ds.TenDv</span>
                                         }
                                     }
                                 }
@@ -152,7 +156,7 @@
                             <td>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
-                                    <a asp-controller="GiaLePhi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" >
+                                    <a asp-controller="GiaLePhi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
@@ -179,6 +183,45 @@
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form asp-controller="GiaLePhi" asp-action="Create" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thêm mới thông tin hồ sơ
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="data_create">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Nhóm: </label>
+                                <select class="form-control" id="Manhom_create" name="Manhom_create">
+                                    @foreach (var item in dmNhom)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                            <input hidden id="Madv_create" name="Madv_create" value="@ViewData["Madv"]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
