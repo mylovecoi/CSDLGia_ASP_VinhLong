@@ -23,7 +23,8 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
+
 <p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -39,29 +40,30 @@
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 
-<div class="card card-custom" style="border: 1px solid #60aee4;">
-   
-    <hr />
+<div class="card-body" id="frm_data">
     <div class="card-body" id="frm_data">
         @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
-
         {
-                @foreach (var dm in dmNhomSpDvCongIch)
+            @foreach (var dm in dmNhomSpDvCongIch)
+            {
+                @if (manhom == dm.Manhom)
                 {
-                    @if (manhom == dm.Manhom)
-                    {
                     <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
-                    }
                 }
 
-            <table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;"dulieubang">
+            }
+            <table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" dulieubang">
                 <thead>
-                    <tr>
-                        <th width="5%" style="text-align:center">Hiển thị</th>
-                        <th width="60%" style="text-align:center">Danh mục</th>
-                        <th width="10%" style="text-align:center">Đơn vị tính</th>
-                        <th width="5%" style="text-align:center">Mức giá từ</th>
-                        <th width="5%" style="text-align:center">Mức giá đến</th>
+                    <tr >
+                        <th style="text-align:center">STT</th>
+                        <th style="text-align:center">Hiện Thị</th>
+                        <th style="text-align:left">Tên sản phẩm dịch vụ</th>
+                        <th style="text-align:center">Đơn vị tính</th>
+                        <th style="text-align:center">Mức giá 1</th>
+                        <th style="text-align:center">Mức giá 2</th>
+                        <th style="text-align:center">Mức giá 3</th>
+                        <th style="text-align:center">Mức giá 4</th>
+                        <th style="text-align:center">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,42 +71,28 @@
                     {
                         @if (Model.GiaSpDvCongIchCt != null)
                         {
-                            @foreach (var item in Model.GiaSpDvCongIchCt.Where(t => t.Capdo == "1" && t.Manhom == manhom))
+                            @foreach (var item in Model.GiaSpDvCongIchCt.Where(t => t.Manhom == manhom))
                             {
                                 <tr>
-                                    
+                                    <td style="text-align:center">@(record_id++)</td>
                                     <td style="text-align:center">@item.HienThi</td>
                                     <td style="text-align:left">@item.Ten</td>
                                     <td style="text-align:center">@item.Dvt</td>
                                     <td style="text-align:center">@item.Mucgiatu</td>
                                     <td style="text-align:center">@item.Mucgiaden</td>
-                                   
+                                    <td style="text-align:center">@item.Mucgia3</td>
+                                    <td style="text-align:center">@item.Mucgia4</td>
+                                    <td>
+                                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
+                                        <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                                onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-
-                                @foreach (var item1 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso && t.Manhom == manhom))
-                                {
-                                    <tr>
-                                      
-                                        <td style="text-align:center">@item1.HienThi</td>
-                                        <td style="text-align:left">@item1.Ten</td>
-                                        <td style="text-align:center">@item1.Dvt</td>
-                                        <td style="text-align:center">@item1.Mucgiatu</td>
-                                        <td style="text-align:center">@item1.Mucgiaden</td>
-                                        
-                                    </tr>
-                                    @foreach (var item2 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item1.Maso && t.Manhom == manhom))
-                                    {
-                                        <tr>
-                                          
-                                            <td style="text-align:center">@item2.HienThi</td>
-                                            <td style="text-align:left">@item2.Ten</td>
-                                            <td style="text-align:center">@item2.Dvt</td>
-                                            <td style="text-align:center">@item2.Mucgiatu</td>
-                                            <td style="text-align:center">@item2.Mucgiaden</td>
-                                            
-                                        </tr>
-                                    }
-                                }
                             }
                         }
                     }
@@ -113,6 +101,8 @@
         }
         <!--end: Datatable-->
     </div>
+
+    <!--end: Datatable-->
 </div>
 
 

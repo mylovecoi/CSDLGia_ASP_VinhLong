@@ -56,6 +56,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             }
         }
 
+        [Route("GiaSpDvCuTheCt/GetMaxSapXep")]
+        [HttpPost]
+
+        public JsonResult GetMaxSapXep(string Manhom)
+        {
+            var i = 0;
+            var data = _db.GiaSpDvCuTheDm.Where(t => t.Manhom == Manhom);
+
+            if (data.Any())
+            {
+                i = data.Max(x => x.Sapxep);
+            }
+
+            return Json(i);
+        }
+
         [Route("GiaSpDvCuTheDmCt/Store")]
         [HttpPost]
         public JsonResult Store(string manhom, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, int sapxep)

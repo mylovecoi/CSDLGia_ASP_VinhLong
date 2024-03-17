@@ -11,18 +11,9 @@
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
-<div class="card card-custom" style="border: 1px solid #60aee4;">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-            </h3>
-        </div>
-
-    </div>
-    <hr />
+<div class="card-body" id="frm_data">
     <div class="card-body" id="frm_data">
         @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
-
         {
             @foreach (var dm in dmNhomSpDvCongIch)
             {
@@ -30,18 +21,20 @@
                 {
                     <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
                 }
-            }
 
+            }
             <table class="table table-striped table-bordered table-hover dulieubang">
                 <thead>
-                    <tr>
-                        <th width="5%" style="text-align:center">STT</th>
-                        <th width="5%" style="text-align:center">Hiển thị</th>
-                        <th width="60%" style="text-align:center">Danh mục</th>
-                        <th width="10%" style="text-align:center">Đơn vị tính</th>
-                        <th width="5%" style="text-align:center">Mức giá từ</th>
-                        <th width="5%" style="text-align:center">Mức giá đến</th>
-                        <th width="10%" style="text-align:center">Thao tác</th>
+                    <tr style="text-align:center">
+                        <th>STT</th>
+                        <th>Hiện Thị</th>
+                        <th>Tên sản phẩm dịch vụ</th>
+                        <th>Đơn vị tính</th>
+                        <th>Mức giá 1</th>
+                        <th>Mức giá 2</th>
+                        <th>Mức giá 3</th>
+                        <th>Mức giá 4</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,78 +42,28 @@
                     {
                         @if (Model.GiaSpDvCongIchCt != null)
                         {
-                            @foreach (var item in Model.GiaSpDvCongIchCt.Where(t => t.Capdo == "1" && t.Manhom == manhom))
+                            @foreach (var item in Model.GiaSpDvCongIchCt.Where(t => t.Manhom == manhom))
                             {
                                 <tr>
-                                    <td style="text-align: center">@(record_id++)</td>
+                                    <td style="text-align:center">@(record_id++)</td>
                                     <td style="text-align:center">@item.HienThi</td>
                                     <td style="text-align:left">@item.Ten</td>
                                     <td style="text-align:center">@item.Dvt</td>
                                     <td style="text-align:center">@item.Mucgiatu</td>
                                     <td style="text-align:center">@item.Mucgiaden</td>
-                                    <td style="text-align:center">
-                                        @if (item.NhapGia)
-                                        {
-                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                                <i class="icon-lg la la-edit text-primary"></i>
-                                            </button>
-                                        }
+                                    <td style="text-align:center">@item.Mucgia3</td>
+                                    <td style="text-align:center">@item.Mucgia4</td>
+                                    <td>
+                                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
                                         <button type="button" data-target="#Delete_Modal" data-toggle="modal"
                                                 onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
                                     </td>
                                 </tr>
-
-                                @foreach (var item1 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso && t.Manhom == manhom))
-                                {
-                                    <tr>
-                                        <td style="text-align: center">@(record_id++)</td>
-                                        <td style="text-align:center">@item1.HienThi</td>
-                                        <td style="text-align:left">@item1.Ten</td>
-                                        <td style="text-align:center">@item1.Dvt</td>
-                                        <td style="text-align:center">@item1.Mucgiatu</td>
-                                        <td style="text-align:center">@item1.Mucgiaden</td>
-                                        <td style="text-align:center">
-                                            @if (item1.NhapGia)
-                                            {
-                                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                                        onclick="SetEdit(@item1.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                                    <i class="icon-lg la la-edit text-primary"></i>
-                                                </button>
-                                            }
-                                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                                    onclick="GetDelete(@item1.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
-                                                <i class="icon-lg la la-trash text-danger"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @foreach (var item2 in Model.GiaSpDvCongIchCt.Where(t => t.Magoc == item1.Maso && t.Manhom == manhom))
-                                    {
-                                        <tr>
-                                            <td style="text-align: center">@(record_id++)</td>
-                                            <td style="text-align:center">@item2.HienThi</td>
-                                            <td style="text-align:left">@item2.Ten</td>
-                                            <td style="text-align:center">@item2.Dvt</td>
-                                            <td style="text-align:center">@item2.Mucgiatu</td>
-                                            <td style="text-align:center">@item2.Mucgiaden</td>
-                                            <td style="text-align:center">
-                                                @if (item2.NhapGia)
-                                                {
-                                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                                            onclick="SetEdit(@item2.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                                        <i class="icon-lg la la-edit text-primary"></i>
-                                                    </button>
-                                                }
-                                                <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                                        onclick="GetDelete(@item2.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
-                                                    <i class="icon-lg la la-trash text-danger"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
                             }
                         }
                     }
@@ -129,5 +72,10 @@
         }
         <!--end: Datatable-->
     </div>
+
+
+
+
+    <!--end: Datatable-->
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Modal.cshtml")

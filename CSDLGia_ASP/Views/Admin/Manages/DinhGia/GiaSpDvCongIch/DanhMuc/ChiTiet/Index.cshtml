@@ -32,7 +32,7 @@
             <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="getmaxsapxep(@ViewData["Manhom"])" class="btn btn-light-primary">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
@@ -53,14 +53,10 @@
             <thead>
                 <tr >
                     <th width="4%">STT</th>
-                    <th style="text-align:center">Mã số</th>
-                    <th style="text-align:left">Tên</th>
-                    <th style="text-align:center">Mã gốc</th>
-                    <th style="text-align:center">Cấp độ</th>
                     <th style="text-align:center">Hiển thị</th>
+                    <th style="text-align:left">Tên sản phẩm dịch vụ</th>
                     <th style="text-align:center">Đơn vị tính</th>
-                    <th style="text-align:center">Theo tác</th>
-
+                    <th style="text-align:center">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,10 +65,9 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.HienThi</td>
+                        <td style="text-align: center">@item.Tenspdv</td>
                         <td style="text-align: center">@item.Dvt</td>
-                        <td style="text-align: center">Thao tác</td>
                         <td>
-
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
