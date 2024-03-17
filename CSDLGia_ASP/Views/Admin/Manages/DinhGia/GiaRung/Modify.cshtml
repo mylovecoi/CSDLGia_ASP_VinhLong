@@ -1,4 +1,5 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaRung
+@* @model CSDLGia_ASP.Models.Manages.DinhGia.GiaRung *@
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
@@ -7,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -20,41 +21,30 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;rừng</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;rừng</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="Giarung" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_rung_update">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="Giarung" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_rung_update">
+        <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Địa bàn</label>
-                            <select class="form-control" id="MaDiaBan" name="MaDiaBan">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Số quyết định</label>
                         <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Thời điểm*</label>
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
@@ -83,7 +73,6 @@
                         </label>
                         <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
                     </div>
-
                 </div>
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/Detail.cshtml")
@@ -116,8 +105,8 @@
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

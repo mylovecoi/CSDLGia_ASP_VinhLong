@@ -10,7 +10,8 @@
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
-<p style="text-align: left; font-size: 16px;">Địa bàn:
+<p style="text-align: left; font-size: 16px;">
+    Địa bàn:
     @foreach (var ds in dsdiaban)
     {
         @if (Model.Madiaban == ds.MaDiaBan)
@@ -21,7 +22,8 @@
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
-<p style="text-align: left; font-size: 16px;">Cơ quan tiếp nhận:
+<p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
     {
         @if (Model.Macqcq == dsonvi.MaDv)
@@ -34,25 +36,28 @@
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-
-    <tr>
-
-        <th style="text-align: center">Loại mặt đất, mặt nước</th>
-        <th style="text-align: center">Vị trí</th>
-        <th style="text-align: center">Địa giới từ</th>
-        <th style="text-align: center">Địa giới đến</th>
-        <th style="text-align: center">Mô tả</th>
-        <th style="text-align: center">Diện tích</th>
-        <th style="text-align: center">Đơn giá</th>
-    </tr>
-    <tr>
-        <td style="text-align: center">@Model.PhanLoaiDatNuoc</td>
-        <td style="text-align: center">@Model.Vitri</td>
-        <td style="text-align: center">@Model.Diemdau</td>
-        <td style="text-align: center">@Model.Diemcuoi</td>
-        <td style="text-align: center">@Model.Mota</td>
-        <td style="text-align: center">@Model.Dientich</td>
-        <td style="text-align: center">@Model.Dongia</td>
-    </tr>
-
+    <thead>
+        <tr style="text-align:center">
+            <th rowspan="2">STT</th>
+            <th rowspan="2">Vị trí, địa bàn</th>
+            <th colspan="3">Tỷ lệ %</th>
+        </tr>
+        <tr style="text-align:center">
+            <th>Ngành, nghề đặc<br />biệt ưu đãi đầu tư</th>
+            <th>Ngành, nghề ưu<br />đãi đầu tư</th>
+            <th>gành, nghề khác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GiaThueMatDatMatNuocCt.OrderBy(x => x.SapXep))
+        {
+            <tr style="text-align:center">
+                <td style="text-align:center">@item.HienThi</td>
+                <td>@item.LoaiDat</td>
+                <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia1)</td>
+                <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia2)</td>
+                <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia3)</td>
+            </tr>
+        }
+    </tbody>
 </table>

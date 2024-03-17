@@ -78,6 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Donvi"] = Madv;
+                        ViewData["NhomTn"] = _db.GiaThueMatDatMatNuocNhom.ToList();
                         ViewData["Title"] = " Thông tin hồ sơ giá thuê mặt đất mặt nước";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -109,22 +110,64 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuoc/Create")]
         [HttpGet]
-        public IActionResult Create(string Madv)
+        public IActionResult Create(string Madv, string maNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
                 {
 
-                    var model = new VMDinhGiaThueDN
+                    var model = new GiaThueMatDatMatNuoc
                     {
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         PhanLoaiHoSo = "HOSOCHITIET",
                     };
+                    var danhmuc = _db.GiaThueMatDatMatNuocDm.ToList(); // lấy dữ liệu trong bảng GiaSpDvKhungGiaDm
+
+
+                    // Khi bấm đồng ý trong moda thì add dữ liệu GiaSpDvKhungGiaDm -> bản GiaSpDvKhungGiaCt
+                    if (maNhom != "all")
+                    {
+                        danhmuc = danhmuc.Where(t => t.Manhom == maNhom).ToList();
+                    }
+                    else
+                    {
+                        danhmuc = danhmuc.ToList();
+                    }
+
+
+                    var chitiet = new List<GiaThueMatDatMatNuocCt>();
+
+
+                    foreach (var item in danhmuc)
+                    {
+                        chitiet.Add(new GiaThueMatDatMatNuocCt()
+                        {
+                            Mahs = model.Mahs,
+                            LoaiDat = item.Loaidat,
+                            SapXep = item.SapXep,
+                            HienThi = item.HienThi,
+                            MaNhom = item.Manhom,
+                            Style = item.Style,
+                            Dongia1 = 0,
+                            Dongia2 = 0,
+                            Dongia3 = 0,
+                            Dongia4 = 0,
+                            Dongia5 = 0,
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        });
+                    }
+                    _db.GiaThueMatDatMatNuocCt.AddRange(chitiet);
+                    _db.SaveChanges();
+
+                    model.GiaThueMatDatMatNuocCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+
                     ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -184,57 +227,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuoc/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(VMDinhGiaThueDN request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Store(GiaThueMatDatMatNuoc request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
                 {
 
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
+                    if (Ipf1 != null && Ipf1.Length > 0)
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
                         string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaThueDN", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
-                            await Ipf1upload.CopyToAsync(FileStream);
+                            await Ipf1.CopyToAsync(FileStream);
                         }
                         request.Ipf1 = filename;
                     }
 
-                    // 2024.03.15 Gộp Update và phần nhận cho Excel
-                    if (_db.GiaThueMatDatMatNuoc.Where(x=>x.Mahs ==  request.Mahs).Any())
-                    {
-                        //Xử lý hồ sơ
-                        var modelExcel = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == request.Mahs);
-                        modelExcel.Madiaban = request.Madiaban;
-                        modelExcel.Soqd = request.Soqd;
-                        modelExcel.Thoidiem = request.Thoidiem;
-                        modelExcel.Thongtin = request.Thongtin;
-                        modelExcel.Ghichu = request.Ghichu;
-                        modelExcel.CodeExcel = request.CodeExcel;
-                        modelExcel.Updated_at = DateTime.Now;
-                        modelExcel.Ipf1 = request.Ipf1;
-                        _db.GiaThueMatDatMatNuoc.Update(modelExcel);                        
-
-                        // Xử lý phần lịch sử hồ sơ 
-                        var lichSu = new TrangThaiHoSo
-                        {
-                            MaHoSo = request.Mahs,
-                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                            ThongTin = "Thay đổi thông tin hồ sơ",
-                            ThoiGian = DateTime.Now,
-                            TrangThai = "CHT",
-                        };
-                        _db.TrangThaiHoSo.Add(lichSu);
-                        _db.SaveChanges();
-                     
-                        return RedirectToAction("Index", "GiaThueDN", new { request.Madv });
-                    }
-                    //Phần cũ
                     var model = new GiaThueMatDatMatNuoc
                     {
                         Mahs = request.Mahs,
@@ -332,23 +345,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
-                    var model_new = new VMDinhGiaThueDN
-                    {
-                        Madv = model.Madv,
-                        Mahs = model.Mahs,
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Thoidiem = model.Thoidiem,
-                        Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu,
-                        PhanLoaiHoSo = model.PhanLoaiHoSo,
-                        CodeExcel = model.CodeExcel,
-                    };
-
-                    var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
-
-                    model_new.GiaThueMatDatMatNuocCt = model_ct.ToList();
-
+                    model.GiaThueMatDatMatNuocCt = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs).ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
@@ -357,11 +354,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
                     ViewData["DanhMucMatDatMatNuoc"] = _db.GiaThueMatDatMatNuocDm.ToList();
-                    if(model.CodeExcel != "")
-                    {
-                        return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/NhanExcel.cshtml", model_new);
-                    }
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modify.cshtml", model_new);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modify.cshtml", model);
                 }
                 else
                 {
@@ -377,7 +370,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuoc/Update")]
         [HttpPost]
-        public IActionResult Update(VMDinhGiaThueDN request)
+        public IActionResult Update(GiaThueMatDatMatNuoc request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -432,39 +425,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
-                    if (model.CodeExcel != "")
-                    {
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = "Chi tiết giá thuê mặt đất mặt nước";                       
-                        return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ShowExcel.cshtml", model);
-                    }
-                    var modelct = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Mahs == Mahs);
-
-                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
-                    {
-                        Mahs = model.Mahs,
-                        Madv = model.Madv,
-                        Madiaban = model.Madiaban,
-                        Soqd = model.Soqd,
-                        Thoidiem = model.Thoidiem,
-                        Vitri = modelct.Vitri,
-                        Diemdau = modelct.Diemdau,
-                        Diemcuoi = modelct.Diemcuoi,
-                        Mota = modelct.Mota,
-                        Dientich = modelct.Dientich,                        
-                        Macqcq = model.Macqcq,
-                        PhanLoaiDatNuoc = modelct.PhanLoaiDatNuoc,
-                    };
-
+                    var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
+                    model.GiaThueMatDatMatNuocCt = modelct.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                    
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", viewModel);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model);
                 }
                 else
                 {

@@ -96,6 +96,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thuetungay { get; set; }
         [NotMapped]
         public DateTime Thuedenngay { get; set; }
+        //Nhận excel
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
 
     }
 }

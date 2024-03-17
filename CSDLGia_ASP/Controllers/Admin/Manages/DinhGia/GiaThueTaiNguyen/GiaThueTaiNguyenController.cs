@@ -136,7 +136,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
                         Manhom = Manhom,
-                        PhanLoaiHoSo = "HOSOCHITIET",
                     };
 
                     var danhmuc = _db.GiaThueTaiNguyenDm.ToList();
@@ -195,43 +194,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-        public IActionResult NhanExcel(string Madv)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
-                {
-
-                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
-                    {
-                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                        Madv = Madv,
-                        Thoidiem = DateTime.Now,
-                        PhanLoaiHoSo = "HOSONHANEXCEL",
-                    };
-
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
-                    ViewData["codeExcel"] = model.CodeExcel;//Gán ra view để dùng chung
-                    return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Excel/NhanExcel.cshtml", model);
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
+        
 
         [Route("GiaThueTaiNguyen/Store")]
         [HttpPost]
@@ -253,11 +216,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             await Ipf1upload.CopyToAsync(FileStream);
                         }
                         request.Ipf1 = filename;
-                    }
-
-                    if (request.CodeExcel != "")
-                    {
-                        request.CodeExcel = request.CodeExcel.Replace("<meta charset=\"utf-8\">", "");
                     }
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
@@ -326,13 +284,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
-                    if (model.PhanLoaiHoSo == "HOSONHANEXCEL")
-                    {
-                        //model.CodeExcel = model.CodeExcel.Replace("[", "");
-                        //model.CodeExcel = model.CodeExcel.Replace("]", "");
-                        return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Excel/NhanExcel.cshtml", model);
-                    }
+                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";                    
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Edit.cshtml", model);
 
                 }
@@ -449,11 +401,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     ViewData["Title"] = "Bảng giá tính thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
-                    if (model.PhanLoaiHoSo == "HOSONHANEXCEL")
-                    {
-                        return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Excel/ShowExcel.cshtml", model);
-                    }
+                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";                   
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Show.cshtml", model);
 
                 }

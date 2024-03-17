@@ -14,19 +14,14 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr style="text-align:center">
-            <th style="text-align:center" rowspan='2'>STT</th>
-            <td style="text-align:center" rowspan='2'>Đơn vị nhập</td>
-            <td style="text-align:center" rowspan='2'>Thời điểm</td>
-            <td style="text-align:center" rowspan='2'>Mô tả</td>
-            <td style="text-align:center" rowspan='2'>Phan loại</td>
-            <th style="text-align:center" rowspan='2'>Tên phí, lệ phí</th>
-            <td style="text-align:center" rowspan='2'>Phần trăm</td>
-            <th style="text-align:center" colspan='2'>Mức thu</th>
-        </tr>
-        <tr>
-            <th style="text-align:center">Từ</th>
-            <th style="text-align:center">Đến</th>
-        </tr>
+            <th style="text-align:center">STT</th>
+            <td style="text-align:center">Đơn vị nhập</td>
+            <td style="text-align:center">Thời điểm</td>
+            <td style="text-align:center" width="20%">Mô tả</td>
+            <th style="text-align:center">Tên phí, lệ phí</th>
+            <td style="text-align:center">Phần trăm</td>
+            <th style="text-align:center">Mức thu</th>
+        </tr>       
     </thead>
     <tbody>
         @if (Model != null)
@@ -47,11 +42,10 @@
                     </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align: center">@item.Mota</td>
-                    <td style="text-align: center">@item.Phanloai</td>
-                    <td style="text-align: center">@item.Tennhom</td>
+                    <td style="text-align: left">@item.Tennhom</td>
                     <td style="text-align: center">@item.Phantram</td>
-                    <td style="text-align: center">@item.Mucthutu</td>
-                    <td style="text-align: center">@item.Mucthuden</td>
+                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
+                  
 
                 </tr>
             }

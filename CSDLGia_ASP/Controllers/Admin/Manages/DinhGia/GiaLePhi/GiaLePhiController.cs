@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("DinhGiaLePhi")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -55,24 +55,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                 Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
                             }
                         }
-                        var model = _db.GiaPhiLePhi.Where(t => t.Madv == Madv).ToList();
+                        var model = _db.GiaPhiLePhi.Where(t => t.Madv == Madv);
 
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            model = model.ToList();
+                            model = model.Where(t=>t.Thoidiem.Year == Nam);
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
-                        }
-
+                       
+                        ViewData["NhomDm"] = _db.GiaPhiLePhiNhom;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
@@ -104,28 +94,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        [Route("DinhGiaLePhi/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv)
+
+        [HttpPost("DinhGiaLePhi/Create")]        
+        public IActionResult Create(string Madv_create, string Manhom_create)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
                 {
-                    var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv).ToList();
-                    if (modelcxd != null)
+                    var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv_create);
+                    if (modelcxd.Any())
                     {
                         _db.GiaPhiLePhiCt.RemoveRange(modelcxd);
-
                         _db.SaveChanges();
                     }
+
                     var model = new GiaPhiLePhi
                     {
-                        Madv = Madv,
+                        Madv = Madv_create,
                         Thoidiem = DateTime.Now,
-                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = Madv_create + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
-                    var dm = _db.GiaPhiLePhiDm.ToList();
+                    var dm = _db.GiaPhiLePhiDm.Where(t=>t.Manhom == Manhom_create);
                     var chitiet = new List<GiaPhiLePhiCt>();
                     foreach (var item in dm)
                     {
@@ -133,8 +123,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         {
                             Madv = model.Madv,
                             Mahs = model.Mahs,
-                            Phanloai = item.Phanloai,
-                            Ptcp = item.Tennhom,
+                            STTSapxep = item.Stt,
+                            STTHienthi = item.SttHienthi,
+                            Style = item.Style,
+                            Phanloai = item.Manhom,
+                            Ptcp = item.HienThi,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
@@ -147,7 +140,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
-
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";

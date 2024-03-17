@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var danhMucLoaiRung = (IEnumerable<GiaRungDm>)ViewData["DmLoaiRung"];
+    int record_id = 1;
 }
 <br />
 <br />
@@ -36,32 +37,48 @@
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-
-    <tr>
-        <th style="text-align: center">Loại rừng</th>
-        <th style="text-align: center">Phân loại</th>
-        <th style="text-align: center">Đơn vị khai thác</th>
-        <th style="text-align: center">Nội dung chi tiết</th>
-        <th style="text-align: center">Diện tích</th>
-        <th style="text-align: center">Đơn vị tính</th>
-        <th style="text-align: center">Đơn giá</th>
-    </tr>
-    <tr>
-        <td style="text-align:center">
-            @foreach (var dmucloairung in danhMucLoaiRung)
+    <thead>
+        <tr style="text-align:center">
+            <th>STT</th>
+            <th>Phân loại</th>
+            <th>Loại rừng</th>
+            <th>Đơn vị khai thác(thuê)</th>
+            <th>Nội dung chi tiết</th>
+            <th>Diện tích rừng</th>
+            <th>Diện tích sử dụng</th>
+            <th>Đơn vị tính</th>
+            <th>Giá trị</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @if (Model.GiaRungCt != null)
             {
-                @if (Model.Manhom == dmucloairung.Manhom)
+                @foreach (var item in Model.GiaRungCt)
                 {
-                    @dmucloairung.Tennhom
+                    <tr>
+                        <td style="text-align:center">@(record_id++)</td>
+                        <td class="active">@item.Phanloai</td>
+                        <td style="text-align:center">
+                            @foreach (var lr in danhMucLoaiRung)
+                            {
+                                @if (item.Manhom == lr.Manhom)
+                                {
+                                    <span>@lr.Tennhom</span>
+                                }
+                            }
+                        </td>
+                        <td style="text-align:center">@item.Dvthue</td>
+                        <td style="text-align:center">@item.Noidung</td>
+                        <td style="text-align:right;font-weight: bold">@item.Dientich</td>
+                        <td style="text-align:right;font-weight: bold">@item.Dientichsd</td>
+                        <td style="text-align:center">@item.Dvt</td>
+                        <td style="text-align:right;font-weight: bold">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                    </tr>
                 }
             }
-        </td>
-        <td style="text-align:center">@Model.Phanloai</td>
-        <td style="text-align:center">@Model.Dvthue</td>
-        <td style="text-align:center">@Model.Noidung</td>
-        <td style="text-align:center">@Model.Dientich</td>
-        <td style="text-align:center">@Model.Dvt</td>
-        <td style="text-align:center">@Model.Dongia</td>
-    </tr>
-
+        }
+    </tbody>
 </table>
+

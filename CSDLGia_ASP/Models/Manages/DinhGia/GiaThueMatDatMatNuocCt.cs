@@ -25,6 +25,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double SapXep { get; set; }
         public string HienThi { get; set; }
         public string Style { get; set; }
+        public string LoaiDat { get; set; }
+        public string MaNhom { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         [NotMapped]

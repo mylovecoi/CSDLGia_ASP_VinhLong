@@ -120,33 +120,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<div class='row'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đơn vị tính*</b></label>";
+                result += "<label><b>Mã dịch vụ</b></label>";
                 result += "<input id='madichvu_edit' name='madichvu_edit'  value='" + model.Madichvu + "' class='form-control' /> ";
-                result += "</div></div>";
+                result += "</div>";
+                result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên dịch vụ*</b></label>";
                 result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' required/>";
-                result += "</div></div>";
-                result += "<div class='col-xl-11'>";
-                result += "<label class='form-control-label'><b>Đơn vị tính*</b></label>";
-                result += "<select type='text' id='Dvt_edit' name='Dvt_edit' class='form-control'>";
-                result += " <option value = ''> ---Select--- </ option >";
-                foreach (var item in DmDvt)
-                {
-                    result += " <option value = '" + item.Dvt + "' " + (item.Dvt == model.Dvt ? "selected" : "") + ">" + item.Dvt + "</ option >";
-                }
-                result += "</select>";
                 result += "</div>";
-                result += " <div class='col-md-1' style='padding-left: 0px'>";
-                result += " <label class='control-label'>&nbsp;&nbsp;&nbsp;</label>";
-                result += " <button type ='button' class='btn btn-default' style='border:rgba(0, 0, 0, 0.1) solid 0.05px' data-target='#Dvt_edit_Modal' data-toggle='modal'>";
-                result += " <i class='fa fa-plus'></i>";
-                result += " </button>";
                 result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Ghi chú</b></label>";
+                result += "<input type='text' id='ghichu_edit' name='ghichu_edit' value='" + model.Ghichu + "' class='form-control' rows='2'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Hiển thị</b></label>";
+                result += "<input type='text' id='hienthi_edit' name='hienthi_edit' value='" + model.Hienthi + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Sắp xếp</b></label>";
+                result += "<input type='number' id='sapxep_edit' name='sapxep_edit' value='" + model.Sapxep + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
                 result += "</div>";
 
-                result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
+                
                 var data = new { status = "success", message = result };
                 return Json(data);
             }
@@ -159,16 +164,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DanhMucDvKcb/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Dvt)
+        public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Ghichu, string Hienthi, int Sapxep)
         {
             var model = _db.GiaDvKcbDm.FirstOrDefault(t => t.Id == Id);
             model.Tenspdv = Tenspdv;
             model.Madichvu = Madichvu;
-            model.Dvt = Dvt;
+            model.Ghichu = Ghichu;
+            model.Hienthi = Hienthi;
+            model.Sapxep = Sapxep;
             model.Updated_at = DateTime.Now;
             _db.GiaDvKcbDm.Update(model);
             _db.SaveChanges();
-            if (Dvt != null)
+            /*if (Dvt != null)
             {
                 var dvt = _db.DmDvt.Where(t => t.Dvt == Dvt).ToList();
                 if (dvt.Count == 0)
@@ -182,7 +189,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     _db.DmDvt.AddRange(new_dvt);
                     _db.SaveChanges();
                 }
-            }
+            }*/
             var data = new { status = "success" };
             return Json(data);
         }

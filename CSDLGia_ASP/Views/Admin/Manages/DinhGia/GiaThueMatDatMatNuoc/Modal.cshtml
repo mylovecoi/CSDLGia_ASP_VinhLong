@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN
+﻿
 @{
     var mahs = ViewData["Mahs"];
     var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
@@ -21,18 +21,6 @@
                 <input type="hidden" value="@mahs" id="mahs_create" />
 
                 <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Loại mặt đất, mặt nước</b></label>
-                            <select style="width: 100%;" class="form-control select2basic" id="loaidn_create" name="loaidn_create">
-                                @foreach (var item in danhMucMatDatMatNuoc)
-                                {
-                                    <option value="@item.Loaidat">@item.Loaidat</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Vị trí*</b></label>
@@ -186,12 +174,12 @@
             url: '/GiaThueMatDatMatNuocCt/Update',
             type: 'POST',
             data: {
-                Vitri: $('#vitri_edit').val(),
-                Diemdau: $('#diemdau_edit').val(),
-                Diemcuoi: $('#diemcuoi_edit').val(),
-                Mota: $('#mota_edit').val(),
-                Dientich: $('#dientich_edit').val(),
-                Dongia: $('#dongia_edit').val(),
+                Loaidat: $('#loaidat_edit').val(),
+                Dongia1: $('#dongia1_edit').val(),
+                Dongia2: $('#dongia2_edit').val(),
+                Dongia3: $('#dongia3_edit').val(),
+                Hienthi: $('#hienthi_edit').val(),
+                SapXep: $('#sapxep_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

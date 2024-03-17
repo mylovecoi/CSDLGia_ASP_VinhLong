@@ -13,6 +13,18 @@ namespace CSDLGia_ASP.Migrations
                 newName: "SapXep");
 
             migrationBuilder.AddColumn<string>(
+               name: "LoaiDat",
+               table: "GiaThueMatDatMatNuocCt",
+               type: "nvarchar(max)",
+               nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+              name: "MaNhom",
+              table: "GiaThueMatDatMatNuocCt",
+              type: "nvarchar(max)",
+              nullable: true);
+
+            migrationBuilder.AddColumn<string>(
                 name: "Capdo",
                 table: "GiaThueMatDatMatNuocDm",
                 type: "nvarchar(max)",
@@ -100,7 +112,7 @@ namespace CSDLGia_ASP.Migrations
                 name: "Style",
                 table: "GiaThueMatDatMatNuocCt",
                 type: "nvarchar(max)",
-                nullable: true);            
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "GiaThueMatDatMatNuocNhom",
@@ -155,6 +167,14 @@ namespace CSDLGia_ASP.Migrations
                 table: "GiaThueMatDatMatNuocDm");
 
             migrationBuilder.DropColumn(
+               name: "LoaiDat",
+               table: "GiaThueMatDatMatNuocDm");
+
+            migrationBuilder.DropColumn(
+              name: "MaNhom",
+              table: "GiaThueMatDatMatNuocDm");
+
+            migrationBuilder.DropColumn(
                 name: "Dongia1",
                 table: "GiaThueMatDatMatNuocCt");
 
@@ -180,12 +200,13 @@ namespace CSDLGia_ASP.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Style",
-                table: "GiaThueMatDatMatNuocCt");            
+                table: "GiaThueMatDatMatNuocCt");
 
             migrationBuilder.RenameColumn(
                 name: "SapXep",
                 table: "GiaThueMatDatMatNuocCt",
                 newName: "Dongia");
+
         }
     }
 }

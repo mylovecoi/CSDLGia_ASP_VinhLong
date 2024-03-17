@@ -49,7 +49,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dgtmdmn_dm">
-                                            <a asp-controller="GiaThueDNDm" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaThueDNNhom" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -3137,7 +3137,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_dglp_dm">
-                                            <a asp-controller="GiaLePhiDm" asp-action="Index" class="menu-link">
+                                            <a asp-controller="GiaLePhiNhom" asp-action="Index" class="menu-link">
                                                 <i class="menu-bullet  menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -3209,7 +3209,19 @@
                             </a>
                             <div class="menu-submenu">
                                 <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">                                    
+                                <ul class="menu-subnav">       
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Index"))
+                                    {
+                                        <li class="menu-item" aria-haspopup="true" id="menu_plp_dm">
+                                            <a asp-controller="PhiLePhiNhom" asp-action="Index" class="menu-link">
+                                                <i class="menu-bullet  menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text text-truncate">Danh mục</span>
+                                            </a>
+                                        </li>
+                                    }
+
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_plp_tt">
