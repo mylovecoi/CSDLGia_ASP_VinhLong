@@ -124,7 +124,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
                                 Maspdv = request.Mahs + DateTime.Now.ToString("yyMMddssmmHH"),
-                                
+
+                                Hienthi = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+
+                                HienthiTT37 = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
 
                                 Madichvu = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
@@ -135,7 +138,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                                 Ghichu = worksheet.Cells[row, 6].Value != null ? worksheet.Cells[row, 6].Value.ToString().Trim() : "",
 
                                 Manhom = worksheet.Cells[row, 7].Value != null ? worksheet.Cells[row, 7].Value.ToString().Trim() : "",
-
                             });
                         }
                     }
@@ -164,7 +166,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                     Madiaban = request.Madiaban,
                     Thoidiem = request.Thoidiem,
                     Ipf1 = request.Ipf1,
-
                     Trangthai = "CHT",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,

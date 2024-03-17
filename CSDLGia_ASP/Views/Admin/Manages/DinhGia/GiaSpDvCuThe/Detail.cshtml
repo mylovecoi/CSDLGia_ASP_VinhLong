@@ -51,7 +51,7 @@
                         {
                             @if (Model.GiaSpDvCuTheCt != null)
                             {
-                                @foreach (var item in Model.GiaSpDvCuTheCt)
+                                @foreach (var item in Model.GiaSpDvCuTheCt.Where(t => t.Manhom == manhom))
                                 {
                                     <tr>
                                         <td style="text-align:center">@(record_id++)</td>

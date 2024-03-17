@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
     public class GiarungExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public GiarungExcelController(CSDLGiaDBContext db)
+        public GiarungExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
 
@@ -129,12 +133,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                                 Dvt = worksheet.Cells[row, 8].Value != null ? worksheet.Cells[row, 8].Value.ToString().Trim() : "",
 
-                                Giatri = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
+                                Dongia = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
 
                             });
                         }
                     }
 
+                    if (Ipf1 != null && Ipf1.Length > 0)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                        string extension = Path.GetExtension(Ipf1.FileName);
+                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await Ipf1.CopyToAsync(FileStream);
+                        }
+                        request.Ipf1 = filename;
+                    }
+
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaRung
+                    {
+                        Mahs = request.Mahs,
+                        Madv = request.Madv,
+                        Manhom = request.Manhom,
+                        Madiaban = request.Madiaban,
+                        Soqd = request.Soqd,
+                        Ghichu = request.Ghichu,
+                        Thoidiem = request.Thoidiem,
+                        Noidung = request.Noidung,
+                        Thongtin = request.Thongtin,
+                        Ipf1 = request.Ipf1,
+                        Trangthai = "CHT",
+                        Congbo = "CHUACONGBO",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.GiaRung.Add(model);
                 }
                 _db.GiaRungCt.AddRange(list_add);
                 _db.SaveChanges();
