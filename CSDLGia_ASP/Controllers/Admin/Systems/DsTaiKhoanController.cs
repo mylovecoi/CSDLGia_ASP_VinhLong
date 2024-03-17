@@ -260,7 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var check = _db.Users.FirstOrDefault(u => u.Username == request.Username && u.Id != request.Id);
                     if (check == null)
                     {
-                        return Ok(NewPassword);
+                        /*return Ok(NewPassword);*/
                         var model = _db.Users.FirstOrDefault(t => t.Id == request.Id);
 
                         if (!string.IsNullOrEmpty(NewPassword))

@@ -87,17 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
                 {
                     var model = _db.GiaDvKcb.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                    var modelct = (from a in _db.GiaDvKcbCt.ToList()
-                                   join b in _db.GiaDvKcbDm on a.Maspdv equals b.Maspdv
-                                   select new GiaDvKcbCt
-                                   {
-                                       Mahs = a.Mahs,
-                                       Tenspdv = b.Tenspdv,
-                                       Dvt = a.Dvt,
-                                       Maspdv = a.Maspdv,
-                                       Giadv = a.Giadv
-
-                                   });
+                    var modelct = _db.GiaDvKcbCt.ToList();
 
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;

@@ -638,6 +638,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             result += "<th>Mã nhóm tài nguyên cấp 3</th>";
             result += "<th>Mã nhóm tài nguyên cấp 4</th>";
             result += "<th>Mã nhóm tài nguyên cấp 5</th>";
+            result += "<th>Mã nhóm tài nguyên cấp 6</th>";
             result += "<th width='25%'>Tên nhóm, loại tài nguyên</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Giá tính thuế tài nguyên (đồng)</th>";
@@ -655,6 +656,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                 result += "<td class='text-center'>" + item.Cap3 + "</td>";
                 result += "<td class='text-center'>" + item.Cap4 + "</td>";
                 result += "<td class='text-center'>" + item.Cap5 + "</td>";
+                result += "<td class='text-center'>" + item.Cap6 + "</td>";
                 result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                 result += "<td class='text-center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";

@@ -60,6 +60,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public List<GiaMuaTaiSanCt> GiaMuaTaiSanCt { get; set; }
         //Nhận excel
+        [Required]
         [NotMapped]
         public IFormFile FormFile { get; set; }
         [NotMapped]
