@@ -324,7 +324,8 @@ namespace CSDLGia_ASP.Database
         //Hồ sơ phí, lệ phí
         public DbSet<PhiLePhi> PhiLePhi { get; set; }
         public DbSet<PhiLePhiCt> PhiLePhiCt { get; set; }
-
+        public DbSet<PhiLePhiDm> PhiLePhiDm { get; set; }
+        public DbSet<PhiLePhiNhom> PhiLePhiNhom { get; set; }
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
     }
