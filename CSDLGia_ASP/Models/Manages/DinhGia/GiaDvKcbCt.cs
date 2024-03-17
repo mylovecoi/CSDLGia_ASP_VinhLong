@@ -31,5 +31,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
         public string Trangthai { get; set; }
+        public string Hienthi { get; set; }
+        public double Sapxep { get; set; }
     }
 }

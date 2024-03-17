@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
     public class DvKhamChuaBenhExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public DvKhamChuaBenhExcelController(CSDLGiaDBContext db)
+        public DvKhamChuaBenhExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
 
@@ -28,21 +32,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Create"))
                 {
-                    var model = new GiaDvKcbCt
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb
                     {
-                        Maspdv = "1",
-                        Tenspdv = "2",
-                        Dvt = "3",
-                        Giadv = 4, 
-                        LineStart = 2,
-                        LineStop = 1000,
+                        Madv = Madv,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Thoidiem = DateTime.Now,
                         Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 3000,
                     };
                     ViewData["Title"] = " Thông tin hồ sơ giá dịch vụ khám chữa bệnh";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
                     ViewData["Madv"] = Madv;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Excels/Excel.cshtml", model);
                 }
                 else
@@ -89,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaDvKcbCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaDvKcb request, IFormFile Ipf1upload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -103,39 +107,74 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                     using (var package = new ExcelPackage(stream))
                     {
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        /*ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];*/
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[request.Sheet - 1];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        /*Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");*/
+                        int stt = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaDvKcbCt
                             {
-                                Mahs = Mahs,
+                                Mahs = request.Mahs,
+                                Madv = request.Madv,
                                 Trangthai = "CXD",
+                                Sapxep = stt++,
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+                                Manhom = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                Tenspdv = worksheet.Cells[row, Int16.Parse(request.Tenspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tenspdv)].Value.ToString().Trim() : "",
+                                Maspdv = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
 
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+                                Tenspdv = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                Giadv = worksheet.Cells[row, Int16.Parse(request.Giadv.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giadv.ToString())].Value) : 0,
+                                Madichvu = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+
+                                Ghichu = worksheet.Cells[row, 5].Value != null ? worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+
+                                Giadv = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,
 
                             });
                         }
                     }
 
                 }
+                if (Ipf1upload != null && Ipf1upload.Length > 0)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
+                    string extension = Path.GetExtension(Ipf1upload.FileName);
+                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaDvKcb", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Ipf1upload.CopyToAsync(FileStream);
+                    }
+                    request.Ipf1 = filename;
+                }
+
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb
+                {
+                    Mahs = request.Mahs,
+                    Madv = request.Madv,
+                    Soqd = request.Soqd,
+                    Mota = request.Mota,
+                    Madiaban = request.Madiaban,
+                    Thoidiem = request.Thoidiem,
+                    Ipf1 = request.Ipf1,
+
+                    Trangthai = "CHT",
+                    Congbo = "CHUACONGBO",
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+
+                _db.GiaDvKcb.Add(model);
                 _db.GiaDvKcbCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "DvKhamChuaBenhExcel", new { Madv = Madv, Mahs = Mahs });
+                return RedirectToAction("Create", "DvKhamChuaBenhExcel", new { Mahs = request.Mahs });
             }
             else
             {

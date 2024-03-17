@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,6 +24,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ghichu { get; set; }
         public string Lichsu { get; set; }
         public string Tinhtrang { get; set; }
+        public string Noidung { get; set; }
         public DateTime Thoidiem { get; set; }
         public string Macqcq { get; set; }
         public string Madv { get; set; }
@@ -50,6 +52,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Ipf1 { get; set; }
+        [NotMapped]
+        public IFormFile Ipf1upload { get; set; }
         public string Ipf2 { get; set; }
         public string Ipf3 { get; set; }
         public string Ipf4 { get; set; }
@@ -59,5 +63,14 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string CodeExcel { get; set; }
         [NotMapped]
         public List<GiaDvKcbCt> GiaDvKcbCt { get; set; }
+        //Nhận excel
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
     }
 }
