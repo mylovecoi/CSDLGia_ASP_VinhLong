@@ -27,20 +27,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             var model = new GiaThueMatDatMatNuoc
             {
-                Vitri = "1",
-                Diemdau = "2",
-                Diemcuoi = "3",
-                Mota = "4",
-                Dientich = 5,
-                Dongia = 6,
+                Madv = Madv,
+                Thoidiem = DateTime.Now,
+                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                 LineStart = 2,
                 LineStop = 10000,
                 Sheet = 1,
             };
+            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
             ViewData["MenuLv1"] = "menu_dg";
             ViewData["MenuLv2"] = "menu_dgtmdmn";
             ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-            ViewData["Madv"] = Madv;
             ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
             return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Excel.cshtml", model);
         }
@@ -95,42 +92,47 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                       
+
+                        int stt = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaThueMatDatMatNuocCt
                             {
                                 Mahs = request.Mahs,
-                                Trangthai = "CXD",
+                                SapXep = stt++,
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-
-                                Vitri = worksheet.Cells[row, Int16.Parse(request.Vitri)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Vitri)].Value.ToString().Trim() : "",
-
-                                Diemdau = worksheet.Cells[row, Int16.Parse(request.Diemdau)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Diemdau)].Value.ToString().Trim() : "",
-
-                                Diemcuoi = worksheet.Cells[row, Int16.Parse(request.Diemcuoi)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Diemcuoi)].Value.ToString().Trim() : "",
-
-                                Mota = worksheet.Cells[row, Int16.Parse(request.Mota)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Mota)].Value.ToString().Trim() : "",
-
-                                Dientich = worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dientich.ToString())].Value) : 0,
-
-                                Dongia1 = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
-
+                                HienThi = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                MaNhom = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                LoaiDat = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Dongia1 = worksheet.Cells[row, 4].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value.ToString().Trim()) : 0,
+                                Dongia2 = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,
+                                Dongia3 = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,
                             });
                         }
                     }
                 }
                 _db.GiaThueMatDatMatNuocCt.AddRange(list_add);
+
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
+                {
+                    Mahs = request.Mahs,
+                    Madv = request.Madv,
+                    Madiaban = request.Madiaban,
+                    Soqd = request.Soqd,
+                    Ghichu = request.Ghichu,
+                    Thoidiem = request.Thoidiem,
+                    Ipf1 = request.Ipf1,
+                    Trangthai = "CHT",
+                    Congbo = "CHUACONGBO",
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+                _db.GiaThueMatDatMatNuoc.Add(model);
+
                 _db.SaveChanges();
 
-                return RedirectToAction("Edit", "GiaThueDN", new { Mahs = request.Mahs });
+                return RedirectToAction("Modify", "GiaThueDN", new { Mahs = request.Mahs });
             }
             else
             {

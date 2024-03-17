@@ -30,7 +30,7 @@
                 <thead>
                     <tr style="text-align:center">
                         <th>STT</th>
-                        <th>STT TT 37</th>
+                        <th>STT TT37</th>
                         <th>Mã dịch vụ</th>
                         <th>Tên dịch vụ</th>
                         <th>Đơn giá</th>
@@ -59,46 +59,11 @@
                                         </button>
                                     </td>
                                 </tr>
-                                @foreach (var item1 in Model.GiaDvKcbCt.Where(t => t.Manhom == manhom))
-                                {
-                                    <tr>
-                                        <td style="text-align:center">@(record_id++)</td>
-                                        <td style="text-align:center"></td>
-                                        <td style="text-align:center">@item1.Madichvu</td>
-                                        <td style="text-align:center">@item1.Tenspdv</td>
-                                        <td style="text-align:center">@item1.Giadv</td>
-                                        <td style="text-align:center">@item1.Ghichu</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                                    data-target="#Edit_Modal" onclick="SetEdit(@item1.Id)">
-                                                <i class="icon-lg la la-edit text-warning"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @foreach (var item2 in Model.GiaDvKcbCt.Where(t => t.Manhom == manhom))
-                                    {
-                                        <tr>
-                                            <td style="text-align:center">@(record_id++)</td>
-                                            <td style="text-align:center"></td>
-                                            <td style="text-align:center">@item2.Madichvu</td>
-                                            <td style="text-align:center">@item2.Tenspdv</td>
-                                            <td style="text-align:center">@item2.Giadv</td>
-                                            <td style="text-align:center">@item2.Ghichu</td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                                        data-target="#Edit_Modal" onclick="SetEdit(@item2.Id)">
-                                                    <i class="icon-lg la la-edit text-warning"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
                             }
                         }
                     }
                 </tbody>
             </table>
-            <!--end: Datatable-->
         }
     </div>
 </div>

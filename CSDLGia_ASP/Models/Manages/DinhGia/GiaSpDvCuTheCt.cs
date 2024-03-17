@@ -43,6 +43,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         // Bổ sung
         public string Tt { get; set; }
         public string Maspdv { get; set; }
+        public string TenSpDv { get; set; }
         public string Manhom { get; set; }
         public string Dvt { get; set; }
         public string Mucgia1 { get; set; }

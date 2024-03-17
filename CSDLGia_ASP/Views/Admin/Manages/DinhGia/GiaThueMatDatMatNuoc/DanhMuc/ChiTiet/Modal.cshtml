@@ -1,0 +1,241 @@
+﻿@{
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+}
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin sản chi tiết
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới chi tiết</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên đối tượng</label>
+                            <input type="text" id="loaidat_create" name="loaidat_create" class="form-control" />
+                        </div>
+                    </div>
+                </div>                
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>STT báo cáo</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" value="@ViewData["STT"]" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Sắp xếp</label>
+                            <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin chi tiết
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin chi tiết</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="edit_thongtin">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin sản phẩm dịch vụ khung giá
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin sản phẩm dịch vụ khung giá???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaThueDNDm" asp-action="Delete">
+                <div class="modal-body">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Lock Modal-->
+<div class="modal fade" id="Lock_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin chi tiết
+                    <span class="d-block text-muted pt-2 font-size-sm">Khóa/Mở khóa tất cả chi tiết danh mục</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input id="manhom_lock" name="manhom_lock" value="@ViewData["Manhom"]" />
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Trạng thái</label>
+                            <select id="theodoi_lock" name="theodoi_lock" class="form-control">
+                                <option value="TD">Đang theo dõi</option>
+                                <option value="KTD">Không theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Lock()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>    
+
+    function Store() {
+        if ($('#loaidat_create').val().trim() == '') {
+            toastr.error("Tên loại đất không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/GiaThueDNDMCT/Store',
+                type: 'POST',
+                data: {
+                    Manhom: $('#Manhom').val(),
+                    Loaidat: $('#loaidat_create').val(),
+                    HienThi: $('#hienthi_create').val(),
+                    SapXep: $('#sapxep_create').val(),
+                    Dvt: $('#dvt_create').val(),
+                    Hientrang: $('#hientrang_create').val(),                    
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+    function getId(id, tennhom) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tennhom_delete").innerHTML = tennhom;
+    }
+
+    function editId(id_edit) {
+        $.ajax({
+            url: '/GiaThueDNDMCT/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        if ($('#loaidat_edit').val().trim() == '') {
+            toastr.error("Tên sản phẩm không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/GiaThueDNDMCT/Update',
+                type: 'POST',
+                data: {                   
+                    Loaidat: $('#loaidat_edit').val(),
+                    Dvt: $('#dvt_edit').val(),                  
+                    Hientrang: $('#hientrang_edit').val(),
+                    HienThi: $('#hienthi_edit').val(),
+                    SapXep: $('#sapxep_edit').val(),
+                    Id: $('#id_edit').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+    function Lock() {
+        $.ajax({
+            url: '/GiaThueDNDMCT/Lock',
+            type: 'POST',
+            data: {
+                Manhom: $('#manhom_lock').val(),
+                Theodoi: $('#theodoi_lock').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }    
+</script>

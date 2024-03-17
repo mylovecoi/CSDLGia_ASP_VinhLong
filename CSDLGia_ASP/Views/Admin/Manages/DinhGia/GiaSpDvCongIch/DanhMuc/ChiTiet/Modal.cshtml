@@ -2,12 +2,6 @@
 
     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
     var PhanLoaiDichVu = (IEnumerable<GiaSpDvCongIchDm>)ViewData["PhanLoaiDichVu"];
-    var list = (from t in PhanLoaiDichVu
-                group t by t.Phanloai into grp
-                select new
-                {
-                    pl = grp.Key
-                });
 
 }
 

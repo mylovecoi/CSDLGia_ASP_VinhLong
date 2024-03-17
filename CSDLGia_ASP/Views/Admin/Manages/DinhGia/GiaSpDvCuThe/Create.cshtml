@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -23,29 +23,29 @@
 }
 
 
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    GIÁ SẢN PHẨM DỊCH VỤ CỤ THỂ
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                GIÁ SẢN PHẨM DỊCH VỤ CỤ THỂ
+            </h3>
         </div>
-        <!--begin::Form-->
-        @*sau khi thêm load lại chỗ này*@
-        <form asp-controller="GiaSpDvCuThe" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvcuthe_store">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    @*sau khi thêm load lại chỗ này*@
+    <form asp-controller="GiaSpDvCuThe" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvcuthe_store">
+        <div class="card-body">
             <input hidden asp-for="Madv" value="@ViewData["Madv"]">
-                <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
+            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
             <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
             <input hidden asp-for="PhanLoaiHoSo" />
             <input hidden asp-for="CodeExcel" />
             <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
-                            <label>Địa bàn áp dụng</label>
-                            <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
                                 <option value="@item.MaDiaBan">@item.TenDiaBan</option>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Detail.cshtml")
-           
+
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="GiaSpDvCuThe" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
@@ -113,8 +113,8 @@
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

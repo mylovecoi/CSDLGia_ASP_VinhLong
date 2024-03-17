@@ -9,7 +9,6 @@
 <br />
 <br />
 
-
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
 <p style="text-align: left; font-size: 16px;">
@@ -61,13 +60,13 @@
                 }
                 <table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" dulieubang">
                     <thead>
-                        <tr style="text-align:center">
-                            <th>STT</th>
-                            <th>Tên sản phẩm dịch vụ</th>
-                            <th>Đơn vị tính</th>
-                            <th>Mức giá từ</th>
-                            <th>Mức giá đến</th>
-                            <th>Thao tác</th>
+                        <tr>
+                            <th style="text-align:center">STT</th>
+                            <th style="text-align:center">Hiển thị</th>
+                            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+                            <th style="text-align:center">Đơn vị tính</th>
+                            <th style="text-align:center">Mức giá từ</th>
+                            <th style="text-align:center">Mức giá đến</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,28 +78,12 @@
                                 {
                                     <tr>
                                         <td style="text-align:center">@(record_id++)</td>
-                                        <td style="text-align:left">
-                                            @foreach (var ds in spcuthedanhmuc)
-                                            {
-                                                @if (item.Maspdv == ds.Maspdv)
-                                                {
-                                                    @ds.Tenspdv
-                                                }
-                                            }
-                                        </td>
-                                        <td style="text-align:left">@item.Dvt</td>
+                                        <td style="text-align:center">@item.Tt</td>
+                                        <td style="text-align:left">@item.TenSpDv</td>
+                                        <td style="text-align:center">@item.Dvt</td>
                                         <td style="text-align:center">@item.Mucgia1</td>
                                         <td style="text-align:center">@item.Mucgia2</td>
-                                        <td>
-                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                                <i class="icon-lg la la-edit text-primary"></i>
-                                            </button>
-                                            <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                                    onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
-                                                <i class="icon-lg la la-trash text-danger"></i>
-                                            </button>
-                                        </td>
+                                       
                                     </tr>
                                 }
                             }
