@@ -117,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
                 {
 
-                    var model = new VMDinhGiaThueDN
+                    var model = new GiaThueMatDatMatNuoc
                     {
                         Madv = Madv,
                         Thoidiem = DateTime.Now,

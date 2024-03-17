@@ -28,22 +28,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
                 {
-                    var model = new GiaThueTaiNguyenCt
-                    { 
-                        //Manhom = "1",
-                        //Tennhom = "2",
-                        //Ten = "3",
-                        //Dvt = "4",
-                        //Gia = "5",
-                        LineStart = 2,
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
+                    {
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Madv = Madv,
+                        LineStart = 4,
                         LineStop = 1000,
                         Sheet = 1,
                     };
+                    ViewData["NhomTn"] = _db.GiaThueTaiNguyenNhom.ToList();
                     ViewData["Title"] = "Thông tin giá thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";
-                    ViewData["Madv"] = Madv;
+                    ViewData["MenuLv3"] = "menu_dgthuetn_tt";                   
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/Excels/Excel.cshtml", model);
 
                 }
