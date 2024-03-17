@@ -177,6 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                             Mucgia2 = item.Mucgia2,
                             Manhom = item.Manhom,
                             Maspdv = item.Maspdv,
+                            TenSpDv = item.Tenspdv,
 
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
@@ -336,6 +337,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = request.Mahs,
                         Madv = request.Madv,
                         Manhom = request.Manhom,
+
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         GhiChu = request.GhiChu,
@@ -437,7 +439,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
 
                     // Xử lý phần Forech theo mã nhóm khi chọn
-                    var groupmanhom = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
                     ViewData["GroupMaNhom"] = groupmanhom;
                     ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
                     ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
@@ -535,7 +537,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
 
                     // Xử lý phần Forech theo mã nhóm khi chọn
-                    var groupmanhom = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
                     ViewData["GroupMaNhom"] = groupmanhom;
                     ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
                     ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
@@ -798,6 +800,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Thoidiem = giaspdvcuthe.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Soqd = giaspdvcuthe.Soqd,
+                                     TenSpDv = giaspdvcuthect.TenSpDv,
                                      Mucgia1 = giaspdvcuthect.Mucgia1,
                                      Mucgia2 = giaspdvcuthect.Mucgia2,
                                      Mota = giaspdvcuthect.Mota,
@@ -814,8 +817,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     {
                         model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
                     }
-
-
 
                     if (ngaynhap_den.ToString("yyMMdd") != "010101")
                     {

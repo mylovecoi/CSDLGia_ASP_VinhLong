@@ -170,18 +170,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         chitiet.Add(new GiaSpDvCongIchCt()
                         {
                             Mahs = model.Mahs,
-                            Maso = item.Maso,
-                            Ten = item.Ten,
-                            Magoc = item.Magoc,
-                            Capdo = item.Capdo,
+                          
                             HienThi = item.HienThi,
                             Dvt = item.Dvt,
-                            Mucgiatu = item.Mucgiatu,
-                            Mucgiaden = item.Mucgiaden,
                             Manhom = item.Manhom,
 
-
-                            Phanloaidv = item.Phanloai,
                             Trangthai = "CXD",
                             Maspdv = item.Maspdv,
                             Created_at = DateTime.Now,

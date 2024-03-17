@@ -17,9 +17,7 @@
             <th style="text-align:center" width="4%">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
             <th style="text-align:center">Số quyết định</th>
-
             <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá từ</th>
             <th style="text-align:center">Mức giá đến</th>
 
@@ -33,23 +31,8 @@
                 <tr style="text-align: center">
                     <td style="text-align:center">@(record_id++)</td>
                     <td style="text-align:center"> @item.Tendv</td>
-                    <td style="text-align:center">@item.Soqd</td> 
-                    
-                    @if (giaSpDvCuTheDm != null)
-                    {
-                        @foreach (var dm in giaSpDvCuTheDm)
-                        {
-                            @if (item.Maspdv == dm.Maspdv)
-                            {
-                                <td style="text-align: left">@dm.Tenspdv</td>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <td style="text-align: center"></td>
-                    }
-                    <td style="text-align:center">@item.Dvt</td>
+                    <td style="text-align:center">@item.Soqd</td>
+                    <td style="text-align:left">@item.TenSpDv</td>
                     <td style="text-align:center">@item.Mucgia1</td>
                     <td style="text-align:center">@item.Mucgia2</td>
                 </tr>
