@@ -64,46 +64,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Vị trí</b></label>";
-                result += "<input type='number' id='vitri_edit' name='vitri_edit' value='" + model.Vitri + "' class='form-control'/>";
+                result += "<label><b>Vị trí, địa bàn</b></label>";
+                result += "<input type='text' id='loaidat_edit' name='loaidat_edit' value='" + model.LoaiDat + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>"; 
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Ngành, nghề đặc biệt ưu đãi đầu tư</label>";
+                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia1 + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới từ</b></label>";
-                result += "<input type='text' id='diemdau_edit' name='diemdau_edit' value='" + model.Diemdau + "' class='form-control'/>";
+                result += "<label>Ngành, nghề ưu đãi đầu tư</label>";
+                result += "<input type='text' id='dongia2_edit' name='dongia2_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia2 + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới đến</b></label>";
-                result += "<input type='text' id='diemcuoi_edit' name='diemcuoi_edit' value='" + model.Diemcuoi + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Mô tả</b></label>";
-                result += "<input type='text' id='mota_edit' name='mota_edit' value='" + model.Mota + "' class='form-control'/>";
+                result += "<label>Ngành, nghề khác</label>";
+                result += "<input type='text' id='dongia3_edit' name='dongia3_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia3 + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Diện tích</b></label>";
-                result += "<input type='text' id='dientich_edit' name='dientich_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dientich + "'/>";
+                result += "<label>STT báo cáo</label>";
+                result += "<input type='text' id='hienthi_edit' name='hienthi_edit' value='" + model.HienThi + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia1 + "'/>";
+                result += "<label>Sắp xếp</label>";
+                result += "<input type='text' id='sapxep_edit' name='sapxep_edit' value='" + model.SapXep + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
 
-                result += "</div>";
-                result += "</div>";
                 result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
 
                 result += "</div>";
@@ -122,16 +122,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuocCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Vitri, string Diemdau, string Diemcuoi, string Mota, double Dientich, double Dongia)
+        public JsonResult Update(int Id, string loaiDat, string hienThi, double sapXep, double Dongia1, double Dongia2, double Dongia3)
         {
             var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
 
-            model.Vitri = Vitri;
-            model.Diemdau = Diemdau;
-            model.Diemcuoi = Diemcuoi;
-            model.Mota = Mota;
-            model.Dientich = Dientich;
-            model.Dongia1 = Dongia;
+            model.LoaiDat = loaiDat;
+            model.HienThi = hienThi;
+            model.SapXep = sapXep;           
+            model.Dongia1 = Dongia1;
+            model.Dongia2 = Dongia2;
+            model.Dongia3 = Dongia3;
             model.Updated_at = DateTime.Now;
             _db.GiaThueMatDatMatNuocCt.Update(model);
             _db.SaveChanges();
@@ -161,26 +161,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
-            result += "<th>STT</th>";
-            result += "<th>Vị trí</th>";
-            result += "<th>Địa giới từ</th>";
-            result += "<th>Địa giới đến</th>";
-            result += "<th>Mô tả</th>";
-            result += "<th>Diện tích</th>";
-            result += "<th>Đơn giá</th>";
-            result += "<th>Thao tác</th>";
-            result += "</tr></thead><tbody>";
+            result += "<th rowspan='2'>STT</th>";
+            result += "<th rowspan='2'>Vị trí, địa bàn</th>";
+            result += "<th colspan='3'>Tỷ lệ %</th>";
+            result += "<th rowspan='2'>Thao tác</th>";
+            result += "</tr>";
+            result += "<tr style='text-align:center'>";
+            result += "<th>Ngành, nghề đặc<br />biệt ưu đãi đầu tư</th>";
+            result += "<th>Ngành, nghề ưu<br />đãi đầu tư</th>";
+            result += "<th>gành, nghề khác</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
 
-            foreach (var item in model)
+            foreach (var item in model.OrderBy(x => x.SapXep))
             {
                 result += "<tr  style='text-align:center'>";
-                result += "<td>" + (record++) + "</td>";
-                result += "<td class='active'>" + item.Vitri + "</td>";
-                result += "<td style='text-align:left;'>" + item.Diemdau + "</td>";
-                result += "<td style='text-align:left;'>" + item.Diemcuoi + "</td>";
-                result += "<td style='text-align:left;'>" + item.Mota + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + item.Dientich + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + item.Dongia1 + "</td>";
+                result += "<td>" + item.SapXep + "</td>";
+                result += "<td class='active'>" + item.LoaiDat + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStrDecimal( item.Dongia1) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStrDecimal(item.Dongia2) + "</td>";
+                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStrDecimal(item.Dongia3) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

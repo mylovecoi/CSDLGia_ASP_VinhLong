@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN;
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
@@ -75,7 +75,7 @@
                 <div class="col-xl-2">
                     <div class="form-group">
                         <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                        <input type="file" asp-for="Ipf1" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
             </div>

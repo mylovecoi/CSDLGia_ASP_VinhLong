@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CSDLGia_ASP.Models.Systems
+namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
     public class GiaThueMatDatMatNuocDm
     {

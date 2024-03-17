@@ -48,6 +48,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string CodeExcel { get; set; }
         public string Ipf1 { get; set; }
         [NotMapped]
+        public List<GiaThueMatDatMatNuocCt> GiaThueMatDatMatNuocCt { get; set; }
+        [NotMapped]
         public string Tendiaban { get; set; }
         [NotMapped]
         public string Diemdau { get; set; }

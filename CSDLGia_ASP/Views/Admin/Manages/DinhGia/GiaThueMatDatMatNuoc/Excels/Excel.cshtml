@@ -2,6 +2,7 @@
 
 @{
     var Madv = ViewData["Madv"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 
 @section custom_style {
@@ -22,7 +23,8 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaThueDNExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+        <input hidden asp-for="Madv">
+        <input hidden asp-for="Mahs">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -35,6 +37,46 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @((string)Model.Madv == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Thời điểm*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        <label>File đính kèm</label>
+                        <input type="file" asp-for="Ipf1" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                    </div>
+                </div>
+            </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
