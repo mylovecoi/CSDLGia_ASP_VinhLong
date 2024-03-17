@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá đến</label>";
-                result += "<input type='text' id='Mucgia2_edit' name='Mucgia2_edit' value='" + model.Mucgia1 + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgia2_edit' name='Mucgia2_edit' value='" + model.Mucgia2 + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";

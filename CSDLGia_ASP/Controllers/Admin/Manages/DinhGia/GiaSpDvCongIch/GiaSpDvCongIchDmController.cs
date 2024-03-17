@@ -68,11 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var request = new GiaSpDvCongIchDm
                     {
                         Manhom = Manhom,
-                        Maso = Maso,
-                        Ten = Ten,
-                        HienThi = HienThi,
-                        Magoc = Magoc,
-                        Capdo = Capdo,
+
                         Dvt = Dvt,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -120,48 +116,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var model = _db.GiaSpDvCongIchDm.FirstOrDefault(p => p.Id == Id);
                     var phanloai = _db.GiaSpDvCongIchDm;
-                    var list = (from t in phanloai
-                                group t by t.Phanloai into grp
-                                select new
-                                {
-                                    pl = grp.Key
-                                });
+
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã số</label>";
-                        result += "<input type='text' id='maso_edit' name='maso_edit' class='form-control' value='" + model.Maso + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên</label>";
-                        result += "<input type='text' id='ten_edit' name='ten_edit' class='form-control' value='" + model.Ten + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã gốc</label>";
-                        result += "<input type='text' id='magoc_edit' name='magoc_edit' class='form-control' value='" + model.Magoc + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Cấp độ</label>";
-                        result += "<select id='capdo_edit' name='capdo_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-                        result += "<option value ='" + 1 + "'>" + 1 + "</ option >";
-                        result += "<option value ='" + 2 + "'>" + 2 + "</ option >";
-                        result += "<option value ='" + 3 + "'>" + 3 + "</ option >";
-                        result += "<option value ='" + 4 + "'>" + 4 + "</ option >";
-                        result += "</select>";
-                        result += "</div>";
-                        result += "</div>";
 
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -209,10 +168,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
                 {
                     var model = _db.GiaSpDvCongIchDm.FirstOrDefault(t => t.Id == Id);
-                    model.Magoc = Magoc;
-                    model.Ten = Ten;
-                    model.Magoc = Magoc;
-                    model.Capdo = Capdo;
                     model.HienThi = HienThi;
                     model.Dvt = Dvt;
 
@@ -262,33 +217,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-        [Route("GiaSpDvCongIchDmCt/Lock")]
-        [HttpPost]
-        public IActionResult Lock(string Manhom, string Theodoi)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
-                {
-                    var model = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom).ToList();
-                    model.ForEach(t => { t.Hientrang = Theodoi; });
-                    _db.SaveChanges();
-
-                    var data = new { status = "success", message = "Khóa/mở khóa danh mục thành công!" };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
-            }
-        }
 
         [Route("GiaSpDvCongIchDmCt/Excel")]
         [HttpPost]
@@ -320,21 +248,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                     Updated_at = DateTime.Now,
                                     Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
 
-                                    Mota = worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString().Trim() : "",
+                                  
 
                                     Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
 
-                                    Mucgiatu = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiatu.ToString())].Value) != 0 ?
-                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiatu.ToString())].Value) : 0,
-
-                                    Mucgiaden = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiaden.ToString())].Value) != 0 ?
-                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Mucgiaden.ToString())].Value) : 0,
-                                    Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
-                                    Hientrang = worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Hientrang)].Value.ToString().Trim() : "",
+                                 
                                     Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
                                                 worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
 
