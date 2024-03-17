@@ -39,18 +39,18 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
     <thead>
-        <tr style="text-align:center">
-            <th>STT</th>
-            <th>Tên đường phố</th>
-            <th>Loại đường</th>
-            <th>Điểm đầu</th>
-            <th>Điểm cuối</th>
-            <th>Hệ số K</th>
-            <th>VT1</th>
-            <th>VT2</th>
-            <th>VT3</th>
-            <th>VT4</th>
-            <th>VT5</th>
+        <tr >
+            <th style="text-align:center">STT</th>
+            <th style="text-align:center">Tên đường phố</th>
+            <th style="text-align:center">Loại đường</th>
+            <th style="text-align:center">Điểm đầu</th>
+            <th style="text-align:center">Điểm cuối</th>
+            <th style="text-align:center">Hệ số K</th>
+            <th style="text-align:center">VT1</th>
+            <th style="text-align:center">VT2</th>
+            <th style="text-align:center">VT3</th>
+            <th style="text-align:center">VT4</th>
+            <th style="text-align:center">VT5</th>
         </tr>
     </thead>
     <tbody>
@@ -64,10 +64,10 @@
                     <tr style="text-align:center">
 
                         <td style="text-align:center">@item.HienThi</td>
-                        <td class="active">@item.Mota</td>
+                        <td class="active" style="text-align:left">@item.Mota</td>
                         <td class="active">@item.Loaiduong</td>
-                        <td class="active">@item.Diemdau</td>
-                        <td class="active">@item.Diemcuoi </td>
+                        <td class="active" style="text-align:left">@item.Diemdau</td>
+                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
                         <td class="active">@item.Hesok </td>
                         <td class="active">@Helpers.ConvertDbToStr(item.Giavt1)</td>
                         <td class="active">@Helpers.ConvertDbToStr(item.Giavt2)</td>

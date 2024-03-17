@@ -228,7 +228,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     {
                         Mahs = request.Mahs,
                         Madv = request.Madv,
-                        Soqd = request.Soqd,
+                        Soqd = request.SoQDTT,
                         Madiaban = request.Madiaban,
                         Thoidiem = request.Thoidiem,
                         Ipf1 = request.Ipf1,
