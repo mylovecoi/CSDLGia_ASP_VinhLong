@@ -254,6 +254,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         request.Ipf1 = filename;
                     }
 
+
+
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch
                     {
                         Mahs = request.Mahs,

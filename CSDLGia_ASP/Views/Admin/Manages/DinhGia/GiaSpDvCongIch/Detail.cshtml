@@ -25,17 +25,21 @@
             }
             <table class="table table-striped table-bordered table-hover dulieubang">
                 <thead>
-                    <tr style="text-align:center">
-                        <th>STT</th>
-                        <th>Hiện Thị</th>
-                        <th>Tên sản phẩm dịch vụ</th>
-                        <th>Đơn vị tính</th>
-                        <th>Mức giá 1</th>
-                        <th>Mức giá 2</th>
-                        <th>Mức giá 3</th>
-                        <th>Mức giá 4</th>
-                        <th>Thao tác</th>
+                    <tr >
+                        <th style="text-align:center" rowspan="2">STT</th>
+                        <th style="text-align:center" rowspan="2">Hiện Thị</th>
+                        <th style="text-align:center" rowspan="2">Tên sản phẩm dịch vụ</th>
+                        <th style="text-align:center" rowspan="2">Đơn vị tính</th>
+                        <th style="text-align:center" colspan="4">Mức giá</th>
+                        <th style="text-align:center" rowspan="2">Thao tác</th>
                     </tr>
+                    <tr >
+                        <th style="text-align:center">Mức giá 1</th>
+                        <th style="text-align:center">Mức giá 2</th>
+                        <th style="text-align:center">Mức giá 3</th>
+                        <th style="text-align:center">Mức giá 4</th>
+                    </tr>
+
                 </thead>
                 <tbody>
                     @if (Model != null)

@@ -30,28 +30,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá từ</label>";
+                result += "<label>Mức giá 1</label>";
                 result += "<input type='text' id='Mucgiatu_edit' name='Mucgiatu_edit' value='" + model.Mucgiatu + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá đến</label>";
+                result += "<label>Mức giá 2</label>";
                 result += "<input type='text' id='Mucgiaden_edit' name='Mucgiaden_edit' value='" + model.Mucgiaden + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá từ</label>";
+                result += "<label>Mức giá 3</label>";
                 result += "<input type='text' id='Mucgia3_edit' name='Mucgia3_edit' value='" + model.Mucgia3 + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá từ</label>";
+                result += "<label>Mức giá 4</label>";
                 result += "<input type='text' id='Mucgia4_edit' name='Mucgia4_edit' value='" + model.Mucgia4 + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
@@ -112,16 +112,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                 result += "<thead>";
                 result += "<tr style='text-align:center'>";
-                result += "<th width='2%'>STT</th>";
-                result += "<th width='2%'>Hiển thị</th>";
-                result += "<th>Tên sản phẩm dịch vụ</th>";
-                result += "<th>Đơn vị tính</th>";
+                result += "<th rowspan='2' width='2%'>STT</th>";
+                result += "<th rowspan='2' width='2%'>Hiển thị</th>";
+                result += "<th rowspan='2'>Tên sản phẩm dịch vụ</th>";
+                result += "<th rowspan='2'>Đơn vị tính</th>";
+                result += "<th colspan='4' >Mức giá</th>";
+                result += "<th rowspan='2'>Thao tác</th>";
+                result += "</tr>";
+
+                result += "<tr style='text-align:center'>";
                 result += "<th>Mức giá 1</th>";
                 result += "<th>Mức giá 2</th>";
                 result += "<th>Mức giá 3</th>";
                 result += "<th>Mức giá 4</th>";
-                result += "<th>Thao tác</th>";
                 result += "</tr>";
+
                 result += "</thead>";
 
                 result += "<tbody>";
