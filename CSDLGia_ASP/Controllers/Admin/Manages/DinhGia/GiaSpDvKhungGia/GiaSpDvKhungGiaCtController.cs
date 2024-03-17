@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("DinhGiaSpDvKhungGiaCt/Store")] // Sinh ra 1 form mới thay thế form có id='frm_data'>
         [HttpPost]
-        public JsonResult Store(string Mahs, string Mota, string Dvt, String Phanloaidv, double Giatoida, double Giatoithieu)
+        public JsonResult Store(string Mahs, string Mota, string Dvt, string Phanloaidv, double Giatoida, double Giatoithieu)
         {
             var model = new GiaSpDvKhungGiaCt
             {
@@ -114,7 +114,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGiaCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Giatoithieu, double Giatoida, string HienThi, string tenSPDV, Double sapXep)
+        public JsonResult UpdateCt(int Id, double Giatoithieu, double Giatoida, string HienThi, string tenSPDV, double sapXep)
         {
             var model = _db.GiaSpDvKhungGiaCt.FirstOrDefault(t => t.Id == Id);
             model.Giatoida = Giatoida;

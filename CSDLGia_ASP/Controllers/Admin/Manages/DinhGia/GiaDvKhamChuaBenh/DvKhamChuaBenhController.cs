@@ -255,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DinhGiaDvKcb/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(VMDinhGiaDvKcb request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
+        public async Task<IActionResult> Store(VMDinhGiaDvKcb request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -318,58 +318,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         }
                         model.Ipf1 = filename;
                     }
-                    if (Ipf2 != null && Ipf2.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
-                        string extension = Path.GetExtension(Ipf2.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf2.CopyToAsync(FileStream);
-                        }
-                        model.Ipf2 = filename;
-                    }
-                    if (Ipf3 != null && Ipf3.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
-                        string extension = Path.GetExtension(Ipf3.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf3.CopyToAsync(FileStream);
-                        }
-                        model.Ipf3 = filename;
-                    }
-                    if (Ipf4 != null && Ipf4.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
-                        string extension = Path.GetExtension(Ipf4.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf4.CopyToAsync(FileStream);
-                        }
-                        model.Ipf4 = filename;
-                    }
-                    if (Ipf5 != null && Ipf5.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
-                        string extension = Path.GetExtension(Ipf5.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf5.CopyToAsync(FileStream);
-                        }
-                        model.Ipf5 = filename;
-                    }
 
                     _db.GiaDvKcb.Add(model);
                     _db.SaveChanges();
@@ -399,53 +347,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
         }
 
-        [Route("DinhGiaDvKcb/EditCt")]
-        [HttpPost]
-        public JsonResult EditCt(int Id)
-        {
-            var model = _db.GiaDvKcbCt.FirstOrDefault(p => p.Id == Id);
-
-            if (model != null)
-            {
-                string result = "<div class='modal-body' id='edit_thongtin'>";
-                result += "<div class='row'>"; ;
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Tên dịch vụ</b></label>";
-                result += "<input type='text' id='Tenspdv_edit' name='Tenspdv_edit' value='" + model.Tenspdv + "' class='form-control  />";
-                result += "</div></div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='Giadv_edit' name='Giadv_edit'  value='" + model.Giadv + "' class='form-control money text-right' style='font-weight: bold' />";
-                result += "</div></div></div>";
-                result += "<input  id='id_edit' name='id_edit' value='" + Id + "'/>";
-                result += "</div></div>";
-
-                var data = new { status = "success", message = result };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
-                return Json(data);
-            }
-        }
-
-        [Route("DinhGiaDvKcb/UpdateCt")]
-        [HttpPost]
-        public JsonResult UpdateCt(int Id, Double Giadv)
-        {
-            var model = _db.GiaDvKcbCt.FirstOrDefault(t => t.Id == Id);
-            model.Giadv = Giadv;
-            model.Updated_at = DateTime.Now;
-            _db.GiaDvKcbCt.Update(model);
-            _db.SaveChanges();
-            string result = GetData(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
-
         [Route("DinhGiaDvKcb/Edit")]
         [HttpGet]
         public IActionResult Edit(string Mahs)
@@ -461,10 +362,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         Mahs = model.Mahs,
                         Manhom = model.Manhom,
                         Ipf1 = model.Ipf1,
-                        Ipf2 = model.Ipf2,
-                        Ipf3 = model.Ipf3,
-                        Ipf4 = model.Ipf4,
-                        Ipf5 = model.Ipf5,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
                         Mota = model.Mota
@@ -478,19 +375,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     //ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
-                    ViewData["Title"] = "Chỉnh sửa giá dịch vụ giáo dục đào tạo";
+                    ViewData["Title"] = "Chỉnh sửa giá dịch vụ khám chữa bệnh";
                     ViewData["Ipf1"] = model.Ipf1;
-                    ViewData["Ipf2"] = model.Ipf2;
-                    ViewData["Ipf3"] = model.Ipf3;
-                    ViewData["Ipf4"] = model.Ipf4;
-                    ViewData["Ipf5"] = model.Ipf5;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_tt";
-                    if (model.CodeExcel != "")
-                    {
-                        return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/NhanExcel.cshtml", model_new);
-                    }
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Edit.cshtml", model_new);
                 }
                 else
@@ -507,7 +396,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DinhGiaDvKcb/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(VMDinhGiaDvGdDt request, IFormFile Ipf1, IFormFile Ipf2, IFormFile Ipf3, IFormFile Ipf4, IFormFile Ipf5)
+        public async Task<IActionResult> Update(VMDinhGiaDvGdDt request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -532,58 +421,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         }
                         model.Ipf1 = filename;
                     }
-                    if (Ipf2 != null && Ipf2.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf2.FileName);
-                        string extension = Path.GetExtension(Ipf2.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf2.CopyToAsync(FileStream);
-                        }
-                        model.Ipf2 = filename;
-                    }
-                    if (Ipf3 != null && Ipf3.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf3.FileName);
-                        string extension = Path.GetExtension(Ipf3.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf3.CopyToAsync(FileStream);
-                        }
-                        model.Ipf3 = filename;
-                    }
-                    if (Ipf4 != null && Ipf4.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf4.FileName);
-                        string extension = Path.GetExtension(Ipf4.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf4.CopyToAsync(FileStream);
-                        }
-                        model.Ipf4 = filename;
-                    }
-                    if (Ipf5 != null && Ipf5.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf5.FileName);
-                        string extension = Path.GetExtension(Ipf5.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf5.CopyToAsync(FileStream);
-                        }
-                        model.Ipf5 = filename;
-                    }
                     _db.GiaDvKcb.Update(model);
                     _db.SaveChanges();
 
@@ -600,7 +437,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [Route("DinhGiaDvKcb/Delete")]
         [HttpPost]
@@ -632,50 +468,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             }
 
         }
-        public string GetData(string Mahs)
-        {
-            var Model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
 
-            int record = 1;
-            string result = "<div class='card-body' id='frm_data'>";
-
-            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
-            result += "<thead>";
-            result += "<tr style = 'text-align:center' >";
-            result += "<th> STT </ th >";
-            result += "<td>Mã dịch vụ</td>";
-            result += "<th> Tên sản phẩm <br />dịch vụ</th>";
-            result += "<th>Đơn vị <br/> tính</th>";
-            result += "<th>Đơn giá</th>";
-            result += "<th width='8%'>Thao tác</th>";
-            result += "</tr>";
-            result += "</thead>";
-
-            result += "<tbody>";
-            if (Model != null)
-            {
-                foreach (var item in Model)
-                {
-                    result += "<tr>";
-                    result += "<td style='text-align:center'>" + (record++) + "</td>";
-                    result += "<td style='text-align:center'>" + item.Madichvu + "</td>";
-                    result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
-                    result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giadv + "</td>";
-                    result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='kê khai' data-toggle='modal'";
-                    result += "data-target = '#Edit_Modal' onclick = 'SetEdit(`" + item.Id + "`)'>";
-                    result += "<i class='icon-lg la la-edit text-warning'></i>";
-                    result += "</button></td>";
-                    result += "</tr>";
-                }
-            }
-
-            result += "</ tbody >";
-            result += "</ table >";
-            result += "</div>";
-
-            return result;
-        }
 
         [Route("DinhGiaDvKcb/Show")]
         [HttpGet]
@@ -772,6 +565,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaDvKcb/Result")]
         [HttpPost]
         public IActionResult Result(double beginPrice, double endPrice, DateTime beginTime, DateTime endTime, string tsp, string dv)
@@ -841,6 +635,100 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
+        [Route("DinhGiaDvKcb/EditCt")]
+        [HttpPost]
+        public JsonResult EditCt(int Id)
+        {
+            var model = _db.GiaDvKcbCt.FirstOrDefault(p => p.Id == Id);
+
+            if (model != null)
+            {
+                string result = "<div class='modal-body' id='edit_thongtin'>";
+                result += "<div class='row'>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn giá</b></label>";
+                result += "<input type='text' id='Giadv_edit' name='Giadv_edit'  value='" + model.Giadv + "' class='form-control money text-right' style='font-weight: bold' />";
+                result += "</div>";
+                result += "</div>";
+                result += "</div>";
+                result += "<input hidden id='id_edit' name='id_edit' value='" + Id + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
+        }
+
+        [Route("DinhGiaDvKcb/UpdateCt")]
+        [HttpPost]
+        public JsonResult UpdateCt(int Id, double Giadv)
+        {
+            var model = _db.GiaDvKcbCt.FirstOrDefault(t => t.Id == Id);
+            model.Giadv = Giadv;
+            model.Updated_at = DateTime.Now;
+            _db.GiaDvKcbCt.Update(model);
+            _db.SaveChanges();
+            string result = GetData(model.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        public string GetData(string Mahs)
+        {
+            var Model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
+
+            int record = 1;
+            string result = "<div class='card-body' id='frm_data'>";
+
+            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
+            result += "<thead>";
+            result += "<tr style='text-align:center'>";
+            result += "<th>STT</th>";
+            result += "<th>STT TT37</th>";
+            result += "<td>Mã dịch vụ</td>";
+            result += "<th>Tên dịch vụ</th>";
+            result += "<th>Đơn giá</th>";
+            result += "<th>Ghi chú</th>";
+            result += "<th width='8%'>Thao tác</th>";
+            result += "</tr>";
+            result += "</thead>";
+
+            result += "<tbody>";
+            if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    result += "<tr>";
+                    result += "<td style='text-align:center'>" + (record++) + "</td>";
+                    result += "<td style='text-align:center'></td>";
+                    result += "<td style='text-align:center'>" + item.Madichvu + "</td>";
+                    result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
+                    result += "<td style='text-align:center'>" + item.Giadv + "</td>";
+                    result += "<td style='text-align:center'>" + item.Ghichu + "</td>";
+                    result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa' data-toggle='modal'";
+                    result += "data-target = '#Edit_Modal' onclick = 'SetEdit(`" + item.Id + "`)'>";
+                    result += "<i class='icon-lg la la-edit text-warning'></i>";
+                    result += "</button></td>";
+                    result += "</tr>";
+                }
+            }
+
+            result += "</ tbody >";
+            result += "</ table >";
+            result += "</div>";
+
+            return result;
+        }
+
+
 
     }
 }
