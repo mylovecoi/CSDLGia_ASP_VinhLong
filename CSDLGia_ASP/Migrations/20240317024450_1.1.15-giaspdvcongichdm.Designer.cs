@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240317024450_1.1.15-giaspdvcongichdm")]
+    partial class _1115giaspdvcongichdm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2726,9 +2728,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Noidung")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
@@ -2810,9 +2809,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Giadv")
                         .HasColumnType("float");
 
-                    b.Property<string>("Hienthi")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Madichvu")
                         .HasColumnType("nvarchar(max)");
 
@@ -2830,9 +2826,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Sapxep")
-                        .HasColumnType("float");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");
