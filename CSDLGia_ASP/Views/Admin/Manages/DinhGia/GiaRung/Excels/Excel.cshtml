@@ -22,8 +22,8 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiarungExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input asp-for="Madv" />
-        <input asp-for="Mahs" />
+        <input hidden asp-for="Madv" />
+        <input hidden asp-for="Mahs" />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>

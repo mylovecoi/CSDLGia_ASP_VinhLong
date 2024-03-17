@@ -329,6 +329,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         // End Xử lý phần lịch sử hồ sơ 
                         return RedirectToAction("Index", "GiaSpDvCuThe", new { request.Madv });
                     }
+
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
                     {
                         Mahs = request.Mahs,

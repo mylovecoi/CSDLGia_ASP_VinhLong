@@ -14,15 +14,18 @@
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr>
-            <th style="text-align:center" width="4%">STT</th>
-            <th style="text-align:center">Đơn vị nhập</th>
-            <th style="text-align:center">Số quyết định</th>
-            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Mức giá từ</th>
-            <th style="text-align:center">Mức giá đến</th>
-
+        <tr >
+            <th style="text-align:center"  rowspan="2">STT</th>
+            <th style="text-align:center" rowspan="2">Hiện Thị</th>
+            <th style="text-align:center" rowspan="2">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center" rowspan="2">Đơn vị tính</th>
+            <th style="text-align:center" colspan="4">Mức giá</th>
+        </tr>
+        <tr >
+            <th>Mức giá 1</th>
+            <th>Mức giá 2</th>
+            <th>Mức giá 3</th>
+            <th>Mức giá 4</th>
         </tr>
     </thead>
     <tbody>
@@ -38,6 +41,8 @@
                     <td style="text-align:center">@item.Dvt</td>
                     <td style="text-align:center">@item.Mucgiatu</td>
                     <td style="text-align:center">@item.Mucgiaden</td>
+                    <td style="text-align:center">@item.Mucgia3</td>
+                    <td style="text-align:center">@item.Mucgia4</td>
                 </tr>
             }
         }
