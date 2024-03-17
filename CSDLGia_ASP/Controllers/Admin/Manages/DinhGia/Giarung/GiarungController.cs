@@ -315,6 +315,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
+                        Noidung = model.Noidung,
                         Ipf1 = model.Ipf1,
                         Ghichu = model.Ghichu
                     };
@@ -326,7 +327,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Loairung"] = _db.GiaRungDm.ToList();
                     ViewData["Dmdvt"] = _db.DmDvt.ToList();
-                    ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
+                    ViewData["Title"] = "Chỉnh sửa giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
@@ -441,37 +442,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
                 {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == Mahs);
-                    if (model.CodeExcel != "")
-                    {
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                        ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = "Chi tiết giá rừng";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgtmdmn";
-                        ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaRung/ShowExcel.cshtml", model);
-                    }
-                    var modelct = _db.GiaRungCt.FirstOrDefault(t => t.Mahs == Mahs);
+                    var modelct = _db.GiaRungCt.Where(t => t.Mahs == Mahs);
+                    model.GiaRungCt = modelct.ToList();
 
-                    var viewModel = new GiaRung
-                    {
-                        // Thông tin hồ sơ
-                        Soqd = model.Soqd,
-                        Mahs = model.Mahs,
-                        Madv = model.Madv,
-                        Madiaban = model.Madiaban,
-                        Thoidiem = model.Thoidiem,
-                        Macqcq = model.Macqcq,
-
-                        // Thông tin hồ sơ chi tiết
-                        Manhom = modelct.Manhom,
-                        Phanloai = modelct.Phanloai,
-                        Dvthue = modelct.Dvthue,
-                        Noidung = modelct.Noidung,
-                        Dientich = modelct.Dientich,
-                        Dvt = modelct.Dvt,
-                        Dongia = modelct.Dongia,
-                    };
                     ViewData["DmLoaiRung"] = _db.GiaRungDm.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
@@ -480,7 +453,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv2"] = "menu_nhomhhdv";
                     ViewData["MenuLv3"] = "menu_dgr";
                     ViewData["MenuLv4"] = "menu_dgr_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaRung/Show.cshtml", viewModel);
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/Show.cshtml", model);
                 }
                 else
                 {
