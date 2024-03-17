@@ -26,5 +26,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thoidiem { get; set; }
         [NotMapped]
         public string Ttqd { get; set; }
+        public double SapXep { get; set; }
+        public string Style { get; set; }
     }
 }
