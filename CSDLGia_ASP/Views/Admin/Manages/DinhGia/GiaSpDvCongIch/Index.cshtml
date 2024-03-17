@@ -115,8 +115,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align: center">@(record_id++)</td>    
-                        <td style="text-align: center">@item.Thoidiem</td>
+                
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                         <td class="text-center active">@item.Soqd</td>
                         <td style="text-align: center">
                             @if (item.Trangthai == "HT")

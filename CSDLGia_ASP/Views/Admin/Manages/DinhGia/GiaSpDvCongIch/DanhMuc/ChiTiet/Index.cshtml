@@ -32,7 +32,7 @@
             <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="getmaxsapxep(@ViewData["Manhom"])" class="btn btn-light-primary">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;

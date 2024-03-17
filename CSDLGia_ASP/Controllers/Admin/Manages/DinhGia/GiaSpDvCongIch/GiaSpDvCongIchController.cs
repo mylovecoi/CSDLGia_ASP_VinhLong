@@ -148,9 +148,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         Madv = MadvBc,
                         Manhom = Manhom,
                     };
-
                     var danhmuc = _db.GiaSpDvCongIchDm.ToList(); // lấy dữ liệu trong bảng GiaSpDvCongIchDm
-
 
                     // Khi bấm đồng ý trong moda thì add dữ liệu GiaSpDvCongIchDm -> bản GiaSpDvCongIchCt
                     if (Manhom != "all")
@@ -170,16 +168,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         chitiet.Add(new GiaSpDvCongIchCt()
                         {
                             Mahs = model.Mahs,
-                          
-                            HienThi = item.HienThi,
-                            Dvt = item.Dvt,
-                            Manhom = item.Manhom,
-
-                            Trangthai = "CXD",
                             Maspdv = item.Maspdv,
+                            Ten = item.Tenspdv,
+                            Manhom = item.Manhom,
+                            Dvt = item.Dvt,
+                            HienThi = item.HienThi,
+
+                            Trangthai = "CXD",                    
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
-                        });
+                        }) ;
                     }
                     _db.GiaSpDvCongIchCt.AddRange(chitiet);
                     _db.SaveChanges();
@@ -199,25 +197,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     {
                         groupmanhom = groupmanhom1;
                     }
-                
                     ViewData["GroupMaNhom"] = groupmanhom;
+      
                     ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
                     // End xử lý phần Forech theo mã nhóm khi chọn
 
                     // Xử lý phần điều kiện để hiện lên nút sửa 
                     model.GiaSpDvCongIchCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
-                    foreach (var item in model.GiaSpDvCongIchCt)
-                    {
-                        var List = model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso).ToList();
-                        if (List.Count > 0)
-                        {
-                            item.NhapGia = false;
-                        }
-                        else
-                        {
-                            item.NhapGia = true;
-                        }
-                    }
+                   
                     // End Xử lý phần điều kiện để hiện lên nút sửa 
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
@@ -276,6 +264,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         Ghichu = request.Ghichu,
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
+
                         Ipf1 = request.Ipf1,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
@@ -349,27 +338,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Edit"))
                 {
                     var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Mahs == Mahs);
-
                     var model_ct = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == model.Mahs);
                     model.GiaSpDvCongIchCt = model_ct.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
-
-
-                    model.GiaSpDvCongIchCt = model_ct.Where(t => t.Mahs == model.Mahs).ToList();
-                    foreach (var item in model.GiaSpDvCongIchCt)
-                    {
-                        var List = model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso).ToList();
-                        if (List.Count > 0)
-                        {
-                            item.NhapGia = false;
-                        }
-                        else
-                        {
-                            item.NhapGia = true;
-                        }
-                    }
+                    model.GiaSpDvCongIchCt = model_ct.Where(t => t.Mahs == model.Mahs).ToList();                  
 
                     ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
                     ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
@@ -414,18 +388,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                     model.GiaSpDvCongIchCt = model_ct.Where(t => t.Mahs == model.Mahs).ToList();
 
-                    foreach (var item in model.GiaSpDvCongIchCt)
-                    {
-                        var List = model.GiaSpDvCongIchCt.Where(t => t.Magoc == item.Maso).ToList();
-                        if (List.Count > 0)
-                        {
-                            item.NhapGia = false;
-                        }
-                        else
-                        {
-                            item.NhapGia = true;
-                        }
-                    }
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
@@ -450,54 +412,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //[Route("DinhGiaSpDvCongIch/Show")]
-        //[HttpGet]
-        //public IActionResult Show(string Mahs)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Edit"))
-        //        {
-        //            var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Mahs == Mahs);
-        //            var model_new = new VMDinhGiaSpDvCongIch
-        //            {
-        //                Madv = model.Madv,
-        //                Mahs = model.Mahs,
-        //                Madiaban = model.Madiaban,
-        //                Soqd = model.Soqd,
-        //                Phanloaidv = model.Phanloai,
-        //                Thoidiem = model.Thoidiem,
-        //                Thongtin = model.Thongtin,
-        //                Ghichu = model.Ghichu
-        //            };
-
-        //            var model_ct = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == model_new.Mahs);
-
-        //            model_new.GiaSpDvCongIchCt = model_ct.ToList();
-
-        //            ViewData["Madv"] = model.Madv;
-        //            ViewData["Mahs"] = model.Mahs;
-        //            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-        //            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-        //            ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
-        //            ViewData["PhanLoaiDichVu"] = _db.GiaSpDvCongIchCt.ToList();
-        //            ViewData["Title"] = "Thông tin chi tiết sản phẩm dịch vụ công ích";
-        //            ViewData["MenuLv1"] = "menu_dg";
-        //            ViewData["MenuLv2"] = "menu_dgdvci";
-        //            ViewData["MenuLv3"] = "menu_dgdvci_tt";
-        //            return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Show.cshtml", model_new);
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
 
         [Route("DinhGiaSpDvCongIch/Update")]
         [HttpPost]
@@ -718,7 +632,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIch/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double beginPrice, double endPrice)
+        public IActionResult Result(string madv, DateTime ngaynhap_tu, DateTime ngaynhap_den, double beginPrice, double endPrice)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -737,11 +651,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Tendv = donvi.TenDv,
                                      Soqd = GiaSpDvCongIch.Soqd,
 
-                                     Maso = GiaSpDvCongIchct.Maso,
-                                     Ten = GiaSpDvCongIchct.Ten,
-                                     Magoc = GiaSpDvCongIchct.Magoc,
-                                     Capdo = GiaSpDvCongIchct.Capdo,
                                      HienThi = GiaSpDvCongIchct.HienThi,
+                                     Ten = GiaSpDvCongIchct.Ten,
                                      Mucgiatu = GiaSpDvCongIchct.Mucgiatu,
                                      Mucgiaden = GiaSpDvCongIchct.Mucgiaden,
 
@@ -759,16 +670,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
                     }
 
-
-
                     if (ngaynhap_den.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-                    }
-
-                    if (tenhanghoa != null)
-                    {
-                        model = model.Where(t => t.Mota == tenhanghoa);
                     }
 
                     if (beginPrice != 0)

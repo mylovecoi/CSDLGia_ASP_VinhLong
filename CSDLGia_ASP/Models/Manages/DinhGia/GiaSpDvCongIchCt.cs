@@ -10,28 +10,32 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Key]
 
         public int Id { get; set; }
+        public string HienThi { get; set; }
         public string Mahs { get; set; }
         public string Maspdv { get; set; }
-        public string Mota { get; set; }
+        public string Manhom { get; set; }
+        public string Ten { get; set; }
         public string Dvt { get; set; }
         public double Mucgiatu { get; set; }
         public double Mucgiaden { get; set; }
+        public double Mucgia3 { get; set; }
+        public double Mucgia4 { get; set; }
+        public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        public string Phanloaidv { get; set; }
-        public string Trangthai { get; set; }
+
+        [NotMapped]
+        public Boolean NhapGia { get; set; }
         [NotMapped]
         public string Madv { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
-        public string Manhom { get; set; }
-        [NotMapped]
-        public string Tennhom { get; set; }
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
         public string Soqd { get; set; }
 
+        // Excel
         [NotMapped]
         public int LineStart { get; set; }
         [NotMapped]
@@ -41,17 +45,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
-
-
-        public string Maso { get; set; }
-        public string Ten { get; set; }
-        public string Magoc { get; set; }
-        public string Capdo { get; set; }
-        public string HienThi { get; set; }
-
-        [NotMapped]
-        public Boolean NhapGia { get; set; }
-
 
     }
 }

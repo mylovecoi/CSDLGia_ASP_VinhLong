@@ -12,15 +12,13 @@
 <br />
 <br />
 
-
-
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr >
+        <tr>
             <th style="text-align:center" width="4%">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
             <th style="text-align:center">Số quyết định</th>
-            <th style="text-align:center">Danh mục</th>
+            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
             <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá từ</th>
             <th style="text-align:center">Mức giá đến</th>
@@ -30,55 +28,22 @@
     <tbody>
         @if (Model != null)
         {
-            @foreach (var item in Model.Where(t => t.Capdo == "1"))
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td style="text-align:center">@item.HienThi</td>
-                    <td style="text-align:center">@item.Tendv</td>
+                <tr style="text-align: center">
+                    <td style="text-align:center">@(record_id++)</td>
+                    <td style="text-align:center"> @item.Tendv</td>
                     <td style="text-align:center">@item.Soqd</td>
                     <td style="text-align:left">@item.Ten</td>
                     <td style="text-align:center">@item.Dvt</td>
                     <td style="text-align:center">@item.Mucgiatu</td>
                     <td style="text-align:center">@item.Mucgiaden</td>
-                    
                 </tr>
-                @foreach (var item1 in Model.Where(t => t.Magoc == item.Maso))
-                {
-                    <tr>
-                        <td style="text-align:center">@item1.HienThi</td>
-                        <td style="text-align:center">@item.Tendv</td>
-                        <td style="text-align:center">@item.Soqd</td>
-                        <td style="text-align:left">@item1.Ten</td>
-                        <td style="text-align:center">@item1.Dvt</td>
-                        <td style="text-align:center">@item1.Mucgiatu</td>
-                        <td style="text-align:center">@item1.Mucgiaden</td>
-                       
-                    </tr>
-                    @foreach (var item2 in Model.Where(t => t.Magoc == item1.Maso))
-                    {
-                        <tr>
-                            <td style="text-align:center">@item2.HienThi</td>
-                            <td style="text-align:center">@item.Tendv</td>
-                            <td style="text-align:center">@item.Soqd</td>
-                            <td style="text-align:left">@item2.Ten</td>
-                            <td style="text-align:center">@item2.Dvt</td>
-                            <td style="text-align:center">@item2.Mucgiatu</td>
-                            <td style="text-align:center">@item2.Mucgiaden</td>
-                           
-                        </tr>
-
-                    }
-                }
-
             }
         }
     </tbody>
 </table>
-<div class="card-footer" style="text-align:center">
-    <a asp-controller="GiaSpDvCongIch" asp-action="Search" class="btn btn-danger">
-        <i class="la la-reply"></i>Quay lại
-    </a>&ensp;
-</div>
+
 
 
 

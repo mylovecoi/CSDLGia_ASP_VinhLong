@@ -9,7 +9,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin sản phẩm dịch vụ cụ thể
+                    Thông tin sản phẩm 
                     <span class="d-block text-muted pt-2 font-size-sm">Thêm mới sản phẩm dịch vụ cụ thể</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -23,7 +23,7 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>TT</label>
-                            <input type="text" id="tt_create" name="tt_create" class="form-control" />
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
                         </div>
                     </div>
 
@@ -410,10 +410,10 @@
 
     function Store() {
         $.ajax({
-            url: '/GiaSpDvCuTheDmCt/Store',
+            url: '/GiaSpDvCongIchDmCt/Store',
             type: 'POST',
             data: {
-                tt: $('#tt_create').val(),
+                HienThi: $('#hienthi_create').val(),
                 manhom: $('#manhom_create').val(),
                 tenspdv: $('#tenspdv_create').val(),
                 dvt: $('#dvt_create').val(),
@@ -431,6 +431,21 @@
                 }
             }
         })
+    }
+
+    function getmaxsapxep(manhom) {
+        $.ajax({
+            url: '/GiaSpDvCongIchDmCt/GetMaxSapXep',
+            type: 'POST',
+            data: {
+                Manhom: $('#manhom_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                $('#sapxep_create').val(data + 1)
+            }
+        })
+
     }
 
     function getId(id, tennhom) {
