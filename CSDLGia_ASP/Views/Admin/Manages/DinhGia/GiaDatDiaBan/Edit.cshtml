@@ -52,7 +52,7 @@
                             <select class="form-control" id="Madiaban" name="Madiaban">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan==(string)ViewData["MaDiaBan"] ? "selected": "")>@item.TenDiaBan</!option>
+                                <!option value="@item.MaDiaBan" @(item.MaDiaBan==Model.Madiaban ? "selected": "")>@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>

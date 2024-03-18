@@ -54,7 +54,7 @@
     <tbody>
         @if (Model.GiaThueTaiNguyenCt.Count() > 0)
         {
-            @foreach (var item in Model.GiaThueTaiNguyenCt)
+            @foreach (var item in Model.GiaThueTaiNguyenCt.OrderBy(x=>x.SapXep))
             {
                 <tr>
                     <td style="text-align: center;">@item.Cap1</td>
@@ -63,7 +63,7 @@
                     <td style="text-align: center;">@item.Cap4</td>
                     <td style="text-align: center;">@item.Cap5</td>
                     <td style="text-align: center;">@item.Cap6</td>
-                    <td style="text-align: center">@item.Ten</td>
+                    <td>@item.Ten</td>
                     <td style="text-align: center">@item.Dvt</td>
                     <td style="text-align: center">@Helpers.ConvertDbToStr(item.Gia)</td>
                 </tr>
