@@ -4,9 +4,6 @@
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung
-<br />
-<br />
-
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
@@ -34,30 +31,36 @@
 </p>
 
 <br />
-<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+<p style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p><br />
+<p style="text-decoration-line: underline; font-weight: bold">@Model.Cqbh</p>
+<p style="text-decoration-line: underline; font-weight: bold">(Số QĐ: @Model.Soqd - @Helpers.ConvertDateToText(Model.Thoidiem) </p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-
     <thead>
         <tr>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Tên nhóm vật liệu</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Tên vật liệu</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá</th>
+            <
+            <th style="text-align: center; font-weight: bold" width="2%">STT</th>
+            <th style="text-align: center; font-weight: bold">Danh mục vật liệu</th>
+            <th style="text-align: center; font-weight: bold" width="5%">Đơn vị tính</th>
+            <th style="text-align: center; font-weight: bold" width="20%">Tiêu chuẩn kỹ thuật</th>
+            <th style="text-align: center; font-weight: bold" width="10%">Đơn giá</th>
+            <th style="text-align: center; font-weight: bold">Ghi chú</th>            
         </tr>
     </thead>
     <tbody>
         @if (Model.GiaVatLieuXayDungCt.Count() > 0)
         {
-            @foreach (var item in Model.GiaVatLieuXayDungCt)
+            @foreach (var item in Model.GiaVatLieuXayDungCt.OrderBy(t=>t.STTSapXep))
             {
+                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                 <tr>
-                    <td style="text-align: center;">@item.Tennhom</td>
-                    <td style="text-align: center;">@item.Ten</td>
-                    <td style="text-align: center;">@item.Dvt</td>
-                    <td style="text-align: center">@Helpers.ConvertDbToStr(item.Gia)</td>
+                    <td class="text-center; @HtmlStyle">@item.STTHienThi</td>
+                    <td class="text-left; @HtmlStyle">@item.Ten</td>
+                    <td class="text-center; @HtmlStyle">@item.Dvt</td>
+                    <td class="text-left; @HtmlStyle">@item.TieuChuan</td>
+                    <td style="text-align: right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Gia)</td>
+                    <td style="text-align: left; @HtmlStyle">@item.GhiChu</td>
                 </tr>
             }
         }
     </tbody>
-
 </table>

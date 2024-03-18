@@ -124,7 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
                 {
                     // Xóa những cái chưa xác định
-                    var check = _db.GiaVatLieuXayDungCt.Where(t => t.Trangthai == "CXD");
+                    var check = _db.GiaVatLieuXayDungCt.Where(t => t.Trangthai == "CXD" && t.Madv == MadvBc);
 
                     if (check != null)
                     {
@@ -349,12 +349,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Delete"))
                 {
-                    var model = _db.GiaVatLieuXayDung.FirstOrDefault(t => t.Id == id_delete);
-                    _db.GiaVatLieuXayDung.Remove(model);
-                    _db.SaveChanges();
-
+                    var model = _db.GiaVatLieuXayDung.FirstOrDefault(t => t.Id == id_delete);   
                     var model_ct = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaVatLieuXayDungCt.RemoveRange(model_ct);
+                    _db.GiaVatLieuXayDung.Remove(model);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaVatLieuXayDung", new { model.Madv });
@@ -578,8 +576,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
             if (model != null)
             {
+                List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Đối tượng</label>";
+                result += "<label>" + model.Ten + "</label>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                result += "<option value='Chữ in hoa'" + (list_style.Contains("Chữ in hoa") ? "selected" : "") + ">Chữ in hoa</option >";
+                result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
+                result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
                 result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -604,10 +619,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
         [Route("GiaVatLieuXayDungCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Gia)
+        public JsonResult UpdateCt(int Id, double Gia, string[] Style)
         {
+            string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
             var model = _db.GiaVatLieuXayDungCt.FirstOrDefault(t => t.Id == Id);
             model.Gia = Gia;
+            model.Style = str_style;
             model.Updated_at = DateTime.Now;
             _db.GiaVatLieuXayDungCt.Update(model);
             _db.SaveChanges();
@@ -620,28 +637,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         {
             var model = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs).ToList();
 
-            int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
 
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
-            result += "<th width='25%'>Phân loại nhà cho thuê</th>";
-            result += "<th>Giá cho thuê (đồng)</th>";
-            result += "<th width='9%'>Thao tác</th>";
+            result += "<th width='2%'>STT</th>";
+            result += "<th>Danh mục vật liệu</th>";
+            result += "<th width='2%'>Đơn vị tính</th>";
+            result += "<th width='15%'>Tiêu chuẩn</th>";
+            result += "<th width='5%'>Đơn giá</th>";
+            result += "<th>Ghi chú</th>";
+            result += "<th width='5%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
 
             foreach (var item in model)
             {
+                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                 result += "<tr>";
-                result += "<td class='text-center'>" + record++ + "</td>";
-                result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTSapXep + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTHienThi + "</td>";
+                result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.Ten + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.Dvt + "</td>";
+                result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.TieuChuan + "</td>";
+                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helper.Helpers.ConvertDbToStr(item.Gia) + "</td>";
+                result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.GhiChu + "</td>";               
                 result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
