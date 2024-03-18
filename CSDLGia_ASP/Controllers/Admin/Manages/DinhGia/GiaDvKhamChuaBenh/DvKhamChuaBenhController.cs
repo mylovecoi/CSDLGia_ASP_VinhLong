@@ -773,7 +773,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     result += "</tr>";
                 }
 
-
                 result += "</ tbody >";
 
                 result += "</ table >";
