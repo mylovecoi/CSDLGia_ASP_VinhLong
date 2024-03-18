@@ -93,9 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             var modeldanhmucnhom = _db.GiaSpDvCuTheNhom.ToList();
             int record = 1;
 
-            var groupmanhom1 = _db.GiaSpDvCuTheCt.Select(item => item.Manhom).Distinct().ToList();
-
-
+            var groupmanhom1 = _db.GiaSpDvCuTheCt.Where(item => item.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
 
             string result = "<div class='card-body' id='frm_data'>";
 
@@ -116,6 +114,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "<thead>";
                 result += "<tr style='text-align:center'>";
                 result += "<th width='2%'>STT</th>";
+                result += "<th width='2%'>Hiển thị</th>";
                 result += "<th>Tên sản phẩm dịch vụ</th>";
                 result += "<th>Đơn vị tính</th>";
                 result += "<th>Mức giá từ</th>";
@@ -125,7 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "</thead>";
 
                 result += "<tbody>";
-                foreach (var item in model)
+                foreach (var item in model.Where(t=>t.Manhom== manhom))
                 {
 
                     result += "<tr>";
@@ -136,7 +135,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     {
                         if (item.Maspdv == dm.Maspdv)
                         {
-                            result += "<td style='text-align:center'>" + dm.Tenspdv + "</td>";
+                            result += "<td style='text-align:left'>" + dm.Tenspdv + "</td>";
                         }
                     }
 
