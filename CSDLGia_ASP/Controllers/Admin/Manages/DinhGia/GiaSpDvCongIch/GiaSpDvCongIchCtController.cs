@@ -89,18 +89,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         public string GetDataCt(string Mahs)
         {
             var model = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs).ToList();
-            var modeldanhmuc = _db.GiaSpDvCongIchDm.ToList();
             var modeldanhmucnhom = _db.GiaSpDvCongIchNhom.ToList();
             int record = 1;
-
-            var groupmanhom1 = _db.GiaSpDvCongIchCt.Where(item => item.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
+            var groupmanhom2 = _db.GiaSpDvCongIchNhom.Where(item => model.Select(x=>x.Manhom).Contains(item.Manhom)).Select(x => x.Manhom).ToList();
 
             string result = "<div class='card-body' id='frm_data'>";
 
-            foreach (var manhom in groupmanhom1)
+            foreach (var manhom in groupmanhom2)
 
             {
-                foreach (var dm in modeldanhmucnhom)
+                foreach (var dm in modeldanhmucnhom.OrderBy(x=>x.Manhom))
                 {
                     if (manhom == dm.Manhom)
                     {

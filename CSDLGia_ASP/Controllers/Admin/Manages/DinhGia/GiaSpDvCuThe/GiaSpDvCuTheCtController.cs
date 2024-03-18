@@ -88,16 +88,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         public string GetDataCt(string Mahs)
         {
+            var modeldanhmucsp = _db.GiaSpDvCuTheDm.ToList();
             var model = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs).ToList();
-            var modeldanhmuc = _db.GiaSpDvCuTheDm.ToList();
             var modeldanhmucnhom = _db.GiaSpDvCuTheNhom.ToList();
             int record = 1;
-
-            var groupmanhom1 = _db.GiaSpDvCuTheCt.Where(item => item.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
+            var groupmanhom2 = _db.GiaSpDvCuTheNhom.Where(item => model.Select(x => x.Manhom).Contains(item.Manhom)).Select(x => x.Manhom).ToList();
 
             string result = "<div class='card-body' id='frm_data'>";
 
-            foreach (var manhom in groupmanhom1)
+            foreach (var manhom in groupmanhom2)
 
             {
 
@@ -124,14 +123,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 result += "</thead>";
 
                 result += "<tbody>";
-                foreach (var item in model.Where(t=>t.Manhom== manhom))
+                foreach (var item in model.Where(t => t.Manhom == manhom))
                 {
 
                     result += "<tr>";
                     result += "<td style='text-align:center'>" + record++ + "</td>";
                     result += "<td style='text-align:left'>" + item.Tt + "</td>";
 
-                    foreach (var dm in modeldanhmuc)
+                    foreach (var dm in modeldanhmucsp)
                     {
                         if (item.Maspdv == dm.Maspdv)
                         {

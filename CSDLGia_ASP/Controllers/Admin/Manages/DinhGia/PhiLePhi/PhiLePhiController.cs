@@ -222,46 +222,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         }
                         request.Ipf1 = filename;
                     }
-                    
 
-                    if (request.CodeExcel != "")
-                    {                        
-                        request.CodeExcel = request.CodeExcel.Replace("<meta charset=\"utf-8\">", "");                        
-                    }
-                    var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    if (model != null)
+                    var mPhiLePhi = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
                     {
-                        model.Soqd = request.Soqd;
-                        model.Thoidiem = request.Thoidiem;
-                        model.Ttqd = request.Ttqd;
-                        model.Thongtin = request.Thongtin;
-                        model.Ghichu = request.Ghichu;
-                        model.Ipf1 = request.Ipf1;
-                        model.PhanLoaiHoSo = request.PhanLoaiHoSo;
-                        model.CodeExcel = request.CodeExcel;
-                        model.Updated_at = DateTime.Now;
-                    }
-                    else
-                    {
-                        var mPhiLePhi = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
-                        {
-                            Mahs = request.Mahs,
-                            Madv = request.Madv,
-                            Thoidiem = request.Thoidiem,
-                            Soqd = request.Soqd,
-                            Ttqd = request.Ttqd,
-                            Ghichu = request.Ghichu,
-                            PhanLoaiHoSo = request.PhanLoaiHoSo,
-                            CodeExcel = request.CodeExcel,
-                            Trangthai = "CHT",
-                            Congbo = "CHUACONGBO",
-                            Ipf1 = request.Ipf1,
-                            Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
-                        };
+                        Mahs = request.Mahs,
+                        Madv = request.Madv,
+                        Thoidiem = request.Thoidiem,
+                        Soqd = request.Soqd,
+                        Ttqd = request.Ttqd,
+                        Ghichu = request.Ghichu,
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
+                        CodeExcel = request.CodeExcel,
+                        Trangthai = "CHT",
+                        Congbo = "CHUACONGBO",
+                        Ipf1 = request.Ipf1,
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
 
-                        _db.PhiLePhi.Add(mPhiLePhi);
-                    }
+                    _db.PhiLePhi.Add(mPhiLePhi);
 
                     _db.SaveChanges();
 

@@ -189,9 +189,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
 
                     // Xử lý phần Forech theo mã nhóm khi chọn
-                    var groupmanhom1 = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
-                    var groupmanhom2 = _db.GiaSpDvCuTheCt.Where(item => item.Manhom == Manhom && item.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
-
+                    var groupmanhom1 = _db.GiaSpDvCuTheNhom.Select(item => item.Manhom).ToList();
+                    var groupmanhom2 = _db.GiaSpDvCuTheNhom.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).ToList();
                     List<string> groupmanhom;
 
                     if (Manhom != "all")
