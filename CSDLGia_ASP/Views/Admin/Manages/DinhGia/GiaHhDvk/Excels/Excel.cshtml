@@ -1,5 +1,7 @@
 ﻿@{
     var DanhMucThongTu = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkNhom>)ViewData["DanhMucThongTu"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.ViewModels.VMImportExcel
 
@@ -34,8 +36,28 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             <div class="row">
-                <input hidden asp-for="MaDv" />
-                <input hidden asp-for="MadiabanBc" />
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Địa bàn</label>
+                        <select asp-for="MadiabanBc" class="form-control" disabled="disabled">
+                            @foreach (var db in dsdiaban)
+                            {
+                                <!option value="@db.MaDiaBan" @((string)ViewData["Madiaban"] == db.MaDiaBan ? "selected" : "")>@db.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Đơn vị báo cáo</label>
+                        <select asp-for="MaDv" class="form-control">
+                            @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
+                            {
+                                <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Quyết định</label>
@@ -45,9 +67,35 @@
                                 <option value="@item.Matt">@item.Tentt</option>
                             }
                         </select>
-
                     </div>
                 </div>
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Tháng</label>
+                        <select class="form-control" id="ThangBc" name="ThangBc">
+                            @for (var i = 1; i <= 12; i++)
+                            {
+                                <!option value="@i" @(DateTime.Now.Month == i ? "selected" : "")>@i</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Năm</label>
+                        <select class="form-control" id="NamBc" name="NamBc">
+                            @{
+                                int nam_start = DateTime.Now.Year - 5;
+                                int nam_stop = DateTime.Now.Year + 1;
+                                for (var i = nam_start; i <= nam_stop; i++)
+                                {
+                                    <!option value="@i" @(i == DateTime.Now.Year ? "selected" : "")>@i</!option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+               
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>

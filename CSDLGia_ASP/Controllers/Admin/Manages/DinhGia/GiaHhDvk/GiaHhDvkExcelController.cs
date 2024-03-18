@@ -1,6 +1,8 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -36,6 +38,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Sheet = 1,
                         MadiabanBc = MadiabanBc
                     };
+                    var dsdonvi = (from db in _db.DsDiaBan
+                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
+                                   select new VMDsDonVi
+                                   {
+                                       Id = dv.Id,
+                                       TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = dv.MaDiaBan,
+                                       TenDv = dv.TenDv,
+                                       MaDv = dv.MaDv,
+                                   }).ToList();
+                    
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    {
+                        ViewData["DsDonVi"] = dsdonvi;
+                    }
+                    else
+                    {
+                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                    }
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DanhMucThongTu"] = _db.GiaHhDvkNhom;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
@@ -132,8 +154,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             Madiaban = request.MadiabanBc,
                             Thoidiem = DateTime.Now,
                             Created_at = DateTime.UtcNow,
-                            Thang = DateTime.Now.Month.ToString(),
-                            Nam = DateTime.Now.Year.ToString(),
+                            Thang = request.Thang.ToString(),
+                            Nam = request.Nam.ToString()
                         };
                         var model_ct = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
                                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv

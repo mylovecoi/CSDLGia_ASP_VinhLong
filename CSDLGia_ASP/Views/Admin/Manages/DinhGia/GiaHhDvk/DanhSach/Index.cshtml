@@ -93,6 +93,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">---Tất cả---</option>
                         @foreach (var db in dsdiaban.Where(t => t.Level != "ADMIN").OrderByDescending(t => t.Level))
                         {
                             <optgroup label="@db.TenDiaBan">

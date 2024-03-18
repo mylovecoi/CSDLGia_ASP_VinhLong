@@ -65,35 +65,37 @@
         </tr>
     </thead>
     <tbody>
-      @*   @foreach (var nhom in nhomhh)
+        @*   @foreach (var nhom in nhomhh)
         {
-            <tr style="font-weight: bold;">
-                <td>@(Helpers.ConvertIntToRoman(record++))</td>
-                <td colspan="11">@nhom.Tennhom</td>
-            </tr> *@
-            @if (Model.GiaHhDvkCt.Count() > 0)
+        <tr style="font-weight: bold;">
+        <td>@(Helpers.ConvertIntToRoman(record++))</td>
+        <td colspan="11">@nhom.Tennhom</td>
+        </tr> *@
+        @if (Model.GiaHhDvkCt.Count() > 0)
+        {
+            @* @foreach (var ct in Model.GiaHhDvkCt.Where(t=>t.Manhom == nhom.Manhom)) *@
+            @foreach (var ct in Model.GiaHhDvkCt)
             {
-                @* @foreach (var ct in Model.GiaHhDvkCt.Where(t=>t.Manhom == nhom.Manhom)) *@
-                @foreach (var ct in Model.GiaHhDvkCt)
-                {
-                    <tr>
-                        <td style="text-align: center">@(record_ct++)</td>
-                        <td style="text-align: center">@ct.Mahhdv</td>
-                        <td>@ct.Tenhhdv</td>
-                        <td>@ct.Dacdiemkt</td>
-                        <td style="text-align: center">@ct.Dvt</td>
-                        <td style="text-align: left">@ct.Loaigia</td>
-                        <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gialk)</td>
-                        <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gia)</td>
-                        <td style="text-align: right;font-weight: bold">@(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(ct.Gia - ct.Gialk))</td>
-                        <td style="text-align: right;font-weight: bold">
-                            @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(((ct.Gia - ct.Gialk)/ ct.Gialk)*100))
-                        </td>
-                        <td>@ct.Nguontt</td>
-                        <td>@ct.Ghichu</td>
-                    </tr>
-                }
+                <tr>
+                    <td style="text-align: center">@(record_ct++)</td>
+                    <td style="text-align: center">@ct.Mahhdv</td>
+                    <td>@ct.Tenhhdv</td>
+                    <td>@ct.Dacdiemkt</td>
+                    <td style="text-align: center">@ct.Dvt</td>
+                    <td style="text-align: left">@ct.Loaigia</td>
+                    <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gialk)</td>
+                    <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gia)</td>                   
+                    <td style="text-align: right;font-weight: bold">
+                        @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(ct.Gia - ct.Gialk))
+                    </td>
+                    <td style="text-align: right;font-weight: bold">
+                        @(ct.Gialk == 0 ? "" : Helpers.ConvertDbToStr(((ct.Gia - ct.Gialk) / ct.Gialk) * 100))
+                    </td>
+                    <td>@ct.Nguontt</td>
+                    <td>@ct.Ghichu</td>
+                </tr>
             }
+        }
         @* } *@
     </tbody>
 </table>

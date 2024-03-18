@@ -13,5 +13,7 @@ namespace CSDLGia_ASP.ViewModels
         public string MaDv { get; set; }
         public string Matt { get; set; }
         public string MadiabanBc { get; set; }
+        public int Nam { get; set; }
+        public int Thang { get; set; }
     }
 }
