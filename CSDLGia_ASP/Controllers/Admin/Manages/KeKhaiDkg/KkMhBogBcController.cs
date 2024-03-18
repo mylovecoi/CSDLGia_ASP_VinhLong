@@ -60,6 +60,79 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                     {
                         model = model.Where(t => t.Manghe == manghe);
                     }
+                    if (phanloai == "ngaychuyen")
+                    {
+                        if (time == "ngay")
+                        {
+                            model = model.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
+                        }
+                        else if (time == "thang")
+                        {
+                            model = model.Where(t => t.Ngaychuyen.Month == int.Parse(thang) && t.Ngaychuyen.Year == int.Parse(nam));
+                        }
+                        else
+                        {
+                            if (quy == "1")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 1, 1);
+                                denngay = new DateTime(int.Parse(nam), 3, 31);
+                            }
+                            else if (quy == "2")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 4, 1);
+                                denngay = new DateTime(int.Parse(nam), 6, 30);
+                            }
+                            else if (quy == "3")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 7, 1);
+                                denngay = new DateTime(int.Parse(nam), 9, 30);
+                            }
+                            else
+                            {
+                                tungay = new DateTime(int.Parse(nam), 10, 1);
+                                denngay = new DateTime(int.Parse(nam), 12, 31);
+                            }
+
+                            model = model.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
+                        }
+                    }
+                    else
+                    {
+                        if (time == "ngay")
+                        {
+                            model = model.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
+                        }
+                        else if (time == "thang")
+                        {
+                            model = model.Where(t => t.Ngaynhan.Month == int.Parse(thang) && t.Ngaynhan.Year == int.Parse(nam));
+                        }
+                        else
+                        {
+                            if (quy == "1")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 1, 1);
+                                denngay = new DateTime(int.Parse(nam), 3, 31);
+                            }
+                            else if (quy == "2")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 4, 1);
+                                denngay = new DateTime(int.Parse(nam), 6, 30);
+                            }
+                            else if (quy == "3")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 7, 1);
+                                denngay = new DateTime(int.Parse(nam), 9, 30);
+                            }
+                            else
+                            {
+                                tungay = new DateTime(int.Parse(nam), 10, 1);
+                                denngay = new DateTime(int.Parse(nam), 12, 31);
+                            }
+
+                            model = model.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
+                        }
+                    }
+
 
                     var model_join = (from kk in model
                                       join com in _db.Company on kk.Madv equals com.Madv
@@ -84,79 +157,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                                           Tendn = com.Tendn,
                                       });
 
-                    if (phanloai == "ngaychuyen")
-                    {
-                        if (time == "ngay")
-                        {
-                            model_join = model_join.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
-                        }
-                        else if (time == "thang")
-                        {
-                            model_join = model_join.Where(t => t.Ngaychuyen.Month == int.Parse(thang) && t.Ngaychuyen.Year == int.Parse(nam));
-                        }
-                        else
-                        {
-                            if (quy == "1")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 1, 1);
-                                denngay = new DateTime(int.Parse(nam), 3, 31);
-                            }
-                            else if (quy == "2")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 4, 1);
-                                denngay = new DateTime(int.Parse(nam), 6, 30);
-                            }
-                            else if (quy == "3")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 7, 1);
-                                denngay = new DateTime(int.Parse(nam), 9, 30);
-                            }
-                            else
-                            {
-                                tungay = new DateTime(int.Parse(nam), 10, 1);
-                                denngay = new DateTime(int.Parse(nam), 12, 31);
-                            }
-
-                            model_join = model_join.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
-                        }
-                    }
-                    else
-                    {
-                        if (time == "ngay")
-                        {
-                            model_join = model_join.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
-                        }
-                        else if (time == "thang")
-                        {
-                            model_join = model_join.Where(t => t.Ngaynhan.Month == int.Parse(thang) && t.Ngaynhan.Year == int.Parse(nam));
-                        }
-                        else
-                        {
-                            if (quy == "1")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 1, 1);
-                                denngay = new DateTime(int.Parse(nam), 3, 31);
-                            }
-                            else if (quy == "2")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 4, 1);
-                                denngay = new DateTime(int.Parse(nam), 6, 30);
-                            }
-                            else if (quy == "3")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 7, 1);
-                                denngay = new DateTime(int.Parse(nam), 9, 30);
-                            }
-                            else
-                            {
-                                tungay = new DateTime(int.Parse(nam), 10, 1);
-                                denngay = new DateTime(int.Parse(nam), 12, 31);
-                            }
-
-                            model_join = model_join.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
-                        }
-                    }
-
+                  
                     ViewData["time"] = time;
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
