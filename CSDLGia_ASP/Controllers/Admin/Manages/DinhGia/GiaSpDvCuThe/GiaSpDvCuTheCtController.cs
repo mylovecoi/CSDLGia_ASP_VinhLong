@@ -140,10 +140,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     }
 
                     result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-
                     result += "<td style='text-align:center'>" + item.Mucgia1 + "</td>";
                     result += "<td style='text-align:center'>" + item.Mucgia2 + "</td>";
-
                     result += "<td>";
                     result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                     result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

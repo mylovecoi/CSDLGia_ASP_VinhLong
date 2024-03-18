@@ -670,36 +670,100 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             return Json(data);
         }
 
+        //public string GetData(string Mahs)
+        //{
+        //    var Model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
+
+        //    int record = 1;
+        //    string result = "<div class='card-body' id='frm_data'>";
+
+        //    result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
+        //    result += "<thead>";
+        //    result += "<tr style='text-align:center'>";
+        //    result += "<th>STT</th>";
+        //    result += "<th>STT TT37</th>";
+        //    result += "<td>Mã dịch vụ</td>";
+        //    result += "<th>Tên dịch vụ</th>";
+        //    result += "<th>Đơn giá</th>";
+        //    result += "<th>Ghi chú</th>";
+        //    result += "<th width='8%'>Thao tác</th>";
+        //    result += "</tr>";
+        //    result += "</thead>";
+
+        //    result += "<tbody>";
+        //    if (Model != null)
+        //    {
+        //        foreach (var item in Model)
+        //        {
+        //            result += "<tr>";
+        //            result += "<td style='text-align:center'>" + (record++) + "</td>";
+        //            result += "<td style='text-align:center'></td>";
+        //            result += "<td style='text-align:center'>" + item.Madichvu + "</td>";
+        //            result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
+        //            result += "<td style='text-align:center'>" + item.Giadv + "</td>";
+        //            result += "<td style='text-align:center'>" + item.Ghichu + "</td>";
+        //            result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa' data-toggle='modal'";
+        //            result += "data-target = '#Edit_Modal' onclick = 'SetEdit(`" + item.Id + "`)'>";
+        //            result += "<i class='icon-lg la la-edit text-warning'></i>";
+        //            result += "</button></td>";
+        //            result += "</tr>";
+        //        }
+        //    }
+
+        //    result += "</ tbody >";
+        //    result += "</ table >";
+        //    result += "</div>";
+
+        //    return result;
+        //}
+
         public string GetData(string Mahs)
         {
-            var Model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
+            //var Model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
 
+            var model = _db.GiaDvKcbCt.Where(t => t.Mahs == Mahs).ToList();
+
+            var modeldanhmuc = _db.GiaDvKcbDm.ToList();
+
+            var modeldanhmucnhom = _db.GiaDvKcbNhom.ToList();
             int record = 1;
+
+            var groupmanhom1 = _db.GiaDvKcbCt.Where(item => item.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
+
             string result = "<div class='card-body' id='frm_data'>";
 
-            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
-            result += "<thead>";
-            result += "<tr style='text-align:center'>";
-            result += "<th>STT</th>";
-            result += "<th>STT TT37</th>";
-            result += "<td>Mã dịch vụ</td>";
-            result += "<th>Tên dịch vụ</th>";
-            result += "<th>Đơn giá</th>";
-            result += "<th>Ghi chú</th>";
-            result += "<th width='8%'>Thao tác</th>";
-            result += "</tr>";
-            result += "</thead>";
+            foreach (var manhom in groupmanhom1)
 
-            result += "<tbody>";
-            if (Model != null)
             {
-                foreach (var item in Model)
+                foreach (var dm in modeldanhmucnhom)
+                {
+                    if (manhom == dm.Manhom)
+                    {
+                        result += "<p style='text-align:center'>" + dm.Tennhom + "</p>";
+                    }
+                }
+
+                result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
+                result += "<thead>";
+                result += "<tr style='text-align:center'>";
+                result += "<th>STT</th>";
+                result += "<th>STT TT37</th>";
+                result += "<td>Mã dịch vụ</td>";
+                result += "<th>Tên dịch vụ</th>";
+                result += "<th>Đơn giá</th>";
+                result += "<th>Ghi chú</th>";
+                result += "<th width='8%'>Thao tác</th>";
+                result += "</tr>";
+                result += "</thead>";
+
+                result += "<tbody>";
+                foreach (var item in model.Where(t => t.Manhom == manhom))
                 {
                     result += "<tr>";
                     result += "<td style='text-align:center'>" + (record++) + "</td>";
                     result += "<td style='text-align:center'></td>";
                     result += "<td style='text-align:center'>" + item.Madichvu + "</td>";
-                    result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
+                    result += "<td style='text-align:left'>" + item.Tenspdv + "</td>";
                     result += "<td style='text-align:center'>" + item.Giadv + "</td>";
                     result += "<td style='text-align:center'>" + item.Ghichu + "</td>";
                     result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa' data-toggle='modal'";
@@ -708,10 +772,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     result += "</button></td>";
                     result += "</tr>";
                 }
-            }
 
-            result += "</ tbody >";
-            result += "</ table >";
+
+                result += "</ tbody >";
+
+                result += "</ table >";
+
+            }
             result += "</div>";
 
             return result;
