@@ -401,7 +401,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["KetNoiAPI_HoSo_ChiTiet"] = _db.KetNoiAPI_HoSo_ChiTiet.Where(t => t.Maso == Maso).OrderBy(t => t.Stt);
                     ViewData["Stt"] = stt;
                     ViewData["Maso"] = Maso;
-                    ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x => x.Maso == Maso).Menu;
+                    //ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x => x.Maso == Maso).Menu;
                     ViewData["Title"] = "Thiết lập chung kết nối API";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
@@ -423,7 +423,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
         [Route("KetNoiAPI/ThietLapHoso/Store")]
         [HttpPost]
-        public JsonResult ThietLapHosoStore(string Tendong, string Tentruong, string Kieudl,
+        public JsonResult ThietLapHosoStore(string Tendong, string Tendong_goc, string Tentruong, string Kieudl,
             string Dinhdang, string Dodai, bool Batbuoc, string Macdinh, int Stt, string Maso)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -436,6 +436,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                         var request = new KetNoiAPI_HoSo
                         {
                             Tendong = Tendong,
+                            Tendong_Goc = Tendong_goc,
                             Tentruong = Tentruong,
                             Kieudulieu = Kieudl,
                             Dinhdang = Dinhdang,
@@ -486,18 +487,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     {
                         string result = "<div class='modal-body' id='frm_edit'>";
                         result += "<div class='row'>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên dòng(API</label>";
                         result += "<input type='text' class='form-control' id='tendong_edit' name='tendong_edit' value='" + model.Tendong + "'/>";
                         result += "</div>";
                         result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên dòng gốc</label>";
+                        result += "<input type='text' class='form-control' id='tendong_goc_edit' name='tendong_goc_edit' value='" + model.Tendong_Goc + "' placeholder=\"Cho các trường trong danh sách chi tiết (DS_HHDV, ...)\"/>";
+                        result += "</div>";
+                        result += "</div>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên trường*</label>";
                         result += "<input type='text' class='form-control' id='tentruong_edit' name='tentruong_edit' value='" + model.Tentruong + "'/>";
                         result += "</div>";
                         result += "</div>";
+
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Kiểu dữ liệu*</label>";
@@ -572,7 +583,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
         [Route("KetNoiAPI/ThietLapHoso/Update")]
         [HttpPost]
-        public IActionResult ThietLapHosoUpdate(int Id, string Maso, string Tentruong, string Tendong, string Kieudl,
+        public IActionResult ThietLapHosoUpdate(int Id, string Maso, string Tentruong, string Tendong, string Tendong_goc, string Kieudl,
             string Dinhdang, string Dodai, bool Batbuoc, string Macdinh, int Stt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -584,6 +595,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     {
                         var model = _db.KetNoiAPI_HoSo.FirstOrDefault(t => t.Id == Id);
                         model.Tendong = Tendong;
+                        model.Tendong_Goc = Tendong_goc;
                         model.Tentruong = Tentruong;
                         model.Kieudulieu = Kieudl;
                         model.Dinhdang = Dinhdang;
@@ -765,6 +777,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult XemHoso(string maSo, string maHS)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.api.chung", "Create"))
+                {
+                    
+
+                    return View("Views/Admin/Systems/API/XemHoSo.cshtml");
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
             }
         }
     }

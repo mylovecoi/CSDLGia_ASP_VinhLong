@@ -19,6 +19,12 @@
                             <input class="form-control" name="tendong_create" id="tendong_create" />
                         </div>
                     </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên dòng gốc</label>
+                            <input class="form-control" name="tendong_goc_create" id="tendong_goc_create" placeholder="Cho các trường trong danh sách chi tiết (DS_HHDV, ...)" />
+                        </div>
+                    </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên trường(CSDL)</label>
@@ -182,6 +188,7 @@
                     type: 'POST',
                     data: {
                         Tendong: $('#tendong_create').val(),
+                        Tendong_Goc: $('#tendong_goc_create').val(),
                         Tentruong: $('#tentruong_create').val(),
                         Kieudl: $('#kieudl_create').val(),
                         Dinhdang: $('#dinhdang_create').val(),
@@ -225,6 +232,7 @@
                     type: 'POST',
                     data: {
                         Tendong: $('#tendong_edit').val(),
+                        Tendong_goc: $('#tendong_goc_edit').val(),
                         Tentruong: $('#tentruong_edit').val(),
                         Kieudl: $('#kieudl_edit').val(),
                         Dinhdang: $('#dinhdang_edit').val(),
