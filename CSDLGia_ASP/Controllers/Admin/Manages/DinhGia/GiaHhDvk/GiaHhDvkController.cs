@@ -44,56 +44,62 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
-                        }
+                        //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                        //{
+                        //    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        //}
+                        //else
+                        //{                            
+                        //    if (string.IsNullOrEmpty(Madv)) 
+                        //    {
+                        //        Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                        //    }
+                        //}                     
 
-                        var model = _db.GiaHhDvk.Where(t => t.Madv == Madv).ToList();
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk;
+
+                        if(Madv != "all")
+                        {
+                            model = model.Where(t=>t.Madv == Madv);
+                        }
 
                         if (string.IsNullOrEmpty(Nam))
                         {
                             Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Nam == Nam).ToList();
+                            model = model.Where(t => t.Nam == Nam);
                         }
                         else
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Nam == Nam).ToList();
+                                model = model.Where(t => t.Nam == Nam);
                             }
-                            else
-                            {
-                                model = model.ToList();
-                            }
+                            //else
+                            //{
+                            //    model = model.ToList();
+                            //}
                         }
-
+                        
                         if (string.IsNullOrEmpty(Thang))
                         {
                             Thang = Helpers.ConvertYearToStr(DateTime.Now.Month);
-                            model = model.Where(t => t.Thang == Thang).ToList();
+                            model = model.Where(t => t.Thang == Thang);
                         }
                         else
                         {
                             if (Thang != "all")
                             {
-                                model = model.Where(t => t.Thang == Thang).ToList();
+                                model = model.Where(t => t.Thang == Thang);
                             }
-                            else
-                            {
-                                model = model.ToList();
-                            }
+                          
                         }
 
-                        var model_join = (from kk in model
-                                          join db in _db.DsDiaBan on kk.Madiaban equals db.MaDiaBan
+                        var model_join = (from kk in model                                         
                                           join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                                           {
@@ -112,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                               Trangthai = kk.Trangthai,
                                               Ipf1 = kk.Ipf1,
                                               Macqcq = kk.Macqcq,
-                                              Tendiaban = db.TenDiaBan,
+                                              //Tendiaban = db.TenDiaBan,
                                               Tentt = nhom.Tentt,
                                           });
 
@@ -125,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = _db.DsDiaBan;
-                        ViewData["Madiaban"] = dsdonvi.FirstOrDefault(t => t.MaDv == Madv).MaDiaBan;
+                        //ViewData["Madiaban"] = dsdonvi.FirstOrDefault(t => t.MaDv == Madv).MaDiaBan;
                         ViewData["Thang"] = Thang;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
