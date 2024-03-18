@@ -141,15 +141,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đơn vị tính</label>";
-                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "<label>Tên sản phẩm dịch vụ</label>";
+                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
                         result += "</div>";
                         result += "</div>";
 
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đơn vị tính</label>";
-                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Sapxep + "'/>";
+                        result += "<label>Sắp xếp</label>";
+                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.Sapxep + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -178,7 +178,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Dvt, string Magoc, string Ten, string Capdo, string HienThi)
+        public JsonResult Update(int Id, string Dvt, string Tenspdv, int Sapxep, string HienThi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -186,7 +186,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var model = _db.GiaSpDvCongIchDm.FirstOrDefault(t => t.Id == Id);
                     model.HienThi = HienThi;
+                    model.Tenspdv = Tenspdv;
                     model.Dvt = Dvt;
+                    model.Sapxep = Sapxep;
 
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCongIchDm.Update(model);
@@ -307,7 +309,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         public JsonResult GetMaxSapXep(string Manhom)
         {
             var i = 0;
-            var data = _db.GiaSpDvCuTheDm.Where(t => t.Manhom == Manhom);
+            var data = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom);
 
             if (data.Any())
             {

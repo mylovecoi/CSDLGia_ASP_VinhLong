@@ -473,17 +473,14 @@
     }
 
     function Update() {
-        if ($('#ten_edit').val().trim() == '') {
-            toastr.error("Tên sản phẩm không được để trống!!!", "Lỗi!");
-        } else {
+      
             $.ajax({
                 url: '/GiaSpDvCongIchDmCt/Update',
                 type: 'POST',
                 data: {
-                    Maso: $('#maso_edit').val(),
-                    Ten: $('#ten_edit').val(),
-                    Magoc: $('#magoc_edit').val(),
-                    Capdo: $('#capdo_edit').val(),
+                  
+                    Tenspdv: $('#tenspdv_edit').val(),
+                    Sapxep: $('#sapxep_edit').val(),
                     HienThi: $('#hienthi_edit').val(),
                     Dvt: $('#dvt_edit').val(),
                     Id: $('#id_edit').val()
@@ -498,7 +495,7 @@
                     }
                 }
             })
-        }
+        
     }
 
     function Lock() {

@@ -36,15 +36,11 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
-            <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </button>&ensp;
-            <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
-                <i class="la la-lock"></i>Khóa/Mở khóa
-            </button>&ensp;
+           
             <a asp-controller="GiaSpDvCongIChNhom" asp-action="Index" class="btn btn-light-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
+
         </div>
     </div>
     <hr />
@@ -65,7 +61,7 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.HienThi</td>
-                        <td style="text-align: center">@item.Tenspdv</td>
+                        <td style="text-align: left">@item.Tenspdv</td>
                         <td style="text-align: center">@item.Dvt</td>
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))

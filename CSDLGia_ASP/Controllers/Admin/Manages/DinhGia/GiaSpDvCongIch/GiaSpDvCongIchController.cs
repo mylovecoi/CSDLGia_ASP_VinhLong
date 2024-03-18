@@ -400,6 +400,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
                     var groupmanhom = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
                     ViewData["GroupMaNhom"] = groupmanhom;
+
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Show.cshtml", model);
 
                 }
