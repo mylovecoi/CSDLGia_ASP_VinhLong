@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240318062151_Fix-GiaVatLieuXayDungCt-NotNap")]
+    partial class FixGiaVatLieuXayDungCtNotNap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -13810,9 +13812,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Tendong")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tendong_Goc")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tentruong")

@@ -54,20 +54,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.baocao", "Index"))
                 {
-                    var model = _db.GiaVatLieuXayDungDm.Where(t => t.Manhom == manhom).ToList();
-
-                    var modellk = _db.GiaVatLieuXayDung.FirstOrDefault(t => t.Thoidiem.Year == namlk && t.Manhom == manhom);
-
-                    var modelbc = _db.GiaVatLieuXayDung.FirstOrDefault(t => t.Thoidiem.Year == nambc && t.Manhom == manhom);
-
-                    ViewData["TenNhom"] = _db.GiaVatLieuXayDungNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
-                    ViewData["Namlk"] = namlk;
-                    ViewData["Nambc"] = nambc;
+                    var data = _db.GiaVatLieuXayDung.Where(t => t.Trangthai == "HT");
+                    ViewData["HoSos"] = data;
                     ViewData["Title"] = "Báo cáo tổng hợp giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
                     ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Bc1.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Bc1.cshtml");
                 }
                 else
                 {

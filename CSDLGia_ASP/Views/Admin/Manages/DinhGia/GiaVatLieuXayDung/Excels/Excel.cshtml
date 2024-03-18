@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt
+﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @{
     var Madv = ViewData["Madv"];
@@ -34,48 +34,19 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select asp-for="Ten" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Gia" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-
+            <div class="row">                
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
             <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" />
+                    </div>
+                </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>Nhận từ dòng*</label>
@@ -88,23 +59,18 @@
                         <input type="number" class="form-control" asp-for="LineStop" />
                     </div>
                 </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label>Sheet*</label>
-                        <input type="number" class="form-control" asp-for="Sheet" />
-                    </div>
-                </div>
+              
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaDatPl" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="GiaVatLieuXayDung" asp-action="Index" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

@@ -15,9 +15,9 @@
             <th style="text-align:center" width="4%">STT</th>
             <th style="text-align:center">Đơn vị nhập</th>
             <th style="text-align:center">Thời điểm</th>
-            <th style="text-align:center">Nhóm vật liệu </th>
             <th style="text-align:center">Tên vật liệu</th>
             <th style="text-align:center">Đơn vị tính</th>
+            <th style="text-align:center">Tiêu chuẩn kỹ thuật</th>
             <th style="text-align:center">Giá</th>
         </tr>
     </thead>
@@ -30,9 +30,9 @@
                     <td style="text-align: center">@(record_id++)</td>
                     <td style="text-align:center">@item.Tendv</td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align:center">@item.Tennhom</td>
-                    <td style="text-align:center"  class="active">@item.Ten</td>
+                    <td style="text-align:left"  class="active">@item.Ten</td>
                     <td style="text-align:center" class="active">@item.Dvt</td>
+                    <td style="text-align:center" class="active">@item.TieuChuan</td>
                     <td style="text-align:center">@Helpers.ConvertDbToStr(item.Gia)</td>
                 </tr>
             }

@@ -46,7 +46,7 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                <button class="btn btn-primary font-weight-bolder" title="Thêm mới" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
 

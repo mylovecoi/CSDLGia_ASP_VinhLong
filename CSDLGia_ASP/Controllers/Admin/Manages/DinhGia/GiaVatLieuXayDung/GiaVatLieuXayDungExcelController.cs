@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
@@ -28,14 +29,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
                 {
-                    var model = new GiaVatLieuXayDungCt
-                    {
-                        Ten = "1",
-                        Dvt = "2",
-                        Gia = 3,
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {                        
                         Sheet = 1,
-                        LineStart = 2,
+                        LineStart = 3,
                         LineStop = 1000,
+                        MaDv = Madv
                        
                     };
                     ViewData["MenuLv1"] = "menu_giakhac";
@@ -57,88 +56,67 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-        [Route("GiaVatLieuXayDungExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
-                {
-
-                    ViewData["Title"] = "Thông tin hồ sơ giá giá vật liệu xây dựng";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
-                    ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_tt";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs);
-
-                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/Excels/Create.cshtml");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
+        
         [HttpPost]
-        public async Task<IActionResult> Import(GiaVatLieuXayDungCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel requests)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+            int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt>();
+            string Mahs = requests.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+            using (var stream = new MemoryStream())
             {
-
-                request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaVatLieuXayDungCt>();
-                int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
-                using (var stream = new MemoryStream())
+                await requests.FormFile.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
                 {
-                    await request.FormFile.CopyToAsync(stream);
-                    using (var package = new ExcelPackage(stream))
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                    var rowcount = worksheet.Dimension.Rows;
+                    requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                    Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                    int line = 1;
+                    for (int row = requests.LineStart; row <= requests.LineStop; row++)
                     {
-                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-                        var rowcount = worksheet.Dimension.Rows;
-                        request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-                        for (int row = request.LineStart; row <= request.LineStop; row++)
+                        list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt
                         {
-                            list_add.Add(new GiaVatLieuXayDungCt
-                            {
-                                Mahs = Mahs,
-                                Trangthai = "CXD",
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value) : 0,
-                             
-                            });
-                        }
+                            Mahs = Mahs,
+                            Madv = requests.MaDv,
+                            Trangthai = "CXD",
+                            STTSapXep = line,
+                            STTHienThi = worksheet.Cells[row, 1].Value != null ?
+                                        worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                            Ten = worksheet.Cells[row, 2].Value != null ?
+                                        worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                            Dvt = worksheet.Cells[row, 3].Value != null ?
+                                        worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                            TieuChuan = worksheet.Cells[row, 4].Value != null ?
+                                        worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                            Gia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                        worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                            GhiChu = worksheet.Cells[row, 6].Value != null ?
+                                        worksheet.Cells[row, 6].Value.ToString().Trim() : "",
+                        });
+                        line = line + 1;
                     }
-
                 }
-                _db.GiaVatLieuXayDungCt.AddRange(list_add);
-                _db.SaveChanges();
-                return RedirectToAction("Create", "GiaVatLieuXayDungExcel", new { Madv = Madv, Mahs = Mahs });
             }
-            else
+            _db.GiaVatLieuXayDungCt.AddRange(list_add);
+            _db.SaveChanges();
+            var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung
             {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
+                Madv = requests.MaDv,
+                Thoidiem = DateTime.Now,
+                Mahs = Mahs,               
+            };
+            var modelct = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs);
+            model.GiaVatLieuXayDungCt = modelct.ToList();
+
+            ViewData["Title"] = "Bảng giá vật liệu xây dựng";
+            ViewData["MenuLv1"] = "menu_giakhac";
+            ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
+            ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_tt";
+            return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/DanhSach/Create.cshtml", model);
+
         }
 
 

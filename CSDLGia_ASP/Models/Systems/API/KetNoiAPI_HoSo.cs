@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Models.Systems.API
         public string Ghichu { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-
+        public string Tendong_Goc { get; set; }//Cho danh sách con
         [NotMapped]
         public List<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
     }

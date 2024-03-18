@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -496,6 +497,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             }
         }
 
+        [HttpPost]
+        public IActionResult TongHop(DateTime tungay, DateTime denngay)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.xetduyet", "Index"))
+                {
+                    var model = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
+                    var model_ct = _db.GiaVatLieuXayDungCt.Where(t => list_hoso.Contains(t.Mahs));
+
+                    ViewData["Title"] = "Tổng hợp Bảng giá vật liệu xây dựng";
+                    ViewData["HoSoCts"] = model_ct;
+                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/XetDuyet/TongHop.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+
+        }
+
         private static string GetMadvChuyen(string macqcq, CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung hoso)
         {
             string madv = "";
@@ -522,5 +551,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
         ketthuc:
             return madv;
         }
+
+       
     }
 }
