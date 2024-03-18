@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             var modeldanhmucnhom = _db.GiaSpDvCongIchNhom.ToList();
             int record = 1;
 
-            var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(item => item.Manhom).ToList();
+            var groupmanhom1 = _db.GiaSpDvCongIchCt.Where(item => item.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
 
             string result = "<div class='card-body' id='frm_data'>";
 
@@ -111,13 +111,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "<table class='table table-striped table-bordered table-hover dulieubang'>";
 
                 result += "<thead>";
-                result += "<tr style='text-align:center'>";
-                result += "<th rowspan='2' width='2%'>STT</th>";
-                result += "<th rowspan='2' width='2%'>Hiển thị</th>";
-                result += "<th rowspan='2'>Tên sản phẩm dịch vụ</th>";
-                result += "<th rowspan='2'>Đơn vị tính</th>";
-                result += "<th colspan='4' >Mức giá</th>";
-                result += "<th rowspan='2'>Thao tác</th>";
+                result += "<tr >";
+                result += "<th style='text-align:center' rowspan='2' width='2%'>STT</th>";
+                result += "<th style='text-align:center' rowspan='2' width='2%'>Hiển thị</th>";
+                result += "<th style='text-align:center' rowspan='2' >Tên sản phẩm dịch vụ</th>";
+                result += "<th style='text-align:center'rowspan='2'>Đơn vị tính</th>";
+                result += "<th style='text-align:center'colspan='4' >Mức giá</th>";
+                result += "<th style='text-align:center'rowspan='2'>Thao tác</th>";
                 result += "</tr>";
 
                 result += "<tr style='text-align:center'>";
@@ -130,13 +130,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "</thead>";
 
                 result += "<tbody>";
-                foreach (var item in model)
+                foreach (var item in model.Where(t => t.Manhom == manhom))
                 {
 
                     result += "<tr>";
                     result += "<td style='text-align:center'>" + record++ + "</td>";
                     result += "<td style='text-align:left'>" + item.HienThi + "</td>";
-                    result += "<td style='text-align:center'>" + item.Ten + "</td>";
+                    result += "<td style='text-align:left'>" + item.Ten + "</td>";
                     result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                     result += "<td style='text-align:center'>" + item.Mucgiatu + "</td>";
                     result += "<td style='text-align:center'>" + item.Mucgiaden + "</td>";
@@ -161,7 +161,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
             }
             result += "</div>";
-
             return result;
         }
 
