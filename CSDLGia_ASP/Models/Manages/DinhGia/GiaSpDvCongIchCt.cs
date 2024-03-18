@@ -20,6 +20,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Mucgiaden { get; set; }
         public double Mucgia3 { get; set; }
         public double Mucgia4 { get; set; }
+        public double Sapxep { get; set; }
+
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
