@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
                 <div class="row" id="data_create">
-                    <input class="form-control" name="maso_create" id="maso_create" value="@ViewData["Maso"]" type="hidden"/>
+                    <input class="form-control" name="maso_create" id="maso_create" value="@ViewData["Maso"]" type="hidden" />
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên dòng(API)</label>
@@ -181,40 +181,36 @@
     function Store() {
         document.getElementById("btn_store").style.display = "none";
         document.getElementById("loading_store").style.display = "block";
-        if ($('#tentruong_create').val().trim() != '') {
-            if ($('#dodai_create').val().trim() != '') {
-                $.ajax({
-                    url: '/KetNoiAPI/ThietLapHoso/Store',
-                    type: 'POST',
-                    data: {
-                        Tendong: $('#tendong_create').val(),
-                        Tendong_Goc: $('#tendong_goc_create').val(),
-                        Tentruong: $('#tentruong_create').val(),
-                        Kieudl: $('#kieudl_create').val(),
-                        Dinhdang: $('#dinhdang_create').val(),
-                        Dodai: $('#dodai_create').val(),
-                        Batbuoc: $('#batbuoc_create').val(),
-                        Macdinh: $('#macdinh_create').val(),
-                        Stt: $('#stt_create').val(),
-                        Maso: $('#maso_create').val(),
-                    },
-                    dataType: 'JSON',
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            toastr.success(data.message);
-                            location.reload();
-                        } else {
-                            toastr.error(data.message, "Lỗi!");
-                        }
-                        document.getElementById("btn_store").style.display = "block";
-                        document.getElementById("loading_store").style.display = "none";
+
+        if ($('#dodai_create').val().trim() != '') {
+            $.ajax({
+                url: '/KetNoiAPI/ThietLapHoso/Store',
+                type: 'POST',
+                data: {
+                    Tendong: $('#tendong_create').val(),
+                    Tendong_Goc: $('#tendong_goc_create').val(),
+                    Tentruong: $('#tentruong_create').val(),
+                    Kieudl: $('#kieudl_create').val(),
+                    Dinhdang: $('#dinhdang_create').val(),
+                    Dodai: $('#dodai_create').val(),
+                    Batbuoc: $('#batbuoc_create').val(),
+                    Macdinh: $('#macdinh_create').val(),
+                    Stt: $('#stt_create').val(),
+                    Maso: $('#maso_create').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
                     }
-                })
-            } else {
-                toastr.error("Tên trường không được để trống", "Lỗi!");
-                document.getElementById("btn_store").style.display = "block";
-                document.getElementById("loading_store").style.display = "none";
-            }
+                    document.getElementById("btn_store").style.display = "block";
+                    document.getElementById("loading_store").style.display = "none";
+                }
+            })
+
         } else {
             toastr.error("Độ dài không được để trống", "Lỗi!");
             document.getElementById("btn_store").style.display = "block";
@@ -225,40 +221,36 @@
     function Update() {
         document.getElementById("btn_update").style.display = "none";
         document.getElementById("loading_update").style.display = "block";
-        if ($('#tentruong_edit').val().trim() != '') {
-            if ($('#dodai_edit').val().trim() != '') {
-                $.ajax({
-                    url: '/KetNoiAPI/ThietLapHoso/Update',
-                    type: 'POST',
-                    data: {
-                        Tendong: $('#tendong_edit').val(),
-                        Tendong_goc: $('#tendong_goc_edit').val(),
-                        Tentruong: $('#tentruong_edit').val(),
-                        Kieudl: $('#kieudl_edit').val(),
-                        Dinhdang: $('#dinhdang_edit').val(),
-                        Dodai: $('#dodai_edit').val(),
-                        Batbuoc: $('#batbuoc_edit').val(),
-                        Macdinh: $('#macdinh_edit').val(),
-                        Stt: $('#stt_edit').val(),
-                        Id: $('#id_edit').val(),
-                    },
-                    dataType: 'JSON',
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            toastr.success("Cập nhật thành công!!!", "Thành công!");
-                            location.reload();
-                        } else {
-                            toastr.error(data.message, "Lỗi!");
-                        }
-                        document.getElementById("btn_update").style.display = "block";
-                        document.getElementById("loading_update").style.display = "none";
+
+        if ($('#dodai_edit').val().trim() != '') {
+            $.ajax({
+                url: '/KetNoiAPI/ThietLapHoso/Update',
+                type: 'POST',
+                data: {
+                    Tendong: $('#tendong_edit').val(),
+                    Tendong_goc: $('#tendong_goc_edit').val(),
+                    Tentruong: $('#tentruong_edit').val(),
+                    Kieudl: $('#kieudl_edit').val(),
+                    Dinhdang: $('#dinhdang_edit').val(),
+                    Dodai: $('#dodai_edit').val(),
+                    Batbuoc: $('#batbuoc_edit').val(),
+                    Macdinh: $('#macdinh_edit').val(),
+                    Stt: $('#stt_edit').val(),
+                    Id: $('#id_edit').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thành công!!!", "Thành công!");
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
                     }
-                })
-            } else {
-                toastr.error("Tên trường không được để trống", "Lỗi!");
-                document.getElementById("btn_store").style.display = "block";
-                document.getElementById("loading_store").style.display = "none";
-            }
+                    document.getElementById("btn_update").style.display = "block";
+                    document.getElementById("loading_update").style.display = "none";
+                }
+            })
+
         } else {
             toastr.error("Độ dài không được để trống", "Lỗi!");
             document.getElementById("btn_store").style.display = "block";
@@ -289,5 +281,5 @@
         //console.log(id);
         document.getElementById("id_delete").value = id;
     }
-    
+
 </script>

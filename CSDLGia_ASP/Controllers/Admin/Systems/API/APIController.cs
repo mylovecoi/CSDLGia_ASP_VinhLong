@@ -1,10 +1,20 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Migrations;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems.API;
+using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {
@@ -780,16 +790,101 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             }
         }
 
-        [HttpPost]
+        [Route("KetNoiAPI/XemHoso")]
+        [HttpGet]
         public IActionResult XemHoso(string maSo, string maHS)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.api.chung", "Create"))
                 {
-                    
+                    var truongDuLieu = _db.KetNoiAPI_HoSo.Where(t => t.Maso == maSo);
+                    var sKQ = "[";
+                    switch (maSo)
+                    {
+                        case "giahhdvk":
+                            {
+                                var dSHoSo = _db.GiaHhDvkTh.Where(x => x.Mahs == maHS).ToList();
+                                var dSChiTiet = _db.GiaHhDvkThCt.Where(x => x.Mahs == maHS).ToList().OrderBy(x=>x.Mahhdv);
 
-                    return View("Views/Admin/Systems/API/XemHoSo.cshtml");
+                                //string jsonHoSo = Newtonsoft.Json.JsonSerializer.Serialize(dSHoSo);
+                                //JsonDocument docHoSo = JsonDocument.Parse(jsonHoSo);
+                                string sHoSo = "{";
+                                foreach (var item in truongDuLieu.Where(x => x.Tendong != "" && x.Tendong != null).OrderBy(x => x.Stt))
+                                {
+                                    var dSTruongChiTiet = truongDuLieu.Where(x => x.Tendong_Goc == item.Tendong);
+                                    sHoSo += item.Tendong + "" + ":";
+                                    if (!string.IsNullOrEmpty(item.Tentruong))
+                                    {
+                                        //    if (dSHoSo.RootElement.TryGetProperty(item.Tentruong, out JsonElement element))
+                                        //    {
+                                        //        Console.WriteLine($"{fieldName}: {element.GetString()}");
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        Console.WriteLine($"Field '{fieldName}' not found.");
+                                        //    }
+                                    }
+                                    else
+                                    {
+                                        if (!dSTruongChiTiet.Any())
+                                        {
+                                            sHoSo += item.Macdinh + ",";
+                                        }
+                                        else { sHoSo += "["; }
+                                    }
+                                    
+                                    if (dSTruongChiTiet.Any())
+                                    {
+                                        foreach (var cths in dSChiTiet)
+                                        {
+                                            sHoSo += "[";
+                                            foreach (var ct in dSTruongChiTiet)
+                                            {
+                                                sHoSo += ct.Tendong + "" + ":";
+                                                if (!string.IsNullOrEmpty(ct.Tentruong))
+                                                {
+                                                    switch (ct.Tentruong)
+                                                    {
+                                                        case "Mahhdv":
+                                                            {
+                                                                sHoSo += cths.Mahhdv + ",";
+                                                                break;
+                                                            }
+                                                        case "Gia":
+                                                            {
+                                                                sHoSo += cths.Gia + ",";
+                                                                break;
+                                                            }
+                                                        case "Gialk":
+                                                            {
+                                                                sHoSo += cths.Gialk + ",";
+                                                                break;
+                                                            }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    sHoSo += ct.Macdinh + ",";
+                                                }
+                                            }
+                                            sHoSo += "]";
+                                        }
+                                        sHoSo += "]";
+                                    }
+                                }
+                                sHoSo += "}]";
+                                sKQ = sHoSo;
+                                break;
+                            }
+                        case "giathuetn":
+                            {
+                                var dSHoSo = _db.GiaThueTaiNguyen.Where(x => x.Mahs == maHS).ToList();
+                                break;
+                            }
+                    }
+                    return Ok(Json(sKQ));
+
                 }
                 else
                 {

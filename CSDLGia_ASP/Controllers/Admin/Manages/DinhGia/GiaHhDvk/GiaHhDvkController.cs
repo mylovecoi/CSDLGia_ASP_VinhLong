@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
-                        ViewData["maKetNoiAPI"] = "giahhdvk";
+                        
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";
                         ViewData["MenuLv2"] = "menu_hhdvk_tt";

@@ -102,6 +102,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["thang"] = Thang;
                     ViewData["nam"] = Nam;
                     ViewData["maDV"] = maDV;
+                    ViewData["maKetNoiAPI"] = "giahhdvk";
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";

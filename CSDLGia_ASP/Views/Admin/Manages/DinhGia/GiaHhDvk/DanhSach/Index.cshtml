@@ -203,10 +203,7 @@
                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
                                 </a>
-                                @{
-                                    ViewData["StringValue"] = item.Mahs;
-                                }
-                                @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["StringValue"])
+                                
                             </td>
                         </tr>
                     }
