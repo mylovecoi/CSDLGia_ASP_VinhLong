@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             var modeldanhmucnhom = _db.GiaSpDvCongIchNhom.ToList();
             int record = 1;
 
-            var groupmanhom1 = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
+            var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(item => item.Manhom).ToList();
 
             string result = "<div class='card-body' id='frm_data'>";
 
@@ -130,7 +130,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "</thead>";
 
                 result += "<tbody>";
-                foreach (var item in model.Where(t => t.Manhom == manhom))
+                foreach (var item in model)
                 {
 
                     result += "<tr>";

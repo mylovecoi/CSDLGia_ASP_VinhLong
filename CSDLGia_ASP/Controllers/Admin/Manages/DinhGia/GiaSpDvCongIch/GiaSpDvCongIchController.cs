@@ -184,8 +184,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
 
                     // Xử lý phần Forech theo mã nhóm khi chọn
-                    var groupmanhom1 = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
-                    var groupmanhom2 = _db.GiaSpDvCongIchCt.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).Distinct().ToList();
+                    var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(item => item.Manhom).ToList();
+                    var groupmanhom2 = _db.GiaSpDvCongIchNhom.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).ToList();
 
                     List<string> groupmanhom;
 
@@ -198,7 +198,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         groupmanhom = groupmanhom1;
                     }
                     ViewData["GroupMaNhom"] = groupmanhom;
-      
                     ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom.ToList();
                     ViewData["GiaSpDvCongIchDm"] = _db.GiaSpDvCongIchDm.ToList();
                     // End xử lý phần Forech theo mã nhóm khi chọn
