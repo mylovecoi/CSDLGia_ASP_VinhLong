@@ -127,14 +127,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                 Sapxep = stt++,
                                 HienThi = worksheet.Cells[row, 1].Value != null ?  worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                 Mota = worksheet.Cells[row, 2].Value != null ?  worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                Diemdau = worksheet.Cells[row, 3].Value != null ?  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Diemcuoi = worksheet.Cells[row, 4].Value != null ?  worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                                Hesok = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row,5].Value.ToString().Trim()) : 0,
-                                Giavt1 = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,
-                                Giavt2 = worksheet.Cells[row, 7].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString().Trim()) : 0,
-                                Giavt3 = worksheet.Cells[row, 8].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString().Trim()) : 0,
-                                Giavt4 = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
-                                Giavt5 = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,                                
+                                Loaiduong = worksheet.Cells[row, 3].Value != null ?  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Diemdau = worksheet.Cells[row, 4].Value != null ?  worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                Diemcuoi = worksheet.Cells[row, 5].Value != null ?  worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                Hesok = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row,6].Value.ToString().Trim()) : 0,
+                                Giavt1 = worksheet.Cells[row, 7].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString().Trim()) : 0,
+                                Giavt2 = worksheet.Cells[row, 8].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString().Trim()) : 0,
+                                Giavt3 = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
+                                Giavt4 = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,
+                                Giavt5 = worksheet.Cells[row, 11].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 11].Value.ToString().Trim()) : 0,                                
                             });
                         }
                     }

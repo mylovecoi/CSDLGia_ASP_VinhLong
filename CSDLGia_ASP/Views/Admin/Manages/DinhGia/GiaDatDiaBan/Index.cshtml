@@ -108,6 +108,7 @@
                     <th width="4%">#</th>
                     <th>Thời điểm</th>
                     <th>Thông tư, quyết định</th>
+                    <th>Địa bàn áp dụng</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận</th>
                     <th >Thao tác</th>
@@ -122,6 +123,9 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center" width="10%">@item.Soqd</td>
+                            <td style="text-align: center">
+                                @dsdiaban.FirstOrDefault(x=>x.MaDiaBan == item.Madiaban).TenDiaBan
+                            </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -150,14 +154,10 @@
                                 }
                             </td>
                             <td style="text-align: center">
-                                @foreach (var ds in dsdiaban)
-                                {
-                                    @if (item.Madiaban == ds.MaDiaBan)
-                                    {
-                                        <span>@ds.TenDiaBan</span>
-                                    }
-                                }
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
                             </td>
+
                             <td width="12%">
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Edit"))
                                 {
