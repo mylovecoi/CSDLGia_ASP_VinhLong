@@ -11,5 +11,7 @@ namespace CSDLGia_ASP.ViewModels
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
         public string MaDv { get; set; }
+        public string Matt { get; set; }
+        public string MadiabanBc { get; set; }
     }
 }
