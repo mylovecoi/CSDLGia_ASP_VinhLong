@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungDm>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -21,56 +20,15 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày......tháng......năm......</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
-    Báo cáo @ViewData["TenNhom"]
-</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-    <thead>
-        <tr>
-            <th style="text-align: center; font-weight: bold" colspan="5" width="26%">Mã nhóm, loại tài nguyên</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="40%">Tên nhóm, loại tài nguyên</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá tính thuế tài nguyên (@ViewData["Namlk"])</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá tính thuế tài nguyên (@ViewData["Nambc"])</th>
-            <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Tăng giảm</th>
-        </tr>
-        <tr>
-            <th style="text-align: center; font-weight: bold">Cấp I</th>
-            <th style="text-align: center; font-weight: bold">Cấp II</th>
-            <th style="text-align: center; font-weight: bold">Cấp III</th>
-            <th style="text-align: center; font-weight: bold">Cấp IV</th>
-            <th style="text-align: center; font-weight: bold">Cấp V</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Count() > 0)
-        {
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td style="text-align: center;">@(item.Level == "1" ? item.Cap1 : "")</td>
-                    <td style="text-align: center;">@(item.Level == "2" ? item.Cap2 : "")</td>
-                    <td style="text-align: center;">@(item.Level == "3" ? item.Cap3 : "")</td>
-                    <td style="text-align: center;">@(item.Level == "4" ? item.Cap4 : "")</td>
-                    <td style="text-align: center;">@(item.Level == "5" ? item.Cap5 : "")</td>
-                    <td style="text-align: left;">@item.Ten</td>
-                    <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.dongialk)</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.dongiabc)</td>
-                    <td style="text-align: right">
-                        @(
-                            (Helpers.ConvertDbToStr(item.dongiabc) == "0" || Helpers.ConvertDbToStr(item.dongiabc) == "") ? "" :
-                            (
-                            (Helpers.ConvertDbToStr(item.dongialk) == "0" || Helpers.ConvertDbToStr(item.dongialk) == "") ? "" :
-                            (Helpers.ConvertDbToStr((item.dongiabc - item.dongialk) / item.dongialk))
-                            )
-                            )
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+
+<div class="row">
+    <div class="col-sm-6">
+        1
+    </div>
+    <div class="col-sm-6">
+        2
+    </div>
+</div>
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
         <td width="45%" style="text-align: left">

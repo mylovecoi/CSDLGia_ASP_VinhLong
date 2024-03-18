@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt>)ViewData["HoSoCts"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ @ViewData["ThoiDiemKetXuat"]</p>
+
+@foreach (var item in Model)
+{
+    <p>Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)</p>
+    <p>Số QĐ: @item.Soqd</p>
+
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+        <thead>
+            <tr>
+                <th style="text-align: center; font-weight: bold" width="2%">STT</th>
+                <th style="text-align: center; font-weight: bold">Danh mục vật liệu</th>
+                <th style="text-align: center; font-weight: bold" width="5%">Đơn vị tính</th>
+                <th style="text-align: center; font-weight: bold" width="20%">Tiêu chuẩn kỹ thuật</th>
+                <th style="text-align: center; font-weight: bold" width="10%">Đơn giá</th>
+                <th style="text-align: center; font-weight: bold" width="20%">Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ct in HoSoCts.OrderBy(t => t.STTSapXep))
+            {
+                string HtmlStyle = Helpers.ConvertStrToStyle(ct.Style);
+                <tr>
+                    <td style="text-align:center; @HtmlStyle">@ct.STTHienThi</td>
+                    <td style="text-align:left; @HtmlStyle">@ct.Ten</td>
+                    <td style="text-align:center; @HtmlStyle">@ct.Dvt</td>
+                    <td style="text-align:left; @HtmlStyle">@ct.TieuChuan</td>
+                    <td style="text-align: right; @HtmlStyle">@Helpers.ConvertDbToStr(ct.Gia)</td>
+                    <td style="text-align: left; @HtmlStyle">@ct.GhiChu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

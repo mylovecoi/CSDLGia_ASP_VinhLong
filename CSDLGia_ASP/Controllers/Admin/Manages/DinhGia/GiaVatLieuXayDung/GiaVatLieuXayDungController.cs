@@ -124,14 +124,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
                 {
                     // Xóa những cái chưa xác định
-                    var check = _db.GiaVatLieuXayDungCt.Where(t => t.Trangthai == "CXD" && t.Madv == MadvBc);
 
-                    if (check != null)
+                    var check = _db.GiaVatLieuXayDungCt.Where(t => t.Trangthai == "CXD" && t.Madv == MadvBc);
+                    if (check.Any())
                     {
                         _db.GiaVatLieuXayDungCt.RemoveRange(check);
                         _db.SaveChanges();
                     }
-
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung
                     {
@@ -141,23 +140,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     };
 
                     // lấy danh mục theo mã nhóm truyền sang
-                    var danhmuc = _db.GiaVatLieuXayDungDm.ToList();
-
-                    if (Manhom != "all")
-                    {
-                        danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
-                    }
-                    else
-                    {
-                        danhmuc = danhmuc.ToList();
-                    }
-
+                    var danhmuc = _db.GiaVatLieuXayDungDm.Where(t=>t.Manhom == Manhom);          
                     var chitiet = new List<GiaVatLieuXayDungCt>();
                     foreach (var item in danhmuc)
                     {
                         chitiet.Add(new GiaVatLieuXayDungCt()
                         {
-                            Mahs = model.Mahs,
+                            Mahs = model.Mahs,                           
                             Ten = item.Ten,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
@@ -169,10 +158,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     _db.SaveChanges();
 
                     model.GiaVatLieuXayDungCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
-
-                    ViewData["Manhom"] = Manhom;
-                    ViewData["Madv"] = MadvBc;
-                    ViewData["Mahs"] = model.Mahs;
+                  
                     ViewData["Title"] = "Bảng giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
@@ -520,18 +506,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Manhom = giathuetn.Manhom,
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
+                                     Ten = giathuetnct.Ten,
                                      /*Tennhom = nhomtn.Tennhom,*/
                                  });
 
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
-                    }
-
-                    if (manhom != "all")
-                    {
-                        model = model.Where(t => t.Manhom == manhom);
-                    }
+                    }                 
 
                     if (ngaynhap_tu.ToString("yyMMdd") != "010101")
                     {
@@ -568,8 +550,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
             }
         }
 
-        [Route("GiaVatLieuXayDungCt/Edit")]
-        [HttpPost]
+        [HttpPost("GiaVatLieuXayDungCt/Edit")]
         public JsonResult EditCt(int Id)
         {
             var model = _db.GiaVatLieuXayDungCt.FirstOrDefault(p => p.Id == Id);
@@ -578,16 +559,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
             {
                 List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
                 string result = "<div class='modal-body' id='edit_thongtin'>";
-
+                result += "<div class='row'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đối tượng</label>";
-                result += "<label>" + model.Ten + "</label>";
+                result += "<label>Mô tả</label>";
+                result += "<label class='form-control'>" + model.Ten + "</label>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                result += "<label >Kiểu in hiển thị: </label>";
                 result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
                 result += "<option value='Chữ in hoa'" + (list_style.Contains("Chữ in hoa") ? "selected" : "") + ">Chữ in hoa</option >";
                 result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
@@ -595,11 +576,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 result += "</select>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='row text-left'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá vật liệu xây dựng (đồng)</label>";
                 result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "</div>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -635,7 +616,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
         public string GetDataCt(string Mahs)
         {
-            var model = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs).ToList();
+            var model = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs);
 
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";

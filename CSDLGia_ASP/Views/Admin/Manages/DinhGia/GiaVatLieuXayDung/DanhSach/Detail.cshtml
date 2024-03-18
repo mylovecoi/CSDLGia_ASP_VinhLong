@@ -4,6 +4,7 @@
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 }
 
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin chi tiết</label>
 </div>
@@ -17,7 +18,7 @@
                     <th>Danh mục vật liệu </th>
                     <th width="2%">Đơn vị tính</th>
                     <th width="15%">Tiêu chuẩn</th>
-                    <th width ="5%">Đơn giá</th>
+                    <th width="5%">Đơn giá</th>
                     <th>Ghi chú</th>
                     <th width="5%">Thao tác</th>
                 </tr>
@@ -37,8 +38,8 @@
                             <td style="text-align: right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Gia)</td>
                             <td style="text-align: left; @HtmlStyle">@item.GhiChu</td>
                             <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
-                                    onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
+                                <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                        onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                             </td>
@@ -53,7 +54,7 @@
 
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
@@ -74,12 +75,12 @@
     </div>
 </div>
 <script>
-    function SetEdit(id_edit) {
+    function SetEdit(id) {
         $.ajax({
             url: '/GiaVatLieuXayDungCt/Edit',
             type: 'POST',
             data: {
-                Id: id_edit
+                Id: id
             },
             dataType: 'JSON',
             success: function (data) {
@@ -93,7 +94,7 @@
                 }
             }
         })
-    }
+    }        
 
     function SetUpdate() {
         var gia = $('#gia_edit').val().replace(',', '');
@@ -102,7 +103,7 @@
             type: 'POST',
             data: {
                 Gia: gia,
-                Style: $('#style_edit').val()
+                Style: $('#style_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

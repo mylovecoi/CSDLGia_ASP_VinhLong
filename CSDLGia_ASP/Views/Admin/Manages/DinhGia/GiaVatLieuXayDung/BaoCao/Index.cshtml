@@ -1,11 +1,8 @@
 ﻿@{
     DateTime nowDate = DateTime.Now;
-    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-    var nhomtn = (IEnumerable<GiaVatLieuXayDungNhom>)ViewData["NhomTn"];
-    var nam_start = DateTime.Now.Year - 7;
-    var nam_stop = DateTime.Now.Year + 1;
-    var nam = ViewData["Nam"].ToString();
+   
+    var HoSos = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>)ViewData["HoSos"];
+  
 }
 
 @section custom_style{
@@ -73,7 +70,7 @@
     </div>
 
     <!--Report Modal!-->
-    <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @* <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form asp-controller="GiaVatLieuXayDungBc" asp-action="Bc1" target="_blank" id="frm_report">
                 <div class="modal-content">
@@ -85,26 +82,14 @@
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group fv-plugins-icon-container">
-                                    <label style="font-weight: bold">Phân nhóm tài nguyên</label>
-                                    <select class="form-control" id="manhom" name="manhom">
-                                    @foreach (var item in nhomtn)
-                                    {
-                                        <option value="@item.Manhom">@item.Tennhom</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
+                    <div class="modal-body">                        
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Năm liền kề*</label>
+                                <label>QĐ so sánh:</label>
                                 <select class="form-control" id="namlk" name="namlk">
-                                    @for (var i = nam_start; i <= nam_stop; i++)
+                                    @foreach (var hs1 in HoSos)
                                     {
-                                    <option value="@i">@i</option>
+                                    <option value="@hs1.Mahs">Số QĐ:@hs1.Soqd - @hs1.Cqbh </option>
                                     }
                                 </select>
                             </div>
@@ -113,10 +98,10 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Năm báo cáo*</label>
                                 <select class="form-control" id="nambc" name="nambc">
-                                    @for (var i = nam_start; i <= nam_stop; i++)
-                                    {
-                                        <!option value="@i" @((string)nam == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
-                                    }
+                                @foreach (var hs2 in HoSos)
+                                {
+                                    <option value="@hs2.Mahs">Số QĐ:@hs2.Soqd - @hs2.Cqbh </option>
+                                }
                                 </select>
                             </div>
                         </div>
@@ -128,5 +113,5 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> *@
 </div>

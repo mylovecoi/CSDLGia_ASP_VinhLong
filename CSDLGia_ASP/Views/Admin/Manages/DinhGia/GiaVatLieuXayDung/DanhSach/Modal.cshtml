@@ -19,7 +19,7 @@
                 <hr />
                 <div class="modal-body">
                     <div class="row">
-                        <div hidden class="col-xl-12">
+                        <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị báo cáo</label>
                                 <select id="MadvBc" name="MadvBc" class="form-control">
@@ -34,7 +34,6 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option >--Chọn--</option>
                                     @foreach (var nhom in nhomtn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
