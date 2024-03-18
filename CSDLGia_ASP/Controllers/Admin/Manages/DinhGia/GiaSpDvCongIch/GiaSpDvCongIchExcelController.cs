@@ -125,6 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                 Mucgiaden = worksheet.Cells[row, 7].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString().Trim()) : 0,
                                 Mucgia3 = worksheet.Cells[row, 8].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString().Trim()) : 0,
                                 Mucgia4 = worksheet.Cells[row, 9].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value.ToString().Trim()) : 0,
+                                Sapxep = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,
 
                             });
                         }

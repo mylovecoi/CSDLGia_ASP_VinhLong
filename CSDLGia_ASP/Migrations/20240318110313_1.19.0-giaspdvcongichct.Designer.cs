@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240318110313_1.19.0-giaspdvcongichct")]
+    partial class _1190giaspdvcongichct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6899,7 +6901,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Mucgiatu")
                         .HasColumnType("float");
 
-                    b.Property<double>("Sapxep")
+                    b.Property<double>("SapXep")
                         .HasColumnType("float");
 
                     b.Property<string>("Ten")
