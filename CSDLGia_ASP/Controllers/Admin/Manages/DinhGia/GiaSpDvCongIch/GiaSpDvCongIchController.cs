@@ -186,7 +186,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     // Xử lý phần Forech theo mã nhóm khi chọn
                     var groupmanhom1 = _db.GiaSpDvCongIchNhom.Select(item => item.Manhom).ToList();
                     var groupmanhom2 = _db.GiaSpDvCongIchNhom.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).ToList();
-
                     List<string> groupmanhom;
 
                     if (Manhom != "all")
@@ -352,8 +351,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_tt";
-                    var groupmanhom = _db.GiaSpDvCongIchCt.Select(item => item.Manhom).Distinct().ToList();
+
+                    var groupmanhom = _db.GiaSpDvCongIchCt.Where(t=>t.Mahs == Mahs).Select(item => item.Manhom).Distinct().ToList();
                     ViewData["GroupMaNhom"] = groupmanhom;
+
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/Modify.cshtml", model);
 
                 }
