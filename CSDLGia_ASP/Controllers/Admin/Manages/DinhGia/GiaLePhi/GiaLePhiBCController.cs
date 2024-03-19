@@ -56,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("GiaLePhi/BaoCao/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -74,6 +74,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                  });
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
@@ -94,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("GiaLePhi/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -104,6 +106,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                             
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Chitiet"] = _db.GiaPhiLePhiCt;
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";

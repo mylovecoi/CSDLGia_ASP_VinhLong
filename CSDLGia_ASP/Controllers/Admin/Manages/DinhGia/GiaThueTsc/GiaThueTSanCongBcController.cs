@@ -49,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
         [Route("BaoCaoDgThueTsc/Bc1")]
         [HttpPost]
-        public IActionResult Bc(DateTime tungay, DateTime denngay, string Madv)
+        public IActionResult Bc(DateTime tungay, DateTime denngay, string Madv, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -92,6 +92,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp định giá thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtsc";

@@ -26,6 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 {
 
                     ViewData["Nam"] = DateTime.Now.Year;
+
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
@@ -46,7 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("BaoCaoDgHhDvCn/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -56,6 +57,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCn.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
@@ -76,7 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("BaoCaoDgHhDvCn/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -85,6 +88,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCn.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["ct"] = _db.GiaHhDvCnCt.ToList();
                     ViewData["Title"] = "Báo cáo chi tiết giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                     ViewData["MenuLv1"] = "menu_giakhac";

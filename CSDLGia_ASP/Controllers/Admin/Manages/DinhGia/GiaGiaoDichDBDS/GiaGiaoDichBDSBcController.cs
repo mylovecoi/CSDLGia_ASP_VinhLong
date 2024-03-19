@@ -27,6 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     var nhomtn = _db.GiaGiaoDichBDSNhom.Where(t => t.Theodoi == "TD").ToList();
 
                     ViewData["NhomTn"] = nhomtn;
+
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá nhà cho thuê sinh viên";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -48,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
         [Route("GiaGiaoDichBDS/Bc1")]
         [HttpPost]
-        public IActionResult Bc1(string manhom, int namlk, int nambc)
+        public IActionResult Bc1(string manhom, int namlk, int nambc, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -63,6 +64,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     ViewData["TenNhom"] = _db.GiaGiaoDichBDSNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá nhà cho thuê sinh viên";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";

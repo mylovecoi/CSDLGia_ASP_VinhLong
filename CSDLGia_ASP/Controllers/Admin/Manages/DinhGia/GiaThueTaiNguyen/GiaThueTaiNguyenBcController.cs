@@ -48,7 +48,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
         [Route("GiaThueTaiNguyen/Bc1")]
         [HttpPost]
-        public IActionResult Bc1(string manhom, int namlk, int nambc)
+        public IActionResult Bc1(string manhom, int namlk, int nambc, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -169,7 +169,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         }
 
                     }
-
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["TenNhom"] = _db.GiaThueTaiNguyenNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;

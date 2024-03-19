@@ -50,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
         // GiaDvGdDtDm
         [Route("BaoCaoDinhGiaGdDtBcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -59,6 +59,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
+
                     ViewData["Title"] = "Báo cáo tổng hợp giá dịch vụ đào tạo";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dggddt";
@@ -79,7 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
         [Route("BaoCaoDinhGiaGdDt/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -101,6 +104,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
+
                     ViewData["ct"] = modelct;
                     ViewData["Title"] = "Báo cáo chi tiết giá dịch vụ đào tạo";
                     ViewData["MenuLv1"] = "menu_dg";

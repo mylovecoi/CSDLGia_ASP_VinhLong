@@ -48,7 +48,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
     
         [Route("BaoCaoGiaDatDiaBan/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -65,6 +65,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                  });
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất địa bàn";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -85,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("BaoCaoGiaDatDiaBan/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -94,6 +96,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["ct"] = _db.GiaDatDiaBanCt;
                     ViewData["Title"] = "Báo cáo chi tiết giá đất địa bàn";
                     ViewData["MenuLv1"] = "menu_giadat";
