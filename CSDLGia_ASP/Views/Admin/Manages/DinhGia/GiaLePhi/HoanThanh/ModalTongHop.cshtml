@@ -1,0 +1,128 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    DateTime currentDate = DateTime.Today;
+    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
+    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi>
+
+<!--Tổng hợp Modal-->
+<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaLePhiHt" asp-action="TongHop" method="post" target="_blank" id="frm_TongHopLePhi" name="frm_TongHopLePhi">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Tổng hợp hồ sơ giá
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Ngày từ </label>
+                                <input type="date" class="form-control" id="ngaytu" name="ngaytu" value="@FromDate" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Ngày đến: </label>
+                                <input type="date" class="form-control" id="ngayden" name="ngayden" value="@ToDate" onchange="GetList()" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Thông tin hồ sơ: </label><br />
+                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Chức danh ký:</label>
+                                <input type="text" class="form-control" id="chucdanhky" name="chucdanhky" value="Thủ trưởng đơn vị" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Họ và tên người ký</label>
+                                <input type="text" class="form-control" id="hotennguoiky" name="hotennguoiky" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Tổng hợp</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function GetList() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+
+                $.ajax({
+                    url: '/GiaLePhiHt/GetListHoSo',
+                    type: 'POST',
+                    data: {
+                        ngaytu: fromDate,
+                        ngayden: toDate,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Thành công!");
+                            $('#MaHsTongHop').replaceWith(data.message);
+                        } else {
+                            toastr.error(data.message, "Lỗi!!!");
+                        }
+                    }
+                });
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+    }
+
+    function CreateTongHop() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("frm_TongHopLePhi");
+                form.submit();
+                location.reload();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+
+    }
+</script>
