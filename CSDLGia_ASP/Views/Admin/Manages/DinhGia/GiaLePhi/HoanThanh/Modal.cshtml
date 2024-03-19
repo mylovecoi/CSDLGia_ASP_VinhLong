@@ -2,10 +2,10 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var record_id = 1;
 }
-<!--Trả lại Modal-->
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi>
 
+<!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="GiaLePhiHt" asp-action="TraLai" id="frm_tralai">
@@ -14,7 +14,6 @@
                     <h3 class="card-label">
                         Lý do trả lại hồ sơ*
                     </h3>
-
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -38,43 +37,6 @@
     </div>
 </div>
 
-<!--Tổng hợp Modal-->
-<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form asp-controller="GiaLePhiHt" asp-action="TongHop" method="post">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Tổng hợp hồ sơ giá
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Ngày từ </label>
-                                <input type="date" class="form-control" id="ngaytu" name="ngaytu" />                                   
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Ngày đến: </label>
-                                <input type="date" class="form-control" id="ngayden" name="ngayden" />                                   
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -175,12 +137,10 @@
         </div>
     </div>
 </div>
-
-<script>
+<script>  
     function SetComplete(mahs) {
         document.getElementById("mahs_complete").value = mahs;
     }
-
     function TraLai(id, madv) {
         document.getElementById("id_tralai").value = id;
         document.getElementById("madv_tralai").value = madv;

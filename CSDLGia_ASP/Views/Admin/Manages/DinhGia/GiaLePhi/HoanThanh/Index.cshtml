@@ -14,6 +14,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
@@ -104,7 +105,6 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
-
                                 @if (dsdonvi != null)
                                 {
                                     @if (item.Level == "ADMIN")
@@ -152,9 +152,8 @@
                                     }
                                 }
                             </td>
-
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-center danger">@item.Mota</td>
+                            <td class="text-left danger">@item.Mota</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
@@ -182,7 +181,6 @@
                                     <br />
                                 }
                             </td>
-
                             <td>
                                 <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
                                    target="_blank">
@@ -273,4 +271,7 @@
     </div>
 </div>
 
+
+
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/ModalTongHop.cshtml")
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Modal.cshtml")

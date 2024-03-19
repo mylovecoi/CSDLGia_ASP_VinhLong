@@ -1524,5 +1524,30 @@ namespace CSDLGia_ASP.Helper
                 return HtmlStyle;
             }
         }
+
+        public static string FomartMathAbsNumber(double number)
+        {
+            string formatted = "";
+            if (Math.Abs(number) == (long)number) // Kiểm tra số có phải là số nguyên không
+            {
+                formatted = Math.Abs(number).ToString("#,##0");
+            }
+            else
+            {
+                formatted = Math.Abs(number).ToString("#,##0.00");
+                if (formatted.EndsWith(".00"))
+                {
+                    formatted = formatted.Substring(0, formatted.Length - 3);
+                }
+            }
+            if (number < 0)
+            {
+                return "(" + formatted + ")";
+            }
+            else
+            {
+                return formatted;
+            }
+        }
     }
 }

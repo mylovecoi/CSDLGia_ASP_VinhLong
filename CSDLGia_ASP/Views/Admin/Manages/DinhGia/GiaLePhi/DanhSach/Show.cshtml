@@ -20,7 +20,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -37,13 +37,11 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th style="text-align:center; font-weight:bold"> STT hiển thị</th>
+            <th style="text-align:center; font-weight:bold" width="5%">STT</th>
             <th style="text-align:center; font-weight:bold">Tên phí , lệ phí</th>
             <th style="text-align:center; font-weight:bold">Phần trăm</th>
             <th style="text-align:center; font-weight:bold">Mức thu</th>
-
         </tr>
-
     </thead>
     <tbody>
         @if (Model != null)
@@ -57,7 +55,7 @@
                         <td style="text-align:center;@HtmlStyle">@item.STTHienthi</td>
                         <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
                         <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                        <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
+                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
                     </tr>
                 }
 
