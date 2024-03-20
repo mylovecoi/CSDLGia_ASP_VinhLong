@@ -76,6 +76,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
 
         [NotMapped]
         public double Mucthuden { get; set; }
+        [NotMapped]
+        public string TenDonVi { get; set; }    
 
     }
 }

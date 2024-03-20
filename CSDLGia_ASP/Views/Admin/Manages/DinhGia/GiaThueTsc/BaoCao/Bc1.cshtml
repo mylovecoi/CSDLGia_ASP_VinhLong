@@ -59,21 +59,19 @@
                     <td style="text-align: center"> @item.Tentaisan </td>
                     <td style="text-align: center"> @item.Diachi </td>
                     <td style="text-align: center"> @item.Soqdpd </td>
-                    <td style="text-align: center"> @item.Thoigianpd </td>
+                    <td style="text-align: center"> @Helpers.ConvertDateToStr(item.Thoigianpd)</td>
                     <td style="text-align: center"> @item.Soqddg </td>
-                    <td style="text-align: center"> @item.Thoigiandg </td>
+                    <td style="text-align: center"> @Helpers.ConvertDateToStr(item.Thoigiandg) </td>
 
                     <td style="text-align: center">  </td>
 
                     <td style="text-align: center"> @item.Sotienthuenam </td>
                     <td style="text-align: center"> @item.Hdthue </td>
                     <td style="text-align: center"> @item.Ththue </td>
-                    <td style="text-align: center"> @item.Thuetungay <br> @item.Thuedenngay </td>
+                    <td style="text-align: center"> @Helpers.ConvertDateToStr(item.Thuetungay) <br> @Helpers.ConvertDateToStr(item.Thuedenngay) </td>
                     <td style="text-align: center">  </td>
-
                 </tr>
             }
-
             <tr>
                 <td></td>
                 <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>

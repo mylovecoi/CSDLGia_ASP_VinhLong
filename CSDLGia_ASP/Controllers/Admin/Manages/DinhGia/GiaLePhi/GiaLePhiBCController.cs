@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
@@ -40,6 +41,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_bc";
+                    ViewData["DanhSachHoSo"] = _db.GiaPhiLePhi.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/Index.cshtml");
                 }
                 else
@@ -56,30 +58,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("GiaLePhi/BaoCao/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkbc", "Index"))
                 {
 
-                    var model = (from pl in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
-                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi
-                                 {
-                                     Id = pl.Id,
-                                     Mahs = pl.Mahs,
-                                     Soqd = pl.Soqd,
-                                     Thoidiem = pl.Thoidiem,
-                                 });
+                    var model =(from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi { 
+                                    TenDonVi = donvi.TenDv,
+                                    Mahs = hoso.Mahs,
+                                    Soqd = hoso.Soqd,                                   
+
+                                });
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
-                    ViewData["tenthutruong"] = tenthutruong;
-                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_bc";
+
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -96,23 +98,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("GiaLePhi/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
+        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkbc", "Index"))
                 {
-                    var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                            
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
-                    ViewData["tenthutruong"] = tenthutruong;
-                    ViewData["chucvu"] = chucvu;
-                    ViewData["Chitiet"] = _db.GiaPhiLePhiCt;
+                    var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaHsTongHop != "all")
+                    {
+                        model = model.Where(t => t.Mahs == MaHsTongHop);
+                    }
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
+                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
+                    var model_ct = _db.GiaPhiLePhiCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+                    ViewData["HoSoCt"] = model_ct;
+                    ViewData["DonVis"] = model_donvi;
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_dglp";
-                    ViewData["MenuLv3"] = "menu_dglp_bc";
+                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/BcCT.cshtml", model);
                 }
                 else

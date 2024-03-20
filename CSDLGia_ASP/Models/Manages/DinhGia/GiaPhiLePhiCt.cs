@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -24,6 +25,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int STTSapxep { get; set; }
         public string STTHienthi { get; set; }
         public string Style { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }       
+        [NotMapped]
+        public string MoTa { get; set; }
+        [NotMapped]
+        public string TenDv { get; set; }
+        
 
 
     }

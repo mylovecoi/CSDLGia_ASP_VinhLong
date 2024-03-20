@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -525,9 +526,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
                 {
 
-                    ViewData["GiaPhiLePhiDm"] = _db.GiaPhiLePhiDm.ToList();
+                    ViewData["GiaPhiLePhiNhom"] = _db.GiaPhiLePhiNhom;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["DanhSachHoSo"] = _db.GiaPhiLePhi.Where(t => t.Thoidiem.Year == DateTime.Now.Year && t.Trangthai == "HT");
 
                     ViewData["Title"] = " Thông tin hồ sơ lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
@@ -546,47 +548,58 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("DinhGiaLePhi/Result")]
         [HttpPost]
-        public IActionResult Result(double beginPrice, double endPrice, DateTime beginTime, DateTime endTime, string tsp, string dv)
+        public IActionResult Result(double beginPrice, double endPrice, DateTime beginTime, DateTime endTime, string tsp, string dv, string mahs, string Ptcp)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Edit"))
                 {
+
                     var model_join = from dgct in _db.GiaPhiLePhiCt
                                      join dg in _db.GiaPhiLePhi on dgct.Mahs equals dg.Mahs
-                                     select new GiaPhiLePhi
+                                     join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
+                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt
                                      {
-                                         Id = dg.Id,
-                                         Mahs = dg.Mahs,
+                                         TenDv = donvi.TenDv,
+                                         Mahs = dgct.Mahs,
                                          Madv = dg.Madv,
-                                         Madiaban = dg.Madiaban,
-                                         Macqcq = dg.Macqcq,
-                                         Thoidiem = dg.Thoidiem,
-                                         Mota = dg.Mota,
-                                         Phanloai = dgct.Phanloai,
-                                         Tennhom = dgct.Ptcp,
+                                         ThoiDiem = dg.Thoidiem,
+                                         MoTa = dg.Mota,
+                                         SoQD = dg.Soqd,
+                                         Ptcp = dgct.Ptcp,
+                                         Dvt = dgct.Dvt,
                                          Phantram = dgct.Phantram,
-                                         Mucthutu = dgct.Mucthutu,
-                                         Mucthuden = dgct.Mucthuden,
+                                         Giatu = dgct.Giatu,
+                                         Phanloai = dgct.Phanloai,
+                                         Mucthutu = dgct.Mucthutu
                                      };
+                    //select new CSD
+                    //{
+                    //    Id = dg.Id,
+                    //    Mahs = dg.Mahs,
+                    //    Madv = dg.Madv,
+                    //    Madiaban = dg.Madiaban,
+                    //    Macqcq = dg.Macqcq,
+                    //    Thoidiem = dg.Thoidiem,
+                    //    Mota = dg.Mota,
+                    //    Phanloai = dgct.Phanloai,
+                    //    Tennhom = dgct.Ptcp,
+                    //    Phantram = dgct.Phantram,
+                    //    Mucthutu = dgct.Mucthutu,
+                    //    Mucthuden = dgct.Mucthuden,
+                    //};
+                    model_join = model_join.Where(t=>t.ThoiDiem >= beginTime && t.ThoiDiem <= endTime);
                     if (tsp != "All")
                     {
-                        model_join = model_join.Where(t => t.Manhom == tsp);
-                    }
+                        model_join = model_join.Where(t => t.Phanloai == tsp);
+                    }                    
                     if (dv != "All")
                     {
                         model_join = model_join.Where(t => t.Madv == dv);
-                    }
-                    if (beginTime.ToString("yyMMdd") != "010101")
-                    {
-                        model_join = model_join.Where(t => t.Thoidiem >= beginTime);
-                    }
-                    if (endTime.ToString("yyMMdd") != "010101")
-                    {
-                        model_join = model_join.Where(t => t.Thoidiem <= endTime);
-                    }
+                    }                    
                     if (beginPrice != 0)
                     {
                         model_join = model_join.Where(t => t.Mucthutu >= beginPrice);
@@ -595,8 +608,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     {
                         model_join = model_join.Where(t => t.Mucthuden <= endPrice);
                     }
-
-                    ViewData["GiaPhiLePhiDm"] = _db.GiaPhiLePhiDm.ToList();
+                    if(mahs != "all")
+                    {
+                        model_join = model_join.Where(t => t.Mahs == mahs);
+                    }
+                    if (!string.IsNullOrEmpty(Ptcp))
+                    {
+                        model_join = model_join.Where(t => t.Ptcp.ToLower().Contains(Ptcp.ToLower()));
+                    }
+                    ViewData["GiaPhiLePhiNhom"] = _db.GiaPhiLePhiNhom.ToList();
                     ViewData["dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
 
 
