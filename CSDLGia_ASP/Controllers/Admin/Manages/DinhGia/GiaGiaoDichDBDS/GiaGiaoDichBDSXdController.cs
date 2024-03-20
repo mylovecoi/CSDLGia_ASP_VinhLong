@@ -522,5 +522,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         ketthuc:
             return madv;
         }
+ 
+        public IActionResult TongHop(DateTime tungay, DateTime denngay)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.xetduyet", "Index"))
+                {
+                    ViewData["Title"] = "Tổng hợp bảng giá giao dịch bất động sản";
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/TongHop.cshtml");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+
+        }
     }
 }

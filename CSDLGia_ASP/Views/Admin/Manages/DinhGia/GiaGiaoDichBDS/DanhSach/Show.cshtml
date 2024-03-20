@@ -2,6 +2,7 @@
     Layout = "_LayoutReports";
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var record_id = 1;
 }
 
 <br />
@@ -33,23 +34,23 @@
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" dulieubang">
+    <thead>
 
-    <tr>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Phân loại bất động sản</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="50%">Phân loại bất động sản</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
-    </tr>
-    <tr>
-        <td style="text-align: center;">@Model.Ten</td>
-        <td style="text-align: center;">@Model.Dvt</td>
-        <td style="text-align: center;">@Helpers.ConvertDbToStr(Model.Gia)</td>
-        <th style="text-align: center;">Phân loại bất động sản</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="4%">Đơn vị tính</th>
-        <th style="text-align: center; font-weight: bold" rowspan="2" width="10%">Giá giao dịch (đồng)</th>
-    </tr>
+        <tr>
+            <th style="text-align:center" rowspan="2">STT</th>
+            <th style="text-align:center" rowspan="2">Loại bất động sản</th>
+            <th style="text-align:center" rowspan="2">Đơn vị tính</th>
+            <th style="text-align:center" colspan="4">Mức giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align:center">@(record_id++)</td>
+            <td style="text-align:center">Nhà trong ngõ</td>
+            <td style="text-align:center">m2</td>
+            <td style="text-align:center">30.0000.000</td>
 
+        </tr>
+    </tbody>
 </table>
