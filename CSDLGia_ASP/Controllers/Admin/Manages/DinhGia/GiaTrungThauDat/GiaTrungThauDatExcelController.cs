@@ -28,22 +28,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
-                    { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
+                        MaDv = Madv,
                     };
+
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ giá xây dựng mới";
+                    ViewData["Title"] = "Thông tin hồ sơ giá trúng thầu đất";
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/Excels/Excel.cshtml", model);
 
                 }

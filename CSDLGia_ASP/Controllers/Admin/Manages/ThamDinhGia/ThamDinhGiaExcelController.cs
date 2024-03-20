@@ -18,26 +18,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.ThamDinhGia
         {
             _db = db;
         }
+
+        [HttpGet("ThamDinhGia/NhanExcel")]
         public IActionResult Index(string Madv)
         {
-            var model = new KkGiaXmTxdCt
+            var model = new CSDLGia_ASP.ViewModels.VMImportExcel
             {
-                Tendvcu = "2",
-                Qccl = "3",
-                Dvt = "4",
-                Gialk = 5,
-                Giakk = 6,
-                LineStart = 4,
-                LineStop = 111,
+                LineStart = 2,
+                LineStop = 1000,
                 Sheet = 1,
+                MaDv = Madv,
             };
-
-            ViewData["Madv"] = Madv;
-            ViewData["Title"] = "Nhận dữ liệu file Excel";
-            ViewData["MenuLv1"] = "menu_kknygia";
-            ViewData["MenuLv2"] = "menu_kkgxmtxd";
-            ViewData["MenuLv3"] = "menu_giakk";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Excel.cshtml", model);
+            ViewData["MenuLv1"] = "menu_dg";
+            ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
+            ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+            ViewData["Title"] = "Thông tin hồ sơ thẩm định giá";
+            return View("Views/Admin/Manages/ThamDinhGia/Excels/Excel.cshtml", model);
         }
 
         [HttpPost]
