@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.xaydungmoi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
@@ -63,6 +63,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
                     ViewData["Madv"] = Madv;
+                  
                     ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa dịch vụ khác";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/Excels/Excel.cshtml", model);
 
@@ -182,8 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["MadvBc"] = request.MaDv;
                         ViewData["MattBc"] = request.Matt;
                         ViewData["MadiabanBc"] = request.MadiabanBc;
-                        ViewData["ThangBc"] = DateTime.Now.Month.ToString();
-                        ViewData["NamBc"] = DateTime.Now.Year.ToString();
+                        ViewData["ThangBc"] = request.Thang.ToString();
+                        ViewData["NamBc"] = request.Nam.ToString();
                         ViewData["Mahs"] = model.Mahs;
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
