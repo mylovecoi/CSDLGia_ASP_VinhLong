@@ -28,15 +28,15 @@
                 </h3>
             </div>
             <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
-            <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+            @* <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
                 <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </button>&ensp;
+            </button>&ensp; *@
             <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
                 <i class="la la-lock"></i>Khóa/Mở khóa
             </button>&ensp;
@@ -74,7 +74,7 @@
                         </td>
                         <td>
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Edit"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
                                 data-target="#Edit_Modal" onclick="editId('@item.Id')">
@@ -82,7 +82,7 @@
                                 </button>
                             }
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.danhmuc", "Delete"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
                                 data-target="#Delete_Modal" onclick="getId('@item.Id')">

@@ -43,8 +43,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhà trọ sinh viên
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin nhà trọ sinh viên</span>
+                    Thông tin bất động sản
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin bất động sản</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -68,8 +68,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhà trọ sinh viên
-                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin nhà trọ sinh viên???</span>
+                    Thông tin bất động sản
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin bất động sản???</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -115,7 +115,7 @@
 <script>
     function Store() {
         if ($('#tennhom_create').val().trim() == '') {
-            toastr.error("Tên nhà trọ sinh viên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên bất động sản không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaGiaoDichBDSDm/Store',
@@ -162,7 +162,7 @@
 
     function Update() {
         if ($('#tennhom_edit').val().trim() == '') {
-            toastr.error("Tên nhà trọ sinh viên không được để trống!!!", "Lỗi!");
+            toastr.error("Tên bất động sản không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaGiaoDichBDSDm/Update',
