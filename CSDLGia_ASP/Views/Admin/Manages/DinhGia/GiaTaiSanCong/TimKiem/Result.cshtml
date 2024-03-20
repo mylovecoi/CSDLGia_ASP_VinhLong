@@ -31,13 +31,15 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: center">
                     @foreach (var dv in dsdonvi)
                     {
                         @if (dv.MaDv == item.Madv)
                         {
-                            <td style="text-align: center">@dv.TenDv</td>
+                            @dv.TenDv
                         }
                     }
+                    </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
                     <td style="text-align: center">@item.Tentaisan</td>
