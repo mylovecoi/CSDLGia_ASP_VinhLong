@@ -1,36 +1,35 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 {
-    public class GiaLePhiMoiExcelController : Controller
+    public class PhiLePhiExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaLePhiMoiExcelController(CSDLGiaDBContext db)
+        public PhiLePhiExcelController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [HttpGet("DinhGiaLePhi/NhanExcel")]
+        [HttpGet("PhiLePhi/NhanExcel")]
         public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.philephi.thongtin", "Create"))
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
-                    {                         
+                    {
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
@@ -39,8 +38,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
-                    ViewData["Title"] = "Thông tin hồ sơ giá lệ phí trước bạ";
-                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/Excels/Excel.cshtml", model);
+                    ViewData["Title"] = "Thông tin hồ sơ phí lệ phí";
+                    return View("Views/Admin/Manages/DinhGia/PhiLePhi/Excels/Excel.cshtml", model);
 
                 }
                 else
@@ -62,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             {
                 requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
                 int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
-                var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt>();
+                var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt>();
                 string Mahs = requests.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 using (var stream = new MemoryStream())
                 {
@@ -77,50 +76,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         int line = 1;
                         for (int row = requests.LineStart; row <= requests.LineStop; row++)
                         {
-                            list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt
+                            list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt
                             {
                                 Mahs = Mahs,
                                 Madv = requests.MaDv,
-                                Trangthai = "CXD",
-                                STTSapxep = line,
-                                STTHienthi = worksheet.Cells[row, 1].Value != null ?
-                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                Ptcp = worksheet.Cells[row, 2].Value != null ?
-                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                Phantram = worksheet.Cells[row, 3].Value != null ?
-                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Mucthutu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "")
+                                
 
                             });
                             line = line + 1;
                         }
                     }
                 }
-                _db.GiaPhiLePhiCt.AddRange(list_add);
+                _db.PhiLePhiCt.AddRange(list_add);
                 _db.SaveChanges();
-                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
                 {
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
-                    Mahs = Mahs,                   
+                    Mahs = Mahs,
                 };
-                var modelct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
-                model.GiaPhiLePhiCt = modelct.ToList();
+                var modelct = _db.PhiLePhiCt.Where(t => t.Mahs == Mahs);
+                model.PhiLePhiCt = modelct.ToList();
                 ViewData["Mahs"] = model.Mahs;
                 ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                 ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
-                ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
+                ViewData["Title"] = " Thông tin hồ sơ phí lệ phí";
                 ViewData["MenuLv1"] = "menu_giakhac";
                 ViewData["MenuLv2"] = "menu_dglp";
                 ViewData["MenuLv3"] = "menu_dglp_tt";
-                return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Create.cshtml", model);
+                return View("Views/Admin/Manages/DinhGia/PhiLePhi/DanhSach/Create.cshtml", model);
             }
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
     }
 }

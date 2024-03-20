@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
                 {
-                    var model = new GiaNuocShCt
+                    var model = new GiaHangHoaTaiSieuThiCt
                     {
                        
                         Sheet = 1,

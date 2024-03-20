@@ -28,17 +28,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Create"))
                 {
-                    var model = new GiaXayDungMoiCt
-                    { 
-                        Manhom = "1",
-                        Tennhom = "2",
-                        Ten = "3",
-                        Dvt = "4",
-                        Gia = "5",
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
+                        MaDv = Madv,
                     };
+
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";

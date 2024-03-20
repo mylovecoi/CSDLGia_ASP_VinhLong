@@ -28,14 +28,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Create"))
                 {
-                    var model = new GiaSpDvToiDaCt
-                    { 
-                        Manhom = "1",
-                        Tennhom = "2",
-
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
+                        MaDv = Madv,
                     };
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
