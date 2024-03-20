@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
         [Route("BaoCaoDgrung/BaoCao")]
         [HttpPost]
-        public IActionResult BaoCao(string phanloai, DateTime tungay, DateTime denngay, string Madv)
+        public IActionResult BaoCao(string phanloai, DateTime tungay, DateTime denngay, string Madv, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -116,6 +116,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         {
                             sum_giatri += item.Giatri;
                         }
+
+                        ViewData["tenthutruong"] = tenthutruong;
+                        ViewData["chucvu"] = chucvu;
+
                         ViewData["tungay"] = Helpers.ConvertDateToStr(tungay);
                         ViewData["denngay"] = Helpers.ConvertDateToStr(denngay);
                         ViewData["sum_dientich"] = sum_dientich;
@@ -172,6 +176,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                             sum_giatri += item.Giatri;
                         }
 
+                        ViewData["tenthutruong"] = tenthutruong;
+                        ViewData["chucvu"] = chucvu;
                         ViewData["tungay"] = Helpers.ConvertDateToStr(tungay);
                         ViewData["denngay"] = Helpers.ConvertDateToStr(denngay);
                         ViewData["sum_dientichSd"] = sum_dientichSd;

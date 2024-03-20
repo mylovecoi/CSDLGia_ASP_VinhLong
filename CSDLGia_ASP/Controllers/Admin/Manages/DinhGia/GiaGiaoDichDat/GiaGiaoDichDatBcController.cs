@@ -48,7 +48,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/Bc1")]
         [HttpPost]
-        public IActionResult Bc1(string manhom, int namlk, int nambc)
+        public IActionResult Bc1(string manhom, int namlk, int nambc, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -63,6 +63,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["TenNhom"] = _db.GiaGiaoDichDatNhom.FirstOrDefault(t => t.Manhom == manhom).Tennhom;
                     ViewData["Namlk"] = namlk;
                     ViewData["Nambc"] = nambc;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất giao dịch thực tế trên thị trường";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";

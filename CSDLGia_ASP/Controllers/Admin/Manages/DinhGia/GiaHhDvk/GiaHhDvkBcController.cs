@@ -56,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/Bc1")]
         [HttpPost]
-        public IActionResult Bc1(string dv, DateTime tungay, DateTime denngay, string matt)
+        public IActionResult Bc1(string dv, DateTime tungay, DateTime denngay, string matt, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -67,6 +67,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                                 && x.Trangthai == "HT").Select(x => x.Mahs).ToArray();
 
                     var getHsCt = _db.GiaHhDvkCt.Where(x => getHs.Contains(x.Mahs) && x.Gia != 0);
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "";
@@ -86,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         }
         [Route("GiaHhDvk/Bc2")]
         [HttpPost]
-        public IActionResult Bc2(string kybc, string kybclk)
+        public IActionResult Bc2(string kybc, string kybclk, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -107,6 +109,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         }
                     }
                     _db.SaveChanges();
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
                     ViewData["Title"] = "Báo cáo tổng hợp";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "";

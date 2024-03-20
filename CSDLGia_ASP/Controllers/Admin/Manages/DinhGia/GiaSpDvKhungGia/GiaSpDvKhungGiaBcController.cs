@@ -45,16 +45,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
    
         [Route("BaoCaoDgSpDvKhungGia/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.baocao", "Index"))
                 {
-
                     var model = _db.GiaSpDvKhungGia.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
+                    ViewData["tenthutruong"] = tenthutruong;
+                    ViewData["chucvu"] = chucvu;
+
                     ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ khung giá";
                     ViewData["MenuLv1"] = "menu_spdvkhunggia";
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_bc";
