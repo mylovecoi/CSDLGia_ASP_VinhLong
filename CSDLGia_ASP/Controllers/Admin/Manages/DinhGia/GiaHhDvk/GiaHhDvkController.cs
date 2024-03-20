@@ -603,8 +603,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     }
                     else
                     {
-                        ViewData["Madv"] = "";
+                        ViewData["Madv"] = "all";
                     }
+                    ViewData["DanhSachHoSo"] = _db.GiaHhDvk.Where(t => t.Thoidiem.Year == DateTime.Now.Year && t.Trangthai == "HT");
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Nhomhh"] = _db.GiaHhDvkNhom;
@@ -628,16 +630,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string matt, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        public IActionResult Result(string madv, string matt, DateTime ngaynhap_tu, DateTime ngaynhap_den,
+                                    double gia_tu, double gia_den, string mahs, string Tenhhdv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
                 {
-                    var model = (from ct in _db.GiaHhDvkCt
-                                 join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
+                    var model = (from ct in _db.GiaHhDvkCt                                
+                                 join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs                                 
+                                 join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
                                  join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
-                                 join dm in _db.GiaHhDvkDm on ct.Manhom equals dm.Manhom
                                  join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
                                  select new GiaHhDvkCt
                                  {
@@ -656,7 +659,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Thoidiem = kk.Thoidiem,
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
-                                 });
+                                 });                   
 
                     if (madv != "all")
                     {
@@ -682,6 +685,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     if (gia_den > 0)
                     {
                         model = model.Where(t => t.Gia <= gia_den);
+                    }
+
+                    if(mahs!= "all")
+                    {
+                        model = model.Where(t=>t.Mahs == mahs);
+                    }
+                    if (!string.IsNullOrEmpty(Tenhhdv))
+                    {
+                        model = model.Where(t => t.Tenhhdv.ToLower().Contains(Tenhhdv.ToLower()));
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin giá hàng hóa dịch vụ chi tiết";
@@ -873,6 +885,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
             return result;
 
+        }
+
+        [HttpPost("GiaHhDvkCt/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaHhDvk.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
         }
     }
 }

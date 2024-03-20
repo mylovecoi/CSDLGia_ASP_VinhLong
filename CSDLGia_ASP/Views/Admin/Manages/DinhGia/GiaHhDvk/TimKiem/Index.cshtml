@@ -2,6 +2,12 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var nhomhh = (IEnumerable<GiaHhDvkNhom>)ViewData["Nhomhh"];
+    DateTime nowDate = DateTime.Now;
+    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+    string FromDate = firstDayCurrentYear.ToString("yyyy-MM-dd");
+    string ToDate = lastDayCurrentYear.ToString("yyyy-MM-dd");
+    var DanhSachHoSo = (IEnumerable<GiaHhDvk>)ViewData["DanhSachHoSo"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -31,7 +37,7 @@
             </div>
         </div>
         <!--begin::Form-->
-        <form asp-controller="GiaHhDvk" asp-action="Result" method="post" id="frm_giahhdvk_timkiem">
+    <form asp-controller="GiaHhDvk" asp-action="Result" method="post" id="frm_search">
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-6">
@@ -58,7 +64,7 @@
                     <div class="form-group">
                         <label>Nhóm hàng hóa</label>
                         <select class="form-control select2basic" id="matt" name="matt">
-                            <option value="all">--Tất cả các đối tượng--</option>
+                            <option value="all">--Tất cả --</option>
                             @foreach (var nhom in nhomhh)
                             {
                                 <option value="@nhom.Matt">@nhom.Tentt</option>
@@ -68,55 +74,109 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-3">
                     <div class="form-group">
                         <label>Thời gian nhập từ</label>
-                        <input type="date" id="ngaynhap_tu" name="ngaynhap_tu" class="form-control" />
+                        <input type="date" id="ngaynhap_tu" name="ngaynhap_tu" class="form-control" value="@FromDate" onchange="GetList()" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Thời gian nhập đến</label>
+                        <input type="date" id="ngaynhap_den" name="ngaynhap_den" class="form-control" value="@ToDate" onchange="GetList()" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Thời gian nhập đến</label>
-                        <input type="date" id="ngaynhap_den" name="ngaynhap_den" class="form-control" />
+                        <label style="font-weight:bold;">Thông tin quyết định</label>
+                        <select class="form-control" id="mahs" name="mahs">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var item in DanhSachHoSo)
+                            {
+                                <option value="@item.Mahs">Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)</option>
+                            }
+                        </select>
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-3">
                     <div class="form-group">
                         <label>Giá trị từ</label>
                         <input type="text" id="gia_tu" name="gia_tu" class="form-control money" />
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-3">
                     <div class="form-group">
                         <label>Giá trị đến</label>
                         <input type="text" id="gia_den" name="gia_den" class="form-control money" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tên hàng hóa dịch vụ:</label>
+                        <input type="text" id="Tenhhdv" name="Tenhhdv" class="form-control" />
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValGiaHhDvk()"><i class="la la-check"></i>Tìm kiếm</button>
+            <button type="button" class="btn btn-primary mr-2" onclick="Search()"><i class="la la-search"></i>Tìm kiếm</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
 <script>
-    function ValGiaHhDvk() {
-        var date_tu = new Date($('#ngaynhap_tu').val());
-        var date_den = new Date($('#ngaynhap_den').val());
-        var date_tu_int = date_tu.getTime();
-        var date_den_int = date_den.getTime();
-
-        if (date_tu_int > date_den_int) {
-            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
+    function GetList() {
+        var fromDate = document.getElementById("ngaynhap_tu").value;
+        var toDate = document.getElementById("ngaynhap_den").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
         } else {
-            if ($('#gia_tu').val() > $('#gia_den').val()) {
-                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+
+                $.ajax({
+                    url: '/GiaHhDvkCt/GetListHoSo',
+                    type: 'POST',
+                    data: {
+                        ngaytu: fromDate,
+                        ngayden: toDate,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Thành công!");
+                            $('#mahs').replaceWith(data.message);
+                        } else {
+                            toastr.error(data.message, "Lỗi!!!");
+                        }
+                    }
+                });
             } else {
-                document.getElementById("frm_giahhdvk_timkiem").submit();
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
             }
         }
+    }
+
+    function Search() {
+        var fromDate = document.getElementById("ngaynhap_tu").value;
+        var toDate = document.getElementById("ngaynhap_den").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("frm_search");
+                form.submit();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+
     }
 </script>
 @section Scripts{

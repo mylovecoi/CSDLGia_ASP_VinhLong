@@ -134,7 +134,7 @@
 
     <div class="card-footer" style="text-align:center">
         <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-        <button type="button" onclick="CreateTongHop()" class="btn btn-primary mr-2"><i class="la la-search"></i>Tìm kiếm </button>
+        <button type="button" onclick="Search()" class="btn btn-primary mr-2"><i class="la la-search"></i>Tìm kiếm </button>
     </div>
 </form>
 
@@ -173,7 +173,7 @@
         }
     }
 
-    function CreateTongHop() {
+    function Search() {
         var fromDate = document.getElementById("beginTime").value;
         var toDate = document.getElementById("endTime").value;
         if (fromDate === "" || toDate === "") {
