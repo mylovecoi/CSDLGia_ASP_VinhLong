@@ -45,22 +45,27 @@
         <th style="text-align: center">Đơn vị tính</th>
         <th style="text-align: center">Giá bán</th>
         <th style="text-align: center">Giá thuê</th>
-       
-    </tr>
-    <tr>
-        <td style="text-align:center">
-            @foreach (var tn in dmtmnxh)
-            {
-                @if (Model.Maso == tn.Maso)
-                {
-                    <span>@tn.Tennha</span>
-                }
-            }
-        </td>
-        <td style="text-align:center">@Model.Dvthue</td>
-        <td style="text-align:center">@Model.Dvt</td>
-        <td style="text-align:center">@Model.Dongia</td>
-        <td style="text-align:center">@Model.Dongiathue</td>
-    </tr>
 
+    </tr>
+    @if (Model != null)
+    {
+        @foreach (var item in Model.GiaThueMuaNhaXhCt)
+        {
+            <tr>
+                <td style="text-align:center">
+                    @foreach (var tn in dmtmnxh)
+                    {
+                        @if (item.Maso == tn.Maso)
+                        {
+                            <span>@tn.Tennha</span>
+                        }
+                    }
+                </td>
+                <td style="text-align:center">@item.Dvthue</td>
+                <td style="text-align:center">@item.Dvt</td>
+                <td style="text-align:center">@item.Dongia</td>
+                <td style="text-align:center">@item.Dongiathue</td>
+            </tr>
+        }
+    }
 </table>
