@@ -124,7 +124,7 @@
                             <td>@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-center left; font-weight:bold">@item.Mota</td>
+                            <td style="text-align: left; font-weight:bold">@item.Mota</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
@@ -152,8 +152,11 @@
                                     }
                                 }
                             </td>
-
                             <td>
+                                <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="GiaLePhi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -170,12 +173,9 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                                   target="_blank">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
-                                <button type="button" onclick="get_attack('@item.Mahs')" class="btn btn-default btn-xs mbs" data-target="#dinhkem-modal-confirm" data-toggle="modal" title="Tải tệp">
-                                    <i class="icon-lg la la-download text-warning"></i>
+                               
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
                             </td>
                         </tr>
@@ -298,6 +298,27 @@
     </div>
 </div>
 
+<!-- hoàn thành Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">Thông tin giấy tờ đính kèm</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
@@ -305,6 +326,26 @@
 
     function SetComplete(mahs) {
         document.getElementById("mahs_complete").value = mahs;
+    }
+
+    function GetFile(mahs) {
+        $.ajax({
+            url: '/ThongTinGiayTo/GetList',
+            type: 'POST',
+            data: {
+                Mahs: mahs
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#giayto_data').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
     }
 
 </script>

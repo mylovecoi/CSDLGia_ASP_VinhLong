@@ -1,15 +1,14 @@
 ﻿@{
-    var TotalRecord = ViewData["TotalRecord"];
-    var PageCurrent = ViewData["PageCurrent"];
-    var PageTotal = ViewData["PageTotal"];
-    var PageRange = (List<int>)ViewData["PageRange"];
+    int TotalRecord = ViewData["TotalRecord"] as int? ?? 0;
+    int PageCurrent = ViewData["PageCurrent"] as int? ?? 0;
+    int PageTotal = ViewData["PageTotal"] as int? ?? 0;
+    var PageRange = ViewData["PageRange"] as List<int> ?? new List<int>();
 }
-
 
 <div class="row">
     <div class="col-xl-12" style="text-align:right">
         <div class="form-group fv-plugins-icon-container">
-            @if ((int)PageCurrent == 1)
+            @if (PageCurrent == 1)
             {
                 <button type="button" class="btn btn-icon btn-sm btn-light mr-2 my-1 disabled" disabled>
                     <i class="ki ki-bold-double-arrow-back icon-xs"></i>
@@ -30,10 +29,10 @@
                 </button>
             }
 
-            @if ((int)PageCurrent - 2 > 1 && (int)PageTotal > 5)
+            @if (PageCurrent - 2 > 1 && PageTotal > 5)
             {
                 <button type="button" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1" onclick="ClickPage(1)">1</button>
-                @if ((int)PageCurrent - 3 != 1)
+                @if (PageCurrent - 3 != 1)
                 {
                     <button type="button" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1 disabled" disabled>...</button>
                 }
@@ -41,7 +40,7 @@
 
             @foreach (int p_r in PageRange)
             {
-                @if (p_r == (int)PageCurrent)
+                @if (p_r == PageCurrent)
                 {
                     <button type="button" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1 btn-hover-primary active">@p_r</button>
                 }
@@ -51,17 +50,17 @@
                 }
             }
 
-            @if ((int)PageCurrent + 2 < (int)PageTotal && (int)PageTotal > 5)
+            @if (PageCurrent + 2 < PageTotal && PageTotal > 5)
             {
 
-                @if ((int)PageCurrent + 3 != (int)PageTotal)
+                @if (PageCurrent + 3 != PageTotal)
                 {
                     <button type="button" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1 disabled" disabled>...</button>
                 }
                 <button type="button" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1" onclick="ClickPage(@PageTotal)">@PageTotal</button>
             }
 
-            @if ((int)PageCurrent == (int)PageTotal || (int)PageTotal == 0)
+            @if (PageCurrent == PageTotal || PageTotal == 0)
             {
                 <button type="button" class="btn btn-icon btn-sm btn-light mr-2 my-1 disabled" disabled>
                     <i class="ki ki-bold-arrow-next icon-xs"></i>

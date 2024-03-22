@@ -48,7 +48,7 @@
         {
             @if (Model.GiaPhiLePhiCt != null)
             {
-                @foreach (var item in Model.GiaPhiLePhiCt)
+                @foreach (var item in Model.GiaPhiLePhiCt.OrderBy(t=>t.STTSapxep))
                 {
                     string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                     <tr>

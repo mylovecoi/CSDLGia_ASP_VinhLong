@@ -58,20 +58,22 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaDatPl" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="GiaLePhi" asp-action="Index" asp-route-Madv="@Model.MaDv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
             <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
         </div>
     </form>
+    <!--end::Form-->
+    <!--end::Form-->
 </div>
 @section Scripts{
     @{

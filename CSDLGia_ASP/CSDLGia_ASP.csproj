@@ -51,6 +51,7 @@
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueDN\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaDatDiaBan\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueTn\" />
+    <Folder Include="wwwroot\UpLoad\File\ThongTinGiayTo\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />
   </ItemGroup>
@@ -89,6 +90,7 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\Excels\Excel.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\Modal.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\ModalTongHop.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\Tonghop.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\TimKiem\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\TimKiem\Result.cshtml" />
