@@ -39,14 +39,13 @@ namespace CSDLGia_ASP.Controllers.HeThong
                 model = model.Where(t => t.Loaivb == Loaivb).ToList();
             }
 
-            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            //{
-            //    ViewBag.bSession = true;
-            //    model = model.Where(t => t.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")).ToList();
-            //} 
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                ViewBag.bSession = true;
+                model = model.Where(t => t.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")).ToList();
+            }
 
             ViewData["Title"] = "Công bố thông tin";
-
             ViewData["Phanloai"] = Phanloai;
             ViewData["Loaivb"] = Loaivb;
             //return Ok(model);
