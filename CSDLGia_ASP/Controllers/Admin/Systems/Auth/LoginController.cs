@@ -27,9 +27,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
         [HttpGet]
         public IActionResult Login()
         {
-            var hethong = _db.tblHeThong;
+            /*var hethong = _db.tblHeThong;*/
             ViewData["Title"] = "Đăng nhập";
-            return View("Views/Admin/Systems/Auth/Login.cshtml", hethong);
+            return View("Views/Admin/Systems/Auth/Login.cshtml");
+            /*return View("Views/Admin/Systems/Auth/Login.cshtml", hethong);*/
+
         }
 
         [Route("SignIn")]

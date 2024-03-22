@@ -11066,6 +11066,36 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("PhiLePhiNhom");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.ThongTinGiayTo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mahs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("STT")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ThongTinGiayTo");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkDkg", b =>
                 {
                     b.Property<int>("Id")

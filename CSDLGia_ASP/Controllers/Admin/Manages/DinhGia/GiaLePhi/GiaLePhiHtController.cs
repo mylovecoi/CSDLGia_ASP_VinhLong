@@ -476,6 +476,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
+
         [HttpPost("GiaLePhiHt/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
         {

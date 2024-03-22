@@ -27,74 +27,10 @@
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaLephi" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">
-            <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số quyết định</label>
-                            <input type="text" class="form-control" asp-for="Soqd" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Ngày áp dụng*</label>
-                            <input type="date" class="form-control" asp-for="Thoidiem" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea type="text" class="form-control" asp-for="Mota" ></textarea> 
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Ghi chú</label>
-                            <textarea type="text" class="form-control" asp-for="Ghichu" ></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label class="control-label">File đính kèm</label>
-                            <input asp-for="Ipf1" type="file" accept=".jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label class="control-label">File đính kèm</label>
-                            <input asp-for="Ipf2" type="file" accept=".jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label class="control-label">File đính kèm</label>
-                            <input asp-for="Ipf3" type="file" accept=".jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label class="control-label">File đính kèm</label>
-                            <input asp-for="Ipf4" type="file" accept=".jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label class="control-label">File đính kèm</label>
-                            <input asp-for="Ipf5" type="file" accept=".jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                </div>
-
+            <div class="card-body">   
                 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Detail.cshtml")
+                <!--Thông tin giấy tời-->
+                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/ThongTinGiayTo/Index.cshtml")
             </div>
             <div class="card-footer" style="text-align:center">
                 <a asp-controller="GiaLePhi" asp-action="Index" asp-route-Madv="@Model.Mahs" class="btn btn-danger">

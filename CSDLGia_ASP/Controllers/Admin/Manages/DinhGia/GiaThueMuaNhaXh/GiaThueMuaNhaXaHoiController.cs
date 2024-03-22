@@ -518,9 +518,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Edit"))
                 {
                     var model = _db.GiaThueMuaNhaXh.FirstOrDefault(t => t.Mahs == Mahs);
-                    var modelct = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Mahs == Mahs);
-
-                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
+                    var modelct = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == model.Mahs);
+                    model.GiaThueMuaNhaXhCt = modelct.ToList();
+                    /*var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
                     {
                         // Thông tin hồ sơ
                         Soqd = model.Soqd,
@@ -536,16 +536,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                         Dvt = modelct.Dvt,
                         Dongia = modelct.Dongia,
                         Dongiathue = modelct.Dongiathue,
-                    };
+                    };*/
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-
+                    ViewData["GiaThueMuaNhaXhDm"] = _db.GiaThueMuaNhaXhDm.ToList();
                     ViewData["Title"] = "Chi tiết giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Show.cshtml", viewModel);
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Show.cshtml", model);
                 }
                 else
                 {

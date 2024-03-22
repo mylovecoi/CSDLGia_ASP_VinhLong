@@ -1,6 +1,39 @@
-﻿@{
-    int record_id = 1;
-}
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi;
+<input hidden asp-for="Madv" />
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="Id" />
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<div class="row">
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Số quyết định</label>
+            <input type="text" class="form-control" asp-for="Soqd" required/>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Ngày áp dụng*</label>
+            <input type="date" class="form-control" asp-for="Thoidiem" required/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Mô tả</label>
+            <textarea type="text" class="form-control" asp-for="Mota"></textarea>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Ghi chú</label>
+            <textarea type="text" class="form-control" asp-for="Ghichu"></textarea>
+        </div>
+    </div>
+</div>
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -10,11 +43,11 @@
             <thead>
                 <tr >
                     <th style="text-align:center" width='5%'>STT</th>
-                    <th style="text-align:center"> STT hiển thị</th>
+                    <th style="text-align:center" width="5%"> STT hiển thị</th>
                     <th style="text-align:center">Tên phí , lệ phí</th>
-                    <th style="text-align:center">Phần trăm</th>
-                    <th style="text-align:center">Mức thu</th>
-                    <th style="text-align:center">Thao tác</th>
+                    <th style="text-align:center" width="10%">Phần trăm</th>
+                    <th style="text-align:center" width="10%">Mức thu</th>
+                    <th style="text-align:center" width="10%">Thao tác</th>
                 </tr>               
             </thead>
             <tbody>
@@ -22,24 +55,21 @@
                 {
                     @if (Model.GiaPhiLePhiCt != null)
                     {
-                        @foreach (var item in Model.GiaPhiLePhiCt)
+                        @foreach (var item in Model.GiaPhiLePhiCt.OrderBy(t => t.STTSapxep))
                         {
                             string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                             <tr>
-                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="text-align:center">@item.STTSapxep</td>
                                 <td style="text-align:center">@item.STTHienthi</td>
                                 <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
                                 <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                                <td style="text-align:center; @HtmlStyle">@item.Mucthutu</td>
+                                <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                onclick="GetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        onclick="GetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </button>
-                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                        <i class="icon-lg la la-trash text-danger"></i>
-                                    </button>
+                                  
                                 </td>
                             </tr>
                         }
