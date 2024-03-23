@@ -3,7 +3,7 @@
     var record_id = 1;
 
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
+@* @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc> *@
 <br />
 <br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -24,7 +24,7 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;"> ...., ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ THUÊ MẶT ĐẤT, MẶT NƯỚC</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP ĐỊNH GIÁ THUÊ, MUA NHÀ XÃ HỘI</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
 
@@ -32,14 +32,14 @@
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Mô tả</th>  @*Đơn vị chuyển*@
+            <th style="text-align: center">Mô tả</th>
             <th style="text-align: center">Số QĐ</th>
             <th style="text-align: center">Ngày chuyển hồ sơ</th>
             <th style="text-align: center">Ngày xét duyệt</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @* @foreach (var item in Model)
         {
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
@@ -54,7 +54,7 @@
         <tr>
             <td></td>
             <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>
-        </tr>
+        </tr> *@
     </tbody>
 </table>
 <table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
