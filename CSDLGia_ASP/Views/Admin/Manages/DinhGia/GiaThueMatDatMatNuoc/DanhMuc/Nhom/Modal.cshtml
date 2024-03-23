@@ -4,7 +4,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin chi tiết nhóm
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                       Thêm mới danh mục nhóm giá thuê đất, mặt nước
+                    </span>
                     <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm sản phẩm</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,19 +18,16 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm giá thuê đất, mặt nước</label>
-                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
+                            <label>Mã hồ sơ:</label>
+                            <input type="text" id="manhom_create" name="manhom_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="theodoi_create" name="theodoi_create" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
+                            <label>Hồ sơ:</label>
+                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
-                    </div>
+                    </div>                  
                 </div>
             </div>
             <div class="modal-footer">
@@ -43,8 +43,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm sản phẩm
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin nhóm sản phẩm</span>
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa Danh mục nhóm giá thuê đất, mặt nước
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -68,8 +70,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm giá thuê đất, mặt nước
-                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin nhóm nhóm giá thuê đất, mặt nước???</span>
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa danh mục nhóm giá thuê đất, mặt nước
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -121,8 +125,8 @@
                 url: '/GiaThueDNDm/Store',
                 type: 'POST',
                 data: {
+                    Manhom: $('#manhom_create').val(),
                     Tennhom: $('#tennhom_create').val(),
-                    Theodoi: $('#theodoi_create').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {
@@ -169,7 +173,6 @@
                 type: 'POST',
                 data: {
                     Tennhom: $('#tennhom_edit').val(),
-                    Theodoi: $('#theodoi_edit').val(),
                     Id: $('#id_edit').val()
                 },
                 dataType: 'JSON',

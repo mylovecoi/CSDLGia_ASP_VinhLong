@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -25,54 +26,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         public IActionResult Index(string Madv)
         {
-            var model = new GiaThueMatDatMatNuoc
+            var model = new VMImportExcel
             {
-                Madv = Madv,
-                Thoidiem = DateTime.Now,
-                Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                LineStart = 2,
+                MaDv = Madv,               
+                LineStart = 4,
                 LineStop = 10000,
                 Sheet = 1,
             };
-            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+            ViewData["GiaThueDNNhom"] = _db.GiaThueMatDatMatNuocNhom;
             ViewData["MenuLv1"] = "menu_dg";
             ViewData["MenuLv2"] = "menu_dgtmdmn";
             ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
             ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
             return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Excel.cshtml", model);
         }
-
-
-        [Route("GiaDatDNExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
-                {
-                    ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
-
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Create.cshtml");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
+       
 
         [HttpPost]
         public async Task<IActionResult> Import(GiaThueMatDatMatNuoc request, IFormFile Ipf1)
