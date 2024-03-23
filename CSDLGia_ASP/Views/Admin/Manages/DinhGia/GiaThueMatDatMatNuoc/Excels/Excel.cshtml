@@ -36,7 +36,11 @@
                     <div class="form-group">
                         <label>Phân loại hồ sơ</label>
                         <select class="form-control" asp-for="MaNhom">
-                            
+                            <option value="all">--Tất cả--</option>
+                            @foreach (var item in DanhMucNhom)
+                            {
+                                <option value="@item.Manhom">@item.Tennhom</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -68,14 +72,14 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu:</label><br />
-                        <input type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaDatPl" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="GiaThueDN" asp-action="Index" class="btn btn-danger" asp-route-Madv="@Model.MaDv">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

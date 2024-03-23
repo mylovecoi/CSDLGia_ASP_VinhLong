@@ -77,7 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá:</label>";
-                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' class='form-control money' style='font-weight: bold' value='" + model.TyLe3 + "'/>";
+                result += "<input type='number' id='dongia1_edit' name='dongia1_edit' class='form-control' style='font-weight: bold' value='" + model.Dongia1 + "'/>";
                 result += "</div>";
                 result += "</div>";
 
