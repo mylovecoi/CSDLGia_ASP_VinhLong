@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var record_id = 1;
+
+    var cts = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["ct"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
+<br />
+<br />
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: .........</td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT ĐỊNH GIÁ RỪNG</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align: center">
+            <th width="2%" style="text-align: center" rowspan='3'>Mã TTR</th>
+            <th rowspan='3' style="text-align: center">Trạng thái rừng</th>
+            <th colspan='6' style="text-align: center">Giá rừng tự nhiên</th>
+            <th rowspan="2" colspan='2' style="text-align: center">Giá cho thuê sử dụng rừng/năm</th>
+            <th colspan='6' style="text-align: center">Giá bồi thường thiệt hại đối với rừng tự nhiên</th>
+        </tr>
+        <tr style="text-align: center">
+            <th colspan='2' style="text-align: center">Đặc dụng</th>
+            <th colspan='2' style="text-align: center">Phòng hộ</th>
+            <th colspan='2' style="text-align: center">Sản xuất</th>
+            <th colspan='2' style="text-align: center">Đặc dụng</th>
+            <th colspan='2' style="text-align: center">Phòng hộ</th>
+            <th colspan='2' style="text-align: center">Sản xuất</th>
+        </tr>
+        <tr style='text-align:center'>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+            <th style="text-align: center">Tối thiểu</th>
+            <th style="text-align: center">Tối đa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var item in Model)
+        {
+            
+        } *@
+    </tbody>
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br />
+            - Bộ tài chính;<br />
+            - Lưu: VT, QLGCS.
+        </td>
+        <td style="vertical-align: top;">
+        <td style="vertical-align: top;">
+
+            <p><b>@ViewData["chucvu"]</b></p>
+            <i>(Ký tên, đóng dấu)</i>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <p><b>@ViewData["tenthutruong"]</b></p>
+        </td>
+    </tr>
+</table>

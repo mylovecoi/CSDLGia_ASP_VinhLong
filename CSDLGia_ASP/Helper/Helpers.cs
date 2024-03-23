@@ -396,12 +396,12 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.baocao", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Báo cáo" });
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb", Name = "Bảng giá các loại đất" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtu", Name = "Bảng giá các loại đất - Thông tư" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtin", Name = "Bảng giá các loại đất - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.xetduyet", Name = "Bảng giá các loại đất - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.timkiem", Name = "Bảng giá các loại đất - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.baocao", Name = "Bảng giá các loại đất - Báo cáo" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb", Name = "Giá đất địa bàn" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtu", Name = "Giá đất địa bàn - Thông tư" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtin", Name = "Giá đất địa bàn - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.xetduyet", Name = "Giá đất địa bàn - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.timkiem", Name = "Giá đất địa bàn - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.baocao", Name = "Giá đất địa bàn - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat", Name = "ĐG - Giá trúng thầu quyền sử dụng đất" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.thongtin", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Thông tin" });
@@ -417,11 +417,13 @@ namespace CSDLGia_ASP.Helper
 
 
             // Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu
+          
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.danhmuc", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.thongtin", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.xetduyet", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.timkiem", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.baocao", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu" });
 
             // Giá HH-DV khác
 

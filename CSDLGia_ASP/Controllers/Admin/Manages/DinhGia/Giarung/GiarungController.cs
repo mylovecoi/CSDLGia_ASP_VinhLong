@@ -602,7 +602,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     {
                         model = model.Where(t => t.Dongia <= endPrice);
                     }
-
+                    ViewData["Title"] = " Tìm kiếm thông tin định giá rừng";
                     ViewData["DmLoaiRung"] = _db.GiaRungDm.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Result.cshtml", model);

@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.baocao", "Index"))
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp nước sinh hoạt";
+                    ViewData["Title"] = "Báo cáo giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_bc";
@@ -78,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     ViewData["tenthutruong"] = tenthutruong;
                     ViewData["chucvu"] = chucvu;
 
-                    ViewData["Title"] = "Báo cáo tổng hợp giá nước sinh hoạt";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_bc";
@@ -111,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     ViewData["tenthutruong"] = tenthutruong;
                     ViewData["chucvu"] = chucvu;
                     ViewData["Chitiet"] = _db.GiaNuocShCt;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá nước sinh hoạt";
+                    ViewData["Title"] = "Báo cáo chi tiết giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
                     ViewData["MenuLv3"] = "menu_dgnsh_bc";

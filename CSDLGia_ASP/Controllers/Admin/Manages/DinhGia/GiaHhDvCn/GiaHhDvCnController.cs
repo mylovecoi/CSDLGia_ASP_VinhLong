@@ -640,73 +640,73 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             }
         }
 
-        //[Route("GiaHhDvCn/TimKiem/KetQua")]
-        //[HttpPost]
-        //public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Index"))
-        //        {
+        [Route("GiaHhDvCn/TimKiem/KetQua")]
+        [HttpPost]
+        public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Index"))
+                {
 
-        //            var model = (from giahhdvcnct in _db.GiaHhDvCnCt
-        //                         join giahhdvcn in _db.GiaHhDvCn on giahhdvcnct.Mahs equals giahhdvcn.Mahs
-        //                         join donvi in _db.DsDonVi on giahhdvcn.Madv equals donvi.MaDv
-        //                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
-        //                         {
-        //                             Id = giahhdvcnct.Id,
-        //                             Mahs = giahhdvcnct.Mahs,
-        //                             Dongia = giahhdvcnct.Dongia,
-        //                             Mota = giahhdvcnct.Mota,
-        //                             Maspdv = giahhdvcnct.Maspdv
-        //                         });
-
-
-        //            if (madv != "all")
-        //            {
-        //                model = model.Where(t => t.Madv == madv);
-        //            }
-
-        //            if (ngaynhap_tu.ToString("yyMMdd") != "010101")
-        //            {
-        //                model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
-        //            }
+                    var model = (from giahhdvcnct in _db.GiaHhDvCnCt
+                                 join giahhdvcn in _db.GiaHhDvCn on giahhdvcnct.Mahs equals giahhdvcn.Mahs
+                                 join donvi in _db.DsDonVi on giahhdvcn.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
+                                 {
+                                     Id = giahhdvcnct.Id,
+                                     Mahs = giahhdvcnct.Mahs,
+                                     Dongia = giahhdvcnct.Dongia,
+                                     Mota = giahhdvcnct.Mota,
+                                     Maspdv = giahhdvcnct.Maspdv
+                                 });
 
 
+                    //if (madv != "all")
+                    //{
+                    //    model = model.Where(t => t.Madv == madv);
+                    //}
 
-        //            if (ngaynhap_den.ToString("yyMMdd") != "010101")
-        //            {
-        //                model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-        //            }
+                    //if (ngaynhap_tu.ToString("yyMMdd") != "010101")
+                    //{
+                    //    model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
+                    //}
 
-        //            if (tenhanghoa != null)
-        //            {
-        //                model = model.Where(t => t.Mota == tenhanghoa);
-        //            }
 
-        //            model = model.Where(t => t.Mucgia >= gia_tu);
-        //            if (gia_den > 0)
-        //            {
-        //                model = model.Where(t => t.Mucgia <= gia_den);
-        //            }
 
-        //            ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-        //            ViewData["MenuLv1"] = "menu_giakhac";
-        //            ViewData["MenuLv2"] = "menu_hhdvcn";
-        //            ViewData["MenuLv3"] = "menu_hhdvcn_tk";
-        //            return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/TimKiem/Result.cshtml", model);
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
+                    //if (ngaynhap_den.ToString("yyMMdd") != "010101")
+                    //{
+                    //    model = model.Where(t => t.Thoidiem <= ngaynhap_den);
+                    //}
+
+                    //if (tenhanghoa != null)
+                    //{
+                    //    model = model.Where(t => t.Mota == tenhanghoa);
+                    //}
+
+                    //model = model.Where(t => t.Mucgia >= gia_tu);
+                    //if (gia_den > 0)
+                    //{
+                    //    model = model.Where(t => t.Mucgia <= gia_den);
+                    //}
+
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_tk";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/TimKiem/Result.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         //    [Route("DinhGiaHhDvCn/Print")]
         //    [HttpGet]
