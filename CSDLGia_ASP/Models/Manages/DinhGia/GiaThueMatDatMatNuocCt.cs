@@ -36,5 +36,13 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Madv { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+        [NotMapped]
+        public string Tennhom { get; set; }
     }
 }

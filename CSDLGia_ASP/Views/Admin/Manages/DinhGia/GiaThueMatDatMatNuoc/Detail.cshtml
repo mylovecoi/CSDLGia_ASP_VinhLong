@@ -14,10 +14,10 @@
     <div class="col-xl-4">
         <div class="form-group">
             <label>Địa bàn</label>
-            <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
+            <select class="form-control select2basic" asp-for="Madiaban">
                 @foreach (var item in dsdiaban)
                 {
-                    <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
 
                 }
             </select>
@@ -26,13 +26,13 @@
     <div class="col-xl-4">
         <div class="form-group">
             <label>Số quyết định</label>
-            <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+            <input type="text" class="form-control" asp-for="Soqd" />
         </div>
     </div>
     <div class="col-xl-4">
         <div class="form-group">
             <label>Thời điểm*</label>
-            <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+            <input type="date" class="form-control" asp-for="Thoidiem"/>
         </div>
     </div>
 

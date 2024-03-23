@@ -467,12 +467,65 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuoc/Search")]
         [HttpGet]
-        public IActionResult Search()
+        public IActionResult Search(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string LoaiDat )
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.timkiem", "Index"))
                 {
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    Manhom = string.IsNullOrEmpty(Manhom) ? "all" : Manhom;
+                    NgayTu = NgayTu.HasValue ? NgayTu : firstDayCurrentYear;
+                    NgayDen = NgayDen.HasValue ? NgayDen : lastDayCurrentYear;
+                    Mahs = string.IsNullOrEmpty(Mahs) ? "all" : Mahs;
+                    DonGiaTu = DonGiaTu == 0 ? 0 : DonGiaTu;
+                    DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
+                    LoaiDat = string.IsNullOrEmpty(LoaiDat) ? "" : LoaiDat;
+
+                  
+
+                    var model = (from hosoct in _db.GiaThueMatDatMatNuocCt
+                                 join hoso in _db.GiaThueMatDatMatNuoc on hosoct.Mahs equals hoso.Mahs
+                                 join nhom in _db.GiaThueMatDatMatNuocNhom on hosoct.MaNhom equals nhom.Manhom
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt
+                                 {
+                                     Madv = hoso.Madv,
+                                     Tendv = donvi.TenDv,
+                                     Tennhom = nhom.Tennhom,
+                                     SoQD = hoso.Soqd,
+                                     ThoiDiem = hoso.Thoidiem,
+                                     LoaiDat = hosoct.LoaiDat,
+                                     TyLe1 = hosoct.TyLe1,
+                                     TyLe2 = hosoct.TyLe2,
+                                     TyLe3 = hosoct.TyLe3,
+                                     Dongia1 = hosoct.Dongia1,
+                                     MaNhom = hosoct.MaNhom,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hoso.Mahs
+                                 });
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.Dongia1 >= DonGiaTu);
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if(Manhom != "all") { model = model.Where(t=>t.MaNhom == Manhom); }
+                    if(DonGiaDen > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen); }
+                    if (!string.IsNullOrEmpty(LoaiDat))
+                    {
+                        model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat.ToLower()));
+                    }
+
+                    ViewData["Madv"] = Madv;
+                    ViewData["Manhom"] = Manhom;
+                    ViewData["NgayTu"] = NgayTu;
+                    ViewData["NgayDen"] = NgayDen;
+                    ViewData["Mahs"] = Mahs;
+                    ViewData["DonGiaTu"] = DonGiaTu;
+                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["LoaiDat"] = LoaiDat;
+                    ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -480,7 +533,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/TimKiem/Index.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/TimKiem/Search.cshtml", model);
 
                 }
                 else
@@ -495,50 +548,42 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
-        [Route("GiaThueMatDatMatNuoc/Result")]
-        [HttpPost]
-        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string madv)
+        [HttpPost("GiaThueMatDatMatNuoc/Print")]
+        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string LoaiDat_Search)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.timkiem", "Edit"))
                 {
-                    var model = from dgct in _db.GiaThueMatDatMatNuocCt
-                                join dg in _db.GiaThueMatDatMatNuoc on dgct.Mahs equals dg.Mahs
-                                select new VMDinhGiaThueDNCt
-                                {
-                                    Id = dg.Id,
-                                    Mahs = dg.Mahs,
-                                    Madv = dg.Madv,
-                                    Vitri = dgct.Vitri,
-                                    Dongia1 = dgct.Dongia1,
-                                    Macqcq = dg.Macqcq,
-                                    Thoidiem = dg.Thoidiem,
-                                    Diemdau = dgct.Diemdau,
-                                    Diemcuoi = dgct.Diemcuoi,
-                                    Dientich = dgct.Dientich,
-                                    PhanLoaiDatNuoc = dgct.PhanLoaiDatNuoc,
-                                };
-                    if (madv != "All")
+                    var model = (from hosoct in _db.GiaThueMatDatMatNuocCt
+                                 join hoso in _db.GiaThueMatDatMatNuoc on hosoct.Mahs equals hoso.Mahs
+                                 join nhom in _db.GiaThueMatDatMatNuocNhom on hosoct.MaNhom equals nhom.Manhom
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt
+                                 {
+                                     Madv = hoso.Madv,
+                                     Tendv = donvi.TenDv,
+                                     Tennhom = nhom.Tennhom,
+                                     SoQD = hoso.Soqd,
+                                     ThoiDiem = hoso.Thoidiem,
+                                     LoaiDat = hosoct.LoaiDat,
+                                     TyLe1 = hosoct.TyLe1,
+                                     TyLe2 = hosoct.TyLe2,
+                                     TyLe3 = hosoct.TyLe3,
+                                     Dongia1 = hosoct.Dongia1,
+                                     MaNhom = hosoct.MaNhom,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hoso.Mahs
+                                 });
+                    model = model.Where(t => t.ThoiDiem >= NgayTu_Search && t.ThoiDiem <= NgayDen_Search && t.Trangthai == "HT" && t.Dongia1 >= DonGiaTu_Search);
+                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
+                    if (Manhom_Search != "all") { model = model.Where(t => t.MaNhom == Manhom_Search); }
+                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen_Search); }
+                    if (!string.IsNullOrEmpty(LoaiDat_Search))
                     {
-                        model = model.Where(t => t.Madv == madv);
+                        model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat_Search.ToLower()));
                     }
 
-                    if (beginTime.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem >= beginTime);
-                    }
-
-                    if (endTime.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem <= endTime);
-                    }
-                    model = model.Where(t => t.Dongia1 >= beginPrice);
-                    if (endPrice > 0)
-                    {
-                        model = model.Where(t => t.Dongia1 <= endPrice);
-                    }
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = " Tìm kiếm thông tin định giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -554,6 +599,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
+        [HttpPost("GiaThueMatDatMatNuoc/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='Mahs_Search' name='Mahs_Search'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
             }
         }
     }

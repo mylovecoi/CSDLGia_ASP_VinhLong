@@ -1,7 +1,7 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
+
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -37,7 +37,7 @@
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaThueDN" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="GiaThueDN" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

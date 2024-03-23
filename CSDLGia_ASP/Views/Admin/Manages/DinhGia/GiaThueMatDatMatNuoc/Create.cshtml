@@ -1,8 +1,5 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
-@{
-   
-    var mahs = ViewData["Mahs"];
-}
+
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -32,33 +29,22 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaThueDN" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tmdmn_store">
-        <div class="card-body">
-            
+        <div class="card-body">           
 
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaThueDN" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="GiaThueDN" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Thêm mới</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
 <script>
-    function ValidateTmdmn() {
-        if ($('#Soqd').val().trim() == '') {
-            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_tmdmn_store").submit();
-            }
-        }
-    }
+   
 </script>
 @section Scripts{
     @{
