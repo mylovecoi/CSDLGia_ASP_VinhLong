@@ -447,6 +447,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
                 {
                     var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    var modeljoin = (from hs in model
+                                     join nhom in _db.GiaPhiLePhiNhom on hs.Manhom equals nhom.Manhom
+                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi { 
+                                        Madv = hs.Madv,
+                                        Mahs = hs.Mahs,
+                                        Soqd = hs.Soqd,
+                                        Mota = hs.Mota,
+                                        Phanloai = nhom.Tennhom
+                                     
+                                     });
                     if(MaHsTongHop != "all")
                     {
                         model = model.Where(t => t.Mahs == MaHsTongHop);
@@ -461,7 +471,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Title"] = "Tổng hợp";
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Tonghop.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Tonghop.cshtml", modeljoin);
 
                 }
                 else

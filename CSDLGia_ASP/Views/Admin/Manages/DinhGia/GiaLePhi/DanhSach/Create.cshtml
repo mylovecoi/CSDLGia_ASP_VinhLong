@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -12,48 +12,51 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;lệ phí trước bạ</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thêm mới hồ sơ giá lệ phí trước bạ
+                </span>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaLephi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">                
-                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Detail.cshtml")
-                <!--Thông tin giấy tời-->
-                @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/ThongTinGiayTo/Index.cshtml")
-            </div>
-            <div class="card-footer" style="text-align:center">
-                <a asp-controller="GiaLePhi" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
-                    <i class="la la-reply"></i>Quay lại
-                </a>&ensp;
-                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-                <button type="button" class="btn btn-primary mr-2" onclick="Validatelp()"><i class="la la-check"></i>Thêm mới</button>
-            </div>
-        </form>
-        <!--end::Form-->
     </div>
-    <script>
-        function Validatelp() {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Ngày quyết định không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_r_store").submit();
-            }
-
+    <!--begin::Form-->
+    <form asp-controller="GiaLephi" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
+        <div class="card-body">
+            <!--Thông tin giấy tời-->
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/ThongTinGiayTo/Index.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Detail.cshtml")
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaLePhi" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="Validatelp()"><i class="la la-check"></i>Thêm mới</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function Validatelp() {
+        if ($('#Thoidiem').val().trim() == '') {
+            toastr.error("Ngày quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            document.getElementById("frm_r_store").submit();
         }
-    </script>
-    @section Scripts{
+
+    }
+</script>
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
