@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             _db = db;
         }
 
-        [Route("BcGiaSpDvCongIch")]
+        [Route("GiaSpDvCongIchBc")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
 
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_bc";
@@ -46,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-        [Route("BcGiaSpDvCongIch/BcTH")]
+        [Route("GiaSpDvCongIchBc/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
@@ -88,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-        [Route("BaoCaoDgSpDvCongIch/BcCT")]
+        [Route("GiaSpDvCongIchBc/BcCT")]
         [HttpPost]
         public IActionResult BcCT(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
         {
@@ -105,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["chucvu"] = chucvu;
 
                     ViewData["ct"] = _db.GiaSpDvCongIchCt.ToList();
-                    ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ công ích";
+                    ViewData["Title"] = "Báo cáo chi tiết giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
                     ViewData["MenuLv3"] = "menu_dgdvci_bc";
