@@ -172,9 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         {
                             Mahs = model.Mahs,
                             Dvt = item.Dvt,
-                            Tt = item.Tt,
-                            Mucgia1 = item.Mucgia1,
-                            Mucgia2 = item.Mucgia2,
+                            Tt = item.Tt,                            
                             Manhom = item.Manhom,
                             Maspdv = item.Maspdv,
                             TenSpDv = item.Tenspdv,
@@ -799,8 +797,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Soqd = giaspdvcuthe.Soqd,
                                      TenSpDv = giaspdvcuthect.TenSpDv,
                                      Mucgia1 = giaspdvcuthect.Mucgia1,
-                                     Mucgia2 = giaspdvcuthect.Mucgia2,
-                                     Mota = giaspdvcuthect.Mota,
+                                     Mucgia2 = giaspdvcuthect.Mucgia2,                                     
                                      Maspdv = giaspdvcuthect.Maspdv,
                                  });
 
@@ -820,10 +817,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
                     }
 
-                    if (tenhanghoa != null)
-                    {
-                        model = model.Where(t => t.Mota == tenhanghoa);
-                    }
+                    
 
                 
 

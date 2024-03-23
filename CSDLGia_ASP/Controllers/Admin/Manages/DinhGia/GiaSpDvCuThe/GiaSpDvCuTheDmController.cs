@@ -87,9 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Tt = tt,
                         Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Tenspdv = tenspdv,
-                        Dvt = dvt,
-                        Mucgia1 = mucgia1,
-                        Mucgia2 = mucgia2,
+                        Dvt = dvt,                       
                         Sapxep = sapxep,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -140,21 +138,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         result += "<label>Tên sản phẩm dịch vụ</label>";
                         result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
                         result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Giá 1</label>";
-                        result += "<input type='text' id='mucgia1_edit' name='mucgia1_edit' class='form-control' value='" + model.Mucgia1 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Giá 2</label>";
-                        result += "<input type='text' id='mucgia2_edit' name='mucgia2_edit' class='form-control' value='" + model.Mucgia2 + "'/>";
-                        result += "</div>";
-                        result += "</div>";
+                        result += "</div>";                        
 
                         result += "<div class='col-xl-4'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -208,9 +192,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     model.Tt = tt;
                     model.Tenspdv = tenspdv;
-                    model.Dvt = dvt;
-                    model.Mucgia1 = mucgia1;
-                    model.Mucgia2 = mucgia2;
+                    model.Dvt = dvt;                  
                     model.Sapxep = sapxep;
                   
                     model.Updated_at = DateTime.Now;
