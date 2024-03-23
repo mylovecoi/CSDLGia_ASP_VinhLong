@@ -1,71 +1,109 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
-@{
-    int record_id = 1;
-    var mahs = ViewData["Mahs"];
-    var GiaThueMatDatMatNuocCt = (IEnumerable<GiaThueMatDatMatNuocCt>)ViewData["GiaThueMatDatMatNuocCt"];
-    var danhMucMatDatMatNuoc = (IEnumerable<GiaThueMatDatMatNuocDm>)ViewData["DanhMucMatDatMatNuoc"];
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DanhMucNhom = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["GiaThueDNNhom"];
 }
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
+
+<input hidden asp-for="Madv" />
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="Id" />
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Địa bàn</label>
+            <select class="form-control select2basic" asp-for="Madiaban">
+                @foreach (var item in dsdiaban)
+                {
+                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Số quyết định</label>
+            <input type="text" class="form-control" asp-for="Soqd" />
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Thời điểm*</label>
+            <input type="date" class="form-control" asp-for="Thoidiem"/>
+        </div>
+    </div>
+
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Mô tả</label>
+            <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
+        </div>
+    </div>
+</div>
+
+<!--Thông tin giấy tời-->
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ThongTinGiayTo/Index.cshtml")
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
 <div class="card card-custom" style="border: 1px solid #60aee4;">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-            </h3>
-        </div>
-        <div class="card-toolbar">
-            @* <button type="button" data-target="#Create_Modal" data-toggle="modal"
-                    class="btn btn-primary font-weight-bolder" title="Create">
-                <i class="la la-plus"></i>Thêm mới
-            </button> *@
-        </div>
-    </div>
-    <hr />
     <div class="card-body" id="frm_data">
-        <table class="table table-striped table-bordered table-hover" id="datatable_4">
-            <thead>
-                <tr style="text-align:center">
-                    <th rowspan="2">STT</th>                   
-                    <th rowspan="2">Vị trí, địa bàn</th>
-                    <th colspan="3">Tỷ lệ %</th>                    
-                    <th rowspan="2">Thao tác</th>
-                </tr>
-                <tr style="text-align:center">
-                    <th>Ngành, nghề đặc<br />biệt ưu đãi đầu tư</th>
-                    <th>Ngành, nghề ưu<br />đãi đầu tư</th>
-                    <th>Ngành, nghề khác</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                    @if (Model.GiaThueMatDatMatNuocCt != null)
-                    {
-                        @foreach (var item in Model.GiaThueMatDatMatNuocCt.OrderBy(x => x.SapXep))
-                        {
+        @if (Model.GiaThueMatDatMatNuocCt != null)
+        {
+            @foreach (var nhom in DanhMucNhom)
+            {
+                var data = Model.GiaThueMatDatMatNuocCt.Where(t => t.MaNhom == nhom.Manhom);
+                if (data.Any())
+                {
+                    <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
+                    <table class="table table-striped table-bordered table-hover class-nosort">
+                        <thead>
                             <tr style="text-align:center">
-                                <td style="text-align:center">@item.SapXep</td>
-                                <td>@item.LoaiDat</td>
-                            <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia1)</td>
-                            <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia2)</td>
-                            <td style="text-align:center; font-weight:bold">@Helpers.ConvertDbToStrDecimal(item.Dongia3)</td>
-                                <td>
-                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </button>
-                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
-                                            onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
-                                        <i class="icon-lg la la-trash text-danger"></i>
-                                    </button>
-                                </td>
+                                <th rowspan="2" width="2%" >STT</th>
+                                <th rowspan="2">Vị trí, địa bàn</th>
+                                <th colspan="3" width="30%">Tỷ lệ (%) </th>
+                                <th rowspan="2" width="10%">Đơn giá</th>
+                                <th rowspan="2" width="5%">Thao tác</th>
                             </tr>
-                        }
-                    }
-                
-            </tbody>
-        </table>
-        <!--end: Datatable-->
+                            <tr>
+                                <th style="text-align:center">Ngành, nghề đặc biệt ưu đãi đầu tư</th>
+                                <th style="text-align:center">Ngành, nghề ưu đãi đầu tư</th>
+                                <th style="text-align:center">Ngành, nghề khác</th>
+                            </tr>
+                          
+                        </thead>
+                        <tbody>
+                            @foreach (var item in data.OrderBy(x => x.SapXep))
+                            {
+                                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                                <tr>
+                                    <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
+                                    <td style="text-align:left; @HtmlStyle">@item.LoaiDat</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe1</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe2</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe3</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
+                                    <td>
+                                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--end: Datatable-->
+                    <hr width="70%" align="center" />
+                }
+            }
+
+
+        }
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Modal.cshtml")

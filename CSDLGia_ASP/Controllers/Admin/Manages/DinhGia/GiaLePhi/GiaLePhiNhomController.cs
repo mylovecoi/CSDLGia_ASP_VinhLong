@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 {
                     var model = _db.GiaPhiLePhiNhom;
 
-                    ViewData["Title"] = "Danh mục giá lệ phí trước bạ";
+                    ViewData["Title"] = "Danh mục hồ sơ giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_dm";
@@ -88,13 +88,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     result += "<div class='row'>";
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Mã nhóm</label>";
+                    result += "<label>Mã hồ sơ:</label>";
                     result += "<label type='text' class='form-control'>" + model.Manhom + "</label>";
                     result += "</div>";
                     result += "</div>";
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Tên nhóm</label>";
+                    result += "<label>Phân loại hồ sơ:</label>";
                     result += "<input type='text' id='TenNhom_Edit' name='TenNhom_Edit' class='form-control required' value='" + model.Tennhom + "'/>";
                     result += "</div>";
                     result += "</div>";

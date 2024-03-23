@@ -24,7 +24,10 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;Giá tính lệ phí trước bạ</small><br />
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý danh mục phân loại hồ sơ
+                </span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -34,7 +37,6 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }
-
         </div>
     </div>
     <hr />
@@ -43,8 +45,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">STT</th>
-                    <th>Nhóm phí, lệ phí</th>
-                    <th>Tên phí, lệ phí</th>
+                    <th>Mã phân loại</th>
+                    <th>Phân loại hồ sơ</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -64,7 +66,7 @@
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="GetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="GetDelete('@item.Id')">
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="GetDelete('@item.Id', '@item.Tennhom')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             </td>
@@ -82,7 +84,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm lệ phí trước bạ
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới danh mục phân loại hồ sơ
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -92,21 +97,21 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Mã nhóm</label>
+                            <label>Mã hồ sơ</label>
                             <input type="text" id="MaNhom_Create" name="MaNhom_Create" class="form-control required" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm</label>
+                            <label>Phân loại hồ sơ:</label>
                             <input type="text" id="TenNhom_Create" name="TenNhom_Create" class="form-control required" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-danger font-weight-bold" onclick="Store()">Thêm mới</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
             </div>
         </div>
     </div>
@@ -119,20 +124,29 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa thông tin???
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa danh mục phân loại hồ sơ
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                
-                    <input id="id_delete" name="id_delete" type="hidden" />
-                
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Phân loại hồ sơ:</label>
+                            <label id="TenNhom_Delete" name="TenNhom_Delete" class="form-control" />
+                        </div>
+                    </div>                   
+                </div>
+                    <input id="id_delete" name="id_delete" type="hidden" />                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Delete()">Đồng ý</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger font-weight-bold" onclick="Delete()">Đồng ý</button>
             </div>
         </div>
     </div>
@@ -144,7 +158,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục sản phẩm dịch vụ công ích
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa danh mục phân loại hồ sơ
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -186,8 +203,9 @@
         }
     }
 
-    function GetDelete(id) {
+    function GetDelete(id, tennhom) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("TenNhom_Delete").innerHTML = tennhom;
     }
     function Delete() {
         $.ajax({
