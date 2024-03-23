@@ -31,8 +31,6 @@
     <!--begin::Form-->
     <form asp-controller="GiaLephi" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
         <div class="card-body">
-            <!--Thông tin giấy tời-->
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">

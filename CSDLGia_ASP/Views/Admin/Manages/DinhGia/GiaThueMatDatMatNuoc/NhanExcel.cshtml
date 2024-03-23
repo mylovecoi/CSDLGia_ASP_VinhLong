@@ -1,40 +1,13 @@
-﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN;
+﻿@model CSDLGia_ASP.ViewModels.VMImportExcel;
 @{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
+
 }
 @section custom_style {
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+
 }
 @section custom_script {
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
-    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
-    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-            var codeExcel = @Html.Raw(@Model.CodeExcel);
-            var table = document.getElementById("dulieuExcel");
-
-            // Duyệt qua mỗi phần tử trong mảng JSON và tạo một hàng mới cho mỗi phần tử
-            codeExcel.forEach(function (item) {
-                var row = table.insertRow();
-
-                // Duyệt qua mỗi cặp key-value trong phần tử JSON và tạo một ô mới cho mỗi cặp
-                Object.keys(item).forEach(function (key) {
-                    var cell = row.insertCell();
-                    cell.innerHTML = item[key];
-                });
-            });
-
-            //TableManaged4.init();
-        });
-    </script>
+    
 }
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
@@ -51,9 +24,7 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input hidden asp-for="Mahs" value="@Model.Mahs">
-            <input hidden asp-for="Madv" value="@Model.Madv">
-            <input hidden asp-for="CodeExcel" value="@Model.CodeExcel">
+            <input hidden asp-for="MaDv">
             <input hidden asp-for="PhanLoaiHoSo" value="@Model.PhanLoaiHoSo">
 
             <div class="row">
