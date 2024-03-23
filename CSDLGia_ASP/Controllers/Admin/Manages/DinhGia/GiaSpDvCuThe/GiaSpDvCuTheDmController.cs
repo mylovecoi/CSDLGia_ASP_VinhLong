@@ -254,7 +254,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        LineStart = 2,
+                        LineStart = 4,
                         LineStop = 1000,
                         Sheet = 1,
                         MaNhom = Manhom,
