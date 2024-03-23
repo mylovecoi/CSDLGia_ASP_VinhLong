@@ -2,9 +2,9 @@
     Layout = "_LayoutReports";
     var record_id = 1;
     
-    var cts = (IEnumerable<GiaDatDiaBanCt>)ViewData["ct"];
+    var cts = (IEnumerable<GiaDauGiaDatCt>)ViewData["ct"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
 <br />
 <br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -25,23 +25,14 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ ĐẤT ĐỊA BÀN</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ GIAO DỊCH ĐẤT THỰC TẾ TRÊN THỊ TRƯỜNG</p>
 @* <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p> *@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
             <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-            <th style="text-align:center; font-weight:bold">Tên đường phố</th>
-            <th style="text-align:center; font-weight:bold">Loại đường </th>
-            <th style="text-align:center; font-weight:bold">Điểm đầu </th>
-            <th style="text-align:center; font-weight:bold">Điểm cuối</th>
-            <th style="text-align:center; font-weight:bold">Hệ số K</th>
-            <th style="text-align:center; font-weight:bold">Vị trí 1 </th>
-            <th style="text-align:center; font-weight:bold">Vị trí 2 </th>
-            <th style="text-align:center; font-weight:bold">Vị trí 3 </th>
-            <th style="text-align:center; font-weight:bold">Vị trí 4 </th>
-            <th style="text-align:center; font-weight:bold">Vị trí 5 </th>
-
+            <th style="text-align:center; font-weight:bold">Phân loại đất thực tế trên thị trường</th>
+            <th style="text-align:center; font-weight:bold">Giá giao dịch</th>
         </tr>
     </thead>
     @* <tbody>

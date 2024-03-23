@@ -2910,6 +2910,18 @@
                         </li>
                     }
 
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.baocao", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_giamts_bc">
+                            <a asp-controller="GiaTrungThauHhDvBC" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                            </a>
+                        </li>
+                    }
+
                 </ul>
             </div>
         </li>
@@ -3335,7 +3347,7 @@
                                         </li>
                                     }
 
-                                   @*  @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.baocao", "Index"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.baocao", "Index"))
                                     {
                                         <li class="menu-item" aria-haspopup="true" id="menu_giakhac_giavatlieuxaydung_bc">
                                             <a asp-controller="GiaVatLieuXayDungBc" asp-action="Index" class="menu-link">
@@ -3345,7 +3357,7 @@
                                                 <span class="menu-text text-truncate">Báo cáo thống kê</span>
                                             </a>
                                         </li>
-                                    } *@
+                                    }
                                 </ul>
                             </div>
                         </li>

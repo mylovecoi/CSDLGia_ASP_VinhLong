@@ -87,7 +87,7 @@
 <!--Báo cáo tổng hợp-->
 <div class="modal fade" id="Report_Modal_TH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaKhungGiaDatBc" asp-action="Bc1" target="_blank" id="frm_report">
+        <form asp-controller="GiaKhungGiaDatBc" asp-action="BcTH" target="_blank" id="frm_TongHop" name="frm_TongHop">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -139,7 +139,7 @@
 <!--Báo cáo chi tiết-->
 <div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaKhungGiaDatBc" asp-action="Bc2" target="_blank" id="frm_TongHop" name="frm_TongHop">
+        <form asp-controller="GiaKhungGiaDatBc" asp-action="BcCT" target="_blank" id="frm_TongHop" name="frm_TongHop">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -193,7 +193,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Đồng ý</button>
+                   @*  <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Đồng ý</button> *@
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
             </div>
         </form>

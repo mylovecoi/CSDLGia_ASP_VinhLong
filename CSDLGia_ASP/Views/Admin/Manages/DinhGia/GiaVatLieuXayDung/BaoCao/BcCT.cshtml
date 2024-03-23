@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "_LayoutReports";
     var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt>)ViewData["HoSoCt"];
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt>)ViewData["HoSoCt"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>
 <br />
 <br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -24,7 +24,7 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU QUYỀN SỬ DỤNG ĐẤT</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ VẬT LIỆU XÂY DỰNG</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
 
@@ -37,7 +37,7 @@
     @foreach (var hoso in hosodonvi)
     {
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem) *@
+            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
         <p style="text-align: center; font-size: 16px; font-style:italic">
           @*   @hoso.Mota *@
@@ -47,17 +47,13 @@
             <thead>
                 <tr>
                     <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold">Số lô</th>
-                    <th style="text-align:center; font-weight:bold">Số thửa</th>
-                    <th style="text-align:center; font-weight:bold">Tờ bản đồ</th>
-                    <th style="text-align:center; font-weight:bold">Mô tả</th>
-                    <th style="text-align:center; font-weight:bold">Diện tích</th>
-                    <th style="text-align:center; font-weight:bold">Đơn vị tính</th>
-                    <th style="text-align:center; font-weight:bold">Giá khởi điểm</th>
-                    <th style="text-align:center; font-weight:bold">Giá đấu giá</th>
+                    <th style="text-align:center; font-weight:bold">Danh mục vật liệu</th>
+                    <th style="text-align:center; font-weight:bold">Tiêu chuẩn kỹ thuật</th>
+                    <th style="text-align:center; font-weight:bold">Đơn giá</th>
+                    <th style="text-align:center; font-weight:bold">Ghi chú</th>
                 </tr>
             </thead>
-          @*   <tbody>
+            @* <tbody>
                 @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
                 {
                     string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);

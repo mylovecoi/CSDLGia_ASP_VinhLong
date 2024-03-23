@@ -67,7 +67,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     var model =(from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
-                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi { 
+                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi 
+                                { 
                                     TenDonVi = donvi.TenDv,
                                     Mahs = hoso.Mahs,
                                     Soqd = hoso.Soqd,                                   
