@@ -44,24 +44,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             }
         }
 
-        /*[Route("GiaKhungGiaDat/Bc1")]
+        [Route("GiaKhungGiaDat/BcTh")]
         [HttpPost]
-        public IActionResult Bc1(int nambc)
+        public IActionResult Bc1(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.baocao", "Index"))
                 {
-
-                    var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Thoidiem.Year == nambc);
-
-               
-                    ViewData["Nambc"] = nambc;
+                    ViewData["tungay"] = tungay;
+                    ViewData["denngay"] = denngay;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["Title"] = "Báo cáo tổng hợp giá khung giá đất";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
-                    return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/BaoCao/Bc1.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/BaoCao/Bc1.cshtml");
                 }
                 else
                 {
@@ -73,9 +72,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }*/
+        }
 
-        [Route("GiaKhungGiaDat/Bc2")]
+        [Route("GiaKhungGiaDat/BcCt")]
         [HttpPost]
         public IActionResult Bc2(int nambc)
         {

@@ -73,13 +73,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                     Soqd = hoso.Soqd,                                   
 
                                 });
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
+                  
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_bc";
 
+                    ViewData["tungay"] = tungay;
+                    ViewData["denngay"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/BcTH.cshtml", model);
