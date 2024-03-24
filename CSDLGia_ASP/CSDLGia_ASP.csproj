@@ -84,6 +84,7 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\DanhSach\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\DanhSach\Modal.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\DanhSach\Show.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\DanhSach\Tonghop.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\Excels\Create.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\Excels\Detail.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\Excels\Excel.cshtml" />

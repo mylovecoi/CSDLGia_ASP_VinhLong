@@ -3,16 +3,16 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var nhomtn = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["NhomTn"];   
+    var nhomtn = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["NhomTn"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -35,14 +35,14 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    GIÁ SẢN PHẨM DỊCH VỤ CỤ THỂ
-                </h3>
-            </div>
-            <div >
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                GIÁ SẢN PHẨM DỊCH VỤ CỤ THỂ
+            </h3>
+        </div>
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
@@ -161,7 +161,9 @@
                                target="_blank">
                                 <i class="icon-lg la la-eye text-success"></i>
                             </a>
-                          
+                            <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <i class="icon-lg la la-file-alt text-dark"></i>
+                            </button>
 
                             @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
 
@@ -189,11 +191,7 @@
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
                                 </a>
                             }
-
                         </td>
-
-
-
                     </tr>
                 }
             }
@@ -233,7 +231,7 @@
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="PhanLoaiHoSo" name="PhanLoaiHoSo" class="form-control">
                                     <option value="XE">Hồ sơ giá trông giữ xe</option>
-                                    <option value="CHO">Hồ sơ giá diện tích bán hàng tại chợ</option>                                   
+                                    <option value="CHO">Hồ sơ giá diện tích bán hàng tại chợ</option>
                                 </select>
                             </div>
                         </div>
@@ -337,7 +335,29 @@
     </div>
 </div>
 
-
+<!-- Giấy tờ Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function SetDelete(id) {
@@ -349,5 +369,23 @@
         function SetComplete(mahs) {
             document.getElementById("mahs_chuyen").value = mahs;
         }
-
+    function GetFile(mahs) {
+        $.ajax({
+            url: '/ThongTinGiayTo/GetList',
+            type: 'POST',
+            data: {
+                Mahs: mahs
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#giayto_data').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
 </script>
