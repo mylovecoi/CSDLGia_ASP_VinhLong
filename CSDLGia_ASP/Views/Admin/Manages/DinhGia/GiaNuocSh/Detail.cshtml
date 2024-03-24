@@ -1,6 +1,12 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
+<<<<<<< HEAD
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+=======
+
+@section custom_script {    
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+>>>>>>> 722bfd334537335f9aec6492cf631c704360a22d
 }
 @section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
@@ -92,7 +98,11 @@
                     <th>Tỷ trọng tiêu thụ (%)</th>
                     <th>Sản lượng<br />(m3)</th>
                     <th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
+<<<<<<< HEAD
                     <th>Thuế suất (%)</th>
+=======
+                    <th>Thuế suất</th>
+>>>>>>> 722bfd334537335f9aec6492cf631c704360a22d
                     <th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
                     <th>Thao tác</th>
                 </tr>
@@ -112,9 +122,15 @@
                             <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
                             <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
                             <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
+<<<<<<< HEAD
                             <td style="text-align:center; @HtmlStyle">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
                             <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2)/100)</td>
 
+=======
+                            <td style="text-align:center; @HtmlStyle">@item.ThueSuat</td>
+                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia2)</td>
+                           
+>>>>>>> 722bfd334537335f9aec6492cf631c704360a22d
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -156,6 +172,17 @@
 </div>
 
 <script>
+    function calc() {
+        // var dongia1 = document.getElementById("dongia1_edit").value;
+        // var dongia1 = parseInt(dongia1, 10);
+        // var thuesuat = document.getElementById("thuesuat_edit").value;
+        // var thuesuat = parseInt(thuesuat, 10);
+        var dongia1 = $('#dongia1_edit').val().replace(',', '');
+        var thuesuat = $('#thuesuat_edit').val().replace(',', '');
+        var dongia2 = dongia1 * thuesuat;
+        document.getElementById("dongia2_edit").value = dongia2;
+    }
+
     function SetEdit(id_edit) {
         $.ajax({
             url: '/GiaNuocShCtNew/Edit',
@@ -175,21 +202,27 @@
                 }
             }
         })
-
-
     }
 
     function SetUpdate() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 722bfd334537335f9aec6492cf631c704360a22d
         var dongia1 = $('#dongia1_edit').val().replace(',', '');
+        var thuesuat = $('#thuesuat_edit').val().replace(',', '');
         var dongia2 = $('#dongia2_edit').val().replace(',', '');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 722bfd334537335f9aec6492cf631c704360a22d
         $.ajax({
             url: '/GiaNuocShCtNew/Update',
             type: 'POST',
             data: {
 
                 DonGia1: dongia1,
+                ThueSuat: thuesuat,
                 DonGia2: dongia2,
                 TyTrongTieuThu: $('#tytrongtieuthu_edit').val(),
                 SanLuong: $('#sanluong_edit').val(),

@@ -18,10 +18,14 @@
 
     <thead>
         <tr style="text-align:center">
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Đối tượng thu</th>
-            <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Mức giá dịch vụ <br /> (đã bao gồm thuế VAT)</th>
+            <th style="text-align:center" rowspan="2">STT</th>
+            <th style="text-align:center" rowspan="2">Đối tượng thu</th>
+            <th style="text-align:center" rowspan="2">Đơn vị tính</th>
+            <th style="text-align:center" colspan="2">Mức giá dịch vụ <br /> (đã bao gồm thuế VAT)</th>
+        </tr>
+        <tr>
+            <th style="text-align:center">Giá từ</th>
+            <th style="text-align:center">Giá đến</th>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +39,8 @@
                         <td style="text-align:center">@item.SapXep</td>
                         <td class="active">@item.Tenspdv</td>
                         <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoithieu) @(item.Giatoithieu > 0 ? " - " : "") @Helpers.ConvertDbToStr(item.Giatoida)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatoithieu)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatoida)</td>
                     </tr>
                     }
                 }
