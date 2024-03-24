@@ -1,137 +1,69 @@
 ﻿@{
-
     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
     var PhanLoaiDichVu = (IEnumerable<GiaSpDvToiDaDm>)ViewData["PhanLoaiDichVu"];
-    var list = (from t in PhanLoaiDichVu
-                group t by t.Phanloai into grp
-                select new
-                {
-                    pl = grp.Key
-                });
-
 }
 
 <!--Create Modal-->
-<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Thông tin sản phẩm dịch vụ tối đa
-                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới sản phẩm dịch vụ tối đa</span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+<form method="post" id="frm_chitiet" asp-controller="GiaSpDvToiDaDm" asp-action="Store">
+    <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin sản phẩm dịch vụ tối đa
+                        <span class="d-block text-muted pt-2 font-size-sm">Thêm mới sản phẩm dịch vụ tối đa</span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+                    <input hidden id="Id" name="Id" />
 
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Tên sản phẩm</label>
-                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên sản phẩm</label>
+                                <input type="text" id="Tenspdv" name="Tenspdv" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <label class="form-control-label">Đơn vị tính</label>
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>STT báo cáo</label>
+                                <input type="text" id="Dvt" name="Dvt" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>STT báo cáo</label>
+                                <input type="text" id="HienThi" name="HienThi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Sắp xếp</label>
+                                <input type="number" id="SapXep" name="SapXep" class="form-control" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mô tả</label>
-                            <input type="text" id="mota_create" name="mota_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá</label>
-                            <input type="text" id="gia_create" name="gia_create" class="form-control" />
-                        </div>
-                    </div>
+
 
                 </div>
-
-                <div class="row">
-
-                    <div class="col-xl-4">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="dvt_create" class="form-control select2me select2-offscreen" name="dvt_create" tabindex="-1" title="">
-                            @foreach (var item in dsdvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-xl-1">
-                        <label class="control-label">Thêm </label>
-                        <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
-                            <i class="la la-plus"></i>
-                        </button>
-                    </div>
-
-                    <div class="col-xl-7">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="hientrang_create" name="hientrang_create" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
                 </div>
-
-                <div class="row">
-                    <div class="col-xl-11">
-                        <label class="control-label">Phân loại sản phẩm, dịch vụ</label>
-                        <select id="plspdv_create" class="form-control" name="plspdv_create">
-                            @foreach (var item in list)
-                            {
-                                <option value="@item.pl">@item.pl</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-xl-1">
-                        <label class="control-label">Thêm </label>
-                        <button type="button" class="btn btn-default" data-target="#Plspdv_Modal" data-toggle="modal">
-                            <i class="la la-plus"></i>
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
             </div>
         </div>
     </div>
-</div>
+</form>
 
-<!--Edit Modal-->
-<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Thông tin sản phẩm dịch vụ tối đa
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa sản phẩm dịch vụ tối đa</span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row" id="edit_thongtin">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -159,342 +91,7 @@
     </div>
 </div>
 
-<!--Lock Modal-->
-<div class="modal fade" id="Lock_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Thông tin chi tiết
-                    <span class="d-block text-muted pt-2 font-size-sm">Khóa/Mở khóa tất cả chi tiết danh mục</span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <input hidden id="manhom_lock" name="manhom_lock" value="@ViewData["Manhom"]" />
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="theodoi_lock" name="theodoi_lock" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Lock()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Thêm phân loại sản phẩm-->
-
-<div class="modal fade" id="Plspdv_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Thông tin phân loại
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label"> Phân loại sản phẩm dịch vụ<span class="require">*</span></label>
-                        <input id="plspdv_add" class="form-control" name="plspdv_add" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Plspdv()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Thêm đơn vị tính -->
-
-<div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Thông tin đơn vị tính
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
-                        <input id="dvt_add" class="form-control" name="dvt_add" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvt()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Thêm đơn vị tính edit  -->
-
-<div class="modal fade" id="Dvt_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Thông tin đơn vị tính edit
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label">Đơn vị tính<span class="require">*</span></label>
-                        <input id="dvt_addedit" class="form-control" name="dvt_addedit" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Dvtedit()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Thêm phân loại sản phẩm-->
-
-<div class="modal fade" id="Plspdv_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Thông tin phân loại
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label"> Phân loại sản phẩm dịch vụ<span class="require">*</span></label>
-                        <input id="plspdv_addedit" class="form-control" name="plspdv_addedit" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Plspdvedit()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Excel Modal-->
-<div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Thông tin sản phẩm dịch vụ cụ thể
-                    <span class="d-block text-muted pt-2 font-size-sm">Nhận dữ liệu từ file excel</span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" type="hidden" />
-                    <div class="mb-3 font-weight-bold font-size-lg">
-                        <label style="color: blue;font-weight: bold; text-transform: uppercase">@ViewData["Tennhom"]</label>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Tên sản phẩm</label>
-                            <select id="Ten_excel" name="Ten_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "1" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mô tả</label>
-                            <select id="Mota_excel" name="Mota_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "2" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá</label>
-                            <select id="Gia_excel" name="Gia_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "3" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị tính</label>
-                            <select id="Dvt_excel" name="Dvt_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "4" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Phân loại</label>
-                            <select id="Phanloai_excel" name="Phanloai_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "5" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Hiện trạng</label>
-                            <select id="Hientrang_excel" name="Hientrang_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "6" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>File dữ liệu:</label><br />
-                            <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Sheet</label>
-                            <input type="number" class="form-control" id="sheet_excel" name="sheet_excel" value="1" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div cla ss="form-group fv-plugins-icon-container">
-                            <label>Từ dòng</label>
-                            <input type="number" class="form-control" id="linestart_excel" name="linestart_excel" value="3" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đến dòng</label>
-                            <input type="number" class="form-control" id="linestop_excel" name="linestop_excel" value="111" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Excel()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-
-    function Dvt() {
-        $('#Dvt_Modal').modal('hide');
-        var gt = $('#dvt_add').val();
-        $('#dvt_create').append(new Option(gt, gt, true, true));
-        $('#dvt_create').val(gt).trigger('change');
-    }
-    function Plspdv() {
-        $('#Plspdv_Modal').modal('hide');
-        var gt = $('#plspdv_add').val();
-        $('#plspdv_create').append(new Option(gt, gt, true, true));
-        $('#plspdv_create').val(gt).trigger('change');
-    }
-
-    function Plspdvedit() {
-        $('#Plspdv_Modal_edit').modal('hide');
-        var gt = $('#plspdv_addedit').val();
-        $('#plspdv_edit').append(new Option(gt, gt, true, true));
-        $('#plspdv_edit').val(gt).trigger('change');
-    }
-
-    function Dvtedit() {
-        $('#Dvt_Modal_edit').modal('hide');
-        var gt = $('#dvt_addedit').val();
-        $('#dvt_edit').append(new Option(gt, gt, true, true));
-        $('#dvt_edit').val(gt).trigger('change');
-    }
-
-    function Store() {
-        if ($('#tennhom_create').val().trim() == '') {
-            toastr.error("Tên nhóm, loại tài nguyên không được để trống!!!", "Lỗi!");
-        } else {
-            $.ajax({
-                url: '/GiaSpDvToiDaDmCt/Store',
-                type: 'POST',
-                data: {
-                    Manhom: $('#Manhom').val(),
-                    Mota: $('#mota_create').val(),
-                    Tenspdv: $('#tennhom_create').val(),
-                    Dvt: $('#dvt_create').val(),
-                    Gia: $('#gia_create').val(),
-                    Hientrang: $('#hientrang_create').val(),
-                    Phanloai: $('#plspdv_create').val(),
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success(data.message);
-                        location.reload();
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
-    }
-
-    function getId(id, tennhom) {
-        document.getElementById("id_delete").value = id;
-        document.getElementById("tennhom_delete").innerHTML = tennhom;
-    }
-
     function editId(id_edit) {
         $.ajax({
             url: '/GiaSpDvToiDaDmCt/Edit',
@@ -504,43 +101,26 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Success!");
-                    $('#edit_thongtin').replaceWith(data.message);
-                } else {
-                    toastr.error(data.message, "Lỗi!!!");
-                }
+                console.log(data);
+                var form = $('#frm_chitiet');
+                form.find("[name='Id']").val(data.id);
+                form.find("[name='Tenspdv']").val(data.tenspdv);
+                form.find("[name='Dvt']").val(data.dvt);
+                form.find("[name='HienThi']").val(data.hienThi);
+                form.find("[name='SapXep']").val(data.sapXep);
             }
         })
     }
 
-    function Update() {
-        if ($('#tennhom_edit').val().trim() == '') {
-            toastr.error("Tên sản phẩm không được để trống!!!", "Lỗi!");
-        } else {
-            $.ajax({
-                url: '/GiaSpDvToiDaDmCt/Update',
-                type: 'POST',
-                data: {
-                    Mota: $('#mota_edit').val(),
-                    Tenspdv: $('#tennhom_edit').val(),
-                    Dvt: $('#dvt_edit').val(),
-                    Gia: $('#gia_edit').val(),
-                    Phanloai: $('#plspdv_edit').val(),
-                    Hientrang: $('#hientrang_edit').val(),
-                    Id: $('#id_edit').val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success(data.message);
-                        location.reload();
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
+    function setId(id_edit) {
+
+        var form = $('#frm_chitiet');
+        form.find("[name='Id']").val(id_edit);
+        form.find("[name='Tenspdv']").val("");
+        form.find("[name='Dvt']").val(data.dvt);
+        form.find("[name='HienThi']").val("");
+        form.find("[name='SapXep']").val(1);
+
     }
 
     function Lock() {

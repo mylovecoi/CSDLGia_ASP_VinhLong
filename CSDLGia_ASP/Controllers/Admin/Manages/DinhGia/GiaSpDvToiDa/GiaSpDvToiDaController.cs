@@ -169,10 +169,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                             Mahs = model.Mahs,
                             Phanloaidv = item.Tenspdv,
                             Maspdv = item.Maspdv,
-                            Mota = item.Mota,
                             Tendv = item.Tenspdv,
                             Dvt = item.Dvt,
-                            Dongia = item.Gia,
+                            HienThi = item.HienThi,
+                            Style = item.Style,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
@@ -637,7 +637,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                      Thoidiem = giaspdvtoida.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Ttqd = giaspdvtoida.Ttqd,
-                                     Mota = giaspdvtoidact.Mota,
+                                     Tenspdv = giaspdvtoidact.Tenspdv,
                                      Dongia = giaspdvtoidact.Dongia,
                                  });
 
@@ -661,7 +661,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 
                     if (tenhanghoa != null)
                     {
-                        model = model.Where(t => t.Mota == tenhanghoa);
+                        model = model.Where(t => t.Tenspdv == tenhanghoa);
                     }
                     if (beginPrice != 0)
                     {

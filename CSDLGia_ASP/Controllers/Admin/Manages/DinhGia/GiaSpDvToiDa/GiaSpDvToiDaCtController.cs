@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             var model = new GiaSpDvToiDaCt
             {
                 Mahs = Mahs,
-                Mota = Mota,
+                //Mota = Mota,
                 Dvt = Dvt,
                 Dongia = Dongia,
                 Phanloaidv = Phanloaidv,
@@ -125,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + record++ + "</td>";
                 result += "<td class='active'>" + item.Phanloaidv + "</td>";
-                result += "<td style='text-align:center'>" + item.Mota + "</td>";
+                result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:center'>" + item.Dongia + "</td>";
 
