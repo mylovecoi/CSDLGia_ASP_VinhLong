@@ -1,7 +1,12 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var record_id = 1;
+    DateTime currentDate = DateTime.Today;
+    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
+    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
+}
 }
 }
 <!--Trả lại Modal-->
@@ -12,9 +17,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Lý do trả lại hồ sơ*
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Quản lý trả lại hồ sơ giá nước sinh hoạt
+                        </span>
                     </h3>
-
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -41,12 +48,15 @@
 
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <form asp-controller="GiaNuocShXd" asp-action="TongHop" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Tổng hợp hồ sơ giá nước sinh hoạt
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Quản lý tổng hợp hồ sơ giá nước sinh hoạt
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -57,12 +67,14 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <input type="date" class="form-control" id="TuNgay" name="TuNgay">
+                                <label>Ngày kết xuất từ:</label>
+                                <input type="date" class="form-control" id="TuNgay" name="TuNgay" value="@FromDate">
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <input type="date" class="form-control" id="DenNgay" name="DenNgay">
+                                <label>Ngày kết xuất đến:</label>
+                                <input type="date" class="form-control" id="DenNgay" name="DenNgay" value="@ToDate">
                             </div>
                         </div>
                     </div>
@@ -130,7 +142,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý công bố?
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Quản lý công bố hồ sơ giá nước sinh hoạt
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -155,7 +170,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hủy công bố?
+                        <h3 class="card-label">
+                            @ViewData["Title"]
+                            <span class="d-block text-muted pt-2 font-size-sm">
+                                Quản lý hủy công bố hồ sơ giá nước sinh hoạt
+                            </span>
+                        </h3>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>

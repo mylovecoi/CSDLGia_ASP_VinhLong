@@ -188,7 +188,9 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.htg", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")
@@ -274,3 +276,4 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/ModalTongHop.cshtml")
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")

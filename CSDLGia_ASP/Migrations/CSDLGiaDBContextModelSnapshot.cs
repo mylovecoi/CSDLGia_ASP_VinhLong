@@ -5573,6 +5573,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Thanhtien")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("ThueSuat")
+                        .HasColumnType("float");
+
                     b.Property<string>("Thuevat")
                         .HasColumnType("nvarchar(max)");
 
