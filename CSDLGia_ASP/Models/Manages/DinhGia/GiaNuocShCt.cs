@@ -51,6 +51,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         //Bố sung
         public string TyTrongTieuThu { get; set; }
         public string SanLuong { get; set; }
+        public double ThueSuat { get; set; }
         public double DonGia1 { get; set; }
         public double DonGia2 { get; set; }
         public int STTSapxep { get; set; }

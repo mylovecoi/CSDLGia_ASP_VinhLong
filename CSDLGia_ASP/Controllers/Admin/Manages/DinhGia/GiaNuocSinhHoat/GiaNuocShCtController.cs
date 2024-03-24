@@ -64,14 +64,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá chưa thuế:</label>";
-                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' value='" + model.DonGia1 + "' class='form-control money text-right' />";
+                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' value='" + Helpers.ConvertDbToStr(model.DonGia1) + "' class='form-control money text-right' oninput='calc();' />";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thuế suất:</label>";
+                result += "<input type='text' id='thuesuat_edit' name='thuesuat_edit' value='" + model.ThueSuat + "' class='form-control text-right' oninput='calc();' />";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá sau thuế:</label>";
-                result += "<input type='text' id='dongia2_edit' name='dongia2_edit' value='" + model.DonGia2 + "' class='form-control money text-right' />";
+                result += "<input type='text' id='dongia2_edit' name='dongia2_edit' value='" + Helpers.ConvertDbToStr(model.DonGia2) + "' class='form-control money text-right' />";
                 result += "</div>";
                 result += "</div>";
                
@@ -94,13 +101,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocShCtNew/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string TyTrongTieuThu, string SanLuong, double DonGia1, double DonGia2, string[] Style)
+        public JsonResult Update(int Id, string TyTrongTieuThu, string SanLuong, double DonGia1, double ThueSuat, double DonGia2, string[] Style)
         {
             string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
             var model = _db.GiaNuocShCt.FirstOrDefault(t => t.Id == Id);
             model.TyTrongTieuThu = TyTrongTieuThu;
             model.SanLuong = SanLuong;
             model.DonGia1 = DonGia1;
+            model.ThueSuat = ThueSuat;
             model.DonGia2 = DonGia2;
             model.Updated_at = DateTime.Now;
             model.Style = str_style;
@@ -125,6 +133,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             result += "<th>Tỷ trọng tiêu thụ (%)</th>";
             result += "<th>Sản lượng (m3)</th>";
             result += "<th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>";
+            result += "<th>Thuế suất</th>";
             result += "<th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
@@ -141,6 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TyTrongTieuThu + "</td>";
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.SanLuong + "</td>";
                 result += "<td style='text-align:right;" + HtmlStyle + "'>" + item.DonGia1 + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.ThueSuat + "</td>";
                 result += "<td style='text-align:right;" + HtmlStyle + "'>" + item.DonGia2 + "</td>";                
                 
                 result += "<td>";
