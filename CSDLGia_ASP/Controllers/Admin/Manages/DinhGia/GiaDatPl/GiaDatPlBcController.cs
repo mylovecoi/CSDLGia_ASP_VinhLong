@@ -1,11 +1,21 @@
-﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using CSDLGia_ASP.Database;
+using System.Security.Cryptography;
+using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -18,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             _db = db;
         }
 
-        [Route("GiaDatCuThe/BaoCao")]
+        [Route("GiaDatPl/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -26,12 +36,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.baocao", "Index"))
                 {
-
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp đất cụ thể";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
+                    ViewData["DanhSachHoSo"] = _db.GiaDatPhanLoai.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/Index.cshtml");
                 }
                 else
@@ -46,30 +56,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("GiaDatCuThe/BcTH")]
+        [Route("GiaDatPl/BaoCao/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
                 {
-                    var model = (from pl in _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join db in _db.DsDiaBan on pl.Madiaban equals db.MaDiaBan
-                                 select new GiaDatPhanLoai
+
+                    var model = (from hoso in _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai
                                  {
-                                     Id = pl.Id,
-                                     Mahs = pl.Mahs,
-                                     Tendiaban = db.TenDiaBan,
-                                     Soqd = pl.Soqd,
-                                     Thoidiem = pl.Thoidiem,
+                                     TenDonVi = donvi.TenDv,
+                                     Mahs = hoso.Mahs,
+                                     Soqd = hoso.Soqd,
+                                     Ghichu = hoso.Ghichu,
                                  });
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
+                    ViewData["tungay"] = tungay;
+                    ViewData["denngay"] = denngay;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -84,23 +96,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        [Route("GiaDatCuThe/BcCT")]
+        [Route("GiaDatPl/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
                 {
-
-                    var model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
-                    ViewData["ct"] = _db.GiaDatPhanLoaiCt;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_bc";
+                    var model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaHsTongHop != "all")
+                    {
+                        model = model.Where(t => t.Mahs == MaHsTongHop);
+                    }
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
+                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
+                    var model_ct = _db.GiaDatPhanLoaiCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+                    ViewData["HoSoCt"] = model_ct;
+                    ViewData["DonVis"] = model_donvi;
+                    ViewData["Title"] = "Báo cáo tổng hợp giá  giá đất cụ thể";
+                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/BcCT.cshtml", model);
                 }
                 else
@@ -118,3 +136,4 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
     }
 }
+
