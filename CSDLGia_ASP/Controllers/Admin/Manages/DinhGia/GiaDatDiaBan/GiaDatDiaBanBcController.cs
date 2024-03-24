@@ -70,10 +70,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                                  {
-                        
+                                  
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-
+                                     GhiChu = hoso.GhiChu,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất địa bàn";
@@ -117,9 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
                     ViewData["HoSoCt"] = model_ct;
                     ViewData["DonVis"] = model_donvi;
-
                     ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
-
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["Title"] = "Báo cáo chi tiết giá lệ giá đất địa bàn";

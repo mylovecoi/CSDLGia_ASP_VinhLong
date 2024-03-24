@@ -38,10 +38,10 @@
     @foreach (var hoso in hosodonvi)
     {
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   Số QĐ: @hoso.S - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem) *@
+            Số QĐ: @hoso.Kyhieuvb - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   @hoso.Mota *@
+            @hoso.Ghichu
         </p>
         var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
         <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">

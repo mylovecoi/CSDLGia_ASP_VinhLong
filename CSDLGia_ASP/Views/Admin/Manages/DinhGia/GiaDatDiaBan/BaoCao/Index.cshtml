@@ -50,7 +50,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Báo cáo giá đất địa bạn
+                Báo cáo giá đất địa bàn
             </h3>
         </div>
     </div>
@@ -138,7 +138,7 @@
 <!--Báo cáo chi tiết-->
 <div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaDatDiaBanBC" asp-action="BcCT" target="_blank" id="frm_TongHopLePhi" name="frm_TongHopLePhi">
+        <form asp-controller="GiaDatDiaBanBC" asp-action="BcCT" target="_blank" id="form_moda" name="form_moda">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -169,6 +169,10 @@
                                 <label>Thông tin hồ sơ: </label><br />
                                 <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
                                     <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd - Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
                                   
                                 </select>
                             </div>
@@ -189,8 +193,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    @* <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Đồng ý</button> *@
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Đồng ý</button>
+                    @* <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button> *@
                 </div>
             </div>
         </form>
@@ -209,7 +213,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaLePhiHt/GetListHoSo',
+                    url: '/GiaDatDiaBanXd/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,
@@ -241,7 +245,10 @@
             var toDateObj = new Date(toDate);
 
             if (fromDateObj <= toDateObj) {
-                var form = document.getElementById("frm_TongHopLePhi");
+                var form = document.getElementById("form_moda");
+                // Ngăn chặn chuyển hướng mặc định của form
+                event.preventDefault();
+
                 form.submit();
                 location.reload();
             } else {

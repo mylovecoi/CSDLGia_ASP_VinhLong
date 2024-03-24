@@ -2,7 +2,7 @@
     Layout = "_LayoutReports";
     var record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat>
 <br />
 <br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -46,7 +46,7 @@
               @*       @item.TenDonVi<br /> *@
                     <b>Mã hồ sơ: </b><a asp-controller="GiaGiaoDichDat" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
-              @*   <td style="text-align: center">@item.Soqd</td> *@
+                <td style="text-align: center">@item.Soqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                 <td></td>
 

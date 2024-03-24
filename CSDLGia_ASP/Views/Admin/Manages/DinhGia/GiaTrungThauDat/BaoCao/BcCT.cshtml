@@ -37,10 +37,10 @@
     @foreach (var hoso in hosodonvi)
     {
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem) *@
+            Số QĐ: @hoso.Soqddaugia - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   @hoso.Mota *@
+        @*     @hoso.Mota *@
         </p>
         var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
         <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
@@ -57,19 +57,7 @@
                     <th style="text-align:center; font-weight:bold">Giá đấu giá</th>
                 </tr>
             </thead>
-          @*   <tbody>
-                @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
-                {
-                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
-                    <tr>
-                        <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
-                        <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
-                        <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
-
-                    </tr>
-                }
-            </tbody> *@
+         
         </table>
     }
 }
