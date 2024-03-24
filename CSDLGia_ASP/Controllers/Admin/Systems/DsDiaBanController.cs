@@ -101,12 +101,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã địa bàn: </label>";
-                        result += "<input type='text' id='madiaban_edit' name='madiaban_edit' class='form-control' value='" + model.MaDiaBan + "' readonly='readonly'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên địa bàn<span class='required'>*</span>: </label>";
                         result += "<input type='text' id='tendiaban_edit' name='tendiaban_edit' class='form-control' value='" + model.TenDiaBan + "'/>";
                         result += "</div>";
