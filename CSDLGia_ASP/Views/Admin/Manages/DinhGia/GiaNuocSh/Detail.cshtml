@@ -82,14 +82,11 @@
     function calc() {
         // var dongia1 = document.getElementById("dongia1_edit").value;
         // var dongia1 = parseInt(dongia1, 10);
-        var dongia1 = $('#dongia1_edit').val().replace(',', '');
-
         // var thuesuat = document.getElementById("thuesuat_edit").value;
         // var thuesuat = parseInt(thuesuat, 10);
+        var dongia1 = $('#dongia1_edit').val().replace(',', '');
         var thuesuat = $('#thuesuat_edit').val().replace(',', '');
-
         var dongia2 = dongia1 * thuesuat;
-
         document.getElementById("dongia2_edit").value = dongia2;
     }
 
@@ -116,12 +113,9 @@
     }
 
     function SetUpdate() {
-        
-
         var dongia1 = $('#dongia1_edit').val().replace(',', '');
         var thuesuat = $('#thuesuat_edit').val().replace(',', '');
         var dongia2 = $('#dongia2_edit').val().replace(',', '');
-      
         $.ajax({
             url: '/GiaNuocShCtNew/Update',
             type: 'POST',
