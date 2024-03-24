@@ -40,7 +40,14 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
-        public string Soqd { get; set; }       
-
+        public string Soqd { get; set; }
+        [NotMapped]
+        public string MaDiaBan { get; set; }
+        [NotMapped]
+        public string PhanLoaiHoSo { get; set; }
+        [NotMapped]
+        public string Ttqd { get; set; }
+        [NotMapped]
+        public string GhiChu { get; set; }
     }
 }

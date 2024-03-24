@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat")]
         [HttpGet]
-        public IActionResult Index(string Madb, string Nam)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -44,22 +44,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madb") != null)
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
-                            Madb = Helpers.GetSsAdmin(HttpContext.Session, "Madb");
-
+                            Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
                         else
                         {
-                            if (string.IsNullOrEmpty(Madb))
+                            if (string.IsNullOrEmpty(Madv))
                             {
-                                Madb = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
+                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
 
                             }
                         }
 
 
-                        var model = _db.GiaDauGiaDat.Where(t => t.Madiaban == Madb).ToList();
+                        var model = _db.GiaDauGiaDat.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -79,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                             }
                         }
 
-                        ViewData["Madb"] = Madb;
+                        ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -116,7 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat/Create")]
         [HttpGet]
-        public IActionResult Create(string Madiaban)
+        public IActionResult Create(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -124,17 +123,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 {
                     var model = new GiaDauGiaDat
                     {
-
+                        Madv = Madv,
                         Thoidiem = DateTime.Now,
-                        Mahs = Madiaban + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
-                    var dsdv = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI" && t.MaDiaBan == Madiaban).OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                    var dsdv = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI" && t.MaDiaBan == Madv).OrderBy(t => t.Id).Select(t => t.MaDv).First();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
-                    ViewData["Madv"] = dsdv;
-                    ViewData["Madb"] = Madiaban;
-                    ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
+                    /*ViewData["Dsdv"] = dsdv;*/
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(t=>t.Madiaban == Madv).ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
@@ -182,7 +179,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         Mahs = request.Mahs,
                         Madv = request.Madv,
-                        Madiaban = request.Madiaban,
                         Maxp = request.Maxp,
                         Thoidiem = request.Thoidiem,
                         Tenduan = request.Tenduan,

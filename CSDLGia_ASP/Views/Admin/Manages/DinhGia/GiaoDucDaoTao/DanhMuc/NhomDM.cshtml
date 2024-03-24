@@ -1,0 +1,233 @@
+﻿@{
+    int record_id = 1;
+    int SapXep = Int32.Parse(ViewData["SapXep"].ToString());
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtNhom>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <h3 class="card-label">
+            @ViewData["Title"]
+            <span class="d-block text-muted pt-2 font-size-sm">
+                Quản lý nhóm danh muc hồ sơ giá giáo dục đào tạo
+            </span>
+        </h3>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="10%">STT</th>
+                    <th>Mã nhóm</th>
+                    <th>Tên nhóm</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@item.MaNhom</td>
+                            <td style="text-align: left">@item.TenNhom</td>
+                            <td style="text-align: center">
+                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaoDucDaoTaoDm" asp-action="Index" asp-route-MaNhom="@item.MaNhom" title="Xem chi tiết">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                    <i class="icon-lg la la-edit text-warning"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới nhóm danh muc hồ sơ giá giáo dục đào tạo
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-action="Store" asp-controller="GiaoDucDaoTaoNhom" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label><b>Mã nhóm*</b></label>
+                                <input type="text" id="MaNhom_create" name="MaNhom_create" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group ">
+                                <label><b>Tên nhóm*</b></label>
+                                <input type="text" id="TenNhom_create" name="TenNhom_create" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label style="font-weight:bold;color:blue">Sắp xếp: </label>
+                                <input type="number" id="stt_create" name="stt_create" class="form-control" step="1" value="@SapXep" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa nhóm danh muc hồ sơ giá giáo dục đào tạo
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaoDucDaoTaoNhom" asp-action="Delete" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên nhóm:</b></label>
+                            <label id="TenNhom_delete" name="TenNhom_delete" class="form-control"></label>
+                        </div>
+                        <input id="id_delete" name="id_delete" type="hidden" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa nhóm danh muc hồ sơ giá giáo dục đào tạo
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function SetDelete(id, tennhom) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("TenNhom_delete").innerHTML = tennhom
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DanhMucNhomGiaGiaoDucDaoTao/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#edit_thongtin').replaceWith(data.message);
+
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function GetEdit() {
+        $.ajax({
+            url: '/DanhMucNhomGiaGiaoDucDaoTao/Update',
+            type: 'POST',
+            data: {
+                MaNhom: $('#MaNhom_edit').val(),
+                TenNhom: $('#TenNhom_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

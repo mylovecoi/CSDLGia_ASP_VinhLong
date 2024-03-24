@@ -1,98 +1,98 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    int record_id = 1;
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
-    var dmNhomSpDvCuThe = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
 }
-<br />
-<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
 
-<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
-<p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
-<p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ GIÁ SẢN PHẨM DỊCH VỤ CỤ THỂ</p>
+@{
+    switch (Model.PhanLoaiHoSo)
     {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
+        case "XE":
+            <p style="font-size: 16px;">Phân loại hồ sơ: Hồ sơ giá trông giữ xe</p>
+            break;
+        default:
+            <p style="font-size: 16px;">Phân loại hồ sơ: Hồ sơ giá diện tích bán hàng tại chợ</p>
+            break;
     }
+}
+<p style="font-size: 16px;"> Địa bàn áp dụng: 
+    @if (!string.IsNullOrEmpty(Model.Madiaban))
+        @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban).TenDiaBan
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
-<p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
-</p>
+<p style="font-size: 16px;">Thời điểm áp dụng @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
+<p style="font-size: 16px;">Số quyết định: @Model.Soqd</p>
+<p style="font-size: 16px;">Nội dung: @Model.GhiChu</p>
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<div class="card card-custom" style="border: 1px solid #60aee4;">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-            </h3>
-        </div>
 
-    </div>
-    <hr />
-    <div class="card-body" id="frm_data">
-        <div class="card-body" id="frm_data">
-            @foreach (var manhom in ViewData["GroupMaNhom"] as List<string>)
-
+@if (Model.PhanLoaiHoSo == "XE")
+{
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+        <thead>
+            <tr style="text-align:center">
+                <th>STT</th>                
+                <th>Tên sản phẩm dịch vụ</th>
+                <th>Đơn vị tính</th>
+                <th>Điểm giữ xe thông<br />thường và danh lam<br />thắng cảnh</th>
+                <th>Điểm giữ xe có nhu<br />cầu sử dụng lớn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
             {
-                @foreach (var dm in dmNhomSpDvCuThe)
+                @if (Model.GiaSpDvCuTheCt != null)
                 {
-                    @if (manhom == dm.Manhom)
+                    @foreach (var item in Model.GiaSpDvCuTheCt.OrderBy(x => x.Sapxep))
                     {
-                        <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
-                    }
-
-                }
-                <table class="cellspacing=" 0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" dulieubang">
-                    <thead>
                         <tr>
-                            <th style="text-align:center">STT</th>
-                            <th style="text-align:center">Hiển thị</th>
-                            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-                            <th style="text-align:center">Đơn vị tính</th>
-                            <th style="text-align:center">Mức giá từ</th>
-                            <th style="text-align:center">Mức giá đến</th>
+                            <td style="text-align:center">@item.Tt</td>
+                            <td style="text-align:left">@item.TenSpDv</td>
+                            <td style="text-align:center">@item.Dvt</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia1)</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia2)</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            @if (Model.GiaSpDvCuTheCt != null)
-                            {
-                                @foreach (var item in Model.GiaSpDvCuTheCt)
-                                {
-                                    <tr>
-                                        <td style="text-align:center">@(record_id++)</td>
-                                        <td style="text-align:center">@item.Tt</td>
-                                        <td style="text-align:left">@item.TenSpDv</td>
-                                        <td style="text-align:center">@item.Dvt</td>
-                                        <td style="text-align:center">@item.Mucgia1</td>
-                                        <td style="text-align:center">@item.Mucgia2</td>
-                                       
-                                    </tr>
-                                }
-                            }
-                        }
-                    </tbody>
-                </table>
+                    }
+                }
             }
-            <!--end: Datatable-->
-        </div>
-        <!--end: Datatable-->
-    </div>
-</div>
+        </tbody>
+    </table>
+}
+else
+{
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+        <thead>
+            <tr style="text-align:center">
+                <th>STT</th>                
+                <th>Tên sản phẩm dịch vụ</th>
+                <th>Đơn vị tính</th>
+                <th>Thành phố</th>
+                <th>Thị xã</th>
+                <th>Các huyện<br />đồng bằng</th>
+                <th>Các huyện<br />miền núi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @if (Model.GiaSpDvCuTheCt != null)
+                {
+                    @foreach (var item in Model.GiaSpDvCuTheCt.OrderBy(x => x.Sapxep))
+                    {
+                        <tr>
+                            <td style="text-align:center">@item.Tt</td>
+                            <td style="text-align:left">@item.TenSpDv</td>
+                            <td style="text-align:center">@item.Dvt</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia1) </td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia2)</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia3)</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia4)</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+    <!--end: Datatable-->
+}

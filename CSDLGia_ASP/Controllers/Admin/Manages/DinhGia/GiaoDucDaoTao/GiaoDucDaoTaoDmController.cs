@@ -19,13 +19,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
         [Route("DanhMucGdDt")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string MaNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Index"))
                 {
-                    var model = _db.GiaDvGdDtDm.ToList();
+                    var model = _db.GiaDvGdDtDm.Where(t => t.MaNhom == MaNhom);
+                    ViewData["TenNhom"] = _db.GiaDvGdDtNhom.FirstOrDefault(t => t.MaNhom == MaNhom)?.TenNhom ?? "";
+                    ViewData["MaNhom"] = MaNhom;
                     ViewData["Title"] = "Danh mục giá dịch vụ giáo dục đạo tạo";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dggddt";
@@ -47,10 +49,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
         [Route("DanhMucGdDt/Store")]
         [HttpPost]
-        public JsonResult Store(string Tenspdv)
+        public JsonResult Store(string Tenspdv, string MaNhom, int SapXep)
         {
             var model = new GiaDvGdDtDm
             {
+                MaNhom = MaNhom,
+                SapXep = SapXep,
                 Tenspdv = Tenspdv,
                 Maspdv = DateTime.Now.ToString("yyMMddssmmHH"),
                 Created_at = DateTime.Now,
@@ -90,7 +94,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 result += "<label><b>Tên dịch vụ*</b></label>";
                 result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control'/>";
                 result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
-                result += "</div></div></div></div>";
+                result += "</div></div>";
+                result += "</div></div>";
 
 
                 var data = new { status = "success", message = result };
