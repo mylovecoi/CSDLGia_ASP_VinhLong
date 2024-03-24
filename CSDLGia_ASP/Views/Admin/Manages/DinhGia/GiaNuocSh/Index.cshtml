@@ -38,8 +38,10 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ<small>&nbsp;giá nước sạch sinh hoạt</small><br />
-                <small style="color: blue;">Mã số thuế: @ViewData["Donvi"]</small>
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý thông tin hồ sơ giá nước sạch sinh hoạt
+                </span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -57,16 +59,7 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
                 }
-            }
-            <a class="btn btn-primary font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
-                <i class="la la-plus"></i>Thêm mới
-            </a>
-            <span>&ensp;</span>
-            <a class="btn btn-success font-weight-bolder" asp-controller="GiaNuocSh" asp-action="NhanExcel"
-               asp-route-Madv="@ViewData["Madv"]">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a>
+            }          
         </div>
     </div>
     <hr />
@@ -179,15 +172,14 @@
                                 }
                             </td>
                             <td>
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
+                                
                                 <a asp-controller="GiaNuocSh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Edit"))
@@ -196,17 +188,22 @@
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs','@item.Soqd')">
+                                        <i class="icon-lg la la-check text-primary"></i>
+                                    </button>
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Delete"))
                                     {
 
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Soqd')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
-                                    }
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary"></i>
-                                    </button>
+                                    }                                   
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                             </td>
                         </tr>
                     }
@@ -223,13 +220,24 @@
             <form asp-controller="GiaNuocSh" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý xóa thông tin???
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Xóa thông tin hồ sơ giá nước sạch sinh hoạt
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số QĐ:</label>
+                                <label class="form-control" id="soqd_delete" name="soqd_delete"></label>                                
+                            </div>
+                        </div>
+                    </div>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -248,7 +256,10 @@
             <form asp-controller="GiaNuocSh" asp-action="Complete">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Hoàn thành thông tin hồ sơ giá nước sạch sinh hoạt
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -257,6 +268,12 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số QĐ:</label>
+                                <label class="form-control" id="soqd_chuyen" name="soqd_chuyen"></label>
+                            </div>
+                        </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
@@ -288,14 +305,15 @@
     </div>
 </div>
 
-
 <script>
-    function SetDelete(id) {
+    function SetDelete(id, soqd) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("soqd_delete").innerHTML = soqd;
     }
 
-    function SetComplete(mahs) {
+    function SetComplete(mahs, soqd) {
         document.getElementById("mahs_complete").value = mahs;
-    }
-
+        document.getElementById("soqd_chuyen").innerHTML = soqd;
+    }  
 </script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaNuocSh/ThongTinGiayTo/Show.cshtml")

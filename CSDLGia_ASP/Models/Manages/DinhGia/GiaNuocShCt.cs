@@ -57,5 +57,13 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string STTHienthi { get; set; }
         public string Style { get; set; }
 
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+
+
     }
 }
