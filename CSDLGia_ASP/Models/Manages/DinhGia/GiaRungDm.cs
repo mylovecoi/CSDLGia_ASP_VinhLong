@@ -17,5 +17,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maxa { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        //
+        public int STTSapXep { get; set; }
+        public string MaTTR { get; set; }
+        public string LoaiRung { get; set; }
+        public string Style { get; set; }
     }
 }

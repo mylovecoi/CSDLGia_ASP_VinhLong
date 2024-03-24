@@ -80,44 +80,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
         public string GetData(string Mahs)
         {
-            var Model = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs).ToList();
-            var GiaDvGdDtDm = _db.GiaDvGdDtDm.ToList();
+            var model = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs).ToList();
+            var model_nhom = _db.GiaDvGdDtNhom;
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
-
-            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
-            result += "<thead>";
-
-            result += "<tr style = 'text-align:center' >";
-            result += "<th>STT</th >";
-            result += "<th>Tên sản phẩm dịch vụ</th>";
-            result += "<td>Thành thị</td>";
-            result += "<td>Nông thôn</td>";
-            result += "<td>Miền núi</td>";
-            result += "<th>Thao tác</th>";
-            result += "</tr>";
-            result += "</thead>";
-            result += "<tbody>";
-            if (Model != null)
+            foreach (var nhom in model_nhom)
             {
-                foreach (var item in Model)
+                var data = model.Where(t => t.MaNhom == nhom.MaNhom);
+                if (data.Any())
                 {
-                    result += "<tr>";
-                    result += "<td style='text-align:center'>" + (record++) + "</td>";
-                    result += "<td style='text-align:left'>" + item.Mota + "</td>";
-                    result += "<td style='text-align:right'>" + item.Giathanhthi1 + "</td>";
-                    result += "<td style='text-align:right'>" + item.Gianongthon1 + "</td>";
-                    result += "<td style='text-align:right'>" + item.Giamiennui1 + "</td>";
-                    result += "<td>";
-                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                    result += "data-target='#Edit_Modal' data-toggle='modal' onclick='GetEdit(`" + item.Id + "`)'>";
-                    result += "<i class='icon-lg la la-edit text-primary'></i>";
-                    result += "</button>";
-                    result += "</td></tr>";
+                    result += "<p style='text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold'>" + nhom.TenNhom + "</p>";
+                    result += "<table class='table table-striped table-bordered table-hover class-nosort'>";
+                    result += "<thead>";
+                    result += "<tr style = 'text-align:center' >";
+                    result += "<th>STT</th >";
+                    result += "<th>Tên sản phẩm dịch vụ</th>";
+                    result += "<td>Thành thị</td>";
+                    result += "<td>Nông thôn</td>";
+                    result += "<td>Miền núi</td>";
+                    result += "<th>Thao tác</th>";
+                    result += "</tr>";
+                    result += "</thead>";
+                    result += "<tbody>";
+                    if (data.Any())
+                    {
+                        foreach (var item in data.OrderBy(t => t.Id))
+                        {
+                            result += "<tr>";
+                            result += "<td style='text-align:center'>" + (record++) + "</td>";
+                            result += "<td style='text-align:left'>" + item.Mota + "</td>";
+                            result += "<td style='text-align:right'>" + item.Giathanhthi1 + "</td>";
+                            result += "<td style='text-align:right'>" + item.Gianongthon1 + "</td>";
+                            result += "<td style='text-align:right'>" + item.Giamiennui1 + "</td>";
+                            result += "<td>";
+                            result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                            result += "data-target='#Edit_Modal' data-toggle='modal' onclick='GetEdit(`" + item.Id + "`)'>";
+                            result += "<i class='icon-lg la la-edit text-primary'></i>";
+                            result += "</button>";
+                            result += "</td></tr>";
+                        }
+                    }
+                    result += "</tbody>";
+                    result += "</table>";
                 }
             }
-            result += "</tbody>";
-            result += "</table>";
             result += "</div>";
 
             return result;
