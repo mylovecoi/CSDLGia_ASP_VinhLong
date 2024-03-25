@@ -84,13 +84,7 @@
                         <label>Ghi chú</label>
                         <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
                     </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
+                </div>               
             </div>
 
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaKhungGiaDat/ThongTinGiayTo/Index.cshtml")

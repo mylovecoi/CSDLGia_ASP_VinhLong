@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan;
 @{
     int record_id = 1;
 }
@@ -61,8 +61,7 @@
                             </tr>
                         }
                     }
-                    else
-                    {
+                    else{
                         <tr>
                             <td style="text-align:center" colspan="3">Không có thông tin</td>
                         </tr>
@@ -113,4 +112,4 @@
         })
     }
 </script>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaKhungGiaDat/ThongTinGiayTo/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvToiDa/ThongTinGiayTo/Modal.cshtml")

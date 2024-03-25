@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240325041655_add_colum_MaDv_model_GiaKhungGiaDatCt")]
+    partial class add_colum_MaDv_model_GiaKhungGiaDatCt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1439,6 +1441,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CodeExcel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1456,6 +1461,21 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Giatri")
                         .HasColumnType("float");
+
+                    b.Property<string>("Ipf1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf5")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lichsu")
                         .HasColumnType("nvarchar(max)");
@@ -1508,7 +1528,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maxp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phanloai")
+                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soqd")
