@@ -7154,22 +7154,28 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maspdv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mucgia1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mucgia2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Mucgiaden")
+                    b.Property<double>("Mucgia1")
                         .HasColumnType("float");
 
-                    b.Property<double>("Mucgiatu")
+                    b.Property<double>("Mucgia2")
                         .HasColumnType("float");
 
-                    b.Property<string>("Phanloaidv")
+                    b.Property<double>("Mucgia3")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Mucgia4")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Mucgia5")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Mucgia6")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Sapxep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenSpDv")
@@ -7208,14 +7214,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maspdv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mucgia1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mucgia2")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Sapxep")
                         .HasColumnType("int");
+
+                    b.Property<string>("Style")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");
@@ -8609,6 +8612,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaNhom")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -8625,6 +8631,15 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Trangthai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TyLe1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TyLe2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TyLe3")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")

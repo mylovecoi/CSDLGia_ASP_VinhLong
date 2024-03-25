@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocNhom>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -19,14 +19,17 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh mục nhóm giá thuê đất, mặt nước
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý Danh mục nhóm giá thuê đất, mặt nước
+                </span>
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
@@ -42,9 +45,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th>Mã số nhóm</th>
-                    <th>Tên nhóm</th>
-                    <th width="10%">Theo dõi</th>
+                    <th width="10%">Mã hồ sơ</th>
+                    <th>Hồ sơ</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -55,21 +57,16 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td class="active">@item.Manhom</td>
                         <td class="active">@item.Tennhom</td>
-                        <td style="text-align: center">
-                            @if (item.Theodoi == "TD")
-                            {
-                                <span class="label font-weight-bold label-lg  label-primary label-inline">Theo dõi</span>
-                            }
-                            else
-                            {
-                                <span class="label font-weight-bold label-lg label-danger label-inline">Không theo dõi</span>
-                            }
-                        </td>
                         <td>
+
+                            <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaThueDNDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                        data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                             }
@@ -77,17 +74,12 @@
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.Tennhom')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.Tennhom')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
 
-                            @if (item.Theodoi == "TD")
-                            {
-                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaThueDNDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
-                            }
+
                         </td>
                     </tr>
                 }

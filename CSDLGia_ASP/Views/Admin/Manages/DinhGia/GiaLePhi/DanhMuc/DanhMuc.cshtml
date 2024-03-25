@@ -26,7 +26,9 @@
         <div class="card-title">
             <h3 class="card-label">
                 @ViewData["Title"]
-                <span class="d-block text-muted pt-2 font-size-sm">@ViewData["TenNhom"]</span>
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý danh mục chi tiết loại hồ sơ @ViewData["TenNhom"]
+                </span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -100,7 +102,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Danh mục khung giá sử dụng nước sinh hoạt
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới danh mục chi tiết loại hồ sơ @ViewData["TenNhom"]
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -125,7 +130,6 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
                                 <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
-                                    <option value="Chữ in hoa">Chữ in hoa</option>
                                     <option value="Chữ in đậm">Chữ in đậm</option>
                                     <option value="Chữ in nghiêng">Chữ in nghiêng</option>
                                 </select>
@@ -154,7 +158,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa danh mục
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa danh mục chi tiết loại hồ sơ @ViewData["TenNhom"]
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -174,7 +181,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa danh mục chi tiết loại hồ sơ @ViewData["TenNhom"]
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -195,7 +205,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa dữ liệu nhóm @ViewData["Manhom"]
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa dữ liệu danh mục chi tiết loại hồ sơ @ViewData["TenNhom"]
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>

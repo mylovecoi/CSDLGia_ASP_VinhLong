@@ -1,0 +1,66 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManagedClass.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Chỉnh sửa thông tin hồ sơ giá giá thuê mặt đất mặt nước
+                </span>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaThueDN" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_tmdmn_update">
+        <div class="card-body">   
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Detail.cshtml")
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaThueDN" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateTmdmn()"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function ValidateTmdmn() {
+        if ($('#Soqd').val().trim() == '') {
+            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
+        } else {
+            if ($('#Thoidiem').val().trim() == '') {
+                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+            } else {
+                document.getElementById("frm_tmdmn_update").submit();
+            }
+        }
+    }
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

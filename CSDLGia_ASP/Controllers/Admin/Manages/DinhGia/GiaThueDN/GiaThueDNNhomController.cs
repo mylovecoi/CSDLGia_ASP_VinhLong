@@ -54,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueDNDM/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
+        public JsonResult Store(string Manhom, string Tennhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -62,9 +62,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 {
                     var request = new GiaThueMatDatMatNuocNhom
                     {
-                        Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Manhom = Manhom,
                         Tennhom = Tennhom,
-                        Theodoi = Theodoi,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -101,19 +100,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đối tượng thu*</label>";
+                        result += "<label>Phân loại hồ sơ</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Trạng thái</label>";
-                        result += "<select id='theodoi_edit' name='theodoi_edit' class='form-control'>";
-                        result += "<option value='TD' " + ((string)model.Theodoi == "TD" ? "selected" : "") + ">Theo dõi</option>";
-                        result += "<option value='KTD' " + ((string)model.Theodoi == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
-                        result += "</select>";
-                        result += "</div>";
-                        result += "</div>";
+                        result += "</div>";                       
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -185,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     _db.GiaThueMatDatMatNuocNhom.RemoveRange(model_ct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaSpDvKhungGiaNhom");
+                    return RedirectToAction("Index", "GiaThueDNNhom");
                 }
                 else
                 {

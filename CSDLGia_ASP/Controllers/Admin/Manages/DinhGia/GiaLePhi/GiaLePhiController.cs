@@ -132,6 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Madv = Madv_create,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv_create + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Manhom = Manhom_create
                     };
                     var dm = _db.GiaPhiLePhiDm.Where(t=>t.Manhom == Manhom_create);
                     var chitiet = new List<GiaPhiLePhiCt>();
@@ -379,6 +380,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Show"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
+                    string TenNhom = _db.GiaPhiLePhiNhom.FirstOrDefault(t=>t.Manhom == model.Manhom)?.Tennhom ?? "";
                     var model_new = new GiaPhiLePhi
                     {
                         Soqd = model.Soqd,
@@ -386,6 +388,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Thongtin = model.Thongtin,
                         Mota = model.Mota,
                         Ghichu = model.Ghichu,
+                        Phanloai = TenNhom
                     };
                     var model_ct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
 
@@ -540,7 +543,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                          Giatu = dgct.Giatu,
                                          Phanloai = dgct.Phanloai,
                                          Mucthutu = dgct.Mucthutu,
-                                          Trangthai = dg.Trangthai
+                                         Trangthai = dg.Trangthai
                                      };
                     
                     model_join = model_join.Where(t=>t.ThoiDiem >= beginTime_Search && t.ThoiDiem <= endTime_Search && t.Trangthai == "HT" && t.Mucthutu >= beginPrice_Search);

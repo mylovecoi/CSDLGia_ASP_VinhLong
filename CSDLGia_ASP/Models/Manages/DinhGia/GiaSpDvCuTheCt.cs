@@ -10,15 +10,26 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Key]
 
         public int Id { get; set; }
-
         public string Mahs { get; set; }
-        public string Mota { get; set; }
-
-        public double Mucgiatu { get; set; }
-        public double Mucgiaden { get; set; }
+        
+        // Bổ sung
+        public string Maspdv { get; set; }
+        public string TenSpDv { get; set; }
+        public string Manhom { get; set; }
+        public string Dvt { get; set; }
+        public double Mucgia1 { get; set; }
+        public double Mucgia2 { get; set; }
+        public double Mucgia3 { get; set; }
+        public double Mucgia4 { get; set; }
+        public double Mucgia5 { get; set; }
+        public double Mucgia6 { get; set; }
+        public string Style { get; set; }
+        public int Sapxep { get; set; }
+        public string Tt { get; set; }
+        //
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        public string Phanloaidv { get; set; }
+       
         public string Trangthai { get; set; }
         [NotMapped]
         public string Madv { get; set; }
@@ -29,28 +40,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
-        public string Soqd { get; set; }
-
-        //Excel
-        [NotMapped]
-        public int LineStart { get; set; }
-        [NotMapped]
-        public int LineStop { get; set; }
-        [NotMapped]
-        public int Sheet { get; set; }
-        [NotMapped]
-        [Required(ErrorMessage = "Thông tin không được bỏ trống")]
-        public IFormFile FormFile { get; set; }
-
-        // Bổ sung
-        public string Tt { get; set; }
-        public string Maspdv { get; set; }
-        public string TenSpDv { get; set; }
-        public string Manhom { get; set; }
-        public string Dvt { get; set; }
-        public string Mucgia1 { get; set; }
-        public string Mucgia2 { get; set; }
-        //
+        public string Soqd { get; set; }       
 
     }
 }
