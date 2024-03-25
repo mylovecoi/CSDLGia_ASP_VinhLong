@@ -20,7 +20,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -41,6 +41,7 @@
             <th rowspan="2" style="text-align:center">STT</th>
             <th rowspan="2" style="text-align:center">Vị trí, địa bàn</th>
             <th colspan="3" style="text-align:center">Tỷ lệ %</th>
+            <th rowspan="2" style="text-align:center">Đơn giá</th>
         </tr>
         <tr style="text-align:center">
             <th style="text-align:center">Ngành, nghề đặc<br />biệt ưu đãi đầu tư</th>
@@ -54,9 +55,10 @@
             <tr style="text-align:center">
                 <td style="text-align:center">@item.HienThi</td>
                 <td style="text-align:left">@item.LoaiDat</td>
-                <td style="text-align:center">@Helpers.ConvertDbToStrDecimal(item.Dongia1)</td>
-                <td style="text-align:center">@Helpers.ConvertDbToStrDecimal(item.Dongia2)</td>
-                <td style="text-align:center">@Helpers.ConvertDbToStrDecimal(item.Dongia3)</td>
+                <td style="text-align:center">@item.TyLe1</td>
+                <td style="text-align:center">@item.TyLe2</td>
+                <td style="text-align:center">@item.TyLe3</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia1)</td>
             </tr>
         }
     </tbody>

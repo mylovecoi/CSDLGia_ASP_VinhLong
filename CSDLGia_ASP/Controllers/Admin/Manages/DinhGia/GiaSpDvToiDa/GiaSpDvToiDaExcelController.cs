@@ -54,47 +54,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-
-        [Route("GiaSpDvToiDaExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Create"))
-                {
-
-                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_spdvtoida";
-                    ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == Mahs);
-                    /*return Ok(ViewData["modelct"]);*/
-
-
-
-                    return View("Views/Admin/Manages/DinhGia/GiaXayDungMoi/Excels/Create.cshtml");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Import(GiaSpDvToiDaCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
+                string Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<GiaSpDvToiDaCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -107,26 +72,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        int sapXep = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaSpDvToiDaCt
                             {
                                 Mahs = Mahs,
+                                Sapxep = sapXep++,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                //Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                //            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                //Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                //            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                //Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                //            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+                              
+                                HienThi = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 3].Value != null ?
+                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),                                
                             });
                         }
                     }
@@ -134,7 +98,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 }
                 _db.GiaSpDvToiDaCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa
+                {
+                    Madv = request.Madv,
+                    Thoidiem = DateTime.Now,
+                    Mahs = Mahs,
+                };
+                var modelct = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == Mahs);
+                model.GiaSpDvToiDaCt = modelct.ToList();
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
+                ViewData["MenuLv1"] = "menu_spdvtoida";
+                ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
+                return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Create.cshtml", model);
             }
             else
             {

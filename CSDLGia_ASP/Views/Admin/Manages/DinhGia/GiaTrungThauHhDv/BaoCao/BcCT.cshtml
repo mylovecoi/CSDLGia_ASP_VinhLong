@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt>)ViewData["HoSoCt"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px; font-weight: bold">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
+        </td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU CỦA HH-DV ĐƯỢC MUA SẮM THEO QĐ CỦA PL VỀ ĐẤU THẦU</p>
+
+<p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
+
+@foreach (var dv in DonVis)
+{
+    <p style="text-align: center; font-size: 16px; font-style:italic">
+        @dv.TenDv
+    </p>
+    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
+    @foreach (var hoso in hosodonvi)
+    {
+        <p style="text-align: center; font-size: 16px; font-style:italic">
+            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
+        </p>
+        <p style="text-align: center; font-size: 16px; font-style:italic">
+            @* @hoso.Mota *@
+        </p>
+        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+            <thead>
+                <tr>
+                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
+                    <th style="text-align:center; font-weight:bold">Tên công tác</th>
+                    <th style="text-align:center; font-weight:bold">Đơn vị</th>
+                    <th style="text-align:center; font-weight:bold">Mức thu</th>
+                    <th style="text-align:center; font-weight:bold">Khối lượng mời thầu</th>
+                    <th style="text-align:center; font-weight:bold">Đơn giá</th>
+                    <th style="text-align:center; font-weight:bold">Thành tiền</th>
+                </tr>
+            </thead>
+            
+        </table>
+    }
+}
+
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
+    <tr>
+        <td width="45%" style="text-align: left">
+        </td>
+        <td width="55%" style="text-align: center">
+            <span style="font-weight: bold; text-transform:uppercase">
+                @ViewData["ChucDanhNguoiKy"]
+            </span><br />
+            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
+        </td>
+    </tr>
+    <tr style="text-align: center; height:100px">
+        <td style="font-weight: bold; padding-top: 90px"></td>
+        <td style="font-weight: bold; padding-top: 90px; text-align:center">@ViewData["HoTenNguoiKy"]</td>
+    </tr>
+</table>

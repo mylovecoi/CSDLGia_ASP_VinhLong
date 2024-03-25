@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             var model = new GiaSpDvToiDaCt
             {
                 Mahs = Mahs,
-                Mota = Mota,
+                //Mota = Mota,
                 Dvt = Dvt,
                 Dongia = Dongia,
                 Phanloaidv = Phanloaidv,
@@ -110,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>STT</th>";
-            result += "<th>Phân loại sản phẩm dịch vụ</th>";
+            result += "<th>STT<br />báo cáo</th>";
             result += "<th>Tên sản phẩm dịch vụ</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Mức giá tối đa</th>";
@@ -119,13 +119,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             result += "</thead>";
 
             result += "<tbody>";
-            foreach (var item in model)
+            foreach (var item in model.OrderBy(x=>x.Sapxep))
             {
 
                 result += "<tr>";
-                result += "<td style='text-align:center'>" + record++ + "</td>";
-                result += "<td class='active'>" + item.Phanloaidv + "</td>";
-                result += "<td style='text-align:center'>" + item.Mota + "</td>";
+                result += "<td style='text-align:center'>" + item.Sapxep + "</td>";
+                result += "<td>" + item.HienThi + "</td>";
+                result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:center'>" + item.Dongia + "</td>";
 

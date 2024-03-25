@@ -40,8 +40,11 @@
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
-            <h3 class="card-label">
-                Thông tin hồ sơ<small>&nbsp;giá lệ phí trước bạ</small>
+            <h3 class="card-label">              
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý hồ sơ giá lệ phí trước bạ
+                </span>
             </h3>
         </div><br />
         <div>
@@ -106,12 +109,12 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th>STT</th>
-                    <th>Số QĐ</th>
-                    <th>Thời điểm <br /> xác định</th>
+                    <th width="2%">STT</t>
+                    <th width="10%">Số QĐ</th>
+                    <th width="10%">Thời điểm</th>
                     <th>Mô tả</th>
-                    <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận</th>
+                    <th width="10%">Trạng thái</th>
+                    <th width="10%">Cơ quan tiếp nhận</th>
                     <th width="18%">Thao tác</th>
                 </tr>
             </thead>
@@ -121,7 +124,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@(record_id++)</td>
+                            <td style="text-align:center">@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: left; font-weight:bold">@item.Mota</td>
@@ -157,26 +160,24 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="GiaLePhi" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
-                                    {
-
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                            <i class="icon-lg la la-trash text-danger"></i>
-                                        </button>
-                                    }
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
-                                }
-                               
-                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
-                                    <i class="icon-lg la la-file-alt text-dark"></i>
-                                </button>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Soqd')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }                                    
+                                }                               
                             </td>
                         </tr>
                     }
@@ -194,7 +195,10 @@
             <form asp-controller="GiaLePhi" asp-action="Create" method="post">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Thêm mới thông tin hồ sơ
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Thêm mới hồ sơ giá lệ phí trước bạ
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -204,7 +208,7 @@
                     <div class="row" id="data_create">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Nhóm: </label>
+                                <label>Phân loại hồ sơ: </label>
                                 <select class="form-control" id="Manhom_create" name="Manhom_create">
                                     @foreach (var item in dmNhom)
                                     {
@@ -232,13 +236,22 @@
             <form asp-controller="GiaLePhi" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý xóa thông tin???
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Xóa hồ sơ giá lệ phí trước bạ
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Số QĐ:</label>
+                            <label class="form-control" id="soqd_delete" name="soqd_delete"></label>                            
+                        </div>
+                    </div>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -258,7 +271,10 @@
             <form asp-controller="GiaLePhiHt" asp-action="HoanThanh">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Hoàn thành hồ sơ giá lệ phí trước bạ
+                        </span>
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -298,55 +314,16 @@
     </div>
 </div>
 
-<!-- hoàn thành Modal-->
-<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    @ViewData["Title"]
-                    <span class="d-block text-muted pt-2 font-size-sm">Thông tin giấy tờ đính kèm</span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="giayto_data">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
-    function SetDelete(id) {
+    function SetDelete(id, soqd) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("soqd_delete").innerHTML = soqd;
     }
 
     function SetComplete(mahs) {
         document.getElementById("mahs_complete").value = mahs;
     }
-
-    function GetFile(mahs) {
-        $.ajax({
-            url: '/ThongTinGiayTo/GetList',
-            type: 'POST',
-            data: {
-                Mahs: mahs
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    $('#giayto_data').replaceWith(data.message);
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
-                    $('#GiayTo_Modal').modal("show");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
-    }
-
 </script>
 
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")

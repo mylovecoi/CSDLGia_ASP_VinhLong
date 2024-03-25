@@ -1,0 +1,168 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var phanloaidichvu = (IEnumerable<GiaSpDvCuTheCt>)ViewData["PhanLoaiDichVu"];
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    var mahs = ViewData["Mahs"];
+
+}
+
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Đồng ý xóa thông tin???
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit Modal-->
+<form id="frm_chitiet" method="post" action="">
+    <input type="hidden" name="Id" />
+    <input type="hidden" name="Mahs" />
+    <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label text-dark">
+                        Chỉnh sửa thông tin
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="edit_thongtin">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Thành phố</label>
+                                <input type="number" class="form-control" name="Mucgia1" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Thị xã</label>
+                                <input type="number" class="form-control" name="Mucgia2" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Các huyện đồng bằng</label>
+                                <input type="number" class="form-control" name="Mucgia3" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Các huyện miền núi</label>
+                                <input type="number" class="form-control" name="Mucgia4" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DinhGiaSpDvCuTheCt/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+                var form = $('#frm_chitiet');
+                form.find("[name='Id']").val(data.id);
+                form.find("[name='Mahs']").val(data.mahs);
+                form.find("[name='Mucgia1']").val(data.mucgia1);
+                form.find("[name='Mucgia2']").val(data.mucgia2);
+                form.find("[name='Mucgia3']").val(data.mucgia3);
+                form.find("[name='Mucgia4']").val(data.mucgia4);
+            }
+        })
+    }
+
+
+    function SetUpdate() {
+        var formData = new FormData($('#frm_chitiet')[0]);
+        $.ajax({
+            url: '/DinhGiaSpDvCuTheCt/Update',
+            type: 'POST',
+            cache: false,
+            dataType: false,
+            processData: false,
+            contentType: false,
+            data: formData,
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        });
+    }
+
+    function GetDelete(id) {
+        document.getElementById("id_delete").value = id;
+    }
+
+    function SetDelete() {
+        $.ajax({
+            url: '/DinhGiaSpDvCuTheCt/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#Delete_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

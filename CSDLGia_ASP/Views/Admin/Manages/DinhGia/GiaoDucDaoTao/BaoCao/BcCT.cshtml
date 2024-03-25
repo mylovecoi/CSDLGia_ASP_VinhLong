@@ -31,12 +31,24 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Tên sản phẩm dịch vụ</th>
-            <th style="text-align: center">Thành thị</th>
-            <th style="text-align: center">Nông thôn</th>
-            <th style="text-align: center">Miền núi</th>
-        </tr>     
+            <th rowspan="2" width="2%" style="text-align: center">STT</th>
+            <th rowspan="2" style="text-align: center">Cấp học</th>
+            <td colspan="3" style="text-align: center">
+               <b> Mức thu học phí năm 2022 - 2023 </b><br />
+               <i>nghìn đồng/học sinh/tháng</i>
+            </td>
+        </tr>   
+        <tr>
+            <td>
+                <b>Thành thị</b>
+                Gồm các phường, thị trấn thuộc huyện, thị xã, thành phố)
+            </td>
+            <td>
+                <b>Nông thôn</b>
+                (các xã thuộc huyện, thị xã, thành phố),các đảo phường VĨnh Nguyên, Nha Trang
+            </td>
+            <th>Miền núi, các đảo thuộc huyện Trường Sa</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)

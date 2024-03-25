@@ -1,5 +1,4 @@
 ﻿@{
-    int record_id = 1;
     int SapXep = Int32.Parse(ViewData["SapXep"].ToString()) + 1;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDmKhung>
@@ -26,7 +25,10 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;khung giá nước sạch sinh hoạt</small><br />
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý thông tin danh mục giá nước sạch sinh hoạt
+                </span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -35,6 +37,15 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal"
                         class="btn btn-primary font-weight-bolder" title="Create">
                     <i class="la la-plus"></i>Thêm mới
+                </button>
+                <span>&ensp;</span>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GianuocshDmKhung" asp-action="NhanExcel">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+                <span>&ensp;</span>
+                <button type="button" data-target="#Remove_Modal" data-toggle="modal"
+                        class="btn btn-danger font-weight-bolder" title="Xóa">
+                    <i class="la la-trash"></i>Xóa dữ liệu
                 </button>
             }
 
@@ -45,8 +56,8 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th width="5%">STT sắp xếp</th>
-                    <th width="5%">STT hiển thị</th>
+                    <th width="2%">#</th>
+                    <th width="5%">STT</th>
                     <th>Khung sử dụng nước sạch sinh hoạt</th>
                     <th width="20%">Thao tác</th>
                 </tr>
@@ -65,7 +76,7 @@
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Doituongsd')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             </td>
@@ -83,7 +94,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Danh mục khung giá sử dụng nước sinh hoạt
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới thông tin danh mục giá nước sạch sinh hoạt
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -133,17 +147,28 @@
 </div>
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Đồng ý xóa danh mục
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa thông tin danh mục giá nước sạch sinh hoạt
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;">Khung sử dụng:</label>
+                            <label type="text" id="doituongsudung_delete" name="doituongsudung_delete" class="form-control"></label>
+                        </div>
+                    </div>
+                </div>
                 <div class="row text-left">
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
@@ -160,8 +185,11 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa thông tin danh mục giá nước sạch sinh hoạt
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -177,7 +205,28 @@
     </div>
 </div>
 
-
+<!--Remove Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa dữ liệu danh mục chi tiết
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger font-weight-bold" onclick="DataRemove()">Đồng ý xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function GetCreate() {
@@ -201,8 +250,9 @@
             }
         })
     }
-    function SetDelete(id) {
+    function SetDelete(id, doituong) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("doituongsudung_delete").innerHTML = doituong;
     }
     function GetDelete() {
         $.ajax({
@@ -261,6 +311,22 @@
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function DataRemove() {
+        $.ajax({
+            url: '/DanhMucGiaNuocShKhung/Remove',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
                     location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");

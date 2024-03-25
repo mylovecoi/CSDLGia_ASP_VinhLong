@@ -3,186 +3,252 @@
     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
 
-
     var nam_start = DateTime.Now.Year - 7;
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
+    var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>)ViewData["DanhSachHoSo"];
 }
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            //$('.select2multi').select2();
-
-            $("#radio1").click(function () {
-                if (this.checked) {
-                    $("#option2").css("display", "none");
-                    $("#option1").css("display", "block");
-                }
-            });
-
-            $("#radio2").click(function () {
-                if (this.checked) {
-                    $("#option1, .quy").css("display", "none");
-                    $("#option2, .thang").css("display", "block");
-                }
-            });
-
-            $("#radio3").click(function () {
-                if (this.checked) {
-                    $("#option1, .thang").css("display", "none");
-                    $("#option2, .quy").css("display", "block");
-                }
-            });
-        });
-    </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Báo cáo giá đất địa bàn
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá đất địa bàn
+                </span>
+            </h3>
         </div>
-        <hr />
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group fv-plugins-icon-container">
-                        <ol>
-                            <li>
-                                <button data-target="#Report_Modal_TH" data-toggle="modal" class="btn btn-link" style="text-align:left">
-                                    <span style="font-size:16px; color:blue;  font-weight: bold">
-                                        Báo cáo tổng hợp
-                                    </span>
-                                </button>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-group fv-plugins-icon-container">
+                    <ol>
+                        <li>
+                            <button data-target="#Report_Modal_TH" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                <span style="font-size:16px; color:blue;  font-weight: bold">
+                                    Báo cáo tổng hợp
+                                </span>
+                            </button>
 
-                            </li>
-                            <li>
-                                <button data-target="#Report_Modal_CT" data-toggle="modal" class="btn btn-link" style="text-align:left">
-                                    <span style="font-size:16px; color:blue;  font-weight: bold">
-                                        Báo cáo chi tiết
-                                    </span>
-                                </button>
+                        </li>
+                        <li>
+                            <button data-target="#Report_Modal_CT" data-toggle="modal" class="btn btn-link" style="text-align:left">
+                                <span style="font-size:16px; color:blue;  font-weight: bold">
+                                    Báo cáo chi tiết
+                                </span>
+                            </button>
 
-                            </li>
-                        </ol>
-                    </div>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!--Báo cáo tổng hợp-->
-    <div class="modal fade" id="Report_Modal_TH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form asp-controller="GiaDatDiaBanBc" asp-action="BcTH" target="_blank" id="frm_report">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="card-label">
-                            Báo cáo tổng hợp giá đất địa bàn
-                        </h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label><b>Từ ngày</b></label>
-                                    <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label><b>Đến ngày</b></label>
-                                    <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
-                                </div>
-                            </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label><b>Tên thủ trưởng đơn vị ký</b></label>
-                                <input type="text" class="form-control" name="tenthutruong" id="tenthutruong" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label><b>Chức vụ</b></label>
-                                <input type="text" class="form-control" name="chucvu" id="chucvu" />
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
-                    </div>
-
+<!--Báo cáo tổng hợp-->
+<div class="modal fade" id="Report_Modal_TH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaDatDiaBanBC" asp-action="BcTH" target="_blank" id="form_moda_th">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Báo cáo tổng hợp giá tính giá đất địa bàn
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
                 </div>
-            </form>
-        </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label><b>Từ ngày</b></label>
+                                <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label><b>Đến ngày</b></label>
+                                <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Chức danh ký:</label>
+                                <input type="text" class="form-control" id="chucdanhky" name="chucdanhky" value="Thủ trưởng đơn vị" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Họ và tên người ký</label>
+                                <input type="text" class="form-control" id="hotennguoiky" name="hotennguoiky" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="BaoCaoTh()">Đồng ý</button>
+                </div>
 
+            </div>
+        </form>
     </div>
 
-    <!--Báo cáo chi tiết-->
-    <div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <form asp-controller="GiaDatDiaBanBc" asp-action="BcCT" target="_blank" id="frm_report">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="card-label">
-                            Báo cáo tổng hợp giá đất địa bàn
-                        </h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki ki-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label><b>Từ ngày</b></label>
-                                    <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label><b>Đến ngày</b></label>
-                                    <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
-                                </div>
-                            </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label><b>Tên thủ trưởng đơn vị ký</b></label>
-                                <input type="text" class="form-control" name="tenthutruong" id="tenthutruong" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label><b>Chức vụ</b></label>
-                                <input type="text" class="form-control" name="chucvu" id="chucvu" />
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
-                    </div>
+</div>
 
+<!--Báo cáo chi tiết-->
+<div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaDatDiaBanBC" asp-action="BcCT" target="_blank" id="form_moda_ct">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Báo cáo chi tiết giá tính giá đất địa bàn
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
                 </div>
-            </form>
-        </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label><b>Từ ngày</b></label>
+                                <input type="date" id="ngaytu" name="ngaytu"
+                                       value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center" onchange="GetList()">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label><b>Đến ngày</b></label>
+                                <input type="date" id="ngayden" name="ngayden"
+                                       value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center" onchange="GetList()">
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Thông tin hồ sơ: </label><br />
+                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd - Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Chức danh ký:</label>
+                                <input type="text" class="form-control" id="chucdanhky" name="chucdanhky" value="Thủ trưởng đơn vị" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Họ và tên người ký</label>
+                                <input type="text" class="form-control" id="hotennguoiky" name="hotennguoiky" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="BaoCaoCt()">Đồng ý</button>
+                   
+                </div>
+            </div>
+        </form>
     </div>
+</div>
+<script>
+    function GetList() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+
+                $.ajax({
+                    url: '/GiaDatDiaBanXd/GetListHoSo',
+                    type: 'POST',
+                    data: {
+                        ngaytu: fromDate,
+                        ngayden: toDate,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Thành công!");
+                            $('#MaHsTongHop').replaceWith(data.message);
+                        } else {
+                            toastr.error(data.message, "Lỗi!!!");
+                        }
+                    }
+                });
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+    }
+
+    function BaoCaoTh() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("form_moda_th");
+                form.submit();
+                location.reload();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+
+    }
+
+    function BaoCaoCt() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("form_moda_ct");
+                form.submit();
+                location.reload();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+
+    }
+</script>
 

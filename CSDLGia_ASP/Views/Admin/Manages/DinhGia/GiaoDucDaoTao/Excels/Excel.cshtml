@@ -21,8 +21,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaoDucDaoTaoExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+    <form asp-controller="GiaoDucDaoTao" asp-action="ImportExcel" method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -57,7 +56,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>

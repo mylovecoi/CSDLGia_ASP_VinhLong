@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -18,37 +18,36 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu quyền sd đất</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá<small>&nbsp;Giá trúng thầu quyền sd đất</small><br />
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaTrungThauDat" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaTrungThauDat" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_r_store">
+        <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-            <input hidden asp-for="Madiaban" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+            </div>
 
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Quận/huyện</label>
-                            <select class="form-control" id="Madv" name="Madv" disabled>
-                                @foreach (var item in DsDonVi)
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Quận/huyện</label>
+                        <select class="form-control" asp-for="Madv" disabled>
+                            @foreach (var item in DsDiaBan.Where(t => t.MaDiaBan == Model.Madv))
                             {
-                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "") >@item.TenDv</!option>
+                                <!option value="@item.MaDiaBan" @((string)Model.Madv == item.MaDiaBan ? "selected" : "") >@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
@@ -56,7 +55,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Xã/phường</label>
-                        <select class="form-control" id="Maxp" name="Maxp">
+                        <select class="form-control" asp-for="Maxp">
                             @foreach (var item in DsXaPhuong)
                             {
                                 <option value="@item.Maxp">@item.Tenxp</option>
@@ -64,11 +63,11 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <label>Tên dự án*</label>
-                    <input type="text" class="form-control" asp-for="Tenduan" />
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Thông tin hồ sơ*</label>
+                        <input type="text" class="form-control" asp-for="Tenduan" />
+                    </div>
                 </div>
             </div>
 
@@ -114,34 +113,26 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label class="control-label">File đính kèm</label>
-                    <input asp-for="Ipf1" type="file" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" />
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <input type="text" class="form-control" asp-for="Thongtin" />
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <label>Ghi chú</label>
-                    <input type="text" class="form-control" asp-for="Thongtin" />
-                </div>
-            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Detail.cshtml")
+
         </div>
-
-
-        @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Detail.cshtml")
-
-
-<div class="card-footer" style="text-align:center">
-    <a asp-controller="GiaTrungThauDat" asp-action="Index" asp-route-Madb="@ViewData["Madb"]" class="btn btn-danger">
-        <i class="la la-reply"></i>Quay lại
-    </a>&ensp;
-    <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-    <button type="button" class="btn btn-primary mr-2" onclick="Validatedgd()"><i class="la la-check"></i>Thêm mới</button>
-</div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaTrungThauDat" asp-action="Index" asp-route-Madb="@ViewData["Madb"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="Validatedgd()"><i class="la la-check"></i>Thêm mới</button>
+        </div>
     </form>
-<!--end::Form-->
+    <!--end::Form-->
 </div>
 <script>
     function Validatedgd() {
@@ -156,8 +147,8 @@
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

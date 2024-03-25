@@ -1,7 +1,5 @@
 ﻿@{
-
     var DmDvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
-
 }
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -16,7 +14,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" value="@ViewData["Mahs"]" id="Mahs_create" />
+                <input type="hidden" value="@ViewData["Mahs"]" id="Mahs_create" name="Mahs_create" />
                 <div class="row">
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
@@ -37,52 +35,79 @@
                             <input type="text" id="Tobando_create" name="Tobando_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Mô tả</b></label>
-                            <textarea type="text" id="Mota_create" name="Mota_create" class="form-control"></textarea>
+                            <label><b>Tên người sử dụng</b></label>
+                            <input type="text" id="Mota_create" name="Mota_create" class="form-control"></input>
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Diện tích</b></label>
                             <input type="text" id="Dientich_create" name="Dientich_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-2">
+                    <div class="col-xl-4">
                         <label class="form-control-label">Đơn vị tính</label>
                         <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
-                            <option value="">---Select---</option>
                             @foreach (var item in DmDvt)
                             {
                                 <option value="@item.Dvt">@item.Dvt</option>
                             }
                         </select>
                     </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
+                    @* <div class="col-md-1" style="padding-left: 0px;">
                         <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
                         <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
                             <i class="fa fa-plus"></i>
                         </button>
-                    </div>
-                    <div class="col-xl-3">
+                    </div> *@
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá khởi điểm</b></label>
                             <input type="text" id="Giakhoidiem_create" name="Giakhoidiem_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá đấu giá</b></label>
                             <input type="text" id="Giadaugia_create" name="Giadaugia_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
+                    @* <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Giá tính tiền sử dụng đất</b></label>
+                            <input type="text" id="Giasddat_create" name="Giasddat_create" class="form-control money text-right" style="font-weight: bold" />
+                        </div>
+                    </div> *@
                 </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa thông tin giá
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -112,27 +137,7 @@
         </div>
     </div>
 </div>
-<!--Edit Modal-->
-<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Chỉnh sửa thông tin giá
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="edit_thongtin">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!--Dvt create Modal-->
 <div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -219,6 +224,7 @@
                 Dvt: $('#Dvt_create').val(),
                 Giakhoidiem: $('#Giakhoidiem_create').val(),
                 Giadaugia: $('#Giadaugia_create').val(),
+                // Giasddat: $('#Giasddat_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {

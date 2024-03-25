@@ -36,12 +36,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Thoidiem = DateTime.Now,
                         Sheet = 1,
-                        LineStart = 2,
+                        LineStart = 4,
                         LineStop = 3000,
                     };
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Excel.cshtml", model);
 
@@ -57,43 +57,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
-        [Route("GiaSpDvCuTheExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
-                {
-
-                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
-                    ViewData["MenuLv1"] = "menu_spdvcuthe";
-                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs);
-                
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
-
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Create.cshtml");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
+      
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -109,51 +76,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                         //ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[request.Sheet - 1];
+                       
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                      
+                        int sTT = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt
                             {
-
                                 Mahs = request.Mahs,
                                 Created_at = DateTime.Now,
-                                Manhom = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                Tt = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                TenSpDv = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Mucgia1 = worksheet.Cells[row, 4].Value != null ? worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                                Mucgia2 = worksheet.Cells[row, 5].Value != null ? worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-              
+                                Sapxep = sTT++ ,
+                                Tt = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                TenSpDv = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+
+                                Mucgia1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                                Mucgia2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                Mucgia3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                    worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                Mucgia4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
                             });
                         }
                     }
-
                 }
+                
                 _db.GiaSpDvCuTheCt.AddRange(list_add);
 
-                if (Ipf1upload != null && Ipf1upload.Length > 0)
-                {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                    string extension = Path.GetExtension(Ipf1upload.FileName);
-                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaSpDvCuThe", filename);
-                    using (var FileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await Ipf1upload.CopyToAsync(FileStream);
-                    }
-                    request.Ipf1 = filename;
-                }
+               
 
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
                 {
+                    Madiaban = request.Madiaban,
                     Mahs = request.Mahs,
                     Madv = request.Madv,
                     Soqd = request.Soqd,
                     Thoidiem = request.Thoidiem,
-                    Ipf1 = request.Ipf1,
-
+                    PhanLoaiHoSo = request.PhanLoaiHoSo,
                     Trangthai = "CHT",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,

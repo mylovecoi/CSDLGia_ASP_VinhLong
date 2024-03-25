@@ -1,11 +1,18 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
 {
@@ -26,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
                 {
                     var model = _db.GiaNuocShDmKhung;
-                    int max_sttsapxep = model.Any() ? model.Max(t => t.STTSapxep) : 0;
+                    int max_sttsapxep = model.Any() ? model.Max(t => t.STTSapxep) : 1;
                     ViewData["Title"] = "Danh mục khung giá sạch sinh hoạt";
                     ViewData["SapXep"] = max_sttsapxep;
                     ViewData["MenuLv1"] = "menu_dg";
@@ -149,6 +156,94 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
         }
 
 
-    }
+        [HttpPost("DanhMucGiaNuocShKhung/Remove")]
+        public JsonResult Remove()
+        {
+            var model = _db.GiaNuocShDmKhung;
+         
+            _db.GiaNuocShDmKhung.RemoveRange(model);
+            _db.SaveChanges();
 
+            var data = new { status = "success" };
+            return Json(data);
+        }
+
+        [HttpGet("DanhMucGiaNuocShKhung/NhanExcel")]
+        public IActionResult NhanExcel()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
+                {
+                    var model = new VMImportExcel()
+                    {
+                        Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 1000
+                    };
+                    ViewData["Title"] = "Danh mục khung giá sạch sinh hoạt";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgnsh";
+                    ViewData["MenuLv3"] = "menu_dgnsh_dmkhung";
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/Excel.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(VMImportExcel requests)
+        {
+            requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+            int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+            string Mahs = requests.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+            using (var stream = new MemoryStream())
+            {
+                await requests.FormFile.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                    var rowcount = worksheet.Dimension.Rows;
+                    requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                    Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                    var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDmKhung>();
+                    int line = 1;
+                    for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                    {
+                        ExcelStyle style = worksheet.Cells[row, 2].Style;
+                        // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                        bool isBold = style.Font.Bold;
+                        // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                        bool isItalic = style.Font.Italic;
+                        StringBuilder strStyle = new StringBuilder();
+                        if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                        if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+
+                        list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDmKhung
+                        {                          
+                            STTSapxep = line,
+                            STTHienthi = worksheet.Cells[row, 1].Value != null ?
+                                        worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                            Doituongsd = worksheet.Cells[row, 2].Value != null ?
+                                        worksheet.Cells[row, 2].Value.ToString().Trim() : "", 
+                            Style = strStyle.ToString()
+                        });
+                        line = line++;
+                    }
+                    _db.GiaNuocShDmKhung.AddRange(list_add);
+                    _db.SaveChanges();                    
+                }
+            }
+            return RedirectToAction("Index", "GiaNuocShDmKhung");
+        }
+    }
 }

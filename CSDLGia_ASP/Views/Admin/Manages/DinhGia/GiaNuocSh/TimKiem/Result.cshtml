@@ -1,29 +1,26 @@
 ﻿@{
     Layout = "_LayoutReports";
     int record_id = 1;
-    var doituong = (IEnumerable<GiaNuocShDmVung>)ViewData["Doituong"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShCt>
-<br />
-<br />
+
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
-<br />
-<br />
+
+
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr >
-            <th style="text-align: center;" colspan="1">STT</th>
-            <th style="text-align: center;" colspan="1">Đơn vị nhập</th>
-            <th style="text-align: center;" colspan="1">Thời điểm</th>
-            <th style="text-align:center">Mục đích sử dụng</th>
-            <th style="text-align:center">Tỷ trọng tiêu thụ (%)</th>
-            <th style="text-align:center">Sản lượng (m3)</th>
-            <th style="text-align:center">Đơn giá chưa bao gồm thuế GTGT <br />(đồng/m3)</th>
-            <th style="text-align:center">Đơn giá đã bao gồm thuế GTGT <br />(đồng/m3)</th>
-        </tr>      
+        <tr>
+            <th width="2%" style="text-align:center">STT</th>
+            <th style="text-align:center">Đơn vị</th>
+            <th style="text-align:center">Số QĐ/Thời điểm</th>
+            <th>Mục đích sử dụng</th>
+            <th>Tỷ trọng tiêu thụ (%)</th>
+            <th>Sản lượng<br />(m3)</th>
+            <th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
+            <th>Thuế suất (%)</th>
+            <th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
+        </tr>
     </thead>
     <tbody>
         @if (Model != null)
@@ -32,25 +29,17 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    <td>@item.Namchuathue</td>
-                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align: center">@item.Doituongsd</td>
-                    <td style="text-align: center">@item.TyTrongTieuThu</td>
-                    <td style="text-align: center">@item.SanLuong</td>                   
-                    <td style="text-align: center">@(@item.DonGia1 != 0 ? Helpers.ConvertDbToStr(item.DonGia1) : "")</td>
-                    <td style="text-align: center">@(@item.DonGia1 != 0 ? Helpers.ConvertDbToStr(item.DonGia1) : "")</td>
+                    <td style="text-align:center">@item.Tendv</td>
+                    <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
+                    <td style="text-align:left;">@item.Doituongsd</td>
+                    <td style="text-align:center;">@item.TyTrongTieuThu</td>
+                    <td style="text-align:center;">@item.SanLuong</td>
+                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1)</td>
+                    <td style="text-align:center;">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
+                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2) / 100)</td>
                 </tr>
             }
         }
     </tbody>
 </table>
-<div class="card-footer" style="text-align:center">
-    <a asp-controller="GiaNuocSh" asp-action="Search" class="btn btn-danger">
-        <i class="la la-reply"></i>Quay lại
-    </a>
-</div>
-
-
-
-
 

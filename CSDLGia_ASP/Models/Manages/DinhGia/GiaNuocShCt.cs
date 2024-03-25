@@ -51,11 +51,20 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         //Bố sung
         public string TyTrongTieuThu { get; set; }
         public string SanLuong { get; set; }
+        public double ThueSuat { get; set; }
         public double DonGia1 { get; set; }
         public double DonGia2 { get; set; }
         public int STTSapxep { get; set; }
         public string STTHienthi { get; set; }
         public string Style { get; set; }
+
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+
 
     }
 }

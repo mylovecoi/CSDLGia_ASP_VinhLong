@@ -100,6 +100,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaDvGdDt> GiaDvGdDt { get; set; }
         public DbSet<GiaDvGdDtCt> GiaDvGdDtCt { get; set; }
         public DbSet<GiaDvGdDtDm> GiaDvGdDtDm { get; set; }
+        public DbSet<GiaDvGdDtNhom> GiaDvGdDtNhom { get; set; }
         public DbSet<GiaDvKcb> GiaDvKcb { get; set; }
         public DbSet<GiaDvKcbCt> GiaDvKcbCt { get; set; }
         public DbSet<GiaDvKcbDm> GiaDvKcbDm { get; set; }

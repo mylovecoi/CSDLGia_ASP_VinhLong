@@ -1,13 +1,88 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh
 
-@section custom_script {    
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>    
+@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+}
+<input hidden asp-for="Madv" />
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="Id" />
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Số quyết định</label>
+            <input type="text" class="form-control" asp-for="Soqd" required/>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Ngày áp dụng*</label>
+            <input type="date" class="form-control" asp-for="Thoidiem" required/>
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Địa bàn</label>
+            <select class="form-control select2basic" asp-for="Madiaban">
+                @foreach (var item in dsdiaban)
+                {
+                    <!option value="@item.MaDiaBan">@item.TenDiaBan</!option>
+
+                }
+            </select>
+        </div>
+    </div>
+</div>
+@* <div class="row">
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Lộ trình từ năm*</label>
+            <select class="form-control select2basic" asp-for="Tunam">
+                @{
+
+                    for (var i = nam_start; i <= nam_stop; i++)
+                    {
+                        <option value="@i">Năm @i</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Lộ trình đến năm*</label>
+            <select class="form-control select2basic" asp-for="Dennam">
+                @{
+                    for (var i = nam_start; i <= nam_stop; i++)
+                    {
+                        <option value="@i">Năm @i</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</div> *@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Nội dung*</label>
+            <textarea type="text" class="form-control" asp-for="Mota" rows="2"></textarea>
+        </div>
+    </div>
+</div>
+<!--Thông tin giấy tời-->
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaNuocSh/ThongTinGiayTo/Index.cshtml")
 
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
-<div class="card card-custom" style="border: 1px solid #60aee4;">  
+<div class="card card-custom" style="border: 1px solid #60aee4;">
     <div class="card-body" id="frm_data">
         <table class="table table-striped table-bordered table-hover no-sort" id="datatable_4">
             <thead>
@@ -18,14 +93,15 @@
                     <th>Tỷ trọng tiêu thụ (%)</th>
                     <th>Sản lượng<br />(m3)</th>
                     <th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
+                    <th>Thuế suất (%)</th>
                     <th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
                     <th>Thao tác</th>
-                </tr>                
+                </tr>
             </thead>
             <tbody>
                 @if (Model.GiaNuocShCt != null)
                 {
-                    @foreach (var item in Model.GiaNuocShCt.OrderBy(t=>t.STTSapxep))
+                    @foreach (var item in Model.GiaNuocShCt.OrderBy(t => t.STTSapxep))
                     {
 
                         string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
@@ -36,9 +112,10 @@
                             <td style="text-align:left; @HtmlStyle">@item.Doituongsd</td>
                             <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
                             <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
-                            <td style="text-align:right; @HtmlStyle">@item.DonGia1</td>
-                            <td style="text-align:right; @HtmlStyle">@item.DonGia2</td>
-                           
+                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
+                            <td style="text-align:center; @HtmlStyle">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
+                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2)/100)</td>
+
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -59,8 +136,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Chỉnh sửa thông tin
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa thông tin chi tiết hồ sơ giá nước sạch sinh hoạt
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -76,43 +156,36 @@
     </div>
 </div>
 
-<script>
+<script> 
     function SetEdit(id_edit) {
         $.ajax({
             url: '/GiaNuocShCtNew/Edit',
             type: 'POST',
             data: {
-                Id: id_edit             
+                Id: id_edit
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success')                 {
+                if (data.status == 'success') {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
                     MoneyMask();
-                } else 
-                {
+                } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
             }
         })
-
-
     }
 
     function SetUpdate() {
-        
-        var dongia1 = $('#dongia1_edit').val().replace(',', '');
-        var dongia2 = $('#dongia2_edit').val().replace(',', '');
-      
         $.ajax({
             url: '/GiaNuocShCtNew/Update',
             type: 'POST',
             data: {
-               
-                DonGia1: dongia1,
-                DonGia2: dongia2,
+
+                DonGia1: $('#dongia1_edit').val(),
+                DonGia2: $('#dongia2_edit').val(),
                 TyTrongTieuThu: $('#tytrongtieuthu_edit').val(),
                 SanLuong: $('#sanluong_edit').val(),
                 Style: $('#style_edit').val(),

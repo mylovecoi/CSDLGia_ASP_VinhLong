@@ -36,8 +36,10 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hoàn thành định giá<small>&nbsp;lệ phí trước bạ </small><br />
-
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                   Quản lý hoàn thành hồ sơ giá lệ phí trước bạ
+                </span>
             </h3>
         </div>
 
@@ -186,7 +188,9 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.htg", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")
@@ -272,3 +276,4 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/ModalTongHop.cshtml")
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")

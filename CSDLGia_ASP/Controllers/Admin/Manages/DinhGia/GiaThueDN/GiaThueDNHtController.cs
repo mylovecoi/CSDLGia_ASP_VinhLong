@@ -567,14 +567,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
-        public IActionResult TongHop()
+        [HttpPost("GiaThueMatDatMatNuoc/TongHop")]
+        public IActionResult TongHop( DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
-
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Tonghop.cshtml");
+                    var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");  
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
+                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
+                    var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+                    ViewData["ThoiGianKetXuat"] = "Từ ngày " + Helper.Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
+                    ViewData["HoSoCt"] = model_ct;
+                    ViewData["DonVis"] = model_donvi;
+                    ViewData["DanhMuc"] = _db.GiaThueMatDatMatNuocNhom;
+                    ViewData["Title"] = "Tổng hợp";
+                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else
@@ -586,6 +596,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost("GiaThueMatDatMatNuoc/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
             }
         }
     }

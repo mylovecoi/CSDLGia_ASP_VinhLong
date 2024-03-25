@@ -20,35 +20,48 @@
         });
     </script>
 }
-<div class="card card-custom">
-    <div class="card-header ribbon ribbon-top ribbon-ver">
-        <div class="card-title">
-            <h3 class="card-label">
-                GIÁ SẢN PHẨM DỊCH VỤ TỐI ĐA
-            </h3>
+<form asp-controller="GiaSpDvToiDa" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvtoida_store">
+    <div class="card card-custom">
+        <div class="card-header ribbon ribbon-top ribbon-ver">
+            <div class="card-title">
+                <h3 class="card-label">
+                    GIÁ SẢN PHẨM, DỊCH VỤ TỐI ĐA
+                </h3>
+            </div>
         </div>
-    </div>
-    <!--begin::Form-->
-    <form asp-controller="GiaSpDvToiDa" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvtoida_store">
+        <!--begin::Form-->
+
         <div class="card-body">
-            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
-            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
-            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Manhom" />
+            <input hidden asp-for="Mahs" />
             <input hidden asp-for="PhanLoaiHoSo" />
-            <input hidden asp-for="CodeExcel" />
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @(Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" required />
                     </div>
                 </div>
 
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" required />
                     </div>
                 </div>
             </div>
@@ -61,27 +74,21 @@
                 </div>
             </div>
 
-
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>File đính kèm</label>
-                    <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg, ,jpeg, .png" class="form-control" />
-                </div>
-            </div>
-
+            <!--Thông tin giấy tờ-->
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvToiDa/ThongTinGiayTo/Index.cshtml")
+            <!--Thông tin chi tiết hồ sơ-->
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Detail.cshtml")
         </div>
-    </form>
-    <div class="card-footer" style="text-align:center">
-        <a asp-controller="GiaSpDvToiDa" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-            <i class="la la-reply"></i>Quay lại
-        </a>&ensp;
-        <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-        <button type="button" class="btn btn-primary mr-2" onclick="ValidateSpDvToiDa()"><i class="la la-check"></i>Thêm mới</button>
+
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaSpDvToiDa" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Hoàn thành</button>
+        </div>
     </div>
-
-</div>
-
+</form>
 <!--end::Form-->
 
 <script>

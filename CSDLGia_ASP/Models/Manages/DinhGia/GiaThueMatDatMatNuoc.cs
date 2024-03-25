@@ -77,6 +77,11 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public IFormFile FormFile { get; set; }
         [NotMapped]
         public int Tencqcq { get; set; }
+
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+        [NotMapped]
+        public string TenDonVi { get; set; }
     }
 
 

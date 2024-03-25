@@ -26,28 +26,49 @@
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
-                <a href="~/UpLoad/File/DinhGia/Excel/GiaSanPhamDvCuThe.xlsx" target="_blank" class="btn btn-link"
+                <a href="~/UpLoad/File/DinhGia/Excel/FileExcelMauGiaSanPhamDvCuThe.xlsx" target="_blank" class="btn btn-link"
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                    <span style="font-weight:bold;">Link tải file mẫu GiaSanPhamDvCuThe.xlsx</span>
+                    <span style="font-weight:bold;">Link tải file mẫu FileExcelMauGiaSanPhamDvCuThe.xlsx</span>
                 </a>
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
             <div class="row">
-
-                <div class="col-xl-12">
+                <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
-                        <label>Số quyết định</label>
-                        <input type="text" class="form-control" id="soqd" name="soqd" />
+                        <label>Phân loại nhóm hàng hóa dịch vụ</label>
+                        <select id="PhanLoaiHoSo" name="PhanLoaiHoSo" class="form-control">
+                            <option value="XE">Hồ sơ giá trông giữ xe</option>
+                            <option value="CHO">Hồ sơ giá diện tích bán hàng tại chợ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Số quyết định</label>
+                        <input type="text" class="form-control" id="soqd" name="soqd" required />
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" required />
                     </div>
                 </div>
             </div>
@@ -56,14 +77,6 @@
                     <div class="form-group">
                         <label>Nội dung chi tiết</label>
                         <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-2">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -94,14 +107,14 @@
                     <div class="col-xl-3">
                         <div class="form-group">
                             <label>File dữ liệu</label> <br />
-                            <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                            <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                             <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-footer" style="text-align:center">
-                <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
+                <a asp-controller="GiaSpDvCuThe" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                     <i class="la la-reply"></i>Quay lại
                 </a>&ensp;
                 <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;

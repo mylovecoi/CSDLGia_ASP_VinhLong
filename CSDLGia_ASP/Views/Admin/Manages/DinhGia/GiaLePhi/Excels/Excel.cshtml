@@ -1,9 +1,9 @@
 ﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @{
-    var Madv = ViewData["Madv"];
+    var GiaPhiLePhiNhom = ViewData["GiaPhiLePhiNhom"] as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>
+                        ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>();
 }
-
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -22,7 +22,6 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaLePhiMoiExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-       
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -30,8 +29,24 @@
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                     <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaLePhi.xlsx</span>
                 </a>
-            </div>           
-
+            </div>
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ:</label>
+            </div>
+            <div class="row">
+                <input hidden asp-for="MaDv" />
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Phân loại hồ sơ:*</label>
+                        <select class="form-control" asp-for="MaNhom">
+                            @foreach(var item in GiaPhiLePhiNhom)
+                            {
+                                <option value="@item.Manhom">@item.Tennhom</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
@@ -58,7 +73,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
@@ -75,8 +90,8 @@
     <!--end::Form-->
     <!--end::Form-->
 </div>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
