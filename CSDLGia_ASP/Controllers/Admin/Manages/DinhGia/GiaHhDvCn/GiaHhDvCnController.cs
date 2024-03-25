@@ -1,6 +1,7 @@
 ﻿
 using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -84,7 +85,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["NhomTn"] = _db.GiaHhDvCnDm.ToList();
+                        ViewData["NhomTn"] = _db.GiaHhDvCnNhom.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
@@ -119,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         [Route("GiaHhDvCn/Create")]
         [HttpGet]
 
-        public IActionResult Create(string MadvBc)
+        public IActionResult Create(string Manhom, string MadvBc)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -130,11 +131,47 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     {
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
+                        Thoidiem = DateTime.Now,
                     };
 
-                    //model.GiaHhDvCnCt = _db.GiaHhDvCnCt.Where(t=>t.Mahs==model.Mahs).ToList();
+                    var danhmuc = _db.GiaHhDvCnDm.ToList(); // lấy dữ liệu trong bảng GiaSpDvToiDaDm
 
-                    ViewData["Spdv"] = _db.GiaHhDvCnDm.ToList();
+
+                    // Khi bấm đồng ý trong moda thì add dữ liệu GiaSpDvToiDaDm -> bản GiaSpDvToiDaCt
+                    if (Manhom != "all")
+                    {
+                        danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
+                    }
+                    else
+                    {
+                        danhmuc = danhmuc.ToList();
+                    }
+
+
+                    var chitiet = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt>();
+
+
+                    foreach (var item in danhmuc)
+                    {
+                        chitiet.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt()
+                        {
+                            Mahs = model.Mahs,
+                            Tenspdv = item.Tenspdv,
+                            Maspdv = item.Maspdv,
+                            Dvt = item.Dvt,
+                            HienThi = item.HienThi,
+                            Style = item.Style,
+                            Trangthai = "CXD",
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        });
+                    }
+                    _db.GiaHhDvCnCt.AddRange(chitiet);
+                    _db.SaveChanges();
+
+                    model.GiaHhDvCnCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                    ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc; // gửi sang create
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Title"] = "Bảng giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành ";
@@ -339,7 +376,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                        Dongia = ct.Dongia,
                                        Maspdv = ct.Maspdv,
                                        Trangthai = ct.Trangthai,
-                                       Mota = ct.Mota,
+                                       //Mota = ct.Mota,
                                        Mahs = ct.Mahs,
                                    };
 
@@ -567,7 +604,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                        Dongia = ct.Dongia,
                                        Maspdv = ct.Maspdv,
                                        Trangthai = ct.Trangthai,
-                                       Mota = ct.Mota,
+                                       //Mota = ct.Mota,
                                        Mahs = ct.Mahs,
                                    };
 
@@ -657,7 +694,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                      Id = giahhdvcnct.Id,
                                      Mahs = giahhdvcnct.Mahs,
                                      Dongia = giahhdvcnct.Dongia,
-                                     Mota = giahhdvcnct.Mota,
+                                     //Mota = giahhdvcnct.Mota,
                                      Maspdv = giahhdvcnct.Maspdv
                                  });
 

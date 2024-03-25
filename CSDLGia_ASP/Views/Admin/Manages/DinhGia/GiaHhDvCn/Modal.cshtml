@@ -26,19 +26,13 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên sản phẩm, dịch vụ*</label>
-                            <select id="maspdv_create" name="maspdv_create" class="form-control">
-                                @foreach (var item in spdv)
-                                {
-                                    <option value="@item.Maspdv">@item.Tenspdv</option>
-
-                                }
-                            </select>
+                            <input type="text" id="maspdv_create" name="maspdv_create" class="form-control" />                            
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn giá*</label>
-                            <input type="text" id="dongia_create" name="_create" class="form-control" />
+                            <input type="text" id="dongia_create" name="dongia_create" class="form-control" />
                         </div>
                     </div>
                 </div>

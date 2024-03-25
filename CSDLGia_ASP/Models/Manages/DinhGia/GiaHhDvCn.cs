@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -63,8 +64,18 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public List<GiaHhDvCnCt> GiaHhDvCnCt { get; set; }
         [NotMapped]
-        public string Tencqcq { get; set; }
+        public string Tencqcq { get; set; }       
+
         [NotMapped]
-        public List<GiaHhDvCnDm> GiaHhDvCnDm { get; set; }
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        [Required(ErrorMessage = "Thông tin không được bỏ trống")]
+        public IFormFile FormFile { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
     }
 }
