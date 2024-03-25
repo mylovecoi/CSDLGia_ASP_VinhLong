@@ -26,16 +26,29 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                GIÁ SẢN PHẨM DỊCH VỤ KHUNG GIÁ
+                HỒ SƠ KHUNG GIÁ SẢN PHẨM. DỊCH VỤ
             </h3>
         </div>
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaSpDvKhungGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_spdvkhunggia_store">
         <div class="card-body">
-            <input hidden asp-for="Madv" value="@ViewData["Madv"]">
-            <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
-            <input hidden asp-for="Mahs" value="@ViewData["Mahs"]">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Manhom" />
+            <input hidden asp-for="Mahs" />
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <!option value="@item.MaDiaBan" @(Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xl-6">
@@ -52,6 +65,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
@@ -61,14 +75,9 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-                </div>
-            </div>
+            <!--Thông tin giấy tờ-->
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/ThongTinGiayTo/Index.cshtml")
+
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Detail.cshtml")
         </div>
     </form>

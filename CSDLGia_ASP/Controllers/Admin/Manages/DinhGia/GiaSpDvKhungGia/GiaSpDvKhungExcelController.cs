@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia request, IFormFile Ipf1)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -103,21 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 var list_add = new List<GiaSpDvKhungGiaCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
-                {
-                    if (Ipf1 != null && Ipf1.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
-                        string extension = Path.GetExtension(Ipf1.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
-
+                { 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
                     {
                         Mahs = request.Mahs,
@@ -128,7 +114,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                         Ghichu = request.Ghichu,
                         Thoidiem = request.Thoidiem,
                         Ttqd = request.Ttqd,
-                        Ipf1 = request.Ipf1,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
@@ -154,12 +139,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                 SapXep = stt++,
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                HienThi = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                Tenspdv = worksheet.Cells[row, 3].Value != null ? worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, 4].Value != null ?worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                                Giatoithieu = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,
-                                Giatoida = worksheet.Cells[row, 6].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString().Trim()) : 0,                               
+                                HienThi = worksheet.Cells[row, 1].Value != null ? worksheet.Cells[row, 1].Value.ToString().Trim() : "",                                
+                                Tenspdv = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 3].Value != null ?worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Giatoithieu = worksheet.Cells[row, 4].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value.ToString().Trim()) : 0,
+                                Giatoida = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,                               
                             });
                         }
                     }
