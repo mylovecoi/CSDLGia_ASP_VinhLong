@@ -64,5 +64,6 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string MadvCh { get; set; }
         public string TendvCh { get; set; }
         public string Tencqcq { get; set; }
+        public string Phanloai { get; set; }
     }
 }

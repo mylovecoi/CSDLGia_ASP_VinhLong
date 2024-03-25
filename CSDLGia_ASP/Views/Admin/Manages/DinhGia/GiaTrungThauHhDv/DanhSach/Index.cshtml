@@ -2,27 +2,25 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
-
-
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/GiaTrungThauHhDv?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -34,24 +32,24 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ<small>&nbsp;Giá tài sản công</small>
-                </h3>
-            </div>
-            <div >
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ giá trúng thầu hàng hóa dịch vụ
+            </h3>
+        </div>
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder"  asp-controller="GiaTrungThauHhDv" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaTrungThauHhDv" asp-action="Create"
+                   asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaTrungThauHhDvExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>                
+                </a>
             }
 
         </div>
@@ -63,7 +61,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
-                          <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -78,7 +76,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -101,13 +99,13 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Địa bàn</th>
+                    <th>Địa bàn áp dụng</th>
                     <th>Số QĐ</th>
-                    <th>Thông tin QĐ</th>
+                    <th>Thông tin hồ sơ</th>
                     <th>Tên nhà thầu</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận</th>
-                    <th width="18%">Thao tác</th>
+                    <th width="15%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -118,18 +116,14 @@
                         <tr>
                             <td>@(record_id++)</td>
                             <td style="text-align: center">
-                                @foreach (var db in dsdiaban)
-                                {
-                                    @if (item.Madiaban == db.MaDiaBan)
-                                    {
-                                        <span>@db.TenDiaBan</span>
-                                    }
-                                }
+                                @if (!string.IsNullOrEmpty(item.Madiaban))
+                                    @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban).TenDiaBan
+
                             </td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@item.Thongtinqd</td>
-                              <td style="text-align: center">@item.Tennhathau</td>
-                           
+                            <td style="text-align: center">@item.Tennhathau</td>
+
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")
                                 {
@@ -146,16 +140,8 @@
                                 }
                             </td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @foreach (var ds in dscqcq)
-                                    {
-                                        @if (item.Macqcq == ds.MaDv)
-                                        {
-                                        <span style="text-align: center">@ds.TenDv</span>
-                                        }
-                                    }
-                                }
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                    @dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
                             </td>
                             <td>
                                 <a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -166,9 +152,12 @@
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
-                                    <a asp-controller="GiaTrungThauHhDv" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" >
+                                    <a asp-controller="GiaTrungThauHhDv" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Delete"))
@@ -182,10 +171,6 @@
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </a>
                             </td>
                         </tr>
                     }
@@ -219,7 +204,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- hoàn thành Modal-->
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -268,6 +252,30 @@
     </div>
 </div>
 
+<!-- Giấy tờ Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
@@ -277,5 +285,24 @@
         document.getElementById("mahs_complete").value = mahs;
     }
 
+    function GetFile(mahs) {
+        $.ajax({
+            url: '/ThongTinGiayTo/GetList',
+            type: 'POST',
+            data: {
+                Mahs: mahs
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#giayto_data').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        });
+    }
 </script>
 

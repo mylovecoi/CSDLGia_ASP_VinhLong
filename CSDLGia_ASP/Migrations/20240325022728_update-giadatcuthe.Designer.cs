@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240325022728_update-giadatcuthe")]
+    partial class updategiadatcuthe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1439,6 +1441,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CodeExcel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Congbo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1456,6 +1461,21 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Giatri")
                         .HasColumnType("float");
+
+                    b.Property<string>("Ipf1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ipf5")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lichsu")
                         .HasColumnType("nvarchar(max)");
@@ -1506,6 +1526,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Maxp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhanLoaiHoSo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phanloai")
@@ -1593,9 +1616,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Khuvuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
@@ -5014,9 +5034,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Giatttd")
                         .HasColumnType("float");
-
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
@@ -14878,27 +14895,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DsXaPhuong");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Excell.ExcellDanhMucLoaiDat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LineStart")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Loaidat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maloaidat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExcellDanhMucLoaiDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.GeneralConfigs", b =>
