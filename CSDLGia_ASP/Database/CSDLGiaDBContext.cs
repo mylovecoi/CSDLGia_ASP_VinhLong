@@ -7,6 +7,7 @@ using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using CSDLGia_ASP.Models.Manages.VbQlNn;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
+using CSDLGia_ASP.Models.Systems.Excell;
 using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
 using Microsoft.EntityFrameworkCore;
 
@@ -280,6 +281,8 @@ namespace CSDLGia_ASP.Database
         public DbSet<DmLoaiDat> DmLoaiDat { get; set; }
         public DbSet<DsDiaBan> DsDiaBan { get; set; }
         public DbSet<DsDonVi> DsDonVi { get; set; }
+        // Excell danh mục
+        public DbSet<ExcellDanhMucLoaiDat> ExcellDanhMucLoaiDat { get; set; }
         /*public DbSet<DsDonViTdg> DsDonViTdg { get; set; }*/
         public DbSet<DsNhomTaiKhoan> DsNhomTaiKhoan { get; set; }
         public DbSet<DsThamDinhVien> DsThamDinhVien { get; set; }

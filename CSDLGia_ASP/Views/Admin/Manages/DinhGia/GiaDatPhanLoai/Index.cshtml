@@ -7,12 +7,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -117,15 +117,9 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
 
-                            @foreach (var ds in dsdiabanAll)
-                            {
-                                @if (item.Madiaban == ds.MaDiaBan)
-                                {
-                                    <td style="text-align: center">@ds.TenDiaBan</td>
-                                }
-                            }
+                            <td>@item.Tendiaban </td>
 
-                            <td style="text-align: center">@item.Thoidiem</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
                             <td style="text-align: center">@item.Thongtin</td>
 
@@ -146,16 +140,7 @@
                             </td>
 
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @foreach (var ds in dscqcq)
-                                    {
-                                        @if (item.Macqcq == ds.MaDv)
-                                        {
-                                            <span style="text-align: center">@ds.TenDv</span>
-                                        }
-                                    }
-                                }
+                                @item.Tencqcq
                             </td>
                             <td style="text-align: center">
 

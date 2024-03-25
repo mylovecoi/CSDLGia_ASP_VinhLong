@@ -1,0 +1,54 @@
+﻿@model CSDLGia_ASP.Models.Systems.Excell.ExcellDanhMucLoaiDat
+@*@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+
+}*@
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
+            <i class="fa fa-star text-warning "></i>
+        </div>
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Chỉnh sửa thông tin tài sản nhận từ excell
+                </span>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="ImportExcellDanhMucLoaiDat" asp-action="Update" method="post">
+        <div class="card-body">
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin excell danh mục đất:</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Mã:</label>
+                        <input class="form-control" asp-for="Maloaidat">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight: bold; color: blue">Loại đất:</label>
+                        <input class="form-control" asp-for="Loaidat">
+                    </div>
+                </div>
+                <input hidden asp-for="Id" />
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="ImportExcellDanhMucLoaiDat" asp-action="Index" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i> Cập nhật </button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
