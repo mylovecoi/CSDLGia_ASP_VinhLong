@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDatCt/Store")]
         [HttpPost]
         public JsonResult Store(string Mahs, string Solo, string Sothua, string Tobando, string Mota,
-            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia, double Giasddat)
+            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
         {
             var model = new GiaDauGiaDatCt
             {
@@ -32,14 +32,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 Dvt = Dvt,
                 Giakhoidiem = Giakhoidiem,
                 Giadaugia = Giadaugia,
-                Giasddat = Giasddat,
+                Giasddat = Giadaugia / Dientich,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
             _db.GiaDauGiaDatCt.Add(model);
             _db.SaveChanges();
 
-            if (Dvt != null)
+            /*if (Dvt != null)
             {
                 var dvt = _db.DmDvt.Where(t => t.Dvt == Dvt).ToList();
                 if (dvt.Count == 0)
@@ -53,7 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     _db.DmDvt.AddRange(new_dvt);
                     _db.SaveChanges();
                 }
-            }
+            }*/
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -127,12 +127,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<input type='text' id='Giadaugia_edit' name='Giadaugia_edit' value='" + @model.Giadaugia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'>";
+                /*result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá tính tiền sử dụng đất</b></label>";
                 result += "<input type='text' id='Giasddat_edit' name='Giasddat_edit' value='" + @model.Giasddat + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
-                result += "</div>";
+                result += "</div>";*/
 
                 result += "</div>";
                 result += "</div>";
@@ -150,7 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDatCt/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Solo, string Sothua, string Tobando, string Mota,
-            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia, double Giasddat)
+            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
         {
             var model = _db.GiaDauGiaDatCt.FirstOrDefault(t => t.Id == Id);
             model.Solo = Solo;
@@ -161,7 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             model.Dvt = Dvt;
             model.Giakhoidiem = Giakhoidiem;
             model.Giadaugia = Giadaugia;
-            model.Giasddat = Giasddat;
+            model.Giasddat = Giadaugia / Dientich;
             model.Updated_at = DateTime.Now;
             _db.GiaDauGiaDatCt.Update(model);
             _db.SaveChanges();
