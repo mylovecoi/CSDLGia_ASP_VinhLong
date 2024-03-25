@@ -90,7 +90,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaSpDvToiDaCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -117,8 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
+                              
                                 Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
                                 //Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?

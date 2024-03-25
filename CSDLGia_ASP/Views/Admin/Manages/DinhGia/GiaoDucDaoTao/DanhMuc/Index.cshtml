@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtDm>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -21,12 +21,16 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-                Danh mục<small>&nbsp;giá dịch vụ giáo dục đào tạo</small><br />
-            </h3>
-        </div>
+        <h3 class="card-label">
+            @ViewData["Title"]
+            <span class="d-block text-muted pt-2 font-size-sm">
+                Quản lý chi tiết danh mục hồ sơ giá giáo dục đào tạo  @ViewData["TenNhom"]
+            </span>
+        </h3>
         <div class="card-toolbar">
+            <a asp-controller="GiaoDucDaoTaoNhom" asp-action="Index" class="btn btn-danger font-weight-bolder">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.danhmuc", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
@@ -34,6 +38,7 @@
                 </button>
             }
         </div>
+        <input hidden id="MaNhom" name="MaNhom" value="@ViewData["MaNhom"]" />
     </div>
     <hr />
     <div class="card-body" id="frm_data">
@@ -75,35 +80,35 @@
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Thông tin sản phẩm dịch vụ giáo dục đào tạo
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Tên dịch vụ*</b></label>
-                                <input type="text" id="Tenspdv_create" name="Tenspdv_create" class="form-control" />
-                            </div>
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin sản phẩm dịch vụ giáo dục đào tạo
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">                        
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên dịch vụ*</b></label>
+                            <input type="text" id="Tenspdv_create" name="Tenspdv_create" class="form-control" />
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetCreate()">Thêm mới</button>
+            </div>
         </div>
     </div>
 </div>
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
@@ -112,12 +117,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
-            </div>
-            <div class="modal-body">
-                <div class="row text-left">
-                    <input id="id_delete" name="id_delete" type="hidden" />
-                </div>
-            </div>
+            </div> 
+            <input id="id_delete" name="id_delete" type="hidden" />            
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
@@ -139,7 +140,6 @@
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -156,18 +156,13 @@
             type: 'POST',
             data: {
                 Tenspdv: $('#Tenspdv_create').val(),
+                MaNhom: $('#MaNhom').val(),              
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                     location.reload();
                     toastr.success("Thêm mới thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Create_Modal').modal("hide");
-                   
+                    location.reload();         
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -187,13 +182,8 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
+                if (data.status == 'success') {                   
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
-                    $('#Delete_Modal').modal("hide");
                     location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
@@ -213,7 +203,7 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
-                    
+
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -232,12 +222,7 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Edit_Modal').modal("hide");
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");                   
                     location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
@@ -245,4 +230,4 @@
             }
         })
     }
- </script>
+</script>

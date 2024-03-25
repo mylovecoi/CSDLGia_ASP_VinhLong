@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -65,5 +66,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tencqcq { get; set; }
         [NotMapped]
         public string Level { get; set; }
+        [NotMapped]
+        public int Sheet { get; set; }
+        [NotMapped]
+        public int LineStart { get; set; }
+        [NotMapped]
+        public int LineStop { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+        [NotMapped]
+        public IFormFile FormFile { get; set; }
     }
 }
