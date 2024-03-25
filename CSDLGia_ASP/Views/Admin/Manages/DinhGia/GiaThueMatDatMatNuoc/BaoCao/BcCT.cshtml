@@ -26,7 +26,7 @@
 @foreach (var dv in DonVis)
 {
     <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
+        Đơn vị:@dv.TenDv
     </p>
     var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
     @foreach (var hoso in hosodonvi)
@@ -35,7 +35,7 @@
             Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
         <p style="text-align: center; font-size: 16px; font-style:italic">
-            @*   @hoso.Mota *@
+              @hoso.Mota
         </p>
         var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
         <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
