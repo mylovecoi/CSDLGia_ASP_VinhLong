@@ -25,7 +25,6 @@
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin hồ sơ giá<small>&nbsp;đất cụ thể</small><br />
-                <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
             </h3>
         </div>
     </div>
@@ -35,7 +34,7 @@
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ @Model.Phanloai:</label>
             </div>
             <div class="row">
                 <div class="col-xl-4">

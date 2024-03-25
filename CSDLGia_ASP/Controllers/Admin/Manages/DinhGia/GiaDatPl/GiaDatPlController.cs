@@ -117,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuThe/Create")]
         [HttpGet]
-        public IActionResult Create(string Madv)
+        public IActionResult Create(string Madv, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -126,6 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     var model = new VMDinhGiaDat
                     {
                         Madv = Madv,
+                        Phanloai = Phanloai,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
