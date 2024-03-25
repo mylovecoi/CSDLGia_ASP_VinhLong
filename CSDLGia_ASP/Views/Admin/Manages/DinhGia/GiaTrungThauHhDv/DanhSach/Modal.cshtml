@@ -44,7 +44,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên công tác</label>
-                                <input type="text" id="MoTa" name="MoTa" class="form-control" />
+                                <input type="text" id="Mota" name="Mota" class="form-control" />
                             </div>
                         </div>                        
                     </div>
@@ -53,7 +53,7 @@
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị tính</label>
-                                <input type="text" id="DVT" name="DVT" class="form-control" style="font-weight: bold" />
+                                <input type="text" id="Dvt" name="Dvt" class="form-control" style="font-weight: bold" />
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -117,12 +117,12 @@
                 console.log(data);
                 var form = $('#frm_philephict');
                 form.find("[name='Id']").val(data.id);
-                form.find("[name='DonGia']").val(data.dongGia);
-                form.find("[name='MoTa']").val(data.moTa);
+                form.find("[name='DonGia']").val(data.donGia);
+                form.find("[name='Mota']").val(data.mota);
                 form.find("[name='HienThi']").val(data.hienThi);
                 form.find("[name='SapXep']").val(data.sapXep);
                 form.find("[name='KhoiLuong']").val(data.khoiLuong);
-                form.find("[name='DVT']").val(data.dvt);
+                form.find("[name='Dvt']").val(data.dvt);
                 form.find("[id='ThanhTien']").val(data.thanhTien);
             }
         })
@@ -132,11 +132,11 @@
         var form = $('#frm_philephict');
         form.find("[name='Id']").val(Id);
         form.find("[name='DonGia']").val(0);
-        form.find("[name='MoTa']").val('');
+        form.find("[name='Mota']").val('');
         form.find("[name='HienThi']").val(0);
         form.find("[name='SapXep']").val(0);
         form.find("[name='KhoiLuong']").val(0);
-        form.find("[name='DVT']").val('');
+        form.find("[name='Dvt']").val('');
         form.find("[name='ThanhTien']").val(0);
     }
 
