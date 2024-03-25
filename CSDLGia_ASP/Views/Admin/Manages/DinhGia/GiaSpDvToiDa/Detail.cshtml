@@ -19,7 +19,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
-                    <th>Phân loại sản phẩm dịch vụ</th>
+                    <th>STT<br />báo cáo</th>
                     <th>Tên sản phẩm dịch vụ</th>
                     <th>Đơn vị tính</th>
                     <th>Mức giá tối đa</th>
@@ -32,11 +32,11 @@
                 {
                     @if (Model.GiaSpDvToiDaCt != null)
                     {
-                        @foreach (var item in Model.GiaSpDvToiDaCt)
+                        @foreach (var item in Model.GiaSpDvToiDaCt.OrderBy(x=>x.Sapxep))
                         {
                             <tr>
-                                <td style="text-align:center">@(record_id++)</td>
-                                <td style="text-align:center"  class="active">@item.Phanloaidv</td>
+                                <td style="text-align:center">@item.Sapxep</td>
+                                <td style="text-align:center">@item.HienThi</td>
                                 <td style="text-align:center" >@item.Tenspdv</td>
                                 <td style="text-align:center" >@item.Dvt</td>
                                 <td style ="text-align:center" >@item.Dongia</td>

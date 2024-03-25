@@ -1,7 +1,6 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var nhomtn = (IEnumerable<GiaThueTaiNguyenNhom>)ViewData["NhomTn"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -25,19 +24,19 @@
         <div class="card-header ribbon ribbon-top ribbon-ver">
             <div class="card-title">
                 <h3 class="card-label">
-                    Tìm kiếm thông tin sản phẩm dịch dụ tối đa
+                    Tìm kiếm thông tin sản phẩm dịch vụ tối đa
                 </h3>
             </div>
         </div>
         <!--begin::Form-->
         <form asp-controller="GiaSpDvToiDa" asp-action="Result" method="post" id="frm_spdvtoida_timkiem">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Đơn vị</label>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn vị</label>
                         <select class="form-control select2basic" id="madv" name="madv">
-                                <option value="all">--Tất cả các đơn vị--</option>
+                            <option value="all">--Tất cả các đơn vị--</option>
                             @foreach (var db in dsdiaban)
                             {
                                 <optgroup label="@db.TenDiaBan">
@@ -53,13 +52,30 @@
                         </select>
                     </div>
                 </div>
+               
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Tên hàng hóa</label>
+                        <label>Địa bàn áp dụng</label>
+                        <select class="form-control select2basic" id="madiaban" name="madiaban">
+                            <option value="all">--Tất cả các địa bàn--</option>
+                            @foreach (var db in dsdiaban)
+                            {
+                                <!option value="@db.MaDiaBan">@db.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>                
+            </div>
+
+            <div class="row">                
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Tên sản phẩm, dịch vụ</label>
                         <input type="text" id="tenhanghoa" name="tenhanghoa" class="form-control" />
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
@@ -73,6 +89,9 @@
                         <input type="date" id="ngaynhap_den" name="ngaynhap_den" class="form-control" />
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Mức giá - Từ</label>
