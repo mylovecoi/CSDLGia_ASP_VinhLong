@@ -62,7 +62,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
-                            Báo cáo tổng hợp mức trợ giá trợ cước
+                            Báo cáo tổng hợp mức dịch vụ khám chữa bệnh
                         </h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -70,6 +70,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
+                            <div class="col-xl-12">
+                            <div class="form-group">
+                                 <label><b>Phân nhóm dịch vụ khám chữa bệnh</b></label>
+                                <select class="form-control" id="manhom" name="manhom" width="100%">
+                                    <option value="all">--Tất cả---</option>
+
+                                </select>
+                            </div>
+                        </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label><b>Từ ngày</b></label>
@@ -114,7 +123,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
-                            Báo cáo chi tiết mức trợ giá trợ cước
+                            Báo cáo chi tiết mức dịch vụ khám chữa bệnh
                         </h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -134,6 +143,15 @@
                                     <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
                                 </div>
                             </div>
+                            <div class="col-xl-12">
+                            <div class="form-group">
+                                <label><b>Thông tin hồ sơ</b> </label>
+                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                    <option value="all">--Tất cả---</option>
+
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Tên thủ trưởng đơn vị ký</b></label>
