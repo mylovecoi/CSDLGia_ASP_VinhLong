@@ -54,8 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //GiaThueMatDatMatNuoc
-        //GiaThueMatDatMatNuocCt
+    
         [Route("BaoCaoDgThueDN/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
