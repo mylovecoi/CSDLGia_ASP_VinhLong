@@ -29,8 +29,9 @@
                     <th>Tờ bản đồ</th>
                     <th>Diện tích</th>
                     <th>Dvt</th>
-                    <th>Gia khởi <br /> điểm</th>
-                    <th>Gia đấu <br /> giá</th>
+                    <th>Giá khởi <br /> điểm</th>
+                    <th>Giá đấu <br /> giá</th>
+                    <th>Giá tính tiền<br />sử dụng đất</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -49,8 +50,9 @@
                                 <td style="text-align:center">@item.Tobanbo</td>
                                 <td style="text-align:center">@item.Dientich</td>
                                 <td style="text-align:center">@item.Dvt</td>
-                                <td style="text-align:center">@item.Giakhoidiem</td>
-                                <td style="text-align:center">@item.Giadaugia</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giakhoidiem)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giadaugia)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giadaugia / item.Dientich)</td>
 
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"

@@ -47,7 +47,7 @@
                             <input type="text" id="Dientich_create" name="Dientich_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-4">
                         <label class="form-control-label">Đơn vị tính</label>
                         <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
                             @foreach (var item in DmDvt)
@@ -62,24 +62,24 @@
                             <i class="fa fa-plus"></i>
                         </button>
                     </div> *@
-                    <div class="col-xl-3">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá khởi điểm</b></label>
                             <input type="text" id="Giakhoidiem_create" name="Giakhoidiem_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá đấu giá</b></label>
                             <input type="text" id="Giadaugia_create" name="Giadaugia_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    @* <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tính tiền sử dụng đất</b></label>
                             <input type="text" id="Giasddat_create" name="Giasddat_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
-                    </div>
+                    </div> *@
                 </div>
 
             </div>
@@ -224,7 +224,7 @@
                 Dvt: $('#Dvt_create').val(),
                 Giakhoidiem: $('#Giakhoidiem_create').val(),
                 Giadaugia: $('#Giadaugia_create').val(),
-                Giasddat: $('#Giasddat_create').val(),
+                // Giasddat: $('#Giasddat_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {
