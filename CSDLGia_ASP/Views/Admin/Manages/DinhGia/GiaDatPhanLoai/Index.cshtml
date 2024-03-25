@@ -7,12 +7,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -46,10 +46,13 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
+                @* <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
+            asp-route-Madv="@ViewData["Madv"]">
+            <i class="la la-plus"></i>Thêm mới
+            </a> *@
+                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
-                </a>
+                </button>
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
@@ -117,15 +120,9 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
 
-                            @foreach (var ds in dsdiabanAll)
-                            {
-                                @if (item.Madiaban == ds.MaDiaBan)
-                                {
-                                    <td style="text-align: center">@ds.TenDiaBan</td>
-                                }
-                            }
+                            <td>@item.Tendiaban </td>
 
-                            <td style="text-align: center">@item.Thoidiem</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
                             <td style="text-align: center">@item.Thongtin</td>
 
@@ -146,16 +143,7 @@
                             </td>
 
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @foreach (var ds in dscqcq)
-                                    {
-                                        @if (item.Macqcq == ds.MaDv)
-                                        {
-                                            <span style="text-align: center">@ds.TenDv</span>
-                                        }
-                                    }
-                                }
+                                @item.Tencqcq
                             </td>
                             <td style="text-align: center">
 
@@ -185,6 +173,42 @@
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thêm mới hồ sơ giá đất cụ thể
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaDatPl" asp-action="Create" method="get" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Phân loại hồ sơ</b></label>
+                                <select id="Phanloai" name="Phanloai" class="form-control">
+                                    <option value="Giá đất bồi thường tái định cư">Giá đất bồi thường tái định cư</option>
+                                    <option value="Giá đất thu tiền sử dụng đất">Giá đất thu tiền sử dụng đất</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

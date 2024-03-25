@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DanhSachHoSo"] = _db.GiaTaiSanCong.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
-                    ViewData["Title"] = "Báo cáo tổng hợp tài sản công";
+                    ViewData["Title"] = "Báo cáo giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_bc";
@@ -118,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 
                     ViewData["HoSoCt"] = model_ct;
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá tài sản công";
+                    ViewData["Title"] = "Báo cáo chi tiết giá tài sản công";
                     ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;

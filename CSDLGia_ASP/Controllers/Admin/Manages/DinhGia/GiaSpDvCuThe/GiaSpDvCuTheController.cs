@@ -130,6 +130,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
                 {
+                    //Xoa dữ liệu thừa
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == MadvBc);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                        _db.SaveChanges();
+                    }
 
                     // hồ sơ mà chỉ đến bước hoàn thành mà quay lại thì sẽ có trạng thái CXD --> cần xóa
                     var check = _db.GiaSpDvCuTheCt.Where(t => t.Trangthai == "CXD");
@@ -261,7 +279,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         modelExcel.Thoidiem = request.Thoidiem;
                         modelExcel.Thongtin = request.Thongtin;
                         modelExcel.GhiChu = request.GhiChu;
-                        modelExcel.CodeExcel = request.CodeExcel;
+                        modelExcel.PhanLoaiHoSo = request.PhanLoaiHoSo;
                         modelExcel.Updated_at = DateTime.Now;
                         modelExcel.Ipf1 = request.Ipf1;
                         _db.GiaSpDvCuThe.Update(modelExcel);
@@ -286,7 +304,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = request.Mahs,
                         Madv = request.Madv,
                         Manhom = request.Manhom,
-
+                        PhanLoaiHoSo = request.PhanLoaiHoSo,
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         GhiChu = request.GhiChu,
@@ -383,9 +401,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
                     model.GiaSpDvCuTheCt = model_ct.ToList();
+                    var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    model.ThongTinGiayTo = model_file.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();                   
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Ipf1"] = model.Ipf1;
@@ -478,7 +498,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
 
-                  
+
                     model.GiaSpDvCuTheCt = model_ct.ToList();
 
                     ViewData["Ipf1"] = model.Ipf1;
@@ -498,7 +518,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }      
+        }
 
         [Route("DinhGiaSpDvCuThe/Print")]
         [HttpGet]
@@ -658,7 +678,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuThe/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string tenhanghoa, DateTime ngaynhap_tu, DateTime ngaynhap_den, double beginPrice, double endPrice)
+        public IActionResult Result(string madv, string tenhanghoa, DateTime? ngaynhap_tu, DateTime? ngaynhap_den,
+            double beginPrice, double endPrice, string MaDiaBan, string PhanLoaiHoSo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -680,29 +701,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      TenSpDv = giaspdvcuthect.TenSpDv,
                                      Mucgia1 = giaspdvcuthect.Mucgia1,
                                      Mucgia2 = giaspdvcuthect.Mucgia2,
+                                     Mucgia3 = giaspdvcuthect.Mucgia3,
+                                     Mucgia4 = giaspdvcuthect.Mucgia4,
                                      Maspdv = giaspdvcuthect.Maspdv,
+                                     MaDiaBan = giaspdvcuthe.Madiaban,
+                                     PhanLoaiHoSo = giaspdvcuthe.PhanLoaiHoSo,
+                                     Ttqd = giaspdvcuthe.Ttqd,
+                                     GhiChu = giaspdvcuthe.GhiChu,
                                  });
 
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm;
+                    //model = model.Where(t => t.Thoidiem >= ngaynhap_tu && t.Thoidiem <= ngaynhap_den && t.Mucgia1 >= beginPrice && t.Trangthai == "HT");
+                    //Đơn vị nhập liệu
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-
-                    if (ngaynhap_tu.ToString("yyMMdd") != "010101")
+                    //Tên sản phẩm dịch vụ
+                    if (!string.IsNullOrEmpty(tenhanghoa))
                     {
-                        model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
+                        model = model.Where(t => t.TenSpDv.ToLower().Contains(tenhanghoa.ToLower()));
                     }
-
-                    if (ngaynhap_den.ToString("yyMMdd") != "010101")
+                    //Phân loại hồ sơ
+                    if (PhanLoaiHoSo != "all")
                     {
-                        model = model.Where(t => t.Thoidiem <= ngaynhap_den);
+                        model = model.Where(t => t.PhanLoaiHoSo == PhanLoaiHoSo);
                     }
+                    //Địa bàn áp dụng
+                    if (MaDiaBan != "all")
+                    {
+                        model = model.Where(t => t.MaDiaBan == MaDiaBan);
+                    }
+                    //Chưa làm mức giá và thời gian
 
-
-
-
-
+                    //
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_tk";

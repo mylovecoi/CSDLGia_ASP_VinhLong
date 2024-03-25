@@ -31,7 +31,7 @@
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Doanh nghiệp</th>
+            <th style="text-align: center">Mô tả</th>
             <th style="text-align: center">Số QĐ</th>
             <th style="text-align: center">Ngày chuyển hồ sơ</th>
             <th style="text-align: center">Ngày xét duyệt</th>
@@ -57,35 +57,23 @@
         </tr>
     </tbody>
 </table>
-
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
     <tr>
-        <td width="45%" style="text-align: left">
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - UBND tỉnh;<br />
+            - Bộ tài chính;<br />
+            - Lưu: VT, QLGCS.
         </td>
-<<<<<<< HEAD
         <td style="vertical-align: top;">
         <td style="vertical-align: top;">
-
-            <p><b>@ViewData["chucvu"]</b></p>
+            <p><b>@ViewData["ChucDanhNguoiKy"]</b></p>
             <i>(Ký tên, đóng dấu)</i>
             <br />
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <p><b>@ViewData["tenthutruong"]</b></p>
-=======
-        <td width="55%" style="text-align: center">
-            <span style="font-weight: bold; text-transform:uppercase">
-                @ViewData["ChucDanhNguoiKy"]
-            </span><br />
-            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
->>>>>>> 3893af95b243ad6193cf141a78fb564fa371f152
+            <p><b>@ViewData["HoTenNguoiKy"]</b></p>
         </td>
-    </tr>
-    <tr style="text-align: center; height:100px">
-        <td style="font-weight: bold; padding-top: 90px"></td>
-        <td style="font-weight: bold; padding-top: 90px; text-align:center">@ViewData["HoTenNguoiKy"]</td>
     </tr>
 </table>

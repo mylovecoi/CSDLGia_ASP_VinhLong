@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography.Xml;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
@@ -58,55 +63,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 
         [Route("GiaSpDvToiDaDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
+        public IActionResult Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaDm request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Create"))
+                var model = _db.GiaSpDvToiDaDm.FirstOrDefault(x => x.Id == request.Id);
+                if (model != null)
                 {
-                    var request = new GiaSpDvToiDaDm
+                    model.Tenspdv = request.Tenspdv;
+                    model.Dvt = request.Dvt;
+                    model.HienThi = request.HienThi;
+                    model.Sapxep = request.Sapxep;
+                    _db.GiaSpDvToiDaDm.Update(model);
+                }
+                else
+                {
+                    var chitiet = new GiaSpDvToiDaDm
                     {
-                        Manhom = Manhom,
-                        Dvt = Dvt,
-                        Tenspdv = Tenspdv,
-                        Mota = Mota,
-                        Gia = Gia,
-                        Phanloai = Phanloai,
-                        Hientrang = Hientrang,
+                        Manhom = request.Manhom,
+                        Dvt = request.Dvt,
+                        Tenspdv = request.Tenspdv,
+                        HienThi = request.HienThi,
+                        Sapxep = request.Sapxep,
                         Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                    _db.GiaSpDvToiDaDm.Add(request);
-                    _db.SaveChanges();
-
-                    var checkdvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt); // kiểm tra đơn vị tính nếu không có giá trị thì thêm vào
-                    if (checkdvt == null)
-                    {
-                        var dvt = new DmDvt
-                        {
-                            Dvt = Dvt,
-                            Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
-                        };
-                        _db.DmDvt.Add(dvt);
-                        _db.SaveChanges();
-
-                    }
-
-                    var data = new { status = "success", message = "Thêm mới thành công!" };
-                    return Json(data);
+                    _db.GiaSpDvToiDaDm.Add(chitiet);
                 }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
+                _db.SaveChanges();
+                return RedirectToAction("Index", "GiaSpDvToiDaDm", new { Manhom = request.Manhom });
             }
             else
             {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
+                return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
 
@@ -114,102 +104,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
         [HttpPost]
         public JsonResult Edit(int Id)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
-                {
-                    var model = _db.GiaSpDvToiDaDm.FirstOrDefault(p => p.Id == Id);
-                    if (model != null)
-                    {
-                        string result = "<div class='row' id='edit_thongtin'>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên Sản Phẩm</label>";
-                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tenspdv + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mô tả</label>";
-                        result += "<input type='text' id='mota_edit' name='mota_edit' class='form-control' value='" + model.Mota + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Giá</label>";
-                        result += "<input type='text' id='gia_edit' name='gia_edit' class='form-control' value='" + model.Gia + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<label class='form-control-label'>Đơn vị tính</label>";
-                        result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-
-                        var dvt = _db.DmDvt.ToList();
-                        foreach (var item in dvt)
-                        {
-                            result += "<option value ='" + @item.Dvt + "'>" + @item.Dvt + "</ option >";
-                        }
-                        result += "</select>";
-                        result += "</div>";
-                        result += "<div class='col-xl-1' style='padding-left: 0px;'>";
-                        result += "<label class='control-label'>Thêm</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
-                        result += "</button>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-7'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Trạng thái</label>";
-                        result += "<select id='hientrang_edit' name='hientrang_edit' class='form-control'>";
-                        result += "<option value='TD' " + ((string)model.Hientrang == "TD" ? "selected" : "") + ">Theo dõi</option>";
-                        result += "<option value='KTD' " + ((string)model.Hientrang == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
-                        result += "</select>";
-                        result += "</div>";
-                        result += "</div>";
-
-
-                        result += "<div class='col-xl-11'>";
-                        result += "<label class='form-control-label'>Phân loại sản phẩm, dịch vụ</label>";
-                        result += "<select id='plspdv_edit' name='plspdv_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-
-                        var plspdvcuthe = _db.GiaSpDvToiDaDm.ToList();
-                        foreach (var item in plspdvcuthe)
-                        {
-                            result += "<option value ='" + @item.Dvt + "'>" + @item.Dvt + "</ option >";
-                        }
-                        result += "</select>";
-                        result += "</div>";
-                        result += "<div class='col-xl-1' style='padding-left: 0px;'>";
-                        result += "<label class='control-label'>Thêm</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Plspdv_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
-                        result += "</button>";
-                        result += "</div>";
-                        result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
-                        result += "</div>";
-
-
-                        var data = new { status = "success", message = result };
-                        return Json(data);
-                    }
-                    else
-                    {
-                        var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
-                        return Json(data);
-                    }
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
-            }
+            var model = _db.GiaSpDvToiDaDm.FirstOrDefault(t => t.Id == Id);
+            // Trả về JSON cho JavaScript
+            return Json(model);
         }
 
         [Route("GiaSpDvToiDaDmCt/Update")]
@@ -222,11 +119,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 {
                     var model = _db.GiaSpDvToiDaDm.FirstOrDefault(t => t.Id == Id);
                     model.Tenspdv = Tenspdv;
-                    model.Mota = Mota;
+
                     model.Dvt = Dvt;
-                    model.Gia = Gia;
-                    model.Phanloai = Phanloai;
-                    model.Hientrang = Hientrang;
+
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvToiDaDm.Update(model);
                     _db.SaveChanges();
@@ -301,73 +196,97 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("GiaSpDvToiDaDmCt/Excel")]
-        [HttpPost]
-        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Gia, string Phanloai,
-            string Hientrang, string Dvt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+        public IActionResult NhanExcel(string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Create"))
                 {
-                    LineStart = LineStart == 0 ? 1 : LineStart;
-                    int sheet = Sheet == 0 ? 0 : (Sheet - 1);
-                    using (var stream = new MemoryStream())
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        await FormFile.CopyToAsync(stream);
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-                            var rowcount = worksheet.Dimension.Rows;
-                            LineStop = LineStop > rowcount ? rowcount : LineStop;
-                            //var n = 1;
-                            for (int row = LineStart; row <= LineStop; row++)
-                            {
-                                var list_add = new GiaSpDvToiDaDm
-                                {
-                                    Manhom = Manhom,
-                                    Created_at = DateTime.Now,
-                                    Updated_at = DateTime.Now,
-                                    Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
+                        LineStart = 4,
+                        LineStop = 1000,
+                        Sheet = 1,
+                        MaNhom = Manhom,
+                        TenNhom = _db.GiaSpDvToiDaNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? ""
+                    };
 
-                                    Mota = worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Mota)].Value.ToString().Trim() : "",
+                    ViewData["Title"] = "Danh mục chi tiết nhóm sản phẩm dịch vụ tối đa";
+                    ViewData["MenuLv1"] = "menu_spdvtoida";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/DanhMuc/Excel.cshtml", model);
 
-                                    Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-                                    Gia = Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) != 0 ?
-                                                Convert.ToDouble(worksheet.Cells[row, Int16.Parse(Gia.ToString())].Value) : 0,
-                                    Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
-                                    Hientrang = worksheet.Cells[row, Int16.Parse(Hientrang)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Hientrang)].Value.ToString().Trim() : "",
-                                    Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-
-
-                                };
-                                _db.GiaSpDvToiDaDm.Add(list_add);
-                            }
-
-                        }
-                    }
-                    //_db.GiaDvKcbDm.AddRange(list_add);
-                    _db.SaveChanges();
-
-                    var data = new { status = "success" };
-                    return Json(data);
                 }
                 else
                 {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
                 }
             }
             else
             {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+                int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+
+                using (var stream = new MemoryStream())
+                {
+                    await requests.FormFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        if (worksheet != null)
+                        {
+                            int rowcount = worksheet.Dimension.Rows;
+                            requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaDm>();
+                            int line = 1;
+                            for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                            {
+                                ExcelStyle style = worksheet.Cells[row, 2].Style;
+                                // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                                bool isBold = style.Font.Bold;
+                                // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                                bool isItalic = style.Font.Italic;
+                                StringBuilder strStyle = new StringBuilder();
+                                if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                                if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+
+                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaDm
+                                {
+                                    Sapxep = line,
+                                    HienThi = worksheet.Cells[row, 1].Value != null ?
+                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                    Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Style = strStyle.ToString(),
+                                    Manhom = requests.MaNhom
+                                });
+                                line++;
+                            }
+                            _db.GiaSpDvToiDaDm.AddRange(list_add);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", "GiaSpDvToiDaDm", new { Manhom = requests.MaNhom });
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
             }
 
         }

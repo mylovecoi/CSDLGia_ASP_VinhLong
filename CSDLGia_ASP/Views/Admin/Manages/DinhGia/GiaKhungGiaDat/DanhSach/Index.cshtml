@@ -162,7 +162,7 @@
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Delete"))
                                     {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Tieude')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
                                     }
@@ -244,6 +244,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                <label>Tiêu đề:</label>
+                <p style="color:blue;" id="MoTaDelete"></p>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -256,8 +258,9 @@
 </div>
 
 <script>
-    function SetDelete(id) {
+    function SetDelete(id,mota) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("MoTaDelete").innerHTML = mota;
     }
 
     function Chuyen(mahs) {

@@ -1,0 +1,72 @@
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
+
+@{
+    int record_id = 1;
+    var mahs = ViewData["Mahs"];
+    var spcuthedanhmuc = (IEnumerable<GiaSpDvCuTheDm>)ViewData["GiaSpDvCuTheDm"];
+    var dmNhomSpDvCuThe = (IEnumerable<GiaSpDvCuTheNhom>)ViewData["GiaSpDvCuTheNhom"];
+}
+
+@*Nhận khi thêm*@
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
+</div>
+<div class="card card-custom" style="border: 1px solid #60aee4;">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+            </h3>
+        </div>
+
+    </div>
+    <hr />
+
+    <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover" id="datatable_4">
+            <thead>
+                <tr style="text-align:center">
+                    <th>STT</th>
+                    <th>Hiện Thị</th>
+                    <th>Tên sản phẩm dịch vụ</th>
+                    <th>Đơn vị tính</th>
+                    <th>Điểm giữ xe thông<br />thường và danh lam<br />thắng cảnh</th>
+                    <th>Điểm giữ xe có nhu<br />cầu sử dụng lớn</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @if (Model.GiaSpDvCuTheCt != null)
+                    {
+                        @foreach (var item in Model.GiaSpDvCuTheCt.OrderBy(x => x.Sapxep))
+                        {
+                            <tr>
+                                <td style="text-align:center">@item.Sapxep</td>
+                                <td style="text-align:center">@item.Tt</td>
+                                <td style="text-align:left">@item.TenSpDv</td>
+                                <td style="text-align:center">@item.Dvt</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia1)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Mucgia2)</td>
+                                <td>
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" data-target="#Delete_Modal" data-toggle="modal"
+                                            onclick="GetDelete(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Xoá">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        <!--end: Datatable-->
+    </div>
+    <!--end: Datatable-->
+
+</div>

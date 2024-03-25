@@ -5,8 +5,15 @@ using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Threading.Tasks;
 //using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
@@ -269,82 +276,99 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
             }
         }
 
-        //[Route("GiaSpDvKhungGiaDmCt/Excel")]
-        //[HttpPost]
-        //public async Task<JsonResult> Excel(string Manhom, string Level, string Cap1, string Cap2, string Cap3,
-        //    string Cap4, string Cap5, string Dvt, string Ten, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.danhmuc", "Edit"))
-        //        {
-        //            LineStart = LineStart == 0 ? 1 : LineStart;
-        //            var list_add = new List<GiaSpDvKhungGiaDm>();
-        //            int sheet = Sheet == 0 ? 0 : (Sheet - 1);
-        //            using (var stream = new MemoryStream())
-        //            {
-        //                await FormFile.CopyToAsync(stream);
-        //                using (var package = new ExcelPackage(stream))
-        //                {
-        //                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-        //                    var rowcount = worksheet.Dimension.Rows;
-        //                    LineStop = LineStop > rowcount ? rowcount : LineStop;
+        public IActionResult NhanExcel(string Manhom)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Create"))
+                {
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {
+                        LineStart = 4,
+                        LineStop = 1000,
+                        Sheet = 1,
+                        MaNhom = Manhom,
+                        TenNhom = _db.GiaSpDvKhungGiaNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? ""
+                    };
 
-        //                    for (int row = LineStart; row <= LineStop; row++)
-        //                    {
-        //                        list_add.Add(new GiaSpDvKhungGiaDm
-        //                        {
-        //                            Manhom = Manhom,
-        //                            Theodoi = "TD",
-        //                            Created_at = DateTime.Now,
-        //                            Updated_at = DateTime.Now,
+                    ViewData["Title"] = "Danh mục chi tiết nhóm khung giá sản phẩm dịch vụ";
+                    ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                    ViewData["MenuLv2"] = "menu_spdvkhunggia_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/DanhMuc/Excel.cshtml", model);
 
-        //                            Level = worksheet.Cells[row, Int16.Parse(Level)].Value.ToString() != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Level)].Value.ToString().Trim() : "",
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
-        //                            Cap1 = worksheet.Cells[row, Int16.Parse(Cap1)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap1)].Value.ToString().Trim() : "",
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+                int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
 
-        //                            Cap2 = worksheet.Cells[row, Int16.Parse(Cap2)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap2)].Value.ToString().Trim() : "",
+                using (var stream = new MemoryStream())
+                {
+                    await requests.FormFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        if (worksheet != null)
+                        {
+                            int rowcount = worksheet.Dimension.Rows;
+                            requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaDm>();
+                            int line = 1;
+                            for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                            {
+                                ExcelStyle style = worksheet.Cells[row, 2].Style;
+                                // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                                bool isBold = style.Font.Bold;
+                                // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                                bool isItalic = style.Font.Italic;
+                                StringBuilder strStyle = new StringBuilder();
+                                if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                                if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
 
-        //                            Cap3 = worksheet.Cells[row, Int16.Parse(Cap3)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap3)].Value.ToString().Trim() : "",
+                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaDm
+                                {
+                                    SapXep = line,
+                                    HienThi = worksheet.Cells[row, 1].Value != null ?
+                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                    Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Style = strStyle.ToString(),
+                                    Manhom = requests.MaNhom
+                                });
+                                line++;
+                            }
+                            _db.GiaSpDvKhungGiaDm.AddRange(list_add);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
 
-        //                            Cap4 = worksheet.Cells[row, Int16.Parse(Cap4)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap4)].Value.ToString().Trim() : "",
+                return RedirectToAction("Index", "GiaSpDvKhungGiaDmCt", new { Manhom = requests.MaNhom });
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
 
-        //                            Cap5 = worksheet.Cells[row, Int16.Parse(Cap5)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Cap5)].Value.ToString().Trim() : "",
-
-        //                            Ten = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-
-        //                            Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-        //                                        worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-        //                        });
-        //                    }
-
-        //                }
-        //            }
-        //            _db.GiaSpDvKhungGiaDm.AddRange(list_add);
-        //            _db.SaveChanges();
-
-        //            var data = new { status = "success" };
-        //            return Json(data);
-        //        }
-        //        else
-        //        {
-        //            var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-        //            return Json(data);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-        //        return Json(data);
-        //    }
-        //}
+        }
     }
 }

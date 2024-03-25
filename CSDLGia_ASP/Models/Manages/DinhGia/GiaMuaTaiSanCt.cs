@@ -21,5 +21,17 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
 
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public string Soqd { get; set; }
+        [NotMapped]
+        public string Thongtinqd { get; set; }
+        [NotMapped]
+        public string Madv { get; set; }
+        [NotMapped]
+        public string Madiaban { get; set; }
+        [NotMapped]
+        public string Tennhathau { get; set; }        
     }
 }
