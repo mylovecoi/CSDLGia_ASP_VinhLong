@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
         [Route("GiaKhungGiaDatCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Vungkt, double Giattdb, double Giatddb
+        public JsonResult Store(string Madv,string Mahs, string Vungkt, double Giattdb, double Giatddb
             , double Giatttd, double Giatdtd, double Giattmn, double Giatdmn)
         {
             var model = new GiaKhungGiaDatCt
@@ -32,6 +32,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                 Giattmn = Giattmn,
                 Giatdmn = Giatdmn,
                 Trangthai = "CXD",
+                Madv = Madv,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };

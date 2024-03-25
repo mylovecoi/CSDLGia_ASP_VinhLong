@@ -93,7 +93,6 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\ModalTongHop.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\HoanThanh\Tonghop.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\TimKiem\Index.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\TimKiem\Result.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\BcCT.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\BcTH.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\Index.cshtml" />
