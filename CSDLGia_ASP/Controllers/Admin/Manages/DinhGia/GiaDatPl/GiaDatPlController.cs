@@ -201,6 +201,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         Mahs = request.Mahs,
                         Madv = request.Madv,
+                        Phanloai = request.Phanloai,
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
@@ -320,6 +321,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         Madv = model.Madv,
                         Mahs = model.Mahs,
+                        Phanloai = model.Phanloai,
                         Madiaban = model.Madiaban,
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,

@@ -33,7 +33,7 @@
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-
+            <input hidden asp-for="Phanloai" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ @Model.Phanloai:</label>
             </div>
@@ -46,7 +46,6 @@
                             @foreach (var item in dsdiaban)
                             {
                                 <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
-
                             }
                         </select>
                     </div>
