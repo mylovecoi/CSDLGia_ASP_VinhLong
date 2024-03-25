@@ -1,4 +1,4 @@
-﻿@{
+﻿@* @{
     DateTime nowDate = DateTime.Now;
     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -163,7 +163,7 @@
         </form>
     </div>
 </div>
-
+ *@
 <!--Report Modal!-->
 @* <div class="modal fade" id="Report_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -252,7 +252,7 @@
 
 </div> *@
 
-
+@* 
 <script>
     function submitTH() {
         var form = document.getElementById('frm_report_th');
@@ -291,4 +291,4 @@
         }
 
     }
-</script>
+</script> *@

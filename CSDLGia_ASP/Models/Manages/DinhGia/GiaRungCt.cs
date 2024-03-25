@@ -35,6 +35,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public string Madv { get; set; }
         [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
         public int LineStart { get; set; }
