@@ -1616,6 +1616,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Khuvuc")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -14893,6 +14896,27 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DsXaPhuong");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Excell.ExcellDanhMucLoaiDat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LineStart")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Loaidat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Maloaidat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExcellDanhMucLoaiDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.GeneralConfigs", b =>

@@ -3,8 +3,7 @@
     var record_id = 1;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>
-<br />
-<br />
+
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -18,10 +17,7 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;"> ...., ngày....tháng....năm....</i></td>
-    </tr>
+   
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ VẬT LIỆU XÂY DỰNG</p>
 
@@ -44,7 +40,7 @@
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
                     @* @item.TenDonVi<br /> *@
-                    <b>Mã hồ sơ: </b><a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
+                    <b>Mã hồ sơ: </b><a asp-controller="GiaVatLieuXayDung" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
                 <td style="text-align: center">@item.Soqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>

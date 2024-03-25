@@ -120,15 +120,9 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
 
-                            @foreach (var ds in dsdiabanAll)
-                            {
-                                @if (item.Madiaban == ds.MaDiaBan)
-                                {
-                                    <td style="text-align: center">@ds.TenDiaBan</td>
-                                }
-                            }
+                            <td>@item.Tendiaban </td>
 
-                            <td style="text-align: center">@item.Thoidiem</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
                             <td style="text-align: center">@item.Thongtin</td>
 
@@ -149,16 +143,7 @@
                             </td>
 
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @foreach (var ds in dscqcq)
-                                    {
-                                        @if (item.Macqcq == ds.MaDv)
-                                        {
-                                            <span style="text-align: center">@ds.TenDv</span>
-                                        }
-                                    }
-                                }
+                                @item.Tencqcq
                             </td>
                             <td style="text-align: center">
 

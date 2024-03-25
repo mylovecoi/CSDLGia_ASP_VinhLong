@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_LayoutReports";
     var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt>)ViewData["HoSoCt"];
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt>)ViewData["HoSoCt"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi>
 <br />
@@ -19,10 +19,7 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
-    </tr>
+    
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ PHÍ LỆ PHÍ</p>
 
@@ -40,7 +37,7 @@
             Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
         <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   @hoso.Mota *@
+            @hoso.Mota
         </p>       
         var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
         <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
@@ -51,7 +48,7 @@
                     <th style="text-align:center; font-weight:bold">Mức thu</th>
                 </tr>
             </thead>
-           @*  <tbody>
+            <tbody>
                 @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
                 {
                     string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
@@ -63,7 +60,7 @@
 
                     </tr>
                 }
-            </tbody> *@
+            </tbody>
         </table>
     }
 }
