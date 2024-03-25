@@ -4,8 +4,6 @@
     var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt>)ViewData["HoSoCt"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
-<br />
-<br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -19,12 +17,8 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
-    </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU CỦA HH-DV ĐƯỢC MUA SẮM THEO QĐ CỦA PHÁP LUẬT VỀ ĐẤU THẦU</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU CỦA HH-DV ĐƯỢC MUA SẮM THEO QĐ CỦA PL VỀ ĐẤU THẦU</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
 
@@ -55,19 +49,7 @@
                     <th style="text-align:center; font-weight:bold">Thành tiền</th>
                 </tr>
             </thead>
-           @*  <tbody>
-                @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
-                {
-                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
-                    <tr>
-                        <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
-                        <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
-                        <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
-
-                    </tr>
-                }
-            </tbody> *@
+            
         </table>
     }
 }

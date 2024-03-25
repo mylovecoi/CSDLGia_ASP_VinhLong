@@ -6,7 +6,7 @@
     var nam_start = DateTime.Now.Year - 7;
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
-    var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>)ViewData["DanhSachHoSo"];
+    var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat>)ViewData["DanhSachHoSo"];
 }
 
 @section custom_style {
@@ -17,40 +17,16 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            //$('.select2multi').select2();
-
-            $("#radio1").click(function () {
-                if (this.checked) {
-                    $("#option2").css("display", "none");
-                    $("#option1").css("display", "block");
-                }
-            });
-
-            $("#radio2").click(function () {
-                if (this.checked) {
-                    $("#option1, .quy").css("display", "none");
-                    $("#option2, .thang").css("display", "block");
-                }
-            });
-
-            $("#radio3").click(function () {
-                if (this.checked) {
-                    $("#option1, .thang").css("display", "none");
-                    $("#option2, .quy").css("display", "block");
-                }
-            });
-        });
-    </script>
 }
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Báo cáo giá trúng thầu quyền sử dụng đất 
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá giao dịch đất trên thị trường
+                </span>
             </h3>
         </div>
     </div>
@@ -86,11 +62,11 @@
 <!--Báo cáo tổng hợp-->
 <div class="modal fade" id="Report_Modal_TH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaTrungThauDatBc" asp-action="BcTH" target="_blank" id="frm_report">
+        <form asp-controller="GiaGiaoDichDatBc" asp-action="BcTH" target="_blank" id="form_moda_th">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Báo cáo tổng hợp giá trúng thầu quyền sử dụng đất
+                        Báo cáo tổng hợp giá giao dịch đất trên thị trường
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -98,6 +74,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label><b>Tên nhóm</b></label>
+                                <input type="text"  class="form-control" style="text-align: center">
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -126,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="BaoCaoTh()">Đồng ý</button>
                 </div>
 
             </div>
@@ -138,7 +120,7 @@
 <!--Báo cáo chi tiết-->
 <div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaTrungThauDatBc" asp-action="BcCT" target="_blank" id="frm_TongHopLePhi" name="frm_TongHopLePhi">
+        <form asp-controller="GiaGiaoDichDatBc" asp-action="BcCT" target="_blank" id="form_moda_ct">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -169,7 +151,11 @@
                                 <label>Thông tin hồ sơ: </label><br />
                                 <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
                                     <option value="all">--Tất cả---</option>
-                                  
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd - Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
+
                                 </select>
                             </div>
                         </div>
@@ -189,8 +175,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    @* <button class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Đồng ý</button> *@
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="BaoCaoCt()">Đồng ý</button>  
                 </div>
             </div>
         </form>
@@ -209,7 +194,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaLePhiHt/GetListHoSo',
+                    url: '/GiaGiaoDichDatXd/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,
@@ -231,7 +216,7 @@
         }
     }
 
-    function CreateTongHop() {
+    function BaoCaoTh() {
         var fromDate = document.getElementById("ngaytu").value;
         var toDate = document.getElementById("ngayden").value;
         if (fromDate === "" || toDate === "") {
@@ -241,7 +226,27 @@
             var toDateObj = new Date(toDate);
 
             if (fromDateObj <= toDateObj) {
-                var form = document.getElementById("frm_TongHopLePhi");
+                var form = document.getElementById("form_moda_th");
+                form.submit();
+                location.reload();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+
+    }
+
+    function BaoCaoCt() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("form_moda_ct");
                 form.submit();
                 location.reload();
             } else {

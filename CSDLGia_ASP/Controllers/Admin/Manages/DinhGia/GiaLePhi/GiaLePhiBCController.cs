@@ -71,7 +71,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                 { 
                                     TenDonVi = donvi.TenDv,
                                     Mahs = hoso.Mahs,
-                                    Soqd = hoso.Soqd,                                   
+                                    Soqd = hoso.Soqd,
+                                    Thoidiem = hoso.Thoidiem,
+
 
                                 });
                   
