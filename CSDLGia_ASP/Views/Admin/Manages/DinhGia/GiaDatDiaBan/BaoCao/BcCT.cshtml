@@ -25,20 +25,26 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT</p>
-<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ ĐẤT ĐỊA BÀN</p>
+@* <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p> *@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Khu vực</th>
-            <th style="text-align: center">Địa giới từ</th>
-            <th style="text-align: center">Địa giới đến</th>
-            <th style="text-align: center">Mô tả</th>
-            
+            <th style="text-align:center; font-weight:bold" width="5%">STT</th>
+            <th style="text-align:center; font-weight:bold">Tên đường phố</th>
+            <th style="text-align:center; font-weight:bold">Loại đường </th>
+            <th style="text-align:center; font-weight:bold">Điểm đầu </th>
+            <th style="text-align:center; font-weight:bold">Điểm cuối</th>
+            <th style="text-align:center; font-weight:bold">Hệ số K</th>
+            <th style="text-align:center; font-weight:bold">Vị trí 1 </th>
+            <th style="text-align:center; font-weight:bold">Vị trí 2 </th>
+            <th style="text-align:center; font-weight:bold">Vị trí 3 </th>
+            <th style="text-align:center; font-weight:bold">Vị trí 4 </th>
+            <th style="text-align:center; font-weight:bold">Vị trí 5 </th>
+
         </tr>
     </thead>
-    <tbody>
+    @* <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -61,7 +67,7 @@
             }
 
         }
-    </tbody>
+    </tbody> *@
 </table>
 <table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
     <tr>

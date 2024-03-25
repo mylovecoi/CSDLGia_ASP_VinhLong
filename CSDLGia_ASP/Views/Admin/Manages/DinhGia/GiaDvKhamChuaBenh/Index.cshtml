@@ -106,7 +106,6 @@
                     <th>STT</th>
                     <th>Số QĐ</th>
                     <th>Thời gian áp dụng</th>
-                    <th>Dịch vụ<br />khám chữa bệnh</th>
                     <th>Mô tả</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận</th>
@@ -122,19 +121,6 @@
                             <td>@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center">
-                                @if (dsnhom != null)
-                                {
-                                    @foreach (var nhom in dsnhom)
-                                    {
-                                        @if (item.Manhom == nhom.Manhom)
-                                        {
-                                            <span>@nhom.Tennhom</span>
-                                        }
-                                    }
-                                }
-
-                            </td>
                             <td>@item.Mota</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "HT")

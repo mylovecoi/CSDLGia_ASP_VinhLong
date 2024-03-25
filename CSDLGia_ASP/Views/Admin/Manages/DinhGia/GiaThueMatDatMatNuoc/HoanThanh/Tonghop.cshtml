@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt>)ViewData["HoSoCt"];
+    var DanhMuc = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocNhom>)ViewData["DanhMuc"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số:......</td>
+        <td style="text-align: right; vertical-align: top"></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
+    TỔNG HỢP GIÁ THUÊ MẶT ĐẤT MẶT NƯỚC
+<p style="text-align: center; font-size: 16px; font-style:italic">
+        @ViewData["ThoiGianKetXuat"]
+</p>
+    @foreach (var donvi in DonVis)
+    {
+    <p style="text-align: center; font-size: 16px; font-style:italic">@donvi.TenDv </p>
+        var HoSos = Model.Where(t => t.Madv == donvi.MaDv);
+        if (HoSos.Any())
+        {
+            @foreach (var hoso in HoSos)
+            {
+            <p>Số QĐ: @hoso.Soqd</p>
+            <p>Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)</p>
+                @foreach (var nhom in DanhMuc)
+                {
+                    var data_nhom = HoSoCts.Where(t => t.Mahs == hoso.Mahs && t.MaNhom == nhom.Manhom);
+                    if (data_nhom.Any())
+                    {
+                    <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
+                    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                                <th rowspan="2" style="text-align:center">Vị trí, địa bàn</th>
+                                <th colspan="3" width="30%" style="text-align:center">Tỷ lệ (%) </th>
+                                <th rowspan="2" width="10%" style="text-align:center">Đơn giá</th>
+
+                            </tr>
+                            <tr>
+                                <th style="text-align:center">Ngành, nghề đặc biệt ưu đãi đầu tư</th>
+                                <th style="text-align:center">Ngành, nghề ưu đãi đầu tư</th>
+                                <th style="text-align:center">Ngành, nghề khác</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                                @foreach (var item in data_nhom.OrderBy(x => x.SapXep))
+                                {
+                                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                                <tr>
+                                    <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
+                                    <td style="text-align:left; @HtmlStyle">@item.LoaiDat</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe1</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe2</td>
+                                    <td style="text-align:center; @HtmlStyle">@item.TyLe3</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+                    }
+                }
+
+            }
+        }
+
+    }
+

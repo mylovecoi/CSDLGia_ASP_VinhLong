@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
+    //Trường Phanloai trong Ct là nội dung của trường Manhom trong danh muc chuyển vào ct
     public class GiaLePhiMoiExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
@@ -32,12 +33,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
-                    {                         
+                    {
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
                         MaDv = Madv,
                     };
+                    ViewData["GiaPhiLePhiNhom"] = _db.GiaPhiLePhiNhom;
                     ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
@@ -63,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             {
                 requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
                 int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
-                
+
                 string Mahs = requests.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 using (var stream = new MemoryStream())
                 {
@@ -104,8 +106,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                     Mucthutu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
                                                     worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                    Style = strStyle.ToString()
-
+                                    Style = strStyle.ToString(),
+                                    Phanloai = requests.MaNhom,
                                 });
                                 line++;
                             }
@@ -114,12 +116,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         }
                     }
                 }
-               
+
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi
                 {
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
-                    Mahs = Mahs,                   
+                    Mahs = Mahs,
+                    Manhom = requests.MaNhom
                 };
                 var modelct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
                 model.GiaPhiLePhiCt = modelct.ToList();

@@ -124,7 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuThe/Create")]
         [HttpGet]
-        public IActionResult Create(string Manhom, string MadvBc)
+        public IActionResult Create(string Manhom, string MadvBc, string PhanLoaiHoSo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -145,7 +145,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
                         Manhom = Manhom,
-                        PhanLoaiHoSo = "HOSOCHITIET",
+                        PhanLoaiHoSo = PhanLoaiHoSo,
                     };
 
                     var danhmuc = _db.GiaSpDvCuTheDm.ToList(); // lấy dữ liệu trong bảng GiaSpDvCuTheDm
@@ -172,9 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         {
                             Mahs = model.Mahs,
                             Dvt = item.Dvt,
-                            Tt = item.Tt,
-                            Mucgia1 = item.Mucgia1,
-                            Mucgia2 = item.Mucgia2,
+                            Tt = item.Tt,                            
                             Manhom = item.Manhom,
                             Maspdv = item.Maspdv,
                             TenSpDv = item.Tenspdv,
@@ -188,23 +186,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     _db.SaveChanges();
 
 
-                    // Xử lý phần Forech theo mã nhóm khi chọn
-                    var groupmanhom1 = _db.GiaSpDvCuTheNhom.Select(item => item.Manhom).ToList();
-                    var groupmanhom2 = _db.GiaSpDvCuTheNhom.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).ToList();
-                    List<string> groupmanhom;
+                    //// Xử lý phần Forech theo mã nhóm khi chọn
+                    //var groupmanhom1 = _db.GiaSpDvCuTheNhom.Select(item => item.Manhom).ToList();
+                    //var groupmanhom2 = _db.GiaSpDvCuTheNhom.Where(item => item.Manhom == Manhom).Select(item => item.Manhom).ToList();
+                    //List<string> groupmanhom;
 
-                    if (Manhom != "all")
-                    {
-                        groupmanhom = groupmanhom2;
-                    }
-                    else
-                    {
-                        groupmanhom = groupmanhom1;
-                    }
-                    ViewData["GroupMaNhom"] = groupmanhom;
-                    ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
-                    ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
-                    // End xử lý phần Forech theo mã nhóm khi chọn
+                    //if (Manhom != "all")
+                    //{
+                    //    groupmanhom = groupmanhom2;
+                    //}
+                    //else
+                    //{
+                    //    groupmanhom = groupmanhom1;
+                    //}
+                    //ViewData["GroupMaNhom"] = groupmanhom;
+                    //ViewData["GiaSpDvCuTheNhom"] = _db.GiaSpDvCuTheNhom.ToList();
+                    //ViewData["GiaSpDvCuTheDm"] = _db.GiaSpDvCuTheDm.ToList();
+                    //// End xử lý phần Forech theo mã nhóm khi chọn
 
                     model.GiaSpDvCuTheCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
@@ -799,8 +797,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Soqd = giaspdvcuthe.Soqd,
                                      TenSpDv = giaspdvcuthect.TenSpDv,
                                      Mucgia1 = giaspdvcuthect.Mucgia1,
-                                     Mucgia2 = giaspdvcuthect.Mucgia2,
-                                     Mota = giaspdvcuthect.Mota,
+                                     Mucgia2 = giaspdvcuthect.Mucgia2,                                     
                                      Maspdv = giaspdvcuthect.Maspdv,
                                  });
 
@@ -820,10 +817,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
                     }
 
-                    if (tenhanghoa != null)
-                    {
-                        model = model.Where(t => t.Mota == tenhanghoa);
-                    }
+                    
 
                 
 

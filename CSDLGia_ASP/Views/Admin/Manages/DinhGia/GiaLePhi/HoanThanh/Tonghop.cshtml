@@ -30,13 +30,15 @@
     var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
     @foreach(var hoso in hosodonvi)
     {
-        <p style="text-align: center; font-size: 16px; font-style:italic">
+        <p style="text-align: left; font-size: 16px; font-style:italic">
            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
         </p>
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-          @hoso.Mota
+        <p style="text-align: left; font-size: 16px; font-style:italic">
+           Phân loại hồ sơ: @hoso.Phanloai
         </p>
-        <p style="text-align:right"><a asp-controller="DinhGiaLePhi" asp-action="Show" asp-route-Mahs="@hoso.Mahs" target="_blank">Chi tiết hồ sơ</a></p>
+        <p style="text-align: left; font-size: 16px; font-style:italic">
+          @hoso.Mota
+        </p>        
         var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
         <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
             <thead>
@@ -63,7 +65,6 @@
         </table>
     }
 }
-
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>

@@ -72,7 +72,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, string Mucgia1, string Mucgia2)
+        public JsonResult UpdateCt(int Id, double Mucgia1, double Mucgia2)
         {
             var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
             model.Mucgia1 = Mucgia1;

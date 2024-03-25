@@ -22,14 +22,27 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Dongia3 { get; set; }
         public double Dongia4 { get; set; }
         public double Dongia5 { get; set; }
+
+
         public double SapXep { get; set; }
         public string HienThi { get; set; }
         public string Style { get; set; }
         public string LoaiDat { get; set; }
         public string MaNhom { get; set; }
+
+        public string TyLe1 { get; set; }
+        public string TyLe2 { get; set; }
+        public string TyLe3 { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        [NotMapped]
         public string Madv { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+        [NotMapped]
+        public string Tennhom { get; set; }
     }
 }
