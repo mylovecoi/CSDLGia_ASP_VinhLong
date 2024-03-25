@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Store(string MaDv, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = new GiaDatPhanLoaiCt
             {
@@ -31,8 +31,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Diagioitu = Diagioitu,
                 Diagioiden = Diagioiden,
                 Hesodc = Hesodc,
+                Madv= MaDv,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
+                Trangthai = "Disabled",
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();

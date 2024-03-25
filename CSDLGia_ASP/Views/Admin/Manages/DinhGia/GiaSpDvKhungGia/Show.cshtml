@@ -1,6 +1,7 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia;
 @{
     Layout = "_LayoutReports";
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ GIÁ SẢN PHẨM DỊCH VỤ THEO KHUNG GIÁ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
@@ -8,8 +9,11 @@
 <p style="text-align: left; font-size: 16px;">
     Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem) </p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Ttqd</p>
-<p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận: @Model.Tencqcq
+<p style="font-size: 16px;">
+    Địa bàn áp dụng:
+    @if (!string.IsNullOrEmpty(Model.Madiaban))
+        @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban).TenDiaBan
+
 </p>
 
 <br />
@@ -21,7 +25,7 @@
             <th style="text-align:center" rowspan="2">STT</th>
             <th style="text-align:center" rowspan="2">Đối tượng thu</th>
             <th style="text-align:center" rowspan="2">Đơn vị tính</th>
-            <th style="text-align:center" colspan="2">Mức giá dịch vụ <br /> (đã bao gồm thuế VAT)</th>
+            <th style="text-align:center" colspan="2">Mức giá</th>
         </tr>
         <tr>
             <th style="text-align:center">Giá từ</th>
@@ -36,7 +40,7 @@
                     @foreach (var item in Model.GiaSpDvKhungGiaCt.OrderBy(x => x.SapXep))
                     {
                     <tr>
-                        <td style="text-align:center">@item.SapXep</td>
+                        <td style="text-align:center">@item.HienThi</td>
                         <td class="active">@item.Tenspdv</td>
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giatoithieu)</td>

@@ -91,8 +91,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             };
             _db.GiaRungDm.Add(model);
             _db.SaveChanges();
-            string result = GetData();
-            var data = new { status = "success", message = result };
+            var data = new { status = "success", message = "Thành công" };
             return Json(data);
         }
 
@@ -135,14 +134,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         public JsonResult Update(int Id, string Manhom, string Tennhom)
         {
             var model = _db.GiaRungDm.FirstOrDefault(t => t.Id == Id);
-            model.Manhom = Manhom;
-            model.Tennhom = Tennhom;
-            model.Updated_at = DateTime.Now;
-            _db.GiaRungDm.Update(model);
-            _db.SaveChanges();
-            string result = GetData();
-            var data = new { status = "success", message = result };
-            return Json(data);
+            if (model != null)
+            {
+                model.Manhom = Manhom;
+                model.Tennhom = Tennhom;
+                model.Updated_at = DateTime.Now;
+                _db.GiaRungDm.Update(model);
+                _db.SaveChanges();
+
+                var data = new { status = "success", message = "Thành công" };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
         }
 
         [Route("DanhMucGiaRung/Delete")]
@@ -150,47 +157,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         public JsonResult Delete(int Id)
         {
             var model = _db.GiaRungDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaRungDm.Remove(model);
-            _db.SaveChanges();
-            var result = GetData();
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
-
-        public string GetData()
-        {
-            var model = _db.GiaRungDm.ToList();
-
-            int record = 1;
-
-            string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table-bordered table-hover' id='sample_3'>";
-            result += "<thead>";
-            result += "<tr style='text-align:center'>";
-            result += "<th>STT</th>";
-            result += "<th>Mã nhóm</th>";
-            result += "<th>Tên nhóm</th>";
-            result += "<th>Thao tác</th>";
-            result += "</tr></thead><tbody>";
-
-            foreach (var item in model)
+            if (model != null)
             {
-                result += "<tr>";
-                result += "<td style='text-align:center'>" + (record++) + "</td>";
-                result += "<td class='active'>" + item.Manhom + "</td>";
-                result += "<td>" + item.Tennhom + "</td>";
-                result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-edit text-primary'></i>";
-                result += "</button>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += "data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button></td></tr>";
+                var modelct = _db.GiaRungDmCt.Where(t => t.Manhom == model.Manhom);
+                if (modelct.Any())
+                {
+                    _db.GiaRungDmCt.RemoveRange(modelct);
+                }
+                _db.GiaRungDm.Remove(model);
+                _db.SaveChanges();
+                var data = new { status = "success", message = "Thành công" };
+                return Json(data);
             }
-            result += "</tr></thead><tbody>";
-            return result;
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                return Json(data);
+            }
         }
+
     }
 }

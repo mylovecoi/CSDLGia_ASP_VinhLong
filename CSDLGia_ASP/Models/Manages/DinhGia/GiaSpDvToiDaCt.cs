@@ -33,7 +33,11 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
-        public string Ttqd { get; set; }      
+        public string Ttqd { get; set; }
+        [NotMapped]
+        public string Ghichu { get; set; }
+        [NotMapped]
+        public string Madiaban { get; set; }
 
     }
 }

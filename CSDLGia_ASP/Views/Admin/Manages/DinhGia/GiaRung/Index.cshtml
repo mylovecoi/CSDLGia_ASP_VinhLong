@@ -8,12 +8,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -41,20 +41,25 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ<small>&nbsp;giá rừng</small>
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Danh sách thông tin hồ sơ giá rừng
+                </span>
             </h3>
         </div>
-        <div >
-            <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
-               asp-route-Madv="@ViewData["Donvi"]">
-                <i class="la la-plus"></i>Thêm mới
-            </a>
+        <div>
+            @if (ViewData["Donvi"].ToString() != "all" && ViewData["Donvi"].ToString() != "")
+            {
+                <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
+                   asp-route-Madv="@ViewData["Donvi"]">
+                    <i class="la la-plus"></i>Thêm mới
+                </a>
 
-            <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
-               asp-route-Madv="@ViewData["Donvi"]">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a>
-
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
+                   asp-route-Madv="@ViewData["Donvi"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+            }
         </div>
     </div>
 </div>
@@ -68,11 +73,11 @@
                 <label style="font-weight:bold; color:blue">Năm</label>
                 <select class="form-control" id="Nam" name="Nam">
                     @{
-                        var nam_start = DateTime.Now.Year - 5;
-                        var nam_stop = DateTime.Now.Year + 1;
-                        for (var i = nam_start; i <= nam_stop; i++)
+                        int nam_start = DateTime.Now.Year - 5;
+                        int nam_stop = DateTime.Now.Year + 1;
+                        for (int i = nam_start; i <= nam_stop; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                            <!option value="@i" @((int)ViewData["Nam"] == i ? "selected" : "")>Năm @i</!option>
                         }
                     }
                 </select>
@@ -101,12 +106,12 @@
     <table class="table table-striped table-bordered table-hover" id="sample_3">
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>
-                <th>Số QĐ</th>
-                <th>Thời điểm xác định</th>
+                <th width="2%">#</th>
+                <th width="10%">Số QĐ</th>
+                <th width="10%">Thời điểm xác định</th>
                 <th>Mô tả</th>
-                <th>Trạng thái</th>
-                <th>Cơ quan tiếp nhận</th>
+                <th width="10%">Trạng thái</th>
+                <th width="10%">Cơ quan tiếp nhận</th>
                 <th width="20%">Thao tác</th>
             </tr>
         </thead>
@@ -150,28 +155,22 @@
                             <td style="text-align: center"></td>
                         }
 
-
-
-                        <td>
-                            <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                <i class="icon-lg la la-cloud-download text-warning"></i>
-                            </a>
-
+                        <td>  
                             <a asp-controller="Giarung" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
                                 <i class="icon-lg la la-eye text-success"></i>
                             </a>
-                            <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                               target="_blank">
-                                <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                            </a>
+                            <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <i class="icon-lg la la-file-alt text-dark"></i>
+                            </button>
                             @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                             {
                                 <a asp-controller="Giarung" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </a>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                    <i class="icon-lg la la-check text-primary"></i>
+                                </button>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Delete"))
                                 {
 
@@ -179,11 +178,13 @@
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 }
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                    <i class="icon-lg la la-check text-primary"></i>
-                                </button>
                             }
-                          
+                            <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                               target="_blank">
+                                <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                            </a>
+
                         </td>
                     </tr>
                 }
@@ -275,3 +276,4 @@
         document.getElementById("mahs_complete").value = mahs;
     }
 </script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/ThongTinGiayTo/Show.cshtml")

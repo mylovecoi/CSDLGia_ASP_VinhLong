@@ -60,8 +60,10 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public List<DsDiaBan> DsDiaBan { get; set; }
         public List<GiaDatPhanLoaiCt> GiaDatPhanLoaiCt { get; set; }
         public List<GiaDatPhanLoaiDm> GiaDatPhanLoaiDm { get; set; }
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
         public string MadvCh { get; set; }
         public string TendvCh { get; set; }
         public string Tencqcq { get; set; }
+        public string Phanloai { get; set; }
     }
 }

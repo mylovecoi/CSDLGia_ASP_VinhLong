@@ -2,8 +2,7 @@
     Layout = "_LayoutReports";
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var danhMucLoaiRung = (IEnumerable<GiaRungDm>)ViewData["DmLoaiRung"];
-    int record_id = 1;
+    var NhomDm = (IEnumerable<GiaRungDm>)ViewData["NhomDm"];
 }
 <br />
 <br />
@@ -21,7 +20,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -36,49 +35,71 @@
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-    <thead>
-        <tr style="text-align:center">
-            <th>STT</th>
-            <th>Phân loại</th>
-            <th>Loại rừng</th>
-            <th>Đơn vị khai thác(thuê)</th>
-            <th>Nội dung chi tiết</th>
-            <th>Diện tích rừng</th>
-            <th>Diện tích sử dụng</th>
-            <th>Đơn vị tính</th>
-            <th>Giá trị</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        {
-            @if (Model.GiaRungCt != null)
-            {
-                @foreach (var item in Model.GiaRungCt)
+@foreach (var nhom in NhomDm)
+{
+    var data_nhom = Model.GiaRungCt.Where(t => t.Manhom == nhom.Manhom);
+    if (data_nhom.Any())
+    {
+        <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+            <thead>
+                <tr>
+                    <th rowspan="3" width="2%" style="text-align:center">TT</th>
+                    <th rowspan="3" style="text-align:center">Mô tả</th>
+                    <th colspan="6" width="30%" style="text-align:center">Giá rừng</th>
+                    <th colspan="2" width="10%" rowspan="2" style="text-align:center">Giá cho thuê quyền sử dụng rừng/năm</th>
+                    <th colspan="6" width="30%" style="text-align:center">Giá bồi thường thiệt hại đối với rừng tự nhiên</th>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:center">Đặc dụng</th>
+                    <th colspan="2" style="text-align:center">Phòng hộ</th>
+                    <th colspan="2" style="text-align:center">Sản xuất</th>
+                    <th colspan="2" style="text-align:center">Đặc dụng</th>
+                    <th colspan="2" style="text-align:center">Phòng hộ</th>
+                    <th colspan="2" style="text-align:center">Sản xuất</th>
+                </tr>
+                <tr>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                    <th style="text-align:center">Tối thiểu</th>
+                    <th style="text-align:center">Tối đa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in data_nhom.OrderBy(t => t.STTSapXep))
                 {
                     <tr>
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td class="active">@item.Phanloai</td>
-                        <td style="text-align:center">
-                            @foreach (var lr in danhMucLoaiRung)
-                            {
-                                @if (item.Manhom == lr.Manhom)
-                                {
-                                    <span>@lr.Tennhom</span>
-                                }
-                            }
-                        </td>
-                        <td style="text-align:center">@item.Dvthue</td>
-                        <td style="text-align:center">@item.Noidung</td>
-                        <td style="text-align:right;font-weight: bold">@item.Dientich</td>
-                        <td style="text-align:right;font-weight: bold">@item.Dientichsd</td>
-                        <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:right;font-weight: bold">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                        <td style="text-align:center">@item.STTHienThi</td>
+                        <td style="text-align:left">@item.MoTa</td>
+                        <td style="text-align:center">@item.GiaRung1</td>
+                        <td style="text-align:center">@item.GiaRung2</td>
+                        <td style="text-align:center">@item.GiaRung3</td>
+                        <td style="text-align:center">@item.GiaRung4</td>
+                        <td style="text-align:center">@item.GiaRung5</td>
+                        <td style="text-align:center">@item.GiaRung6</td>
+                        <td style="text-align:center">@item.GiaChoThue1</td>
+                        <td style="text-align:center">@item.GiaChoThue2</td>
+                        <td style="text-align:center">@item.GiaBoiThuong1</td>
+                        <td style="text-align:center">@item.GiaBoiThuong2</td>
+                        <td style="text-align:center">@item.GiaBoiThuong3</td>
+                        <td style="text-align:center">@item.GiaBoiThuong4</td>
+                        <td style="text-align:center">@item.GiaBoiThuong5</td>
+                        <td style="text-align:center">@item.GiaBoiThuong6</td>
+                      
                     </tr>
                 }
-            }
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    }
+}
 
