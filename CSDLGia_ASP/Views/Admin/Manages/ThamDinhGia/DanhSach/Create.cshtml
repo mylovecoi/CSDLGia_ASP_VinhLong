@@ -1,6 +1,8 @@
 ﻿@{
     var record_id = 1;
     var tdgdv = (IEnumerable<ThamDinhGiaDv>)ViewData["TdgDonvi"];
+    var tdgdm = (IEnumerable<ThamDinhGiaDmHh>)ViewData["TdgDmHh"];
+    var dmnhomhh = (IEnumerable<DmNhomHh>)ViewData["DmNhomHh"];
 }
 @model CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
 @section custom_style {
@@ -8,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -20,160 +22,161 @@
             TableManaged.init();
             TableManaged2.init();
             TableManaged4.init();
-            $('#Songaykq').change(function () {
-                addngay();
-            });
-            $('#Thoidiem').change(function () {
-                addngay();
-            });
+            // $('#Songaykq').change(function () {
+            //     addngay();
+            // });
+            // $('#Thoidiem').change(function () {
+            //     addngay();
+            // });
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Hồ sơ thẩm định giá
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Hồ sơ thẩm định giá
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="ThamDinhGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tdg_store">
-            <div class="card-body">
-            <input hidden asp-for="Madv" />
-                <input hidden asp-for="Mahs" />
-            <input hidden asp-for="Madiaban" />
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-5">
-                        <div class="form-group">
-                            <label>Đơn vị yêu cầu thẩm định*</label>
-                            <input type="text" class="form-control" asp-for="Dvyeucau" />
-                        </div>
-                    </div>
-                    <div class="col-xl-1">
-                        <div class="form-group">
-                            <label>&nbsp;&nbsp;&nbsp;</label><br />
-                            <button type="button" class="btn btn-default" data-target="#Dvyc_Modal" data-toggle="modal">
-                                <i class="la la-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Thông tin tờ trình*</label>
-                            <input type="text" class="form-control" asp-for="Hosotdgia" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Tên nhóm hàng hóa yêu cầu thẩm định*</label>
-                            <input type="text" class="form-control" asp-for="Tttstd" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Thời điểm thẩm định*</label>
-                            <input type="date" class="form-control" asp-for="Thoidiem" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Địa điểm thẩm định</label>
-                            <input type="text" class="form-control" asp-for="Diadiem" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số thông báo kết luận*</label>
-                            <input type="text" class="form-control" asp-for="Sotbkl" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số ngày sử dụng kết quả thẩm định</label>
-                            <input type="number" class="form-control" asp-for="Songaykq" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Thời hạn sử dụng kết quả thẩm định</label>
-                            <input type="date" class="form-control" id="Thoihan" name="Thoihan" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Ghi chú</label>
-                            <textarea class="form-control" asp-for="Ghichu" cols="12" rows="5"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>File đính kèm 1</label>
-                            <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>File đính kèm 2</label>
-                            <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>File đính kèm 3</label>
-                            <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>File đính kèm 4</label>
-                            <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                @await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/DanhSach/Detail.cshtml")
-
-            </div>
-            <div class="card-footer" style="text-align:center">
-                <a asp-controller="ThamDinhGia" asp-action="Index" asp-route-Nam="@ViewData["Nam"]" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                    <i class="la la-reply"></i>Quay lại
-                </a>&ensp;
-                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-                <button type="button" class="btn btn-primary mr-2" onclick="ValTdg()"><i class="la la-check"></i>Thêm mới</button>
-            </div>
-        </form>
-        <!--end::Form-->
     </div>
-
-    <!--Tdgdv Modal-->
-    <div class="modal fade" id="Dvyc_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Thông tin đơn vị thẩm định giá
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
+    <!--begin::Form-->
+    <form asp-controller="ThamDinhGia" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_tdg_store">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <input hidden asp-for="Madiaban" />
+            <input hidden asp-for="Phanloai" />
+            <input hidden asp-for="Tttstd" />
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin @Model.Phanloai</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="form-group">
+                        <label>Đơn vị thẩm định</label>
+                        <input type="text" class="form-control" asp-for="Dvthamdinh" />
+                    </div>
                 </div>
-                <hr />
-                <div class="modal-body">
-                    <table class="table table-striped table-bordered table-hover" id="sample_3">
-                        <thead>
-                            <tr style="text-align:center">
-                                <th width="4%">#</th>
-                                <th>Tên đơn vị</th>
-                                <th>Người đại điện</th>
-                                <th>Địa chỉ</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="col-xl-1">
+                    <div class="form-group">
+                        <label>&nbsp;&nbsp;&nbsp;</label><br />
+                        <button type="button" class="btn btn-default" data-target="#Dvtd_Modal" data-toggle="modal">
+                            <i class="la la-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn vị yêu cầu</label>
+                        <input type="text" class="form-control" asp-for="Dvyeucau" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thông tin hồ sơ*</label>
+                        <input type="text" class="form-control" asp-for="Hosotdgia" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tên nhóm hàng hóa yêu cầu thẩm định*</label>
+                        <select class="form-control" asp-for="Tttstd" disabled>
+                            @foreach (var item in dmnhomhh)
+                            {
+                                <!option value="@item.Manhom" @(Model.Tttstd == item.Manhom ? "selected" : "")>&emsp;@item.Tennhom</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thời điểm thẩm định*</label>
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa điểm thẩm định</label>
+                        <input type="text" class="form-control" asp-for="Diadiem" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số chứng thư thẩm định*</label>
+                        <input type="text" class="form-control" asp-for="Sotbkl" />
+                    </div>
+                </div>
+                @* <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số ngày sử dụng kết quả thẩm định</label>
+                        <input type="number" class="form-control" asp-for="Songaykq" />
+                    </div>
+                </div> *@
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày quyết định chứng thư thẩm định</label>
+                        <input type="date" class="form-control" asp-for="Thoihan" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số quyết định phê duyệt</label>
+                        <input type="text" class="form-control" asp-for="Soqdpheduyet" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Ngày quyết định phê duyệt</label>
+                        <input type="date" class="form-control" asp-for="Ngayqdpheduyet" />
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" asp-for="Ghichu" cols="12" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/DanhSach/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="ThamDinhGia" asp-action="Index" asp-route-Nam="@ViewData["Nam"]" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="ValTdg()"><i class="la la-check"></i>Thêm mới</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<!--Dvtd Modal-->
+<div class="modal fade" id="Dvtd_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin đơn vị thẩm định giá
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <hr />
+            <div class="modal-body">
+                <table class="table table-striped table-bordered table-hover" id="sample_3">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th width="4%">#</th>
+                            <th>Tên đơn vị</th>
+                            <th>Người đại điện</th>
+                            <th>Địa chỉ</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @if (tdgdv != null)
                         {
                             @foreach (var item in tdgdv)
@@ -202,11 +205,11 @@
 </div>
 
 <script>
-    function add_date(thoidiem,songay) {
-        if(thoidiem == ''){
+    function add_date(thoidiem, songay) {
+        if (thoidiem == '') {
             return null;
         }
-        if(songay == '' || songay == 0){
+        if (songay == '' || songay == 0) {
             return thoidiem;
         }
 
@@ -226,8 +229,8 @@
     }
 
     function adddonvi(tendv) {
-        $('#Dvyc_Modal').modal('hide');
-        $('#Dvyeucau').val(tendv);
+        $('#Dvtd_Modal').modal('hide');
+        $('#Dvthamdinh').val(tendv);
     }
 
     function addngay() {
@@ -237,15 +240,15 @@
     }
 
     function ValTdg() {
-        if ($('#Dvyeucau').val().trim() == '') {
-            toastr.error("Đơn vị yêu cầu thẩm định không được để trống!", "Lỗi!!!")
+        if ($('#Dvthamdinh').val().trim() == '') {
+            toastr.error("Đơn vị thẩm định không được để trống!", "Lỗi!!!")
         } else {
             if ($('#Hosotdgia').val().trim() == '') {
                 toastr.error("Thông tin tờ trình không được để trống!", "Lỗi!!!")
             } else {
-                if ($('#Tttstd').val().trim() == '') {
+                @* if ($('#Tttstd').val().trim() == '') {
                     toastr.error("Tên nhóm hàng hóa yêu cầu thẩm định không được để trống!", "Lỗi!!!")
-                } else {
+                } else { *@
                     if ($('#Thoidiem').val().trim() == '') {
                         toastr.error("Thời điểm thẩm định không được để trống!", "Lỗi!!!")
                     } else {
@@ -259,13 +262,13 @@
                             }
                         }
                     }
-                }
+                @* } *@
             }
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

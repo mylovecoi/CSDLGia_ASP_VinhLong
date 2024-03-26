@@ -50,36 +50,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhMuc/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom)
+        public JsonResult Store(string Tennhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Create"))
                 {
-                    var check = _db.DmNhomHh.FirstOrDefault(t => t.Manhom == Manhom && t.Phanloai == "THAMDINHGIA");
-                    if (check == null)
+                    var request = new DmNhomHh
                     {
-                        var request = new DmNhomHh
-                        {
-                            Manhom = Manhom,
-                            Tennhom = Tennhom,
-                            Theodoi = "TD",
-                            Phanloai = "THAMDINHGIA",
-                            Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
-                        };
+                        Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Tennhom = Tennhom,
+                        Theodoi = "TD",
+                        Phanloai = "THAMDINHGIA",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
 
-                        _db.DmNhomHh.Add(request);
-                        _db.SaveChanges();
+                    _db.DmNhomHh.Add(request);
+                    _db.SaveChanges();
 
-                        var data = new { status = "success", message = "Thêm mới nhóm hàng hóa thành công!" };
-                        return Json(data);
-                    }
-                    else
-                    {
-                        var data = new { status = "error", message = "Mã nhóm này đã tồn tại!" };
-                        return Json(data);
-                    }
+                    var data = new { status = "success", message = "Thêm mới nhóm hàng hóa thành công!" };
+                    return Json(data);
                 }
                 else
                 {
@@ -107,12 +98,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     {
                         string result = "<div class='modal-body' id='frm_edit'>";
                         result += "<div class='row'>";
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã nhóm*</label>";
-                        result += "<input type='text' class='form-control' id='manhom_edit' name='manhom_edit' value='" + model.Manhom + "' readonly />";
-                        result += "</div>";
-                        result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên nhóm*</label>";
@@ -147,31 +132,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhMuc/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Manhom, string Tennhom)
+        public IActionResult Update(int Id, string Tennhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
                 {
-                    int check = _db.DmNhomHh.Where(t => t.Manhom == Manhom && t.Phanloai == "THAMDINHGIA" && t.Id != Id).Count();
-                    if (check == 0)
-                    {
-                        var model = _db.DmNhomHh.FirstOrDefault(t => t.Id == Id);
-                        model.Tennhom = Tennhom;
-                        model.Updated_at = DateTime.Now;
+                    var model = _db.DmNhomHh.FirstOrDefault(t => t.Id == Id);
+                    model.Tennhom = Tennhom;
+                    model.Updated_at = DateTime.Now;
 
-                        _db.DmNhomHh.Update(model);
-                        _db.SaveChanges();
+                    _db.DmNhomHh.Update(model);
+                    _db.SaveChanges();
 
-                        var data = new { status = "success", message = "Cập nhật thành công!" };
-                        return Json(data);
-                    }
-                    else
-                    {
-                        var data = new { status = "error", message = "Mã nhóm hàng hóa đã tồn tại!!!" };
-                        return Json(data);
-                    }
-
+                    var data = new { status = "success", message = "Cập nhật thành công!" };
+                    return Json(data);
                 }
                 else
                 {

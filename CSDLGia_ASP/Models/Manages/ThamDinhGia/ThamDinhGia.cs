@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,11 +18,14 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Ppthamdinh { get; set; }
         public string Mucdich { get; set; }
         public string Dvyeucau { get; set; }
+        public string Dvthamdinh { get; set; }
         public DateTime Thoihan { get; set; }
         public string Sotbkl { get; set; }
         public string Hosotdgia { get; set; }
         public string Nguonvon { get; set; }
         public string Phanloai { get; set; }
+        public string Soqdpheduyet { get; set; }
+        public DateTime Ngayqdpheduyet { get; set; }
         public string Quy { get; set; }
         public string Thuevat { get; set; }
         public int Songaykq { get; set; }
@@ -72,6 +76,8 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         [NotMapped]
         public List<ThamDinhGiaCt> ThamDinhGiaCt { get; set; }
         [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+        [NotMapped]
         public string MadvCh { get; set; }
         [NotMapped]
         public string TendvCh { get; set; }
@@ -81,5 +87,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Tendb { get; set; }
         [NotMapped]
         public string Level { get; set; }
+        [NotMapped]
+        public string Tennhomhh { get; set; }
     }
 }

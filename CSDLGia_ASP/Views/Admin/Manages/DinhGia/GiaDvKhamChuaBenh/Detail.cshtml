@@ -5,6 +5,9 @@
     var mahs = ViewData["Mahs"];
     var nhomdvkcb = (IEnumerable<GiaDvKcbNhom>)ViewData["GiaDvKcbNhom"];
 }
+
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/ThongTinGiayTo/Index.cshtml")
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -26,7 +29,7 @@
                     <p style="text-align: center; font-weight: bold; font-size: 15px;">@dm.Tennhom</p>
                 }
             }
-            <table class="table table-striped table-bordered table-hover" id="datatable_4">
+            <table class="table table-striped table-bordered table-hover class-nosort">
                 <thead>
                     <tr style="text-align:center">
                         <th>STT</th>
@@ -129,7 +132,7 @@
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManagedClass.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {

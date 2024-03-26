@@ -10190,6 +10190,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<int>("LineStart")
                         .HasColumnType("int");
 
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -13614,6 +13617,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Diadiem")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Dvthamdinh")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Dvyeucau")
                         .HasColumnType("nvarchar(max)");
 
@@ -13689,6 +13695,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mucdich")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Ngayqdpheduyet")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nguonvon")
                         .HasColumnType("nvarchar(max)");
 
@@ -13703,6 +13712,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<int>("Songaykq")
                         .HasColumnType("int");
+
+                    b.Property<string>("Soqdpheduyet")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sotbkl")
                         .HasColumnType("nvarchar(max)");
@@ -13893,7 +13905,13 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Ngaycap")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Ngaydungtd")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nguoidaidien")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Soqddungtd")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sothe")

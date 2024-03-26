@@ -12,7 +12,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
-    @*<script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>*@
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
@@ -36,11 +36,21 @@
             <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
-            }&ensp;
-            <a asp-controller="GiaHhDvkNhom" asp-action="Index" class="btn btn-light-danger">
+                @if (ViewData["Matt"].ToString() != "")
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <span>&ensp;</span>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvkDm" asp-action="NhanExcel"
+                       asp-route-Matt="@ViewData["Matt"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                    <span>&ensp;</span>                   
+                }
+               
+            }
+            <a asp-controller="GiaHhDvkNhom" asp-action="Index" class="btn btn-light-danger mr-2">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
         </div>

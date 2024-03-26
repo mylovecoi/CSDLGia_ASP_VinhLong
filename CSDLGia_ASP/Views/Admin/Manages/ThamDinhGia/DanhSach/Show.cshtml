@@ -12,7 +12,7 @@
 
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
-<p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqdpheduyet</p>
 <p style="text-align: left; font-size: 16px;">
     Địa bàn:
     @foreach (var ds in dsdiaban)
@@ -24,7 +24,7 @@
     }
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">Mô tả: 01</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Hosotdgia</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -49,8 +49,6 @@
             <th style="text-align:center">Xuất xứ</th>
             <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Số lượng</th>
-            <th style="text-align:center">Đơn giá đề nghị</th>
-            <th style="text-align:center">Giá trị đề nghị</th>
             <th style="text-align:center">Đơn giá thẩm định</th>
             <th style="text-align:center">Giá trị thẩm định</th>
         </tr>
@@ -70,8 +68,6 @@
                         <td style="text-align:center">@item.Nguongoc</td>
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:center">@item.Sl</td>
-                        <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Nguyengiadenghi)</td>
-                        <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giadenghi)</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Nguyengiathamdinh)</td>
                         <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatritstd)</td>
                     </tr>

@@ -48,13 +48,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("NhomDvKcb/Store")]
         [HttpPost]
-        public JsonResult Store(string Tennhom, string Hientrang)
+        public JsonResult Store(string Tennhom, string Hientrang, string Manhom)
         {
             var model = new GiaDvKcbNhom
             {
                 Tennhom = Tennhom,
-                Hientrang = Hientrang,
-                Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                Manhom = Manhom,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -89,18 +88,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<div class='row'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Tên dịch vụ*</b></label>";
+                result += "<label><b>Mã nhóm</b></label>";
+                result += "<input type='text' id='manhom_edit' name='manhom_edit' value='" + model.Manhom + "' class='form-control' required/>";
+                result += "</div></div>";              
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Tên nhóm</b></label>";
                 result += "<input type='text' id='tennhom_edit' name='tennhom_edit' value='" + model.Tennhom + "' class='form-control' required/>";
                 result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
                 result += "</div></div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Hiện trạng*</b></label>";
-                result += "<select id='hientrang_edit' name='hientrang_edit' class='form-control'>";
-                result += "<option value='TD' " + (model.Hientrang == "TD" ? "selected" : "") + "> Đang theo dõi</ option >";
-                result += "<option value='KTD' " + (model.Hientrang == "KTD" ? "selected" : "") + ">  Không theo dõi</ option>";
-                result += "</select>";
-                result += "</div></div>";
+              
                 result += "</div>";
 
 
@@ -115,11 +112,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         }
         [Route("NhomDvKcb/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Hientrang)
+        public JsonResult Update(int Id, string Tennhom, string Manhom)
         {
             var model = _db.GiaDvKcbNhom.FirstOrDefault(t => t.Id == Id);
             model.Tennhom = Tennhom;
-            model.Hientrang = Hientrang;
+            model.Manhom = Manhom;
             model.Updated_at = DateTime.Now;
             _db.GiaDvKcbNhom.Update(model);
             _db.SaveChanges();

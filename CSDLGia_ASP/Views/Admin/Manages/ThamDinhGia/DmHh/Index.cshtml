@@ -105,12 +105,12 @@
             </div>
             <div class="modal-body">
                 <div class="row" id="data_create">
-                    <div class="col-xl-12">
+                    @* <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Mã nhóm*</label>
                             <input type="text" name="manhom_create" id="manhom_create" class="form-control" />
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên nhóm*</label>
@@ -161,13 +161,13 @@
     function Store() {
         document.getElementById("btn_store").style.display = "none";
         document.getElementById("loading_store").style.display = "block";
-        if ($('#manhom_create').val().trim() != '') {
+        // if ($('#manhom_create').val().trim() != '') {
             if ($('#tennhom_create').val().trim() != '') {
                 $.ajax({
                     url: '/ThamDinhGia/DanhMuc/Store',
                     type: 'POST',
                     data: {
-                        Manhom: $('#manhom_create').val(),
+                        // Manhom: $('#manhom_create').val(),
                         Tennhom: $('#tennhom_create').val(),
                     },
                     dataType: 'JSON',
@@ -187,23 +187,23 @@
                 document.getElementById("btn_store").style.display = "block";
                 document.getElementById("loading_store").style.display = "none";
             }
-        } else {
-            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
-            document.getElementById("btn_store").style.display = "block";
-            document.getElementById("loading_store").style.display = "none";
-        }
+        // } else {
+        //     toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+        //     document.getElementById("btn_store").style.display = "block";
+        //     document.getElementById("loading_store").style.display = "none";
+        // }
     }
 
     function Update() {
         document.getElementById("btn_update").style.display = "none";
         document.getElementById("loading_update").style.display = "block";
-        if ($('#manhom_edit').val().trim() != '') {
+        // if ($('#manhom_edit').val().trim() != '') {
             if ($('#tennhom_edit').val().trim() != '') {
                 $.ajax({
                     url: '/ThamDinhGia/DanhMuc/Update',
                     type: 'POST',
                     data: {
-                        Manhom: $('#manhom_edit').val(),
+                        // Manhom: $('#manhom_edit').val(),
                         Tennhom: $('#tennhom_edit').val(),
                         Id: $('#id_edit').val(),
                     },
@@ -224,11 +224,11 @@
                 document.getElementById("btn_update").style.display = "block";
                 document.getElementById("loading_update").style.display = "none";
             }
-        } else {
-            toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
-            document.getElementById("btn_update").style.display = "block";
-            document.getElementById("loading_update").style.display = "none";
-        }
+        // } else {
+        //     toastr.error("Mã nhóm hàng hóa không được để trống", "Lỗi!");
+        //     document.getElementById("btn_update").style.display = "block";
+        //     document.getElementById("loading_update").style.display = "none";
+        // }
     }
 
     function editId(id) {
