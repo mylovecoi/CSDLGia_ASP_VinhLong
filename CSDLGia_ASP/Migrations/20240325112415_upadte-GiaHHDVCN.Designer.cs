@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240325112415_upadte-GiaHHDVCN")]
+    partial class upadteGiaHHDVCN
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1233,9 +1235,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Loaiduong")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaDv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Madiaban")
@@ -4055,8 +4054,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Dongia")
-                        .HasColumnType("float");
+                    b.Property<string>("Dongia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
@@ -9105,9 +9104,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hdthue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Madv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
