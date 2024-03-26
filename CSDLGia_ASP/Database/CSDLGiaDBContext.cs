@@ -110,6 +110,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaHhDvCn> GiaHhDvCn { get; set; }
         public DbSet<GiaHhDvCnCt> GiaHhDvCnCt { get; set; }
         public DbSet<GiaHhDvCnDm> GiaHhDvCnDm { get; set; }
+        public DbSet<GiaHhDvCnNhom> GiaHhDvCnNhom { get; set; }
         public DbSet<GiaHhDvkNhom> GiaHhDvkNhom { get; set; }
         public DbSet<GiaHhDvkDm> GiaHhDvkDm { get; set; }
         public DbSet<GiaHhDvkDmDv> GiaHhDvkDmDv { get; set; }
@@ -145,6 +146,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaRung> GiaRung { get; set; }
         public DbSet<GiaRungCt> GiaRungCt { get; set; }
         public DbSet<GiaRungDm> GiaRungDm { get; set; }
+        public DbSet<GiaRungDmCt> GiaRungDmCt { get; set; }
         public DbSet<GiaSpDvCi> GiaSpDvCi { get; set; }
         public DbSet<GiaSpDvCiCt> GiaSpDvCiCt { get; set; }
         public DbSet<GiaSpDvCiDm> GiaSpDvCiDm { get; set; }

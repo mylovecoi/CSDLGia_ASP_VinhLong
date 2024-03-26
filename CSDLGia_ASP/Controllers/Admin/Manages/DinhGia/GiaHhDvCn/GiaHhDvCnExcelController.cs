@@ -27,14 +27,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Create"))
                 {
-                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn
                     {
-                        Maspdv = "1",
-                        Dongia = "2",
-
-                        LineStart = 2,
-                        LineStop = 1000,
+                        Madv = Madv,
+                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Thoidiem = DateTime.Now,
                         Sheet = 1,
+                        LineStart = 4,
+                        LineStop = 3000,
                     };
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
@@ -91,7 +91,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn request, string Madv, string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -118,11 +118,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
+                                Maspdv = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dongia)].Value.ToString().Trim() : "",
+                                Dongia = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                             });
                         }
                     }

@@ -125,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn.GiaHhDvCnCt
                             Dongia = ct.Dongia,
                             Maspdv = ct.Maspdv,
                             Trangthai = ct.Trangthai,
-                            Mota = ct.Mota,
+                           
                             Mahs = ct.Mahs,
                         };
 

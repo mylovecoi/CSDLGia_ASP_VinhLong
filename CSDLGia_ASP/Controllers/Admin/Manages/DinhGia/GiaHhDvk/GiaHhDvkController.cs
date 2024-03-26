@@ -63,9 +63,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                         IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk;
 
-                        if(Madv != "all")
+                        if (Madv != "all")
                         {
-                            model = model.Where(t=>t.Madv == Madv);
+                            model = model.Where(t => t.Madv == Madv);
                         }
 
                         if (string.IsNullOrEmpty(Nam))
@@ -84,7 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             //    model = model.ToList();
                             //}
                         }
-                        
+
                         if (string.IsNullOrEmpty(Thang))
                         {
                             Thang = Helpers.ConvertYearToStr(DateTime.Now.Month);
@@ -96,10 +96,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             {
                                 model = model.Where(t => t.Thang == Thang);
                             }
-                          
+
                         }
 
-                        var model_join = (from kk in model                                         
+                        var model_join = (from kk in model
                                           join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                                           {
@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
-                        
+
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";
                         ViewData["MenuLv2"] = "menu_hhdvk_tt";
@@ -181,12 +181,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                     {
-                        Mahs = MadiabanBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Matt = MattBc,
                         Madiaban = MadiabanBc,
                         Madv = MadvBc,
                         Thang = ThangBc,
                         Nam = NamBc,
+                        Thoidiem = DateTime.Now,
+                        Thoidiemlk = DateTime.Now,
                     };
 
                     var danhmucdv = _db.GiaHhDvkDmDv.Where(t => t.Matt == MattBc && t.Madv == MadvBc).OrderBy(t => t.Mahhdv).ToList();
@@ -233,6 +235,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         _db.SaveChanges();
                     }
 
+
+
                     var modelct_join = (from ct in chitiet
                                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
@@ -254,6 +258,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                         }).ToList();
 
                     model.GiaHhDvkCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
+
+                    var modellk = _db.GiaHhDvk.Where(t => t.Matt == MattBc && t.Madv == MadvBc && t.Trangthai == "HT").OrderByDescending(t => t.Thoidiem).FirstOrDefault();
+                    if (modellk != null)
+                    {
+                        model.Soqdlk = modellk.Soqd;
+                        model.Thoidiemlk = modellk.Thoidiem;
+                        var modellkct = _db.GiaHhDvkCt.Where(t => t.Mahs == modellk.Mahs).ToList();
+                        var modellkct_join = (from ct in modellkct
+                                              join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                              select new GiaHhDvkCt
+                                              {
+                                                  Id = ct.Id,
+                                                  Manhom = ct.Manhom,
+                                                  Mahhdv = ct.Mahhdv,
+                                                  Mahs = ct.Mahs,
+                                                  Gia = ct.Gia,
+                                                  Gialk = ct.Gia,
+                                                  Loaigia = ct.Loaigia,
+                                                  Nguontt = ct.Nguontt,
+                                                  Ghichu = ct.Ghichu,
+                                                  Created_at = ct.Created_at,
+                                                  Updated_at = ct.Updated_at,
+                                                  Tenhhdv = dm.Tenhhdv,
+                                                  Dacdiemkt = dm.Dacdiemkt,
+                                                  Dvt = dm.Dvt,
+                                              }).ToList();
+
+                        model.GiaHhDvkCt = modellkct_join.ToList();
+                    }
 
                     ViewData["MadvBc"] = MadvBc;
                     ViewData["MattBc"] = MattBc;
@@ -637,8 +670,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
                 {
-                    var model = (from ct in _db.GiaHhDvkCt                                
-                                 join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs                                 
+                    var model = (from ct in _db.GiaHhDvkCt
+                                 join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
                                  join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
                                  join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
                                  join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
@@ -659,7 +692,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Thoidiem = kk.Thoidiem,
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
-                                 });                   
+                                 });
 
                     if (madv != "all")
                     {
@@ -687,9 +720,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         model = model.Where(t => t.Gia <= gia_den);
                     }
 
-                    if(mahs!= "all")
+                    if (mahs != "all")
                     {
-                        model = model.Where(t=>t.Mahs == mahs);
+                        model = model.Where(t => t.Mahs == mahs);
                     }
                     if (!string.IsNullOrEmpty(Tenhhdv))
                     {

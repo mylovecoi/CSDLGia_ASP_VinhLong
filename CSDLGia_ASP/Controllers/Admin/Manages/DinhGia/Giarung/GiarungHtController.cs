@@ -560,14 +560,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
-        public IActionResult TongHop()
+        [HttpPost("GiaRung/XetDuyet/TongHop")]
+        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Index"))
                 {
+                    var model = _db.GiaRung.Where(t => t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
+                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+                    List<string> list_hoso = model.Select(t=>t.Mahs).ToList();
+                    var model_hosoct = _db.GiaRungCt.Where(t => list_hoso.Contains(t.Mahs));
 
-                    return View("Views/Admin/Manages/DinhGia/GiaRung/Tonghop.cshtml");
+                    ViewData["DonVis"] = model_donvi;
+                    ViewData["HoSoCt"] = model_hosoct;
+                    ViewData["DanhMuc"] = _db.GiaRungDm;
+                    ViewData["ThoiDiemKetXuat"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
+                    ViewData["Title"] = "Tỏng hợp giá rừng";
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else

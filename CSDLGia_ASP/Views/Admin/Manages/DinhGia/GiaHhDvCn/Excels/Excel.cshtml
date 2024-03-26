@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
+﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn
 
 @{
     var Madv = ViewData["Madv"];
@@ -26,39 +26,14 @@
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
-                <a href="~/UpLoad/File/DinhGia/Excel/FileExcelGiaHhDvCnNew.xlsx" target="_blank" class="btn btn-link"
+                <a href="~/UpLoad/File/DinhGia/Excel/FileExcelMauGiaHhDvCn.xlsx" target="_blank" class="btn btn-link"
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                    <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaHhDvCnNew.xlsx</span>
+                    <span style="font-weight:bold;">Link tải file mẫu FileExcelMauGiaHhDvCn.xlsx</span>
                 </a>
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
-            </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mã sản phẩm dịch vụ</label>
-                        <select asp-for="Maspdv" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Dongia" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div>
+            </div>            
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
@@ -85,7 +60,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>

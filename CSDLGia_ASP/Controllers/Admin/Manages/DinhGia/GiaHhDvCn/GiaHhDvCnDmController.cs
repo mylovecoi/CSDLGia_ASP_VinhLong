@@ -4,8 +4,15 @@ using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 {
@@ -20,20 +27,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("GiaHhDvCnDm")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Index"))
                 {
 
-                    var model = _db.GiaHhDvCnDm.ToList();
+                    var model = _db.GiaHhDvCnDm.Where(t => t.Manhom == Manhom).ToList();
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
+                    ViewData["Manhom"] = Manhom;
                     ViewData["Title"] = "Nhóm hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Index.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/ChiTiet/Index.cshtml", model);
                 }
                 else
                 {
@@ -61,7 +69,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         Maspdv = DateTime.Now.ToString("yyMMddssmmHH"),
                         Tenspdv = Tennhom,
                         Dvt = Dvt,
-                        Mota = Mota,
+                        Manhom = Manhom,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -148,12 +156,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mô tả*</label>";
-                        result += "<input type='text' id='mota_edit' name='mota_edit' class='form-control' value='" + model.Mota + "'/>";
-                        result += "</div>";
-                        result += "</div>";
+                       
 
                         result += "<div class='col-xl-4'>";
                         result += "<label class='form-control-label'>Đơn vị tính</label>";
@@ -199,15 +202,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("GiaHhDvCnDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Dvt, string Mota)
+        public JsonResult Update(int Id, string Tenspdv, string Dvt, string Mota)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Edit"))
                 {
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(t => t.Id == Id);
-                    model.Tenspdv = Tennhom;
-                    model.Mota = Mota;
+                    model.Tenspdv = Tenspdv;                    
                     model.Dvt = Dvt;
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCnDm.Update(model);
@@ -244,5 +246,100 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             }
         }
 
+        public IActionResult NhanExcel(string Manhom)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Create"))
+                {
+                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
+                    {
+                        LineStart = 4,
+                        LineStop = 1000,
+                        Sheet = 1,
+                        MaNhom = Manhom,
+                        TenNhom = _db.GiaHhDvCnNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? ""
+                    };
+
+                    ViewData["Title"] = "Nhóm hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Excel.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+                int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+
+                using (var stream = new MemoryStream())
+                {
+                    await requests.FormFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        if (worksheet != null)
+                        {
+                            int rowcount = worksheet.Dimension.Rows;
+                            requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnDm>();
+                            int line = 1;
+                            for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                            {
+                                ExcelStyle style = worksheet.Cells[row, 2].Style;
+                                // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                                bool isBold = style.Font.Bold;
+                                // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                                bool isItalic = style.Font.Italic;
+                                StringBuilder strStyle = new StringBuilder();
+                                if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                                if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+
+                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnDm
+                                {
+                                    Sapxep = line,
+                                    HienThi = worksheet.Cells[row, 1].Value != null ?
+                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                    Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Style = strStyle.ToString(),
+                                    Manhom = requests.MaNhom
+                                });
+                                line++;
+                            }
+                            _db.GiaHhDvCnDm.AddRange(list_add);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", "GiaHhDvCnDm", new { Manhom = requests.MaNhom });
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+
+        }
     }
 }

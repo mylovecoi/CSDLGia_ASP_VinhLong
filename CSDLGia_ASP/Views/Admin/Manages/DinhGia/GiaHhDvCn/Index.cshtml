@@ -3,17 +3,17 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var nhomtn = (IEnumerable<GiaHhDvCnDm>)ViewData["NhomTn"];
+    var nhomtn = (IEnumerable<GiaHhDvCnNhom>)ViewData["NhomTn"];
 }
 
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -39,23 +39,20 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-               Thông tin hồ sơ<small>&nbsp;hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành </small><br />
+                Thông tin hồ sơ<small>&nbsp;hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành </small><br />
             </h3>
         </div>
-        <div >
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHhDvCn" asp-action="Create"
-               asp-route-MadvBc="@ViewData["Madv"]">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
-                </a>
+                </button>
                 <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvCnExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-
             }
-
         </div>
     </div>
 
@@ -138,34 +135,21 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
-                        <td style="text-align: center" width="15%">
-                            @foreach (var db in dsdonvi)
-                            {
-                                @if (item.Macqcq == db.MaDv)
-                                {
-                                    <span>@db.TenDv</span>
-                                }
-                            }
+                        <td style="text-align: center">
+                            @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
                         </td>
                         <td width="20%">
-
-
                             <a asp-controller="GiaHhDvCn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
                                 <i class="icon-lg la la-eye text-success"></i>
                             </a>
-                            <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                <i class="icon-lg la la-cloud-download text-warning"></i>
-                            </a>
+                            <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <i class="icon-lg la la-file-alt text-dark"></i>
+                            </button>
 
                             @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-
                             {
-                                <a asp-controller="GiaHhDvCn" asp-action="Print" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="In hồ sơ"
-                       target="_blank">
-                                    <i class="icon-lg la la-print text-info"></i>
-                                </a>
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Edit"))
                                 {
@@ -184,17 +168,9 @@
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
                                     <i class="icon-lg la la-check text-primary "></i>
                                 </button>
-
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                       onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </a>
                             }
 
                         </td>
-
-
-
                     </tr>
                 }
             }
@@ -263,7 +239,7 @@
                                     <option value="khac">--Tất cả --</option>
                                     @foreach (var nhom in nhomtn)
                                     {
-                                        <option value="@nhom.Maspdv">@nhom.Tenspdv</option>
+                                        <option value="@nhom.Created_at">@nhom.Tennhom</option>
                                     }
                                 </select>
                             </div>
@@ -281,7 +257,6 @@
 
 
 <!--complete Modal-->
-
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="GiaHhDvCn" asp-action="Complete">
@@ -328,6 +303,29 @@
     </div>
 </div>
 
+<!-- Giấy tờ Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -339,4 +337,23 @@
         document.getElementById("mahs_chuyen").value = mahs;
     }
 
+    function GetFile(mahs) {
+        $.ajax({
+            url: '/ThongTinGiayTo/GetList',
+            type: 'POST',
+            data: {
+                Mahs: mahs
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#giayto_data').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
 </script>

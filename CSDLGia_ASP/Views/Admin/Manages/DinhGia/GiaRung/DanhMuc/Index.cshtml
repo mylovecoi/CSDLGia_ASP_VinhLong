@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -25,7 +25,10 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;giá rừng</small><br />
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý danh mục nhóm giá rừng
+                </span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -43,10 +46,10 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th>STT</th>
-                    <th>Mã nhóm</th>
+                    <th width="2%">#</th>
+                    <th width="10%">Mã nhóm</th>
                     <th>Tên nhóm</th>
-                    <th width="20%">Thao tác</th>
+                    <th width="10%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,8 +61,11 @@
                             <td style="text-align: center">@(record_id++)</td>
 
                             <td style="text-align: center">@item.Manhom</td>
-                            <td class="text-center active">@item.Tennhom</td>
+                            <td style="text-align:left">@item.Tennhom</td>
                             <td>
+                                <a class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" asp-controller="GiarungDmCt" asp-action="Index" asp-route-Manhom="@item.Manhom">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
@@ -79,54 +85,56 @@
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Thông tin nhóm loại rừng
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Mã nhóm</label>
-                                <input type="text" id="manhom_create" name="manhom_create" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Tên nhóm</label>
-                                <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetStore()">Thêm mới</button>
-                </div>
-        </div>
-    </div>
-</div>
-<!--Delete Modal-->
-<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
             <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Đồng ý xóa thông tin???
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới danh mục nhóm giá rừng
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row text-left">
-                    <input id="id_delete" name="id_delete" type="hidden" />
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã nhóm</label>
+                            <input type="text" id="manhom_create" name="manhom_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên nhóm</label>
+                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-danger font-weight-bold" onclick="SetStore()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa danh mục nhóm giá rừng
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <input id="id_delete" name="id_delete" type="hidden" />
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
@@ -136,18 +144,20 @@
 </div>
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục giá rừng
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa danh mục nhóm giá rừng
+                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -156,8 +166,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script>
     function SetStore() {
@@ -172,11 +180,7 @@
             success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Thêm mới thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged.init();
-                    });
-                    $('#Create_Modal').modal("hide");
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -198,12 +202,8 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged.init();
-                    });
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
-                    $('#Delete_Modal').modal("hide");
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -221,7 +221,7 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                   
+
                     $('#edit_thongtin').replaceWith(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
@@ -243,11 +243,7 @@
             success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged.init();
-                    });
-                    $('#Edit_Modal').modal("hide");
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

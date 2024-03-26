@@ -515,7 +515,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     if (!string.IsNullOrEmpty(LoaiDat))
                     {
                         model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat.ToLower()));
-                    }
+                    }                  
 
                     ViewData["Madv"] = Madv;
                     ViewData["Manhom"] = Manhom;

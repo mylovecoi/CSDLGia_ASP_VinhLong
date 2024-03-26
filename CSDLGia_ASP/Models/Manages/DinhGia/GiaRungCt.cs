@@ -32,7 +32,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai { get; set; }
         /*public double SapXep { get; set; }
         public string HienThi { get; set; }*/
-        [NotMapped]
         public string Madv { get; set; }
         [NotMapped]
         public DateTime Thoidiem { get; set; }
@@ -45,5 +44,35 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
+
+        //
+        public int STTSapXep { get; set; }
+        public string STTHienThi { get; set; }
+        public string MoTa { get; set; }
+        public string Style { get; set; }
+        public double GiaRung1 { get; set; }
+        public double GiaRung2 { get; set; }
+        public double GiaRung3 { get; set; }
+        public double GiaRung4 { get; set; }
+        public double GiaRung5 { get; set; }
+        public double GiaRung6 { get; set; }
+        public double GiaChoThue1 { get; set; }
+        public double GiaChoThue2 { get; set; }
+        public double GiaBoiThuong1 { get; set; }
+        public double GiaBoiThuong2 { get; set; }
+        public double GiaBoiThuong3 { get; set; }
+        public double GiaBoiThuong4 { get; set; }
+        public double GiaBoiThuong5 { get; set; }
+        public double GiaBoiThuong6 { get; set; }
+
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string Tennhom { get; set; }
+      
+        [NotMapped]
+        public string SoQD { get; set; }
+
+
     }
 }
