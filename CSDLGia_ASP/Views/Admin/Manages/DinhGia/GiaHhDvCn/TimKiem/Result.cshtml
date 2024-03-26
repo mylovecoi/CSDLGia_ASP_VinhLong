@@ -1,9 +1,8 @@
 ﻿@{
-    // int record_id = 1;
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
-
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt>
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -24,7 +23,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Kết quả tìm kiếm hồ sơ
+                Kết quả tìm kiếm hồ sơ giá sản phẩm giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành
             </h3>
         </div>
     </div>
@@ -44,15 +43,36 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th width="4%">#</th>                  
-                    <th width="30%">Tên sản phẩm dịch vụ</th>
-                    <th>Đơn vị tính</th>
-                    <th>Mức giá</th>
-
+                    <th style="text-align:center">STT</th>
+                    <th style="text-align:center">Đơn vị nhập</th>
+                    <th style="text-align:center">Thời điểm</th>
+                    <th style="text-align:center">Tên sản phẩm, dịch vụ</th>
+                    <th style="text-align:center">Đơn vị tính</th>
+                    <th style="text-align:center">Mức giá</th>
+                    <th style="text-align:center" width="5%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-            
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center">@(record_id++)</td>
+                            <td style="text-align:center">@item.TenDv</td>
+                            <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>                           
+                            <td style="text-align:center">@item.Tenspdv</td>
+                            <td style="text-align:center">@item.Dvt</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                            <td>
+                                <a asp-controller="GiaHhDvCn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>

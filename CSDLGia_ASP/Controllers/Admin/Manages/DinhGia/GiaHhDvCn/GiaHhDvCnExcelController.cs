@@ -91,11 +91,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
+                string Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -108,21 +108,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+
+                        int sTT = 1;
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt
                             {
                                 Mahs = Mahs,
-                                Trangthai = "CXD",
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-
-                                Maspdv = worksheet.Cells[row, 1].Value != null ?
-                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-
-                                Dongia = worksheet.Cells[row, 2].Value != null ?
-                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Sapxep = sTT++,
+                                HienThi = worksheet.Cells[row, 1].Value != null ?
+                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                      worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
                             });
                         }
                     }
@@ -130,7 +131,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 }
                 _db.GiaHhDvCnCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaHhDvCnExcel", new { Madv = Madv, Mahs = Mahs });
+
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn
+                {
+                    Madv = request.Madv,
+                    Thoidiem = DateTime.Now,
+                    Mahs = Mahs,
+                };
+                var modelct = _db.GiaHhDvCnCt.Where(t => t.Mahs == Mahs);
+                model.GiaHhDvCnCt = modelct.ToList();
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                ViewData["Title"] = "Bảng giá tính giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
+                ViewData["MenuLv1"] = "menu_giakhac";
+                ViewData["MenuLv2"] = "menu_hhdvcn";
+                ViewData["MenuLv3"] = "menu_hhdvcn_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/Create.cshtml", model);
             }
             else
             {
