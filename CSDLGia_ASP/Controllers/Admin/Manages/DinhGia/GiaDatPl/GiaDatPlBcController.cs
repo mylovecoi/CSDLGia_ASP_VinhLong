@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -98,27 +99,54 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatPl/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string PhanLoai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
                 {
-                    var model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if (MaHsTongHop != "all")
-                    {
-                        model = model.Where(t => t.Mahs == MaHsTongHop);
-                    }
-                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
-                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
-                    var model_ct = _db.GiaDatPhanLoaiCt.Where(t => list_hoso.Contains(t.Mahs));
-                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
-                    ViewData["HoSoCt"] = model_ct;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
+                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
+
+                    var model = (from giact in _db.GiaDatPhanLoaiCt
+                                 join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
+                                 join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
+                                 join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
+                                 select new GiaDatPhanLoaiCt
+                                 {
+                                     Id = giact.Id,
+                                     Madv = gia.Madv,
+                                     Tendv = donvi.TenDv,
+                                     Mahs = giact.Mahs,
+                                     Thoidiem = gia.Thoidiem,
+                                     Maloaidat = giact.Maloaidat,
+                                     Loaidat = dm.Loaidat,
+                                     Vitri = giact.Vitri,
+                                     Dientich = giact.Dientich,
+                                     Giacuthe = giact.Giacuthe,
+                                     Trangthai = gia.Trangthai,
+                                 });
+
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    var model_hoso = _db.GiaDatPhanLoai.Where(t => list_mahs.Contains(t.Mahs));
+
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá  giá đất cụ thể";
-                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
-                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["ChiTietHs"] = model_hoso;
+                    ViewData["NgayTu"] = ngaytu;
+                    ViewData["NgayDen"] = ngayden;
+
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["Title"] = "Báo cáo giá đất cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/BcCT.cshtml", model);
                 }
                 else
@@ -132,6 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
 
 
     }
