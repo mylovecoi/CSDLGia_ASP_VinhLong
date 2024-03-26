@@ -202,7 +202,7 @@
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManagedClass.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {
@@ -228,7 +228,7 @@
                 if (data.status == 'success') {
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManagedClass.init();
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#Delete_Modal').modal("hide");

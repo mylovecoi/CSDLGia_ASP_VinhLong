@@ -5,7 +5,7 @@
 
 }
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
@@ -18,16 +18,30 @@
             </div>
             <div class="modal-body">
                 <input hidden id="manhom_create" name="manhom_create" value="@ViewData["Manhom"]" />
-
                 <div class="row">
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Sắp xếp</label>
+                            <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>TT</label>
                             <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
                         </div>
                     </div>
-
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                            <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
+                                <option value="Chữ in hoa">Chữ in hoa</option>
+                                <option value="Chữ in đậm">Chữ in đậm</option>
+                                <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên sản phẩn dịch vụ</label>
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
@@ -37,12 +51,6 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính</label>
                             <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Sắp xếp</label>
-                            <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -96,6 +104,32 @@
             <form asp-controller="GiaSpDvCongIchDm" asp-action="Delete">
                 <div class="modal-body">
                     <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin sản phẩm dịch vụ công ích
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa dữ liệu sản phẩm dịch vụ công ích???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaSpDvCongIchDm" asp-action="Remove">
+                <div class="modal-body">
+                    <input hidden id="manhom_remove" name="manhom_remove" value="@ViewData["Manhom"]"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -465,6 +499,7 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2multi').select2();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }

@@ -11,6 +11,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tennhom { get; set; }
         public string Mota { get; set; }
         public string Theodoi { get; set; }
+        public int SapXep { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
 
