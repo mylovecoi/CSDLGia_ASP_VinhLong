@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240326023735_update-tdg")]
+    partial class updatetdg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -13743,13 +13745,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<DateTime>("Ngaycap")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Ngaydungtd")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Nguoidaidien")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soqddungtd")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sothe")

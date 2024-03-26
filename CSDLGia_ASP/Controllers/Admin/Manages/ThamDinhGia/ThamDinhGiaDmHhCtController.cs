@@ -50,53 +50,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhMuc/ChiTiet/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Mahh, string Tenhh, string Tskt, string Xuatxu, string Dvt)
+        public JsonResult Store(string Manhom, /*string Mahh,*/ string Tenhh, string Tskt, string Xuatxu, string Dvt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Create"))
                 {
-                    var check = _db.ThamDinhGiaDmHh.FirstOrDefault(t => t.Manhom == Manhom && t.Mahanghoa == Mahh);
-                    if (check == null)
+                    var request = new ThamDinhGiaDmHh
                     {
-                        var request = new ThamDinhGiaDmHh
+                        Manhom = Manhom,
+                        Mahanghoa = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Tenhanghoa = Tenhh,
+                        Xuatxu = Xuatxu,
+                        Thongsokt = Tskt,
+                        Dvt = Dvt,
+                        Theodoi = "TD",
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+
+                    _db.ThamDinhGiaDmHh.Add(request);
+                    _db.SaveChanges();
+
+                    var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
+
+                    if (check_dvt == null)
+                    {
+                        var dvt = new DmDvt
                         {
-                            Manhom = Manhom,
-                            Mahanghoa = Mahh,
-                            Tenhanghoa = Tenhh,
-                            Xuatxu = Xuatxu,
-                            Thongsokt = Tskt,
                             Dvt = Dvt,
-                            Theodoi = "TD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         };
-
-                        _db.ThamDinhGiaDmHh.Add(request);
+                        _db.DmDvt.Add(dvt);
                         _db.SaveChanges();
-
-                        var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
-
-                        if (check_dvt == null)
-                        {
-                            var dvt = new DmDvt
-                            {
-                                Dvt = Dvt,
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                            };
-                            _db.DmDvt.Add(dvt);
-                            _db.SaveChanges();
-                        }
-
-                        var data = new { status = "success", message = "Thêm mới hàng hóa thành công!" };
-                        return Json(data);
                     }
-                    else
-                    {
-                        var data = new { status = "error", message = "Mã hàng hóa này đã tồn tại!" };
-                        return Json(data);
-                    }
+
+                    var data = new { status = "success", message = "Thêm mới hàng hóa thành công!" };
+                    return Json(data);
                 }
                 else
                 {
@@ -126,12 +117,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         string result = "<div class='modal-body' id='frm_edit'>";
                         result += "<div class='row'>";
 
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã hàng hóa*</label>";
-                        result += "<input type='text' class='form-control' id='mahh_edit' name='mahh_edit' value='" + model.Mahanghoa + "'/>";
-                        result += "</div>";
-                        result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên hàng hóa*</label>";
@@ -197,48 +182,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhMuc/ChiTiet/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Manhom, string Mahh, string Tenhh, string Tskt, string Xuatxu, string Dvt)
+        public IActionResult Update(int Id, string Manhom, /*string Mahh,*/ string Tenhh, string Tskt, string Xuatxu, string Dvt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
                 {
-                    int check = _db.ThamDinhGiaDmHh.Where(t => t.Manhom == Manhom && t.Mahanghoa == Mahh && t.Id != Id).Count();
-                    if (check == 0)
+                    /*int check = _db.ThamDinhGiaDmHh.Where(t => t.Manhom == Manhom && t.Mahanghoa == Mahh && t.Id != Id).Count();*/
+                    var model = _db.ThamDinhGiaDmHh.FirstOrDefault(t => t.Id == Id);
+                    model.Tenhanghoa = Tenhh;
+                    model.Thongsokt = Tskt;
+                    model.Xuatxu = Xuatxu;
+                    model.Dvt = Dvt;
+                    model.Updated_at = DateTime.Now;
+
+                    _db.ThamDinhGiaDmHh.Update(model);
+                    _db.SaveChanges();
+
+                    var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
+
+                    if (check_dvt == null)
                     {
-                        var model = _db.ThamDinhGiaDmHh.FirstOrDefault(t => t.Id == Id);
-                        model.Mahanghoa = Mahh;
-                        model.Tenhanghoa = Tenhh;
-                        model.Thongsokt = Tskt;
-                        model.Xuatxu = Xuatxu;
-                        model.Dvt = Dvt;
-                        model.Updated_at = DateTime.Now;
-
-                        _db.ThamDinhGiaDmHh.Update(model);
-                        _db.SaveChanges();
-
-                        var check_dvt = _db.DmDvt.FirstOrDefault(t => t.Dvt == Dvt);
-
-                        if (check_dvt == null)
+                        var dvt = new DmDvt
                         {
-                            var dvt = new DmDvt
-                            {
-                                Dvt = Dvt,
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                            };
-                            _db.DmDvt.Add(dvt);
-                            _db.SaveChanges();
-                        }
+                            Dvt = Dvt,
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        };
+                        _db.DmDvt.Add(dvt);
+                        _db.SaveChanges();
+                    }
 
-                        var data = new { status = "success", message = "Cập nhật thành công!" };
-                        return Json(data);
-                    }
-                    else
-                    {
-                        var data = new { status = "error", message = "Mã hàng hóa đã tồn tại!!!" };
-                        return Json(data);
-                    }
+                    var data = new { status = "success", message = "Cập nhật thành công!" };
+                    return Json(data);
 
                 }
                 else
