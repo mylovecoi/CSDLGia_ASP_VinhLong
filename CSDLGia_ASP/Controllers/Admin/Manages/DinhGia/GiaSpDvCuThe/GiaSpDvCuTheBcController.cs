@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaSpDvCuThe.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
@@ -96,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuThe/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom, string PhanLoaiHoSo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -109,27 +109,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
-                    var model = (from hosoct in _db.GiaSpDvCuTheCt
-                                 join hoso in _db.GiaSpDvCuThe on hosoct.Mahs equals hoso.Mahs
-                                 join nhom in _db.GiaSpDvCuTheNhom on hosoct.Manhom equals nhom.Manhom
-                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
-                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt
+                    var model = (from giaspdvcuthect in _db.GiaSpDvCuTheCt
+                                 join giaspdvcuthe in _db.GiaSpDvCuThe on giaspdvcuthect.Mahs equals giaspdvcuthe.Mahs
+                                 join nhom in _db.GiaSpDvCuTheNhom on giaspdvcuthect.Manhom equals nhom.Manhom
+                                 join donvi in _db.DsDonVi on giaspdvcuthe.Madv equals donvi.MaDv
+                                 select new GiaSpDvCuTheCt
                                  {
-                                     Madv = hoso.Madv,
+                                     Id = giaspdvcuthect.Id,
+                                     Dvt = giaspdvcuthect.Dvt,
+                                     Mahs = giaspdvcuthect.Mahs,
+                                     Madv = giaspdvcuthe.Madv,
+                                     Thoidiem = giaspdvcuthe.Thoidiem,
                                      Tendv = donvi.TenDv,
+                                     Soqd = giaspdvcuthe.Soqd,
+                                     TenSpDv = giaspdvcuthect.TenSpDv,
+                                     Mucgia1 = giaspdvcuthect.Mucgia1,
+                                     Mucgia2 = giaspdvcuthect.Mucgia2,
+                                     Mucgia3 = giaspdvcuthect.Mucgia3,
+                                     Mucgia4 = giaspdvcuthect.Mucgia4,
+                                     Maspdv = giaspdvcuthect.Maspdv,
+                                     MaDiaBan = giaspdvcuthe.Madiaban,
+                                     PhanLoaiHoSo = giaspdvcuthe.PhanLoaiHoSo,
+                                     Ttqd = giaspdvcuthe.Ttqd,
+                                     GhiChu = giaspdvcuthe.GhiChu,
+
+                                     Manhom = giaspdvcuthect.Manhom,
                                      Tennhom = nhom.Tennhom,
-                                     Soqd = hoso.Soqd,
-                                     Thoidiem = hoso.Thoidiem,
-                                     GhiChu = hosoct.GhiChu,                  
-                                     Manhom = hosoct.Manhom,
-                                     Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Trangthai = giaspdvcuthe.Trangthai,
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
                     if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
-
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop && t.Mahs == PhanLoaiHoSo); }
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == PhanLoaiHoSo); }
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
@@ -143,7 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/BcCT.cshtml", model);
                 }
                 else

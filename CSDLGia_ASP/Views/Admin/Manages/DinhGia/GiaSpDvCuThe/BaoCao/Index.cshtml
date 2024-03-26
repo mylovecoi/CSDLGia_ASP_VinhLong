@@ -76,18 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Tên nhóm</label><br />
-                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
-                                    <option value="all">--Tất cả---</option>
-                                    @foreach (var item in DanhSachNhom)
-                                    {
-                                        <option value="@item.Manhom">@item.Tennhom</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
+                      
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -140,7 +129,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Phân loại hồ sơ</label>
+                                <select id="PhanLoaiHoSo" name="PhanLoaiHoSo" class="form-control">
+                                    <option value="all">--Tất cả---</option>
+                                    <option value="XE">Hồ sơ giá trông giữ xe</option>
+                                    <option value="CHO">Hồ sơ giá diện tích bán hàng tại chợ</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên nhóm</label><br />
