@@ -22,7 +22,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
@@ -55,20 +55,9 @@
                 {
                     <tr>
                         <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:center">
-                            @if (GiaTroGiaTroCuocDm != null)
-                            {
-                                @foreach (var sp in GiaTroGiaTroCuocDm)
-                                {
-                                    @if (item.Maspdv == sp.Maspdv)
-                                    {
-                                        <span>@sp.Tenspdv</span>
-                                    }
-                                }
-                            }
-                        </td>
+                        <td style="text-align:left">@item.Mota</td>
 
-                        <td style="text-align:center">@item.Dongia</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Dongia)</td>
 
                     </tr>
                 }

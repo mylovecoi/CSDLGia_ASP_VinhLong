@@ -62,5 +62,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 
         [NotMapped]
         public List<GiaTroGiaTroCuocCt> GiaTroGiaTroCuocCt { get; set; }
+
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
     }
 }

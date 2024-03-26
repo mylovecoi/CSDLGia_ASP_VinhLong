@@ -37,13 +37,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd"  required/>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem"  required/>
                     </div>
                 </div>
             </div>
@@ -64,24 +64,12 @@
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateTGTC()"><i class="la la-check"></i>Thêm mới</button>
+            <button type="submit" class="btn btn-primary mr-2" ><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
-    function ValidateTGTC() {
-        if ($('#Soqd').val().trim() == '') {
-            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_r_store").submit();
-            }
-        }
-    }
-</script>
+
 @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
