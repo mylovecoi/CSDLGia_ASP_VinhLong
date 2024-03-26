@@ -65,6 +65,7 @@
                 </div>
 
             </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
             <div class="card-footer" style="text-align:center">
                 <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
