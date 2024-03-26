@@ -2,6 +2,7 @@
     Layout = "_LayoutReports";
     int record_ct = 1;
     var nhomhh = (IEnumerable<DmNhomHh>)ViewData["Nhomhh"];
+    var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
 
@@ -80,7 +81,10 @@
                     <td style="text-align: center">@ct.Mahhdv</td>
                     <td>@ct.Tenhhdv</td>
                     <td>@ct.Dacdiemkt</td>
-                    <td style="text-align: center">@ct.Dvt</td>
+                    <td style="text-align: center">
+                        @if (!string.IsNullOrEmpty(ct.Dvt))
+                            @dmdvt.FirstOrDefault(x => x.Madvt == ct.Dvt)?.Dvt
+                    </td>
                     <td style="text-align: left">@ct.Loaigia</td>
                     <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gialk)</td>
                     <td style="text-align: right;font-weight: bold">@Helpers.ConvertDbToStr(ct.Gia)</td>

@@ -34,10 +34,11 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
-            <input asp-for="Madv" value="@ViewData["MadvBc"]" hidden>
-            <input asp-for="Mahs" value="@ViewData["Mahs"]" hidden>
-            <input asp-for="Matt" value="@ViewData["MattBc"]" hidden>
-            <input asp-for="Madiaban" value="@ViewData["MadiabanBc"]" hidden >
+            <input asp-for="Madv" type="hidden">
+            <input asp-for="Mahs" type="hidden">
+            <input asp-for="Matt" type="hidden">
+            <input asp-for="Thang" type="hidden">
+            <input asp-for="Nam" type="hidden">
 
             <div class="row">
                 <div class="col-xl-6">
@@ -54,36 +55,35 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
-                        <select asp-for="Madiaban" class="form-control" disabled="disabled">
+                        <select asp-for="Madiaban" class="form-control">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @((string)ViewData["MadiabanBc"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                                <!option value="@item.MaDiaBan" @(Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@ViewData["ThangBc"]</span></label>
-                        <input hidden asp-for="Thang" value="@ViewData["ThangBc"]">
+                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>
+                        
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@ViewData["NamBc"]</span></label>
-                        <input hidden asp-for="Nam" value="@ViewData["NamBc"]">
+                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>                        
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Số báo cáo*</label>
-                        <input type="text" asp-for="Soqd" class="form-control" />
+                        <input type="text" asp-for="Soqd" class="form-control" required />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng*</label>
-                        <input type="date" asp-for="Thoidiem" class="form-control">
+                        <input type="date" asp-for="Thoidiem" class="form-control" required />
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -104,13 +104,9 @@
                         <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
                     </div>
                 </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
+                
             </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/ThongTinGiayTo/Index.cshtml")
 
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/DanhSach/Detail.cshtml")
 
@@ -120,24 +116,11 @@
                asp-route-Madv="@ViewData["MadvBc"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValHhDvk()"><i class="la la-check"></i>Hoàn Thành</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Hoàn Thành</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
-    function ValHhDvk() {
-        if ($('#Soqd').val().trim() == '') {
-            toastr.error("Số báo cáo không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Ngày áp dụng không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_giahhdvk_store").submit();
-            }
-        }
-    }
-</script>
 @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
