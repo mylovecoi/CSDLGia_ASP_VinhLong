@@ -2,6 +2,8 @@
 @{
     int record_id = 1;
 }
+<!--Thông tin giấy tời-->
+@await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/ThongTinGiayTo/Index.cshtml")
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -30,8 +32,6 @@
                     <th>Xuất xứ</th>
                     <th>Đơn vị tính</th>
                     <th>Số lượng</th>
-                    <th>Đơn giá đề nghị</th>
-                    <th>Giá trị đề nghị</th>
                     <th>Đơn giá thẩm định</th>
                     <th>Giá trị thẩm định</th>
                     <th width="9%">Thao tác</th>
@@ -52,8 +52,6 @@
                                 <td>@item.Nguongoc</td>
                                 <td style="text-align:center">@item.Dvt</td>
                                 <td style="text-align:center">@item.Sl</td>
-                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Nguyengiadenghi)</td>
-                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giadenghi)</td>
                                 <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Nguyengiathamdinh)</td>
                                 <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giatritstd)</td>
                                 <td>

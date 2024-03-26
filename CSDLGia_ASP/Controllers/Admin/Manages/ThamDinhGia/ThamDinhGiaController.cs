@@ -168,6 +168,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         Tttstd = Tttstd,
                         Thoidiem = DateTime.Now,
                         Ngayqdpheduyet = DateTime.Now,
+                        Thoihan = DateTime.Now,
                     };
 
                     ViewData["Madv"] = Madv;
@@ -221,6 +222,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         Madiaban = request.Madiaban,
                         Madv = request.Madv,
                         Dvyeucau = request.Dvyeucau,
+                        Dvthamdinh = request.Dvthamdinh,
                         Hosotdgia = request.Hosotdgia,
                         Tttstd = request.Tttstd,
                         Thoidiem = request.Thoidiem,
@@ -252,6 +254,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     _db.ThamDinhGiaCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
+                    var modelFile = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
+                    if (modelFile.Any())
+                    {
+                        foreach (var file in modelFile) { file.Status = "XD"; }
+                    }
+                    _db.ThongTinGiayTo.UpdateRange(modelFile);
+                    _db.SaveChanges();
+
                     return RedirectToAction("Index", "ThamDinhGia", new { request.Madv });
                 }
                 else
@@ -277,8 +287,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     var model = _db.ThamDinhGia.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var model_ct = _db.ThamDinhGiaCt.Where(t => t.Mahs == model.Mahs);
-
                     model.ThamDinhGiaCt = model_ct.ToList();
+
+                    var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    model.ThongTinGiayTo = model_file.ToList();
 
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["Madv"] = model.Madv;
@@ -330,6 +342,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
                     var model = _db.ThamDinhGia.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Dvyeucau = request.Dvyeucau;
+                    model.Dvthamdinh = request.Dvthamdinh;
                     model.Hosotdgia = request.Hosotdgia;
                     model.Tttstd = request.Tttstd;
                     model.Thoidiem = request.Thoidiem;

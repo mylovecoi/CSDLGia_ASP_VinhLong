@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Ppthamdinh { get; set; }
         public string Mucdich { get; set; }
         public string Dvyeucau { get; set; }
+        public string Dvthamdinh { get; set; }
         public DateTime Thoihan { get; set; }
         public string Sotbkl { get; set; }
         public string Hosotdgia { get; set; }
@@ -73,6 +75,8 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public DateTime Updated_at { get; set; }
         [NotMapped]
         public List<ThamDinhGiaCt> ThamDinhGiaCt { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
         [NotMapped]
         public string MadvCh { get; set; }
         [NotMapped]
