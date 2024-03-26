@@ -33,6 +33,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai { get; set; }
         public string Hienthi { get; set; }
         public double Sapxep { get; set; }
-        public string HienthiTT37 { get; set; } 
+        public string HienthiTT37 { get; set; }
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+        [NotMapped]
+        public string Tennhom { get; set; }
+        
     }
 }
