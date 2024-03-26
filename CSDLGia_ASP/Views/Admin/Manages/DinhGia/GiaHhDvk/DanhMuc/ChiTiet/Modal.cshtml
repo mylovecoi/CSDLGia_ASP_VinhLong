@@ -3,7 +3,7 @@
     var dvt = (IEnumerable<DmDvt>)ViewData["Dvt"];
 }
 <!--Create Modal-->
-<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade kt_select2_modal" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,18 +18,6 @@
             <div class="modal-body">
                 <div class="row">
                     <input hidden id="Matt" name="Matt" value="@ViewData["Matt"]" />
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Nhóm hàng hóa, dịch vụ*</label>
-                            <select id="manhom_create" name="manhom_create" class="form-control">
-                                <option value="">--Chọn nhóm hàng hóa, dịch vụ--</option>
-                                @foreach (var item in dmnhomhh)
-                                {
-                                    <option value="@item.Manhom">@item.Tennhom</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Mã hàng hóa dịch vụ*</label>
@@ -51,7 +39,7 @@
                     <div class="col-xl-10">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính</label>
-                            <select class="form-control" id="dvt_create" name="dvt_create">
+                            <select class="form-control select2_modal" id="dvt_create" name="dvt_create">
                                 @foreach (var item in dvt)
                                 {
                                     <option value="@item.Madvt">@item.Dvt</option>
@@ -192,40 +180,38 @@
 
 <script>
     function Store() {
-        if ($('#manhom_create').val().trim() == '') {
-            toastr.error("Nhóm hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+
+        if ($('#mahhdv_create').val().trim() == '') {
+            toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
         } else {
-            if ($('#mahhdv_create').val().trim() == '') {
-                toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+            if ($('#tenhhdv_create').val().trim() == '') {
+                toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
             } else {
-                if ($('#tenhhdv_create').val().trim() == '') {
-                    toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
-                } else {
-                    $.ajax({
-                        url: '/GiaHhDvkDmCt/Store',
-                        type: 'POST',
-                        data: {
-                            Manhom: $('#manhom_create').val(),
-                            Matt: $('#Matt').val(),
-                            Mahhdv: $('#mahhdv_create').val(),
-                            Tenhhdv: $('#tenhhdv_create').val(),
-                            Dacdiemkt: $('#dacdiemkt_create').val(),
-                            Dvt: $('#dvt_create').val(),
-                        },
-                        dataType: 'JSON',
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                toastr.success(data.message);
-                                location.reload();
-                            } else {
-                                toastr.error(data.message, "Lỗi!");
-                            }
+                $.ajax({
+                    url: '/GiaHhDvkDmCt/Store',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_create').val(),
+                        Matt: $('#Matt').val(),
+                        Mahhdv: $('#mahhdv_create').val(),
+                        Tenhhdv: $('#tenhhdv_create').val(),
+                        Dacdiemkt: $('#dacdiemkt_create').val(),
+                        Dvt: $('#dvt_create').val(),
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
                         }
-                    })
-                }
+                    }
+                })
             }
         }
     }
+
 
     function getId(id) {
         document.getElementById("id_delete").value = id;

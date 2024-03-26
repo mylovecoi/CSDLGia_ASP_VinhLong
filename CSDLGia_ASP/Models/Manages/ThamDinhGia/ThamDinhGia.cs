@@ -22,6 +22,8 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Hosotdgia { get; set; }
         public string Nguonvon { get; set; }
         public string Phanloai { get; set; }
+        public string Soqdpheduyet { get; set; }
+        public DateTime Ngayqdpheduyet { get; set; }
         public string Quy { get; set; }
         public string Thuevat { get; set; }
         public int Songaykq { get; set; }
@@ -81,5 +83,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Tendb { get; set; }
         [NotMapped]
         public string Level { get; set; }
+        [NotMapped]
+        public string Tennhomhh { get; set; }
     }
 }

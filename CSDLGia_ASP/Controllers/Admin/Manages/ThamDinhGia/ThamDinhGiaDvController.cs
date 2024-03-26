@@ -46,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/Donvi/Store")]
         [HttpPost]
-        public JsonResult Store(string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap)
+        public JsonResult Store(string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap, string Soqddungtd, DateTime Ngaydungtd)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -61,6 +61,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         Chucvu = Chucvu,
                         Sothe = Sothe,
                         Ngaycap = Ngaycap,
+                        Soqddungtd = Soqddungtd,
+                        Ngaydungtd = Ngaydungtd,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -131,6 +133,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "<input type='date' id='ngaycap_edit' name='ngaycap_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaycap) + "'/>";
                         result += "</div>";
                         result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Số quyết định dừng theo dõi</label>";
+                        result += "<input type='text' id='soqddungtd_edit' name='soqddungtd_edit' class='form-control' value='" + model.Soqddungtd + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Ngày dừng theo dõi</label>";
+                        result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
+                        result += "</div>";
+                        result += "</div>";
 
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
@@ -159,7 +173,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/Donvi/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap)
+        public JsonResult Update(int Id, string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap, string Soqddungtd, DateTime Ngaydungtd)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -172,6 +186,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     model.Chucvu = Chucvu;
                     model.Sothe = Sothe;
                     model.Ngaycap = Ngaycap;
+                    model.Soqddungtd = Soqddungtd;
+                    model.Ngaydungtd = Ngaydungtd;
                     model.Updated_at = DateTime.Now;
                     _db.ThamDinhGiaDv.Update(model);
                     _db.SaveChanges();

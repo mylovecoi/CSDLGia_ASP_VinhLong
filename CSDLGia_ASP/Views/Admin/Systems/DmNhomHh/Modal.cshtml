@@ -12,12 +12,12 @@
             </div>
             <div class="modal-body">
                 <div class="row" id="data_create">
-                    <div class="col-xl-12">
+                    @* <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Mã nhóm*</label>
                             <input type="text" name="manhom_create" id="manhom_create" class="form-control" />
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên nhóm*</label>
@@ -119,7 +119,7 @@
                     url: '/DmNhomHh/Store',
                     type: 'POST',
                     data: {
-                        Manhom: $('#manhom_create').val(),
+                        // Manhom: $('#manhom_create').val(),
                         Tennhom: $('#tennhom_create').val(),
                         Theodoi: $('#theodoi_create').val(),
                         Phanloai: $('#phanloai_create').val(),
@@ -157,7 +157,7 @@
                     url: '/DmNganhNghe/Update',
                     type: 'POST',
                     data: {
-                        Manhom: $('#manhom_edit').val(),
+                        // Manhom: $('#manhom_edit').val(),
                         Tennhom: $('#tennhom_edit').val(),
                         Theodoi: $('#theodoi_edit').val(),
                         Phanloai: $('#phanloai_edit').val(),

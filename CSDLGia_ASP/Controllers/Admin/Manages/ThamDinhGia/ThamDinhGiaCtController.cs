@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 result += "<input type='text' id='xuatxu_edit' name='xuatxu_edit' class='form-control' value='" + model.Nguongoc + "' />";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-2'>";
+                result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị tính</label>";
                 result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
@@ -106,12 +106,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 result += "</select>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-1'>";
+                /*result += "<div class='col-xl-1'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>&nbsp;&nbsp;&nbsp;</label><br />";
                 result += "<button type='button' class='btn btn-default' data-target='#Dvt_Edit_Modal' data-toggle='modal'><i class='la la-plus'></i></button>";
                 result += "</div>";
-                result += "</div>";
+                result += "</div>";*/
                 result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Số lượng</label>";
