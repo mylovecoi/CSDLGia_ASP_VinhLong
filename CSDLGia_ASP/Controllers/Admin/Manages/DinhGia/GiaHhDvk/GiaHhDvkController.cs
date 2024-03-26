@@ -238,7 +238,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
 
                     var modelct_join = (from ct in chitiet
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x=>x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -347,7 +347,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var modelct_join = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -370,6 +370,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_tt";
@@ -390,25 +391,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Edit"))
-                {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
+                {                   
 
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
@@ -477,7 +465,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaHhDvkCt = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -706,8 +694,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         [HttpPost]
         public JsonResult EditCt(int Id)
         {
+            var chiTiet = _db.GiaHhDvkCt.FirstOrDefault(t => t.Id == Id);
+            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
+
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Id == Id)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,
@@ -813,8 +804,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         public string GetDataCt(string Mahs)
         {
+            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,
