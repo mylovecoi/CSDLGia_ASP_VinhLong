@@ -42,12 +42,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             result += "<div class='col-xl-6'>";
             result += "<div class='form-group'>";
             result += "<label>Giá kỳ trước</label>";
-            result += "<input data-mask='fdecimal' class='form-control' id='Gia' name='Gia' value='" + record.Gia + "'/>";
+            result += "<input type='number' class='form-control' id='Gia' name='Gia' value='" + record.Gia + "'/>";
             result += "</div></div>";
             result += "<div class='col-xl-6'>";
             result += "<div class='form-group'>";
             result += "<label>Giá kỳ này</label>";
-            result += "<input data-mask='fdecimal' class='form-control' id='Gialk' name='Gialk' value='" + record.Gialk + "'/>";
+            result += "<input type='number' class='form-control' id='Gialk' name='Gialk' value='" + record.Gialk + "'/>";
             result += "</div></div>";
             result += "<div class='col-xl-12'>";
             result += "<div class='form-group'>";

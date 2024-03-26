@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -191,51 +192,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Thoidiemlk = DateTime.Now,
                     };
 
-                    var danhmucdv = _db.GiaHhDvkDmDv.Where(t => t.Matt == MattBc && t.Madv == MadvBc).OrderBy(t => t.Mahhdv).ToList();
+                    //var danhmucdv = _db.GiaHhDvkDmDv.Where(t => t.Matt == MattBc && t.Madv == MadvBc).OrderBy(t => t.Mahhdv).ToList();
                     var danhmuc = _db.GiaHhDvkDm.Where(t => t.Matt == MattBc).ToList();
 
                     var chitiet = new List<GiaHhDvkCt>();
 
-                    if (danhmucdv.Count > 0)
+
+                    foreach (var item in danhmuc)
                     {
-                        foreach (var item in danhmucdv)
+                        chitiet.Add(new GiaHhDvkCt()
                         {
-                            chitiet.Add(new GiaHhDvkCt()
-                            {
-                                Manhom = item.Manhom,
-                                Mahs = model.Mahs,
-                                Mahhdv = item.Mahhdv,
-                                Loaigia = "Giá bán lẻ",
-                                Nguontt = "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định",
-                                Trangthai = "CXD",
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                            });
-                        }
-                        _db.GiaHhDvkCt.AddRange(chitiet);
-                        _db.SaveChanges();
-                    }
-                    else
-                    {
-                        foreach (var item in danhmuc)
-                        {
-                            chitiet.Add(new GiaHhDvkCt()
-                            {
-                                Manhom = item.Manhom,
-                                Mahs = model.Mahs,
-                                Mahhdv = item.Mahhdv,
-                                Loaigia = "Giá bán lẻ",
-                                Nguontt = "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định",
-                                Trangthai = "CXD",
-                                Created_at = DateTime.Now,
-                                Updated_at = DateTime.Now,
-                            });
-                        }
-                        _db.GiaHhDvkCt.AddRange(chitiet);
-                        _db.SaveChanges();
+                            Manhom = item.Manhom,
+                            Mahs = model.Mahs,
+                            Mahhdv = item.Mahhdv,
+                            Loaigia = "Giá bán lẻ",
+                            Nguontt = "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định",
+                            Trangthai = "CXD",
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        });
                     }
 
+                    //Tìm hồ sơ kê khai liền kề
+                    string thangBcLk = int.Parse(ThangBc) == 1 ? "12" : (int.Parse(ThangBc) - 1).ToString();
+                    string namBcLk = thangBcLk == "12" ? (int.Parse(NamBc) - 1).ToString() : NamBc;
 
+                    var modellk = _db.GiaHhDvk.Where(t => t.Matt == MattBc && t.Madv == MadvBc && t.Trangthai == "HT" && t.Thang == thangBcLk && t.Nam == namBcLk).FirstOrDefault();
+                    if (modellk != null)
+                    {
+                        model.Soqdlk = modellk.Soqd;
+                        model.Thoidiemlk = modellk.Thoidiem;
+                        var modellkct = _db.GiaHhDvkCt.Where(t => t.Mahs == modellk.Mahs).ToList();
+                        //Gán thông tin giá vào hồ sơ chi tiết
+                        foreach ( var t in chitiet) { 
+                            var lk = modellkct.FirstOrDefault(x=>x.Mahhdv == t.Mahhdv);
+                            if (lk != null)
+                            {
+                                t.Gia=lk.Gia;
+                                t.Gialk=lk.Gia;
+                            }
+                        }                       
+                    }
+                    //Lưu thông tin vào db
+                    _db.GiaHhDvkCt.AddRange(chitiet);
+                    _db.SaveChanges();
 
                     var modelct_join = (from ct in chitiet
                                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
@@ -259,42 +259,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     model.GiaHhDvkCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
 
-                    var modellk = _db.GiaHhDvk.Where(t => t.Matt == MattBc && t.Madv == MadvBc && t.Trangthai == "HT").OrderByDescending(t => t.Thoidiem).FirstOrDefault();
-                    if (modellk != null)
-                    {
-                        model.Soqdlk = modellk.Soqd;
-                        model.Thoidiemlk = modellk.Thoidiem;
-                        var modellkct = _db.GiaHhDvkCt.Where(t => t.Mahs == modellk.Mahs).ToList();
-                        var modellkct_join = (from ct in modellkct
-                                              join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
-                                              select new GiaHhDvkCt
-                                              {
-                                                  Id = ct.Id,
-                                                  Manhom = ct.Manhom,
-                                                  Mahhdv = ct.Mahhdv,
-                                                  Mahs = ct.Mahs,
-                                                  Gia = ct.Gia,
-                                                  Gialk = ct.Gia,
-                                                  Loaigia = ct.Loaigia,
-                                                  Nguontt = ct.Nguontt,
-                                                  Ghichu = ct.Ghichu,
-                                                  Created_at = ct.Created_at,
-                                                  Updated_at = ct.Updated_at,
-                                                  Tenhhdv = dm.Tenhhdv,
-                                                  Dacdiemkt = dm.Dacdiemkt,
-                                                  Dvt = dm.Dvt,
-                                              }).ToList();
 
-                        model.GiaHhDvkCt = modellkct_join.ToList();
-                    }
-
-                    ViewData["MadvBc"] = MadvBc;
-                    ViewData["MattBc"] = MattBc;
-                    ViewData["MadiabanBc"] = MadiabanBc;
-                    ViewData["ThangBc"] = ThangBc;
-                    ViewData["NamBc"] = NamBc;
-                    ViewData["Mahs"] = model.Mahs;
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
@@ -316,25 +283,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
-                {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
+                {                   
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                     {
@@ -351,7 +305,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Ghichu = request.Ghichu,
                         Trangthai = "CHT",
                         Congbo = "CHUACONGBO",
-                        Ipf1 = request.Ipf1,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -544,6 +497,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                         }).ToList();
 
                     ViewData["Nhomhh"] = nhomhh;
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ chi tiết";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_tt";
@@ -732,6 +686,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Title"] = "Tìm kiếm thông tin giá hàng hóa dịch vụ chi tiết";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_tk";
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TimKiem/Result.cshtml", model);
 
                 }
@@ -800,14 +755,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ trước</label>";
-                result += "<input type='text' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ này</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -878,6 +833,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                          });
 
             int record = 1;
+            var dmDVT = _db.DmDvt;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
             result += "<thead>";
@@ -901,7 +857,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<td class='text-center'>" + item.Mahhdv + "</td>";
                 result += "<td class='text-left active'>" + item.Tenhhdv + "</td>";
                 result += "<td class='text-left'>" + item.Dacdiemkt + "</td>";
-                result += "<td class='text-center'>" + item.Dvt + "</td>";
+                result += "<td class='text-center'>" + dmDVT.FirstOrDefault(x => x.Madvt == item.Dvt)?.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gialk) + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
                 result += "<td>";

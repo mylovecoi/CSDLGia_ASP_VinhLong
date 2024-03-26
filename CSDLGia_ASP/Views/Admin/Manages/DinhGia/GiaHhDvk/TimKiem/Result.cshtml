@@ -1,5 +1,6 @@
 ﻿@{
     int record_id = 1;
+    var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkCt>
 
@@ -54,6 +55,7 @@
                     <th style="text-align:center">Đơn vị tính</th>
                     <th style="text-align:center">Giá kỳ trước</th>
                     <th style="text-align:center">Giá kỳ này</th>
+                    <th style="text-align:center" width="5%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,9 +71,15 @@
                             <td style="text-align: center">@item.Mahhdv</td>
                             <td class="text-left active" style="font-weight: bold">@item.Tenhhdv</td>
                             <td>@item.Dacdiemkt</td>
-                            <td style="text-align: center">@item.Dvt</td>
+                            <td style="text-align: center">@dmdvt.FirstOrDefault(x => x.Madvt == item.Dvt)?.Dvt</td>
                             <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Gialk)</td>
                             <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Gia)</td>
+                            <td>
+                                <a asp-controller="GiaHhDvk" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 }
