@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Migrations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -22,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Mota,  string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, 
+        public JsonResult Store(string MaDv,string Mahs, string Mota,  string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, 
             Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
         {
             // Tạo 1 bản nghi mới trang thái CXD nếu thêm chi tiết xong quay lại
@@ -47,6 +48,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
+                MaDv= MaDv,
             };
 
             _db.GiaDatDiaBanCt.Add(model);
@@ -340,8 +342,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         public string GetData(string Mahs)
         {
-            var model = _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList().OrderBy(x => x.Sapxep);
-            int record = 1;
+            var model = _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList().OrderBy(x => x.Sapxep);           
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
             result += "<thead>";

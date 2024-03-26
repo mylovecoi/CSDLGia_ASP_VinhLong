@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 {
     public class GiaHhDvCnNhomController : Controller
     {
@@ -16,19 +16,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
         {
             _db = db;
         }
-       
+
+        [Route("GiaHhDvCnNhom")]
         [HttpGet]
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Index"))
                 {
-                    var model = _db.GiaSpDvToiDaNhom.ToList();
-                    ViewData["Title"] = "Nhóm sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_spdvtoida";
-                    ViewData["MenuLv2"] = "menu_spdvtoida_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/DanhMuc/Nhom/Index.cshtml", model);
+                    var model = _db.GiaHhDvCnNhom.ToList();
+                    ViewData["Title"] = "Nhóm sản phẩm hàng hoá chuyên ngành";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else
                 {
@@ -42,15 +44,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("GiaSpDvToiDaDm/Store")]
+        [Route("GiaHhDvCnNhom/Store")]
         [HttpPost]
         public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Create"))
                 {
-                    var request = new GiaSpDvToiDaNhom
+                    var request = new GiaHhDvCnNhom
                     {
                         Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
                         Tennhom = Tennhom,
@@ -58,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                    _db.GiaSpDvToiDaNhom.Add(request);
+                    _db.GiaHhDvCnNhom.Add(request);
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Thêm mới thành công!" };
@@ -77,15 +79,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("GiaSpDvToiDaDm/Edit")]
+        [Route("GiaHhDvCnNhom/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Edit"))
                 {
-                    var model = _db.GiaSpDvToiDaNhom.FirstOrDefault(p => p.Id == Id);
+                    var model = _db.GiaHhDvCnNhom.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
@@ -129,19 +131,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("GiaSpDvToiDaDm/Update")]
+        [Route("GiaHhDvCnNhom/Update")]
         [HttpPost]
         public JsonResult Update(int Id, string Tennhom, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Edit"))
                 {
-                    var model = _db.GiaSpDvToiDaNhom.FirstOrDefault(t => t.Id == Id);
+                    var model = _db.GiaHhDvCnNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
                     model.Theodoi = Theodoi;
                     model.Updated_at = DateTime.Now;
-                    _db.GiaSpDvToiDaNhom.Update(model);
+                    _db.GiaHhDvCnNhom.Update(model);
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
@@ -160,20 +162,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("GiaSpDvToiDaDm/Delete")]
+        [Route("GiaHhDvCnNhom/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Delete"))
                 {
-                    var model = _db.GiaSpDvToiDaNhom.FirstOrDefault(p => p.Id == id_delete);
-                    _db.GiaSpDvToiDaNhom.Remove(model);
+                    var model = _db.GiaHhDvCnNhom.FirstOrDefault(p => p.Id == id_delete);
+                    _db.GiaHhDvCnNhom.Remove(model);
                     _db.SaveChanges();
 
-                    var model_ct = _db.GiaSpDvToiDaDm.Where(p => p.Manhom == model.Manhom).ToList();
-                    _db.GiaSpDvToiDaDm.RemoveRange(model_ct);
+                    var model_ct = _db.GiaHhDvCnDm.Where(p => p.Manhom == model.Manhom).ToList();
+                    _db.GiaHhDvCnDm.RemoveRange(model_ct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaSpDvToiDaNhom");
