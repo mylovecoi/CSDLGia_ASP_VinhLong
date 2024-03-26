@@ -38,46 +38,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 10000,
+                        Madv = Madv
                     };
 
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-                    ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá thuê mua nhà xã hội";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Excels/Excel.cshtml", model);
 
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        [Route("GiathuemuanhaxhExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanhaxh.thongtin", "Create"))
-                {
-
-                    ViewData["Title"] = "Thông tin hồ sơ giá thuê mua nhà xã hội";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmnxh";
-                    ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == Mahs);
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Excels/Create.cshtml");
                 }
                 else
                 {
@@ -96,7 +65,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<GiaThueMuaNhaXhCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -140,7 +108,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                 }
                 _db.GiaThueMuaNhaXhCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiathuemuanhaxhExcel", new { Madv = Madv, Mahs = Mahs });
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
+                {
+                    Madv = Madv,
+                    Thoidiem = DateTime.Now,
+                    Mahs = Mahs
+                };
+                model.GiaThueMuaNhaXhCt = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == Mahs).ToList();
+
+
+                ViewData["DmDvt"] = _db.DmDvt.ToList();
+                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                ViewData["Dmtmnxh"] = _db.GiaThueMuaNhaXhDm.ToList();
+                ViewData["Title"] = "Thêm mới giá thuê mua nhà xã hội";
+                ViewData["MenuLv1"] = "menu_dg";
+                ViewData["MenuLv2"] = "menu_dgtmnxh";
+                ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Create.cshtml", model);
             }
             else
             {

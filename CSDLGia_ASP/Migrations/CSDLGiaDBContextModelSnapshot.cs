@@ -9050,6 +9050,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Hdthue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
