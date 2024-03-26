@@ -481,12 +481,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     {
                         model = model.Where(t => t.Ptcp.ToLower().Contains(Ptcp.ToLower()));
                     }
-
-
-
-
-
-
                     ViewData["GiaPhiLePhiNhom"] = _db.GiaPhiLePhiNhom;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
