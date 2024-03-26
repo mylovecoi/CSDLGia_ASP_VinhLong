@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dmnhomhh = (IEnumerable<DmNhomHh>)ViewData["DmNhomHh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia>
 
@@ -44,10 +45,10 @@
             <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="ThamDinhGia"
-               asp-action="Create" asp-route-Madv="@ViewData["Madv"]">
+                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
-                </a>
+                </button>
+                <span>&ensp;</span>
                 <a class="btn btn-success font-weight-bolder" asp-controller="ThamDinhGiaExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
@@ -117,7 +118,7 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td>@item.Hosotdgia</td>
-                            <td>@item.Tttstd</td>
+                            <td>@item.Tennhomhh</td>
                             <td>@item.Dvyeucau</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
@@ -179,6 +180,53 @@
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thêm mới hồ sơ giá đất cụ thể
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="ThamDinhGia" asp-action="Create" method="get" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Phân loại hồ sơ</b></label>
+                                <select id="Phanloai" name="Phanloai" class="form-control">
+                                    <option value="Hồ sơ thẩm định giá tài sản">Hồ sơ thẩm định giá tài sản</option>
+                                    <option value="Hồ sơ thẩm định giá đất">Hồ sơ thẩm định giá đất</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Nhóm hàng hóa thẩm định</b></label>
+                                <select id="Tttstd" name="Tttstd" class="form-control">
+                                    @foreach(var item in dmnhomhh)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

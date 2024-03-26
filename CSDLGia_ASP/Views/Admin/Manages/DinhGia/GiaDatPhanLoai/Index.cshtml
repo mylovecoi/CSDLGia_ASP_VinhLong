@@ -46,10 +46,6 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Create"))
             {
-                @* <a class="btn btn-primary font-weight-bolder" asp-controller="GiaDatPl" asp-action="Create"
-            asp-route-Madv="@ViewData["Madv"]">
-            <i class="la la-plus"></i>Thêm mới
-            </a> *@
                 <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
                 </button>

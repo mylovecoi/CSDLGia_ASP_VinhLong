@@ -26,6 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                 {
                     var model = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["SapXep"] = model.Any() ? model.Max(t => t.SapXep) + 1 : 1;
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -46,7 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDm/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
+        public JsonResult Store(string Manhom, string Tennhom, string Theodoi, int SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -54,7 +55,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var request = new GiaSpDvCongIchNhom
                     {
-                        Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                        SapXep = SapXep,
+                        Manhom = Manhom,
                         Tennhom = Tennhom,
                         Theodoi = Theodoi,
                         Created_at = DateTime.Now,
@@ -91,21 +93,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
-                        result += "<div class='col-xl-12'>";
+                        result += "<div class='col-xl-3'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Sắp xếp</label>";
+                        result += "<input type='number' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.SapXep + "'/>";
+                        result += "</div>";
+                        result += "</div>";                       
+                        result += "<div class='col-xl-9'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên nhóm</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Trạng thái</label>";
-                        result += "<select id='theodoi_edit' name='theodoi_edit' class='form-control'>";
-                        result += "<option value='TD' " + ((string)model.Theodoi == "TD" ? "selected" : "") + ">Theo dõi</option>";
-                        result += "<option value='KTD' " + ((string)model.Theodoi == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
-                        result += "</select>";
-                        result += "</div>";
-                        result += "</div>";
+                        result += "</div>";                      
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -133,7 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, int SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -141,7 +140,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var model = _db.GiaSpDvCongIchNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
-                    model.Theodoi = Theodoi;
+                    model.SapXep = SapXep;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCongIchNhom.Update(model);
                     _db.SaveChanges();

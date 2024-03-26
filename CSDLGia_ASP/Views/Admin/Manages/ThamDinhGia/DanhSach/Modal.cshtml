@@ -55,11 +55,10 @@
                             <input type="text" id="xuatxu_create" name="xuatxu_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-2">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính</label>
                             <select id="dvt_create" name="dvt_create" class="form-control">
-                                <option value=""></option>
                                 @foreach (var item in dvt)
                                 {
                                     <option value="@item.Dvt">@item.Dvt</option>
@@ -67,14 +66,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-1">
+                    @* <div class="col-xl-1">
                         <div class="form-group fv-plugins-icon-container">
                             <label>&nbsp;&nbsp;&nbsp;</label><br />
                             <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
                                 <i class="la la-plus"></i>
                             </button>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Số lượng</label>
