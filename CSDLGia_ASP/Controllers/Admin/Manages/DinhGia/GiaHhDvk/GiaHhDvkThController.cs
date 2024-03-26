@@ -172,7 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
                     //Đẩy dữ liệu qua view
                     var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x=>x.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -255,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var modelCt = _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs);
 
                     var modelct_join = (from ct in modelCt
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -484,8 +484,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         [HttpPost]
         public JsonResult EditCt(int Id)
         {
+            var chiTiet = _db.GiaHhDvkThCt.FirstOrDefault(t => t.Id == Id);
+            var hoSo = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
+
             var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Id == Id)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkThCt
                          {
                              Id = ct.Id,
@@ -598,7 +601,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaHhDvkThCt = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -639,8 +642,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         public string GetDataCt(string Mahs)
         {
+            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv                         
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv                         
                          select new GiaHhDvkThCt
                          {
                              Id = ct.Id,

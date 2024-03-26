@@ -155,6 +155,9 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="DvKhamChuaBenh" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -304,7 +307,6 @@
         document.getElementById("mahs_complete").value = mahs;
     }
 
-
-
 </script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/ThongTinGiayTo/Show.cshtml")
 
