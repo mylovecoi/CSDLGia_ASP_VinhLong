@@ -674,16 +674,35 @@ namespace CSDLGia_ASP.Helper
             }
         }
 
-        public static string ConvertDbToStr(double db)
+        public static string ConvertDbToStr(double number)
         {
-            if (db == 0)
+            if (number == 0)
             {
                 return "";
             }
             else
             {
-                string str = String.Format("{0:n0}", db);
-                return str;
+                //string str = String.Format("{0:n0}", db);
+                //return str;
+                if (number == Math.Floor(number))
+                {
+                    // Nếu là số nguyên, định dạng theo dạng #.###
+                    return string.Format("{0:n0}", number);
+                }
+                else
+                {
+                    // Nếu không phải là số nguyên, định dạng theo dạng #,##
+                    string formatted = number.ToString("#,##0.00");
+                    if (formatted.EndsWith(".00"))
+                    {
+                        formatted = formatted.Substring(0, formatted.Length - 3);
+                    }
+                    if (formatted.EndsWith("0"))
+                    {
+                        formatted = formatted.Substring(0, formatted.Length - 1);
+                    }
+                    return formatted;
+                }
             }
         }
 
@@ -750,11 +769,29 @@ namespace CSDLGia_ASP.Helper
             double val = 0;
             if (!string.IsNullOrEmpty(str))
             {
+                //string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                //if (double.TryParse(numericString, out double result))
+                //{
+                //    val = result;
+                //}
+
                 string numericString = Regex.Replace(str, @"[^\d,.]", "");
-                if (double.TryParse(numericString, out double result))
+
+                // Lấy thông tin về cài đặt vùng của hệ thống
+                CultureInfo culture = CultureInfo.CurrentCulture;
+
+                // Chỉ định định dạng số cho việc chuyển đổi
+                NumberFormatInfo numberFormat = new NumberFormatInfo();
+                numberFormat.NumberDecimalSeparator = culture.NumberFormat.NumberDecimalSeparator;
+                numberFormat.NumberGroupSeparator = culture.NumberFormat.NumberGroupSeparator;
+
+                // Kiểm tra xem chuỗi sau khi loại bỏ các ký tự không phải số có thể được chuyển đổi thành double không
+                if (double.TryParse(numericString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, numberFormat, out double result))
                 {
-                    val = result;
+                    val= result;
                 }
+
+
             }
            return val;
         }              

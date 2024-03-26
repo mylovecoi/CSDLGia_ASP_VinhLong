@@ -1,8 +1,6 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaRung
-@* @model CSDLGia_ASP.Models.Manages.DinhGia.GiaRung *@
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var mahs = ViewData["Mahs"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -17,7 +15,7 @@
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
         $(document).ready(function () {
-            TableManaged4.init();
+            TableManagedClass.init();
         });
     </script>
 }
@@ -25,86 +23,29 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hồ sơ giá<small>&nbsp;rừng</small>
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Chỉnh sửa hồ sơ giá rừng
+                </span>
             </h3>
         </div>
     </div>
     <!--begin::Form-->
     <form asp-controller="Giarung" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_rung_update">
-        <div class="card-body">
-            <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
-            <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-            </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Thời điểm*</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Nội dung hồ sơ</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf1))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaRung/@Model.Ipf1" target="_blank"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File đính kèm hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-                </div>
-            </div>
+        <div class="card-body">           
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaRung/Detail.cshtml")
-
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="Giarung" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateRung()"><i class="la la-check"></i>Cập nhật</button>
+            <button type="submit" class="btn btn-primary mr-2"<i class="la la-check"></i>Cập nhật</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
-    function ValidateRung() {
-        if ($('#Soqd').val().trim() == '') {
-            toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
-            } else {
-                if ($('#Thoidiem').val().trim() == '') {
-                    toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
-                } else {
-                    document.getElementById("frm_rung_update").submit();
-                }
-            }
-        }
-    }
-</script>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -29,5 +29,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Style { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        public string MaDv { get; set; }
     }
 }

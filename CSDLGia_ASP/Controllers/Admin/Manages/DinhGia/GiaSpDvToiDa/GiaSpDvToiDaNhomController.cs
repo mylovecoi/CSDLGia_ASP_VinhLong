@@ -8,16 +8,16 @@ using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 {
-    public class GiaSpDvToiDaNhomController : Controller
+    public class GiaHhDvCnNhomController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaSpDvToiDaNhomController(CSDLGiaDBContext db)
+        public GiaHhDvCnNhomController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("GiaSpDvToiDaDm")]
+        [Route("GiaSpDvToiDaNhom")]
         [HttpGet]
         public IActionResult Index()
         {

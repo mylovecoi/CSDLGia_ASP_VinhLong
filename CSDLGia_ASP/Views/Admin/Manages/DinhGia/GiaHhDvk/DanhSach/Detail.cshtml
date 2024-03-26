@@ -2,6 +2,7 @@
 
 @{
     int record_id = 1;
+    var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin chi tiết</label>
@@ -31,7 +32,10 @@
                             <td class="text-center">@item.Mahhdv</td>
                             <td class="text-left active">@item.Tenhhdv</td>
                             <td class="text-left">@item.Dacdiemkt</td>
-                            <td class="text-center">@item.Dvt</td>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(item.Dvt))
+                                    @dmdvt.FirstOrDefault(x => x.Madvt == item.Dvt)?.Dvt
+                            </td>
                             <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gialk)</td>
                             <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
                             <td>
@@ -93,8 +97,8 @@
     }
 
     function SetUpdate() {
-        var gialk = $('#gialk_edit').val().replace(',', '');
-        var gia = $('#gia_edit').val().replace(',', '');
+        var gialk = $('#gialk_edit').val().replace(/\./g, ',');
+        var gia = $('#gia_edit').val().replace(/\./g, ',');      
         $.ajax({
             url: '/GiaHhDvkCt/Update',
             type: 'POST',

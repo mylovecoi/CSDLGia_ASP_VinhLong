@@ -523,14 +523,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             return madv;
         }
 
-        public IActionResult TongHop()
+        [HttpPost("HoanThanhDinhGiaSpDvCongIch/TongHop")]
+        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
                 {
 
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/HoanThanh/Tonghop.cshtml");
+                    var model = _db.GiaSpDvCongIch.Where(t=>t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    List<string> list_madv = model.Select(t=>t.Madv).ToList();
+                    var model_ct = _db.GiaSpDvCongIchCt.Where(t => list_mahs.Contains(t.Mahs));
+                    var model_dv = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom;
+                    ViewData["HoSoCt"] = model_ct;
+                    ViewData["DonVis"] = model_dv;
+                    ViewData["Titile"] = "Tổng hợp giá sản phẩm dịch vụ công ích";
+
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else

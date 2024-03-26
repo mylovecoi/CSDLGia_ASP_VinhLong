@@ -1,0 +1,69 @@
+﻿
+@{
+    DateTime currentDate = DateTime.Today;
+    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
+    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
+}
+
+<!--Tổng hợp Modal-->
+<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Tổng hợp thông tin hoàn thành hồ sơ giá rừng
+                        </span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form asp-controller="GiarungHt" asp-action="TongHop" method="post" target="_blank" id="frm_TongHop" name="frm_TongHop">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Ngày từ </label>
+                                    <input type="date" class="form-control" id="ngaytu" name="ngaytu" value="@FromDate" />
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label>Ngày đến: </label>
+                                    <input type="date" class="form-control" id="ngayden" name="ngayden" value="@ToDate" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                        <button type="button" class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Tổng hợp</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+<script>
+    function CreateTongHop() {
+        var fromDate = document.getElementById("ngaytu").value;
+        var toDate = document.getElementById("ngayden").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var form = document.getElementById("frm_TongHop");
+                form.submit();
+                location.reload();
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+    }
+</script>

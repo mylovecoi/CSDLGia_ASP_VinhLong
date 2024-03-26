@@ -1,7 +1,8 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch
+﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
+
 @{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
+    var GiaSpDvCongIchNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchNhom>)ViewData["GiaSpDvCongIchNhom"];
+
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -21,8 +22,7 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaSpDvCongIchExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden asp-for="Madv">
-        <input hidden asp-for="Mahs">
+        <input hidden asp-for="MaDv">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -32,81 +32,59 @@
                 </a>
             </div>
             <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-            </div>
-            <div class="row">
-
-                <div class="col-xl-12">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label>Số quyết định</label>
-                        <input type="text" class="form-control" id="soqd" name="soqd" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
-                    </div>
-                </div>
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung chi tiết</label>
-                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
+                        <label>Phân loại hồ sơ</label>
+                        <select asp-for="MaNhom" class="form-control">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var item in GiaSpDvCongIchNhom)
+                            {
+                                <option value="@item.Manhom">@item.Tennhom</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
+            </div>
             <div class="row">
-                <div class="col-xl-2">
+                <div class="col-xl-3">
                     <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận từ dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStart" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận đến dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStop" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>File dữ liệu</label> <br />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
+                        <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
-                </div>
-                <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Sheet*</label>
-                            <input type="number" class="form-control" asp-for="Sheet" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Nhận từ dòng*</label>
-                            <input type="number" class="form-control" asp-for="LineStart" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Nhận đến dòng*</label>
-                            <input type="number" class="form-control" asp-for="LineStop" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>File dữ liệu</label> <br />
-                            <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
-                            <span asp-validation-for="FormFile" class="form-text text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer" style="text-align:center">
-                <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
-                    <i class="la la-reply"></i>Quay lại
-                </a>&ensp;
-                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-                <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
-            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="GiaSpDvCongIch" asp-action="Index" asp-route-Madv="@Model.MaDv" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
         </div>
     </form>
     <!--end::Form-->

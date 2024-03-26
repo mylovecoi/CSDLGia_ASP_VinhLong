@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var HoSoCt = (IEnumerable<GiaRungCt>)ViewData["HoSoCt"];
+    var DanhMuc = (IEnumerable<GiaRungDm>)ViewData["DanhMuc"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số:......</td>
+        <td style="text-align: right; vertical-align: top"></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
+    TỔNG HỢP THÔNG TIN HỒ SƠ GIÁ RỪNG
+</p>
+<p style="text-align: center; font-size: 16px; font-style:italic">
+    @ViewData["ThoiDiemKetXuat"]
+</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th rowspan="3" width="2%" style="text-align:center">TT</th>
+            <th rowspan="3" style="text-align:center">Mô tả</th>
+            <th colspan="6" width="30%" style="text-align:center">Giá rừng</th>
+            <th colspan="2" width="10%" rowspan="2" style="text-align:center">Giá cho thuê quyền sử dụng rừng/năm</th>
+            <th colspan="6" width="30%" style="text-align:center">Giá bồi thường thiệt hại đối với rừng tự nhiên</th>
+        </tr>
+        <tr>
+            <th colspan="2" style="text-align:center">Đặc dụng</th>
+            <th colspan="2" style="text-align:center">Phòng hộ</th>
+            <th colspan="2" style="text-align:center">Sản xuất</th>
+            <th colspan="2" style="text-align:center">Đặc dụng</th>
+            <th colspan="2" style="text-align:center">Phòng hộ</th>
+            <th colspan="2" style="text-align:center">Sản xuất</th>
+        </tr>
+        <tr>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+            <th style="text-align:center">Tối thiểu</th>
+            <th style="text-align:center">Tối đa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donvi in DonVis)
+        {
+            <tr>
+                <td></td>
+                <td colspan="15" style="font-weight:bold; text-transform:uppercase">@donvi.TenDv</td>
+            </tr>
+            var hosoInDV = Model.Where(t => t.Madv == donvi.MaDv);
+            foreach (var hoso in hosoInDV)
+            {
+                <tr>
+                    <td></td>
+                    <td colspan="15">Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)</td>
+                </tr>
+                foreach (var nhom in DanhMuc)
+                {
+
+                    var hosoct = HoSoCt.Where(t => t.Mahs == hoso.Mahs && t.Manhom == nhom.Manhom);
+                    if (hosoct.Any())
+                    {
+                        <tr>
+                            <td></td>
+                            <td colspan="15" style="text-align:center; font-weight:bold">@nhom.Tennhom</td>
+                        </tr>
+                        foreach (var item in hosoct.OrderBy(t => t.STTSapXep))
+                        {
+                            <tr>
+                                <td style="text-align:center">@item.STTHienThi</td>
+                                <td style="text-align:left">@item.MoTa</td>
+                                <td style="text-align:center">@item.GiaRung1</td>
+                                <td style="text-align:center">@item.GiaRung2</td>
+                                <td style="text-align:center">@item.GiaRung3</td>
+                                <td style="text-align:center">@item.GiaRung4</td>
+                                <td style="text-align:center">@item.GiaRung5</td>
+                                <td style="text-align:center">@item.GiaRung6</td>
+                                <td style="text-align:center">@item.GiaChoThue1</td>
+                                <td style="text-align:center">@item.GiaChoThue2</td>
+                                <td style="text-align:center">@item.GiaBoiThuong1</td>
+                                <td style="text-align:center">@item.GiaBoiThuong2</td>
+                                <td style="text-align:center">@item.GiaBoiThuong3</td>
+                                <td style="text-align:center">@item.GiaBoiThuong4</td>
+                                <td style="text-align:center">@item.GiaBoiThuong5</td>
+                                <td style="text-align:center">@item.GiaBoiThuong6</td>
+                            </tr>
+
+                        }
+                    }
+                }
+            }
+        }
+
+    </tbody>
+</table>

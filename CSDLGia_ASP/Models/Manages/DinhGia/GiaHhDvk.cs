@@ -78,5 +78,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public string Level { get; set; }
 
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+
     }
 }

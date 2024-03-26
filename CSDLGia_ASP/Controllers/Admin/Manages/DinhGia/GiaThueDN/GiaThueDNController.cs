@@ -257,8 +257,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                    _db.GiaThueMatDatMatNuoc.Add(model);
-                    _db.SaveChanges();
 
                     // Xử lý phần lịch sử hồ sơ 
 
@@ -277,16 +275,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == request.Mahs);
-                    foreach(var ct in modelct)
+                    if (modelct.Any())
                     {
-                        ct.Trangthai = "XD";
+                        foreach (var ct in modelct)
+                        {
+                            ct.Trangthai = "XD";
+                        }
+                        _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);    
                     }
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
-                    foreach(var file in model_file)
+                    if (model_file.Any())
                     {
-                        file.Status = "XD";
+                        foreach (var file in model_file)
+                        {
+                            file.Status = "XD";
+                        }
+                        _db.ThongTinGiayTo.UpdateRange(model_file);
                     }
-                    _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
+                    _db.GiaThueMatDatMatNuoc.Add(model);
                     _db.SaveChanges();
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -515,7 +521,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     if (!string.IsNullOrEmpty(LoaiDat))
                     {
                         model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat.ToLower()));
-                    }
+                    }                  
 
                     ViewData["Madv"] = Madv;
                     ViewData["Manhom"] = Manhom;

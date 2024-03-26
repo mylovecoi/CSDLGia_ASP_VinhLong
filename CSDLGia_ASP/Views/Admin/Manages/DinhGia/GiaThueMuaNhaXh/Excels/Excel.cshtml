@@ -31,7 +31,7 @@
                     <span style="font-weight:bold;">Link tải file mẫu FileExcelGiathuemuanhaxh.xlsx</span>
                 </a>
             </div>
-            <div class="mb-3 font-weight-bold font-size-lg">
+            @* <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
             <div class="row">
@@ -96,7 +96,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> *@
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
@@ -123,14 +123,14 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="GiaDatPl" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="GiaThueMuaNhaXaHoi" asp-action="Index" asp-route-Madv="@Model.Madv" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
