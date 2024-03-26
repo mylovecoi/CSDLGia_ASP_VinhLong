@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo giá giáo dục đào tạo";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaSpDvCuThe.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
@@ -73,7 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Soqd = hoso.Soqd,
                                  });
 
-                    ViewData["Title"] = "Báo cáo giá giáo dục đào tạo";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
                     ViewData["NgayTu"] = tungay;
@@ -143,7 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá giáo dục đào tạo";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/BcCT.cshtml", model);
                 }
                 else

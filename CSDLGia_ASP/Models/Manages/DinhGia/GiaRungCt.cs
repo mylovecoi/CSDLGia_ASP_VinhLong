@@ -68,8 +68,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double GiaBoiThuong6 { get; set; }
 
         [NotMapped]
-        public string Tendv { get; set; }
-        [NotMapped]
         public string Tennhom { get; set; }
       
         [NotMapped]
