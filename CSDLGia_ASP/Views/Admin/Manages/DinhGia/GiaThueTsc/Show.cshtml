@@ -40,15 +40,16 @@
     
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>
-                <th>Tên tài sản</th>
-                <td>Đơn vị thuê</td>
-                <td>Hợp đồng số</td>
-                <td>Thời hạn</td>
-                <td>Đơn vị <br /> tính</td>
-                <th>Đơn giá</th>
-                <td>Thành tiền</td>
-
+            <th style="text-align:center" width="2%">STT</th>
+            <th style="text-align:center" width="10%">Mã tài sản</th>
+            <th style="text-align:center">Tên tài sản</th>
+            <td style="text-align:center">Đơn vị thuê</td>
+            <td style="text-align:center" width="5%">Hợp đồng số</td>
+            <td style="text-align:center" width="5%">Thời hạn</td>
+            <td style="text-align:center" width="5%">Từ ngày</td>
+            <td style="text-align:center" width="5%">Đơn vị tính</td>
+            <th style="text-align:center" width="10%">Đơn giá</th>
+            <td style="text-align:center" width="10%">Thành tiền</td>
             </tr>
         </thead>
         <tbody>
@@ -58,29 +59,18 @@
                 {
                     @foreach (var item in Model.GiaThueTaiSanCongCt)
                     {
-                        <tr>
-                            <td style="text-align:center">@(record_id++)</td>
-                            <td style="text-align:center">
-                                @if (GiaThueTaiSanCongDm != null)
-                                {
-                                    @foreach (var dm in GiaThueTaiSanCongDm)
-                                    {
-                                        @if (item.Mataisan == dm.Mataisan)
-                                        {
-                                            <span>@dm.Tentaisan</span>
-                                        }
-                                    }
-                                }
-                            </td>
-
-                            <td style="text-align:center"> @item.Dvthue</td>
-                            <td style="text-align:center">@item.Hdthue</td>
-                            <td style="text-align:center">@item.Ththue</td>
-                            <td style="text-align:center">@item.Dvt</td>
-                            <td style="text-align:center">@item.Dongiathue</td>
-                            <td style="text-align:center">@item.Sotienthuenam</td>
-
-                        </tr>
+                    <tr>
+                        <td style="text-align:center">@(record_id++)</td>
+                        <td style="text-align:center">@item.Mataisan</td>
+                        <td style="text-align:left">@item.Tentaisan</td>
+                        <td style="text-align:left"> @item.Dvthue</td>
+                        <td style="text-align:center">@item.Hdthue</td>
+                        <td style="text-align:center">@item.Ththue</td>
+                        <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thuetungay)</td>
+                        <td style="text-align:center">@item.Dvt</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongiathue)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Sotienthuenam)</td>                       
+                    </tr>
                     }
 
                 }

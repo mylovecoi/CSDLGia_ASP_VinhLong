@@ -2,10 +2,17 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 {
@@ -48,7 +55,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             }
         }
 
-
         [Route("DanhMucThueTsc/Store")]
         [HttpPost]
         public JsonResult Store(GiaThueTaiSanCongDm request)
@@ -58,7 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             {
                 Madv = request.Madv,
                 Tentaisan = request.Tentaisan,
-                Mataisan = DateTime.Now.ToString("yyMMddssmmHH"),
+                Mataisan = request.Mataisan,
                 Mota = request.Mota,
                 Dientich = request.Dientich,
                 Dvt = request.Dvt,
@@ -70,21 +76,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             _db.GiaThueTaiSanCongDm.Add(model);
             _db.SaveChanges();
 
-            if (request.Dvt != null)
-            {
-                var dvt = _db.DmDvt.Where(t => t.Dvt == request.Dvt).ToList();
-                if (dvt.Count == 0)
-                {
-                    var new_dvt = new DmDvt
-                    {
-                        Dvt = request.Dvt,
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-                    _db.DmDvt.AddRange(new_dvt);
-                    _db.SaveChanges();
-                }
-            }
+            //if (request.Dvt != null)
+            //{
+            //    var dvt = _db.DmDvt.Where(t => t.Dvt == request.Dvt).ToList();
+            //    if (dvt.Count == 0)
+            //    {
+            //        var new_dvt = new DmDvt
+            //        {
+            //            Dvt = request.Dvt,
+            //            Created_at = DateTime.Now,
+            //            Updated_at = DateTime.Now,
+            //        };
+            //        _db.DmDvt.AddRange(new_dvt);
+            //        _db.SaveChanges();
+            //    }
+            //}
             var data = new { status = "success" };
             return Json(data);
         }
@@ -101,7 +107,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             return Json(data);
         }
 
-
         [Route("DanhMucThueTsc/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
@@ -114,15 +119,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<div class='row'>";
                 result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
+                //result += "<div class='col-xl-12'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label><b>Tên sản phẩm , dịch vụ*</b></label>";
+                //result += "<select id = 'Madv_edit' name = 'Madv_edit'  class='form-control'>";
+                //foreach (var item in DsDonVi)
+                //{
+                //    result += "<option value ='" + @item.MaDv + "'>" + @item.TenDv + "</option>";
+                //}
+                //result += "</select>";
+                //result += "</div></div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Tên sản phẩm , dịch vụ*</b></label>";
-                result += "<select id = 'Madv_edit' name = 'Madv_edit'  class='form-control'>";
-                foreach (var item in DsDonVi)
-                {
-                    result += "<option value ='" + @item.MaDv + "'>" + @item.TenDv + "</option>";
-                }
-                result += "</select>";
+                result += "<label><b>Mã sản phẩm , dịch vụ*</b></label>";
+                result += "<input type='text' id='Mataisan_edit' name='Mataisan_edit' value='" + model.Mataisan + "' class='form-control'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -134,33 +144,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 result += "<label><b>Mô tả*</b></label>";
                 result += "<input type='text' id='Mota_edit' name='Mota_edit' value='" + model.Mota + "' class='form-control'/>";
                 result += "</div></div>";
-                result += "<div class='col-xl-12'>";
+                result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Diện tích*</b></label>";
                 result += "<input type='text' id='Dientich_edit' name='Dientich_edit' value='" + model.Dientich + "' class='form-control'/>";
                 result += "</div></div>";
-                result += "<div class='col-xl-5'>";
+                result += "<div class='col-xl-3'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label class='form-control-label'><b>Đơn vị tính*</b></label>";
-                result += "<select type='text' id='Dvt_edit' name='Dvt_edit' class='form-control'>";
-                result += " <option value = ''> ---Select--- </ option >";
-                foreach (var item in DmDvt)
-                {
-                    result += " <option value = '" + item.Dvt + "' " + (item.Dvt == model.Dvt ? "selected" : "") + ">" + item.Dvt + "</ option >";
-                }
-                result += "</select>";
-                result += "</div>";
-                result += " <div class='col-md-1' style='padding-left: 0px'>";
-                result += " <label class='control-label'>&nbsp;&nbsp;&nbsp;</label>";
-                result += " <button type ='button' class='btn btn-default' style='border:rgba(0, 0, 0, 0.1) solid 0.05px' data-target='#Dvt_edit_Modal' data-toggle='modal'>";
-                result += " <i class='fa fa-plus'></i>";
-                result += " </button>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
+                result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control'/>";
+                result += "</div></div>";
+                result += "";
+                result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá trị*</b></label>";
                 result += "<input type='text' id='Giatri_edit' name='Giatri_edit' value='" + model.Giatri + "' class='form-control'/>";
                 result += "</div></div>";
-                result += "<div class='col-xl-6'>";
+                result += "<div class='col-xl-3'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Hiện trạng*</b></label>";
                 result += "<select id = 'Hientrang_edit' name = 'Hientrang_edit'  class='form-control'>";
@@ -184,7 +184,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         public JsonResult Update(GiaThueTaiSanCongDm request)
         {
             var model = _db.GiaThueTaiSanCongDm.FirstOrDefault(t => t.Id == request.Id);
-            model.Madv = request.Madv;
+            //model.Madv = request.Madv;
+            model.Mataisan = request.Mataisan;
             model.Tentaisan = request.Tentaisan;
             model.Mota = request.Mota;
             model.Dvt = request.Dvt;
@@ -194,23 +195,130 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             model.Updated_at = DateTime.Now;
             _db.GiaThueTaiSanCongDm.Update(model);
             _db.SaveChanges();
-            if (request.Dvt != null)
-            {
-                var dvt = _db.DmDvt.Where(t => t.Dvt == request.Dvt).ToList();
-                if (dvt.Count == 0)
-                {
-                    var new_dvt = new DmDvt
-                    {
-                        Dvt = request.Dvt,
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-                    _db.DmDvt.AddRange(new_dvt);
-                    _db.SaveChanges();
-                }
-            }
+            //if (request.Dvt != null)
+            //{
+            //    var dvt = _db.DmDvt.Where(t => t.Dvt == request.Dvt).ToList();
+            //    if (dvt.Count == 0)
+            //    {
+            //        var new_dvt = new DmDvt
+            //        {
+            //            Dvt = request.Dvt,
+            //            Created_at = DateTime.Now,
+            //            Updated_at = DateTime.Now,
+            //        };
+            //        _db.DmDvt.AddRange(new_dvt);
+            //        _db.SaveChanges();
+            //    }
+            //}
             var data = new { status = "success" };
             return Json(data);
+        }
+
+        public IActionResult RemoveRange()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Index"))
+                {
+                    var model = _db.GiaThueTaiSanCongDm;
+                    _db.GiaThueTaiSanCongDm.RemoveRange(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaThueTSanCongDm");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpGet("DanhMucThueTsc/NhanExcel")]
+        public IActionResult NhanExcel()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Create"))
+                {
+                    var model = new VMImportExcel { 
+                        Sheet = 1,
+                        LineStart = 3,
+                        LineStop = 1000,
+                    
+                    };
+                    ViewData["Title"] = "Danh mục thuê tài sản công";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgtsc";
+                    ViewData["MenuLv3"] = "menu_dgtsc_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaThueTsc/DanhMuc/Excel.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(VMImportExcel requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Create"))
+                {
+                    requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+                    int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+
+                    using (var stream = new MemoryStream())
+                    {
+                        await requests.FormFile.CopyToAsync(stream);
+                        using (var package = new ExcelPackage(stream))
+                        {
+                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                            if (worksheet != null)
+                            {
+                                int rowcount = worksheet.Dimension.Rows;
+                                requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                                //Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+
+                                var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm>();
+                                for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                                {     
+                                    list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm
+                                    {
+                                        Mataisan = worksheet.Cells[row, 1].Value != null ?
+                                                     worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                        Tentaisan = worksheet.Cells[row, 2].Value != null ?
+                                                     worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    });
+                                }
+                                _db.GiaThueTaiSanCongDm.AddRange(list_add);
+                                _db.SaveChanges();
+                            }
+                        }
+                    }
+                    return RedirectToAction("Index", "GiaThueTSanCongDm");
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
         }
     }
 }

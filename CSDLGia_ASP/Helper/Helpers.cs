@@ -1589,5 +1589,18 @@ namespace CSDLGia_ASP.Helper
                 return formatted;
             }
         }
+
+        public static DateTime ExcelConvertToDate(string dateString)
+        {
+            DateTime result;
+            if (DateTime.TryParseExact(dateString, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out result))
+            {
+                return result; // Trả về đối tượng DateTime đã được chuyển đổi
+            }
+            else
+            {
+                return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
+            }
+        }
     }
 }

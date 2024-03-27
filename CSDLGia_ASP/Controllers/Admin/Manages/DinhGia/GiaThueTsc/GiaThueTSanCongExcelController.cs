@@ -1,6 +1,8 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -27,18 +29,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin", "Create"))
                 {
-                    var model = new GiaThueTaiSanCongCt
+                    var model = new VMImportExcel
                     {
-                        Mataisan = "1",
-                        Dvthue = "2",
-                        Hdthue = "3",
-                        Ththue = "4",
-                        Dvt = "5",
-                        Dongiathue = 6,
-                        Sotienthuenam = 7,
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 1000,
+                        MaDv = Madv,
                     };
                     ViewData["Title"] = "Danh mục thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -95,13 +91,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaThueTaiSanCongCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(VMImportExcel request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
+                string Mahs = request.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaThueTaiSanCongCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -112,45 +107,73 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        var list_add = new List<GiaThueTaiSanCongCt>();
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaThueTaiSanCongCt
                             {
                                 Mahs = Mahs,
+                                Madv = request.MaDv,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Mataisan = worksheet.Cells[row, Int16.Parse(request.Mataisan)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Mataisan)].Value.ToString().Trim() : "",
+                                Mataisan = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                Dvthue = worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value.ToString().Trim() : "",
+                                Tentaisan = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
 
-                                Hdthue = worksheet.Cells[row, Int16.Parse(request.Hdthue)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Hdthue)].Value.ToString().Trim() : "",
+                                Dvthue = worksheet.Cells[row, 3].Value != null ?
+                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                Ththue = worksheet.Cells[row, Int16.Parse(request.Ththue)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ththue)].Value.ToString().Trim() : "",
+                                Hdthue = worksheet.Cells[row, 4].Value != null ?
+                                            worksheet.Cells[row, 4].Value.ToString().Trim() : "",
 
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+                                Ththue = worksheet.Cells[row, 5].Value != null ?
+                                            worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                Thuetungay = Helpers.ExcelConvertToDate(worksheet.Cells[row, 6].Value != null ?
+                                            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
 
-                                Dongiathue = worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value) : 0,
+                                Dvt = worksheet.Cells[row, 7].Value != null ?
+                                            worksheet.Cells[row, 7].Value.ToString().Trim() : "",
 
-                                Sotienthuenam = worksheet.Cells[row, Int16.Parse(request.Sotienthuenam.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Sotienthuenam.ToString())].Value) : 0,
+                                Dongiathue = worksheet.Cells[row, 8].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, 8].Value) : 0,
+
+                                Sotienthuenam = worksheet.Cells[row, 9].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, 9].Value) : 0,
 
                             });
                         }
+                        _db.GiaThueTaiSanCongCt.AddRange(list_add);
+                        _db.SaveChanges();
+
                     }
 
                 }
-                _db.GiaThueTaiSanCongCt.AddRange(list_add);
-                _db.SaveChanges();
-                return RedirectToAction("Create", "GiaThueTSanCongExcel", new { Madv = Madv, Mahs = Mahs });
+
+                var model = new VMDinhGiaThueTsc
+                {
+                    Madv = request.MaDv,
+                    Thoidiem = DateTime.Now,
+                    Mahs = Mahs,
+                    Thoigianpd_create = DateTime.Now,
+                    Thoigiandg_create = DateTime.Now,
+                    Thuetungay_create = DateTime.Now,
+                    Thuedenngay_create = DateTime.Now,
+                };
+                model.GiaThueTaiSanCongCt = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs).ToList();
+
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                ViewData["GiaThueTaiSanCongDm"] = _db.GiaThueTaiSanCongDm.ToList();
+
+                ViewData["Title"] = " Thông tin hồ sơ thuê tài sản công";
+                ViewData["MenuLv1"] = "menu_dg";
+                ViewData["MenuLv2"] = "menu_dgtsc";
+                ViewData["MenuLv3"] = "menu_dgtsc_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Create.cshtml", model);
             }
             else
             {

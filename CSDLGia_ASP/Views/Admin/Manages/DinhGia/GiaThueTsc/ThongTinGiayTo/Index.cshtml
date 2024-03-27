@@ -1,0 +1,115 @@
+﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueTsc
+@{
+    int record_id = 1;
+}
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin giấy tờ kèm theo:</label>
+    <button type="button" class="btn btn-link" onclick="DisplayTTGiayTo()" id="btn_ttgiayto" style="font-style:italic">Hiển thị</button>
+</div>
+<div style="display: none;" id="frm_ttgiayto">
+    <div class="card card-custom" style="border: 1px solid #60aee4;">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-title">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">Thông tin giấy tờ kèm theo</span>
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                <button type="button" data-target="#Create_GiayTo_Modal" data-toggle="modal"
+                        class="btn btn-primary font-weight-bolder" title="Create" onclick="ClearFrmGiayTo()">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            </div>
+        </div>
+        <hr />
+        <div class="card-body" id="giayto_data">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr style="text-align:center">
+                        <th width="2%">#</th>
+                        <th width="88%">Mô tả</th>
+                        <th width="10%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ThongTinGiayTo != null)
+                    {
+                        @foreach (var item in Model.ThongTinGiayTo)
+                        {
+                            <tr>
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="font-weight:bold">@item.MoTa</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.FileName))
+                                    {
+                                        <a href="~/UpLoad/File/ThongTinGiayTo/@item.FileName" target="_blank" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                            <i class="icon-lg la la-eye text-success"></i>
+                                        </a>
+                                    }
+                                    <button type="button" data-target="#Edit_GiayTo_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                            onclick="SetEditGiayTo('@item.Id')" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" data-toggle="modal" data-target="#Delete_GiayTo_Modal"
+                                            onclick="SetDelGiayTo('@item.Id', '@item.MoTa')"
+                                            class="btn btn-sm btn-clean btn-icon" title="Xóa">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else{
+                        <tr>
+                            <td style="text-align:center" colspan="3">Không có thông tin</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!--end: Datatable-->
+        </div>
+    </div>
+</div>
+<script>
+    function DisplayTTGiayTo() {
+        var x = document.getElementById("frm_ttgiayto").style.display;
+        if (x == "none") {
+            document.getElementById("frm_ttgiayto").style.display = "block";
+            document.getElementById("btn_ttgiayto").innerHTML = "Ẩn";
+        } else {
+            document.getElementById("frm_ttgiayto").style.display = "none";
+            document.getElementById("btn_ttgiayto").innerHTML = "Hiển thị";
+        }
+    }
+    function ClearFrmGiayTo() {
+        document.getElementById("mota_giayto_create").value = '';
+        document.getElementById("file_giayto_create").value = '';
+    }
+
+    function SetDelGiayTo(id, mota) {
+        document.getElementById("id_giayto_delete").value = id;
+        document.getElementById("mota_giayto_delete").innerHTML = mota;
+    }
+
+    function SetEditGiayTo(id) {
+        $.ajax({
+            url: '/ThongTinGiayTo/Edit',
+            type: 'POST',
+            data: {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_giayto_edit').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTsc/ThongTinGiayTo/Modal.cshtml")
