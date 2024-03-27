@@ -1,11 +1,10 @@
 ﻿@{
     Layout = "_LayoutReports";
+    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var hoso = (IEnumerable<GiaTaiSanCong>)ViewData["ChiTietHs"];
 
-    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt>)ViewData["HoSoCt"];
-  
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -20,78 +19,73 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
-    </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TÀI SẢN CÔNG</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @ViewData["ThoiDiemKX"]</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
+
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr>
-            <th style="text-align:center">STT</th>
+        <tr >
+            <th style="text-align:center" width="2%">TT</th>
             <th style="text-align:center">Tên tài sản</th>
-            <th style="text-align:center">Đặc điểm</th>
+            <th style="text-align:center"> Đặc điểm</th>
             <th style="text-align:center">Nguyên giá</th>
             <th style="text-align:center">Giá còn lại</th>
             <th style="text-align:center">Giá phê duyệt</th>
-            <th style="text-align:center">Giá bán (Thanh lý)</th>
+            <th style="text-align:center">Giá bán <br />(thanh lý)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var donvi in DonVis)
+        @foreach (var donvi in donvis)
         {
             <tr>
                 <td></td>
-                <td colspan="6" style="font-weight:bold; text-transform:uppercase">@donvi.TenDv</td>
+                <td colspan="6" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
-            var hoso = Model.Where(t => t.Madv == donvi.MaDv);
-            foreach (var hs in hoso)
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @foreach (var hosoindv in hosoInDv)
             {
                 <tr>
                     <td></td>
-                    <td colspan="6" style="font-weight:bold; font-style:italic">Số QĐ: @hs.Soqd- Thời điểm: @Helpers.ConvertDateToStr(hs.Thoidiem)</td>
+                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
-                var hosoct = HoSoCts.Where(t => t.Mahs == hs.Mahs);
-                int record_id = 1;
-                @foreach(var item in hosoct)
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                @foreach (var item in chitieths)
                 {
-                    <tr>
-                        <td style="text-align:center">@(record_id++)</td>
-                        <td style="text-align:left">@item.Tentaisan</td>
-                        <td style="text-align:right">@item.Dacdiem</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathue)</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giaconlai)</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giapheduyet)</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giaban)</td>
-                    </tr>
-                }
-            }
-        }      
-    </tbody>
 
+                    <tr>
+                        <td></td>
+                        <td style="text-align: center">@item.Tentaisan</td>
+                        <td style="text-align: center">@item.Dacdiem</td>
+                        <td style="text-align: center">@item.Giathue</td>
+                        <td style="text-align: center">@item.Giaconlai</td>
+                        <td style="text-align: center">@item.Giapheduyet</td>
+                        <td style="text-align: center">@item.Giaban</td>
+
+                    </tr>
+
+                }
+
+            }
+        }
+    </tbody>
 </table>
 
-<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
-        <td width="40%" style="text-align: left; vertical-align: top;">
-            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
-            - UBND tỉnh;<br />
-            - Bộ tài chính;<br />
-            - Lưu: VT, QLGCS.
+        <td width="45%" style="text-align: left">
         </td>
-        <td style="vertical-align: top;">
-        <td style="vertical-align: top;">
-            <p><b>@ViewData["ChucDanhNguoiKy"]</b></p>
-            <i>(Ký tên, đóng dấu)</i>
-            <br />
-            <br />
-            <br />
-            <br />
-            <p><b>@ViewData["HoTenNguoiKy"]</b></p>
+        <td width="55%" style="text-align: center">
+            <span style="font-weight: bold; text-transform:uppercase">
+                @ViewData["ChucDanhNguoiKy"]
+            </span><br />
+            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
         </td>
+    </tr>
+    <tr style="text-align: center; height:100px">
+        <td style="font-weight: bold; padding-top: 90px"></td>
+        <td style="font-weight: bold; padding-top: 90px; text-align:center">@ViewData["HoTenNguoiKy"]</td>
     </tr>
 </table>
