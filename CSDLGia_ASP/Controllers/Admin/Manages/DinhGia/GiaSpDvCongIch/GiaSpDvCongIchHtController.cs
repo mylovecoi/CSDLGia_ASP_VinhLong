@@ -523,14 +523,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             return madv;
         }
 
-        public IActionResult TongHop()
+        [HttpPost("HoanThanhDinhGiaSpDvCongIch/TongHop")]
+        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Index"))
                 {
 
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/HoanThanh/Tonghop.cshtml");
+                    var model = _db.GiaSpDvCongIch.Where(t=>t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    List<string> list_madv = model.Select(t=>t.Madv).ToList();
+                    var model_ct = _db.GiaSpDvCongIchCt.Where(t => list_mahs.Contains(t.Mahs));
+                    var model_dv = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom;
+                    ViewData["HoSoCt"] = model_ct;
+                    ViewData["DonVis"] = model_dv;
+                    ViewData["Titile"] = "Tổng hợp giá sản phẩm dịch vụ công ích";
+
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else
@@ -542,6 +554,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost("GiaSpDvCongIchHt/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaSpDvCongIch.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
             }
         }
 

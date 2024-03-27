@@ -23,8 +23,8 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Địa bàn</label>
-                                <select id="MadiabanBc" name="MadiabanBc" class="form-control" disabled="disabled">
+                                <label>Địa bàn áp dụng</label>
+                                <select id="MadiabanBc" name="MadiabanBc" class="form-control">
                                     @foreach (var db in dsdiaban)
                                     {
                                         <!option value="@db.MaDiaBan" @((string)ViewData["Madiaban"] == db.MaDiaBan ? "selected" : "")>@db.TenDiaBan</!option>

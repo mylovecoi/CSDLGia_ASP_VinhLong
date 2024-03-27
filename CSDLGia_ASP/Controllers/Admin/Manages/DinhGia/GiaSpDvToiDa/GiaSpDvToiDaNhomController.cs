@@ -16,7 +16,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
         {
             _db = db;
         }
-       
+
+        [Route("GiaSpDvToiDaNhom")]
         [HttpGet]
         public IActionResult Index()
         {

@@ -65,12 +65,13 @@
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Năm</label>
                 <select class="form-control" id="Nam" name="Nam">
+                    <option value="0">--Tất cả--</option> 
                     @{
-                        var nam_start = DateTime.Now.Year - 5;
-                        var nam_stop = DateTime.Now.Year + 1;
+                        int nam_start = DateTime.Now.Year - 5;
+                        int nam_stop = DateTime.Now.Year + 1;
                         for (var i = nam_start; i <= nam_stop; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                            <!option value="@i" @((int)ViewData["Nam"] == i ? "selected" : "")>Năm @i</!option>
                         }
                     }
                 </select>
@@ -99,12 +100,12 @@
     <table class="table table-striped table-bordered table-hover" id="sample_3">
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>
-                <th>Số QĐ</th>
-                <th>Thời điểm xác định</th>
+                <th width="2%">STT</th>
+                <th width="10%">Số QĐ</th>
+                <th width="10%">Thời điểm xác định</th>
                 <th>Mô tả</th>
-                <th>Trạng thái</th>
-                <th>Cơ quan tiếp nhận</th>
+                <th width="10%">Trạng thái</th>
+                <th width="10%">Cơ quan tiếp nhận</th>
                 <th width="20%">Thao tác</th>
             </tr>
         </thead>
@@ -123,14 +124,16 @@
                             {
                                 <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
                             }
-                            @if (item.Trangthai == "CHT")
+                            else if (item.Trangthai == "CHT")
                             {
                                 <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
                             }
-                            @if (item.Trangthai == "BTL")
+                            else if (item.Trangthai == "BTL")
                             {
                                 <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
                                 <p>Lý do:&nbsp;@item.Lydo</p>
+                            }else{
+                                @item.Trangthai
                             }
                         </td>
 
@@ -150,14 +153,17 @@
                         }
 
                         <td>
-                            <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                            <a asp-controller="Giathuemuanhaxh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
-                                <i class="icon-lg la la-redo-alt text-danger"></i>
-
+                                <i class="icon-lg la la-eye text-success"></i>
                             </a>
+                            <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <i class="icon-lg la la-file-alt text-dark"></i>
+                            </button>
+                            
                             @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                             {
-                                <a asp-controller="Giathuemuanhaxh" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <a asp-controller="Giathuemuanhaxh" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </a>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.dct.ttg", "Delete"))
@@ -171,22 +177,12 @@
                                     <i class="icon-lg la la-check text-primary"></i>
                                 </button>
                             }
-                            else
-                            {
-                                <a asp-controller="Giathuemuanhaxh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                                   target="_blank">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
-                            }
-                            @if (item.Trangthai == "HT")
-                            {
+                            <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                               target="_blank">
+                                <i class="icon-lg la la-redo-alt text-danger"></i>
 
-                            }
-                            <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                <i class="icon-lg la la-cloud-download text-warning"></i>
                             </a>
-
+                         
                         </td>
                     </tr>
                 }
@@ -278,3 +274,4 @@
     }
 
 </script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/ThongTinGiayTo/Show.cshtml")

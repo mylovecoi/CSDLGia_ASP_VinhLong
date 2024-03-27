@@ -489,14 +489,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             }
         }
 
-        public IActionResult TongHop()
+        [HttpPost("GiaTGTCHt/TongHop")]
+        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.xetduyet", "Index"))
                 {
 
-                    return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Tonghop.cshtml");
+                    var model = _db.GiaTroGiaTroCuoc.Where(t=>t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
+                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
+                    var model_hosoct = _db.GiaTroGiaTroCuocCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+
+                    ViewData["HoSoCt"] = model_hosoct;
+                    ViewData["DonVis"] = model_donvi;
+                    ViewData["Title"] = "Tổng hợp hồ sơ trợ giá trợ cước";
+                    return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else

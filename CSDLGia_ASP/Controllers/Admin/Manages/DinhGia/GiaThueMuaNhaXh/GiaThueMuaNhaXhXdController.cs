@@ -18,10 +18,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
         {
             _db = db;
         }
-        
+
         [Route("GiaThueMuaNhaXhXd/XetDuyet")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -64,21 +64,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
 
                     if (getdonvi.Level == "H")
                     {
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam > 0)
                         {
-                            model = model.Where(t => t.Madv_h == Madv).ToList();
+                            model = model.Where(t => t.Thoidiem_h.Year == Nam && t.Madv_h == Madv).ToList();
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam) && t.Madv_h == Madv).ToList();
-                            }
-                            else
-                            {
-                                model = model.Where(t => t.Madv_h == Madv).ToList();
-                            }
-                        }
+
 
                         var model_new = (from kk in model
                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
@@ -89,16 +79,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_h,
-                                             Thoidiem = kk.Thoidiem_h,
+                                             Thoidiem = kk.Thoidiem,
                                              Mota = kk.Mota,
-                                             Trangthai = kk.Trangthai_h,
+                                             Trangthai = kk.Trangthai,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
                                          });
 
                         var model_join = (from kkj in model_new
@@ -117,11 +102,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -143,22 +123,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     }
                     else if (getdonvi.Level == "T")
                     {
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            model = model.Where(t => t.Madv_t == Madv).ToList();
+                            model = model.Where(t => t.Thoidiem_t.Year == Nam && t.Madv_t == Madv).ToList();
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam) && t.Madv_t == Madv).ToList();
-                            }
-                            else
-                            {
-                                model = model.Where(t => t.Madv_t == Madv).ToList();
-                            }
-                        }
-
                         var model_new = (from kk in model
                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
                                          {
@@ -168,16 +136,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_t,
-                                             Thoidiem = kk.Thoidiem_t,
+                                             Thoidiem = kk.Thoidiem,
                                              Mota = kk.Mota,
-                                             Trangthai = kk.Trangthai_t,
+                                             Trangthai = kk.Trangthai,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
+                                             
                                          });
 
                         var model_join = (from kkj in model_new
@@ -196,13 +160,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
+                                           
                                           });
-                      
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -222,23 +182,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     }
                     else
                     {
-
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            model = model.Where(t => t.Madv_ad == Madv).ToList();
+                            model = model.Where(t => t.Thoidiem_ad.Year == Nam && t.Madv_ad == Madv).ToList();
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam) && t.Madv_ad == Madv).ToList();
-                            }
-                            else
-                            {
-                                model = model.Where(t => t.Madv_ad == Madv).ToList();
-                            }
-                        }
-
 
                         var model_new = (from kk in model
                                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
@@ -249,18 +196,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_ad,
-                                             Thoidiem = kk.Thoidiem_ad,
+                                             Thoidiem = kk.Thoidiem,
                                              Mota = kk.Mota,
-                                             Trangthai = kk.Trangthai_ad,
+                                             Trangthai = kk.Trangthai,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
+                                           
                                          });
-  
+
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
@@ -277,13 +220,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
+                                            
                                           });
-                        
+
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -404,63 +343,65 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                 {
                     var model = _db.GiaThueMuaNhaXh.FirstOrDefault(t => t.Id == id_tralai);
 
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
-                    {
-                        model.Macqcq = null;
-                        model.Trangthai = "HHT";
-                        model.Lydo = Lydo;
-                    }
+                    ////Gán trạng thái của đơn vị chuyển hồ sơ
+                    //if (madv_tralai == model.Macqcq)
+                    //{
+                    //    model.Macqcq = null;
+                    //    model.Trangthai = "HHT";
+                    //    model.Lydo = Lydo;
+                    //}
 
-                    if (madv_tralai == model.Macqcq_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Trangthai_h = "HHT";
-                        model.Lydo = Lydo;
-                    }
+                    //if (madv_tralai == model.Macqcq_h)
+                    //{
+                    //    model.Macqcq_h = null;
+                    //    model.Trangthai_h = "HHT";
+                    //    model.Lydo = Lydo;
+                    //}
 
-                    if (madv_tralai == model.Macqcq_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Trangthai_t = "HHT";
-                         model.Lydo = Lydo;
-                    }
+                    //if (madv_tralai == model.Macqcq_t)
+                    //{
+                    //    model.Macqcq_t = null;
+                    //    model.Trangthai_t = "HHT";
+                    //    model.Lydo = Lydo;
+                    //}
 
-                    if (madv_tralai == model.Macqcq_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Trangthai_ad = "HHT";
-                        model.Lydo = Lydo;
-                    }
-
-
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
+                    //if (madv_tralai == model.Macqcq_ad)
+                    //{
+                    //    model.Macqcq_ad = null;
+                    //    model.Trangthai_ad = "HHT";
+                    //    model.Lydo = Lydo;
+                    //}
 
 
-                    if (madv_tralai == model.Madv_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Madv_h = null;
-                        model.Thoidiem_h = DateTime.MinValue;
-                        model.Trangthai_h = null;
-                    }
+                    ////Gán trạng thái của đơn vị tiếp nhận hồ sơ
 
-                    if (madv_tralai == model.Madv_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Madv_t = null;
-                        model.Thoidiem_t = DateTime.MinValue;
-                        model.Trangthai_t = null;
-                    }
 
-                    if (madv_tralai == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Madv_ad = null;
-                        model.Thoidiem_ad = DateTime.MinValue;
-                        model.Trangthai_ad = null;
-                    }
+                    //if (madv_tralai == model.Madv_h)
+                    //{
+                    //    model.Macqcq_h = null;
+                    //    model.Madv_h = null;
+                    //    model.Thoidiem_h = DateTime.MinValue;
+                    //    model.Trangthai_h = null;
+                    //}
 
+                    //if (madv_tralai == model.Madv_t)
+                    //{
+                    //    model.Macqcq_t = null;
+                    //    model.Madv_t = null;
+                    //    model.Thoidiem_t = DateTime.MinValue;
+                    //    model.Trangthai_t = null;
+                    //}
+
+                    //if (madv_tralai == model.Madv_ad)
+                    //{
+                    //    model.Macqcq_ad = null;
+                    //    model.Madv_ad = null;
+                    //    model.Thoidiem_ad = DateTime.MinValue;
+                    //    model.Trangthai_ad = null;
+                    //}
+
+                    model.Trangthai = "BTL";
+                    model.Lydo = Lydo;
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
 
@@ -547,6 +488,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     var model = _db.GiaThueMuaNhaXh.FirstOrDefault(t => t.Mahs == mahs_hcb);
 
                     model.Trangthai_ad = "HCB";
+                    model.Trangthai = "HT";
                     model.Congbo = "CHUACONGBO";
 
                     _db.GiaThueMuaNhaXh.Update(model);

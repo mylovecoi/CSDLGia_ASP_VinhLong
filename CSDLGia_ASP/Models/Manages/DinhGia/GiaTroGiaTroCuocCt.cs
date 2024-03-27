@@ -16,7 +16,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Trangthai { get; set; }
-        [NotMapped]
         public string Madv { get; set; }
         [NotMapped]
         public string Tenspdv { get; set; }
@@ -28,5 +27,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
+
+        [NotMapped]
+        public string Tendv { get;set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
     }
 }

@@ -3,6 +3,7 @@
     var dsnhom = (IEnumerable<GiaHhDvkNhom>)ViewData["Dsnhom"];
     var hoso = (IEnumerable<GiaHhDvk>)ViewData["Hoso"];
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh>
 <!--Tổng hợp HH-DV Modal-->
@@ -23,7 +24,7 @@
 
                 <div class="modal-body">
                     <div class="row">
-                 
+
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Theo thông tư quyết định</label>
@@ -69,7 +70,7 @@
                                 <th>Số quyết định</th>
                                 <th>Ngày nhập</th>
                                 <th>Tên đơn vị cập nhật</th>
-                                <th>Tên đơn vị tiếp nhận hồ sơ</th>
+                                <th>Địa bàn áp dụng</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -84,8 +85,16 @@
                                             @item.Soqd<br />Tháng @item.Thang năm @item.Nam
                                         </td>
                                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                                        <td>@item.Madv</td>
-                                        <td>@item.Macqcq</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Madv))
+                                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv
+
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Madiaban))
+                                                @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan
+
+                                        </td>
                                         <td style="text-align: center">
                                             <input type="checkbox" value="@item.Mahs" name="Hoso" checked />
                                         </td>

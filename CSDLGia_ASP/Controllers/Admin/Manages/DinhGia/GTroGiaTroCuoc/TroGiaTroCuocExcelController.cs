@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -28,19 +29,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Create"))
                 {
+                    var model_ct_cxd = _db.GiaTroGiaTroCuocCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+                    if (model_ct_cxd.Any())
+                    {
+                        _db.GiaTroGiaTroCuocCt.RemoveRange(model_ct_cxd);
+                        _db.SaveChanges();
+                    }
                     var model = new GiaTroGiaTroCuocCt
                     {
                         Tenspdv = "1",
                         Dongia = 2,
-
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
+                        Madv = Madv
                     };
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";
                     ViewData["MenuLv3"] = "menu_dgtgtc_tt";
-                    ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ được trợ giá trợ cước";
                     return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Excels/Excel.cshtml", model);
 
@@ -57,49 +63,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
             }
         }
 
-
-        [Route("TroGiaTroCuocExcel/Create")]
-        [HttpGet]
-        public IActionResult Create(string Madv, string Mahs)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Create"))
-                {
-
-                    ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ được trợ giá trợ cước";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtgtc";
-                    ViewData["MenuLv3"] = "menu_dgtgtc_tt";
-                    ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["modelct"] = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs);
-                    ViewData["DmSanPhamDichVu"] = _db.GiaTroGiaTroCuocDm.ToList();
-
-                    return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Excels/Create.cshtml");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Import(GiaTroGiaTroCuocCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaTroGiaTroCuocCt request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
 
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
 
-                var list_add = new List<GiaTroGiaTroCuocCt>();
+                string Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -110,7 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        var list_add = new List<GiaTroGiaTroCuocCt>();
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaTroGiaTroCuocCt
@@ -119,21 +91,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
+                                Mota = worksheet.Cells[row, 1].Value != null ?
+                                                worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Dongia = Helpers.ConvertStrToDb(worksheet.Cells[row, 2].Value != null ?
+                                                    worksheet.Cells[row, 2].Value.ToString().Trim() : ""),
+                                
 
-                                Maspdv = worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maspdv)].Value.ToString().Trim() : "",
-
-                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
                             });
                         }
+                        _db.GiaTroGiaTroCuocCt.AddRange(list_add);
+                        _db.SaveChanges();
 
                     }
 
                 }
-                _db.GiaTroGiaTroCuocCt.AddRange(list_add);
-                _db.SaveChanges();
-                return RedirectToAction("Create", "TroGiaTroCuocExcel", new { Madv = Madv, Mahs = Mahs });
+
+                var model = new VMDinhGiaTroGiaTroCuoc
+                {
+                    Madv = request.Madv,
+                    Mahs = request.Mahs,
+                    Thoidiem = DateTime.Now
+                };
+                model.GiaTroGiaTroCuocCt = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs).ToList();
+                ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                ViewData["Title"] = " Thông tin hồ Mức trợ giá trợ cước";
+                ViewData["MenuLv1"] = "menu_dg";
+                ViewData["MenuLv2"] = "menu_dgtgtc";
+                ViewData["MenuLv3"] = "menu_dgtgtc_tt";
+
+                return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Create.cshtml", model);
             }
             else
             {

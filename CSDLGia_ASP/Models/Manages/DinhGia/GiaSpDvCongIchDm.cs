@@ -13,6 +13,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string HienThi { get; set; }
         public string Dvt { get; set; }
         public int Sapxep { get; set; }
+        public string Style { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }

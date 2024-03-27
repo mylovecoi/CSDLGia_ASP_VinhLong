@@ -1,4 +1,7 @@
-﻿<!--Create Modal-->
+﻿@{
+    int SapXep = Int32.Parse(ViewData["SapXep"].ToString());
+}
+<!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -13,19 +16,22 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm</label>
-                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
+                            <label>Sắp xếp</label>
+                            <input type="text" id="sapxep_create" name="manhom_create" class="form-control" value="@SapXep" required />
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã nhóm</label>
+                            <input type="text" id="manhom_create" name="manhom_create" class="form-control" required/>
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="theodoi_create" name="theodoi_create" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
+                            <label>Tên nhóm</label>
+                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" required />
                         </div>
                     </div>
                 </div>
@@ -121,8 +127,9 @@
                 url: '/GiaSpDvCongIchDm/Store',
                 type: 'POST',
                 data: {
+                    SapXep: $('#sapxep_create').val(),
                     Tennhom: $('#tennhom_create').val(),
-                    Theodoi: $('#theodoi_create').val(),
+                    Manhom: $('#manhom_create').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {
@@ -169,8 +176,8 @@
                 url: '/GiaSpDvCongIchDm/Update',
                 type: 'POST',
                 data: {
+                    SapXep: $('#sapxep_edit').val(),
                     Tennhom: $('#tennhom_edit').val(),
-                    Theodoi: $('#theodoi_edit').val(),
                     Id: $('#id_edit').val()
                 },
                 dataType: 'JSON',

@@ -20,15 +20,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Mucgiaden { get; set; }
         public double Mucgia3 { get; set; }
         public double Mucgia4 { get; set; }
-        public double Sapxep { get; set; }
-
+        public int Sapxep { get; set; }
+        public string Style { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
 
         [NotMapped]
         public Boolean NhapGia { get; set; }
-        [NotMapped]
+
         public string Madv { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
@@ -47,6 +47,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
+
+        [NotMapped]
+        public string Tennhom { get; set; }
+      
 
     }
 }

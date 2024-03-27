@@ -2,13 +2,18 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading.Tasks;
 //using OfficeOpenXml;
 
@@ -34,9 +39,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                 {
                     var model = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom).ToList();
-
+                    int max_sttsapxep = model.Any() ? model.Max(t => t.Sapxep) : 1;
+                    ViewData["SapXep"] = max_sttsapxep;
                     ViewData["Manhom"] = Manhom;
-                    ViewData["Tennhom"] = _db.GiaSpDvCongIchNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
+                    ViewData["Tennhom"] = _db.GiaSpDvCongIchNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? "";
                     ViewData["Title"] = "Danh mục chi tiết nhóm sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -59,12 +65,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep)
+        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Create"))
                 {
+                    string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                     var request = new GiaSpDvCongIchDm
                     {
                         Manhom = Manhom,
@@ -73,6 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         Dvt = Dvt,
                         HienThi = HienThi,
                         Sapxep = Sapxep,
+                        Style = str_style,
 
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -123,12 +131,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                     if (model != null)
                     {
-                        string result = "<div class='row' id='edit_thongtin'>";
 
-                        result += "<div class='col-xl-4'>";
+                        List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
+
+                        string result = "<div class='row' id='edit_thongtin'>";
+                        result += "<div class='col-xl-3'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Sắp xếp</label>";
+                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.Sapxep + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-3'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Hiển thị</label>";
                         result += "<input type='text' id='hienthi_edit' name='hienthi_edit' class='form-control' value='" + model.HienThi + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                        result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                        result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
+                        result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-8'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên sản phẩm dịch vụ</label>";
+                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -139,19 +173,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên sản phẩm dịch vụ</label>";
-                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Sắp xếp</label>";
-                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.Sapxep + "'/>";
-                        result += "</div>";
-                        result += "</div>";
+                       
 
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         var data = new { status = "success", message = result };
@@ -178,18 +200,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Dvt, string Tenspdv, int Sapxep, string HienThi)
+        public JsonResult Update(int Id, string Dvt, string Tenspdv, int Sapxep, string HienThi, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
                 {
+                    string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                     var model = _db.GiaSpDvCongIchDm.FirstOrDefault(t => t.Id == Id);
                     model.HienThi = HienThi;
                     model.Tenspdv = Tenspdv;
                     model.Dvt = Dvt;
                     model.Sapxep = Sapxep;
-
+                    model.Style = str_style;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCongIchDm.Update(model);
                     _db.SaveChanges();
@@ -236,87 +259,113 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-
-        [Route("GiaSpDvCongIchDmCt/Excel")]
         [HttpPost]
-        public async Task<JsonResult> Excel(string Manhom, string Mota, string Ten, double Mucgiatu, double Mucgiaden, string Phanloai,
-            string Hientrang, string Dvt, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
+        public IActionResult Remove(string manhom_remove)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Delete"))
                 {
-                    LineStart = LineStart == 0 ? 1 : LineStart;
-                    int sheet = Sheet == 0 ? 0 : (Sheet - 1);
-                    using (var stream = new MemoryStream())
-                    {
-                        await FormFile.CopyToAsync(stream);
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-                            var rowcount = worksheet.Dimension.Rows;
-                            LineStop = LineStop > rowcount ? rowcount : LineStop;
-                            //var n = 1;
-                            for (int row = LineStart; row <= LineStop; row++)
-                            {
-                                var list_add = new GiaSpDvCongIchDm
-                                {
-                                    Manhom = Manhom,
-                                    Created_at = DateTime.Now,
-                                    Updated_at = DateTime.Now,
-                                    Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
-
-                                  
-
-                                    Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-
-                                 
-                                    Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-
-
-                                };
-                                _db.GiaSpDvCongIchDm.Add(list_add);
-                            }
-
-                        }
-                    }
-                    //_db.GiaDvKcbDm.AddRange(list_add);
+                    var model = _db.GiaSpDvCongIchDm.Where(p => p.Manhom == manhom_remove);
+                    _db.GiaSpDvCongIchDm.RemoveRange(model);
                     _db.SaveChanges();
 
-                    var data = new { status = "success" };
-                    return Json(data);
+                    return RedirectToAction("Index", "GiaSpDvCongIchDm", new { Manhom = manhom_remove });
                 }
                 else
                 {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
                 }
             }
             else
             {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
+                return View("Views/Admin/Error/SessionOut.cshtml");
             }
-
         }
 
-       
-        [Route("GiaSpDvCongIchDmCt/GetMaxSapXep")]
-        [HttpPost]
-        public JsonResult GetMaxSapXep(string Manhom)
+        [HttpGet("GiaSpDvCongIchDmCt/NhanExcel")]
+        public IActionResult NhanExcel (string Manhom)
         {
-            var i = 0;
-            var data = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom);
-
-            if (data.Any())
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                i = data.Max(x => x.Sapxep);
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
+                {
+                    var model = new VMImportExcel()
+                    {
+                        Sheet = 1,
+                        LineStart = 2,
+                        LineStop = 1000,
+                        MaNhom = Manhom
+                    };
+                    ViewData["Title"] = "Danh mục chi tiết nhóm sản phẩm dịch vụ công ích";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgdvci";
+                    ViewData["MenuLv3"] = "menu_dgdvci_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCongIch/DanhMuc/ChiTiet/Excel.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
             }
-
-            return Json(i);
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(VMImportExcel requests)
+        {
+            requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+            int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+            using (var stream = new MemoryStream())
+            {
+                await requests.FormFile.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                    var rowcount = worksheet.Dimension.Rows;
+                    requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                    Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                    var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchDm>();
+                    int line = 1;
+                    for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                    {
+                        ExcelStyle style = worksheet.Cells[row, 2].Style;
+                        // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                        bool isBold = style.Font.Bold;
+                        // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                        bool isItalic = style.Font.Italic;
+                        StringBuilder strStyle = new StringBuilder();
+                        if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                        if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+
+                        list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchDm
+                        {
+                            Manhom = requests.MaNhom,
+                            Sapxep = line,
+                            HienThi = worksheet.Cells[row, 1].Value != null ?
+                                        worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                            Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                        worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                            Dvt = worksheet.Cells[row, 3].Value != null ?
+                                        worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+
+                            Style = strStyle.ToString()
+                        });
+                        line = line + 1;
+                    }
+                    _db.GiaSpDvCongIchDm.AddRange(list_add);
+                    _db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index", "GiaSpDvCongIchDm", new { Manhom = requests.MaNhom});
+        }
+
+
     }
 }

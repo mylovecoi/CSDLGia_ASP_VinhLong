@@ -1,11 +1,20 @@
-﻿using CSDLGia_ASP.Database;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using CSDLGia_ASP.Database;
+using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using CSDLGia_ASP.ViewModels.Systems;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 {
@@ -18,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             _db = db;
         }
 
-        [Route("BaoCaoDgSpDvToiDa")]
+        [Route("GiaSpDvToiDa/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -26,11 +35,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.baocao", "Index"))
                 {
-
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ tối đa";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
-                    ViewData["MenuLv2"] = "menu_spdvtoida_bc";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_baocao";
+                    ViewData["DanhSachHoSo"] = _db.GiaSpDvToiDa.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachNhom"] = _db.GiaSpDvToiDaNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/BaoCao/Index.cshtml");
                 }
                 else
@@ -44,24 +54,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
-        [Route("BaoCaoDgSpDvToiDa/BcTH")]
+
+        [Route("GiaSpDvToiDa/BaoCao/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay, string tenthutruong, string chucvu)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky, string MaNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.baocao", "Index"))
                 {
 
-                    var model = _db.GiaSpDvToiDa.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT");
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
-                    ViewData["tenthutruong"] = tenthutruong;
-                    ViewData["chucvu"] = chucvu;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ tối đa";
+                    var model = (from hoso in _db.GiaSpDvToiDa.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa
+                                 {
+                                     TenDonVi = donvi.TenDv,
+                                     Mahs = hoso.Mahs,
+                                     Soqd = hoso.Soqd,
+                                 });
+
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
-                    ViewData["MenuLv2"] = "menu_spdvtoida_bc";
+                    ViewData["MenuLv2"] = "menu_spdvtoida_baocao";
+                    ViewData["NgayTu"] = tungay;
+                    ViewData["NgayDen"] = denngay;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -76,27 +94,61 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             }
         }
 
-        [Route("BaoCaoDgSpDvToiDa/BcCT")]
+        [Route("GiaSpDvToiDa/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime tungay, DateTime denngay)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.baocao", "Index"))
                 {
-                    var model = (from a in _db.GiaSpDvToiDa.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join b in _db.GiaSpDvToiDaCt on a.Mahs equals b.Mahs
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
+                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
+                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
+
+                    var model = (from giaspdvtoidact in _db.GiaSpDvToiDaCt
+                                 join giaspdvtoida in _db.GiaSpDvToiDa on giaspdvtoidact.Mahs equals giaspdvtoida.Mahs
+                                 join donvi in _db.DsDonVi on giaspdvtoida.Madv equals donvi.MaDv
                                  select new GiaSpDvToiDaCt
                                  {
-                                     Id = a.Id,
-                                     Mahs = a.Mahs,
+                                     Id = giaspdvtoidact.Id,
+                                     Dvt = giaspdvtoidact.Dvt,
+                                     Mahs = giaspdvtoidact.Mahs,
+                                     Madv = giaspdvtoida.Madv,
+                                     Thoidiem = giaspdvtoida.Thoidiem,
+                                     Tendv = donvi.TenDv,
+                                     Ttqd = giaspdvtoida.Ttqd,
+                                     Tenspdv = giaspdvtoidact.Tenspdv,
+                                     Dongia = giaspdvtoidact.Dongia,
+                                     Ghichu = giaspdvtoida.Ttqd,
+                                     Madiaban = giaspdvtoidact.Madiaban,
+                                     Manhom = giaspdvtoidact.Manhom,
+                                     Trangthai = giaspdvtoida.Trangthai,
+
                                  });
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
-                    ViewData["ct"] = _db.GiaSpDvToiDaCt.ToList();
-                    ViewData["Title"] = "Báo cáo tổng hợp giá sản phẩm dịch vụ tối đa";
-                    ViewData["MenuLv1"] = "menu_spdvtoida";
-                    ViewData["MenuLv2"] = "menu_spdvtoida_bc";
+
+
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    var model_hoso = _db.GiaSpDvToiDa.Where(t => list_mahs.Contains(t.Mahs));
+
+                    ViewData["DonVis"] = model_donvi;
+                    ViewData["ChiTietHs"] = model_hoso;
+                    ViewData["NgayTu"] = ngaytu;
+                    ViewData["NgayDen"] = ngayden;
+
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ tối đa";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/BaoCao/BcCT.cshtml", model);
                 }
                 else

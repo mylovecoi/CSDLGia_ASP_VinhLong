@@ -171,8 +171,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.GiaHhDvkThCt.AddRange(chiTiet);
                     _db.SaveChanges();
                     //Đẩy dữ liệu qua view
-                    var modelct_join = (from ct in chiTiet
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                    var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x=>x.Mahs == model.Mahs)
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -191,7 +191,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                             Dvt = dm.Dvt,
                                         }).ToList();
 
-                    model.GiaHhDvkThCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
+                    model.GiaHhDvkThCt = modelct_join;
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
@@ -254,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var modelCt = _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs);
 
                     var modelct_join = (from ct in modelCt
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -277,6 +278,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
 
                     ViewData["Matt"] = model.Matt;
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác chỉnh sửa";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
@@ -482,8 +484,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         [HttpPost]
         public JsonResult EditCt(int Id)
         {
+            var chiTiet = _db.GiaHhDvkThCt.FirstOrDefault(t => t.Id == Id);
+            var hoSo = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
+
             var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Id == Id)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkThCt
                          {
                              Id = ct.Id,
@@ -529,14 +534,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ trước</label>";
-                result += "<input type='text' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ trước</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -585,10 +590,61 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             return Json(data);
         }
 
+        [Route("GiaHhDvkTh/Show")]
+        [HttpGet]
+        public IActionResult Show(string Mahs)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
+                {
+                    var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
+                    var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == Mahs);
+                    model.GiaHhDvkThCt = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == model.Mahs)
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        select new GiaHhDvkThCt
+                                        {
+                                            Id = ct.Id,
+                                            Manhom = ct.Manhom,
+                                            Mahhdv = ct.Mahhdv,
+                                            Mahs = ct.Mahs,
+                                            Gia = ct.Gia,
+                                            Gialk = ct.Gialk,
+                                            Loaigia = ct.Loaigia,
+                                            Nguontt = ct.Nguontt,
+                                            Ghichu = ct.Ghichu,
+                                            Created_at = ct.Created_at,
+                                            Updated_at = ct.Updated_at,
+                                            Tenhhdv = dm.Tenhhdv,
+                                            Dacdiemkt = dm.Dacdiemkt,
+                                            Dvt = dm.Dvt,
+                                        }).ToList();
+
+                    ViewData["Nhomhh"] = nhomhh;
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
+                    ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ chi tiết";
+                    ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Show.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
         public string GetDataCt(string Mahs)
         {
+            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv                         
                          select new GiaHhDvkThCt
                          {
                              Id = ct.Id,
@@ -607,6 +663,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                          });
 
             int record = 1;
+            var dmDVT= _db.DmDvt;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
             result += "<thead>";
@@ -630,7 +687,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<td class='text-center'>" + item.Mahhdv + "</td>";
                 result += "<td class='text-left active'>" + item.Tenhhdv + "</td>";
                 result += "<td class='text-left'>" + item.Dacdiemkt + "</td>";
-                result += "<td class='text-center'>" + item.Dvt + "</td>";
+                result += "<td class='text-center'>" + dmDVT.FirstOrDefault(x=>x.Madvt == item.Dvt)?.Dvt  + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gialk) + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
                 result += "<td>";

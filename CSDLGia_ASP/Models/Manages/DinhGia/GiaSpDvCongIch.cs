@@ -81,5 +81,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public int LineStop { get; set; }
 
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+
+
+        [NotMapped]
+        public string TenDonVi { get; set; }
+
     }
 }
