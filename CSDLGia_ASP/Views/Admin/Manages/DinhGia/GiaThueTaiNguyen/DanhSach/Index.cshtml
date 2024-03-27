@@ -49,7 +49,7 @@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaThueTaiNguyenExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaThueTaiNguyenExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>                
@@ -162,15 +162,13 @@
                                 <td style="text-align: center"></td>
                             }
                             <td >
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
                                 <a asp-controller="GiaThueTaiNguyen" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Edit"))
@@ -189,6 +187,11 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                                 @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["StringValue"])
                             </td>
                         </tr>
@@ -200,3 +203,4 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Modal.cshtml")
 @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/ThongTinGiayTo/Show.cshtml")

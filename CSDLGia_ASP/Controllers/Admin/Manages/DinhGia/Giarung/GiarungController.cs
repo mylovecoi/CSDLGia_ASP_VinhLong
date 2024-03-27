@@ -389,14 +389,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
         [Route("GiaRung/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(VMDinhGiaRung request, IFormFile Ipf1)
+        public IActionResult Update(VMDinhGiaRung request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
-                {
-                    
-
+                {        
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Madiaban = request.Madiaban;
                     model.Soqd = request.Soqd;

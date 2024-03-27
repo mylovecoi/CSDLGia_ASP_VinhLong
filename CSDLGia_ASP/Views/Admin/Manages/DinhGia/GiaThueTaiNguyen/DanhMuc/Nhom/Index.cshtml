@@ -42,6 +42,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
+                    <th>Mã nhóm</th>
                     <th>Nhóm tài nguyên</th>
                     <th width="20%">Theo dõi</th>
                     <th width="15%">Thao tác</th>
@@ -52,6 +53,7 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
+                        <td class="active">@item.Manhom</td>
                         <td class="active">@item.Tennhom</td>
                         <td style="text-align: center">
                             @if (item.Theodoi == "TD")
@@ -64,6 +66,12 @@
                             }
                         </td>
                         <td>
+                            @if (item.Theodoi == "TD")
+                            {
+                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaThueTaiNguyenDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                            }
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
@@ -80,12 +88,6 @@
                                 </button>
                             }
 
-                            @if (item.Theodoi == "TD")
-                            {
-                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaThueTaiNguyenDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
-                            }
                         </td>
                     </tr>
                 }

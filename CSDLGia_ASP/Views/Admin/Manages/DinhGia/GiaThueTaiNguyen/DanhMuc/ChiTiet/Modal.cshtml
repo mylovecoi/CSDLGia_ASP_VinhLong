@@ -55,6 +55,12 @@
                             <input type="text" id="macap5_create" name="macap5_create" class="form-control" />
                         </div>
                     </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Mã cấp VI*</label>
+                            <input type="text" id="macap6_create" name="macap6_create" class="form-control" />
+                        </div>
+                    </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính*</label>
@@ -137,6 +143,30 @@
     </div>
 </div>
 
+<!--Remove Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin mặt hàng thuế tài nguyên
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin mặt hàng thuế tài nguyên???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaThueTaiNguyenDm" asp-action="RemoveRange">
+                <input hidden id="manhom_removeRange" name="manhom_removeRange" value="@ViewData["Manhom"]" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!--Lock Modal-->
 <div class="modal fade" id="Lock_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -186,12 +216,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue;font-weight: bold; text-transform: uppercase">@ViewData["Tennhom"]</label>
+                </div>
                 <div class="row">
-                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" hidden/>
-                    <div class="mb-3 font-weight-bold font-size-lg">
-                        <label style="color: blue;font-weight: bold; text-transform: uppercase">@ViewData["Tennhom"]</label>
-                    </div>
-                    <div class="col-xl-4">
+                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" hidden />
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Level</label>
                             <select id="level_excel" name="level_excel" class="form-control">
@@ -202,7 +232,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Cấp I*</label>
                             <select id="cap1_excel" name="cap1_excel" class="form-control">
@@ -213,7 +243,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Cấp II*</label>
                             <select id="cap2_excel" name="cap2_excel" class="form-control">
@@ -224,7 +254,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Cấp III*</label>
                             <select id="cap3_excel" name="cap3_excel" class="form-control">
@@ -235,7 +265,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Cấp IV*</label>
                             <select id="cap4_excel" name="cap4_excel" class="form-control">
@@ -246,7 +276,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Cấp V*</label>
                             <select id="cap5_excel" name="cap5_excel" class="form-control">
@@ -257,10 +287,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm, loại tài nguyên*</label>
-                            <select id="ten_excel" name="ten_excel" class="form-control">
+                            <label>Cấp VI*</label>
+                            <select id="cap6_excel" name="cap6_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "7" ? "selected" : "")>@item.Key</!option>
@@ -268,10 +298,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị tính*</label>
-                            <select id="dvt_excel" name="dvt_excel" class="form-control">
+                            <label>Tên nhóm, loại tài nguyên*</label>
+                            <select id="ten_excel" name="ten_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
                                     <!option value="@item.Value" @(item.Value.ToString() == "8" ? "selected" : "")>@item.Key</!option>
@@ -279,28 +309,39 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>File dữ liệu:</label><br />
-                            <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" />
+                            <label>Đơn vị tính*</label>
+                            <select id="dvt_excel" name="dvt_excel" class="form-control">
+                                @foreach (var item in Helpers.GetListColExcel())
+                                {
+                                    <!option value="@item.Value" @(item.Value.ToString() == "9" ? "selected" : "")>@item.Key</!option>
+                                }
+                            </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sheet</label>
                             <input type="number" class="form-control" id="sheet_excel" name="sheet_excel" value="1" />
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div cla ss="form-group fv-plugins-icon-container">
                             <label>Từ dòng</label>
                             <input type="number" class="form-control" id="linestart_excel" name="linestart_excel" value="3" />
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đến dòng</label>
                             <input type="number" class="form-control" id="linestop_excel" name="linestop_excel" value="111" />
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>File dữ liệu:</label><br />
+                            <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" required />
                         </div>
                     </div>
                 </div>
@@ -329,6 +370,7 @@
                     Cap3: $('#macap3_create').val(),
                     Cap4: $('#macap4_create').val(),
                     Cap5: $('#macap5_create').val(),
+                    Cap6: $('#macap6_create').val(),
                     Dvt: $('#dvt_create').val(),
                     Tennhom: $('#tennhom_create').val(),
                     Theodoi: $('#theodoi_create').val(),
@@ -383,6 +425,7 @@
                     Cap3: $('#macap3_edit').val(),
                     Cap4: $('#macap4_edit').val(),
                     Cap5: $('#macap5_edit').val(),
+                    Cap6: $('#macap6_edit').val(),
                     Dvt: $('#dvt_edit').val(),
                     Tennhom: $('#tennhom_edit').val(),
                     Theodoi: $('#theodoi_edit').val(),
