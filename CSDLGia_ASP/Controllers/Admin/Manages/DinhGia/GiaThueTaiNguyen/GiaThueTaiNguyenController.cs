@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -508,7 +509,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             }
         }
 
-        [Route("GiaThueTaiNguyen/TimKiem")]
+        [Route("GiaThueTaiNguyen/Search")]
         [HttpGet]
         public IActionResult Search(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Ten)
         {
@@ -599,59 +600,53 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             }
         }
 
-        [Route("GiaThueTaiNguyen/TimKiem/KetQua")]
+        [Route("GiaThueTaiNguyen/PrintSearch")]
         [HttpPost]
-        public IActionResult Result(string madv, string manhom, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, 
+                                    string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string Ten_Search)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
                 {
-                    var model = (from giathuetnct in _db.GiaThueTaiNguyenCt
-                                 join giathuetn in _db.GiaThueTaiNguyen on giathuetnct.Mahs equals giathuetn.Mahs
-                                 join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 select new GiaThueTaiNguyenCt
+                    var model = (from hosoct in _db.GiaThueTaiNguyenCt
+                                 join hoso in _db.GiaThueTaiNguyen on hosoct.Mahs equals hoso.Mahs
+                                 join nhom in _db.GiaThueTaiNguyenNhom on hosoct.Manhom equals nhom.Manhom
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenCt
                                  {
-                                     Id = giathuetnct.Id,
-                                     Dvt = giathuetnct.Dvt,
-                                     Gia = giathuetnct.Gia,
-                                     Mahs = giathuetnct.Mahs,
-                                     Madv = giathuetn.Madv,
-                                     Manhom = giathuetn.Manhom,
-                                     Thoidiem = giathuetn.Thoidiem,
+                                     Madv = hoso.Madv,
                                      Tendv = donvi.TenDv,
+                                     Tennhom = nhom.Tennhom,
+                                     SoQD = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
+                                     Cap1 = hosoct.Cap1,
+                                     Cap2 = hosoct.Cap2,
+                                     Cap3 = hosoct.Cap3,
+                                     Cap4 = hosoct.Cap4,
+                                     Cap5 = hosoct.Cap5,
+                                     Cap6 = hosoct.Cap6,
+                                     Ten = hosoct.Ten,
+                                     Dvt = hosoct.Dvt,
+                                     Gia = hosoct.Gia,
+                                     Manhom = hosoct.Manhom,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hoso.Mahs
                                  });
-
-                    if (madv != "all")
+                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Trangthai == "HT");
+                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
+                    if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
+                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Gia >= DonGiaTu_Search); }
+                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Gia <= DonGiaDen_Search); }
+                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
+                    if (!string.IsNullOrEmpty(Ten_Search))
                     {
-                        model = model.Where(t => t.Madv == madv);
+                        model = model.Where(t => t.Ten.ToLower().Contains(Ten_Search.ToLower()));
                     }
 
-                    if (manhom != "all")
-                    {
-                        model = model.Where(t => t.Manhom == manhom);
-                    }
-
-                    if (ngaynhap_tu.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
-                    }
-
-                    if (ngaynhap_den.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-                    }
-
-                    model = model.Where(t => t.Gia >= gia_tu);
-                    if (gia_den > 0)
-                    {
-                        model = model.Where(t => t.Gia <= gia_den);
-                    }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgthuetn";
-                    ViewData["MenuLv3"] = "menu_dgthuetn_tk";
+                  ;
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/TimKiem/Result.cshtml", model);
 
                 }

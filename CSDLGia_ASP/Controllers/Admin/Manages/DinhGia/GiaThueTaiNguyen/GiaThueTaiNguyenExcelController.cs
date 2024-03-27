@@ -139,7 +139,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                 Ten = worksheet.Cells[row, 8].Value != null ? worksheet.Cells[row, 8].Value.ToString().Trim() : "",
                                 Dvt = worksheet.Cells[row, 9].Value != null ? worksheet.Cells[row, 9].Value.ToString().Trim() : "",
                                 Gia = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,
-                                Manhom =  worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 8].Value.ToString().Trim() : "",
+                                Manhom = (request.Manhom == "all" 
+                                        ? worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 11].Value.ToString().Trim() : ""
+                                        : request.Manhom),
                                 Madv = request.Madv,
                                 Trangthai = "CXD",
                                 SapXep = stt++,        

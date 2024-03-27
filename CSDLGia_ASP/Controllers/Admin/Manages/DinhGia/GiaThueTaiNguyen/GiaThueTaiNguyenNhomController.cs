@@ -94,7 +94,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Mã nhóm tài nguyên*</label>";
-                        result += "<input type='text' id='mannhom_edit' name='mannhom_edit' class='form-control' value='" + model.Manhom + "'/>";
+                        result += "<input type='text' id='manhom_edit' name='manhom_edit' class='form-control' value='" + model.Manhom + "'/>";
                         result += "</div>";
                         result += "</div>";
                         result += "<div class='col-xl-12'>";
