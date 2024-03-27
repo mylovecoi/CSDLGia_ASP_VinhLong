@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 {
@@ -42,6 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
                     ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachNhom"] = _db.GiaVatLieuXayDungNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Index.cshtml");
                 }
                 else
@@ -69,7 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung
                                  {
-                                     //TenDonVi = donvi.TenDv,
+                                     TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
 
@@ -98,27 +100,55 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
         [Route("GiaVatLieuXayDung/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.baocao", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.baocao", "Index"))
                 {
-                    var model = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if (MaHsTongHop != "all")
-                    {
-                        model = model.Where(t => t.Mahs == MaHsTongHop);
-                    }
-                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
-                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
-                    var model_ct = _db.GiaVatLieuXayDungCt.Where(t => list_hoso.Contains(t.Mahs));
-                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
-                    ViewData["HoSoCt"] = model_ct;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
+                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
+                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
+
+                    var model = (from giathuetnct in _db.GiaVatLieuXayDungCt
+                                 join giathuetn in _db.GiaVatLieuXayDung on giathuetnct.Mahs equals giathuetn.Mahs
+                                 join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
+                                 /*join nhomtn in _db.GiaVatLieuXayDungNhom on giathuetn.Manhom equals nhomtn.Manhom*/
+                                 select new GiaVatLieuXayDungCt
+                                 {
+                                     Id = giathuetnct.Id,
+                                     Gia = giathuetnct.Gia,
+                                     Mahs = giathuetnct.Mahs,
+                                     Madv = giathuetn.Madv,
+                                     Manhom = giathuetn.Manhom,
+                                     Thoidiem = giathuetn.Thoidiem,
+                                     Tendv = donvi.TenDv,
+                                     Ten = giathuetnct.Ten,
+                                     Trangthai = giathuetn.Trangthai,
+                                 });
+
+
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    //if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    var model_hoso = _db.GiaVatLieuXayDung.Where(t => list_mahs.Contains(t.Mahs));
+
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["Title"] = "Báo cáo vật liệu xây dựng";
-                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
-                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["ChiTietHs"] = model_hoso;
+                    ViewData["NgayTu"] = ngaytu;
+                    ViewData["NgayDen"] = ngayden;
+
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["Title"] = "Báo cáo giá vật liệu xây dựng";
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/BcCT.cshtml", model);
                 }
                 else
@@ -132,6 +162,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
 
 
     }
