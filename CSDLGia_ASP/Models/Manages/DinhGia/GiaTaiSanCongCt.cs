@@ -31,5 +31,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Trangthai { get; set; }
         [NotMapped]
         public string Madv { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
     }
 }
