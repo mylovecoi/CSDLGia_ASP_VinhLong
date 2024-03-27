@@ -11,6 +11,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int Id { get; set; }
 
         public string Mataisan { get; set; }
+        public string Tentaisan { get; set; }
         public double Dongiathue { get; set; }
         public string Dvthue { get; set; }
         public string Hdthue { get; set; }
@@ -28,7 +29,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thuetungay { get; set; }
         public DateTime Thuedenngay { get; set; }
         public string Trangthai { get; set; }
-        [NotMapped]
         public string Madv { get; set; }
         [NotMapped]
         public int LineStart { get; set; }
@@ -39,6 +39,13 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
+
+        [NotMapped]
+        public string Tendv { get; set; }
+        [NotMapped]
+        public string SoQD { get; set; }
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
 
     }
 }

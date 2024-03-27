@@ -40,11 +40,11 @@
 
             </h3>
         </div>
-        <div>
+      @*   <div>
             <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
                 <i class="la la-plus"></i>Tổng hợp hồ sơ
             </button>
-        </div>
+        </div> *@
     </div>
     <hr />
     <div class="card-body">
@@ -91,7 +91,8 @@
                     <th width="4%">STT</th>
                     <th>Cơ quan chuyển hồ sơ</th>
                     <th>Địa bàn</th>
-                    <th>Thời điểm<br />xác đinh</th>
+                    <th>Số quyết định</th>
+                    <th>Thời điểm xác đinh</th>
                     <th>Trạng thái</th>
                     <th width="20%">Thao tác</th>
                 </tr>
@@ -153,6 +154,7 @@
                                 }
                             </td>
                             <td class="text-center danger"></td>
+                            <td class="text-center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
@@ -183,15 +185,13 @@
                             </td>
                           
                             <td>
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
                                 <a asp-controller="GiaThueTSanCong" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>                                
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Approve"))
                                 {
@@ -233,6 +233,11 @@
                                         }
                                     }
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                </a>
                                 <div class="dropdown dropdown-inline">
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
                                         <i class="icon-lg la la-cog "></i>
@@ -278,3 +283,4 @@
 </div>
 
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTsc/HoanThanh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTsc/ThongTinGiayTo/Show.cshtml")
