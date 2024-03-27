@@ -62,7 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
+                string str_style = Style.Length > 0 ? string.Join(",", Style.ToArray()) : "";
                 var model = new GiaRungDmCt
                 {
                     STTSapXep = STTSapXep,
@@ -210,7 +210,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 var model = _db.GiaRungDmCt.FirstOrDefault(t => t.Id == Id);
                 if (model != null)
                 {
-                    string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
+                    string str_style = Style.Length > 0 ? string.Join(",", Style.ToArray()) : "";
                     model.STTSapXep = STTSapXep;
                     model.STTHienThi = STTHienThi;
                     model.MoTa = MoTa;
@@ -289,7 +289,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         {
                             int rowcount = worksheet.Dimension.Rows;
                             requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
-                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                            //Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
                             var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDmCt>();
                             int line = 1;
                             for (int row = requests.LineStart; row <= requests.LineStop; row++)

@@ -343,7 +343,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                             {
                                 var rowcount = worksheet.Dimension.Rows;
                                 requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
-                                Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                                //Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
                                 var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenDm>();
                                 int line = 1;
                                 for (int row = requests.LineStart; row <= requests.LineStop; row++)
