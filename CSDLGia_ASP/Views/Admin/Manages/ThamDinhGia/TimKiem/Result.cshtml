@@ -54,12 +54,12 @@
                     <th style="text-align: center" width="4%">#</th>
                     <th style="text-align: center">Đơn vị nhập</th>
                     <th style="text-align: center">Thời điểm</th>
-                    <th style="text-align: center">Thông tin tài sản thẩm định</th>
+                    <th style="text-align: center">Đơn vị thẩm định</th>
                     <th style="text-align: center">Đơn vị yêu cầu thẩm định</th>
                     <th style="text-align: center">Tên tài sản</th>
                     <th style="text-align: center">Số lượng</th>
-                    <th style="text-align: center">Giá đề nghị</th>
                     <th style="text-align: center">Giá thẩm định</th>
+                    <th style="text-align: center">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,12 +71,15 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Tendv</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center">@item.Tttstd</td>
                             <td style="text-align: center">@item.Dvyeucau</td>
+                            <td style="text-align: center"></td>
                             <td style="text-align: center">@item.Tents</td>
                             <td style="text-align: center">@item.Sl</td>
-                            <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Giadenghi)</td>
                             <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Giatritstd)</td>
+                            <a asp-controller="ThamDinhGia" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
                         </tr>
                     }
                 }
@@ -84,7 +87,7 @@
         </table>
     </div>
     <div class="card-footer" style="text-align:center">
-        <a asp-controller="GiaHhDvCn" asp-action="Search" class="btn btn-danger">
+        <a asp-controller="ThamDinhGia" asp-action="Search" class="btn btn-danger">
             <i class="la la-reply"></i>Quay lại
         </a>
     </div>
