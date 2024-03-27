@@ -30,20 +30,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                 {
                     var model = new GiaTaiSanCongCt
                     { 
-                        Tentaisan = "1",
-                        Dacdiem = "2",
-                        Giathue = 3,
-                        Giaconlai = 4,
-                        Giapheduyet = 5,
-                        Giaban = 6,
+                        Mataisan = "1",
+                        Tentaisan = "2",
+                        Dacdiem = "3",
+                        Giathue = 4,
+                        Giaconlai = 5,
+                        Giapheduyet = 6,
+                        Giaban = 7,
                         LineStart = 2,
                         LineStop = 1000,
                         Sheet = 1,
+                        Madv = Madv
                     };
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_tt";
-                    ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin hồ sơ giá tài sản công";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/Excels/Excel.cshtml", model);
 
@@ -120,6 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
+                                Mataisan = worksheet.Cells[row, Int16.Parse(request.Mataisan)].Value != null ?
+                                            worksheet.Cells[row, Int16.Parse(request.Mataisan)].Value.ToString().Trim() : "",
                                 Tentaisan = worksheet.Cells[row, Int16.Parse(request.Tentaisan)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Tentaisan)].Value.ToString().Trim() : "",
 

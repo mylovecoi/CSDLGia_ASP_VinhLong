@@ -23,7 +23,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Báo cáo định giá thuê mua nhà xã hội<br />
+                Báo cáo định giá thuế tài nguyên<br />
             </h3>
         </div>
     </div>
@@ -227,7 +227,7 @@
     var nam_start = DateTime.Now.Year - 7;
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
-    var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh>)ViewData["DanhSachHoSo"];
+    var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen>)ViewData["DanhSachHoSo"];
 }
 
 @section custom_style {
@@ -247,7 +247,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá thuê mua nhà xã hội
+                    Thông tin hồ sơ giá thuế tài nguyên
                 </span>
             </h3>
         </div>
@@ -284,11 +284,11 @@
 <!--Báo cáo tổng hợp-->
 <div class="modal fade" id="Report_Modal_TH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiathuemuanhaxhBc" asp-action="BcTH" target="_blank" id="form_moda_th">
+        <form asp-controller="GiaThueTaiNguyenBc" asp-action="BcTH" target="_blank" id="form_moda_th">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Báo cáo tổng hợp giá thuê mua nhà xã hội
+                        Báo cáo tổng hợp giá thuế tài nguyên
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -336,11 +336,11 @@
 <!--Báo cáo chi tiết-->
 <div class="modal fade" id="Report_Modal_CT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiathuemuanhaxhBc" asp-action="BcCT" target="_blank" id="form_moda_ct">
+        <form asp-controller="GiaThueTaiNguyenBc" asp-action="BcCT" target="_blank" id="form_moda_ct">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Báo cáo chi tiết giá thuê mua nhà xã hội
+                        Báo cáo chi tiết giá thuế tài nguyên
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -409,7 +409,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaThueMuaNhaXhXd/GetListHoSo',
+                    url: '/GiaThueTaiNguyenXd/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,

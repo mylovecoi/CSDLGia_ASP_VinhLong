@@ -141,7 +141,7 @@
                             <td style="text-align: center">
                                 @item.Tencqcq
                             </td>
-                            <td style="text-align: center">
+                            <td style="text-align: left;">
 
                                 <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
@@ -154,7 +154,7 @@
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
 
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Thongtin')">
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
 
@@ -162,7 +162,9 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -222,6 +224,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <label>Thông tin hồ sơ: </label>
+                    <label style="color:blue;" id="MoTaDelete"></label>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -281,10 +285,11 @@
         </form>
     </div>
 </div>
-
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
 <script>
-    function SetDelete(id) {
+    function SetDelete(id,mota) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("MoTaDelete").innerHTML = mota;
     }
 
     function Chuyen(mahs) {
