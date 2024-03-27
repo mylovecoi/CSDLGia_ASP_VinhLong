@@ -4,8 +4,7 @@
 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
-<br />
-<br />
+
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -19,61 +18,56 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;"> ...., ngày....tháng....năm....</i></td>
-    </tr>
-</table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP ĐỊNH GIÁ RỪNG</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ RỪNG</p>
+
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Mô tả</th>  @*Đơn vị chuyển*@
+            <th style="text-align: center">Mô tả</th>
             <th style="text-align: center">Số QĐ</th>
             <th style="text-align: center">Ngày chuyển hồ sơ</th>
             <th style="text-align: center">Ngày xét duyệt</th>
         </tr>
     </thead>
     <tbody>
-        @* @foreach (var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
-                    @item.Tendiaban<br />
-                    <b>Mã hồ sơ: </b>@item.Mahs
+                    @item.TenDonVi<br />
+                    <b>Mã hồ sơ: </b><a asp-controller="Giarung" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
                 <td style="text-align: center">@item.Soqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td></td>
+
             </tr>
         }
         <tr>
             <td></td>
             <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>
-        </tr> *@
+        </tr>
     </tbody>
 </table>
-<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
-        <td width="40%" style="text-align: left; vertical-align: top;">
-            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
-            - UBND tỉnh;<br />
-            - Bộ tài chính;<br />
-            - Lưu: VT, QLGCS.
+        <td width="45%" style="text-align: left">
         </td>
-        <td style="vertical-align: top;">
-        <td style="vertical-align: top;">
-            <p><b>@ViewData["chucvu"]</b></p>
-            <i>(Ký tên, đóng dấu)</i>
-            <br />
-            <br />
-            <br />
-            <br />
-            <p><b>@ViewData["tenthutruong"]</b></p>
+        <td width="55%" style="text-align: center">
+            <span style="font-weight: bold; text-transform:uppercase">
+                @ViewData["ChucDanhNguoiKy"]
+            </span><br />
+            <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
         </td>
+    </tr>
+    <tr style="text-align: center; height:100px">
+        <td style="font-weight: bold; padding-top: 90px"></td>
+        <td style="font-weight: bold; padding-top: 90px; text-align:center">@ViewData["HoTenNguoiKy"]</td>
     </tr>
 </table>

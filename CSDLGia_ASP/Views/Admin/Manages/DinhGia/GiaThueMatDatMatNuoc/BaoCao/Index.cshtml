@@ -7,6 +7,7 @@
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
     var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>)ViewData["DanhSachHoSo"];
+    var DanhSachNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocNhom>)ViewData["DanhSachNhom"];
 }
 
 @section custom_style {
@@ -75,6 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -127,6 +129,33 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên nhóm</label><br />
+                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachNhom)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Thông tin hồ sơ: </label><br />
+                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -141,18 +170,7 @@
                                        value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center" onchange="GetList()">
                             </div>
                         </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Thông tin hồ sơ: </label><br />
-                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
-                                    <option value="all">--Tất cả---</option>
-                                    @foreach (var item in DanhSachHoSo)
-                                    {
-                                        <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
+                      
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Chức danh ký:</label>
@@ -176,6 +194,7 @@
     </div>
 </div>
 <script>
+
     function GetList() {
         var fromDate = document.getElementById("ngaytu").value;
         var toDate = document.getElementById("ngayden").value;
@@ -209,6 +228,7 @@
             }
         }
     }
+
 
     function BaoCaoTh() {
         var fromDate = document.getElementById("ngaytu").value;

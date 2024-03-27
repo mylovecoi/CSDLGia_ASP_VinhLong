@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -48,13 +49,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         public string GetData(string Mahs)
         {
             var model = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs).ToList();
-            var GiaTroGiaTroCuocDm = _db.GiaTroGiaTroCuocDm.ToList();
             int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table - bordered table - hover' id='datatable_4'>";
+            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
-            result += "<th>STT</th>";
+            result += "<th>#</th>";
             result += "<th>Tên sản phẩm dịch vụ</th>";
             result += "<th>Đơn giá </th>";
             result += "<th>Thao tác</th>";
@@ -64,25 +64,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             {
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
-                result += "<td style='text-align:center'>";
-                foreach (var dm in GiaTroGiaTroCuocDm)
-                {
-                    if (item.Maspdv == dm.Maspdv)
-                    {
-                        result += "<span>" + dm.Tenspdv + "</span>";
-                    }
-                }
-                result += "</td>";
-                result += "<td style='text-align:center'>" + item.Dongia + "</td>";
+                result += "<td style='text-align:left'>" + item.Mota + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Dongia) + "</td>";
                 result += "<td style='text-align:center'>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button></td></tr>";
+                result+="</td></tr>";
             }
             result += "</tbody>";
             return result;
@@ -92,7 +81,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         public JsonResult Edit(int Id)
         {
             var model = _db.GiaTroGiaTroCuocCt.FirstOrDefault(p => p.Id == Id);
-            var GiaTroGiaTroCuocDm = _db.GiaTroGiaTroCuocDm.ToList();
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -101,18 +89,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên sản phẩm dịch vụ</b></label>";
-                result += "<select class='form-control' id='Maspdv_edit' name='Maspdv_edit'>";
-                foreach (var item in GiaTroGiaTroCuocDm)
-                {
-                    result += "<option value='" + item.Maspdv + "'" + (item.Maspdv == model.Maspdv ? "selected" : "") + ">" + item.Tenspdv + " </option>";
-                }
-                result += "</select>";
+                result += "<lable class='form-control'>" + model.Mota + "</label>";            
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='Dongia_edit' name='Dongia_edit' value='" + @model.Dongia + "' class='form-control money text-right' style = 'font-weight: bold'/>";
+                result += "<input type='text' id='Dongia_edit' name='Dongia_edit' value='" + model.Dongia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -133,7 +116,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         {
             var model = _db.GiaTroGiaTroCuocCt.FirstOrDefault(t => t.Id == Id);
             model.Dongia = Dongia;
-            model.Maspdv = Maspdv;
             model.Updated_at = DateTime.Now;
             _db.GiaTroGiaTroCuocCt.Update(model);
             _db.SaveChanges();
