@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -60,8 +61,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th style='text-align:center'>STT</th>";
+            result += "<th style='text-align:center'>Mã tài sản</th>";
             result += "<th style='text-align:center'>Tên tài sản</th>";
-            result += "<th style='text-align:center'>Đặc điểm</th>";
             result += "<th style='text-align:center'>Nguyên giá</th>";
             result += "<th style='text-align:center'>Giá còn lại</th>";
             result += "<th style='text-align:center'>Giá phê duyệt</th>";
@@ -74,22 +75,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 {
                     result += "<tr>";
                     result += "<td style='text-align:center'>" + (record++) + "</td>";
-                    result += "<td style='text-align:center'>" + item.Tentaisan + "</td>";
-                    result += "<td style='text-align:center'>" + item.Dacdiem + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giathue + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giaconlai + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giapheduyet + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giaban + "</td>";
+                    result += "<td style='text-align:center'>" + item.Mataisan + "</td>";
+                    result += "<td style='text-align:left'>" + item.Tentaisan + "</td>";
+                    result += "<td style='text-align:ringt'>" + Helpers.ConvertDbToStr(item.Giathue) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giaconlai) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giapheduyet) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giaban) + "</td>";
 
                     result += "<td>";
                     result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                     result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                     result += "<i class='icon-lg la la-edit text-primary'></i>";
                     result += "</button>";
-                    result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                    result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                    result += "<i class='icon-lg la la-trash text-danger'></i>";
-                    result += "</button></td></tr>";
+                    result += "</td></tr>";
                 }
             }
 
@@ -110,16 +108,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên tài sản</b></label>";
-                result += "<input type='text' id='Tentaisan_edit' name='Tentaisan_edit' value='" + @model.Tentaisan + "' class='form-control'/>";
+                result += "<label class='form-control'>" + @model.Tentaisan + "</label>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Đặc điểm</b></label>";
-                result += "<input type='text' id='Dacdiem_edit' name='Dacdiem_edit' value='" + @model.Dacdiem + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -160,11 +151,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
         [Route("GiaTaiSanCongCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tentaisan, string Dacdiem, double Giathue, double Giaconlai, double Giapheduyet, double Giaban)
+        public JsonResult Update(int Id, double Giathue, double Giaconlai, double Giapheduyet, double Giaban)
         {
             var model = _db.GiaTaiSanCongCt.FirstOrDefault(t => t.Id == Id);
-            model.Tentaisan = Tentaisan;
-            model.Dacdiem = Dacdiem;
+           
             model.Giathue = Giathue;
             model.Giaconlai = Giaconlai;
             model.Giapheduyet = Giapheduyet;
