@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDmHh>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -19,20 +19,24 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Nhóm hàng hóa: @ViewData["Tennhom"]
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Nhóm hàng hóa: @ViewData["Tennhom"]
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.hh", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary font-weight-bolder" title="Thêm mới">
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary font-weight-bolder mr-2" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-            }&ensp;
+                <a class="btn btn-success font-weight-bolder mr-2" asp-controller="ThamDinhGiaDmHh" asp-action="NhanExcel"
+                   asp-route-Manhom="@ViewData["Manhom"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+            }
             <a asp-controller="ThamDinhGiaDmHh" asp-action="Index" class="btn btn-light-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>
@@ -49,7 +53,6 @@
                     <th>Thông số kỹ thuật</th>
                     <th>Xuất xứ</th>
                     <th>Đơn vị tính</th>
-                    <th width="20%">Theo dõi</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -63,22 +66,15 @@
                         <td>@item.Thongsokt</td>
                         <td>@item.Xuatxu</td>
                         <td style="text-align: center">@item.Dvt</td>
-                        <td style="text-align: center">
-                            @if (item.Theodoi == "TD")
-                            {
-                                <span class="label font-weight-bold label-lg  label-primary label-inline">Theo dõi</span>
-                            }
-                            else
-                            {
-                                <span class="label font-weight-bold label-lg label-danger label-inline">Dừng theo dõi</span>
-                            }
-                        </td>
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                        data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete(@item.Id)">
+                                    <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
 

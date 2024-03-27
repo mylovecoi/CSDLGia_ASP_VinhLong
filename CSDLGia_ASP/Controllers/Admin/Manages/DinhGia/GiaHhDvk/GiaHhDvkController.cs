@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan
+                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -692,13 +692,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvkCt/Edit")]
         [HttpPost]
-        public JsonResult EditCt(int Id)
+        public JsonResult EditCt(int Id, string Matt)
         {
-            var chiTiet = _db.GiaHhDvkCt.FirstOrDefault(t => t.Id == Id);
-            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
+            //var chiTiet = _db.GiaHhDvkCt.FirstOrDefault(t => t.Id == Id);
+            //var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
 
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Id == Id)
-                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,
@@ -787,7 +787,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvkCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Gia, double Gialk, string Nguontt, string Loaigia)
+        public JsonResult UpdateCt(int Id, double Gia, double Gialk, string Nguontt, string Loaigia, string Matt)
         {
             var model = _db.GiaHhDvkCt.FirstOrDefault(t => t.Id == Id);
             model.Gia = Gia;
@@ -797,16 +797,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             model.Updated_at = DateTime.Now;
             _db.GiaHhDvkCt.Update(model);
             _db.SaveChanges();
-            string result = GetDataCt(model.Mahs);
+            string result = GetDataCt(model.Mahs, Matt);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        public string GetDataCt(string Mahs)
+        public string GetDataCt(string Mahs, string Matt)
         {
-            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
+            //var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,

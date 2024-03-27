@@ -45,5 +45,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Mucdich { get; set; }
         [NotMapped]
         public DateTime Thoihan { get; set; }
+        [NotMapped]
+        public string Dvthamdinh { get; set; }
     }
 }
