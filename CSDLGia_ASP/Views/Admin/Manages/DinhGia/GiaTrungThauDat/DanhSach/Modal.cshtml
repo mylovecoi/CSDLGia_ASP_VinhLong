@@ -14,7 +14,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" value="@ViewData["Mahs"]" id="Mahs_create" name="Mahs_create" />
+                @* <input type="hidden" value="@ViewData["Mahs"]" id="Mahs_create" name="Mahs_create" /> *@
                 <div class="row">
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
@@ -215,7 +215,7 @@
             url: '/GiaTrungThauDatCt/Store',
             type: 'POST',
             data: {
-                Mahs: $('#Mahs_create').val(),
+                Mahs: $('#Mahs').val(),
                 Solo: $('#Solo_create').val(),
                 Sothua: $('#Sothua_create').val(),
                 Tobando: $('#Tobando_create').val(),
@@ -224,6 +224,8 @@
                 Dvt: $('#Dvt_create').val(),
                 Giakhoidiem: $('#Giakhoidiem_create').val(),
                 Giadaugia: $('#Giadaugia_create').val(),
+                MaDv: $('#Madv').val(),
+                
                 // Giasddat: $('#Giasddat_create').val(),
             },
             dataType: 'JSON',

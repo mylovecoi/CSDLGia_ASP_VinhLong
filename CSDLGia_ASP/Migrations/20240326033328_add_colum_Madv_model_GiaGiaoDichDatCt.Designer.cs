@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240326033328_add_colum_Madv_model_GiaGiaoDichDatCt")]
+    partial class add_colum_Madv_model_GiaGiaoDichDatCt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2174,9 +2176,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Loaidat")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaDv")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -2193,9 +2192,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tobanbo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")

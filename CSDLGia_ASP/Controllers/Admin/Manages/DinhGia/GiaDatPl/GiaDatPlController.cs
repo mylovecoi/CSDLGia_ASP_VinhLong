@@ -258,11 +258,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Delete"))
                 {
                     var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Id == id_delete);
-                    _db.GiaDatPhanLoai.Remove(model);
-                    _db.SaveChanges();
+                    _db.GiaDatPhanLoai.Remove(model);                    
 
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model.Mahs);
+                    if (model_ct.Any())
+                    {
                     _db.GiaDatPhanLoaiCt.RemoveRange(model_ct);
+                    }
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
                     _db.SaveChanges();
                     ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";

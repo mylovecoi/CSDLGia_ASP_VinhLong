@@ -63,6 +63,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giadaugia { get; set; }
         [NotMapped]
         public List<GiaDauGiaDatCt> GiaDauGiaDatCt { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
 
     }
 }

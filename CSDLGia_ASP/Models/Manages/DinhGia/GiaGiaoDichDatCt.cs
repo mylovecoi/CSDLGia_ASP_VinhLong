@@ -15,8 +15,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Gia { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
-        public DateTime Updated_at { get; set; }
-        [NotMapped]
+        public DateTime Updated_at { get; set; }       
         public string Madv { get; set; }
         [NotMapped]
         public string Tendv { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDatCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Solo, string Sothua, string Tobando, string Mota,
+        public JsonResult Store(string MaDv, string Mahs, string Solo, string Sothua, string Tobando, string Mota,
             double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
         {
             var model = new GiaDauGiaDatCt
@@ -35,6 +36,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 Giasddat = Giadaugia / Dientich,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
+                MaDv = MaDv,
+                TrangThai = "CXD",
             };
             _db.GiaDauGiaDatCt.Add(model);
             _db.SaveChanges();

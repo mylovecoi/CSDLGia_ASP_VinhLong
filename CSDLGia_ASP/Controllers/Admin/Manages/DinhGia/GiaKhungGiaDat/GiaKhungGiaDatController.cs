@@ -141,15 +141,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                 {
                     // xóa giá khung giá đất chi tiết chưa xác định
                     var check = _db.GiaKhungGiaDatCt.Where(t => t.Madv == Madv && t.Trangthai == "CXD");
-                    if (check != null)
+                    if (check.Any())
                     {
                         _db.GiaKhungGiaDatCt.RemoveRange(check);
                     }
-                    // xóa thông tin giấy tờ chưa xác định
-                    var giayto_remove = _db.ThongTinGiayTo.Where(x => x.Madv == Madv && x.Status == "CXD");
-                    if (giayto_remove.Any())
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    if (model_file_cxd.Any())
                     {
-                        _db.ThongTinGiayTo.RemoveRange(giayto_remove);
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                     }
                     _db.SaveChanges();
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
@@ -339,7 +350,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Edit"))
                 {
+
                     var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
+                    // xóa giá khung giá đất chi tiết chưa xác định
+                    var check = _db.GiaKhungGiaDatCt.Where(t => t.Madv == model.Madv && t.Trangthai == "CXD");
+                    if (check != null)
+                    {
+                        _db.GiaKhungGiaDatCt.RemoveRange(check);
+                    }
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == model.Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
+                    _db.SaveChanges();
 
                     var model_ct = _db.GiaKhungGiaDatCt.Where(t => t.Mahs == model.Mahs);
                     model.GiaKhungGiaDatCt = model_ct.ToList();
@@ -424,12 +460,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Delete"))
                 {
-                    var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Id == id_delete);
-                    _db.GiaKhungGiaDat.Remove(model);
-                    _db.SaveChanges();
-
+                    var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Id == id_delete);  
                     var model_ct = _db.GiaKhungGiaDatCt.Where(t => t.Mahs == model.Mahs);
+                    if (model_ct.Any())
+                    {
                     _db.GiaKhungGiaDatCt.RemoveRange(model_ct);
+                    }
+                    
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }                   
+                    _db.GiaKhungGiaDat.Remove(model);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaKhungGiaDat", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
