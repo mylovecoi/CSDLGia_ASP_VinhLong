@@ -211,21 +211,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Create"))
-                {
-                    //if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    //{
-                    //    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    //    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                    //    string extension = Path.GetExtension(Ipf1upload.FileName);
-                    //    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                    //    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                    //    using (var FileStream = new FileStream(path, FileMode.Create))
-                    //    {
-                    //        await Ipf1upload.CopyToAsync(FileStream);
-                    //    }
-                    //    request.Ipf1 = filename;
-                    //}
-
+                {            
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat
                     {
                         Mahs = request.Mahs,
@@ -340,25 +326,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request /*, IFormFile Ipf1upload*/)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request )
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Edit"))
-                {
-                    //if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    //{
-                    //    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    //    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                    //    string extension = Path.GetExtension(Ipf1upload.FileName);
-                    //    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                    //    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                    //    using (var FileStream = new FileStream(path, FileMode.Create))
-                    //    {
-                    //        await Ipf1upload.CopyToAsync(FileStream);
-                    //    }
-                    //    request.Ipf1 = filename;
-                    //}
+                {                    
                     var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;

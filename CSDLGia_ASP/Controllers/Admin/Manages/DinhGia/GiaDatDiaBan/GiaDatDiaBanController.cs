@@ -233,21 +233,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Create"))
                 {
-
-                    //if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    //{
-                    //    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    //    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                    //    string extension = Path.GetExtension(Ipf1upload.FileName);
-                    //    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                    //    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaDatDiaBan", filename);
-                    //    using (var FileStream = new FileStream(path, FileMode.Create))
-                    //    {
-                    //        await Ipf1upload.CopyToAsync(FileStream);
-                    //    }
-                    //    request.Ipf1 = filename;
-                    //}
-
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                     {
                         Mahs = request.Mahs,
