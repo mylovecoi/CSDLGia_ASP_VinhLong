@@ -40,7 +40,7 @@
                     <div class="form-group fv-plugins-icon-container">
                         <label>Phân loại nhóm hàng hóa dịch vụ</label>
                         <select id="Manhom" name="Manhom" class="form-control">
-                            
+                            <option value="all">--Tất cả--</option>
                             @foreach (var nhom in nhomtn)
                             {
                                 <option value="@nhom.Manhom">@nhom.Tennhom</option>
@@ -118,7 +118,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>

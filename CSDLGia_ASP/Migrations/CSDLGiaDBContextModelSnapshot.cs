@@ -2174,6 +2174,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Loaidat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MaDv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
@@ -2190,6 +2193,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tobanbo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
@@ -3382,6 +3388,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Gia")
                         .HasColumnType("float");
+
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
@@ -9710,7 +9719,13 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Madv")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mahs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Manhom")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("SapXep")
@@ -9753,6 +9768,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cap5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cap6")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")

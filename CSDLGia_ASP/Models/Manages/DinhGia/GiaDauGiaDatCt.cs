@@ -22,5 +22,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tobanbo { get; set; }
         public string Dvt { get; set; }
         public string Sotobanbo { get; set; }
+        public string TrangThai { get; set; }
+        public string MaDv { get; set; }
     }
 }
