@@ -115,6 +115,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <label>Mô tả: </label>
+                    <label style="color:blue;" id="MoTaDelete"></label>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -127,8 +129,9 @@
 </div>
 
 <script>
-    function SetDelete(id) {
+    function SetDelete(id,mota) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("MoTaDelete").value = mota;
     }
 
     function Chuyen(mahs) {
