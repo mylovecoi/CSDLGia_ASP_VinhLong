@@ -134,11 +134,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     {
                         _db.GiaDatDiaBanCt.RemoveRange(giadatdiabanchitiet);
                     }
-                    // xóa giấy tờ đính kèm chưa xác định
-                    var giayto_remove = _db.ThongTinGiayTo.Where(x => x.Madv == madv && x.Status == "CXD");
-                    if (giayto_remove.Any())
+                    // xóa giấy tờ đính kèm chưa xác định                    
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(x => x.Madv == madv && x.Status == "CXD");
+                    if (model_file_cxd.Any())
                     {
-                        _db.ThongTinGiayTo.RemoveRange(giayto_remove);
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                     }
                     _db.SaveChanges();
                     var model = _db.GiaDatDiaBan.Where(t => t.Soqd == soqd && t.Madiaban == madiaban).FirstOrDefault();
@@ -304,11 +315,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     if (model_ct.Any())
                     {
                         _db.GiaDatDiaBanCt.RemoveRange(model_ct);
-                    }                    
-                    var thongtingiayto = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
-                    if (thongtingiayto.Any())
+                    }
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
                     {
-                        _db.ThongTinGiayTo.RemoveRange(thongtingiayto);
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                     }
                     _db.SaveChanges();
 
@@ -341,11 +364,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     {
                         _db.GiaDatDiaBanCt.RemoveRange(giadatdiabanchitiet);
                     }
-                    // xóa giấy tờ đính kèm chưa xác định
-                    var giayto_remove = _db.ThongTinGiayTo.Where(x => x.Madv == model.Madv && x.Status == "CXD");
-                    if (giayto_remove.Any())
+                    // xóa giấy tờ đính kèm chưa xác định                    
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(x => x.Madv == model.Madv && x.Status == "CXD");
+                    if (model_file_cxd.Any())
                     {
-                        _db.ThongTinGiayTo.RemoveRange(giayto_remove);
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                     }
                     _db.SaveChanges();
                     var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs);

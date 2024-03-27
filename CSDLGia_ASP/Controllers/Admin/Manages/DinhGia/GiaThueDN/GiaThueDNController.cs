@@ -492,8 +492,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
                     LoaiDat = string.IsNullOrEmpty(LoaiDat) ? "" : LoaiDat;
 
-                  
-
                     var model = (from hosoct in _db.GiaThueMatDatMatNuocCt
                                  join hoso in _db.GiaThueMatDatMatNuoc on hosoct.Mahs equals hoso.Mahs
                                  join nhom in _db.GiaThueMatDatMatNuocNhom on hosoct.MaNhom equals nhom.Manhom
@@ -514,6 +512,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
+
                     model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.Dongia1 >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if(Manhom != "all") { model = model.Where(t=>t.MaNhom == Manhom); }
@@ -609,31 +608,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         }
 
 
-        [HttpPost("GiaThueMatDatMatNuoc/GetListHoSo")]
-        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                string result = "<select class='form-control' id='Mahs_Search' name='Mahs_Search'>";
-                result += "<option value='all'>--Tất cả---</option>";
-
-                if (model.Any())
-                {
-                    foreach (var item in model)
-                    {
-                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
-                    }
-                }
-                result += "</select>";
-                var data = new { status = "success", message = result };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
-                return Json(data);
-            }
-        }
     }
 }
