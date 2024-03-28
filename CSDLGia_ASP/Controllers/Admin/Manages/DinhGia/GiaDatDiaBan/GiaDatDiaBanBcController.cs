@@ -70,10 +70,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                                  {
-                                  
+                                     TenDonVi = hoso.TenDonVi,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      GhiChu = hoso.GhiChu,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất địa bàn";
@@ -100,28 +101,53 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("GiaDatDiaBan/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.baocao", "Index"))
                 {
-                    var model = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if (MaHsTongHop != "all")
-                    {
-                        model = model.Where(t => t.Mahs == MaHsTongHop);
-                    }
-                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
-                    List<string> list_donvi = model.Select(t => t.Madv).ToList();
-                    var model_ct = _db.GiaDatDiaBanCt.Where(t => list_hoso.Contains(t.Mahs));
-                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
-                    ViewData["HoSoCt"] = model_ct;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
+                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
+
+                    var model = from dgct in _db.GiaDatDiaBanCt
+                                join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
+                                select new VMDinhGiaDatDiaBanCt
+                                {
+                                    Id = dg.Id,
+                                    Mahs = dg.Mahs,
+                                    Diemdau = dgct.Diemdau,
+                                    Diemcuoi = dgct.Diemcuoi,
+                                    Soqd = dg.Soqd,
+                                    Thoidiem = dg.Thoidiem,
+                                    Mota = dgct.Mota,
+                                    Loaiduong = dgct.Loaiduong,
+                                    Hesok = dgct.Hesok,
+                                    MaDv = dgct.MaDv,
+
+                                };
+
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    List<string> list_madv = model.Select(t => t.MaDv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    var model_hoso = _db.GiaDatPhanLoai.Where(t => list_mahs.Contains(t.Mahs));
+
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
-                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["ChiTietHs"] = model_hoso;
+                    ViewData["NgayTu"] = ngaytu;
+                    ViewData["NgayDen"] = ngayden;
+
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    ViewData["Title"] = "Báo cáo chi tiết giá lệ giá đất địa bàn";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/BaoCao/BcCT.cshtml",model);
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["Title"] = "Báo cáo giá đất cụ thể";
+                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/BaoCao/BcCT.cshtml", model);
                 }
                 else
                 {
@@ -134,6 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
 
 
     }

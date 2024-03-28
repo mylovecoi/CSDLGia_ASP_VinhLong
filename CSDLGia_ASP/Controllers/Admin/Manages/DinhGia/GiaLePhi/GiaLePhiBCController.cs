@@ -42,6 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["MenuLv2"] = "menu_dglp";
                     ViewData["MenuLv3"] = "menu_dglp_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaPhiLePhi.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachNhom"] = _db.GiaPhiLePhiNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/Index.cshtml");
                 }
                 else
@@ -65,16 +66,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.baocao", "Index"))
                 {
 
-                    var model =(from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
-                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi 
-                                { 
-                                    TenDonVi = donvi.TenDv,
-                                    Mahs = hoso.Mahs,
-                                    Soqd = hoso.Soqd,
-                                    Thoidiem = hoso.Thoidiem,
-                                });
-                  
+                    var model = (from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi
+                                 {
+                                     TenDonVi = donvi.TenDv,
+                                     Mahs = hoso.Mahs,
+                                     Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
+                                 });
+
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";
@@ -115,24 +116,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
                     var model = from dgct in _db.GiaPhiLePhiCt
-                                     join dg in _db.GiaPhiLePhi on dgct.Mahs equals dg.Mahs
-                                     join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
-                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt
-                                     {
-                                         TenDv = donvi.TenDv,
-                                         Mahs = dgct.Mahs,
-                                         Madv = dg.Madv,
-                                         ThoiDiem = dg.Thoidiem,
-                                         MoTa = dg.Mota,
-                                         SoQD = dg.Soqd,
-                                         Ptcp = dgct.Ptcp,
-                                         Dvt = dgct.Dvt,
-                                         Phantram = dgct.Phantram,
-                                         Giatu = dgct.Giatu,
-                                         Phanloai = dgct.Phanloai,
-                                         Mucthutu = dgct.Mucthutu,
-                                         Trangthai = dg.Trangthai
-                                     };
+                                join dg in _db.GiaPhiLePhi on dgct.Mahs equals dg.Mahs
+                                join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
+                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt
+                                {
+                                    TenDv = donvi.TenDv,
+                                    Mahs = dgct.Mahs,
+                                    Madv = dg.Madv,
+                                    ThoiDiem = dg.Thoidiem,
+                                    MoTa = dg.Mota,
+                                    SoQD = dg.Soqd,
+                                    Ptcp = dgct.Ptcp,
+                                    Dvt = dgct.Dvt,
+                                    Phantram = dgct.Phantram,
+                                    Giatu = dgct.Giatu,
+                                    Phanloai = dgct.Phanloai,
+                                    Mucthutu = dgct.Mucthutu,
+                                    Trangthai = dg.Trangthai
+                                };
 
                     model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && t.Trangthai == "HT");
 
@@ -154,7 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ khung giá";
-                    return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/BaoCao/BcCT.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/BcCT.cshtml", model);
                 }
                 else
                 {

@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt>)ViewData["HoSoCt"];
+    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var hoso = (IEnumerable<GiaDauGiaDat>)ViewData["ChiTietHs"];
+
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
+@* @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt> *@
+    @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -19,42 +21,50 @@
         </td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU QUYỀN SỬ DỤNG ĐẤT</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ TRÚNG THẦU QUYỀN SỬ DỤNG ĐẤT</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-@foreach (var dv in DonVis)
-{
-    <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
-    </p>
-    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
-    @foreach (var hoso in hosodonvi)
-    {
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            Số QĐ: @hoso.Soqddaugia - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
-        </p>
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-        @*     @hoso.Mota *@
-        </p>
-        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
-        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-            <thead>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th style="text-align: center">STT</th>
+            <th style="text-align: center">Tên dự án</th>
+            <th style="text-align: center">Giá khởi điểm</th>
+            <th style="text-align: center">Giá trúng thầu</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donvi in donvis)
+        {
+            <tr>
+                <td></td>
+                <td colspan="5" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+            </tr>
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @foreach (var hosoindv in hosoInDv)
+            {
                 <tr>
-                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold">Số lô</th>
-                    <th style="text-align:center; font-weight:bold">Số thửa</th>
-                    <th style="text-align:center; font-weight:bold">Tờ bản đồ</th>
-                    <th style="text-align:center; font-weight:bold">Mô tả</th>
-                    <th style="text-align:center; font-weight:bold">Diện tích</th>
-                    <th style="text-align:center; font-weight:bold">Đơn vị tính</th>
-                    <th style="text-align:center; font-weight:bold">Giá khởi điểm</th>
-                    <th style="text-align:center; font-weight:bold">Giá đấu giá</th>
+                    <td></td>
+                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqdpagia - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
-            </thead>
-        </table>
-    }
-}
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                @foreach (var item in chitieths)
+                {
+                    <tr>
+                        <td style="text-align: center">@item.Tenduan</td>
+                        <td style="text-align: center">@item.Giakhoidiem</td>
+                        <td style="text-align: center">@item.Giadaugia</td>
+
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
