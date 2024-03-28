@@ -1,0 +1,218 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var DanhSachHoSo = (IEnumerable<GiaHangHoaTaiSieuThi>)ViewData["DanhSachHoSo"];
+
+
+    string FromDate = ((DateTime)ViewData["beginTime"]).ToString("yyyy-MM-dd");
+    string ToDate = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");
+    double beginPrice = ViewData["beginPrice"] as double? ?? 0;
+    double endPrice = ViewData["endPrice"] as double? ?? 0;
+
+    int record_id = 1;
+}
+
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        function ClickSearch() {
+            var fromDate = document.getElementById("beginTime_Search").value;
+            var toDate = document.getElementById("endTime_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaHangHoaTaiSieuThi/Search?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var beginTime = '&beginTime=' + $('#beginTime_Search').val();
+                    var endTime = '&endTime=' + $('#endTime_Search').val();
+                    var mahs = '&mahs=' + $('#mahs_Search').val();
+                    var beginPrice = '&beginPrice=' + $('#beginPrice_Search').val();
+                    var endPrice = '&endPrice=' + $('#endPrice_Search').val();
+
+                    var url = current_path_url + Madv + tsp + beginTime + endTime + mahs + beginPrice + endPrice + Ptcp;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
+        function Print() {
+            var form = document.getElementById("frm_search");
+            form.submit();
+        }
+
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá hàng hóa siêu thị
+                </span>
+            </h3>
+        </div>
+        <div class="col-xl-6" style="text-align:right;margin-top: auto">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
+                <i class="la la-print"></i>Kết xuất
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <form asp-controller="GiaHangHoaTaiSieuThi" asp-action="Print" method="post" target="_blank" id="frm_search">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold;">Đơn vị</label>
+                        <select class="form-control" id="Madv_Search" name="Madv_Search">
+                            <option value="all">--Tất cả--</option>
+                            @foreach (var item in dsdonvi)
+                            {
+                                <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thời gian nhập từ</label>
+                        <input type="date" class="form-control" name="beginTime_Search" id="beginTime_Search" value="@FromDate" onchange="GetList()" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thời gian nhập đến</label>
+                        <input type="date" class="form-control" name="endTime_Search" id="endTime_Search" value="@ToDate" onchange="GetList()" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thông tin quyết định</label>
+                        <select class="form-control" id="mahs_Search" name="mahs_Search">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var item in DanhSachHoSo)
+                            {
+                                <!option value="@item.Mahs" @(ViewData["mahs"].ToString() == item.Mahs ? "selected" : "")>
+                                Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)
+                                </!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn gia nhập từ</label>
+                        <input type="number" class="form-control" name="beginPrice_Search" id="beginPrice_Search" value="@beginPrice" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn gia nhập đến</label>
+                        <input type="number" class="form-control" name="endPrice_Search" id="endPrice_Search" value="@endPrice" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-xl-12" style="text-align:center">
+                <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
+            </div>
+        </div>
+        <hr />
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr>
+                    <th style="text-align:center" width="2%">STT</th>
+                    <td style="text-align:center" width="5%">Đơn vị nhập</td>
+                    <td style="text-align:center" width="5%">Số QĐ</td>
+                    <td style="text-align:center" width="5%">Thời điểm</td>
+                    <td style="text-align:center" width="20%">Mô tả</td>
+                    <th style="text-align:center" width="5%">Giá từ</th>
+                    <th style="text-align:center" width="5%">Giá đến</th>
+                    <th style="text-align:center" width="5%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@item.TenDv</td>
+                            <td style="text-align: center">
+                                @item.Soqd
+                            </td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: left">@item.Mota</td>
+                            <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giatu)</td>
+                            <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giaden)</td>
+                            <td>
+                                <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function GetList() {
+        var fromDate = document.getElementById("beginTime_Search").value;
+        var toDate = document.getElementById("endTime_Search").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+
+                $.ajax({
+                    url: '/GiaHangHoaTaiSieuThi/GetListHoSo',
+                    type: 'POST',
+                    data: {
+                        ngaytu: fromDate,
+                        ngayden: toDate,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Thành công!");
+                            $('#mahs_Search').replaceWith(data.message);
+                        } else {
+                            toastr.error(data.message, "Lỗi!!!");
+                        }
+                    }
+                });
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+    }
+</script>

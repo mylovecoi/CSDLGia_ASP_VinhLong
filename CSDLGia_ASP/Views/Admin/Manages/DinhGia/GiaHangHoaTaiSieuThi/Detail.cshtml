@@ -2,6 +2,9 @@
 @{
     int record_id = 1;
 }
+<!--Thông tin giấy tời-->
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/ThongTinGiayTo/Index.cshtml")
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -18,25 +21,14 @@
             <thead>
                 <tr style="text-align:center">
                     <th rowspan="2">STT</th>
-                    <th rowspan="2">Tên sản phẩm dịch vụ</th>
-                    <th colspan="2">Đơn giá</th>
-                    <th colspan="2">Đơn giá</th>
-                    <th colspan="2">Đơn giá</th>
-                    <th colspan="2">Đơn giá</th>
+                    <th rowspan="2">Mã hàng hóa</th>
+                    <th rowspan="2">Tên hàng hóa</th>
                     <th colspan="2">Đơn giá</th>
                     <th rowspan="2">Thao tác</th>
                 </tr>
                 <tr style="text-align:center">
-                    <th>Năm áp dụng</th>
-                    <th>Giá tiền</th>
-                    <th>Năm áp dụng</th>
-                    <th>Giá tiền</th>
-                    <th>Năm áp dụng</th>
-                    <th>Giá tiền</th>
-                    <th>Năm áp dụng</th>
-                    <th>Giá tiền</th>
-                    <th>Năm áp dụng</th>
-                    <th>Giá tiền</th>
+                    <th>Giá từ</th>
+                    <th>Giá đến</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,17 +38,10 @@
                     {
                         <tr>
                             <td style="text-align:center">@(record_id++)</td>
-                            <td style="text-align:center">@item.Doituongsd</td>
-                            <td style="text-align:center">@item.Namchuathue</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
-                            <td style="text-align:center">@item.Namchuathue1</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
-                            <td style="text-align:center">@item.Namchuathue2</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
-                            <td style="text-align:center">@item.Namchuathue3</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
-                            <td style="text-align:center">@item.Namchuathue4</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
+                            <td style="text-align:center">@item.Mahanghoa</td>
+                            <td style="text-align:center" class="success">@item.Tenhanghoa</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : "")</td>
+                            <td style="text-align:center" ;font-weight:bold">@(@item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : "")</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -96,20 +81,11 @@
 
 <script>
     function SetEdit(id_edit) {
-        var begin = $("#Tunam").val();
-        var datebegin = parseInt(begin);
-        var end = $("#Dennam").val();
-        var dateend = parseInt(end);
         $.ajax({
             url: '/GiaHangHoaTaiSieuThiCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit,
-                Nam: datebegin,
-                Nam1: datebegin + 1 <= dateend ? datebegin + 1 : "",
-                Nam2: datebegin + 2 <= dateend ? datebegin + 2 : "",
-                Nam3: datebegin + 3 <= dateend ? datebegin + 3 : "",
-                Nam4: datebegin + 4 <= dateend ? datebegin + 4 : "",
             },
             dataType: 'JSON',
             success: function (data) {
@@ -125,25 +101,14 @@
     }
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
-        var gia1 = $('#gia1_edit').val().replace(',', '');
-        var gia2 = $('#gia2_edit').val().replace(',', '');
-        var gia3 = $('#gia3_edit').val().replace(',', '');
-        var gia4 = $('#gia4_edit').val().replace(',', '');
+        var giatu = $('#giatu_edit').val().replace(',', '');
+        var giaden = $('#giaden_edit').val().replace(',', '');
         $.ajax({
             url: '/GiaHangHoaTaiSieuThiCt/Update',
             type: 'POST',
             data: {
-                Namchuathue: $('#nam_edit').val(),
-                Namchuathue1: $('#nam1_edit').val(),
-                Namchuathue2: $('#nam2_edit').val(),
-                Namchuathue3: $('#nam3_edit').val(),
-                Namchuathue4: $('#nam4_edit').val(),
-                Giachuathue: gia,
-                Giachuathue1: gia1,
-                Giachuathue2: gia2,
-                Giachuathue3: gia3,
-                Giachuathue4: gia4,
+                Giatu: giatu,
+                Giaden: giaden,
                 Id: $('#id_edit').val(),
             },
             dataType: 'JSON',

@@ -34,6 +34,8 @@
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
+            <input hidden asp-for="Thang" />
+            <input hidden asp-for="Nam" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -56,42 +58,24 @@
                         <select class="form-control select2basic" asp-for="Madiaban">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @((string)ViewData["Madv"] == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
-
+                                <!option value="@item.MaDiaBan" @(Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
                             }
                         </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@Model.Nam</span></label>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Lộ trình từ năm*</label>
-                        <select class="form-control select2basic" asp-for="Tunam">
-                            @{
 
-                                for (var i = nam_start; i <= nam_stop; i++)
-                                {
-                                    <option value="@i">Năm @i</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Lộ trình đến năm*</label>
-                        <select class="form-control select2basic" asp-for="Dennam">
-                            @{
-                                for (var i = nam_start; i <= nam_stop; i++)
-                                {
-                                    <option value="@i">Năm @i</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
@@ -100,14 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label class="control-label">File đính kèm</label>
-                        <input asp-for="Ipf1upload" type="file" class="form-control" accept=".doc, .pdf, .xlsx, .txt" />
-                    </div>
-                </div>
-            </div>
+
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Detail.cshtml")
         </div>
         <div class="card-footer" style="text-align:center">
