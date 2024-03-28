@@ -1,11 +1,8 @@
-﻿
-@{
+﻿@{
     Layout = "_LayoutReports";
-    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var hoso = (IEnumerable<GiaHhDvCn>)ViewData["ChiTietHs"];
-
+    var record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCong>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -20,54 +17,43 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
+
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ HH-DV KHÁC THEO QUY ĐỊNH CỦA PHÁP LUẬT CHUYÊN NGHÀNH</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ THUÊ TÀI SẢN CÔNG</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr style="text-align:center">
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Tên sản phẩm, dịch vụ</th>
-            <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Mức giá</th>
+        <tr>
+            <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Mô tả</th>
+            <th style="text-align: center">Số QĐ</th>
+            <th style="text-align: center">Ngày chuyển hồ sơ</th>
+            <th style="text-align: center">Ngày xét duyệt</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var donvi in donvis)
+        @foreach (var item in Model)
         {
             <tr>
-                <td></td>
-                <td colspan="8" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+                <td style="text-align: center">@(record_id++)</td>
+                <td>
+                    @item.TenDonVi<br />
+                    <b>Mã hồ sơ: </b><a asp-controller="GiaThueTSanCong" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
+                </td>
+                <td style="text-align: center">@item.Soqd</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+
             </tr>
-            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
-            @foreach (var hosoindv in hosoInDv)
-            {
-                <tr>
-                    <td></td>
-                    <td colspan="8" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
-                </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
-                {
-                    <tr>
-                        <td ></td>                   
-                        <td style="text-align:center">@item.Tenspdv</td>
-                        <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Dongia)</td>
-                       
-                    </tr>
-
-                }
-
-            }
         }
+        <tr>
+            <td></td>
+            <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>
+        </tr>
     </tbody>
 </table>
-
-
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
         <td width="45%" style="text-align: left">

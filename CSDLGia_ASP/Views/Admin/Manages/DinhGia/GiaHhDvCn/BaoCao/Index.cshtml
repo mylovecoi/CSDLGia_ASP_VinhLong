@@ -8,6 +8,8 @@
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
     var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn>)ViewData["DanhSachHoSo"];
+    var DanhSachNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnNhom>)ViewData["DanhSachNhom"];
+
 }
 
 @section custom_style {
@@ -80,13 +82,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
-                                <input type="date" id="tungay" name="tungay_th" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                <input type="date" id="tungay" name="tungay" value="@firstDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Đến ngày</b></label>
-                                <input type="date" id="denngay" name="denngay_th" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
+                                <input type="date" id="denngay" name="denngay" value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center">
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -129,6 +131,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên nhóm</label><br />
+                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachNhom)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
