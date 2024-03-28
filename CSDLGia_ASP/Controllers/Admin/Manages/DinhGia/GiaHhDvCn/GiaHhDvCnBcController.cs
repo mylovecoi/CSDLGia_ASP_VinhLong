@@ -108,7 +108,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tmnxh.bc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.baocao", "Index"))
                 {
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
