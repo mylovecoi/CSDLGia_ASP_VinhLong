@@ -204,7 +204,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
         [Route("GiaSpDvKhungGia/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia request)
+        public IActionResult Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

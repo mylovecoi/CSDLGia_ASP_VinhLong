@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Sheet = 1,
                         MadiabanBc = MadiabanBc
                     };
-                    var dsdonvi = (from db in _db.DsDiaBan
+                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -159,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             Nam = request.Nam.ToString()
                         };
                         var model_ct = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
-                                        join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(t => t.Matt == request.Matt) on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -188,6 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Mahs"] = model.Mahs;
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                        ViewData["DmDvt"] = _db.DmDvt.ToList();
                         ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                         ViewData["MenuLv1"] = "menu_hhdvk";
                         ViewData["MenuLv2"] = "menu_hhdvk_tt";
