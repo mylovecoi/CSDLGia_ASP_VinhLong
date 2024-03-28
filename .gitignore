@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaHhDvk/GiaHhDvkExcelController.cs
+/CSDLGia_ASP/Controllers/Admin/Manages/ThamDinhGia/ThamDinhGiaController.cs
+/CSDLGia_ASP/Controllers/Admin/Manages/ThamDinhGia/ThamDinhGiaController.cs
