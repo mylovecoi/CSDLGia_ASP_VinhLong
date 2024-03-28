@@ -110,33 +110,30 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null)
+            @foreach (var item in Model)
             {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: center">
-                            @foreach (var ds in dsdonvi)
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: center">
+                        @foreach (var ds in dsdonvi)
+                        {
+                            @if (item.Madv == ds.MaDv)
                             {
-                                @if (item.Madv == ds.MaDv)
-                                {
-                                    @ds.TenDv
-                                }
+                                @ds.TenDv
                             }
-                        </td>
-                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: center">@item.Ten</td>
-                        <td style="text-align: center">@item.Dvt</td>
-                        <td style="text-align: center">@item.Gia</td>
-                        <td style="text-align: center">
-                            <a asp-controller="GiaGiaoDichBDS" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                               target="_blank">
-                                <i class="icon-lg la la-eye text-success"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
+                        }
+                    </td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: center">@item.Ten</td>
+                    <td style="text-align: center">@item.Dvt</td>
+                    <td style="text-align: center">@item.Gia</td>
+                    <td style="text-align: center">
+                        <a asp-controller="GiaGiaoDichBDS" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                           target="_blank">
+                            <i class="icon-lg la la-eye text-success"></i>
+                        </a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
