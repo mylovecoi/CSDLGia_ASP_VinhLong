@@ -159,6 +159,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         _db.SaveChanges();
                     }
 
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                        _db.SaveChanges();
+                    }
+
                     var model = new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
                     {
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
@@ -326,19 +344,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.tt", "Edit"))
                 {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/ThamDinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
 
                     var model = _db.ThamDinhGia.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Dvyeucau = request.Dvyeucau;
@@ -354,10 +359,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     model.Ngayqdpheduyet = request.Ngayqdpheduyet;
                     model.Ghichu = request.Ghichu;
                     model.Phanloai = request.Phanloai;
-                    model.Ipf1 = request.Ipf1;
                     model.Updated_at = DateTime.Now;
 
+                    var modelct = _db.ThamDinhGiaCt.Where(t => t.Mahs == request.Mahs);
+                    if (modelct.Any()) { foreach (var ct in modelct) { ct.Trangthai = "XD"; } }
+                    var modelfile = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
+                    if (modelfile.Any()) { foreach (var file in modelfile) { file.Status = "Enable"; } }
+
                     _db.ThamDinhGia.Update(model);
+                    _db.ThongTinGiayTo.UpdateRange(modelfile);
+                    _db.ThamDinhGiaCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "ThamDinhGia", new { request.Madv });
