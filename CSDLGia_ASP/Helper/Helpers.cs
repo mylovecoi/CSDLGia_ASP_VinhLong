@@ -684,24 +684,24 @@ namespace CSDLGia_ASP.Helper
             {
                 //string str = String.Format("{0:n0}", db);
                 //return str;
-                if (number == Math.Floor(number))
+                if (Math.Abs(number % 1) < double.Epsilon)               
                 {
-                    // Nếu là số nguyên, định dạng theo dạng #.###
-                    return string.Format("{0:n0}", number);
+                    // Nếu là số nguyên, định dạng theo dạng #,###
+                    return number.ToString("#,##0").Replace(",",".");
                 }
                 else
                 {
                     // Nếu không phải là số nguyên, định dạng theo dạng #,##
-                    string formatted = number.ToString("#,##0.00");
+                    string formatted = number.ToString("#,##0.##");
                     if (formatted.EndsWith(".00"))
                     {
                         formatted = formatted.Substring(0, formatted.Length - 3);
                     }
-                    if (formatted.EndsWith("0"))
+                    if (formatted.EndsWith(".0"))
                     {
                         formatted = formatted.Substring(0, formatted.Length - 1);
                     }
-                    return formatted;
+                    return formatted.Replace(".", "*").Replace(",", ".").Replace("*", ",");
                 }
             }
         }
@@ -775,7 +775,8 @@ namespace CSDLGia_ASP.Helper
                 //    val = result;
                 //}
 
-                string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                //string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                string numericString = Regex.Replace(str, @"[^\d,]", "").Replace(',', '.');
 
                 // Lấy thông tin về cài đặt vùng của hệ thống
                 CultureInfo culture = CultureInfo.CurrentCulture;
@@ -1605,6 +1606,19 @@ namespace CSDLGia_ASP.Helper
                 }
             }
             return value;
+        }
+
+        public static DateTime ExcelConvertToDate(string dateString)
+        {
+            DateTime result;
+            if (DateTime.TryParseExact(dateString, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out result))
+            {
+                return result; // Trả về đối tượng DateTime đã được chuyển đổi
+            }
+            else
+            {
+                return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
+            }
         }
     }
 }
