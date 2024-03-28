@@ -3,8 +3,10 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
     public class GiaThueTSanCongExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
-        public GiaThueTSanCongExcelController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public GiaThueTSanCongExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index(string Madv)
@@ -29,6 +32,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.thongtin", "Create"))
                 {
+                    var model_ct_cxd = _db.GiaThueTaiSanCongCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+                    if (model_ct_cxd.Any())
+                    {
+                        _db.GiaThueTaiSanCongCt.RemoveRange(model_ct_cxd);
+                        _db.SaveChanges();
+                    }
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                        _db.SaveChanges();
+                    }
                     var model = new VMImportExcel
                     {
                         Sheet = 1,
@@ -132,8 +158,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
 
                                 Ththue = worksheet.Cells[row, 5].Value != null ?
                                             worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-                                Thuetungay = Helpers.ExcelConvertToDate(worksheet.Cells[row, 6].Value != null ?
-                                            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                //Thuetungay = Helpers.ExcelConvertToDate(worksheet.Cells[row, 6].Value != null ?
+                                //            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
 
                                 Dvt = worksheet.Cells[row, 7].Value != null ?
                                             worksheet.Cells[row, 7].Value.ToString().Trim() : "",

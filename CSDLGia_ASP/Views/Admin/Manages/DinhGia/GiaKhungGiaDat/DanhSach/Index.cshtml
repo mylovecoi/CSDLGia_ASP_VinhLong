@@ -147,7 +147,12 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-                            <td style="text-align: left" width="15%">@item.Tencqcq</td>
+                            <td style="text-align: left" width="15%">
+                                @if (item.Trangthai == "HT")
+                                {
+                                    @dsdonvi.FirstOrDefault(x=>x.MaDv== item.Macqcq).TenDv
+                                }
+                            </td>
                             <td width="12%" style="text-align:left;">
                                 <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
@@ -243,8 +248,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <label>Tiêu đề:</label>
-                <p style="color:blue;" id="MoTaDelete"></p>
+                    <label>Tiêu đề:</label>
+                    <p style="color:blue;" id="MoTaDelete"></p>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -258,7 +263,7 @@
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
 
 <script>
-    function SetDelete(id,mota) {
+    function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").innerHTML = mota;
     }

@@ -1,6 +1,7 @@
 using CSDLGia_ASP.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,10 @@ namespace CSDLGia_ASP
             {
                 options.Conventions.AddPageRoute("/Login", "");
             });
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new RequestCulture("vi-VN");
+            //});
             //services.AddMvc();
 
             /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

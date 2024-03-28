@@ -1,9 +1,9 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    // var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    // var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -54,7 +54,6 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
             }
-
         </div>
     </div>
     <hr />
@@ -80,17 +79,9 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in donvi)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -139,7 +130,9 @@
                             </td>
 
                             <td style="text-align: center">
-                                @item.Tencqcq
+                                @if(item.Trangthai == "HT"){
+                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+                                }
                             </td>
                             <td style="text-align: left;">
 
@@ -259,17 +252,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                                    @foreach (var item in dsdonvi)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>
@@ -287,7 +272,7 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
 <script>
-    function SetDelete(id,mota) {
+    function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").innerHTML = mota;
     }

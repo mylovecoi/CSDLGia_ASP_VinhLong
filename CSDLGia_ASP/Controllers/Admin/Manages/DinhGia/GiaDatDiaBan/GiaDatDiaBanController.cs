@@ -98,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDv"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;
-                    ViewData["MaDV"] = Madv;
+                    ViewData["Madv"] = Madv;
                     ViewData["Title"] = " Thông tin hồ sơ";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -169,8 +169,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                         };
                         ViewData["Khuvuc"] = _db.GiaDatDiaBanCt.ToList();
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H").ToList();
-                        ViewData["MaDiaBan"] = madiaban;
+                        ViewData["DsDonVi"] = _db.DsDonVi;
+
+                        ViewData["MaDv"] = madv;
                         ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
@@ -182,7 +183,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     }
                     else if (model != null && model.Trangthai != "HT")
-
                     {
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
@@ -199,6 +199,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     else
                     {
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["dsdonvi"] = _db.DsDonVi.ToList();
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
                         ViewData["Title"] = "Thông tin hồ sơ giá đất";

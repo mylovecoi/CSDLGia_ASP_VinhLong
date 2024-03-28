@@ -228,7 +228,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.thongtin", Name = "Giá tài sản công - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.xetduyet", Name = "Giá tài sản công - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.timkiem", Name = "Giá tài sản công - Tìm kiếm" });
-            
+
             //Giá phí lệ phí
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi", Name = "Giá phí lệ phí" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", Name = "ĐG - Giá phí lệ phí - Danh mục" });
@@ -417,7 +417,7 @@ namespace CSDLGia_ASP.Helper
 
 
             // Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu
-          
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.danhmuc", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.thongtin", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Thông tin" });
@@ -684,24 +684,24 @@ namespace CSDLGia_ASP.Helper
             {
                 //string str = String.Format("{0:n0}", db);
                 //return str;
-                if (number == Math.Floor(number))
+                if (Math.Abs(number % 1) < double.Epsilon)               
                 {
-                    // Nếu là số nguyên, định dạng theo dạng #.###
-                    return string.Format("{0:n0}", number);
+                    // Nếu là số nguyên, định dạng theo dạng #,###
+                    return number.ToString("#,##0").Replace(",",".");
                 }
                 else
                 {
                     // Nếu không phải là số nguyên, định dạng theo dạng #,##
-                    string formatted = number.ToString("#,##0.00");
+                    string formatted = number.ToString("#,##0.##");
                     if (formatted.EndsWith(".00"))
                     {
                         formatted = formatted.Substring(0, formatted.Length - 3);
                     }
-                    if (formatted.EndsWith("0"))
+                    if (formatted.EndsWith(".0"))
                     {
                         formatted = formatted.Substring(0, formatted.Length - 1);
                     }
-                    return formatted;
+                    return formatted.Replace(".", "*").Replace(",", ".").Replace("*", ",");
                 }
             }
         }
@@ -775,7 +775,8 @@ namespace CSDLGia_ASP.Helper
                 //    val = result;
                 //}
 
-                string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                //string numericString = Regex.Replace(str, @"[^\d,.]", "");
+                string numericString = Regex.Replace(str, @"[^\d,]", "").Replace(',', '.');
 
                 // Lấy thông tin về cài đặt vùng của hệ thống
                 CultureInfo culture = CultureInfo.CurrentCulture;
@@ -788,13 +789,13 @@ namespace CSDLGia_ASP.Helper
                 // Kiểm tra xem chuỗi sau khi loại bỏ các ký tự không phải số có thể được chuyển đổi thành double không
                 if (double.TryParse(numericString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, numberFormat, out double result))
                 {
-                    val= result;
+                    val = result;
                 }
 
 
             }
-           return val;
-        }              
+            return val;
+        }
 
         public static string ConvertYearToStr(int year)
         {
@@ -1588,6 +1589,23 @@ namespace CSDLGia_ASP.Helper
             {
                 return formatted;
             }
+        }
+
+        public static int ConvertStrToInt(string str)
+        {
+            int value = 0;
+            if (!string.IsNullOrEmpty(str))
+            {
+                try
+                {
+                    value = Convert.ToInt32(str);
+                }
+                catch
+                {
+                    value = 0;
+                }
+            }
+            return value;
         }
 
         public static DateTime ExcelConvertToDate(string dateString)
