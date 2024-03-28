@@ -45,7 +45,7 @@ namespace CSDLGia_ASP
             });
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture("vi-VN");
+                options.DefaultRequestCulture = new RequestCulture("en-US");
             });
             //services.AddMvc();
 
