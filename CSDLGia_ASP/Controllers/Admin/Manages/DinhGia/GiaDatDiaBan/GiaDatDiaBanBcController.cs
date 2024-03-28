@@ -77,7 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                      Thoidiem = hoso.Thoidiem,
                                  });
 
-                    ViewData["Title"] = "Báo cáo tổng hợp giá đất địa bàn";
+                    ViewData["Title"] = "Báo cáo giá đất địa bàn";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_bc";
@@ -127,6 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Loaiduong = dgct.Loaiduong,
                                     Hesok = dgct.Hesok,
                                     MaDv = dgct.MaDv,
+                                    Trangthai = dg.Trangthai,
 
                                 };
 
@@ -137,7 +138,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
-                    var model_hoso = _db.GiaDatPhanLoai.Where(t => list_mahs.Contains(t.Mahs));
+                    var model_hoso = _db.GiaDatDiaBan.Where(t => list_mahs.Contains(t.Mahs));
 
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
@@ -146,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá đất cụ thể";
+                    ViewData["Title"] = "Báo cáo giá đất địa bàn";
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/BaoCao/BcCT.cshtml", model);
                 }
                 else
