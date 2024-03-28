@@ -34,18 +34,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
 
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
-                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                                   select new VMDsDonVi
-                                   {
-                                       Id = dv.Id,
-                                       TenDiaBan = db.TenDiaBan,
-                                       MaDiaBan = dv.MaDiaBan,
-                                       TenDv = dv.TenDv,
-                                       MaDv = dv.MaDv,
-                                   }).ToList();
-                    if (dsdonvi.Count > 0)
-                    {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
@@ -54,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             if (string.IsNullOrEmpty(Madv))
                             {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                                Madv = _db.DsDonVi.OrderBy(t => t.Id).Select(x => x.MaDv).First();
                             }
                         }
 
@@ -65,53 +53,41 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
-                        var data = from giadat in model
-                                   join diaban in _db.DsDiaBan on giadat.Madiaban equals diaban.MaDiaBan
-                                   join cqcq in _db.DsDonVi on giadat.Macqcq equals cqcq.MaDv into joingroup
-                                   from subRightItem in joingroup.DefaultIfEmpty()
+                        var data = from giadat in model                                   
+                                   join donvi in _db.DsDonVi on giadat.Madv equals donvi.MaDv 
+                                   join diaban in _db.DsDiaBan on donvi.MaDiaBan equals diaban.MaDiaBan                                   
                                    select new GiaDatPhanLoai()
                                    {
                                        Id = giadat.Id,
-                                       Madiaban = giadat.Madiaban,
+                                       Madv = giadat.Madv,
                                        Thoidiem = giadat.Thoidiem,
                                        Thongtin = giadat.Thongtin,
                                        Trangthai = giadat.Trangthai,
-                                       Tendiaban = diaban.TenDiaBan,
-                                       Tencqcq = subRightItem.TenDv,
+                                       Tendiaban=diaban.TenDiaBan,                                                                             
                                        Mahs = giadat.Mahs,
                                        Lydo = giadat.Lydo,
+                                       Macqcq = giadat.Macqcq,
                                    };
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
-                            ViewData["DsDonVi"] = dsdonvi;
+                            ViewData["DsDonVi"] = _db.DsDonVi;
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
                         }
 
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        //ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
-                        ViewData["DsDiaBanAll"] = _db.DsDiaBan;
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        //ViewData["DsDiaBanAll"] = _db.DsDiaBan;
+                        //ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = " Thông tin hồ sơ giá các loại đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
                         ViewData["MenuLv3"] = "menu_dgdct_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", data);
-                    }
-                    else
-                    {
-                        ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-                        ViewData["Messages"] = "Thông tin hồ sơ giá các loại đất.";
-                        ViewData["MenuLv1"] = "menu_giadat";
-                        ViewData["MenuLv2"] = "menu_dgdct";
-                        ViewData["MenuLv3"] = "menu_dgdct_tt";
-                        return View("Views/Admin/Error/ThongBaoLoi.cshtml");
-                    }
-
+                        return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", data);    
                 }
                 else
                 {
@@ -167,8 +143,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ThongTinGiayTo = new List<CSDLGia_ASP.Models.Manages.DinhGia.ThongTinGiayTo>(),
                     };
                     ViewData["Madv"] = Madv;
-                    ViewData["Mahs"] = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["Mahs"] = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");                    
+                    ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
@@ -579,7 +555,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
-                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá tài sản trong tố tụng hình sự";
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tk";

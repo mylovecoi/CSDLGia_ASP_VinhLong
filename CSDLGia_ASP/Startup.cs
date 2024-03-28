@@ -43,10 +43,10 @@ namespace CSDLGia_ASP
             {
                 options.Conventions.AddPageRoute("/Login", "");
             });
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en-US");
-            });
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new RequestCulture("vi-VN");
+            //});
             //services.AddMvc();
 
             /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

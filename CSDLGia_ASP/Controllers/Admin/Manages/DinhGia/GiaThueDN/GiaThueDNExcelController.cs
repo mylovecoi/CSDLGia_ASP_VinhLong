@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 {
@@ -21,14 +23,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
     public class GiaThueDNExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
-        public GiaThueDNExcelController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public GiaThueDNExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index(string Madv)
         {
+            var model_ct_cxd = _db.GiaThueMatDatMatNuocCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+            if (model_ct_cxd.Any())
+            {
+                _db.GiaThueMatDatMatNuocCt.RemoveRange(model_ct_cxd);
+                _db.SaveChanges();
+            }
+            var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+            if (model_file_cxd.Any())
+            {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                foreach (var file in model_file_cxd)
+                {
+                    string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                    FileInfo fi = new FileInfo(path_del);
+                    if (fi != null)
+                    {
+                        System.IO.File.Delete(path_del);
+                        fi.Delete();
+                    }
+                }
+                _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                _db.SaveChanges();
+            }
             var model = new VMImportExcel
             {
                 MaDv = Madv,               

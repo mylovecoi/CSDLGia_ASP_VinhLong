@@ -93,7 +93,7 @@
                                 }
                                 @foreach (var item in donvi)
                                 {
-                                    <!option value="@item.MaDv" >@item.TenDv</!option>
+                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "") >@item.TenDv</!option>
                                 }
                             </optgroup>
                         }
