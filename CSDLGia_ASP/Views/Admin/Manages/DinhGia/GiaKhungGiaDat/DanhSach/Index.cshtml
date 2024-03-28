@@ -148,7 +148,7 @@
                                 }
                             </td>
                             <td style="text-align: left" width="15%">@item.Tencqcq</td>
-                            <td width="12%">
+                            <td width="12%" style="text-align:left;">
                                 <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -170,10 +170,9 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -256,6 +255,7 @@
         </div>
     </div>
 </div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
 
 <script>
     function SetDelete(id,mota) {

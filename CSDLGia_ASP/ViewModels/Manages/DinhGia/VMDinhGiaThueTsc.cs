@@ -76,5 +76,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 
         [NotMapped]
         public List<GiaThueTaiSanCongCt> GiaThueTaiSanCongCt { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
     }
 }

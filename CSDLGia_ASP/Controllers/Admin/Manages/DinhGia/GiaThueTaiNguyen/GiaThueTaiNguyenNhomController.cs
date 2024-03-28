@@ -54,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                 {
                     var request = new GiaThueTaiNguyenNhom
                     {
-                        Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Manhom = Manhom,
                         Tennhom = Tennhom,
                         Theodoi = Theodoi,
                         Created_at = DateTime.Now,
@@ -91,6 +91,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Mã nhóm tài nguyên*</label>";
+                        result += "<input type='text' id='manhom_edit' name='manhom_edit' class='form-control' value='" + model.Manhom + "'/>";
+                        result += "</div>";
+                        result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên nhóm tài nguyên*</label>";
@@ -133,18 +139,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
         [Route("GiaThueTaiNguyenDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, string Theodoi, string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.danhmuc", "Edit"))
                 {
                     var model = _db.GiaThueTaiNguyenNhom.FirstOrDefault(t => t.Id == Id);
-                    model.Tennhom = Tennhom;
-                    model.Theodoi = Theodoi;
-                    model.Updated_at = DateTime.Now;
-                    _db.GiaThueTaiNguyenNhom.Update(model);
-                    _db.SaveChanges();
+                    if (model != null)
+                    {
+                        var model_ct = _db.GiaThueTaiNguyenDm.Where(t => t.Manhom == model.Manhom);
+                        if (model_ct.Any())
+                        {
+                            foreach (var item in model_ct) { item.Manhom = Manhom; }
+                            _db.GiaThueTaiNguyenDm.UpdateRange(model_ct);
+                        }
+                        model.Manhom = Manhom;
+                        model.Tennhom = Tennhom;
+                        model.Theodoi = Theodoi;
+                        model.Updated_at = DateTime.Now;
+                        _db.GiaThueTaiNguyenNhom.Update(model);
+                        _db.SaveChanges();
+                    }
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
                     return Json(data);

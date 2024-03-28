@@ -17,6 +17,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Cap3 { get; set; }
         public string Cap4 { get; set; }
         public string Cap5 { get; set; }
+        public string Cap6 { get; set; }
         public string Dvt { get; set; }
         public string Sapxep { get; set; }
         public string Theodoi { get; set; }

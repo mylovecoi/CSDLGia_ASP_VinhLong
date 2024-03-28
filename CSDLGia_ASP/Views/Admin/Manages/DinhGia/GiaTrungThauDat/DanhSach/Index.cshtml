@@ -55,7 +55,6 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
             }
-
         </div>
     </div>
     <hr />
@@ -79,11 +78,11 @@
             </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Địa bàn</label>
-                    <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv">
+                        @foreach (var db in dscqcq)
                         {
-                            <!option value="@db.MaDiaBan" @((string)ViewData["Madv"] == db.MaDiaBan ? "selected" : "")>&emsp;@db.TenDiaBan</!option>
+                            <!option value="@db." @((string)ViewData["Madv"] == db.MaDv ? "selected" : "")>&emsp;@db.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -150,7 +149,7 @@
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.thongtin", "Delete"))
                                     {
 
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Tenduan')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
                                     }
@@ -185,6 +184,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <label>Tên dự án: </label>
+                    <label style="color:blue;" id="MoTaDelete"></label>
                     <input id="id_delete" name="id_delete" type="hidden" />
                 </div>
                 <div class="modal-footer">
@@ -245,8 +246,9 @@
 </div>
 
 <script>
-    function SetDelete(id) {
+    function SetDelete(id,mota) {
         document.getElementById("id_delete").value = id;
+        document.getElementById("MoTaDelete").innerHTML = mota;
     }
 
     function SetComplete(mahs) {

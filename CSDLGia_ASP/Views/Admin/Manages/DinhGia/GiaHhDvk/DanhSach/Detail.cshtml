@@ -81,7 +81,8 @@
             url: '/GiaHhDvkCt/Edit',
             type: 'POST',
             data: {
-                Id: id_edit
+                Id: id_edit,
+                Matt: $('#Matt').val()
             },
             dataType: 'JSON',
             success: function (data) {
@@ -107,7 +108,8 @@
                 Gia: gia,
                 Loaigia: $('#loaigia_edit').val(),
                 Nguontt: $('#nguontt_edit').val(),
-                Id: $('#id_edit').val()
+                Id: $('#id_edit').val(),
+                Matt: $('#Matt').val()
             },
             dataType: 'JSON',
             success: function (data) {

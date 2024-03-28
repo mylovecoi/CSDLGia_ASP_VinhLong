@@ -123,13 +123,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Create"))
                 {
-                    var check = _db.GiaGiaoDichDatCt.Where(t => t.Trangthai == "CXD");
-                    if (check != null)
+                    var check = _db.GiaGiaoDichDatCt.Where(t => t.Madv == MadvBc && t.Trangthai == "CXD");
+                    if (check.Any())
                     {
                         _db.GiaGiaoDichDatCt.RemoveRange(check);
-                        _db.SaveChanges();
                     }
-
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == MadvBc);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
+                    _db.SaveChanges();
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat
                     {
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
@@ -158,6 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
+                            Madv = model.Madv,
                         });
                     }
                     _db.GiaGiaoDichDatCt.AddRange(chitiet);
@@ -189,26 +206,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Create"))
-                {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
-
+                {            
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat
                     {
                         Mahs = request.Mahs,
@@ -227,9 +230,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         Updated_at = DateTime.Now,
                     };
                     _db.GiaGiaoDichDat.Add(model);
-                    _db.SaveChanges();
-
-                    var modelct = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == request.Mahs);
+                    // Lưu lại hồ sơ chi tiết chưa xác định
+                    var modelct = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == request.Mahs && t.Trangthai == "CXD");
                     if (modelct != null)
                     {
                         foreach (var item in modelct)
@@ -237,8 +239,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                             item.Trangthai = "XD";
                         }
                     }
-                    _db.GiaGiaoDichDatCt.UpdateRange(modelct);
-                    _db.SaveChanges();
+                    var giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs && t.Status == "CXD");
+                    if (giayto.Any())
+                    {
+                        foreach (var item in giayto)
+                        {
+                            item.Status = "XD";
+                        }
+                    }
+                    await _db.SaveChangesAsync();
 
                     return RedirectToAction("Index", "GiaGiaoDichDat", new { request.Madv });
                 }
@@ -262,11 +271,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Edit"))
                 {
+
                     var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == Mahs);
+                    // xóa hồ sơ chi tiết chưa xác định
+                    var check = _db.GiaGiaoDichDatCt.Where(t => t.Madv == model.Madv && t.Trangthai == "CXD");
+                    if (check.Any())
+                    {
+                        _db.GiaGiaoDichDatCt.RemoveRange(check);
+                    }
+
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == model.Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
+                    _db.SaveChanges();
+                    //
 
                     var model_ct = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs);
 
                     model.GiaGiaoDichDatCt = model_ct.ToList();
+                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs).ToList();
 
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
                     ViewData["MenuLv1"] = "menu_giadat";
@@ -289,26 +326,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat request )
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Edit"))
-                {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
-
+                {                    
                     var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
                     model.Thoidiem = request.Thoidiem;
@@ -320,7 +343,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     model.Updated_at = DateTime.Now;
 
                     _db.GiaGiaoDichDat.Update(model);
-                    _db.SaveChanges();
+                    // Lưu lại hồ sơ chi tiết chưa xác định
+                    var modelct = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == request.Mahs && t.Trangthai == "CXD");
+                    if (modelct != null)
+                    {
+                        foreach (var item in modelct)
+                        {
+                            item.Trangthai = "XD";
+                        }
+                    }
+                    var giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs && t.Status == "CXD");
+                    if (giayto.Any())
+                    {
+                        foreach (var item in giayto)
+                        {
+                            item.Status = "XD";
+                        }
+                    }
+                    await _db.SaveChangesAsync();
 
                     return RedirectToAction("Index", "GiaGiaoDichDat", new { request.Madv });
                 }
@@ -345,11 +385,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Delete"))
                 {
                     var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Id == id_delete);
-                    _db.GiaGiaoDichDat.Remove(model);
-                    _db.SaveChanges();
 
                     var model_ct = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs);
-                    _db.GiaGiaoDichDatCt.RemoveRange(model_ct);
+                    if (model_ct.Any())
+                    {
+                        _db.GiaGiaoDichDatCt.RemoveRange(model_ct);
+                    }
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
+                    _db.GiaGiaoDichDat.Remove(model);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaGiaoDichDat", new { model.Madv });
@@ -459,21 +518,56 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/TimKiem")]
         [HttpGet]
-        public IActionResult Search()
+        public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Index"))
                 {
+                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : ngaynhap_den;
+                    ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : ngaynhap_tu;
 
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    var model = (from giathuetnct in _db.GiaGiaoDichDatCt
+                                 join giathuetn in _db.GiaGiaoDichDat on giathuetnct.Mahs equals giathuetn.Mahs
+                                 join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
+                                 /*join nhomtn in _db.GiaGiaoDichDatNhom on giathuetn.Manhom equals nhomtn.Manhom*/
+                                 select new GiaGiaoDichDatCt
+                                 {
+                                     Id = giathuetnct.Id,
+                                     Gia = giathuetnct.Gia,
+                                     Mahs = giathuetnct.Mahs,
+                                     Madv = giathuetn.Madv,
+                                     Manhom = giathuetn.Manhom,
+                                     Thoidiem = giathuetn.Thoidiem,
+                                     Tendv = donvi.TenDv,
+                                     Ten= giathuetnct.Ten,
+                                     
+                                     /*Tennhom = nhomtn.Tennhom,*/
+                                 });
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den);
+
+                    if (madv != "all")
                     {
-                        ViewData["Madv"] = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        model = model.Where(t => t.Madv == madv);
                     }
-                    else
+
+                    if (manhom != "all")
                     {
-                        ViewData["Madv"] = "";
+                        model = model.Where(t => t.Manhom == manhom);
                     }
+                    model = model.Where(t => t.Gia >= gia_tu);
+                    if (gia_den > 0)
+                    {
+                        model = model.Where(t => t.Gia <= gia_den);
+                    }
+                    ViewData["ngaynhap_tu"] = ngaynhap_tu;
+                    ViewData["ngaynhap_den"] = ngaynhap_den;
+                    ViewData["gia_tu"] = gia_tu;
+                    ViewData["gia_den"] = gia_den;
+                    ViewData["madv"] = madv;
+                    ViewData["manhom"] = manhom;
+
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaGiaoDichDatNhom.Where(t => t.Theodoi == "TD").ToList();
@@ -481,7 +575,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/Index.cshtml");
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/Index.cshtml",model);
 
                 }
                 else

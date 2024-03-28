@@ -591,7 +591,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/TimKiem/KetQua")]
         [HttpPost]
-        public IActionResult Result(string madv, string tenspdv, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, double giatd_tu, double giatd_den)
+        public IActionResult Result(string madv, string tenspdv, DateTime ngaynhap_tu, DateTime ngaynhap_den,
+            double giatd_tu, double giatd_den, string tendvtd, string tendvyctd)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -613,18 +614,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                      Tendv = dv.TenDv,
                                      Tttstd = tdg.Tttstd,
                                      Dvyeucau = tdg.Dvyeucau,
+                                     Dvthamdinh = tdg.Dvthamdinh,
                                  });
 
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-
+                    //Tên hàng hoá thẩm định
                     if (!string.IsNullOrEmpty(tenspdv))
                     {
                         model = model.Where(t => t.Tents.Contains(tenspdv));
                     }
 
+                    //Tên đơn vị thẩm định
+                    if (!string.IsNullOrEmpty(tendvtd))
+                    {
+                        model = model.Where(t => t.Dvthamdinh.Contains(tendvtd));
+                    }
+
+                    //Tên đơn vị yêu cầu thẩm định
+                    if (!string.IsNullOrEmpty(tendvtd))
+                    {
+                        model = model.Where(t => t.Dvyeucau.Contains(tendvyctd));
+                    }
+
+                    //Thời gian thẩm định
                     if (ngaynhap_tu.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
@@ -635,13 +650,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
                     }
 
-                    model = model.Where(t => t.Giadenghi >= gia_tu);
-                    if (gia_den > 0)
+                    //Giá thị thẩm định
+                    if (giatd_tu > 0)
                     {
-                        model = model.Where(t => t.Giadenghi <= gia_den);
+                        model = model.Where(t => t.Giatritstd >= giatd_tu);
                     }
 
-                    model = model.Where(t => t.Giatritstd >= giatd_tu);
                     if (giatd_den > 0)
                     {
                         model = model.Where(t => t.Giatritstd <= giatd_den);
@@ -664,6 +678,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
     }
 }

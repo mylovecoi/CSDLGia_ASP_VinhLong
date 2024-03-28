@@ -4,22 +4,22 @@ using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
 using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using Microsoft.Extensions.Hosting;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 {
     public class TaiSanCongBcController : Controller
     {
-
         private readonly CSDLGiaDBContext _db;
 
         public TaiSanCongBcController(CSDLGiaDBContext db)
@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             _db = db;
         }
 
-        [Route("BaoCaoTaiSanCong")]
+        [Route("TaiSanCongBc/BaoCao")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,13 +35,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.baocao", "Index"))
                 {
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["DanhSachHoSo"] = _db.GiaTaiSanCong.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_bc";
+                    ViewData["DanhSachHoSo"] = _db.GiaTaiSanCong.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/BaoCao/Index.cshtml");
                 }
                 else
@@ -56,7 +55,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             }
         }
 
-        [Route("GiaTaiSanCong/BaoCao/BcTH")]
+
+        [Route("TaiSanCongBc/BaoCao/BcTH")]
         [HttpPost]
         public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky)
         {
@@ -65,25 +65,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.baocao", "Index"))
                 {
 
-                    var model = (from pl in _db.GiaTaiSanCong.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join dv in _db.DsDonVi on pl.Madv equals dv.MaDv
+                    var model = (from hoso in _db.GiaTaiSanCong.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
                                  {
-                                     Id = pl.Id,
-                                     Mahs = pl.Mahs,
-                                     Soqd = pl.Soqd,
-                                     Thoidiem = pl.Thoidiem,
-                                     Tentaisan = dv.TenDv,
+                                     TenDonVi = donvi.TenDv,
+                                     Mahs = hoso.Mahs,
+                                     Soqd = hoso.Soqd,
                                  });
-                    ViewData["tungay"] = tungay;
-                    ViewData["denngay"] = denngay;
-                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    ViewData["Title"] = "Báo cáo tổng hợp giá tài sản công";
+
+                    ViewData["Title"] = "Báo cáo giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_bc";
-
+                    ViewData["NgayTu"] = tungay;
+                    ViewData["NgayDen"] = denngay;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -98,30 +96,59 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             }
         }
 
-        [Route("GiaTaiSanCong/BaoCao/BcCT")]
+        [Route("TaiSanCongBc/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.baocao", "Index"))
                 {
-                    var model = _db.GiaTaiSanCong.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if(MaHsTongHop != "all")
-                    {
-                        model = model.Where(t=>t.Mahs == MaHsTongHop);
-                    }
-                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
-                    var model_ct = _db.GiaTaiSanCongCt.Where(t => list_hoso.Contains(t.Mahs));
-                    List<string> list_donvi = model.Select(t=>t.Madv).ToList();
-                    var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
-                
-                    ViewData["HoSoCt"] = model_ct;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
+                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
+                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
+
+
+                    var model = (from hosoct in _db.GiaTaiSanCongCt
+                                 join hoso in _db.GiaTaiSanCong on hosoct.Mahs equals hoso.Mahs
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt
+                                 {
+                                     Id = hoso.Id,
+                                     Mahs = hoso.Mahs,
+                                     Madv = hoso.Madv,  
+                                     Thoidiem = hoso.Thoidiem,
+                                     Tentaisan = hosoct.Tentaisan,
+                                     Dacdiem = hosoct.Dacdiem,
+                                     Giathue = hosoct.Giathue,
+                                     Giaconlai = hosoct.Giaconlai,
+                                     Giapheduyet = hosoct.Giapheduyet,
+                                     Giaban = hosoct.Giaban,
+                                     Trangthai = hoso.Trangthai
+                                 });
+
+             
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+
+                    List<string> list_mahs = model.Select(t => t.Mahs).ToList();
+                    var model_hoso = _db.GiaTaiSanCong.Where(t => list_mahs.Contains(t.Mahs));
+
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["Title"] = "Báo cáo chi tiết giá tài sản công";
-                    ViewData["ThoiDiemKX"] = "Từ ngày " + Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
-                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["ChiTietHs"] = model_hoso;
+                    ViewData["NgayTu"] = ngaytu;
+                    ViewData["NgayDen"] = ngayden;
+
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    ViewData["Title"] = "Báo cáo giá tài sản công";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/BaoCao/BcCT.cshtml", model);
                 }
                 else
@@ -133,33 +160,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        [HttpPost("GiaTaiSanCong/BaoCao/GetListHoSo")]
-        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                var model = _db.GiaTaiSanCong.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
-                result += "<option value='all'>--Tất cả---</option>";
-
-                if (model.Any())
-                {
-                    foreach (var item in model)
-                    {
-                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
-                    }
-                }
-                result += "</select>";
-                var data = new { status = "success", message = result };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
-                return Json(data);
             }
         }
 

@@ -24,14 +24,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.ThamDinhGia
         {
             var model = new CSDLGia_ASP.ViewModels.VMImportExcel
             {
-                LineStart = 2,
+                LineStart = 4,
                 LineStop = 1000,
                 Sheet = 1,
                 MaDv = Madv,
             };
-            ViewData["MenuLv1"] = "menu_dg";
-            ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
-            ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
+            ViewData["MenuLv1"] = "menu_tdg";
+            ViewData["MenuLv2"] = "menu_tdg_tk";
             ViewData["Title"] = "Thông tin hồ sơ thẩm định giá";
             return View("Views/Admin/Manages/ThamDinhGia/Excels/Excel.cshtml", model);
         }

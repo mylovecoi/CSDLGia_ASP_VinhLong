@@ -258,11 +258,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Delete"))
                 {
                     var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Id == id_delete);
-                    _db.GiaDatPhanLoai.Remove(model);
-                    _db.SaveChanges();
+                    _db.GiaDatPhanLoai.Remove(model);                    
 
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model.Mahs);
+                    if (model_ct.Any())
+                    {
                     _db.GiaDatPhanLoaiCt.RemoveRange(model_ct);
+                    }
+                    // xóa thông tin giấy tờ chưa lưu lại
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
                     _db.SaveChanges();
                     ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
@@ -508,46 +527,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }
+        }        
 
         [Route("GiaDatCuThe/Search")]
         [HttpGet]
-        public IActionResult Search()
+        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string mld="All", string madv ="All")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
                 {
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
-                    ViewData["Title"] = "Tìm kiếm thông tin định giá đất cụ thể";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/Index.cshtml");
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        [Route("GiaDatCuThe/Result")]
-        [HttpPost]
-        public IActionResult Result(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string mld, string madv)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
-                {
+                    beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year,01,01) : beginTime;
+                    endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year,12,31) : endTime;
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
                                  join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
@@ -565,7 +556,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
                                  });
-
+                    model = model.Where(x=>x.Thoidiem >= beginTime && x.Thoidiem <= endTime);
                     if (madv != "All")
                     {
                         model = model.Where(t => t.Madv == madv);
@@ -573,16 +564,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     if (mld != "All")
                     {
                         model = model.Where(t => t.Maloaidat == mld);
-                    }
-                    if (beginTime.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem >= beginTime);
-                    }
-
-                    if (endTime.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem <= endTime);
-                    }
+                    }                    
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
                     {

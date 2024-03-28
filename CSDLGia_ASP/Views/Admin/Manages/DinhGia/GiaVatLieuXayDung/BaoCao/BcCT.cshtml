@@ -1,9 +1,10 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt>)ViewData["HoSoCt"];
+    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var hoso = (IEnumerable<GiaVatLieuXayDung>)ViewData["ChiTietHs"];
+
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -21,49 +22,52 @@
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ VẬT LIỆU XÂY DỰNG</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-@foreach (var dv in DonVis)
-{
-    <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
-    </p>
-    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
-    @foreach (var hoso in hosodonvi)
-    {
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
-        </p>
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-          @*   @hoso.Mota *@
-        </p>
-        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
-        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-            <thead>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th style="text-align:center">STT</th>
+            <th style="text-align:center">Tên vật liệu</th>
+            <th style="text-align:center">Đơn vị tính</th>
+            <th style="text-align:center">Tiêu chuẩn kỹ thuật</th>
+            <th style="text-align:center">Giá</th>
+            <th style="text-align:center">Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donvi in donvis)
+        {
+            <tr>
+                <td></td>
+                <td colspan="5" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+            </tr>
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @foreach (var hosoindv in hosoInDv)
+            {
                 <tr>
-                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold">Danh mục vật liệu</th>
-                    <th style="text-align:center; font-weight:bold">Tiêu chuẩn kỹ thuật</th>
-                    <th style="text-align:center; font-weight:bold">Đơn giá</th>
-                    <th style="text-align:center; font-weight:bold">Ghi chú</th>
+                    <td></td>
+                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
-            </thead>
-            @* <tbody>
-                @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                @foreach (var item in chitieths)
                 {
-                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                     <tr>
-                        <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
-                        <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
-                        <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
-
+                        <td>@item.STTHienThi</td>
+                        <td style="text-align:left" class="active">@item.Ten</td>
+                        <td style="text-align:center" class="active">@item.Dvt</td>
+                        <td style="text-align:center" class="active">@item.TieuChuan</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Gia)</td>
+                        <td style="text-align:center">@item.GhiChu</td>
                     </tr>
+
                 }
-            </tbody> *@
-        </table>
-    }
-}
+
+            }
+        }
+    </tbody>
+</table>
 
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
