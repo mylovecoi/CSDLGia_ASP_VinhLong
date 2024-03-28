@@ -47,8 +47,8 @@
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
                     var NoiDung = '&MoTa=' + $('#Mota_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(",", ".");//.replace(/\./g, ',');
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(",", ".");//.replace(/\./g, ',');
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(",", ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(",", ".");
 
                     var url = current_path_url + Madv + Manhom + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + NoiDung;
                     window.location.href = url;
@@ -210,19 +210,19 @@
                         <td style="text-align:center">@item.Tennhom</td>
                         <td style="text-align:left">@item.MoTa</td>
                         <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung1)</td>
-                        <td style="text-align:center">@item.GiaRung2</td>
-                        <td style="text-align:center">@item.GiaRung3</td>
-                        <td style="text-align:center">@item.GiaRung4</td>
-                        <td style="text-align:center">@item.GiaRung5</td>
-                        <td style="text-align:center">@item.GiaRung6</td>
-                        <td style="text-align:center">@item.GiaChoThue1</td>
-                        <td style="text-align:center">@item.GiaChoThue2</td>
-                        <td style="text-align:center">@item.GiaBoiThuong1</td>
-                        <td style="text-align:center">@item.GiaBoiThuong2</td>
-                        <td style="text-align:center">@item.GiaBoiThuong3</td>
-                        <td style="text-align:center">@item.GiaBoiThuong4</td>
-                        <td style="text-align:center">@item.GiaBoiThuong5</td>
-                        <td style="text-align:center">@item.GiaBoiThuong6</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung2)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung3)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung4)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung5)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung6)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaChoThue1)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaChoThue2)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong1)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong2)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong3)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong4)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong5)</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong6)</td>
                         <td>
                             <a asp-controller="Giarung" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
                                target="_blank">

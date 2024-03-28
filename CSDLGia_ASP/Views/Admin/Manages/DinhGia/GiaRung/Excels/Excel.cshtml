@@ -20,10 +20,9 @@
             </h3>
         </div>
     </div>
-    @Helpers.ConvertStrToDb("529,84")
     <!--begin::Form-->
     <form asp-controller="GiarungExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden asp-for="MaDv" />
+        <input hidden asp-for="MaDv"  />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>

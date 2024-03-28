@@ -37,6 +37,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
                 {
+                    var modelct_cxd = _db.GiaRungCt.Where(t => t.Madv == Madv && t.Trangthai == "CXD");
+                    if (modelct_cxd.Any())
+                    {
+                        _db.GiaRungCt.RemoveRange(modelct_cxd);
+                        _db.SaveChanges();
+                    }
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                        _db.SaveChanges();
+                    }
+
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
                         MaDv = Madv,                     
