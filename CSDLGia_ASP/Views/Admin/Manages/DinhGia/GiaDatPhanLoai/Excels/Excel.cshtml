@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt
+﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @{
     var Madv = ViewData["Madv"];
@@ -32,101 +32,7 @@
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                     <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaDatPl.xlsx</span>
                 </a>
-            </div>
-            @* <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
-            </div>
-            <div class="row">
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Tên đường giới hạn khu vực</label>
-                        <select asp-for="Khuvuc" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                        
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Mã loại đất</label>
-                        <select asp-for="Maloaidat" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Vị trí</label>
-                        <select asp-for="Vitri" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Giá đất tại bảng</label>
-                        <select asp-for="Banggiadat" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Giá đất cụ thể</label>
-                        <select asp-for="Giacuthe" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Địa giới từ</label>
-                        <select asp-for="Diagioitu" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Địa giới đến</label>
-                        <select asp-for="Diagioiden" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Hệ số điều chỉnh</label>
-                        <select asp-for="Hesodc" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div> *@
+            </div>            
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>

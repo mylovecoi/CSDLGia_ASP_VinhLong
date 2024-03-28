@@ -1,6 +1,6 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"]; // truyền sang từ ViewData
-                                                                     //var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"]; // truyền sang từ ViewData
+                                                             //var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
 }
 
@@ -58,9 +58,9 @@
                     <div class="form-group">
                         <label>Địa bàn</label>
                         <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                            @foreach (var item in dsdiaban)
+                            @foreach (var item in dsdonvi)
                             {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                                <!option value="@item.MaDv" @(item.MaDv == (string)ViewData["MaDv"] ? "selected" : "")>&emsp;@item.TenDv</!option>
                             }
                         </select>
                     </div>

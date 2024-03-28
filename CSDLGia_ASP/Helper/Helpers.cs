@@ -228,7 +228,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.thongtin", Name = "Giá tài sản công - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.xetduyet", Name = "Giá tài sản công - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.timkiem", Name = "Giá tài sản công - Tìm kiếm" });
-            
+
             //Giá phí lệ phí
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi", Name = "Giá phí lệ phí" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", Name = "ĐG - Giá phí lệ phí - Danh mục" });
@@ -417,7 +417,7 @@ namespace CSDLGia_ASP.Helper
 
 
             // Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu
-          
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.danhmuc", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.thongtin", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Thông tin" });
@@ -789,13 +789,13 @@ namespace CSDLGia_ASP.Helper
                 // Kiểm tra xem chuỗi sau khi loại bỏ các ký tự không phải số có thể được chuyển đổi thành double không
                 if (double.TryParse(numericString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, numberFormat, out double result))
                 {
-                    val= result;
+                    val = result;
                 }
 
 
             }
-           return val;
-        }              
+            return val;
+        }
 
         public static string ConvertYearToStr(int year)
         {
@@ -1591,17 +1591,21 @@ namespace CSDLGia_ASP.Helper
             }
         }
 
-        public static DateTime ExcelConvertToDate(string dateString)
+        public static int ConvertStrToInt(string str)
         {
-            DateTime result;
-            if (DateTime.TryParseExact(dateString, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out result))
+            int value = 0;
+            if (!string.IsNullOrEmpty(str))
             {
-                return result; // Trả về đối tượng DateTime đã được chuyển đổi
+                try
+                {
+                    value = Convert.ToInt32(str);
+                }
+                catch
+                {
+                    value = 0;
+                }
             }
-            else
-            {
-                return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
-            }
+            return value;
         }
     }
 }

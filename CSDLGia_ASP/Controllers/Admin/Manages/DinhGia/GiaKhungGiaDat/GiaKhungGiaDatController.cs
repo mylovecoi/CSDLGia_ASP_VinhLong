@@ -76,7 +76,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                         }
 
                         var model_join = (from kgd in model
-                                          join dv in dsdonvi on kgd.Macqcq equals dv.MaDv
+                                          join dv in dsdonvi on kgd.Madv equals dv.MaDv                                           
                                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
                                           {
                                               Id = kgd.Id,
@@ -87,8 +87,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                                               Trangthai = kgd.Trangthai,
                                               Madiaban = kgd.Madiaban,
                                               Thoidiem = kgd.Thoidiem,
-                                              Macqcq = kgd.Macqcq,
-                                              Tencqcq = dv.TenDv,
+                                              Macqcq = kgd.Macqcq,       
+                                              Tendiaban=dv.TenDiaBan,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
