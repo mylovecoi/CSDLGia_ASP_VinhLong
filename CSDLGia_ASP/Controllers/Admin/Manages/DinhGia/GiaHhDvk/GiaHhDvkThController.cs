@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using OfficeOpenXml.Packaging;
 using System;
@@ -37,11 +38,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Index"))
                 {
-                    var dsDonVi = _db.DsDonVi;
+                    var dsDonViQuery = _db.DsDonVi.AsQueryable(); // Không cần ép kiểu, chỉ cần sử dụng truy vấn EntityQueryable
+
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {
-                        dsDonVi = (DbSet<DsDonVi>)dsDonVi.Where(t => t.MaDv == maDV);
+                        dsDonViQuery = dsDonViQuery.Where(t => t.MaDv == Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     }
+
+                    var dsDonVi = dsDonViQuery.ToList();
                     Nam = Nam ?? Helpers.ConvertYearToStr(DateTime.Now.Year);
                     Thang = Thang ?? Helpers.ConvertYearToStr(DateTime.Now.Month);
                     maDV = maDV ?? dsDonVi.FirstOrDefault().MaDv;
