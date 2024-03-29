@@ -49,10 +49,13 @@
                 <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
+                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
+                    <i class="la la-plus"></i>Nhận dữ liệu
+                </button>
+                @* <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                </a> *@
             }
         </div>
     </div>
@@ -187,6 +190,42 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Phân loại hồ sơ</b></label>
                                 <select id="Phanloai" name="Phanloai" class="form-control">
+                                    <option value="Giá đất bồi thường tái định cư">Giá đất bồi thường tái định cư</option>
+                                    <option value="Giá đất thu tiền sử dụng đất">Giá đất thu tiền sử dụng đất</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Excel Modal-->
+<div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Nhận dữ liệu hồ sơ giá đất cụ thể
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaDatPlExcel" asp-action="Index" method="get" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <input hidden id="MadvExcel" name="MadvExcel" value="@ViewData["Madv"]" />
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Phân loại hồ sơ</b></label>
+                                <select id="PhanloaiExcel" name="PhanloaiExcel" class="form-control">
                                     <option value="Giá đất bồi thường tái định cư">Giá đất bồi thường tái định cư</option>
                                     <option value="Giá đất thu tiền sử dụng đất">Giá đất thu tiền sử dụng đất</option>
                                 </select>

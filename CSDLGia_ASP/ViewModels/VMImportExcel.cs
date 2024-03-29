@@ -17,5 +17,6 @@ namespace CSDLGia_ASP.ViewModels
         public int Thang { get; set; }
         public string MaNhom { get; set; }
         public string TenNhom { get; set; }
+        public string Phanloai { get; set; }
     }
 }

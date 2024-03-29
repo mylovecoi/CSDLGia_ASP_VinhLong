@@ -48,11 +48,6 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        public string Ipf1 { get; set; }
-        public string Ipf2 { get; set; }
-        public string Ipf3 { get; set; }
-        public string Ipf4 { get; set; }
-        public string Ipf5 { get; set; }
         public string TenDv { get; set; }
         public string TenDiaBan { get; set; }
         public string Level { get; set; }
