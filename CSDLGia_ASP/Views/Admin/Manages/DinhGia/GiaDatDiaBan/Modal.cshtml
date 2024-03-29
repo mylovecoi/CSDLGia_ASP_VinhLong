@@ -1,7 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDv"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     var khuvuc = (IEnumerable<GiaDatDiaBanCt>)ViewData["Khuvuc"];
@@ -12,7 +12,7 @@
 
 <!--Create Modal-->
 
-<div class="modal fade" id="Modal_Create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,19 +58,19 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Hệ số K</label>
-                            <input type="text" id="hesok_create" name="hesok_create" class="form-control" />
+                            <input type="number" step="0.1" id="hesok_create" name="hesok_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí I</label>
-                            <input type="text" id="giavt1_create" name="giavt1_create" class="form-control" />
+                            <input type="number" step="0.1" id="giavt1_create" name="giavt1_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí II</label>
-                            <input type="text" id="giavt2_create" name="giavt2_create" class="form-control" />
+                            <input type="number" step="0.1" id="giavt2_create" name="giavt2_create" class="form-control" />
                         </div>
                     </div>
 
@@ -80,19 +80,19 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí III</label>
-                            <input type="text" id="giavt3_create" name="giavt3_create" class="form-control" />
+                            <input type="number" step="0.1" id="giavt3_create" name="giavt3_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí IV</label>
-                            <input type="text" id="giavt4_create" name="giavt4_create" class="form-control" />
+                            <input type="number" step="0.1" id="giavt4_create" name="giavt4_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí V</label>
-                            <input type="text" id="giavt5_create" name="giavt5_create" class="form-control" />
+                            <input type="number" step="0.1" id="giavt5_create" name="giavt5_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
-                            <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" />
+                            <input type="number" step="0.1" id="sapxep_create" name="sapxep_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -459,7 +459,7 @@
                 Giavt5: $('#giavt5_create').val(),
                 HienThi: $('#hienthi_create').val(),
                 SapXep: $('#sapxep_create').val(),
-                MaDv: $('#MaDv').val(),
+                MaDv: $('#Madv').val(),
                 
             },
             dataType: 'JSON',
@@ -473,8 +473,7 @@
                     $(document).ready(function () {
                         TableManaged4.init();
                     });
-
-                    $('#Modal_Create').modal("hide");
+                    $('#Create_Modal').modal("hide");
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

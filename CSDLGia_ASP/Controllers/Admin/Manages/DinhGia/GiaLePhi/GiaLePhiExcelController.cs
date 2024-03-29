@@ -124,6 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     Mahs = Mahs,
                     Manhom = requests.MaNhom
                 };
+
                 var modelct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
                 model.GiaPhiLePhiCt = modelct.ToList();
                 ViewData["Mahs"] = model.Mahs;

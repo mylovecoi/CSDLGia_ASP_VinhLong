@@ -971,7 +971,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.danhmucsieuthi", "Index"))
+                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.danhmucsieuthi", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dmsieuthi">
                         <a asp-controller="GiaHangHoaTaiSieuThiDmSieuThi" asp-action="Index" class="menu-link">
@@ -981,7 +981,7 @@
                             <span class="menu-text text-truncate">Danh mục siêu thị</span>
                         </a>
                     </li>
-                }
+                } *@
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.danhmuchanghoataisieuthi", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgnsh_dmhhtaisieuthi">
@@ -989,7 +989,7 @@
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
-                            <span class="menu-text text-truncate">Danh mục hàng hoá tại siêu thị</span>
+                            <span class="menu-text text-truncate">Danh mục hàng hoá</span>
                         </a>
                     </li>
                 }

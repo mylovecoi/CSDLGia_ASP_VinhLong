@@ -21,11 +21,12 @@
         });
 
         $(function () {
-            $('#Donvi, #Nam').change(function () {
+            $('#Nam, #Thang, #Madv').change(function () {
                 var current_path_url = '/GiaHangHoaTaiSieuThi?';
-                var madv = '&Madv=' + $('#Donvi').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var thang = '&Thang=' + $('#Thang').val();
+                var madv = '&Madv=' + $('#Madv').val();
+                var url = current_path_url + nam + thang + madv;
                 window.location.href = url;
             })
         });
@@ -38,27 +39,43 @@
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin hồ sơ<small>&nbsp;giá hàng hóa tại siêu thị</small><br />
-                <small style="color: blue;">Mã số thuế: @ViewData["Donvi"]</small>
             </h3>
         </div>
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThi" asp-action="Create"
+                @* <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThi" asp-action="Create"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-plus"></i>Thêm mới
+                </a> *@
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+                <span>&ensp;</span>
+                <a class="btn btn-success font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThiExcel" asp-action="Index"
+                   asp-route-Madv="@ViewData["Madv"]">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-            }&ensp;
-            <a class="btn btn-success font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThiExcel" asp-action="Index"
-               asp-route-Madv="@ViewData["Madv"]">
-                <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a>
+            }
+            
 
         </div>
     </div>
     <hr />
     <div class="card-body">
         <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Tháng</label>
+                    <select class="form-control" id="Thang" name="Thang">
+                        <option value="all">--Tất cả--</option>
+                        @for (var i = 1; i <= 12; i++)
+                        {
+                            <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                        }
+                    </select>
+                </div>
+            </div>
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
@@ -69,16 +86,16 @@
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
                             }
                         }
                     </select>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="Donvi" name="Donvi">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -192,6 +209,68 @@
     </div>
 </div>
 
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form asp-controller="GiaHangHoaTaiSieuThi" asp-action="Create" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thêm mới báo cáo giá hàng hóa dịch vụ
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <hr />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Đơn vị báo cáo</label>
+                                <select id="MadvBc" name="MadvBc" class="form-control">
+                                    @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
+                                    {
+                                        <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tháng</label>
+                                <select class="form-control" id="ThangBc" name="ThangBc">
+                                    @for (var i = 1; i <= 12; i++)
+                                    {
+                                        <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Năm</label>
+                                <select class="form-control" id="NamBc" name="NamBc">
+                                    @{
+                                        for (var i = nam_start; i <= nam_stop; i++)
+                                        {
+                                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -264,7 +343,6 @@
     </div>
 </div>
 
-
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
@@ -273,5 +351,4 @@
     function SetComplete(mahs) {
         document.getElementById("mahs_complete").value = mahs;
     }
-
 </script>

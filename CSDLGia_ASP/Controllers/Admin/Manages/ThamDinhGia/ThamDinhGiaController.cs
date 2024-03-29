@@ -338,7 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/DanhSach/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
