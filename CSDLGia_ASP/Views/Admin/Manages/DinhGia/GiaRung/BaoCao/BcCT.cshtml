@@ -66,14 +66,14 @@
         {
             <tr>
                 <td></td>
-                <td colspan="14" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+                <td colspan="15" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
             var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
             @foreach (var hosoindv in hosoInDv)
             {
                 <tr>
                     <td></td>
-                    <td colspan="14" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="15" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
