@@ -2,7 +2,6 @@
     DateTime nowDate = DateTime.Now;
     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-
     var nam_start = DateTime.Now.Year - 7;
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
@@ -18,7 +17,6 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
 }
 
 <div class="card card-custom">
@@ -27,7 +25,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá HH-DV khác
+                    Thông tin hồ sơ giá hàng hóa dịch vụ khác
                 </span>
             </h3>
         </div>
@@ -44,7 +42,6 @@
                                     Báo cáo tổng hợp
                                 </span>
                             </button>
-
                         </li>
                         <li>
                             <button data-target="#Report_Modal_CT" data-toggle="modal" class="btn btn-link" style="text-align:left">
@@ -52,7 +49,6 @@
                                     Báo cáo chi tiết
                                 </span>
                             </button>
-
                         </li>
                     </ol>
                 </div>
@@ -68,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Báo cáo tổng hợp giá HH-DV khác
+                        Báo cáo tổng hợp giá hàng hóa dịch vụ khác
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -76,7 +72,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -121,7 +116,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Báo cáo chi tiết giá HH-DV khác
+                        Báo cáo tổng hợp giá hàng hóa dịch vụ khác
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -141,20 +136,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Thông tin hồ sơ: </label><br />
-                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
-                                    <option value="all">--Tất cả---</option>
-                                    @foreach (var item in DanhSachHoSo)
-                                    {
-                                        <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -169,7 +150,18 @@
                                        value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center" onchange="GetList()">
                             </div>
                         </div>
-
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Thông tin hồ sơ: </label><br />
+                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Chức danh ký:</label>
@@ -193,7 +185,6 @@
     </div>
 </div>
 <script>
-
     function GetList() {
         var fromDate = document.getElementById("ngaytu").value;
         var toDate = document.getElementById("ngayden").value;
@@ -206,7 +197,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaSpDvCuTheHt/GetListHoSo',
+                    url: '/GiaHhDvkXd/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,
@@ -228,7 +219,6 @@
         }
     }
 
-
     function BaoCaoTh() {
         var fromDate = document.getElementById("ngaytu").value;
         var toDate = document.getElementById("ngayden").value;
@@ -248,6 +238,7 @@
         }
 
     }
+
 
     function BaoCaoCt() {
         var fromDate = document.getElementById("ngaytu").value;

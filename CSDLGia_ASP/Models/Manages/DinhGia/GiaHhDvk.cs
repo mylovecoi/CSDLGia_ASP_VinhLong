@@ -80,7 +80,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
 
         [NotMapped]
         public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
-
         [NotMapped]
         public string TenDonVi { get; set; }
 

@@ -154,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ khung giá";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     return View("Views/Admin/Manages/DinhGia/GiaLePhi/BaoCao/BcCT.cshtml", model);
                 }
                 else

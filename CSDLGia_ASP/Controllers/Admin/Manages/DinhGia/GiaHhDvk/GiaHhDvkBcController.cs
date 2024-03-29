@@ -1,20 +1,20 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using CSDLGia_ASP.Database;
 using System.Security.Cryptography;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.ViewModels.Systems;
-using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
@@ -28,6 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             _db = db;
         }
 
+
         [Route("GiaHhDvk/BaoCao")]
         [HttpGet]
         public IActionResult Index()
@@ -37,9 +38,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
-                    ViewData["Title"] = "Báo cáo giá HH-DV khác";
-                    ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_bc";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá giá hàng hóa dịch vụ khác";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaHhDvk.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     ViewData["DanhSachNhom"] = _db.GiaHhDvkNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/Index.cshtml");
@@ -58,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/BaoCao/BcTH")]
         [HttpPost]
-        public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky, string MaNhom)
+        public IActionResult BcTH(DateTime tungay, DateTime denngay, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -75,14 +77,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Thoidiem = hoso.Thoidiem,
                                  });
 
-                    ViewData["Title"] = "Báo cáo giá HH-DV khác";
-                    ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_bc";
-                    ViewData["NgayTu"] = tungay;
-                    ViewData["NgayDen"] = denngay;
+                    ViewData["Title"] = "Báo cáo tổng hợp giá  giá giá hàng hóa dịch vụ khác";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_bc";
+
+                    ViewData["tungay"] = tungay;
+                    ViewData["denngay"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/BcTH.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/BcTHNEW.cshtml", model);
                 }
                 else
                 {
@@ -98,12 +102,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/BaoCao/BcCT")]
         [HttpPost]
+
         public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string Matt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                 {
+
                     var model = (from ct in _db.GiaHhDvkCt
                                  join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
                                  join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
@@ -117,19 +123,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Gialk = ct.Gialk,
                                      Gia = ct.Gia,
                                      Ghichu = ct.Ghichu,
-                                     Matt = ct.Matt,
+                                     Manhom = ct.Manhom,
                                      Tenhhdv = dm.Tenhhdv,
                                      Dacdiemkt = dm.Dacdiemkt,
                                      Dvt = dm.Dvt,
                                      Madv = kk.Madv,
+                                     Matt = kk.Matt,
                                      Thoidiem = kk.Thoidiem,
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
                                      Trangthai = kk.Trangthai
-                                 }); ;
+                                 }) ;
+         
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 
+                    if (Matt != "all") { model = model.Where(t => t.Matt == Matt); }
+
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
 
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
@@ -144,7 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá HH-DV khác";
+                    ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ khung giá";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/BcCT.cshtml", model);
                 }
                 else
@@ -158,7 +169,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
     }
 }
