@@ -163,13 +163,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     Madiaban = request.Madiaban,
                     Thoidiem = request.Thoidiem,
                     Ipf1 = request.Ipf1,
-
                     Trangthai = "CHT",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,
                 };
-
                 _db.GiaDatDiaBan.Add(model);
                 _db.GiaDatDiaBanCt.AddRange(list_add);
                 _db.SaveChanges();

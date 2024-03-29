@@ -494,9 +494,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Gia = giathuetnct.Gia,
                                      Manhom= giathuetn.Manhom,
                                      Mahs=giathuetn.Mahs,
+                                     Trangthai = giathuetn.Trangthai,
 
                                  });
-                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den);
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai =="HT");
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);

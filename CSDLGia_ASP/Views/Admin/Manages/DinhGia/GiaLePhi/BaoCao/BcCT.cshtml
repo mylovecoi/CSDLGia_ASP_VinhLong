@@ -1,4 +1,4 @@
-﻿@{
+﻿@* @{
     Layout = "_LayoutReports";
     var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
     var hoso = (IEnumerable<GiaPhiLePhi>)ViewData["ChiTietHs"];
@@ -24,31 +24,31 @@
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-    <thead>
-        <tr>
-            <th style="text-align:center" width="2%">STT</th>
-            <th style="text-align:center">Tên phí, lệ phí</th>
-            <th style="text-align:center" width="5%">Mức thu</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var donvi in donvis)
-        {
-            <tr>
-                <td></td>
-                <td colspan="3" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
-            </tr>
-            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
-            @foreach (var hosoindv in hosoInDv)
-            {
+@foreach (var dv in DonVis)
+{
+    <p style="text-align: center; font-size: 16px; font-style:italic">
+        @dv.TenDv
+    </p>
+    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
+    @foreach (var hoso in hosodonvi)
+    {
+        <p style="text-align: center; font-size: 16px; font-style:italic">
+            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
+        </p>
+        <p style="text-align: center; font-size: 16px; font-style:italic">
+            @hoso.Mota
+        </p>       
+        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+            <thead>
                 <tr>
-                    <td></td>
-                    <td colspan="3" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
+                    <th style="text-align:center; font-weight:bold">Nội dung</th>
+                    <th style="text-align:center; font-weight:bold">Mức thu</th>
                 </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
+            </thead>
+            <tbody>
+                @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
                 {
                     <tr>
                         <td></td>  
@@ -79,4 +79,4 @@
         <td style="font-weight: bold; padding-top: 90px"></td>
         <td style="font-weight: bold; padding-top: 90px; text-align:center">@ViewData["HoTenNguoiKy"]</td>
     </tr>
-</table>
+</table> *@

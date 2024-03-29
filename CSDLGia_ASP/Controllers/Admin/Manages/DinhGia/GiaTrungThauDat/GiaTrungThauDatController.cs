@@ -147,11 +147,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
+                    var MaDiaBan = _db.DsDonVi.FirstOrDefault(x => x.MaDv == Madv).MaDiaBan;
 
                     //var dsdv = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI" && t.MaDv == Madv).OrderBy(t => t.Id).Select(t => t.MaDv).First();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
-                    ViewData["TenDonVi"]= _db.DsDonVi.First(x=>x.MaDv== Madv).TenDv;
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(t => t.Madiaban == Madv).ToList();
+                    ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == Madv).TenDv;
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(t => t.Madiaban == MaDiaBan).ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
@@ -473,9 +474,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          Giakhoidiem = dgct.Giakhoidiem,
                                          Giadaugia = dgct.Giadaugia,
                                          Thoidiem = dg.Thoidiem,
+                                         Trangthai = dg.Trangthai,
 
                                      };
-                    model_join = model_join.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime);
+                    model_join = model_join.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.Trangthai == "HT");
                     if (!string.IsNullOrEmpty(ten))
                     {
                         model_join = model_join.Where(t => t.Tenduan.Contains(ten));
@@ -516,7 +518,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
                     ViewData["MenuLv3"] = "menu_giadgd_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Index.cshtml",model_join);
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Index.cshtml", model_join);
                 }
                 else
                 {
