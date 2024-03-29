@@ -42,8 +42,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + (record++) + "</td>";
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTHienthi + "</td>";
                 result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.Ptcp + "</td>";
-                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.Phantram + "</td>";
-                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helper.Helpers.ConvertDbToStr(item.Mucthutu) + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Phantram) + "</td>";
+                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Mucthutu) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='GetEdit(`" + item.Id + "`)'>";
@@ -85,13 +85,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Phần trăm</b></label>";
-                result += "<input type='text' id='Phantram_edit' name='Phantram_edit' value='" + @model.Phantram + "' class='form-control text-right' style = 'font-weight: bold'/>";
+                result += "<input type='text' id='Phantram_edit' name='Phantram_edit' value='" + @model.Phantram + "' class='form-control text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-8'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Mức thu từ</b></label>";
-                result += "<input type='number' id='Mucthutu_edit' name='Mucthutu_edit' value='" + @model.Mucthutu + "' class='form-control money text-right' style = 'font-weight: bold'/>";
+                result += "<input type='number' id='Mucthutu_edit' name='Mucthutu_edit' value='" + @model.Mucthutu + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";            
                 result += "</div>";
@@ -108,7 +108,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         }
         [Route("DinhGiaLePhiCt/Update")]
         [HttpPost]
-        public JsonResult Update(string Ptcp, string Phantram, double Mucthutu, string[] Style, int Id)
+        public JsonResult Update(string Ptcp, double Phantram, double Mucthutu, string[] Style, int Id)
         {
             var model = _db.GiaPhiLePhiCt.FirstOrDefault(t => t.Id == Id);
             if (model != null)

@@ -13,7 +13,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Phanloai { get; set; }
         public string Ptcp { get; set; }
         public string Dvt { get; set; }
-        public string Phantram { get; set; }
+        public double Phantram { get; set; }
         public double Mucthutu { get; set; }
         public double Mucthuden { get; set; }
         public double Giatu { get; set; }
