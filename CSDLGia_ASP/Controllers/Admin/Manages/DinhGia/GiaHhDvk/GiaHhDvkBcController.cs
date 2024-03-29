@@ -39,9 +39,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo tổng hợp giá giá hàng hóa dịch vụ khác";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_dglp";
-                    ViewData["MenuLv3"] = "menu_dglp_bc";
+                    ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaHhDvk.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     ViewData["DanhSachNhom"] = _db.GiaHhDvkNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/Index.cshtml");
@@ -78,15 +77,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá giá hàng hóa dịch vụ khác";
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_dglp";
-                    ViewData["MenuLv3"] = "menu_dglp_bc";
-
+                    ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_bc";
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/BcTHNEW.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/BaoCao/BcTH.cshtml", model);
                 }
                 else
                 {
