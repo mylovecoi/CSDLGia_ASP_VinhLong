@@ -159,8 +159,7 @@
                             </a>
                             <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                 <i class="icon-lg la la-file-alt text-dark"></i>
-                            </button>
-                            
+                            </button>                            
                             @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                             {
                                 <a asp-controller="Giathuemuanhaxh" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -180,9 +179,7 @@
                             <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                target="_blank">
                                 <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                            </a>
-                         
+                            </a>                         
                         </td>
                     </tr>
                 }
