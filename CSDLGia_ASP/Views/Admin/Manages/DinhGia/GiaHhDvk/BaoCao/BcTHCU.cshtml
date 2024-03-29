@@ -2,7 +2,9 @@
     Layout = "_LayoutReports";
     var record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk>
+<br />
+<br />
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -16,12 +18,13 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
+  
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ TRÚNG THẦU CỦA HH-DV ĐƯỢC MUA SẮM THEO QĐ CỦA PL VỀ ĐẤU THẦU</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ HH-DV KHÁC</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
 
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
@@ -38,12 +41,12 @@
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
                     @item.TenDonVi<br />
-                    <b>Mã hồ sơ: </b><a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
+                    <b>Mã hồ sơ: </b><a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
                 <td style="text-align: center">@item.Soqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-
+  
             </tr>
         }
         <tr>
@@ -54,7 +57,7 @@
 </table>
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
-        <td width="45%" style="text-align: left">
+        <td width="45%" style="text-align: left">           
         </td>
         <td width="55%" style="text-align: center">
             <span style="font-weight: bold; text-transform:uppercase">

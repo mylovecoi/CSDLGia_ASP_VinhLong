@@ -65,18 +65,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakkbc", "Index"))
                 {
 
-                    var model =(from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
-                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi 
-                                { 
-                                    TenDonVi = donvi.TenDv,
-                                    Mahs = hoso.Mahs,
-                                    Soqd = hoso.Soqd,
-                                    Thoidiem = hoso.Thoidiem,
+                    var model = (from hoso in _db.GiaPhiLePhi.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi
+                                 {
+                                     TenDonVi = donvi.TenDv,
+                                     Mahs = hoso.Mahs,
+                                     Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
+                                 });
 
-
-                                });
-                  
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_dglp";

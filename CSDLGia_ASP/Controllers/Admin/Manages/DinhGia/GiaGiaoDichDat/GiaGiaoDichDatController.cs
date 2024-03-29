@@ -301,7 +301,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
                     model.GiaGiaoDichDatCt = model_ct.ToList();
                     model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs).ToList();
-
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
@@ -538,10 +538,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Ten= giathuetnct.Ten,
+                                     Trangthai = giathuetn.Trangthai,
                                      
                                      /*Tennhom = nhomtn.Tennhom,*/
                                  });
-                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den);
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai =="HT");
 
                     if (madv != "all")
                     {
