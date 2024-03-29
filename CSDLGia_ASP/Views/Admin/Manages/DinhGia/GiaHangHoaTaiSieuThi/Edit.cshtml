@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
@@ -33,11 +33,8 @@
         <div class="card-body">
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-            <input hidden asp-for="Ipf1" />
-            <input hidden asp-for="Ipf2" />
-            <input hidden asp-for="Ipf3" />
-            <input hidden asp-for="Ipf4" />
-            <input hidden asp-for="Ipf5" />
+            <input hidden asp-for="Thang" />
+            <input hidden asp-for="Nam" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -45,7 +42,7 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định</label>
-                        <input type="text" class="form-control" asp-for="Soqd"/>
+                        <input type="text" class="form-control" asp-for="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
@@ -60,37 +57,20 @@
                         <select class="form-control" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Lộ trình từ năm*</label>
-                        <select class="form-control select2basic" asp-for="Tunam">
-                            @{
-                                for (var i = nam_start; i <= nam_stop; i++)
-                                {
-                                    <option value="@i">Năm @i</option>
-                                }
+                                <!option value="@item.MaDiaBan" @(@Model.Madiaban == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Lộ trình đến năm*</label>
-                        <select class="form-control select2basic" asp-for="Dennam">
-                            @{
-                                for (var i = nam_start; i <= nam_stop; i++)
-                                {
-                                    <option value="@i">Năm @i</option>
-                                }
-                            }
-                        </select>
+                        <label>Tháng báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Năm báo cáo: <span style="font-weight: bold; color: blue;">@Model.Thang</span></label>
                     </div>
                 </div>
             </div>
@@ -102,88 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf1))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaHangHoaTaiSieuThi/@Model.Ipf1" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    @Model.Ipf1
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
 
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf2))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaHangHoaTaiSieuThi/@Model.Ipf2" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    @Model.Ipf2
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf3))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaHangHoaTaiSieuThi/@Model.Ipf3" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    @Model.Ipf3
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf4))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaHangHoaTaiSieuThi/@Model.Ipf4" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    @Model.Ipf4
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>
-                            File đính kèm
-                            @if (!string.IsNullOrEmpty(Model.Ipf5))
-                            {
-                                <a href="~/UpLoad/File/DinhGia/GiaHangHoaTaiSieuThi/@Model.Ipf5" target="_blank"
-                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    @Model.Ipf5
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-
-            </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Detail.cshtml")
 
         </div>
@@ -205,16 +104,16 @@
             if ($('#Thoidiem').val().trim() == '') {
                 toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
             } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
-                }else{
+                if ($('#Thoidiem').val().trim() == '') {
+                    toastr.error("Thời điểm mức giá không được để trống!", "Lỗi!!!")
+                } else {
                     document.getElementById("frm_nsh_update").submit();
                 }
             }
         }
     }
 </script>
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

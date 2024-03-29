@@ -93,11 +93,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                              Trangthai = kk.Trangthai_h,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
                                          });
 
                         var model_join = (from kkj in model_new
@@ -116,11 +111,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -172,11 +162,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                              Trangthai = kk.Trangthai_t,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
                                          });
 
                         var model_join = (from kkj in model_new
@@ -195,11 +180,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -251,11 +231,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                              Trangthai = kk.Trangthai_ad,
                                              Soqd = kk.Soqd,
                                              Level = getdonvi.Level,
-                                             Ipf1 = kk.Ipf1,
-                                             Ipf2 = kk.Ipf2,
-                                             Ipf3 = kk.Ipf3,
-                                             Ipf4 = kk.Ipf4,
-                                             Ipf5 = kk.Ipf5,
                                          });
 
                         var model_join = (from kkj in model_new
@@ -274,11 +249,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                               Trangthai = kkj.Trangthai,
                                               Soqd = kkj.Soqd,
                                               Level = kkj.Level,
-                                              Ipf1 = kkj.Ipf1,
-                                              Ipf2 = kkj.Ipf2,
-                                              Ipf3 = kkj.Ipf3,
-                                              Ipf4 = kkj.Ipf4,
-                                              Ipf5 = kkj.Ipf5,
                                           });
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -553,6 +523,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             }
         ketthuc:
             return madv;
+        }
+
+        [HttpPost("GiaHangHoaTaiSieuThiXd/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaHangHoaTaiSieuThi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
         }
     }
 }

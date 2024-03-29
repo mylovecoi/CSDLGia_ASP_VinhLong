@@ -10,77 +10,39 @@
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
-<p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
-</p>
+<p style="text-align: left; font-size: 16px;">Địa bàn: </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
-<p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
-</p>
-
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
- 
-        <thead>
-            <tr style="text-align:center">
-                <th rowspan="2">STT</th>
-                <th rowspan="2">Mục đích sử dụng</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-                <th colspan="2">Đơn giá</th>
-            </tr>
-            <tr style="text-align:center">
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-                <th>Năm áp dụng</th>
-                <th>Giá tiền</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.GiaHangHoaTaiSieuThiCt != null)
+
+    <thead>
+        <tr style="text-align:center">
+            <th rowspan="2">STT</th>
+            <th rowspan="2">Mã hàng hóa</th>
+            <th rowspan="2">Tên hàng hóa</th>
+            <th colspan="2">Đơn giá</th>
+        </tr>
+        <tr style="text-align:center">
+            <th>Giá từ</th>
+            <th>Giá đến</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.GiaHangHoaTaiSieuThiCt != null)
+        {
+            @foreach (var item in Model.GiaHangHoaTaiSieuThiCt)
             {
-                @foreach (var item in Model.GiaHangHoaTaiSieuThiCt)
-                {
-                    <tr style="text-align:center">
-                        <td>@(record_id++)</td>
-                        <td>@item.Doituongsd</td>
-                        <td>@item.Namchuathue</td>
-                        <td font-weight:bold">@(@item.Giachuathue != 0 ? Helpers.ConvertDbToStr(item.Giachuathue) : "")</td>
-                        <td>@item.Namchuathue1</td>
-                        <td font-weight:bold">@(@item.Giachuathue1 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue1) : "")</td>
-                        <td>@item.Namchuathue2</td>
-                        <td font-weight:bold">@(@item.Giachuathue2 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue2) : "")</td>
-                        <td>@item.Namchuathue3</td>
-                        <td font-weight:bold">@(@item.Giachuathue3 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue3) : "")</td>
-                        <td>@item.Namchuathue4</td>
-                        <td font-weight:bold">@(@item.Giachuathue4 != 0 ? Helpers.ConvertDbToStr(item.Giachuathue4) : "")</td>
-                    </tr>
-                }
+                <tr style="text-align:center">
+                    <td style="text-align:center">@(record_id++)</td>
+                    <td style="text-align:center">@item.Mahanghoa</td>
+                    <td style="text-align:center">@item.Tenhanghoa</td>
+                    <td style="text-align:center">@(@item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : "")</td>
+                    <td style="text-align:center">@(@item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : "")</td>
+                </tr>
             }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 </table>
