@@ -531,6 +531,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DonGiaDen"] = DonGiaDen;
                     ViewData["LoaiDat"] = LoaiDat;
                     ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
+                    ViewData["DanhMucNhom"] = _db.GiaThueMatDatMatNuocNhom;
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -607,6 +608,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
+        [HttpPost("GiaThueMatDatMatNuoc/GetHoSoSearch")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='Mahs_Search' name='Mahs_Search'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
 
     }
 }

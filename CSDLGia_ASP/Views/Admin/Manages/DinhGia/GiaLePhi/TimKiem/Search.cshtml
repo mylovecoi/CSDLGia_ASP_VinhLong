@@ -1,7 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var GiaPhiLePhiNhom = ViewData["GiaPhiLePhiNhom"]
+    var DanhMucNhom = ViewData["DanhMucNhom"]
                         as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>
                         ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>();
     var DanhSachHoSo = (IEnumerable<GiaPhiLePhi>)ViewData["DanhSachHoSo"];
@@ -109,7 +109,7 @@
                         <label style="font-weight:bold;">Nhóm phí</label>
                         <select class="form-control" id="tsp_Search" name="tsp_Search">
                             <option value="all">--Tất cả --</option>
-                            @foreach (var tn in GiaPhiLePhiNhom)
+                            @foreach (var tn in DanhMucNhom)
                             {
                                 <!option value="@tn.Manhom" @(ViewData["tsp"].ToString() == tn.Manhom ? "selected" : "")>@tn.Tennhom</!option>
                             }
