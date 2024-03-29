@@ -146,10 +146,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         PhanLoaiHoSo = "HOSOCHITIET",
                     };
                     IEnumerable<GiaThueMatDatMatNuocDm> danhmuc = _db.GiaThueMatDatMatNuocDm;
-                    if(maNhom != "all")
+                    if (maNhom != "all")
                     {
                         danhmuc = danhmuc.Where(t => t.Manhom == maNhom);
-                    }    
+                    }
 
                     var chitiet = new List<GiaThueMatDatMatNuocCt>();
 
@@ -165,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             MaNhom = item.Manhom,
                             Style = item.Style,
                             Trangthai = "CXD",
-                            Madv = Madv,                          
+                            Madv = Madv,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
@@ -240,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
-                {    
+                {
                     var model = new GiaThueMatDatMatNuoc
                     {
                         Mahs = request.Mahs,
@@ -281,7 +281,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         {
                             ct.Trangthai = "XD";
                         }
-                        _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);    
+                        _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
                     }
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
                     if (model_file.Any())
@@ -408,7 +408,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     model.Thongtin = request.Thongtin;
                     model.Ghichu = request.Ghichu;
                     model.Updated_at = DateTime.Now;
-                   
+
 
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
@@ -419,7 +419,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         }
                     }
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
-                    foreach(var file in model_file) { file.Status = "XD"; }
+                    foreach (var file in model_file) { file.Status = "XD"; }
                     _db.ThongTinGiayTo.UpdateRange(model_file);
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.GiaThueMatDatMatNuocCt.UpdateRange(modelct);
@@ -473,7 +473,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuoc/Search")]
         [HttpGet]
-        public IActionResult Search(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string LoaiDat )
+        public IActionResult Search(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string LoaiDat)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -515,12 +515,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.Dongia1 >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
-                    if(Manhom != "all") { model = model.Where(t=>t.MaNhom == Manhom); }
-                    if(DonGiaDen > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen); }
+                    if (Manhom != "all") { model = model.Where(t => t.MaNhom == Manhom); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen); }
                     if (!string.IsNullOrEmpty(LoaiDat))
                     {
                         model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat.ToLower()));
-                    }                  
+                    }
 
                     ViewData["Madv"] = Madv;
                     ViewData["Manhom"] = Manhom;
@@ -531,6 +531,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DonGiaDen"] = DonGiaDen;
                     ViewData["LoaiDat"] = LoaiDat;
                     ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
+                    ViewData["DanhMucNhom"] = _db.GiaThueMatDatMatNuocNhom;
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -607,6 +608,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
+        [HttpPost("GiaThueMatDatMatNuoc/GetHoSoSearch")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='Mahs_Search' name='Mahs_Search'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Số QĐ: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
 
     }
 }

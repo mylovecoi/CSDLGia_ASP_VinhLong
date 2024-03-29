@@ -1,9 +1,12 @@
-﻿@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>;
-@{
+﻿@{
     Layout = "_LayoutReports";
-    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>)ViewData["HoSoCt"];
+    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var hoso = (IEnumerable<GiaDatDiaBan>)ViewData["ChiTietHs"];
+
 }
+@* @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt> *@
+    @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDatDiaBanCt>
+
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -20,47 +23,49 @@
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ ĐẤT ĐỊA BÀN</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-@foreach (var dv in DonVis)
-{
-    <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
-    </p>
-    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
-    @foreach (var hoso in hosodonvi)
-    {
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
-        </p>
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            @hoso.GhiChu
-        </p>
-        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
-        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-            <thead>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th>TT</th>
+            <th style="text-align:left">Tên đường phố</th>
+            <th style="text-align:center">Loại đường</th>
+            <th style="text-align:center">Hệ số K</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donvi in donvis)
+        {
+            <tr>
+                <td></td>
+                <td colspan="6" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+            </tr>
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @foreach (var hosoindv in hosoInDv)
+            {
                 <tr>
-                    <th style="text-align:center; font-weight:bold" rowspan="2" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold" rowspan="2">Tên đường</th>
-                    <th style="text-align:center; font-weight:bold" rowspan="2">Điểm đầu </th>
-                    <th style="text-align:center; font-weight:bold" rowspan="2">Điểm cuối</th>
-                    <th style="text-align:center; font-weight:bold" rowspan="2">Loại đường </th>
-                    <th style="text-align:center; font-weight:bold" rowspan="2">Hệ số K</th>
-                    <th style="text-align:center; font-weight:bold" colspan="5">Giá đất theo hệ số đường</th>
+                    <td></td>
+                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                @foreach (var item in chitieths)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.Mota</td>
+                        <td>@item.Loaiduong</td>
+                        <td>@Helpers.ConvertDbToStr(item.Hesok)</td>
+                       
+                    </tr>
+                }
 
-                <tr> 
-                    <th style="text-align:center; font-weight:bold">Vị trí 1 </th>
-                    <th style="text-align:center; font-weight:bold">Vị trí 2 </th>
-                    <th style="text-align:center; font-weight:bold">Vị trí 3 </th>
-                    <th style="text-align:center; font-weight:bold">Vị trí 4 </th>
-                    <th style="text-align:center; font-weight:bold">Vị trí 5 </th>
-                </tr>
-            </thead>
+            }
+        }
+    </tbody>
+</table>
 
-        </table>
-    }
-}
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>

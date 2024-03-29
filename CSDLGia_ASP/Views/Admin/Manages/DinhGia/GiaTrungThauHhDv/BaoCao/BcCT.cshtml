@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt>)ViewData["HoSoCt"];
+    var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var hoso = (IEnumerable<GiaMuaTaiSan>)ViewData["ChiTietHs"];
+
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt>
+
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -20,39 +22,54 @@
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ TRÚNG THẦU CỦA HH-DV ĐƯỢC MUA SẮM THEO QĐ CỦA PL VỀ ĐẤU THẦU</p>
 
-<p style="text-align: center; font-size: 16px;">Thời điểm: @ViewData["ThoiDiemKX"]</p>
+<p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-@foreach (var dv in DonVis)
-{
-    <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
-    </p>
-    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
-    @foreach (var hoso in hosodonvi)
-    {
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
-        </p>
-        <p style="text-align: center; font-size: 16px; font-style:italic">
-            @* @hoso.Mota *@
-        </p>
-        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
-        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-            <thead>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr >
+            <th style="text-align: center">TT</th>
+            <th style="text-align: center">Tên nhà thầu</th>
+            <th style="text-align: center">Tên công tác</th>
+            <th style="text-align: center">Đơn vị</th>
+            <th style="text-align: center">Khối lượng<br>mời thầu</th>
+            <th style="text-align: center">Đơn giá</th>
+            <th style="text-align: center">Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donvi in donvis)
+        {
+            <tr>
+                <td></td>
+                <td colspan="6" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+            </tr>
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @foreach (var hosoindv in hosoInDv)
+            {
                 <tr>
-                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold">Tên công tác</th>
-                    <th style="text-align:center; font-weight:bold">Đơn vị</th>
-                    <th style="text-align:center; font-weight:bold">Mức thu</th>
-                    <th style="text-align:center; font-weight:bold">Khối lượng mời thầu</th>
-                    <th style="text-align:center; font-weight:bold">Đơn giá</th>
-                    <th style="text-align:center; font-weight:bold">Thành tiền</th>
+                    <td></td>
+                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
-            </thead>
-            
-        </table>
-    }
-}
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                @foreach (var item in chitieths)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.Tennhathau</td>
+                        <td class="active">@item.Mota</td>
+                        <td>@item.Dvt</td>
+                        <td> @Helpers.ConvertDbToStr(item.KhoiLuong)</td>
+                        <td> @Helpers.ConvertDbToStr(item.DonGia)</td>
+                        <td> @Helpers.ConvertDbToStr(item.DonGia * item.KhoiLuong)</td> 
+                    </tr>
+
+                }
+
+            }
+        }
+    </tbody>
+</table>
 
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">

@@ -500,6 +500,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DanhSachHoSo"] = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= beginTime && t.Thoidiem <= endTime && t.Trangthai == "HT");
+                    ViewData["DanhMucNhom"] = _db.GiaPhiLePhiNhom;
                     ViewData["Madv"] = Madv;
                     ViewData["tsp"] = tsp;
                     ViewData["beginTime"] = beginTime;

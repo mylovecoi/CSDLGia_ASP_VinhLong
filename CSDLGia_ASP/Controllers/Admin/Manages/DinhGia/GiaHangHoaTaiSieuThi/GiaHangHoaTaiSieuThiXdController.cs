@@ -525,7 +525,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             return madv;
         }
 
-        [HttpPost("GiaHangHoaTaiSieuThiXd/GetListHoSo")]
+        /*[HttpPost("GiaHangHoaTaiSieuThiXd/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -550,6 +550,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
                 return Json(data);
             }
-        }
+        }*/
     }
 }

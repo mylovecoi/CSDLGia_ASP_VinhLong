@@ -1,11 +1,11 @@
 ﻿@{
     Layout = "_LayoutReports";
     var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
-    var hoso = (IEnumerable<GiaDauGiaDat>)ViewData["ChiTietHs"];
+    var hoso = (IEnumerable<GiaHhDvk>)ViewData["ChiTietHs"];
+    var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
 
 }
-@* @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt> *@
-    @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkCt>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -21,19 +21,21 @@
         </td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO TỔNG HỢP GIÁ TRÚNG THẦU QUYỀN SỬ DỤNG ĐẤT</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO CHI TIẾT GIÁ HH-DV KHÁC</p>
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr style="text-align:center">
-            <th style="text-align: center">STT</th>
-            <th style="text-align: center">Tên dự án</th>
-            <th style="text-align: center">Giá khởi điểm</th>
-            <th style="text-align: center">Giá trúng thầu</th>
-            <th>Thao tác</th>
+        <tr>
+            <th style="text-align:center" width="2%">TT</th>
+            <th style="text-align:center">Mã hàng hóa dịch vụ</th>  
+            <th style="text-align:center">Tên hàng hóa dịch vụ</th>
+            <th style="text-align:center">Đặc điểm kỹ thuật</th>
+            <th style="text-align:center">Đơn vị tính</th>
+            <th style="text-align:center">Giá kỳ trước</th>
+            <th style="text-align:center">Giá kỳ này</th>
         </tr>
     </thead>
     <tbody>
@@ -41,25 +43,30 @@
         {
             <tr>
                 <td></td>
-                <td colspan="5" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+                <td colspan="6" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
             var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
             @foreach (var hosoindv in hosoInDv)
             {
                 <tr>
                     <td></td>
-                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqdpagia - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
                 {
                     <tr>
-                        <td style="text-align: center">@item.Tenduan</td>
-                        <td style="text-align: center">@item.Giakhoidiem</td>
-                        <td style="text-align: center">@item.Giadaugia</td>
-
+                        <td></td>
+                        <td style="text-align: center">@item.Mahhdv</td>
+                        <td class="text-left active" style="font-weight: bold">@item.Tenhhdv</td>
+                        <td>@item.Dacdiemkt</td>
+                        <td style="text-align: center">@dmdvt.FirstOrDefault(x => x.Madvt == item.Dvt)?.Dvt</td>
+                        <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Gialk)</td>
+                        <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Gia)</td> 
                     </tr>
+
                 }
+
             }
         }
     </tbody>
