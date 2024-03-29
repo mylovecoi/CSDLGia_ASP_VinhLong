@@ -20,19 +20,19 @@
     <div class="col-xl-6">
         <div class="form-group">
             <label>Thời điểm</label>
-            <input type="date" id="Thoidiem" name="Thoidiem" class="form-control" required>
+            <input type="date" asp-for="Thoidiem" class="form-control" required>
         </div>
     </div>
     <div class="col-xl-6">
         <div class="form-group">
             <label>Số quyết định liền kề</label>
-            <input type="text" asp-for="Soqdlk" class="form-control" />
+            <input asp-for="Soqdlk" class="form-control" required />
         </div>
     </div>
     <div class="col-xl-6">
         <div class="form-group">
             <label>Ngày báo cáo liền kề</label>
-            <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
+            <input type="date"  asp-for="Thoidiemlk" class="form-control" required>
         </div>
     </div>
     <div class="col-xl-12">

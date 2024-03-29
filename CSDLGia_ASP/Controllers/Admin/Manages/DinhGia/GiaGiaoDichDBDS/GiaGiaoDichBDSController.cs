@@ -236,6 +236,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     var giayto = _db.ThongTinGiayTo.Where(x => x.Mahs == Mahs).ToList();
                     model.ThongTinGiayTo = giayto;
                     ViewData["Title"] = "Bảng giá giao dịch bất động sản";
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
                     ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
@@ -486,7 +487,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Ten = giathuetnct.Ten,
                                      Dvt = giathuetnct.Dvt,
                                      Gia = giathuetnct.Gia,
-                                     Manhom= giathuetn.Manhom,
+                                     Manhom= giathuetnct.Manhom,
                                      Mahs=giathuetn.Mahs,
                                      Trangthai = giathuetn.Trangthai,
 
