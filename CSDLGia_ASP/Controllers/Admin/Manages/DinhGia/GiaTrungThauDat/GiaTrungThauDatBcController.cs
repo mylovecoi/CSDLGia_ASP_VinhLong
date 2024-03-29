@@ -74,7 +74,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                      Mahs = hoso.Mahs,
                                      Soqdpagia = hoso.Soqdpagia,
                                      Thoidiem = hoso.Thoidiem,
-
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp trúng thầu quyền sử dụng đất";
@@ -113,18 +112,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
-                    var model= from dgct in _db.GiaDauGiaDatCt
-                                     join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
-                                     select new GiaDauGiaDat
-                                     {
-                                         Id = dgct.Id,
-                                         Mahs = dgct.Mahs,
-                                         Madv = dgct.MaDv,
-                                         Tenduan = dg.Tenduan,
-                                         Giakhoidiem = dgct.Giakhoidiem,
-                                         Giadaugia = dgct.Giadaugia,
-                                         Thoidiem = dg.Thoidiem,
-                                     };
+                    var model = from dgct in _db.GiaDauGiaDatCt
+                                join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
+                                select new GiaDauGiaDat
+                                {
+                                    Id = dgct.Id,
+                                    Mahs = dgct.Mahs,
+                                    Madv = dgct.MaDv,
+                                    Tenduan = dg.Tenduan,
+                                    Giakhoidiem = dgct.Giakhoidiem,
+                                    Giadaugia = dgct.Giadaugia,
+                                    Thoidiem = dg.Thoidiem,
+                                    Trangthai = dg.Trangthai
+                                };
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 
