@@ -38,12 +38,12 @@
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
-                  @*   @item.TenDonVi<br /> *@
+                    @item.TenDonVi<br />
                     <b>Mã hồ sơ: </b><a asp-controller="GiaTrungThauDat" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
-                <td style="text-align: center">@item.Soqddaugia</td>
+                <td style="text-align: center">@item.Soqdpagia</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                <td></td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
             </tr>
         }
