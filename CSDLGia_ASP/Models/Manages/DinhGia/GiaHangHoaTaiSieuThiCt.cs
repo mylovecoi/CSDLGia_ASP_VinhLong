@@ -31,6 +31,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public string Mota { get; set; }
         [NotMapped]
-        public string TenDv { get; set; }
+        public string Tendv { get; set; }
     }
 }

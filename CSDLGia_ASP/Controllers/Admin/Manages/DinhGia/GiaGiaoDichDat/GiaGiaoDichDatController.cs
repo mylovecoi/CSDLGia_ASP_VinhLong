@@ -157,11 +157,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     if (Manhom != "all")
                     {
                         danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
-                    }
-                    else
-                    {
-                        danhmuc = danhmuc.ToList();
-                    }
+                    }                   
 
                     var chitiet = new List<GiaGiaoDichDatCt>();
 
@@ -175,13 +171,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                             Madv = model.Madv,
+                            Manhom= item.Manhom,
                         });
                     }
                     _db.GiaGiaoDichDatCt.AddRange(chitiet);
                     _db.SaveChanges();
 
-                    model.GiaGiaoDichDatCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
-
+                    model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
+                    ViewData["DanhMucNhom"]= _db.GiaGiaoDichDatNhom;
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;

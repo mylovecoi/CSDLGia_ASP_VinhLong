@@ -1,43 +1,98 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
-
 @{
     int record_id = 1;
+    var DanhMucNhom = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["DanhMucNhom"];
 }
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<input hidden asp-for="Madv">
+<input hidden asp-for="Manhom">
+<input hidden asp-for="Mahs">
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Số quyết định</label>
+            <input type="text" asp-for="Soqd" class="form-control" required/>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Thời điểm</label>
+            <input type="date" id="Thoidiem" name="Thoidiem" class="form-control" required>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Số quyết định liền kề</label>
+            <input type="text" asp-for="Soqdlk" class="form-control" />
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Ngày báo cáo liền kề</label>
+            <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Nội dung</label>
+            <textarea class="form-control" rows="2" asp-for="Cqbh"></textarea>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Ghi chú</label>
+            <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/ThongTinGiayTo/Index.cshtml")
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin chi tiết</label>
 </div>
 <div class="card card-custom" style="border: 1px solid #60aee4;">
     <div class="card-body" id="frm_data">
-        <table class="table table-striped table-bordered table-hover" id="datatable_4">
-            <thead>
-                <tr style="text-align:center">
-                    <th width="2%">STT</th>
-                    <th width="25%">Phân loại bất động sản</th>
-                    <th>Giá giao dịch</th>
-                    <th width="15%">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.GiaGiaoDichBDSCt != null)
-                {
-                    @foreach (var item in Model.GiaGiaoDichBDSCt)
-                    {
-                        <tr>
-                            <td class="text-center">@(record_id++)</td>
-                            <td class="active" style="font-weight:bold;">@item.Ten</td>
-                            <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
-                            <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
-                                onclick="SetEdit('@item.Id')" title="Nhập Giá">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-                            </td>
-
+        @foreach (var nhom in DanhMucNhom)
+        {
+            var data = Model.GiaGiaoDichBDSCt.Where(x => x.Manhom == nhom.Manhom);
+            if (data.Any())
+            {
+                <hr />
+                <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
+                <table class="table table-striped table-bordered table-hover class-nosort">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th width="2%">STT</th>
+                            <th width="25%">Phân loại bất động sản</th>
+                            <th>Giá giao dịch</th>
+                            <th width="15%">Thao tác</th>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in data)
+                        {
+                            <tr>
+                                <td class="text-center">@(record_id++)</td>
+                                <td class="active" style="font-weight:bold;">@item.Ten</td>
+                                <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
+                                <td>
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                            onclick="SetEdit('@item.Id')" title="Nhập Giá">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+        }
+
     </div>
 </div>
 

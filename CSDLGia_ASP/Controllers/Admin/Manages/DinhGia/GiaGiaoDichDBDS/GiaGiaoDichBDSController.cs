@@ -117,53 +117,47 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
         [Route("GiaGiaoDichBDS/Create")]
         [HttpGet]
-        public IActionResult Create(string Manhom, string MadvBc)
+        public IActionResult Create(string maNhom, string MadvBc)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
                 {
 
+                    string Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     this.RemoveData_ChuaXacDinh(MadvBc);
-                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
-                    {
-                        Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                        Madv = MadvBc,
-                        Manhom = Manhom,
-                    };
 
                     var danhmuc = _db.GiaGiaoDichBDSDm.ToList();
-                    if (Manhom != "all")
+                    if (maNhom != "all")
                     {
-                        danhmuc = danhmuc.Where(t => t.Manhom == Manhom).ToList();
+                        danhmuc = danhmuc.Where(t => t.Manhom == maNhom).ToList();
                     }
-                    else
-                    {
-                        danhmuc = danhmuc.ToList();
-                    }
-
                     var chitiet = new List<GiaGiaoDichBDSCt>();
-
                     foreach (var item in danhmuc)
                     {
                         chitiet.Add(new GiaGiaoDichBDSCt()
                         {
-                            Mahs = model.Mahs,
+                            Mahs = Mahs,
                             Ten = item.Ten,
                             Trangthai = "CXD",
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
-                            Madv = model.Madv,
+                            Madv = MadvBc,
+                            Manhom= item.Manhom,
                         });
                     }
                     _db.GiaGiaoDichBDSCt.AddRange(chitiet);
                     _db.SaveChanges();
 
-                    model.GiaGiaoDichBDSCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
+                    {
+                        Mahs = Mahs,
+                        Madv = MadvBc,
+                        Manhom = maNhom,
+                    };
+                    model.GiaGiaoDichBDSCt = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs).ToList();
 
-                    ViewData["Manhom"] = Manhom;
-                    ViewData["Madv"] = MadvBc;
-                    ViewData["Mahs"] = model.Mahs;
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
                     ViewData["Title"] = "Bảng giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
@@ -624,7 +618,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         {
             // 
             var check = _db.GiaGiaoDichBDSCt.Where(t => t.Madv == maDonVi && t.Trangthai == "CXD");
-            if (check != null)
+            if (check.Any())
             {
                 _db.GiaGiaoDichBDSCt.RemoveRange(check);
             }

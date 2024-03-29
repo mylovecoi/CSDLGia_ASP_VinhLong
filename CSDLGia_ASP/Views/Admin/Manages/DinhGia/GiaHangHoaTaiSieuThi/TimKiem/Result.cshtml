@@ -1,39 +1,24 @@
 ﻿@{
     Layout = "_LayoutReports";
     int record_id = 1;
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt>
-<br />
-<br />
+
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
-<br />
-<br />
+
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr style="text-align:center">
-            <th rowspan="2" colspan="1">STT</th>
-            <th rowspan="2" colspan="1">Đơn vị nhập</th>
-            <th rowspan="2" colspan="1">Thời điểm</th>
-            <th rowspan="2" colspan="1">Đối tượng sử dụng</th>
-            <th colspan="2">Đơn giá</th>
-            <th colspan="2">Đơn giá</th>
-            <th colspan="2">Đơn giá</th>
-            <th colspan="2">Đơn giá</th>
-            <th colspan="2">Đơn giá</th>
+        <tr>
+            <th rowspan="2" width="2%" style="text-align:center">STT</th>
+            <th rowspan="2" style="text-align:center">Đơn vị</th>
+            <th rowspan="2" style="text-align:center">Số QĐ/Thời điểm</th>
+            <th rowspan="2" style="text-align:center">Tên hàng hóa</th>
+            <th colspan="2" style="text-align:center">Đơn giá</th>
         </tr>
-        <tr style="text-align:center">
-            <th>Năm áp dụng</th>
-            <th>Giá tiền</th>
-            <th>Năm áp dụng</th>
-            <th>Giá tiền</th>
-            <th>Năm áp dụng</th>
-            <th>Giá tiền</th>
-            <th>Năm áp dụng</th>
-            <th>Giá tiền</th>
-            <th>Năm áp dụng</th>
-            <th>Giá tiền</th>
+        <tr>
+            <th style="text-align:center">Giá từ</th>
+            <th style="text-align:center">Giá đến</th>
         </tr>
     </thead>
     <tbody>
@@ -43,25 +28,17 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    @foreach (var dv in dsdonvi)
-                    {
-                        @if (item.Madv == dv.MaDv)
-                        {
-                            <td>@dv.TenDv</td>
-                        }
-                    }
-                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td class="success">1</td>
+                    <td style="text-align:center">@item.Tendv</td>
+                    <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align:center">@item.Tenhanghoa</td>
+                    <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giatu)</td>
+                    <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giaden)</td>
                 </tr>
             }
         }
     </tbody>
 </table>
-<div class="card-footer" style="text-align:center">
-    <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Search" class="btn btn-danger">
-        <i class="la la-reply"></i>Quay lại
-    </a>
-</div>
+
 
 
 
