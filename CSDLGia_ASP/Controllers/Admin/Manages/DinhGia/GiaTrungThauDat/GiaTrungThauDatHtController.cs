@@ -86,6 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          Trangthai_h = dg.Trangthai_h,
                                          Thongtin = dg.Thongtin,
                                          Level = getdonvi.Level,
+                                         
                                      };
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                     {

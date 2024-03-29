@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Madv { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
-        [NotMapped]
+        
         public string Manhom { get; set; }
         [NotMapped]
         public string Tennhom { get; set; }

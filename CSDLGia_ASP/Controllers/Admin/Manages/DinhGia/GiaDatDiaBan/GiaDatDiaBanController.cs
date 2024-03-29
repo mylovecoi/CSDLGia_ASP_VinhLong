@@ -573,9 +573,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Loaiduong = dgct.Loaiduong,
                                     Hesok = dgct.Hesok,
                                     MaDv = dgct.MaDv,
+                                    Trangthai = dg.Trangthai,
 
                                 };
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.Hesok == heSoK);
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime  && x.Trangthai =="HT");
                     if (madv != "all")
                     {
                         model = model.Where(x => x.MaDv == madv);
@@ -592,7 +593,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     {
                         model = model.Where(x => x.Loaiduong.Contains(loaiDuong));
                     }
-                    
+                    if (heSoK >0)
+                    {
+                        model = model.Where(x=>x.Hesok == heSoK);
+                    }                    
                     ViewData["beginTime"] = beginTime;
                     ViewData["endTime"] = endTime;
                     ViewData["soQuyetDinh"] = soQuyetDinh;
