@@ -1,17 +1,16 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+
+    string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
+    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
+    double DonGiaTu = ViewData["DonGiaTu"] as double? ?? 0;
+    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
+
     var DanhSachHoSo = (IEnumerable<GiaHangHoaTaiSieuThi>)ViewData["DanhSachHoSo"];
 
-
-    string FromDate = ((DateTime)ViewData["beginTime"]).ToString("yyyy-MM-dd");
-    string ToDate = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");
-    double beginPrice = ViewData["beginPrice"] as double? ?? 0;
-    double endPrice = ViewData["endPrice"] as double? ?? 0;
-
     int record_id = 1;
-}
 
+}
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt>
 
 @section custom_style {
@@ -30,8 +29,8 @@
         });
 
         function ClickSearch() {
-            var fromDate = document.getElementById("beginTime_Search").value;
-            var toDate = document.getElementById("endTime_Search").value;
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
             if (fromDate === "" || toDate === "") {
                 toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
             } else {
@@ -41,13 +40,13 @@
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaHangHoaTaiSieuThi/Search?';
                     var Madv = '&Madv=' + $('#Madv_Search').val();
-                    var beginTime = '&beginTime=' + $('#beginTime_Search').val();
-                    var endTime = '&endTime=' + $('#endTime_Search').val();
-                    var mahs = '&mahs=' + $('#mahs_Search').val();
-                    var beginPrice = '&beginPrice=' + $('#beginPrice_Search').val();
-                    var endPrice = '&endPrice=' + $('#endPrice_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val();
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
 
-                    var url = current_path_url + Madv + tsp + beginTime + endTime + mahs + beginPrice + endPrice + Ptcp;
+                    var url = current_path_url + Madv + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -88,7 +87,7 @@
                         <label style="font-weight:bold;">Đơn vị</label>
                         <select class="form-control" id="Madv_Search" name="Madv_Search">
                             <option value="all">--Tất cả--</option>
-                            @foreach (var item in dsdonvi)
+                            @foreach (var item in dscqcq)
                             {
                                 <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                             }
@@ -98,23 +97,23 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thời gian nhập từ</label>
-                        <input type="date" class="form-control" name="beginTime_Search" id="beginTime_Search" value="@FromDate" onchange="GetList()" />
+                        <input type="date" class="form-control" name="NgayTu_Search" id="NgayTu_Search" value="@NgayTu" onchange="GetList()" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thời gian nhập đến</label>
-                        <input type="date" class="form-control" name="endTime_Search" id="endTime_Search" value="@ToDate" onchange="GetList()" />
+                        <input type="date" class="form-control" name="NgayDen_Search" id="NgayDen_Search" value="@NgayDen" onchange="GetList()" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control" id="mahs_Search" name="mahs_Search">
+                        <select class="form-control" id="Mahs_Search" name="Mahs_Search">
                             <option value="all">--Tất cả---</option>
                             @foreach (var item in DanhSachHoSo)
                             {
-                                <!option value="@item.Mahs" @(ViewData["mahs"].ToString() == item.Mahs ? "selected" : "")>
+                                <!option value="@item.Mahs" @(ViewData["Mahs"].ToString() == item.Mahs ? "selected" : "")>
                                 Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)
                                 </!option>
                             }
@@ -123,14 +122,14 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
-                        <label style="font-weight:bold;">Đơn gia nhập từ</label>
-                        <input type="number" class="form-control" name="beginPrice_Search" id="beginPrice_Search" value="@beginPrice" />
+                        <label style="font-weight:bold;">Đơn giá từ</label>
+                        <input type="number" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@DonGiaTu" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
-                        <label style="font-weight:bold;">Đơn gia nhập đến</label>
-                        <input type="number" class="form-control" name="endPrice_Search" id="endPrice_Search" value="@endPrice" />
+                        <label style="font-weight:bold;">Đơn giá đến</label>
+                        <input type="number" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@DonGiaDen" />
                     </div>
                 </div>
             </div>
@@ -144,30 +143,30 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr>
-                    <th style="text-align:center" width="2%">STT</th>
-                    <td style="text-align:center" width="5%">Đơn vị nhập</td>
-                    <td style="text-align:center" width="5%">Số QĐ</td>
-                    <td style="text-align:center" width="5%">Thời điểm</td>
-                    <td style="text-align:center" width="20%">Mô tả</td>
-                    <th style="text-align:center" width="5%">Giá từ</th>
-                    <th style="text-align:center" width="5%">Giá đến</th>
-                    <th style="text-align:center" width="5%">Thao tác</th>
+                    <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                    <th rowspan="2" style="text-align:center">Đơn vị</th>
+                    <th rowspan="2" style="text-align:center">Số QĐ/Thời điểm</th>
+                    <th rowspan="2" style="text-align:center">Tên hàng hóa</th>
+                    <th colspan="2" style="text-align:center">Đơn giá</th>
+                    <th rowspan="2" width="5%" style="text-align:center">Thao tác</th>
+                </tr>
+                <tr>
+                    <th style="text-align:center">Giá từ</th>
+                    <th style="text-align:center">Giá đến</th>
                 </tr>
             </thead>
             <tbody>
-                @if (Model != null)
+                @if(Model != null)
+                {
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">@item.TenDv</td>
-                            <td style="text-align: center">
-                                @item.Soqd
-                            </td>
-                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: left">@item.Mota</td>
-                            <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giatu)</td>
-                            <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giaden)</td>
+                            <td style="text-align:center">@item.Tendv</td>
+                            <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align:center">@item.Tenhanghoa</td>
+                            <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giatu)</td>
+                            <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giaden)</td>
                             <td>
                                 <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
                                    target="_blank">
@@ -176,6 +175,7 @@
                             </td>
                         </tr>
                     }
+                }
             </tbody>
         </table>
     </div>
@@ -183,8 +183,8 @@
 
 <script>
     function GetList() {
-        var fromDate = document.getElementById("beginTime_Search").value;
-        var toDate = document.getElementById("endTime_Search").value;
+        var fromDate = document.getElementById("NgayTu_Search").value;
+        var toDate = document.getElementById("NgayDen_Search").value;
         if (fromDate === "" || toDate === "") {
             toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
         } else {
