@@ -47,7 +47,7 @@
             {
                 <tr>
                     <td></td>
-                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqdpagia - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqdpagia - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
@@ -56,13 +56,7 @@
                         <td></td>
                         <td style="text-align: center">@item.Tenduan</td>
                         <td style="text-align: center">@item.Giakhoidiem</td>
-                        <td style="text-align: center">@item.Giadaugia</td>
-                        <td>
-                            <a asp-controller="GiaTrungThauDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                               target="_blank">
-                                <i class="icon-lg la la-eye text-success"></i>
-                            </a>
-                        </td>
+                        <td style="text-align: center">@item.Giadaugia</td> 
                     </tr>
                 }
             }
