@@ -107,31 +107,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.baocao", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
                     var model = from dgct in _db.GiaDatDiaBanCt
                                 join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
-                                select new VMDinhGiaDatDiaBanCt
+                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                                 {
                                     Id = dg.Id,
                                     Mahs = dg.Mahs,
-                                    Diemdau = dgct.Diemdau,
-                                    Diemcuoi = dgct.Diemcuoi,
-                                    Soqd = dg.Soqd,
                                     Thoidiem = dg.Thoidiem,
-                                    Mota = dgct.Mota,
-                                    Loaiduong = dgct.Loaiduong,
-                                    Hesok = dgct.Hesok,
                                     MaDv = dgct.MaDv,
                                     Trangthai = dg.Trangthai,
 
-                                };
+                                    Mota = dgct.Mota,
+                                    Loaiduong = dgct.Loaiduong,
+                                    Diemdau = dgct.Diemdau,
+                                    Diemcuoi = dgct.Diemcuoi,
+                                    Hesok = dgct.Hesok,
+                                    Giavt1 = dgct.Giavt1,
+                                    Giavt2 = dgct.Giavt2,
+                                    Giavt3 = dgct.Giavt3,
+                                    Giavt4 = dgct.Giavt4,
+                                    Giavt5 = dgct.Giavt5,
 
+                                };
+           
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                   
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
 
                     List<string> list_madv = model.Select(t => t.MaDv).ToList();

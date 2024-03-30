@@ -73,6 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
 
                                  });
                     ViewData["Title"] = "Báo cáo vật liệu xây dựng";

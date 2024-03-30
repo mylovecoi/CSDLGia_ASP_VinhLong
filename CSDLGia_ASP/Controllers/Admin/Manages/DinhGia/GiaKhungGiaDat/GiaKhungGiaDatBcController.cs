@@ -75,6 +75,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                      Mahs = hoso.Mahs,
                                      Kyhieuvb = hoso.Kyhieuvb,
                                      Ghichu = hoso.Ghichu,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá  khung giá đất";

@@ -28,7 +28,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
         {
             _db = db;
         }
-
         [Route("GiaGiaoDichDat/BaoCao")]
         [HttpGet]
         public IActionResult Index()
@@ -74,6 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Ghichu = hoso.Ghichu,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giao dịch đất trên thị trường";
@@ -126,8 +126,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
                                      Trangthai = giathuetn.Trangthai,
+                                     
                                  });
-
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
-                    var model_hoso = _db.GiaDatDiaBan.Where(t => list_mahs.Contains(t.Mahs));
+                    var model_hoso = _db.GiaGiaoDichDat.Where(t => list_mahs.Contains(t.Mahs));
 
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
@@ -146,7 +146,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá đất địa bàn";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/BaoCao/BcCT.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/BaoCao/BcCT.cshtml", model);
                 }
                 else
                 {
