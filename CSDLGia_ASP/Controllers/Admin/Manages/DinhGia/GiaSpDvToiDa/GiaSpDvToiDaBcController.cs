@@ -71,6 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ tối đa";

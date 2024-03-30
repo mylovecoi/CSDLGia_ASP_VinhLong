@@ -42,6 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                        TenDiaBan = db.TenDiaBan,
                                        TenDv = dv.TenDv,
                                        MaDv = dv.MaDv,
+
                                    }).ToList();
 
                     if (dsdonvi.Count > 0)

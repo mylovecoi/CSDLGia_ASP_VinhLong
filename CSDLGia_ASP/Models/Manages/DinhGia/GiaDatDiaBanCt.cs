@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -30,5 +31,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string MaDv { get; set; }
+
+        [NotMapped]
+        public DateTime Thoidiem { get; set; }
+
+
     }
 }
