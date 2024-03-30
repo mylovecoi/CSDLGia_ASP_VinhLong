@@ -138,7 +138,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "<div class='col-xl-10'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
-                        result += "<select class='form-control' id='dvt_edit' name='dvt_edit'>";
+                        result += "<select class='form-control kt_select2_1_modal' id='dvt_edit' name='dvt_edit'>";
                         foreach (var item in dvt)
                         {
                             result += "<option value='" + item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + item.Dvt + "</option>";
