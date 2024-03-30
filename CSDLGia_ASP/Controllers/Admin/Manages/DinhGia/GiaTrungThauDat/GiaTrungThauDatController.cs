@@ -429,15 +429,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Phanloai = model.Phanloai
                     };
                     var model_ct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI").ToList();
-                    ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sử dụng đất";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgd";
-                    ViewData["MenuLv3"] = "menu_giadgd_tt";
+                    var donvi = _db.DsDonVi.First(t => t.MaDv == model.Madv);
+                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+                    ViewData["TenDonVi"] = donvi.TenDv;                    
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
                 }
                 else

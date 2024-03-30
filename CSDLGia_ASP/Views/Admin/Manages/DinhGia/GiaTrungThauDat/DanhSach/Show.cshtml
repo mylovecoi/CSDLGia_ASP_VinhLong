@@ -1,33 +1,16 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat;
 @{
     Layout = "_LayoutReports";
-    int record_id = 1;
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    int record_id = 1;    
 }
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:01</p>
 <p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
+    Địa bàn:@ViewData["TenDiaBan"]
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
 <p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
+    Cơ quan tiếp nhận:@ViewData["TenDonVi"]
 </p>
 
 <br />
@@ -49,7 +32,7 @@
     <tbody>
         @if (Model != null)
         {
-            @if (Model.GiaDauGiaDatCt != null)
+            @if (Model.GiaDauGiaDatCt.Any())
             {
                 @foreach (var item in Model.GiaDauGiaDatCt)
                 {
