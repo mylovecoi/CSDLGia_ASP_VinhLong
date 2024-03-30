@@ -105,33 +105,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-                    MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
-                    var model = from dgct in _db.GiaDvKcbCt.Where(t => t.Ghichu == "XD")
-                                     join dg in _db.GiaDvKcb on dgct.Mahs equals dg.Mahs
-                                     //join dgdm in _db.GiaDvGdDtDm on dgct.Maspdv equals dgdm.Maspdv
-                                     select new VMDinhGiaDvKcb
-                                     {
-                                         Id = dg.Id,
-                                         Mahs = dg.Mahs,
-                                         Madv = dg.Madv,
-                                         Macqcq = dg.Macqcq,
-                                         Thoidiem = dg.Thoidiem,
-                                         Maspdv = dgct.Maspdv,
-                                         Tenspdv = dgct.Tenspdv,
-                                         Giadv = dgct.Giadv,
-                                         Trangthai = dgct.Trangthai,
-                                         Manhom = dgct.Manhom,
-                                     };
-
-                  
-                    //model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    //if (MaNhom != "all") { model = model.Where(t => t.MaNhom == MaNhom); }
+                    var model = (from hosoct in _db.GiaDvKcbCt
+                                 join hoso in _db.GiaDvKcb on hosoct.Mahs equals hoso.Mahs
+                                 join nhom in _db.GiaDvKcbNhom on hosoct.Manhom equals nhom.Manhom
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbCt
+                                 {
+                                     Madv = hoso.Madv,
+                                     Tendv = donvi.TenDv,
+                                     Tennhom = nhom.Tennhom,
+                                     SoQD = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
+                                     Madichvu = hosoct.Madichvu,
+                                     Tenspdv = hosoct.Tenspdv,
+                                     Giadv = hosoct.Giadv,
+                                     Manhom = hosoct.Manhom,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hoso.Mahs,
+                                     Ghichu = hosoct.Ghichu,
+                                 });
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop);}
        
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
