@@ -121,7 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Mota = hosoct.Mota,
                                      Dongia = hosoct.Dongia,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     Dvt = hosoct.Dvt
                                  });
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop && t.Mahs == PhanLoaiHoSo); }

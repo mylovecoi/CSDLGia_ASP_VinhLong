@@ -55,6 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             var model = new GiaTroGiaTroCuocDm
             {
                 Tenspdv = request.Tenspdv,               
+                Dvt = request.Dvt,               
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -83,7 +84,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         public JsonResult Edit(int Id)
         {
             var model = _db.GiaTroGiaTroCuocDm.FirstOrDefault(p => p.Id == Id);
-            var DmDvt = _db.DmDvt.ToList();
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -93,6 +93,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên dịch vụ*</b></label>";
                 result += "<input type='text' id='Tenspdv_edit' name='Tenspdv_edit' value='" + model.Tenspdv + "' class='form-control'/>";
+                result += "</div></div>"; 
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn vị tính*</b></label>";
+                result += "<input type='text' id='dvt_edit' name='dvt_edit' value='" + model.Dvt + "' class='form-control'/>";
                 result += "</div></div>";
                
                 result += "</div></div></div></div>";
@@ -111,6 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         {
             var model = _db.GiaTroGiaTroCuocDm.FirstOrDefault(t => t.Id == request.Id);
             model.Tenspdv = request.Tenspdv;
+            model.Dvt = request.Dvt;
             
             model.Updated_at = DateTime.Now;
             _db.GiaTroGiaTroCuocDm.Update(model);

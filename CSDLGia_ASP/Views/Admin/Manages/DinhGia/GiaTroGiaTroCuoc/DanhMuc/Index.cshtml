@@ -47,6 +47,7 @@
                     <th width="4%">STT</th>
                     @* <th>Mã hàng hóa, dịch vụ</th> *@
                     <th>Tên hàng hóa dịch vụ</th>
+                    <th>Đơn vị tính</th>
                     <th width="18%">Thao tác</th>
                 </tr>
             </thead>
@@ -59,8 +60,7 @@
                             <td style="text-align: center">@(record_id++)</td>
 
                             <td style="text-align: left">@item.Tenspdv</td>
-                            @*         <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: center">@item.Mota</td> *@
+                            <td style="text-align: center">@item.Dvt</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
@@ -96,6 +96,12 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên hàng hóa*</b></label>
                             <input type="text" id="Tenspdv_create" name="Tenspdv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính*</b></label>
+                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
                         </div>
                     </div>
                     @*   <div class="col-xl-12">
@@ -190,7 +196,7 @@
 
 <script>
 
-  
+
 
     function SetCreate() {
 
@@ -198,7 +204,8 @@
             url: '/DanhMucTGTC/Store',
             type: 'POST',
             data: {
-                Tenspdv: $('#Tenspdv_create').val(),              
+                Tenspdv: $('#Tenspdv_create').val(),
+                Dvt: $('#dvt_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -230,7 +237,7 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {                  
+                if (data.status == 'success') {
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     location.reload();
                 } else {
@@ -266,13 +273,14 @@
             url: '/DanhMucTGTC/Update',
             type: 'POST',
             data: {
-                Tenspdv: $('#Tenspdv_edit').val(),             
+                Tenspdv: $('#Tenspdv_edit').val(),
+                Dvt: $('#dvt_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");                
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");

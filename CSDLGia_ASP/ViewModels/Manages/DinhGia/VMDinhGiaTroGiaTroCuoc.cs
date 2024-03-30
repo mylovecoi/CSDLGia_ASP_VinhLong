@@ -52,7 +52,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Maspdv { get; set; }
         public double Dongia { get; set; }
         public string Phanloai { get; set; }
-
+        public string Dvt { get; set; }
 
 
         public string Level { get; set; }
