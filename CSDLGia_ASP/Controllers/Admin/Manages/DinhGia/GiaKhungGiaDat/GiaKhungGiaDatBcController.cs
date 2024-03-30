@@ -109,12 +109,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.baocao", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-                    MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
                     var model = (from giakgdct in _db.GiaKhungGiaDatCt
                                  join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
@@ -129,6 +123,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                      Tendv = donvi.TenDv,
                                      SoQD = giakgd.Kyhieuvb,
                                      Trangthai = giakgd.Trangthai,
+                                     Giattdb = giakgdct.Giattdb,
+                                     Giatddb = giakgdct.Giatddb,
+                                     Giatdmn = giakgdct.Giatdmn,
+                                     Giatdtd = giakgdct.Giatdtd,
+                                     Giattmn = giakgdct.Giattmn,
+                                     Giatttd = giakgdct.Giatttd
 
                                  });
 

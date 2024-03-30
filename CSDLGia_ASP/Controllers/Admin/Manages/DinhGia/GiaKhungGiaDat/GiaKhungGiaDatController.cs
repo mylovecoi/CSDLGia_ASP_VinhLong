@@ -606,17 +606,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     madv = string.IsNullOrEmpty(madv) ? "all" : madv;                    
                     ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? firstDayCurrentYear : ngaynhap_tu;
                     ngaynhap_den = ngaynhap_den == DateTime.MinValue ? lastDayCurrentYear : ngaynhap_den;
-                    //var model = from giakgd in _db.GiaKhungGiaDat 
-                    //             join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
-                    //             select new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
-                    //             {
-                    //                 Id = giakgd.Id,                                     
-                    //                 Mahs = giakgd.Mahs,
-                    //                 Madv = giakgd.Madv,
-                    //                 Thoidiem = giakgd.Thoidiem,
-                    //                 TenDonVi = donvi.TenDv,
-                    //                 Kyhieuvb = giakgd.Kyhieuvb,
-                    //             };
+                  
                     var model = (from giakgdct in _db.GiaKhungGiaDatCt
                                  join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
                                  join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv

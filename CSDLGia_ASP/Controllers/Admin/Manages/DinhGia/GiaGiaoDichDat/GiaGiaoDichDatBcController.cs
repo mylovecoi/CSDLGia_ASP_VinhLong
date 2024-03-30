@@ -106,27 +106,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.baocao", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
-
+              
                     var model = (from giathuetnct in _db.GiaGiaoDichDatCt
                                  join giathuetn in _db.GiaGiaoDichDat on giathuetnct.Mahs equals giathuetn.Mahs
                                  join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 /*join nhomtn in _db.GiaGiaoDichDatNhom on giathuetn.Manhom equals nhomtn.Manhom*/
+                                 join nhomtn in _db.GiaGiaoDichDatNhom on giathuetnct.Manhom equals nhomtn.Manhom
                                  select new GiaGiaoDichDatCt
                                  {
                                      Id = giathuetnct.Id,
                                      Gia = giathuetnct.Gia,
                                      Mahs = giathuetnct.Mahs,
                                      Madv = giathuetn.Madv,
-                                     Manhom = giathuetn.Manhom,
+                                     Manhom = giathuetnct.Manhom,
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
+                                     Ten = giathuetnct.Ten,
                                      Trangthai = giathuetn.Trangthai,
-                                     
+                                     Dvt = giathuetnct.Dvt,
+                                     Tennhom = nhomtn.Tennhom,
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
