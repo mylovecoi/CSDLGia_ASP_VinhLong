@@ -40,9 +40,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                 {
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgkhunggd";
-                    ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaHhDvCn.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     ViewData["DanhSachNhom"] = _db.GiaHhDvCnNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/BaoCao/Index.cshtml");
@@ -80,9 +80,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                  });
 
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgkhunggd";
-                    ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_hhdvcn";
+                    ViewData["MenuLv3"] = "menu_hhdvcn_bc";
 
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
@@ -162,6 +162,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost("GiaHhDvCn/BaoCao/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaHhDvCn.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
             }
         }
 

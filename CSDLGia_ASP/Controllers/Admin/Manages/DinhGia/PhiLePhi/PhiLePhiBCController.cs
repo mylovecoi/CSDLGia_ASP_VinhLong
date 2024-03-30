@@ -68,10 +68,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
                                  {
-                                     //TenDonVi = donvi.TenDv,
+                                     TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-                                     Thoidiem = hoso.Thoidiem                                    
 
                                  });
                     ViewData["Title"] = "Báo cáo giá phí lệ phí";
