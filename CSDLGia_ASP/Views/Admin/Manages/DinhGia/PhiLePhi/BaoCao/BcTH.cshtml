@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "_LayoutReports";
     var record_id = 1;
+
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi>
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -21,7 +22,7 @@
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
 
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
@@ -37,12 +38,12 @@
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
-                    @* @item.TenDonVi<br /> *@
-                    <b>Mã hồ sơ: </b><a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
+                    <b>Số QĐ: </b>@item.Soqd<br />
+                    <b>Mã hồ sơ: </b><a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
                 <td style="text-align: center">@item.Soqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                <td></td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
             </tr>
         }
