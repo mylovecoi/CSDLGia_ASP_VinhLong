@@ -2,329 +2,717 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-
+<html lang="en">
+<!--begin::Head-->
 <head>
-
+    <base href="">
     <meta charset="utf-8" />
-    <title>@ViewData["title"]</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com connect.facebook.net www.googleadservices.com www.google-analytics.com googleads.g.doubleclick.net onesignal.com tpc.googlesyndication.com;">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-    <!--link href="~/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"-->
-    <link href="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-    @*<link href="~/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />*@
-    <!-- END PAGE LEVEL PLUGIN STYLES -->
-    <!-- BEGIN PAGE STYLES -->
-    <link href="~/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="~/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+    <title>@ViewData["Title"] | CSDL Giá</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="canonical" href="https://keenthemes.com/metronic" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Page Vendors Styles(used by this page)-->
+    <link href="~/Admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendors Styles-->
+    <!--begin::Global Theme Styles(used by all pages)-->
 
-
-    @RenderSection("custom_style", false);
-    <!-- END PAGE STYLES -->
-    <!-- BEGIN THEME STYLES -->
-    <link href="~/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/css/plugins-md.css" rel="stylesheet" type="text/css">
-    <link href="~/assets/admin/layout3/css/layout.css" rel="stylesheet" type="text/css">
-    <link href="~/assets/admin/layout3/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color">
-    <link href="~/assets/admin/layout3/css/custom.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="~/assets/global/plugins/bootstrap-toastr/toastr.min.css" />
-    <!-- END THEME STYLES -->
-    <!--link rel="shortcut icon" href="favicon.ico"/-->
-    <link rel="shortcut icon" href="~/logo/logolife.png" type="image/x-icon" />
-    <script src="~/assets/global/plugins/respond.min.js"></script>
-    <script src="~/assets/global/plugins/excanvas.min.js"></script>
-    <![endif]-->
-    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-    <script src="~/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-    <script src="~/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="~/assets/global/scripts/metronic.js" type="text/javascript"></script>
-    <script src="~/assets/admin/layout3/scripts/layout.js" type="text/javascript"></script>
-    <script src="~/assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
-    <script src="~/assets/admin/pages/scripts/index3.js" type="text/javascript"></script>
-    <script src="~/assets/admin/pages/scripts/tasks.js" type="text/javascript"></script>
-
-    <script>
-        jQuery(document).ready(function () {
-            Metronic.init(); // init metronic core componets
-            Layout.init(); // init layout
-            Demo.init(); // init demo(theme settings page)
-            //Index.init(); // init index page
-            //Tasks.initDashboardWidget(); // init tash dashboard widget
-        });
-    </script>
-    <!-- END JAVASCRIPTS -->
-
-    <script type="text/javascript">
-        function time() {
-            var today = new Date();
-            var weekday = new Array(7);
-            weekday[0] = "Chủ nhật";
-            weekday[1] = "Thứ hai";
-            weekday[2] = "Thứ ba";
-            weekday[3] = "Thứ tư";
-            weekday[4] = "Thứ năm";
-            weekday[5] = "Thứ sáu";
-            weekday[6] = "Thứ bảy";
-            var day = weekday[today.getDay()];
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            m = checkTime(m);
-            s = checkTime(s);
-            nowTime = h + ":" + m + ":" + s;
-            if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-
-            tmp = '<span class="date"> ' + today + ' | ' + nowTime + '</span>';
-
-            document.getElementById("clock").innerHTML = tmp;
-
-            clocktime = setTimeout("time()", "1000", "JavaScript");
-            function checkTime(i) {
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
-            }
-        }
-    </script>
-
+    <link href="~/Admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Theme Styles-->
+    <!--begin::Layout Themes(used by all pages)-->
+    @*<link href="~/Admin/assets/css/themes/layout/header/base/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/header/menu/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Admin/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/brand/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/aside/light.css" rel="stylesheet" type="text/css" />
+    <!--end::Layout Themes-->
+    <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
+    @RenderSection("custom_style", required: false)
 </head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
-<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
-<body style="" class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid" onload="time()">
-    <!-- BEGIN HEADER -->
-    <div class="page-header">
-        <!-- BEGIN HEADER TOP -->
-        <div class="page-header-top" style="">
-            <div class="container">
-                <!-- BEGIN LOGO -->
-                <div class="page-logo">
-                    <a href="~/CongBo">
-                        <h3 style="text-transform: uppercase;"><b style="color: #25aae2">CƠ SỞ DỮ LIỆU VỀ GIÁ @ViewBag.HeThong.DiaDanh</b></h3>
-                    </a>
+<!--end::Head-->
+<!--begin::Body-->
+<body onload="display_ct6()" id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed footer-fixed page-loading">
+    <!--begin::Main-->
+    <!--begin::Header Mobile-->
+
+    <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
+        <!--begin::Logo-->
+        <a asp-controller="Home" asp-action="Index">
+            <img alt="Logo" src="~/Admin/FileUpload/Logo/Logo_Life.png" style="margin-top: -10px" />
+        </a>
+        <!--end::Logo-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Aside Mobile Toggle-->
+            <button class="btn p-0 burger-icon ml-4" id="kt_aside_mobile_toggle" title="Menu">
+                <span></span>
+            </button>
+            <!--end::Aside Mobile Toggle-->
+            <!--begin::Header Menu Mobile Toggle-->
+            <!--<button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
+                <span></span>
+            </button>-->
+            <!--end::Header Menu Mobile Toggle-->
+            <!--begin::Topbar Mobile Toggle-->
+            <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
+                <span class="svg-icon svg-icon-xl">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                            <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+            </button>
+            <!--end::Topbar Mobile Toggle-->
+        </div>
+        <!--end::Toolbar-->
+    </div>
+    <!--end::Header Mobile-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="d-flex flex-row flex-column-fluid page">
+            <!--begin::Wrapper-->
+            <!--Test-->
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                <!--begin::Header-->
+                <div id="kt_header" class="header header-fixed" @*style="background-image: url(Admin/assets/media/bg/bg-11.jpg)"*@>
+                    <!--begin::Container-->
+                    <div class="container d-flex align-items-stretch justify-content-between">
+                        <!--begin::Header Menu Wrapper-->
+                        <div class="topbar">
+                            <!--begin::Header Menu-->
+                            <div class="topbar-item">
+                                <!--begin::Header Nav-->
+                                <a href="~/CongBo">
+                                    <h2 style="text-transform: uppercase;"><b style="color: #25aae2">CƠ SỞ DỮ LIỆU VỀ GIÁ @*@ViewBag.HeThong.DiaDanh*@</b></h2>
+                                </a>
+                                <!--end::Header Nav-->
+                            </div>
+                            <!--end::Header Menu-->
+                        </div>
+                        <!--end::Header Menu Wrapper-->
+                        <div class="topbar">
+                            <!--begin::Header Menu-->
+                            <div class="topbar-item">
+                                @if (ViewBag.bSession)
+                                {
+                                    <a asp-controller="Home" asp-action="Index" title="Trang công bố">Vào chương trình</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Login" asp-action="Login" class="text-bold text-primary no-underline">Đăng nhập</a>
+                                    <b>&nbsp; Hoặc &nbsp;</b>
+                                    <a href="#" class="text-bold text-primary no-underline">Kiểm tra tài khoản đăng ký</a>
+                                }
+                            </div>
+                            <!--end::Header Menu-->
+                        </div>
+                    </div>
+                    <!--end::Container-->
                 </div>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                <a href="javascript:;" class="menu-toggler"></a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-                <!-- BEGIN TOP NAVIGATION MENU -->
-                <div class="top-menu">
-                    <b style="color: #25aae2"><div id="clock"></div></b>
-                    @if (ViewBag.bSession)
-                    {
-                        <a class="text-bold text-white no-underline" asp-controller="Home" asp-action="Index" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Vào chương trình</a>
+                <!--end::Header-->
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="background-image: url('../../../Admin/assets/media/bg/bg-3.jpg')">
+                    <!--begin::Subheader-->
+                    <div class="subheader py-2 py-lg-4 subheader-solid bg-white" id="kt_subheader">
+                        <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                            <!--begin::Info-->
+                            <div class="d-flex align-items-stretch mr-3">
+                                <!--begin::Header Menu Wrapper-->
+                                <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+                                    <!--begin::Header Menu-->
+                                    <div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
+                                        <!--begin::Header Nav-->
+                                        <ul class="menu-nav">
+                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="javascript:;" class="menu-link menu-toggle">
+                                                    <span class="menu-text">Hàng hóa, dịch vụ</span>
+                                                    <span class="menu-desc"></span>
+                                                    <i class="menu-arrow"></i>
+                                                </a>
+                                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                                                    <ul class="menu-subnav">
+                                                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                            <a href="javascript:;" class="menu-link menu-toggle">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Định giá (Phần I)</span>
+                                                                <i class="menu-arrow"></i>
+                                                            </a>
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                <ul class="menu-subnav">
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaThueDNCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá thuê mặt đất-nước</span>
+                                                                        </a>
+                                                                    </li>
+
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiarungCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá rừng</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="Giathuemuanhaxh" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá thuê mua nhà XH</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="Gianuocsh" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá nước sạch sinh hoạt</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaThueTSanCong" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá thuê tài sản công</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaDichVuCongIch" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá sản phẩm, dịch vụ công ích,... đặt hàng</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaoDucDaoTao" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá dịch vụ GD-ĐT</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="DvKhamChuaBenh" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá dịch vụ KCB</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                            <a href="javascript:;" class="menu-link menu-toggle">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Định giá (Phần II)</span>
+                                                                <i class="menu-arrow"></i>
+                                                            </a>
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                <ul class="menu-subnav">
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="TroGiaTroCuoc" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Mức trợ giá, trợ cước</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaHhDvCn" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaDatPl" asp-action="TrangCongBo" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá đất cụ thể</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="Giadatpl" asp-action="TrangCongBo" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá thuế tài nguyên</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaDatDiaBan" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá đất theo địa bàn</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaTrungThauDat" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá đấu giá đất</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a asp-controller="GiaVatLieuXayDungCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text">Giá vật liệu xây dựng</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="KkMhBog" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Bình ổn giá</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="GiaHhDvk" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Giá HH-DV khác</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Giá lệ phí trước bạ</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="javascript:;" class="menu-link menu-toggle">
+                                                    <span class="menu-text">Kê khai, niêm yết giá</span>
+                                                    <span class="menu-desc"></span>
+                                                    <i class="menu-arrow"></i>
+                                                </a>
+                                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                                                    <ul class="menu-subnav">
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" href="#" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Doanh nghiệp kê khai, niêm yết giá</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" href="#" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Lĩnh vực hoạt động kinh doanh</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" href="#" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Tìm kiếm giá kê khai, niêm yết</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a target="_blank" asp-controller="ThamDinhGia" asp-action="Index" class="menu-link menu-toggle">
+                                                    <span class="menu-text">Thẩm định giá</span>
+                                                    <span class="menu-desc"></span>
+                                                    <i class="menu-arrow"></i>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="javascript:;" class="menu-link menu-toggle">
+                                                    <span class="menu-text">Văn bản QLNN</span>
+                                                    <span class="menu-desc"></span>
+                                                    <i class="menu-arrow"></i>
+                                                </a>
+                                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                                                    <ul class="menu-subnav">
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="VbQlNn" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Văn bản QLNN về giá, phí lệ phí</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="VbQlNn" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Thông tin QLNN về giá</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                                                <a href="javascript:;" class="menu-link menu-toggle">
+                                                    <span class="menu-text">Hỗ trợ</span>
+                                                    <span class="menu-desc"></span>
+                                                    <i class="menu-arrow"></i>
+                                                </a>
+                                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                                                    <ul class="menu-subnav">
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" href="#" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Danh sách tài khoản tập huấn</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" href="#" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Thông tin hỗ trợ</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a asp-controller="CongBo" asp-action="MobileApp" class="menu-link" target="_blank">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Ứng dụng di động</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <!--end::Header Nav-->
+                                    </div>
+                                    <!--end::Header Menu-->
+                                </div>
+                                <!--end::Header Menu Wrapper-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Toolbar-->
+                            <div class="d-flex align-items-center">
+                                <a href="#" class="btn btn-sm btn-light font-weight-bold mr-2">
+                                    <span id='ct6' class="text-primary font-size-base font-weight-bolder"
+                                    @*class="label label-white font-weight-bold label-light-danger label-inline" style="font-size:12px; width:170px; height:30px; font-weight:bold"*@>
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end::Toolbar-->
+                        </div>
+
+                    </div>
+                    <!--end::Subheader-->
+                    <!--begin::Entry-->
+                    <div class="d-flex flex-column-fluid">
+                        <!--begin::Container-->
+                        <div class="container">
+                            <!--begin::Row-->
+                            @RenderBody()
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Entry-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+                    <!--begin::Container-->
+                    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <!--begin::Copyright-->
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted font-weight-bold mr-2">Copyright © 2013-@DateTime.Now.Year.ToString()</span>
+                            <a href="https://phanmemcuocsong.com/" target="_blank" class="text-dark-75 text-hover-primary">LifeSoft</a>
+                            <span class="text-muted font-weight-bold mr-2">Tiện ích hơn - Hiệu quả hơn</span>
+                        </div>
+                        <!--end::Copyright-->
+                        <!--begin::Nav-->
+                        <div class="nav nav-dark">
+                            <a href="https://phanmemcuocsong.com/gioi-thieu/" target="_blank" class="nav-link pl-0 pr-5">Về chúng tôi</a>
+                            @*<a href="#" target="_blank" class="nav-link pl-0 pr-5">Team</a>*@
+                            <a href="https://phanmemcuocsong.com/lien-he/" target="_blank" class="nav-link pl-0 pr-0">Liên hệ</a>
+                            <input hidden id="MenuLv1" value="@ViewData["MenuLv1"]" />
+                            <input hidden id="MenuLv2" value="@ViewData["MenuLv2"]" />
+                            <input hidden id="MenuLv3" value="@ViewData["MenuLv3"]" />
+                            <input hidden id="MenuMinimize" value="@Helpers.GetMenuMinimize(HttpContextAccessor.HttpContext.Session)" />
+                        </div>
+                        <!--end::Nav-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Main-->
+    <!-- begin::User Panel-->
+    <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
+        <!--begin::Scrolltop-->
+        <div id="kt_scrolltop" class="scrolltop">
+            <span class="svg-icon">
+                <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                        <rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1"></rect>
+                        <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero"></path>
+                    </g>
+                </svg>
+                <!--end::Svg Icon-->
+            </span>
+        </div>
+        <!--end::Scrolltop-->
+        <!--end::Demo Panel-->
+        <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+        <!--begin::Global Config(global config for global JS scripts)-->
+        <script>
+            var KTAppSettings = {
+                "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": {
+                    "theme": {
+                        "base": {
+                            "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32"
+                        }, "light": {
+                            "wte": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0"
+                        }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" }
+                    }, "gray":
+                        { "gray - 100": "#F3F6F9", "gray - 200": "#EBEDF3", "gray - 300": "#E4E6EF", "gray - 400": "#D1D3E0", "gray - 500": "#B5B5C3", "gray - 600": "#7E8299", "gray- 700": "#5E6278", "gray- 800": "#3F4254", "gray - 900": "#181C32" }
+                }, "font-family": "Nunito Sans"
+            };</script>
+        <!--end::Global Config-->
+        <!--begin::Global Theme Bundle(used by all pages)-->
+        <script src="~/Admin/assets/plugins/global/plugins.bundle.js"></script>
+        <script src="~/Admin/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+        <script src="~/Admin/assets/js/scripts.bundle.js"></script>
+        <!--end::Global Theme Bundle-->
+        <!--begin::Page Vendors(used by this page)-->
+        <script src="~/Admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+        <!--end::Page Vendors-->
+        <!--begin::Page Scripts(used by this page)-->
+        <script src="~/Admin/assets/js/pages/widgets.js"></script>
+        <!--end::Page Scripts-->
+        <script>
+            $(document).ready(function () {
+                var menu1 = document.getElementById("MenuLv1").value;
+                var menu2 = document.getElementById("MenuLv2").value;
+                var menu3 = document.getElementById("MenuLv3").value;
+                if (menu3 != '') {
+                    document.getElementById(menu1).className = "menu-item menu-item-open menu-item-here";
+                    document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
+                    document.getElementById(menu3).className = "menu-item menu-item-active";
+                } else if (menu2 != '') {
+                    document.getElementById(menu1).className = "menu-item menu-item-open";
+                    document.getElementById(menu2).className = "menu-item menu-item-active";
+                } else if (menu1 != '') {
+                    document.getElementById(menu1).className = "menu-item menu-item-active";
+                }
+                var menuminimize = document.getElementById("MenuMinimize").value;
+                if (menuminimize == 'True') {
+                    document.getElementById('kt_body').className += " aside-minimize";
+                }
+            });
+            function MoneyMask() {
+                $('.money').mask('000,000,000,000,000', {
+                    reverse: true
+                });
+            }
+            function SetValue(value, id_set) {
+                document.getElementById(id_set).value = value;
+            }
+            function SetMenuMinimize() {
+                $.ajax({
+                    url: '/Ajax/SetMenuMinimize',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                            document.getElementById('MenuMinimize').value = data.message;
+                            if (data.message == 'True') {
+                                document.getElementById('kt_body').className += " aside-minimize";
+                            }
+
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
                     }
-                    else
-                    {
-                        <b>
-                            <a asp-controller="Login" asp-action="Login" class="text-bold text-white no-underline" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Đăng nhập</a>
-                            &nbsp;Hoặc&nbsp;
-                            <a class="text-bold text-white no-underline" href="~/searchtkdangky" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in"> Kiểm tra tài khoản đăng ký</a>
-                        </b>
-                    }
-                </div>
-                <!-- END TOP NAVIGATION MENU -->
-            </div>
+                })
+            }
+        </script>
+        <script type="text/javascript">
+            function display_ct6() {
+                var x = new Date()
+                var month = x.getMonth() + 1;
+                var date = x.getDate();
+                var year = x.getFullYear();
+                var hour = x.getHours();
+                var minute = x.getMinutes();
+                var second = x.getSeconds();
 
-        </div>
+                if (date < 10) { date = '0' + date }
+                if (month < 10) { month = '0' + month }
+                if (hour < 10) { hour = '0' + hour }
+                if (minute < 10) { minute = '0' + minute }
+                if (second < 10) { second = '0' + second }
 
-        <!-- END HEADER TOP -->
-        <!-- BEGIN HEADER MENU -->
-        <div class="page-header-menu">
-            <div class="container">
-                <!-- BEGIN MEGA MENU -->
-                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
-                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
-                <div class="hor-menu ">
-
-                    <ul class="nav navbar-nav">
-                        @**if (chkCongBo('csdlmucgiahhdv'))**@
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">Hàng hóa, dịch vụ<i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu pull-left">
-                                <li class=" dropdown-submenu">
-                                    <a href="javascript:;">
-                                        <i class="icon-folder"></i>
-                                        &nbsp;Định giá (Phần I)
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @*Viết 1 hàm lấy tên chức năng hoặc trả lại. Lưu Dictionary to session sau đó làm như mảng Array*@
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiadatpl">giadatpl->Giá đất phân loại </a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiathuedatnuoc">giathuedatnuoc->Giá thuê mặt đất-nước</a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiarung">giarung->Giá rừng</a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbthuemuanhaxh">giathuemuanhaxh->Giá thuê mua nhà XH</a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgianuocsachsinhhoat">gianuocsh->Giá nước sạch sinh hoạt</a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiathuetscong">giathuetscong->Giá thuê tài sản công </a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiaspdvci">giaspdvci->Giá sản phẩm, dịch vụ công ích,... đặt hàng </a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbgiadvgiaoducdaotao">giadvgddt->Giá dịch vụ GD-ĐT</a></li>
-                                        <li><a asp-controller="CongBo" asp-action="~/cbdichvukcb">giadvkcb->Giá dịch vụ KCB</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class=" dropdown-submenu">
-                                    <a href="javascript:;">
-                                        <i class="icon-folder"></i>
-                                        &nbsp;Định giá (Phần II)
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a asp-action="~/cbtrogiatrocuoc">trogiatrocuoc->Mức trợ giá, trợ cước </a></li>
-                                        <li><a asp-action="~/cbgiahhdvcn">giahhdvcn->Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành </a></li>
-                                        <li><a asp-action="~/cbgiadatduan">giadatduan->Giá đất cụ thể dự án </a></li>
-                                        <li><a asp-action="~/cbdaugiadatts">daugiadatts->Giá đấu giá đất và tài sản gắn liền đất </a></li>
-                                        <li><a asp-action="~/cbgiathuetainguyen">giathuetn->Giá thuế tài nguyên</a></li>
-                                        <li><a asp-action="~/cbgiacuocvanchuyen">giacuocvanchuyen->Giá cước vận chuyển </a></li>
-                                        <li><a asp-action="~/cbgiathuenhacongvu">giathuenhacongvu->Giá thuê nhà công vụ</a></li>
-                                        <li><a asp-action="~/cbbannhataidinhcu">bannhataidinhcu->Giá bán nhà tái định cư </a></li>
-                                        <li><a asp-action="~/cbgiadatdiaban">giacldat->Giá đất theo địa bàn </a></li>
-                                        <li><a asp-action="~/cbgiadaugiadat">giadaugiadat->Giá đấu giá đất</a></li>
-                                    </ul>
-                                </li>
-                                <!-- Chon năm; chon phân loại mặt hàng -->
-                                <li><a asp-action="~/cbbinhongia"><i class="icon-folder"></i>bog->Bình ổn giá</a></li>
-                                <li><a asp-action="~/coming"><i class="icon-folder"></i>Giá HH-DV khác</a></li>
-
-                                <li><a asp-action="~/cbgialephitruocba"><i class="icon-folder"></i>gialephitruocba->Giá lệ phí trước bạ</a></li>
-                                <li><a asp-action="~/cbphilephi"><i class="icon-folder"></i>giaphilephi->Phí, lệ phí</a></li>
-                            </ul>
-                        </li>
-                        @**endif**@
-
-                        <li class="menu-dropdown classic-menu-dropdown">
-                            <a data-hover="megamenu-dropdown" data-close-others="true" href="javascript:;">Kê khai, niêm yết giá<i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu pull-left">
-                                <li><a asp-action="~/cbkekhaigia">Doanh nghiệp kê khai, niêm yết giá</a></li>
-                                <li><a asp-action="~/cblinhvuckk">Lĩnh vực hoạt động kinh doanh</a></li>
-                                <li><a asp-action="~/timkiemkekhai">Tìm kiếm giá kê khai, niêm yết</a></li>
-                            </ul>
-                        </li>
-
-
-
-                        @*{{--if (chkCongBo('csdlthamdinhgia')) --}}*@
-                        <li class="menu-dropdown classic-menu-dropdown">
-                            <a data-hover="megamenu-dropdown" data-close-others="true" asp-action="~/cbthamdinhgia">Thẩm định giá</a>
-                        </li>
-                        @*{{--endif--}}*@
-
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">Văn bản QLNN<i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu pull-left">
-                                <li class=" dropdown-submenu">
-                                    <a href="javascript:;">
-                                        <i class="icon-folder"></i>
-                                        &nbsp;Văn bản QLNN về giá, phí lệ phí
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @*<?php $modelbcthvegia = \App\Model\manage\vanbanplvegia\baocaoth\BcThVeGiaDm::all(); ?>
-                                            foreach ($modelbcthvegia as $bcthvegia)*@
-                                        <li><a asp-action="~//cbvbqlnn"><i class="icon-folder"></i> &nbsp;bcthvegia->mota</a></li>
-                                        @*endforeach*@
-                                    </ul>
-                                </li>
-
-                                <li class=" dropdown-submenu">
-                                    <a href="javascript:;">
-                                        <i class="icon-folder"></i>
-                                        &nbsp;Thông tin QLNN về giá
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @*<?php $ttpvctqlnn = \App\Model\manage\ttpvctqlnn\TtPvCtQlNnDm::all(); ?>
-                                            foreach ($ttpvctqlnn as $ttpv)*@
-                                        <li>
-                                            <a asp-action="~//cbttqlnn"><i class="icon-folder"></i> $ttpv->mota</a>
-                                        </li>
-                                        @*endforeach*@
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">&nbsp;Hỗ trợ<i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu pull-left">
-                                <li><a asp-action="~/danhsachusertaphuan"><i class="icon-folder"></i>&nbsp;Danh sách tài khoản tập huấn</a></li>
-                                <li><a asp-action="~/thongtinhotro" target="_blank"><i class="icon-folder"></i> &nbsp;Thông tin hỗ trợ</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- END MEGA MENU -->
-            </div>
-        </div>
-        <!-- END HEADER MENU -->
+                var x1 = date + "/" + month + "/" + year;
+                x1 = x1 + " - " + hour + ":" + minute + ":" + second;
+                document.getElementById('ct6').innerHTML = x1;
+                display_c6();
+            }
+            function display_c6() {
+                var refresh = 1000; // Refresh rate in milli seconds
+                mytime = setTimeout('display_ct6()', refresh)
+            }
+            display_c6()
+        </script>
+        @RenderSection("custom_script", required: false)
+        @await RenderSectionAsync("Scripts", required: false)
     </div>
-    <!-- END HEADER -->
-    <!-- BEGIN PAGE CONTAINER -->
-    <div class="page-container">
-        <!-- BEGIN PAGE HEAD -->
-        <!-- END PAGE HEAD -->
-        <!-- BEGIN PAGE CONTENT -->
-        <div class="page-content" style="">
-            <br>
-            @RenderBody();
-        </div>
-        <!-- END PAGE CONTENT -->
-    </div>
-    <!-- END PAGE CONTAINER -->
-    <!-- BEGIN PRE-FOOTER -->
-    <!-- END PRE-FOOTER -->
-    <!-- BEGIN FOOTER -->
-    <div class="page-prefooter">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 footer-block" style="text-align: center">
-                    <h2><strong>Giá hàng hóa dịch vụ @ViewBag.HeThong.DiaDanh</strong></h2>
-                    <p>Bản quyền thuộc về &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.TenDonVi</b></p>
-                    <p>Địa chỉ: &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.DiaChi</b></p>
-                    <p>Thông tin liên hệ: &nbsp;<b style="color: #25aae2">@ViewBag.HeThong.DienThoai</b></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-footer">
-        <div class="container">
-            <div class="col-md-12">
-                Copyright &copy;  2016 - @DateTime.Now.Year;  <a href="https://phanmemcuocsong.com/" target="_blank">Tiện ích hơn - Hiệu quả hơn</a>
-            </div>
-        </div>
-    </div>
-    <div class="scroll-to-top">
-        <i class="icon-arrow-up"></i>
-    </div>
-    <!-- END FOOTER -->
-    <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
-    <!-- BEGIN CORE PLUGINS -->
-    <!--[if lt IE 9]-->
-    @RenderSection("custom_script", false)
-    @await RenderSectionAsync("Scripts", false)
 </body>
-<!-- END BODY -->
+<!--end::Body-->
 </html>

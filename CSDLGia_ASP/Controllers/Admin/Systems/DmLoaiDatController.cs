@@ -30,8 +30,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Danh mục loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_dm";
+                    ViewData["MenuLv2"] = "menu_giadatdiaban";
+                    ViewData["MenuLv3"] = "menu_giadatdiaban_dm";
                     return View("Views/Admin/Systems/DmLoaiDat/Index.cshtml", model);
                 }
                 else

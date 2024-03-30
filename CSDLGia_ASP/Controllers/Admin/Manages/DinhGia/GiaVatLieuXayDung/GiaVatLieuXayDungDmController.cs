@@ -1,46 +1,38 @@
-﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Helper;
+﻿using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System;
+using CSDLGia_ASP.Database;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 {
     public class GiaVatLieuXayDungDmController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-        private readonly IWebHostEnvironment _env;
 
-        public GiaVatLieuXayDungDmController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
+        public GiaVatLieuXayDungDmController(CSDLGiaDBContext db)
         {
             _db = db;
-            _env = hostingEnv;
         }
 
-        [Route("GiaVatLieuXayDungDmCt")]
+        [Route("GiaVatLieuXayDungDm")]
         [HttpGet]
-        public IActionResult Index(string Manhom)
+        public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", "Index"))
                 {
-                    var model = _db.GiaVatLieuXayDungDm.Where(t => t.Manhom == Manhom).ToList();
+                    var model = _db.GiaVatLieuXayDungDm.ToList();
 
-                    ViewData["Manhom"] = Manhom;
-                    ViewData["Tennhom"] = _db.GiaVatLieuXayDungNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
-                    ViewData["Title"] = "Thông tin chi tiết danh mục nhóm vật liệu xây dựng";
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
+                    ViewData["Title"] = "Danh mục vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
                     ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_dm";
-                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/DanhMuc/ChiTiet/Index.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/DanhMuc/Index.cshtml", model);
                 }
                 else
                 {
@@ -54,9 +46,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             }
         }
 
-        [Route("GiaVatLieuXayDungDmCt/Store")]
+        [Route("GiaVatLieuXayDungDm/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
+        public JsonResult Store(string Tenvlxd, string Dvt, string Tieuchuan)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -64,9 +56,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 {
                     var request = new GiaVatLieuXayDungDm
                     {
-                        Manhom = Manhom,
-                        Ten = Tennhom,
-                        Theodoi = Theodoi,
+                        Mavlxd = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Tenvlxd = Tenvlxd,
+                        Dvt = Dvt,
+                        Tieuchuan = Tieuchuan,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -89,7 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             }
         }
 
-        [Route("GiaVatLieuXayDungDmCt/Edit")]
+        [Route("GiaVatLieuXayDungDm/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
@@ -98,27 +91,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", "Edit"))
                 {
                     var model = _db.GiaVatLieuXayDungDm.FirstOrDefault(p => p.Id == Id);
+                    var dvt = _db.DmDvt;
+
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
-
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên nhóm </label>";
-                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Ten + "'/>";
+                        result += "<label>Tên vật liệu xây dựng*</label>";
+                        result += "<input type='text' id='tenvlxd_edit' name='tenvlxd_edit' class='form-control' value='" + model.Tenvlxd + "'/>";
                         result += "</div>";
                         result += "</div>";
-
-                        result += "<div class='col-xl-6'>";
+                        result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Trạng thái</label>";
-                        result += "<select id='theodoi_edit' name='theodoi_edit' class='form-control'>";
-                        result += "<option value='TD' " + ((string)model.Theodoi == "TD" ? "selected" : "") + ">Theo dõi</option>";
-                        result += "<option value='KTD' " + ((string)model.Theodoi == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
+                        result += "<label>Đơn vị tính</label>";
+                        result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
+                        foreach (var item in dvt)
+                        {
+                            result += "<option value='" + item.Madvt + "' " + ((string)model.Dvt == item.Madvt ? "selected" : "") + ">" + item.Dvt + "</option>";
+                        }
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
-
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tiêu chuẩn*</label>";
+                        result += "<input type='text' id='tieuchuan_edit' name='tieuchuan_edit' class='form-control' value='" + model.Tieuchuan + "'/>";
+                        result += "</div>";
+                        result += "</div>";
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -144,17 +144,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             }
         }
 
-        [Route("GiaVatLieuXayDungDmCt/Update")]
+        [Route("GiaVatLieuXayDungDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tenvlxd, string Dvt, string Tieuchuan)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", "Edit"))
                 {
                     var model = _db.GiaVatLieuXayDungDm.FirstOrDefault(t => t.Id == Id);
-                    model.Ten = Tennhom;
-                    model.Theodoi = Theodoi;
+                    model.Tenvlxd = Tenvlxd;
+                    model.Dvt = Dvt;
+                    model.Tieuchuan = Tieuchuan;
                     model.Updated_at = DateTime.Now;
                     _db.GiaVatLieuXayDungDm.Update(model);
                     _db.SaveChanges();
@@ -175,7 +176,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             }
         }
 
-        [Route("GiaVatLieuXayDungDmCt/Delete")]
+        [Route("GiaVatLieuXayDungDm/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
@@ -187,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     _db.GiaVatLieuXayDungDm.Remove(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaVatLieuXayDungDm", new { Manhom = model.Manhom });
+                    return RedirectToAction("Index", "GiaVatLieuXayDungDm");
                 }
                 else
                 {
@@ -198,112 +199,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        [Route("GiaVatLieuXayDungDmCt/Lock")]
-        [HttpPost]
-        public IActionResult Lock(string Manhom, string Theodoi)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", "Edit"))
-                {
-                    var model = _db.GiaVatLieuXayDungDm.Where(t => t.Manhom == Manhom).ToList();
-                    model.ForEach(t => { t.Theodoi = Theodoi; });
-                    _db.SaveChanges();
-
-                    var data = new { status = "success", message = "Khóa/mở khóa danh mục thành công!" };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
-            }
-        }
-
-        [Route("GiaVatLieuXayDungDmCt/Excel")]
-        [HttpPost]
-        public async Task<JsonResult> Excel(string Manhom, string Level, string Cap1, string Cap2, string Cap3,
-            string Cap4, string Cap5, string Dvt, string Ten, int Sheet, int LineStart, int LineStop, IFormFile FormFile)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.danhmuc", "Edit"))
-                {
-                    LineStart = LineStart == 0 ? 1 : LineStart;
-                    var list_add = new List<GiaVatLieuXayDungDm>();
-                    int sheet = Sheet == 0 ? 0 : (Sheet - 1);
-                    using (var stream = new MemoryStream())
-                    {
-                        await FormFile.CopyToAsync(stream);
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-                            var rowcount = worksheet.Dimension.Rows;
-                            LineStop = LineStop > rowcount ? rowcount : LineStop;
-
-                            for (int row = LineStart; row <= LineStop; row++)
-                            {
-                                list_add.Add(new GiaVatLieuXayDungDm
-                                {
-                                    Manhom = Manhom,
-                                    Theodoi = "TD",
-                                    Created_at = DateTime.Now,
-                                    Updated_at = DateTime.Now,
-
-                                    Level = worksheet.Cells[row, Int16.Parse(Level)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Level)].Value.ToString().Trim() : "",
-
-                                    Cap1 = worksheet.Cells[row, Int16.Parse(Cap1)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Cap1)].Value.ToString().Trim() : "",
-
-                                    Cap2 = worksheet.Cells[row, Int16.Parse(Cap2)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Cap2)].Value.ToString().Trim() : "",
-
-                                    Cap3 = worksheet.Cells[row, Int16.Parse(Cap3)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Cap3)].Value.ToString().Trim() : "",
-
-                                    Cap4 = worksheet.Cells[row, Int16.Parse(Cap4)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Cap4)].Value.ToString().Trim() : "",
-
-                                    Cap5 = worksheet.Cells[row, Int16.Parse(Cap5)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Cap5)].Value.ToString().Trim() : "",
-
-                                    Ten = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
-
-                                    Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-                                });
-                            }
-
-                        }
-                    }
-                    _db.GiaVatLieuXayDungDm.AddRange(list_add);
-                    _db.SaveChanges();
-
-                    var data = new { status = "success" };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
             }
         }
     }

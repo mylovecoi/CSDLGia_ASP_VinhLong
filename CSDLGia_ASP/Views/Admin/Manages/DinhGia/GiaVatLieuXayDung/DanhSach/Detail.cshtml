@@ -19,7 +19,6 @@
                     <th width="2%">Đơn vị tính</th>
                     <th width="15%">Tiêu chuẩn</th>
                     <th width="5%">Đơn giá</th>
-                    <th>Ghi chú</th>
                     <th width="5%">Thao tác</th>
                 </tr>
             </thead>
@@ -32,11 +31,10 @@
                         <tr>
                             <td class="text-center; @HtmlStyle">@item.STTSapXep</td>
                             <td class="text-center; @HtmlStyle">@item.STTHienThi</td>
-                            <td class="text-left; @HtmlStyle">@item.Ten</td>
+                            <td class="text-left; @HtmlStyle">@item.Tenvlxd</td>
                             <td class="text-center; @HtmlStyle">@item.Dvt</td>
-                            <td class="text-left; @HtmlStyle">@item.TieuChuan</td>
+                            <td class="text-left; @HtmlStyle">@item.Tieuchuan</td>
                             <td style="text-align: right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Gia)</td>
-                            <td style="text-align: left; @HtmlStyle">@item.GhiChu</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
