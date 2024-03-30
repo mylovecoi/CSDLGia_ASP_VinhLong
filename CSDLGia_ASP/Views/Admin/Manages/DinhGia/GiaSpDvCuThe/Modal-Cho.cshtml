@@ -115,6 +115,7 @@
 
     function SetUpdate() {
         var formData = new FormData($('#frm_chitiet')[0]);
+        formData.append('PhanLoaiHoSo', $('#PhanLoaiHoSo').val());
         $.ajax({
             url: '/DinhGiaSpDvCuTheCt/Update',
             type: 'POST',
@@ -149,6 +150,7 @@
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
+                PhanLoaiHoSo: $('#PhanLoaiHoSo').val()
             },
             dataType: 'JSON',
             success: function (data) {
