@@ -47,7 +47,6 @@
 </div>
 <hr />
 
-
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -81,7 +80,6 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
                     MoneyMask();
                 } else {

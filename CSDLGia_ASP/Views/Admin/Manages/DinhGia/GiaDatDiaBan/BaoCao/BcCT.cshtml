@@ -50,30 +50,30 @@
         {
             <tr>
                 <td></td>
-                <td colspan="6" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+                <td colspan="10" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
             var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
             @foreach (var hosoindv in hosoInDv)
             {
                 <tr>
                     <td></td>
-                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="10" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
                 {
                     <tr>
                         <td></td>
-                        <td class="active" style="text-align:left">@item.Mota</td>
-                        <td class="active">@item.Loaiduong</td>
-                        <td class="active" style="text-align:left">@item.Diemdau</td>
-                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
-                        <td class="active">@item.Hesok </td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt1)</td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt2)</td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt3)</td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                        <td class="active" style="text-align:center">@item.Mota</td>
+                        <td class="active" style="text-align:center">@item.Loaiduong</td>
+                        <td class="active" style="text-align:center">@item.Diemdau</td>
+                        <td class="active" style="text-align:center">@item.Diemcuoi </td>
+                        <td class="active" style="text-align:center">@item.Hesok </td>
+                        <td class="active" style="text-align:center">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                        <td class="active" style="text-align:center">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                        <td class="active" style="text-align:center">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                        <td class="active" style="text-align:center">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                        <td class="active" style="text-align:center">@Helpers.ConvertDbToStr(item.Giavt5)</td>
                     </tr>
                 }
 
