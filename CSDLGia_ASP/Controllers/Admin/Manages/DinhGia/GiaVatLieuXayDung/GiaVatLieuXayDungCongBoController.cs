@@ -116,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
@@ -186,7 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
@@ -256,7 +256,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         }
                         else
                         {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["Madv"] = Madv;
