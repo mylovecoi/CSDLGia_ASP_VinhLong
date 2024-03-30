@@ -75,6 +75,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Dvt { get; set; }
         [NotMapped]
         public double Gia { get; set; }
+        [NotMapped]
+        public string TenDonVi { get; set; }
 
     }
 }
