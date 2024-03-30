@@ -14,7 +14,7 @@
     <div class="col-xl-6">
         <div class="form-group">
             <label>Số quyết định</label>
-            <input type="text" asp-for="Soqd" class="form-control" required/>
+            <input type="text" asp-for="Soqd" class="form-control" required />
         </div>
     </div>
     <div class="col-xl-6">
@@ -32,7 +32,7 @@
     <div class="col-xl-6">
         <div class="form-group">
             <label>Ngày báo cáo liền kề</label>
-            <input type="date"  asp-for="Thoidiemlk" class="form-control" required>
+            <input type="date" asp-for="Thoidiemlk" class="form-control" required>
         </div>
     </div>
     <div class="col-xl-12">
@@ -67,6 +67,7 @@
                         <tr style="text-align:center">
                             <th width="2%">STT</th>
                             <th width="25%">Phân loại bất động sản</th>
+                            <th>Đơn vị tính</th>
                             <th>Giá giao dịch</th>
                             <th width="15%">Thao tác</th>
                         </tr>
@@ -76,7 +77,8 @@
                         {
                             <tr>
                                 <td class="text-center">@(record_id++)</td>
-                                <td class="active" style="font-weight:bold;">@item.Ten</td>
+                                <td style="font-weight:bold;">@item.Ten</td>
+                                <td style="text-align:right;">@item.Dvt</td>
                                 <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
@@ -146,15 +148,16 @@
             type: 'POST',
             data: {
                 Gia: gia,
-                Id: $('#id_edit').val()
+                Id: $('#id_edit').val(),
+                Dvt: $('#Dvt_edit').val(),
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
+                    $('#frm_data').html(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManagedClass.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {

@@ -432,13 +432,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 {
                     var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
-
+                    var donvi= _db.DsDonVi.First(x=>x.MaDv == model.Madv);                    
                     ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan== donvi.MaDiaBan).TenDiaBan;
+                    ViewData["TenDonVi"] = donvi.TenDv;
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Show.cshtml", model);
 
                 }
@@ -722,13 +723,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 if (data.Any())
                 {                     
                     result += "<p style='text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold'>" + @nhom.Tennhom + "</p>";
-                    result += "<table class='table table-striped table-bordered table-hover table-responsive'>";
+                    result += "<table class='table table-striped table-bordered table-hover table-responsive class-nosort'>";
                     result += "<thead>";
                     result += "<tr style='text-align:center'>";
                     result += "<th width='2%'>#</th>";
                     result += "<th width='25%'>Phân loại nhà cho thuê</th>";
-                    result += "<th>Giá cho thuê (đồng)</th>";
                     result += "<th>Đơn vị tính</th>";
+                    result += "<th>Giá cho thuê (đồng)</th>";                    
                     result += "<th width='5%'>Thao tác</th>";
                     result += "</tr>";
                     result += "</thead>";
@@ -737,9 +738,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     {
                         result += "<tr>";
                         result += "<td class='text-center'>" + record++ + "</td>";
-                        result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
-                        result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
+                        result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";                        
                         result += "<td style='text-align:right; font-weight:bold'>" + item.Dvt + "</td>";
+                        result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
                         result += "<td>";
                         result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
                         result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
@@ -749,8 +750,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         result += "</tr>";
                     }
                     result += "</tbody>";
-                    result += "</table>";
-                    
+                    result += "</table>";                    
                 }     
             }
             return result;

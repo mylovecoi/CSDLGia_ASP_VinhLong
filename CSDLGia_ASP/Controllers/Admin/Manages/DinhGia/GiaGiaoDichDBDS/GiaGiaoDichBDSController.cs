@@ -143,7 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                             Madv = MadvBc,
-                            Manhom= item.Manhom,
+                            Manhom = item.Manhom,
                         });
                     }
                     _db.GiaGiaoDichBDSCt.AddRange(chitiet);
@@ -330,7 +330,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Index"))
                 {
                     var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
-                    var modelct = _db.GiaGiaoDichBDSCt.FirstOrDefault(t => t.Mahs == Mahs);
+                    var modelct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs);
 
                     var viewModel = new GiaGiaoDichBDS
                     {
@@ -341,19 +341,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         Madiaban = model.Madiaban,
                         Thoidiem = model.Thoidiem,
                         Macqcq = model.Macqcq,
-
-                        // Thông tin hồ sơ chi tiết
-                        Ten = modelct.Ten,
-                        Dvt = modelct.Dvt,
-                        Gia = modelct.Gia,
+                        //// Thông tin hồ sơ chi tiết
+                        //Ten = modelct.Ten,
+                        //Dvt = modelct.Dvt,
+                        //Gia = modelct.Gia,
                     };
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["Title"] = "Bảng giá giao dịch bất động sản";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dg_giaodichbds";
-                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
+                    viewModel.GiaGiaoDichBDSCt = modelct.ToList();
+                    var donvi = _db.DsDonVi.First(x=>x.MaDv==model.Madv);
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
+                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+                    ViewData["TenDonVi"] = donvi.TenDv;
+                    ViewData["Title"] = "Bảng giá giao dịch bất động sản";                    
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", viewModel);
 
                 }
@@ -487,12 +485,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Ten = giathuetnct.Ten,
                                      Dvt = giathuetnct.Dvt,
                                      Gia = giathuetnct.Gia,
-                                     Manhom= giathuetnct.Manhom,
-                                     Mahs=giathuetn.Mahs,
+                                     Manhom = giathuetnct.Manhom,
+                                     Mahs = giathuetn.Mahs,
                                      Trangthai = giathuetn.Trangthai,
 
                                  });
-                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai =="HT");
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai == "HT");
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
@@ -549,6 +547,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                 result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Đơn vị tính</label>";
+                result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control text-right' style='font-weight: bold'/>";
+                result += "</div>";
+                result += "</div>";
+
                 result += "</div>";
 
                 result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
@@ -565,10 +570,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         }
         [Route("GiaGiaoDichBDSCt/Update")]
         [HttpPost]
-        public JsonResult UpdateCt(int Id, double Gia)
+        public JsonResult UpdateCt(int Id, double Gia, string Dvt)
         {
             var model = _db.GiaGiaoDichBDSCt.FirstOrDefault(t => t.Id == Id);
             model.Gia = Gia;
+            model.Dvt = Dvt;
             model.Updated_at = DateTime.Now;
             _db.GiaGiaoDichBDSCt.Update(model);
             _db.SaveChanges();
@@ -579,39 +585,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         public string GetDataCt(string Mahs)
         {
             var model = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs).ToList();
-
+            var DanhMucNhom = _db.GiaGiaoDichBDSNhom;
             int record = 1;
-            string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
-
-            result += "<thead>";
-            result += "<tr style='text-align:center'>";
-            result += "<th width='2%'>#</th>";
-            result += "<th width='25%'>Phân loại nhà cho thuê</th>";
-            result += "<th>Giá cho thuê (đồng)</th>";
-            result += "<th width='9%'>Thao tác</th>";
-            result += "</tr>";
-            result += "</thead>";
-            result += "<tbody>";
-
-            foreach (var item in model)
+            string result = "";
+            foreach (var nhom in DanhMucNhom)
             {
-                result += "<tr>";
-                result += "<td class='text-center'>" + record++ + "</td>";
-                result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
-                result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-edit text-primary'></i>";
-                result += "</button>";
-                result += "</td>";
-                result += "</tr>";
+                var data = model.Where(x => x.Manhom == nhom.Manhom);
+                if (data.Any())
+                {
+                    result += "<p style='text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold'>" + @nhom.Tennhom + "</p>";
+                    result += "<table class='table table-striped table-bordered table-hover table-responsive class-nosort'>";
+                    result += "<thead>";
+                    result += "<tr style='text-align:center'>";
+                    result += "<th width='2%'>#</th>";
+                    result += "<th width='25%'>Phân loại nhà cho thuê</th>";
+                    result += "<th>Đơn vị tính</th>";
+                    result += "<th>Giá cho thuê (đồng)</th>";                   
+                    result += "<th width='9%'>Thao tác</th>";
+                    result += "</tr>";
+                    result += "</thead>";
+                    result += "<tbody>";
+                    foreach (var item in data)
+                    {
+                        result += "<tr>";
+                        result += "<td class='text-center'>" + record++ + "</td>";
+                        result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
+                        result += "<td >" + item.Dvt + "</td>";
+                        result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
+                        result += "<td>";
+                        result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
+                        result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
+                        result += "<i class='icon-lg la la-edit text-primary'></i>";
+                        result += "</button>";
+                        result += "</td>";
+                        result += "</tr>";
+                    }
+                    result += "</tbody>";
+                    result += "</table>";
+                    result += "</div>";
+                }
             }
-            result += "</tbody>";
-            result += "</table>";
-            result += "</div>";
-
             return result;
 
         }

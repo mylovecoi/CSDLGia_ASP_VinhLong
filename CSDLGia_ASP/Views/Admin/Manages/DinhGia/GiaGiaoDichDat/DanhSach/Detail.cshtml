@@ -10,18 +10,17 @@
     <div class="card-body" id="frm_data">       
         @foreach (var nhom in DanhMucNhom)
         {
-            <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
             var data = Model.GiaGiaoDichDatCt.Where(x => x.Manhom == nhom.Manhom);
             if (data.Any())
             {
-
-                <table class="table table-striped table-bordered table-hover">
+                <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.Tennhom</p>
+                <table class="table table-striped table-bordered table-hover class-nosort">
                     <thead>
                         <tr style="text-align:center">
                             <th width="2%">STT</th>
-                            <th width="25%">Phân loại đất thực tế trên thị trường</th>
-                            <th>Giá giao dịch</th>
+                            <th width="25%">Phân loại đất thực tế trên thị trường</th>                            
                             <th>Đơn vị tính</th>
+                            <th>Giá giao dịch</th>
                             <th width="5%">Thao tác</th>
                         </tr>
                     </thead>
@@ -30,9 +29,9 @@
                         {
                             <tr>
                                 <td class="text-center">@(record_id++)</td>
-                                <td class="active" style="font-weight:bold;">@item.Ten</td>
-                                <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
+                                <td class="active" style="font-weight:bold;">@item.Ten</td>                                
                                 <td style="text-align: right; font-weight:bold">@item.Dvt</td>
+                                <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.Gia)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
                                             onclick="SetEdit('@item.Id')" title="Nhập Giá">
@@ -111,6 +110,9 @@
                     $('#frm_data').html(data.message);
                     $(document).ready(function () {
                         TableManaged4.init();
+                    });
+                    $(document).ready(function () {
+                        TableManagedClass.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {
