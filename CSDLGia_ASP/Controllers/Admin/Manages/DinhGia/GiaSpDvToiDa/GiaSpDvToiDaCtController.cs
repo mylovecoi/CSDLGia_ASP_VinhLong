@@ -102,7 +102,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
         {
             var model = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == Mahs).ToList();
 
-            int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
 
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";

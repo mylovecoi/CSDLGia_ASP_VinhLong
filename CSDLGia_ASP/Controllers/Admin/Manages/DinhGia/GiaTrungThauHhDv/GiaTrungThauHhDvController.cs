@@ -150,7 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
 
         [Route("GiaTrungThauHhDv/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(GiaMuaTaiSan request)
+        public IActionResult Store(GiaMuaTaiSan request)
         {
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

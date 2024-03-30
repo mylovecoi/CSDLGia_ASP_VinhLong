@@ -43,7 +43,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
                     ViewData["MenuLv3"] = "menu_giakhac_giavatlieuxaydung_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
-                    ViewData["DanhSachNhom"] = _db.GiaVatLieuXayDungNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/BaoCao/Index.cshtml");
                 }
                 else
@@ -113,21 +112,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
-                    var model = (from giathuetnct in _db.GiaVatLieuXayDungCt
-                                 join giathuetn in _db.GiaVatLieuXayDung on giathuetnct.Mahs equals giathuetn.Mahs
-                                 join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 /*join nhomtn in _db.GiaVatLieuXayDungNhom on giathuetn.Manhom equals nhomtn.Manhom*/
+                    var model = (from giavlxdct in _db.GiaVatLieuXayDungCt
+                                 join giavlxd in _db.GiaVatLieuXayDung on giavlxdct.Mahs equals giavlxd.Mahs
+                                 join donvi in _db.DsDonVi on giavlxd.Madv equals donvi.MaDv
                                  select new GiaVatLieuXayDungCt
                                  {
-                                     Id = giathuetnct.Id,
-                                     Gia = giathuetnct.Gia,
-                                     Mahs = giathuetnct.Mahs,
-                                     Madv = giathuetn.Madv,
-                                     Manhom = giathuetn.Manhom,
-                                     Thoidiem = giathuetn.Thoidiem,
+                                     Id = giavlxdct.Id,
+                                     Gia = giavlxdct.Gia,
+                                     Mahs = giavlxdct.Mahs,
+                                     Madv = giavlxd.Madv,
+                                     Thoidiem = giavlxd.Thoidiem,
                                      Tendv = donvi.TenDv,
-                                     Ten = giathuetnct.Ten,
-                                     Trangthai = giathuetn.Trangthai,
+                                     Tenvlxd = giavlxdct.Tenvlxd,
+                                     Mavlxd = giavlxdct.Mavlxd,
+                                     Dvt = giavlxdct.Dvt,
+                                     Tieuchuan = giavlxdct.Tieuchuan,
+                                     Trangthai = giavlxd.Trangthai,
                                  });
 
 

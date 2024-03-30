@@ -1,7 +1,10 @@
 ﻿@{
+    Layout = "_LayoutCongBo.cshtml";
+}
+@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>
 
@@ -42,20 +45,6 @@
                 Thông tin hồ sơ giá vật liệu xây dựng
             </h3>
         </div>
-        <div>
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
-            {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaVatLieuXayDung" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Thêm mới
-                </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaVatLieuXayDungExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
-            }
-
-        </div>
     </div>
     <hr />
     <div class="card-body">
@@ -80,7 +69,6 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -93,7 +81,6 @@
                                 }
                             </optgroup>
                         }
-
                     </select>
                 </div>
             </div>
@@ -105,8 +92,6 @@
                     <th>Ngày báo cáo</th>
                     <th>Số quyết định</th>
                     <th>Nội dung</th>
-                    <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận</th>
                     <th width="30%">Thao tác</th>
                 </tr>
             </thead>
@@ -120,63 +105,11 @@
                             <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td>@item.Soqd</td>
                             <td>@item.Cqbh</td>
-                            <td style="text-align: center" width="15%">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
-                                }
-                                @if (item.Trangthai == "CHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "HHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
-                                    <p>Lý do:&nbsp;@item.Lydo</p>
-                                }
-                            </td>
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var cqcq in dsdonvi)
-                                {
-                                    @if (item.Macqcq == cqcq.MaDv)
-                                    {
-                                        <td style="text-align: center">@cqcq.TenDv</td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
                             <td width="12%">
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
                                 <a asp-controller="GiaVatLieuXayDung" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-                                {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Edit"))
-                                    {
-                                        <a asp-controller="GiaVatLieuXayDung" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                            <i class="icon-lg la la-edit text-primary"></i>
-                                        </a>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Delete"))
-                                    {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                            <i class="icon-lg la la-trash text-danger"></i>
-                                        </button>
-                                    }
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary "></i>
-                                    </button>
-                                }
                                 <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
@@ -189,4 +122,3 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaVatLieuXayDung/DanhSach/Modal.cshtml")

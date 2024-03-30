@@ -30,12 +30,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giavatlieuxaydung.thongtin", "Create"))
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
-                    {                        
+                    {
                         Sheet = 1,
                         LineStart = 3,
                         LineStop = 1000,
                         MaDv = Madv
-                       
+
                     };
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_giakhac_giavatlieuxaydung";
@@ -56,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel requests)
         {
@@ -81,20 +81,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                         {
                             Mahs = Mahs,
                             Madv = requests.MaDv,
+                            Mavlxd = DateTime.Now.ToString("yyMMddssmmHH"),
                             Trangthai = "CXD",
                             STTSapXep = line,
                             STTHienThi = worksheet.Cells[row, 1].Value != null ?
-                                        worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                            Ten = worksheet.Cells[row, 2].Value != null ?
-                                        worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                         worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                            
+                            Tenvlxd = worksheet.Cells[row, 2].Value != null ?
+                                      worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+
                             Dvt = worksheet.Cells[row, 3].Value != null ?
-                                        worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                            TieuChuan = worksheet.Cells[row, 4].Value != null ?
+                                  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+
+                            Tieuchuan = worksheet.Cells[row, 4].Value != null ?
                                         worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                            Gia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
-                                        worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+
+                            Gia = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                         worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+
                             GhiChu = worksheet.Cells[row, 6].Value != null ?
-                                        worksheet.Cells[row, 6].Value.ToString().Trim() : "",
+                                     worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                         });
                         line = line + 1;
                     }
@@ -106,7 +112,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
             {
                 Madv = requests.MaDv,
                 Thoidiem = DateTime.Now,
-                Mahs = Mahs,               
+                Mahs = Mahs,
             };
             var modelct = _db.GiaVatLieuXayDungCt.Where(t => t.Mahs == Mahs);
             model.GiaVatLieuXayDungCt = modelct.ToList();
