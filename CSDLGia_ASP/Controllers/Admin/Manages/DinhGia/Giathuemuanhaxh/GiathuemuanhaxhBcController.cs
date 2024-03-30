@@ -71,6 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
                     ViewData["Title"] = "Báo cáo giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";

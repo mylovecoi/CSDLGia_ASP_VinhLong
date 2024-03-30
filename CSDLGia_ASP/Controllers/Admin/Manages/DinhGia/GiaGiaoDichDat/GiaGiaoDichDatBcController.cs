@@ -73,6 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Ghichu = hoso.Ghichu,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giao dịch đất trên thị trường";

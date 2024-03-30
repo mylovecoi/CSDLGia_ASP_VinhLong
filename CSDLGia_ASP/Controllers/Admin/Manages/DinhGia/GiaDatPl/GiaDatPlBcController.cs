@@ -74,6 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Ghichu = hoso.Ghichu,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
                     ViewData["Title"] = "Báo cáo tổng hợp giá đất cụ thể";
                     ViewData["MenuLv1"] = "menu_giadat";

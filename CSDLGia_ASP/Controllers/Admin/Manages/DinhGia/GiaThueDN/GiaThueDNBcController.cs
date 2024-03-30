@@ -71,7 +71,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                  {
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
-                                     Soqd = hoso.Soqd,                            
+                                     Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá thuê mặt đất mặt nước";

@@ -128,18 +128,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Tên nhóm</label><br />
-                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
-                                    <option value="all">--Tất cả---</option>
-                                    @foreach (var item in DanhSachNhom)
-                                    {
-                                        <option value="@item.Manhom">@item.Tennhom</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -154,6 +142,18 @@
                                        value="@lastDayCurrentYear.ToString("yyyy-MM-dd")" class="form-control" style="text-align: center" onchange="GetList()">
                             </div>
                         </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Tên nhóm</label><br />
+                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
+                                    <option value="all">--Tất cả---</option>
+                                    @foreach (var item in DanhSachNhom)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>                       
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Thông tin hồ sơ: </label><br />
