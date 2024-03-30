@@ -68,5 +68,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
 
+        [NotMapped]
+        public string TenDonVi { get; set; }
+
     }
 }

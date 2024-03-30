@@ -54,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 {
                     var request = new PhiLePhiNhom
                     {
-                        Manhom = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Manhom = Manhom,
                         Tennhom = Tennhom,
                         Theodoi = Theodoi,
                         Created_at = DateTime.Now,
@@ -93,7 +93,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đối tượng thu*</label>";
+                        result += "<label>Mã nhóm*</label>";
+                        result += "<input type='text' id='manhom_edit' name='manhom_edit' class='form-control' value='" + model.Manhom + "'/>";
+                        result += "</div>";
+                        result += "</div>"; 
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên nhóm</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
                         result += "</div>";
@@ -133,13 +139,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
         [Route("PhiLePhiDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, string Theodoi, string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Edit"))
                 {
                     var model = _db.PhiLePhiNhom.FirstOrDefault(t => t.Id == Id);
+                    var model_ct = _db.PhiLePhiDm.Where(t => t.Manhom == model.Manhom);
+                    if (model_ct.Any())
+                    {
+                        foreach(var item in model_ct) { item.Manhom = Manhom;}
+                        _db.PhiLePhiDm.UpdateRange(model_ct);
+                    }
+                    model.Manhom = Manhom;
                     model.Tennhom = Tennhom;
                     model.Theodoi = Theodoi;
                     model.Updated_at = DateTime.Now;

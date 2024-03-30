@@ -21,7 +21,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = 'PhiLePhi/XetDuyet?';
+                var current_path_url = '/PhiLePhi/XetDuyet?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -39,12 +39,11 @@
 
             </h3>
         </div>
-
-        <div>
+      @*   <div>
             <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
                 <i class="la la-plus"></i>Tổng hợp hồ sơ
             </button>
-        </div>
+        </div> *@
     </div>
     <hr />
     <div class="card-body">
@@ -184,15 +183,14 @@
                             </td>
 
                             <td>
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
+                              
                                 <a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
                                 {                                   
@@ -235,7 +233,11 @@
                                         }
                                     }
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
 
+                                </a>
                                 <div class="dropdown dropdown-inline">
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
                                         <i class="icon-lg la la-cog "></i>
@@ -280,3 +282,4 @@
 </div>
 
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/HoanThanh/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/ThongTinGiayTo/Show.cshtml")

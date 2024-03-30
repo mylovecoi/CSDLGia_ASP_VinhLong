@@ -1,118 +1,29 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi
-<!--Delete Modal-->
-<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa thông tin???
+                    Chỉnh sửa thông tin hồ sơ
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row text-left">
-                    <input hidden id="id_delete" name="id_delete" />
-                </div>
+                <div class="row" id="edit_thongtin"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
             </div>
         </div>
     </div>
 </div>
-
-<!--Edit Modal-->
-<form id="frm_philephict" action="" method="post">
-    <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label text-dark">
-                        Chỉnh sửa thông tin hồ sơ
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body" id="edit_thongtin">
-                    <input type="hidden" value="@Model.Mahs" id="Mahs" name="Mahs" />
-                    <input type="hidden" id="id" name="Id" />
-                    <div class="row">
-                        <div class="col-xl-3">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Mã số*</label>
-                                <input type="text" id="MaSo" name="MaSo" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="col-xl-9">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Nội dung</label>
-                                <input type="text" id="ChiTieu" name="ChiTieu" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-3">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Sắp xếp</label>
-                                <input type="text" id="STT" name="STT" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Số thự tự hiển thị</label>
-                                <input type="text" id="HienThi" name="HienThi" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-3">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cấp độ</label>
-                                <input type="number" id="CapDo" name="CapDo" min="1" max="4" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-xl-9">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Mã số gốc</b></label>
-                                <input type="text" id="MaSoGoc" name="MaSoGoc" class="form-control" style="font-weight: bold" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Mức thu</b></label>
-                                <input type="text" id="DVT" name="DVT" class="form-control" style="font-weight: bold" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Mức thu</b></label>
-                                <input type="text" id="Dongia" name="Dongia" class="form-control money text-right" style="font-weight: bold" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 <script>
     function SetEdit(Id) {
-        $('#frm_philephict').find("[name='Id']").val(Id);
         $.ajax({
             url: '/PhiLePhiCt/Edit',
             type: 'POST',
@@ -120,84 +31,37 @@
                 Id: Id
             },
             dataType: 'JSON',
-            success: function (data) {              
-                //console.log(data);
-                var form = $('#frm_philephict');
-                form.find("[name='Id']").val(data.id);
-                form.find("[name='MaSo']").val(data.maSo);
-                form.find("[name='ChiTieu']").val(data.chiTieu);
-                form.find("[name='STT']").val(data.stt);
-                form.find("[name='HienThi']").val(data.hienThi);
-                form.find("[name='CapDo']").val(data.capDo);
-                form.find("[name='MaSoGoc']").val(data.maSoGoc);
-                form.find("[name='DVT']").val(data.dvt);
-                form.find("[name='Dongia']").val(data.dongia);
-            }
-        })
-    }
-
-    function Add(Id) {        
-        var form = $('#frm_philephict');
-        form.find("[name='Id']").val(Id);
-        form.find("[name='MaSo']").val('');
-        form.find("[name='ChiTieu']").val('');
-        form.find("[name='STT']").val(1);
-        form.find("[name='HienThi']").val(1);
-        form.find("[name='CapDo']").val(1);
-        form.find("[name='MaSoGoc']").val('');
-        form.find("[name='DVT']").val('');
-        form.find("[name='Dongia']").val(0);
-
-    }
-
-    function SetUpdate() {
-        var dongGia = $('#frm_philephict').find("[name='Dongia']").val().replace(",", "");        
-        $('#frm_philephict').find("[name='Dongia']").val(dongGia);
-        var formData = new FormData($('#frm_philephict')[0]);
-        $.ajax({
-            url: '/PhiLePhiCt/Update',
-            type: 'POST',
-            cache: false,
-            dataType: false,
-            processData: false,
-            contentType: false,
-            data: formData,
-            dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Edit_Modal').modal("hide");
+                    $('#edit_thongtin').replaceWith(data.message);
+                    toastr.success("Success!");
                 } else {
-                    toastr.error(data.message, "Lỗi!");
+                    toastr.error(data.message, "Lỗi!!!");
                 }
             }
         })
     }
 
-    function GetDelete(id) {
-        document.getElementById("id_delete").value = id;
-    }
-
-    function SetDelete() {
+    function SetUpdate() {
+        var DonGia = $('#dongia_edit').val().replace(/\,/g, '.');
         $.ajax({
-            url: '/PhiLePhiCt/Delete',
+            url: '/PhiLePhiCt/Update',
             type: 'POST',
             data: {
-                Id: $('#id_delete').val(),
+                Mahs: $('#Mahs').val(),
+                GhiChu: $('#ghichu_edit').val(),
+                Dongia: DonGia,
+                Id: $('#id_edit').val()
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
+                    $('#Edit_Modal').modal("hide");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
                         TableManaged4.init();
                     });
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
-                    $('#Delete_Modal').modal("hide");
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

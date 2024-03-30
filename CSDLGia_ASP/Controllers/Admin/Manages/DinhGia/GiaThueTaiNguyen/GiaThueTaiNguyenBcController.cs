@@ -70,7 +70,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                  {
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
-                                     Soqd = hoso.Soqd,   
+                                     Soqd = hoso.Soqd,
+                                     Thoidiem = hoso.Thoidiem,
                                  });
                     ViewData["Title"] = "Báo cáo giá thuế tài nguyên";
                     ViewData["MenuLv1"] = "menu_dg";

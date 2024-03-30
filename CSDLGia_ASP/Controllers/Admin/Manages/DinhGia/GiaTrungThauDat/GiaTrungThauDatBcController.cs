@@ -106,25 +106,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trungthaudat.baocao", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);                 
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
                     var model = from dgct in _db.GiaDauGiaDatCt
-                                join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
-                                select new GiaDauGiaDat
-                                {
-                                    Id = dgct.Id,
-                                    Mahs = dgct.Mahs,
-                                    Madv = dgct.MaDv,
-                                    Tenduan = dg.Tenduan,
-                                    Giakhoidiem = dgct.Giakhoidiem,
-                                    Giadaugia = dgct.Giadaugia,
-                                    Thoidiem = dg.Thoidiem,
-                                    Trangthai = dg.Trangthai
-                                };
+                                     join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
+                                     select new GiaDauGiaDat
+                                     {
+                                         Id = dgct.Id,
+                                         Mahs = dgct.Mahs,
+                                         Madv = dgct.MaDv,
+                                         Tenduan = dg.Tenduan,
+                                         Giakhoidiem = dgct.Giakhoidiem,
+                                         Giadaugia = dgct.Giadaugia,
+                                         Thoidiem = dg.Thoidiem,
+                                         Trangthai = dg.Trangthai,
+
+                                     };
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 
@@ -157,6 +153,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             }
         }
 
+        [HttpPost("GiaTrungThauDat/BaoCao/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaDauGiaDat.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Soqddaugia + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
 
     }
 }

@@ -26,14 +26,13 @@
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
 
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr style="text-align:center">
-            <th style="text-align: center">STT</th>
+            <th style="text-align: center" width="2%">TT</th>
             <th style="text-align: center">Tên dự án</th>
             <th style="text-align: center">Giá khởi điểm</th>
             <th style="text-align: center">Giá trúng thầu</th>
-            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -54,10 +53,16 @@
                 @foreach (var item in chitieths)
                 {
                     <tr>
+                        <td></td>
                         <td style="text-align: center">@item.Tenduan</td>
                         <td style="text-align: center">@item.Giakhoidiem</td>
                         <td style="text-align: center">@item.Giadaugia</td>
-
+                        <td>
+                            <a asp-controller="GiaTrungThauDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+                        </td>
                     </tr>
                 }
             }

@@ -2,6 +2,7 @@
 
 @{
     var Madv = ViewData["Madv"];
+    var dmnhomhh = (IEnumerable<DmNhomHh>)ViewData["DmNhomHh"];
 }
 
 @section custom_style {
@@ -21,7 +22,7 @@
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="ThamDinhGiaExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+    <form asp-controller="ThamDinhGiaExcel" asp-action="ImportExcel" method="post" enctype="multipart/form-data">
 
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
@@ -36,29 +37,54 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
             <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label><b>Phân loại hồ sơ</b></label>
+                        <select id="Phanloai" name="Phanloai" class="form-control">
+                            <option value="Hồ sơ thẩm định giá tài sản">Hồ sơ thẩm định giá tài sản</option>
+                            <option value="Hồ sơ thẩm định giá đất">Hồ sơ thẩm định giá đất</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label><b>Nhóm hàng hóa thẩm định</b></label>
+                        <select id="MaNhom" name="MaNhom" class="form-control">
+                            @foreach (var item in dmnhomhh)
+                            {
+                                <option value="@item.Manhom">@item.Tennhom</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <input hidden asp-for="MaDv" />
-                <div class="col-xl-3">
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Sheet*</label>
                         <input type="number" class="form-control" asp-for="Sheet" />
                     </div>
                 </div>
-                <div class="col-xl-3">
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Nhận từ dòng*</label>
                         <input type="number" class="form-control" asp-for="LineStart" />
                     </div>
                 </div>
-                <div class="col-xl-3">
+                <div class="col-xl-4">
                     <div class="form-group">
                         <label>Nhận đến dòng*</label>
                         <input type="number" class="form-control" asp-for="LineStop" />
                     </div>
                 </div>
-                <div class="col-xl-3">
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>

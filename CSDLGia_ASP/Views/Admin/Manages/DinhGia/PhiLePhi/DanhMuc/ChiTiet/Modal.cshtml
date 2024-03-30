@@ -20,45 +20,39 @@
             </div>
             <div class="modal-body">
                 <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
-
                 <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Tên đối tượng</label>
-                            <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-12">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="dvt_create" class="form-control select2me select2-offscreen" name="dvt_create" tabindex="-1" title="">
-                            <option value="">--Chọn đơn vị tính--</option>
-                            @foreach (var item in dsdvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>                               
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>STT báo cáo</label>
-                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" value="@ViewData["STT"]" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-2">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
                             <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
                         </div>
                     </div>
-                </div>
-
+                    <div class="col-xl-2">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>STT báo cáo</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" value="@ViewData["STT"]" />
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                            <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
+                                <option value="Chữ in đậm">Chữ in đậm</option>
+                                <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên đối tượng</label>
+                            <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
+                        </div>
+                    </div> 
+                    <div class="col-xl-12">
+                        <label class="form-control-label">Đơn vị tính</label>
+                        <input id="dvt_create" class="form-control" name="dvt_create">                           
+                    </div>                               
+                </div>    
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -119,37 +113,28 @@
     </div>
 </div>
 
-<!--Lock Modal-->
-<div class="modal fade" id="Lock_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--RemoveRange Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
                     Thông tin chi tiết
-                    <span class="d-block text-muted pt-2 font-size-sm">Khóa/Mở khóa tất cả chi tiết danh mục</span>
+                    <span class="d-block text-muted pt-2 font-size-sm">Xóa tất cả chi tiết danh mục</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <input id="manhom_lock" name="manhom_lock" value="@ViewData["Manhom"]" />
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="theodoi_lock" name="theodoi_lock" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <form asp-controller="PhiLePhiDm" asp-action="RemoveRange">
+            <input id="manhom_removerange" name="manhom_removerange" value="@ViewData["Manhom"]" hidden />
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Lock()">Đồng ý</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -168,6 +153,7 @@
                     Tenspdv: $('#tenspdv_create').val(),
                     HienThi: $('#hienthi_create').val(),
                     SapXep: $('#sapxep_create').val(),
+                    Style: $('#style_create').val(),
                     Dvt: $('#dvt_create').val(),
                     Hientrang: $('#hientrang_create').val(),                    
                 },
@@ -199,8 +185,9 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2multi').select2();
+                    toastr.success("Success!");
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -222,6 +209,7 @@
                     Hientrang: $('#hientrang_edit').val(),
                     HienThi: $('#hienthi_edit').val(),
                     SapXep: $('#sapxep_edit').val(),
+                    Style: $('#style_edit').val(),
                     Id: $('#id_edit').val()
                 },
                 dataType: 'JSON',
@@ -235,25 +223,5 @@
                 }
             })
         }
-    }
-
-    function Lock() {
-        $.ajax({
-            url: '/PhiLePhiDmCt/Lock',
-            type: 'POST',
-            data: {
-                Manhom: $('#manhom_lock').val(),
-                Theodoi: $('#theodoi_lock').val(),
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success(data.message);
-                    location.reload();
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
     }    
 </script>
