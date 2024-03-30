@@ -1,7 +1,7 @@
 ﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @{
-    var Madv = ViewData["Madv"];
+    var DanhMucNhom = (IEnumerable<PhiLePhiNhom>)ViewData["DanhMucNhom"];
 }
 
 @section custom_style {
@@ -32,6 +32,22 @@
                 </a>
             </div>
 
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhóm phí, lệ phí*</label>
+                        <select class="form-control" asp-for="MaNhom">
+                            @foreach(var item in DanhMucNhom)
+                            {
+                                <option value="@item.Manhom">@item.Tennhom </option>
+                            }
+                        </select>
+                        </div>
+                </div>
+            </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>

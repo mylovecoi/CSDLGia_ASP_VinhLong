@@ -18,8 +18,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string ChiTieu { get; set; }
         public string Dvt { get; set; }
         public double Dongia { get; set; } = 0;
-        [NotMapped]
         public string Madv { get; set; }
+        public string TrangThai { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
         [NotMapped]
@@ -28,5 +28,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ttqd { get; set; }
         public double SapXep { get; set; }
         public string Style { get; set; }
+        public string Tenspdv { get; set; }
+        public string Manhom { get; set; }
+        public string GhiChu { get; set; }
+
+        [NotMapped]
+        public string SoQD { get; set; }
+
+        [NotMapped]
+        public string Tennhom { get; set; }
+
     }
 }

@@ -2,16 +2,17 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var DanhMucNhom = (IEnumerable<PhiLePhiNhom>)ViewData["DanhMucNhom"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 
-    }
+}
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -42,15 +43,14 @@
                 Thông tin hồ sơ phí, lệ phí
             </h3>
         </div>
-        <div >
+        <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="PhiLePhi" asp-action="Create"
-               asp-route-Madv="@ViewData["Madv"]">
+                <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" type="buttom">
                     <i class="la la-plus"></i>Thêm mới
-                </a>
+                </button>
 
-                <a class="btn btn-primary font-weight-bolder" asp-controller="PhiLePhiExcel" asp-action="Index"
+                <a class="btn btn-success font-weight-bolder" asp-controller="PhiLePhiExcel" asp-action="Index"
                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
@@ -101,7 +101,6 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th>Địa bàn</th>
                     <th>Số quyết định</th>
                     <th>Mô tả</th>
                     <th>Thời điểm áp dụng</th>
@@ -117,7 +116,6 @@
                     {
                         <tr>
                             <td style="text-align: center" width="3%">@(record_id++)</td>
-                            <td style="text-align: center">@item.Tendiaban</td>
                             <td style="text-align: left">@item.Soqd</td>
                             <td style="text-align: left">@item.Ttqd</td>
                             <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -155,14 +153,13 @@
                             </td>
                             <td style="text-align: left" width="15%">@item.Tencqcq</td>
                             <td width="12%">
-                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
-                                   target="_blank">
-                                    <i class="icon-lg la la-redo-alt text-danger"></i>
-
-                                </a>
-                                <a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"target="_blank">
+                               
+                                <a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT" || item.Trangthai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
@@ -181,9 +178,11 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
+                                
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+
                                 </a>
                             </td>
                         </tr>
@@ -191,6 +190,44 @@
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                   Thêm mới hồ sơ phí lệ phí
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-action="Create" asp-asp-controller="PhiLePhi" method="get">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Nhóm phí lệ phí</label>
+                                <select id="manhom_create" name="manhom_create" class="form-control">
+                                    @foreach (var item in DanhMucNhom)
+                                    {
+                                        <option value="@item.Manhom">@item.Tennhom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="madv_create" name="madv_create" value="@ViewData["Madv"]" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -275,3 +312,4 @@
         document.getElementById("mahs_chuyen").value = mahs;
     }
 </script>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/PhiLePhi/ThongTinGiayTo/Show.cshtml")
