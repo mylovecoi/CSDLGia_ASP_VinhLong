@@ -131,12 +131,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
-                        ViewData["DsDiaBan"] = _db.DsDiaBan;
                         //ViewData["Madiaban"] = dsdonvi.FirstOrDefault(t => t.MaDv == Madv).MaDiaBan;
                         ViewData["Thang"] = Thang;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                          join tk  in _db.Users on donvi.MaDv equals tk.Madv
+                                          join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                          select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                          {       
+                                              MaDiaBan = donvi.MaDiaBan,
+                                              MaDv = donvi.MaDv,
+                                              TenDv = donvi.TenDv,                                             
+                                          });
+
+                        ViewData["DsDiaBan"] = _db.DsDiaBan;
+
+                        ViewData["DsDonViTh"] = dsDonViTH;
 
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";

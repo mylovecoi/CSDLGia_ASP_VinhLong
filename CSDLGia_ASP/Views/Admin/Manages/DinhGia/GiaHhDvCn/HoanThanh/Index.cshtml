@@ -6,12 +6,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -33,28 +33,28 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hoàn thành định giá<small>&nbsp;hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hoàn thành định giá<small>&nbsp;hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</small><br />
+            </h3>
+        </div>
         <div>
             <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
                 <i class="la la-plus"></i>Tổng hợp hồ sơ
             </button>
         </div>
-        </div>
-        <hr />
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold; color:blue">Năm</label>
-                        <select class="form-control " id="Nam" name="Nam">
-                            <option value="all">--Tất cả--</option>
-                            @{
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control " id="Nam" name="Nam">
+                        <option value="all">--Tất cả--</option>
+                        @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
@@ -102,12 +102,12 @@
                 {
                     @foreach (var item in Model)
                     {
-                        <tr >
+                        <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center" class="active">@item.TendvCh</td>
                             <td style="text-align: center" class="active">@item.Tencqcq</td>
-                            <td style="text-align: center" >@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align: center" >@item.Ttqd</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@item.Ttqd</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -136,10 +136,12 @@
                             </td>
                             <td>
                                 <a asp-controller="GiaHhDvCn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.xetduyet", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")
@@ -147,19 +149,19 @@
                                         @if (item.Trangthai == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                onclick="HuyCongBo('@item.Mahs')">
+                                                    onclick="HuyCongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
                                         }
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                onclick="CongBo('@item.Mahs')">
+                                                    onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -170,23 +172,19 @@
                                         @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                                    onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
                                                 <i class="icon-lg la la-check text-primary "></i>
                                             </button>
 
                                         }
                                     }
                                 }
-
-                                <a href="~/UpLoad/File/DinhGia/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </a>
+                                
                                 <div class="dropdown dropdown-inline">
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
                                         <i class="icon-lg la la-cog "></i>
@@ -222,7 +220,7 @@
                                     </div>
                                 </div>
                             </td>
-                           
+
 
                         </tr>
                     }
