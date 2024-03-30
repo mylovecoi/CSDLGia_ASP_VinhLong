@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("GiaHhDvCnDm/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Dvt, string Mota)
+        public JsonResult Store(string Manhom, string Tenspdv, string Dvt)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -67,7 +67,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var request = new GiaHhDvCnDm
                     {
                         Maspdv = DateTime.Now.ToString("yyMMddssmmHH"),
-                        Tenspdv = Tennhom,
+                        Tenspdv = Tenspdv,
                         Dvt = Dvt,
                         Manhom = Manhom,
                         Created_at = DateTime.Now,
@@ -119,10 +119,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(p => p.Id == id_delete);
                     _db.GiaHhDvCnDm.Remove(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_hhdvcn";
-                    ViewData["MenuLv3"] = "menu_hhdvcn_dm";
-                    return RedirectToAction("Index", "GiaHhDvCnDm");
+
+                   
+                    return RedirectToAction("Index", "GiaHhDvCnDm", new { Manhom = model.Manhom });
                 }
                 else
                 {
