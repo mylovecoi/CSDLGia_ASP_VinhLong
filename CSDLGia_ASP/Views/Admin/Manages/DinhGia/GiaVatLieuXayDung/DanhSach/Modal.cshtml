@@ -1,7 +1,6 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var nhomtn = (IEnumerable<GiaVatLieuXayDungNhom>)ViewData["NhomTn"];
 }
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,17 +25,6 @@
                                     @foreach (var dv in dsdonvi)
                                     {
                                         <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Phân loại nhóm hàng hóa dịch vụ</label>
-                                <select id="Manhom" name="Manhom" class="form-control">
-                                    @foreach (var nhom in nhomtn)
-                                    {
-                                        <option value="@nhom.Manhom">@nhom.Tennhom</option>
                                     }
                                 </select>
                             </div>

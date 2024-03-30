@@ -1,11 +1,15 @@
-﻿<!--Create Modal-->
+﻿@{
+    var dvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+}
+
+<!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
-                    Thông tin nhóm vật liệu xây dựng
-                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm vật liệu xây dựng</span>
+                    Thông tin danh mục vật liệu xây dựng
+                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới vật liệu xây dựng</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -15,17 +19,25 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nhóm vật liệu xây dựng</label>
-                            <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
+                            <label>Tên vật liệu xây dựng</label>
+                            <input type="text" id="tenvlxd_create" name="tenvlxd_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Trạng thái</label>
-                            <select id="theodoi_create" name="theodoi_create" class="form-control">
-                                <option value="TD">Đang theo dõi</option>
-                                <option value="KTD">Không theo dõi</option>
+                            <label>Đơn vị tính</label>
+                            <select id="dvt_create" name="dvt_create" class="form-control">
+                                @foreach(var item in dvt)
+                                {
+                                    <option value="@item.Madvt">@item.Dvt</option>
+                                }
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tiêu chuẩn</label>
+                            <input type="text" id="tieuchuan_create" name="tieuchuan_create" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -38,6 +50,7 @@
     </div>
 </div>
 
+<!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -75,7 +88,7 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaVatLieuXayDungNhom" asp-action="Delete">
+            <form asp-controller="GiaVatLieuXayDungDm" asp-action="Delete">
                 <div class="modal-body">
                     <div class="form-group form-group-last">
                         <div class="alert alert-custom alert-default" role="alert">
@@ -92,14 +105,11 @@
                                     <!--end::Svg Icon-->
                                 </span>
                             </div>
-                            <div class="alert-text">
-                                Các chi tiết danh mục thuộc nhóm danh mục này sẽ đồng thời bị xóa !!!
-                            </div>
                         </div>
                     </div>
                     <div class="form-group fv-plugins-icon-container">
-                        <label>Tên nhóm: </label>
-                        <b id="tennhom_delete" style="color: #0000FF"></b>
+                        <label>Tên vật liệu xây dựng: </label>
+                        <b id="tenvlxd_delete" style="color: #0000FF"></b>
                     </div>
                     <input hidden id="id_delete" name="id_delete" />
                 </div>
@@ -114,15 +124,16 @@
 
 <script>
     function Store() {
-        if ($('#tennhom_create').val().trim() == '') {
+        if ($('#tenvlxd_create').val().trim() == '') {
             toastr.error("Tên vật liệu xây dựng không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaVatLieuXayDungDm/Store',
                 type: 'POST',
                 data: {
-                    Tennhom: $('#tennhom_create').val(),
-                    Theodoi: $('#theodoi_create').val(),
+                    Tenvlxd: $('#tenvlxd_create').val(),
+                    Dvt: $('#dvt_create').val(),
+                    Tieuchuan: $('#tieuchuan_create').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {
@@ -137,9 +148,9 @@
         }
     }
 
-    function getId(id, tennhom) {
+    function getId(id, tenvlxd) {
         document.getElementById("id_delete").value = id;
-        document.getElementById("tennhom_delete").innerHTML = tennhom;
+        document.getElementById("tenvlxd_delete").innerHTML = tenvlxd;
     }
 
     function editId(id_edit) {
@@ -162,15 +173,16 @@
     }
 
     function Update() {
-        if ($('#tennhom_edit').val().trim() == '') {
+        if ($('#tenvlxd_edit').val().trim() == '') {
             toastr.error("Tên vật liệu xây dựng không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaVatLieuXayDungDm/Update',
                 type: 'POST',
                 data: {
-                    Tennhom: $('#tennhom_edit').val(),
-                    Theodoi: $('#theodoi_edit').val(),
+                    Tenvlxd: $('#tenvlxd_edit').val(),
+                    Dvt: $('#dvt_edit').val(),
+                    Tieuchuan: $('#tieuchuan_edit').val(),
                     Id: $('#id_edit').val()
                 },
                 dataType: 'JSON',

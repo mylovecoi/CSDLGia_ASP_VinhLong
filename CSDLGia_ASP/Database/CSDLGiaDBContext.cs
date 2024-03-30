@@ -248,7 +248,6 @@ namespace CSDLGia_ASP.Database
         public DbSet<GiaVatLieuXayDung> GiaVatLieuXayDung { get; set; }
         public DbSet<GiaVatLieuXayDungCt> GiaVatLieuXayDungCt { get; set; }
         public DbSet<GiaVatLieuXayDungDm> GiaVatLieuXayDungDm { get; set; }
-        public DbSet<GiaVatLieuXayDungNhom> GiaVatLieuXayDungNhom { get; set; }
 
         //Tham Dinh Gia
         public DbSet<ThamDinhGia> ThamDinhGia { get; set; }

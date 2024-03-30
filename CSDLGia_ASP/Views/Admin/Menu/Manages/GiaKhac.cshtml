@@ -18,7 +18,7 @@
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_hhdvcn_dm">
-                        <a asp-controller="GiaHhDvCnDm" asp-action="Index" class="menu-link">
+                        <a asp-controller="GiaHhDvCnNhom" asp-action="Index" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
@@ -248,7 +248,7 @@
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.danhmuc", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_giakhac_giavatlieuxaydung_dm">
-                        <a asp-controller="GiaVatLieuXayDungNhom" asp-action="Index" class="menu-link">
+                        <a asp-controller="GiaVatLieuXayDungDm" asp-action="Index" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
@@ -283,7 +283,7 @@
 
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.timkiem", "Index"))
                 {
-                    <li class="menu-item" aria-haspopup="true" id="menu_dg_giavatlieuxaydung_tk">
+                    <li class="menu-item" aria-haspopup="true" id="menu_giakhac_giavatlieuxaydung_tk">
                         <a asp-controller="GiaVatLieuXayDung" asp-action="Search" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
@@ -293,17 +293,17 @@
                     </li>
                 }
 
-                @*  @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.baocao", "Index"))
-            {
-            <li class="menu-item" aria-haspopup="true" id="menu_giakhac_giavatlieuxaydung_bc">
-            <a asp-controller="GiaVatLieuXayDungBc" asp-action="Index" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text text-truncate">Báo cáo thống kê</span>
-            </a>
-            </li>
-            } *@
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.baocao", "Index"))
+                {
+                    <li class="menu-item" aria-haspopup="true" id="menu_giakhac_giavatlieuxaydung_bc">
+                        <a asp-controller="GiaVatLieuXayDungBc" asp-action="Index" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </li>
