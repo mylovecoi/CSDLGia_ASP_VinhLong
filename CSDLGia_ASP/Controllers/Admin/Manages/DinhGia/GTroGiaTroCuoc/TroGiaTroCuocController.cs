@@ -158,6 +158,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                             Mota = item.Tenspdv,
                             Trangthai = "CXD",
                             Maspdv = item.Maspdv,
+                            Dvt = item.Dvt
                         });
                     }
                     _db.GiaTroGiaTroCuocCt.AddRange(list_add);
@@ -238,8 +239,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
 
         [Route("DinhGiaTGTC/Edit")]
         [HttpGet]
@@ -333,8 +332,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
 
         [Route("DinhGiaTGTC/Delete")]
         [HttpPost]
@@ -459,7 +456,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Mota = hosoct.Mota,
                                      Dongia = hosoct.Dongia,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     Dvt = hosoct.Dvt
                                  });
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
@@ -522,7 +520,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Mota = hosoct.Mota,
                                      Dongia = hosoct.Dongia,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     Dvt = hosoct.Dvt
                                  });
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }

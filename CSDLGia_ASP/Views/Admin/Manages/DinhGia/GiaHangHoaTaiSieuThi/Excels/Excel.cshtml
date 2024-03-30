@@ -1,6 +1,7 @@
 ﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 @{
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dstt = (IEnumerable<GiaHangHoaTaiSieuThiDm>)ViewData["Dstt"];
 }
 
 @section custom_style {
@@ -33,13 +34,24 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label>Đơn vị báo cáo</label>
                         <select asp-for="MaDv" class="form-control">
                             @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
                             {
                                 <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Danh mục thông tư</label>
+                        <select asp-for="Matt" class="form-control">
+                            @foreach (var ds in dstt)
+                            {
+                                <option value="@ds.Matt">@ds.Tentt</option>
                             }
                         </select>
                     </div>

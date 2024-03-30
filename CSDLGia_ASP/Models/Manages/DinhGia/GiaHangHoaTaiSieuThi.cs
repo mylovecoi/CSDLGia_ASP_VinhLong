@@ -16,6 +16,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Madiaban { get; set; }
         public string Maxp { get; set; }
         public string Mahs { get; set; }
+        public string Matt { get; set; }
         public string Soqd { get; set; }
         public string Mota { get; set; }
         public string Thang { get; set; }
