@@ -241,8 +241,8 @@ namespace CSDLGia_ASP.Database
 
         public DbSet<GiaHangHoaTaiSieuThi> GiaHangHoaTaiSieuThi { get; set; }
         public DbSet<GiaHangHoaTaiSieuThiCt> GiaHangHoaTaiSieuThiCt { get; set; }
-        public DbSet<GiaHangHoaTaiSieuThiDmHHTaiSieuThi> GiaHangHoaTaiSieuThiDmHHTaiSieuThi { get; set; }
-        public DbSet<GiaHangHoaTaiSieuThiDmSieuThi> GiaHangHoaTaiSieuThiDmSieuThi { get; set; }
+        public DbSet<GiaHangHoaTaiSieuThiDmCt> GiaHangHoaTaiSieuThiDmCt { get; set; }
+        public DbSet<GiaHangHoaTaiSieuThiDm> GiaHangHoaTaiSieuThiDm { get; set; }
 
         // Định giá giao dịch bất động sản
         public DbSet<GiaVatLieuXayDung> GiaVatLieuXayDung { get; set; }

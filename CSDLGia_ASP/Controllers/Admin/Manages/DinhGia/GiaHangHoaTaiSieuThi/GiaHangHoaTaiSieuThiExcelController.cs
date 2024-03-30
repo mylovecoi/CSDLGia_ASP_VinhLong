@@ -63,6 +63,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     ViewData["MenuLv2"] = "menu_dgsieuthi";
                     ViewData["MenuLv3"] = "menu_dgsieuthi_tt";
                     ViewData["Madv"] = Madv;
+                    ViewData["Dstt"] = _db.GiaHangHoaTaiSieuThiDm;
                     ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa tại siêu thị";
                     return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Excels/Excel.cshtml", model);
 
@@ -106,6 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                             {
                                 list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt
                                 {
+                                    Matt = requests.Matt,
                                     Mahs = Mahs,
                                     Madv = requests.MaDv,
                                     Trangthai = "CXD",
@@ -138,7 +140,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
                 ViewData["Madv"] = requests.MaDv;
                 ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                ViewData["Danhmuc"] = _db.GiaHangHoaTaiSieuThiDmSieuThi.ToList();
                 ViewData["Title"] = "Thêm mới giá hàng hóa tại siêu thị";
                 ViewData["MenuLv1"] = "menu_dg";
                 ViewData["MenuLv2"] = "menu_dgsieuthi";

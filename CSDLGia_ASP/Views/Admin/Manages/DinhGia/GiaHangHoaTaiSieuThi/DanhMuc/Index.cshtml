@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDmHHTaiSieuThi>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDm>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -24,11 +24,11 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục<small>&nbsp;hàng hóa tại siêu thị</small><br />
+                Danh mục<small>&nbsp; thông tư</small><br />
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.danhmuchanghoataisieuthi", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.danhmucsieuthi", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal"
                     class="btn btn-primary font-weight-bolder" title="Create">
@@ -44,8 +44,8 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="3%">STT</th>
-                    <th>Mã hàng hóa</th>
-                    <th>Tên hàng hóa</th>
+                    <th>Mã thông tư</th>
+                    <th>Tên thông tư</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -56,9 +56,12 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">@item.Mahanghoa</td>
-                            <td style="text-align: center">@item.Tenhanghoa</td>
+                            <td style="text-align: center">@item.Matt</td>
+                            <td style="text-align: center">@item.Tentt</td>
                             <td>
+                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaHangHoaTaiSieuThiDmCt" asp-action="Index" asp-route-Matt="@item.Matt" title="Xem chi tiết">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
@@ -74,14 +77,14 @@
     </div>
 </div>
 
-<!--create Modal-->
+<!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GianuocshDmKhung" asp-action="Store">
+            <form asp-controller="GiaHangHoaTaiSieuThiDm" asp-action="Store">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Danh mục hàng hóa tại siêu thị
+                        Danh mục thông tư
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
@@ -91,10 +94,8 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label><b>Mã hàng hóa</b></label>
-                                <input type="text" id="mahanghoa_create" name="mahanghoa_create" class="form-control" />
-                                <label><b>Tên hàng hóa</b></label>
-                                <input type="text" id="tenhanghoa_create" name="tenhanghoa_create" class="form-control" />
+                                <label><b>Tên thông tư</b></label>
+                                <input type="text" id="tentt_create" name="tentt_create" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -107,13 +108,36 @@
         </div>
     </div>
 </div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label text-dark">
+                    Chỉnh sửa danh mục thông tư
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
-                    Đồng ý xóa manh mục
+                    Đồng ý xóa manh mục thông tư
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -131,39 +155,14 @@
         </div>
     </div>
 </div>
-<!--Edit Modal-->
-<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Chỉnh sửa danh mục
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="edit_thongtin">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 <script>
     function GetCreate() {
         $.ajax({
-            url: '/DanhMucHangHoaTaiSieuThi/Store',
+            url: '/DanhMucSieuThi/Store',
             type: 'POST',
             data: {
-                Mahanghoa: $('#mahanghoa_create').val(),
-                Tenhanghoa: $('#tenhanghoa_create').val(),
+                Tentt: $('#tentt_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -181,12 +180,14 @@
             }
         })
     }
+
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
+
     function GetDelete() {
         $.ajax({
-            url: '/DanhMucHangHoaTaiSieuThi/Delete',
+            url: '/DanhMucSieuThi/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
@@ -210,7 +211,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DanhMucHangHoaTaiSieuThi/Edit',
+            url: '/DanhMucSieuThi/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -218,7 +219,6 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                   
                     $('#edit_thongtin').replaceWith(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
@@ -226,13 +226,13 @@
             }
         })
     }
+
     function GetEdit() {
         $.ajax({
-            url: '/DanhMucHangHoaTaiSieuThi/Update',
+            url: '/DanhMucSieuThi/Update',
             type: 'POST',
             data: {
-                Mahanghoa: $('#mahanghoa_edit').val(),
-                Tenhanghoa: $('#tenhanghoa_edit').val(),
+                Tentt: $('#tentt_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
