@@ -3,8 +3,16 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Security.Policy;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
@@ -231,6 +239,73 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
+                int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
+
+                using (var stream = new MemoryStream())
+                {
+                    await requests.FormFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                        if (worksheet != null)
+                        {
+                            int rowcount = worksheet.Dimension.Rows;
+                            requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
+                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
+                            var list_add = new List<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv>();
+                          
+                            for (int row = requests.LineStart; row <= requests.LineStop; row++)
+                            {
+                                ExcelStyle style = worksheet.Cells[row, 2].Style;
+                                // Kiểm tra xem font chữ có được đánh dấu là đậm không
+                                bool isBold = style.Font.Bold;
+                                // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
+                                bool isItalic = style.Font.Italic;
+                                StringBuilder strStyle = new StringBuilder();
+                                if (isBold) { strStyle.Append("Chữ in đậm,"); }
+                                if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+
+                                list_add.Add(new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv
+                                {
+
+                                    Maso = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row,2].Value.ToString().Trim() : "",
+                                    Tendv = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Diachi = worksheet.Cells[row, 4].Value != null ?
+                                                 worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                    Nguoidaidien = worksheet.Cells[row, 5].Value != null ?
+                                                 worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                    Chucvu = worksheet.Cells[row, 6].Value != null ?
+                                                 worksheet.Cells[row, 6].Value.ToString().Trim() : "",
+                                    Created_at = DateTime.Now,
+                                    Updated_at = DateTime.Now,
+                                  
+                                });
+                               
+                            }
+                            _db.ThamDinhGiaDv.AddRange(list_add);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", "ThamDinhGiaDv");
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+
         }
     }
 }
