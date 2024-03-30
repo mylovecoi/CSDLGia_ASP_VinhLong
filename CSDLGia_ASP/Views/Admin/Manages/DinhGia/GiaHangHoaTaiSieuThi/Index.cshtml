@@ -2,15 +2,16 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dstt = (IEnumerable<GiaHangHoaTaiSieuThiDm>)ViewData["Dstt"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -45,9 +46,9 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
             {
                 @* <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThi" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a> *@
+            asp-route-Madv="@ViewData["Madv"]">
+            <i class="la la-plus"></i>Thêm mới
+            </a> *@
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
@@ -57,7 +58,7 @@
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
             }
-            
+
 
         </div>
     </div>
@@ -161,21 +162,7 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var dv in dsdonvi)
-                                {
-                                    @if (item.Macqcq == dv.MaDv)
-                                    {
-                                        <td style="text-align: center">@dv.TenDv</td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
-
+                            <td style="text-align: center"></td>
                             <td>
                                 <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
@@ -235,6 +222,17 @@
                                     @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
                                     {
                                         <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Danh mục thông tư</label>
+                                <select id="MattBc" name="MattBc" class="form-control">
+                                    @foreach (var ds in dstt)
+                                    {
+                                        <option value="@ds.Matt">@ds.Tentt</option>
                                     }
                                 </select>
                             </div>
