@@ -98,6 +98,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                         ViewData["Nam"] = Nam;
                         ViewData["Thang"] = Thang;
                         ViewData["Madv"] = Madv;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Dstt"] = _db.GiaHangHoaTaiSieuThiDm;
                         ViewData["Title"] = " Thông tin giá hàng hóa tại siêu thị";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgsieuthi";
@@ -129,7 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
         [Route("GiaHangHoaTaiSieuThi/Create")]
         [HttpGet]
-        public IActionResult Create(string MadvBc, string ThangBc, string NamBc)
+        public IActionResult Create(string MadvBc, string ThangBc, string NamBc, string MattBc)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -162,6 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     {
+                        Matt = MattBc,
                         Madv = MadvBc,
                         Thang = ThangBc,
                         Nam = NamBc,
@@ -169,7 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
 
-                    var dm = _db.GiaHangHoaTaiSieuThiDmHHTaiSieuThi.ToList();
+                    var dm = _db.GiaHangHoaTaiSieuThiDmCt.Where(t=>t.Matt == MattBc).ToList();
                     var ct = new List<GiaHangHoaTaiSieuThiCt>();
                     foreach (var item in dm)
                     {
@@ -192,7 +195,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
 
                     ViewData["Madv"] = MadvBc;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Danhmuc"] = _db.GiaHangHoaTaiSieuThiDmSieuThi.ToList();
+                    ViewData["Danhmuc"] = _db.GiaHangHoaTaiSieuThiDm.ToList();
                     ViewData["Title"] = "Thêm mới giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgsieuthi";
@@ -221,6 +224,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 {
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     {
+                        Matt = request.Matt,
                         Mahs = request.Mahs,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
@@ -236,7 +240,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                         Updated_at = DateTime.Now,
                     };
                     
-
                     var modelct = _db.GiaHangHoaTaiSieuThiCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct != null)
                     {

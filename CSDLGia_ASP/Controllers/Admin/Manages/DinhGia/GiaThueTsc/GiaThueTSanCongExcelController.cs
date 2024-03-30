@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
                     var model = new VMImportExcel
                     {
                         Sheet = 1,
-                        LineStart = 2,
+                        LineStart = 3,
                         LineStop = 1000,
                         MaDv = Madv,
                     };
@@ -158,8 +158,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
 
                                 Ththue = worksheet.Cells[row, 5].Value != null ?
                                             worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-                                //Thuetungay = Helpers.ExcelConvertToDate(worksheet.Cells[row, 6].Value != null ?
-                                //            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+
+                                Thuetungay = Helpers.ExcelConvertToDate(worksheet.Cells[row, 6].Value != null ?
+                                            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
 
                                 Dvt = worksheet.Cells[row, 7].Value != null ?
                                             worksheet.Cells[row, 7].Value.ToString().Trim() : "",

@@ -91,6 +91,7 @@
                     <th width="4%">STT</th>
                     <th>Cơ quan chuyển hồ sơ</th>
                     <th>Địa bàn</th>
+                    <th>Số QĐ</th>
                     <th>Thời điểm<br />xác đinh</th>
                     <th>Trạng thái</th>
                     <th width="20%">Thao tác</th>
@@ -153,6 +154,7 @@
                                 }
                             </td>
                             <td class="text-center danger"></td>
+                            <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")

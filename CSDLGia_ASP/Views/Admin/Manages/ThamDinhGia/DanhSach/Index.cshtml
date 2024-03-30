@@ -6,12 +6,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
-    }
+}
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -35,14 +35,14 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin hồ sơ thẩm định giá
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ thẩm định giá
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Create"))
             {
                 <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
@@ -149,9 +149,12 @@
                             <td style="text-align: left">@item.Macqcq</td>
                             <td>
                                 <a asp-controller="ThamDinhGia" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Edit"))
@@ -170,10 +173,7 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                <button type="button" data-target="#File_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
-                                onclick="GetFile('@item.Id')" title="Tải tệp">
-                                    <i class="icon-lg la la-cloud-download text-warning"></i>
-                                </button>
+
                             </td>
                         </tr>
                     }
@@ -212,7 +212,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nhóm hàng hóa thẩm định</b></label>
                                 <select id="Tttstd" name="Tttstd" class="form-control">
-                                    @foreach(var item in dmnhomhh)
+                                    @foreach (var item in dmnhomhh)
                                     {
                                         <option value="@item.Manhom">@item.Tennhom</option>
                                     }
@@ -326,29 +326,55 @@
     </div>
 </div>
 
+<!-- Giấy tờ Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
 
-    function GetFile(id) {
+    function GetFile(mahs) {
         $.ajax({
-            url: '/ThamDinhGia/DanhSach/ShowFile',
+            url: '/ThongTinGiayTo/GetList',
             type: 'POST',
             data: {
-                Id: id,
+                Mahs: mahs
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    $('#frm_file').replaceWith(data.message);
+                    $('#giayto_data').replaceWith(data.message);
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
             }
         })
-    }
+    }    
 
     function Chuyen(mahs) {
         document.getElementById("mahs_chuyen").value = mahs;

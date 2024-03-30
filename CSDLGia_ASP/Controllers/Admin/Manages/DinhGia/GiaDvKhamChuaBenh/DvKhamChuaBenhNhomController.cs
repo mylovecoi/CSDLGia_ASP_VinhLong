@@ -115,6 +115,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         public JsonResult Update(int Id, string Tennhom, string Manhom)
         {
             var model = _db.GiaDvKcbNhom.FirstOrDefault(t => t.Id == Id);
+            var model_ct = _db.GiaDvKcbDm.Where(t => t.Manhom == model.Manhom);
+            if (model_ct.Any())
+            {
+                foreach(var item in model_ct) { item.Manhom = Manhom; };
+                _db.GiaDvKcbDm.UpdateRange(model_ct);
+            }
             model.Tennhom = Tennhom;
             model.Manhom = Manhom;
             model.Updated_at = DateTime.Now;

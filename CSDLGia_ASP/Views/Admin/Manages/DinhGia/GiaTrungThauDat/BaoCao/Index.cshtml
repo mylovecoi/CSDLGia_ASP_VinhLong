@@ -145,7 +145,10 @@
                                 <label>Thông tin hồ sơ: </label><br />
                                 <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
                                     <option value="all">--Tất cả---</option>
-
+                                    @foreach (var item in DanhSachHoSo)
+                                    {
+                                        <option value="@item.Mahs">Số QĐ: @item.Soqddaugia- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -184,7 +187,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaTrungThauDat/BaoCao/GetListHoSo',
+                    url: 'GiaTrungThauDat/BaoCao/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,

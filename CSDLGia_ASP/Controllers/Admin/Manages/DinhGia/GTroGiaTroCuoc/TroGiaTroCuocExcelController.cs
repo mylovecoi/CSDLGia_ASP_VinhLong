@@ -58,10 +58,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
                         _db.SaveChanges();
                     }
                     var model = new GiaTroGiaTroCuocCt
-                    {
-                        Tenspdv = "1",
-                        Dongia = 2,
-                        LineStart = 2,
+                    {                       
+                        LineStart = 3,
                         LineStop = 1000,
                         Sheet = 1,
                         Madv = Madv
@@ -115,23 +113,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TroGiaTroCuoc
                                 Updated_at = DateTime.Now,
                                 Mota = worksheet.Cells[row, 1].Value != null ?
                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                Dongia = Helpers.ConvertStrToDb(worksheet.Cells[row, 2].Value != null ?
-                                                    worksheet.Cells[row, 2].Value.ToString().Trim() : ""),
-                                
+                                Dvt = worksheet.Cells[row, 2].Value != null ?
+                                                worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Dongia = Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
+                                                    worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
+                                Madv = request.Madv                               
 
                             });
                         }
                         _db.GiaTroGiaTroCuocCt.AddRange(list_add);
                         _db.SaveChanges();
-
                     }
-
                 }
 
                 var model = new VMDinhGiaTroGiaTroCuoc
                 {
                     Madv = request.Madv,
-                    Mahs = request.Mahs,
+                    Mahs = Mahs,
                     Thoidiem = DateTime.Now
                 };
                 model.GiaTroGiaTroCuocCt = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs).ToList();

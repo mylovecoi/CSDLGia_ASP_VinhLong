@@ -54,10 +54,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
-            result += "<th>#</th>";
+            result += "<th width='2%'>#</th>";
             result += "<th>Tên sản phẩm dịch vụ</th>";
-            result += "<th>Đơn giá </th>";
-            result += "<th>Thao tác</th>";
+            result += "<th width='10%'>Đơn vị tính</th>";
+            result += "<th width='10%'>Đơn giá </th>";
+            result += "<th width='5%'>Thao tác</th>";
             result += "</tr></thead><tbody>";
 
             foreach (var item in model)
@@ -65,6 +66,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
                 result += "<td style='text-align:left'>" + item.Mota + "</td>";
+                result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Dongia) + "</td>";
                 result += "<td style='text-align:center'>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
@@ -90,6 +92,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên sản phẩm dịch vụ</b></label>";
                 result += "<lable class='form-control'>" + model.Mota + "</label>";            
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn vị tính</b></label>";
+                result += "<lable class='form-control'>" + model.Dvt + "</label>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
