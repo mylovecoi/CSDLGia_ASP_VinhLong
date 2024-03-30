@@ -1,8 +1,7 @@
 ﻿@{
-    Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dsnhom = (IEnumerable<GiaDvKcbNhom>)ViewData["GiaDvKcbNhom"];
+    Layout = "_LayoutReports";   
+    var dsnhom = (IEnumerable<GiaGiaoDichDatNhom>)ViewData["DanhMucNhom"];
+    int stt = 1;
 }
 <br />
 <br />
@@ -10,25 +9,11 @@
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
 <p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
+    Địa bàn:@ViewData["TenDiaBan"]
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
+    Cơ quan tiếp nhận:@ViewData["TenDonVi"]
 </p>
 
 <br />
@@ -36,6 +21,7 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
+            <th style="text-align: center;" width="2%">STT</th>
             <th style="text-align: center;" rowspan="2" width="50%">Tên loại đất</th>
             <th style="text-align: center;" rowspan="2" width="4%">Đơn vị tính</th>
             <th style="text-align: center;" rowspan="2" width="10%">Giá </th>
@@ -44,14 +30,25 @@
     <tbody>
         @if (Model.GiaGiaoDichDatCt.Count() > 0)
         {
-            @foreach (var item in Model.GiaGiaoDichDatCt)
+            @foreach (var nhom in dsnhom)
             {
-                <tr>
-                    <td style="text-align: left;">@item.Ten</td>
-                    <td style="text-align: center;">@item.Dvt</td>
-                    <td style="text-align: center">@Helpers.ConvertDbToStr(item.Gia)</td>
-                </tr>
-            }
+                var data = Model.GiaGiaoDichDatCt.Where(x => x.Manhom == nhom.Manhom);                
+                if (data.Any())
+                {
+                    <tr>
+                        <td style="text-align:left;font-weight:bold;" colspan="4">@nhom.Tennhom</td>
+                    </tr>
+                    @foreach (var item in data)
+                    {
+                        <tr>
+                            <td style="text-align:center;"> @(stt++)</td>
+                            <td style="text-align: left;">@item.Ten</td>
+                            <td style="text-align: center;">@item.Dvt</td>
+                            <td style="text-align: center">@Helpers.ConvertDbToStr(item.Gia)</td>
+                        </tr>
+                    }
+                }                
+            }           
         }
     </tbody>
 </table>

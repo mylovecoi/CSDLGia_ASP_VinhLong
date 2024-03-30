@@ -138,13 +138,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
         }
         [Route("GiaKhungGiaDatCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, string Vungkt, double Giattdb, double Giatddb
+        public JsonResult Update(int Id, string Vungkt, double Giattdb, double Giatddb
             , double Giatttd, double Giatdtd, double Giattmn, double Giatdmn)
         {
-            var model = _db.GiaKhungGiaDatCt.FirstOrDefault(t => t.Id == Id);
-            model.Mahs = Mahs;
+            var model = _db.GiaKhungGiaDatCt.FirstOrDefault(t => t.Id == Id);           
             model.Vungkt = Vungkt;
-            model.Giatddb = Giatdtd;
+            model.Giatddb = Giatddb;
             model.Giattdb = Giattdb;
             model.Giatdtd = Giatdtd;
             model.Giatttd = Giatttd;
@@ -153,7 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             model.Updated_at = DateTime.Now;
             _db.GiaKhungGiaDatCt.Update(model);
             _db.SaveChanges();
-            string result = GetData(Mahs);
+            string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
