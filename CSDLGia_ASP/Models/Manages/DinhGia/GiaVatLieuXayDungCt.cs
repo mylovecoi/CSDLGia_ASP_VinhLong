@@ -9,20 +9,20 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
-        public string Ten { get; set; }
         public string Mahs { get; set; }
+        public string Madv { get; set; }
+        public string Mavlxd { get; set; }
+        public string Tenvlxd { get; set; }
         public string Dvt { get; set; }
+        public string Tieuchuan { get; set; }
         public double Gia { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
-        public string Madv { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
         [NotMapped]
-        public string Manhom { get; set; }
-        [NotMapped]
-        public string Tennhom { get; set; }
+        public string Soqd { get; set; }
         [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
@@ -39,7 +39,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public int STTSapXep { get; set; }
         public string STTHienThi { get; set; }
         public string Style { get; set; }
-        public string TieuChuan { get; set; }
         public string GhiChu { get; set; }
     }
 }
