@@ -222,7 +222,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 
                     var model = (from giaspdvkhunggiact in _db.GiaSpDvKhungGiaCt
                                  join giaspdvkhunggia in _db.GiaSpDvKhungGia on giaspdvkhunggiact.Mahs equals giaspdvkhunggia.Mahs
-                                 join nhom in _db.GiaSpDvKhungGiaNhom on giaspdvkhunggiact.Manhom equals nhom.Manhom
                                  join donvi in _db.DsDonVi on giaspdvkhunggia.Madv equals donvi.MaDv
                                  select new GiaSpDvKhungGiaCt
                                  {
@@ -239,12 +238,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                      Mota = giaspdvkhunggiact.Mota,
                                      Tenspdv = giaspdvkhunggiact.Tenspdv,
                                      Madiaban = giaspdvkhunggia.Madiaban,
-                                     Manhom = giaspdvkhunggiact.Manhom,
-                                     Tennhom = nhom.Tennhom,
-                                     Trangthai = giaspdvkhunggia.Trangthai,
-
+                                     Trangthai = giaspdvkhunggia.Trangthai
                                  });
-
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 

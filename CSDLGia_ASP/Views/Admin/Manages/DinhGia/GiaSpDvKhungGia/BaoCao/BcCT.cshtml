@@ -28,7 +28,7 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
-            <th style="text-align:center" width="2%">STT</th>
+            <th style="text-align:center" width="2%">TT</th>
             <th style="text-align:center">Tên sản phẩm, dịch vụ</th>
             <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Mức giá tối thiểu</th>
@@ -38,31 +38,34 @@
     <tbody>
         @foreach (var donvi in donvis)
         {
+            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
+            @if (hosoInDv.Any())
+            {
             <tr>
                 <td></td>
                 <td colspan="5" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
-            var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
-            @foreach (var hosoindv in hosoInDv)
-            {
-                <tr>
-                    <td></td>
-                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
-                </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
+            
+                @foreach (var hosoindv in hosoInDv)
                 {
-
                     <tr>
-                        <td style="text-align:center">@item.HienThi</td>
-                        <td style="text-align:left">@item.Tenspdv</td>
-                        <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoithieu)</td>
-                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoida)</td>
+                        <td></td>
+                        <td colspan="5" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                     </tr>
+                    var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                    @foreach (var item in chitieths)
+                    {
+                        <tr>
+                            <td style="text-align:center"></td>
+                            <td style="text-align:left">@item.Tenspdv</td>
+                            <td style="text-align:center">@item.Dvt</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoithieu)</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giatoida)</td>
+                        </tr>
+
+                    }
 
                 }
-
             }
         }
     </tbody>

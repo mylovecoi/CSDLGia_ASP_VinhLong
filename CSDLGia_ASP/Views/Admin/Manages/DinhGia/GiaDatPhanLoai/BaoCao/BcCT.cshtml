@@ -28,8 +28,10 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr style="text-align:center">
-            <th style="text-align: center" width="2%">STT</th>
-            <th style="text-align: center">Vị trí </th>
+            <th style="text-align: center" width="2%">TT</th>
+            <th style="text-align: center">Phân loại dất</th>
+            <th style="text-align: center">Vị trí</th>
+            <th style="text-align: center">Diện tích</th>
             <th style="text-align: center">Giá trị</th>
         </tr>
     </thead>
@@ -51,7 +53,10 @@
                 @foreach (var item in chitieths)
                 {
                     <tr>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center">@item.Loaidat</td>
                         <td style="text-align: center">@item.Vitri</td>
+                        <td style="text-align: center">@item.Dientich</td>
                         <td style="text-align: center">@item.Giacuthe</td>
                     </tr>
 
