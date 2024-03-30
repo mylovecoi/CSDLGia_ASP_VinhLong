@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 <br />
@@ -9,7 +9,7 @@
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ GIÁ PHÍ, LỆ PHÍ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: @Model.Soqd</p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -23,65 +23,29 @@
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
-        <tr style="text-align:center">
-            <th>STT</th>
-            <th>Nội dung</th>
-            <th>Đơn vị<br />tính</th>
-            <th>Mức giá</th>
-            <th>Ghi chú</th>
-        </tr>        
+        <tr>
+            <th width="2%" style="text-align:center">STT</th>
+            <th style="text-align:center">Nội dung</th>
+            <th width="10%" style="text-align:center">Đơn vị tính</th>
+            <th width="10%" style="text-align:center">Đơn giá</th>
+            <th width="10%" style="text-align:center">Ghi chú</th>
+        </tr>
     </thead>
     <tbody>
-        @if (Model != null)
+        @if (Model.PhiLePhiCt.Any())
         {
-            @if (Model.PhiLePhiCt != null)
+            @foreach (var item in Model.PhiLePhiCt.OrderBy(x => x.SapXep))
             {
-                @foreach (var item in Model.PhiLePhiCt.Where(x => x.CapDo == 1).OrderBy(x => x.STT))
-                {
-                    <tr>
-                        <td>@item.HienThi</td>
-                        <td>@item.ChiTieu</td>
-                        <td>@item.Dvt</td>
-                        <td>@item.Dongia</td>
-                        <td></td>
-                    </tr>
-                    @* Vòng 2 *@
-                    @foreach (var item1 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item.MaSo).OrderBy(x => x.STT))
-                    {
-                        <tr>
-                            <td>@item1.HienThi</td>
-                            <td>@item1.ChiTieu</td>
-                            <td>@item1.Dvt</td>
-                            <td>@item1.Dongia</td>
-                            <td></td>
-                        </tr>
-                        @* Vòng 3 *@
-                        @foreach (var item2 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item1.MaSo).OrderBy(x => x.STT))
-                        {
-                            <tr>
-                                <td>@item2.HienThi</td>
-                                <td>@item2.ChiTieu</td>
-                                <td>@item2.Dvt</td>
-                                <td>@item2.Dongia</td>
-                                <td></td>
-                            </tr>
-                            @* Vòng 4 *@
-                            @foreach (var item3 in Model.PhiLePhiCt.Where(x => x.MaSoGoc == item2.MaSo).OrderBy(x => x.STT))
-                            {
-                                <tr>
-                                    <td>@item3.HienThi</td>
-                                    <td>@item3.ChiTieu</td>
-                                    <td>@item3.Dvt</td>
-                                    <td>@item3.Dongia</td>
-                                    <td></td>
-                                </tr>
-                            }
-                        }
-                    }
-                }
+                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                <tr>
+                    <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
+                    <td style="text-align:left; @HtmlStyle">@item.Tenspdv</td>
+                    <td style="text-align:center; @HtmlStyle">@item.Dvt</td>
+                    <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                    <td style="text-align:center; @HtmlStyle">@item.GhiChu</td>
+                </tr>
             }
         }
     </tbody>
