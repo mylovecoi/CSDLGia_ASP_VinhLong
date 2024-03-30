@@ -1,15 +1,9 @@
 ﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
-@{
-    var Madv = ViewData["Madv"];
-  
-}
-
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-
 
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
@@ -24,7 +18,8 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaDatPlExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+        <input hidden name="Madv" id="Madv" value="@Model.MaDv" />
+        <input hidden name="Phanloai" id="Phanloai" value="@Model.Phanloai" />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>

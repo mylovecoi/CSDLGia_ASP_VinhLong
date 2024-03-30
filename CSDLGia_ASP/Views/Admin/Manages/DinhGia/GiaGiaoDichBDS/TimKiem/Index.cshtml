@@ -49,14 +49,13 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Nhóm nhà trọ sinh viên</label>
+                        <label>Nhóm hàng hóa dịch vụ</label>
                         <select class="form-control" asp-for="@manhom" id="manhom" name="manhom">
-                            <option value="all">--Tất cả các đối tượng--</option>
+                            <option value="all">--Tất cả--</option>
                             @foreach (var nhom in nhomtn)
                             {
                                 <option value="@nhom.Manhom">@nhom.Tennhom</option>
-                            }
-                            <option value="khac">Khác</option>
+                            }                            
                         </select>
                     </div>
                 </div>
@@ -106,7 +105,6 @@
                 <th style="text-align: center">Đơn vị tính</th>
                 <th style="text-align: center">Giá giao dịch</th>
                 <th style="text-align: center">Thao tác</th>
-
             </tr>
         </thead>
         <tbody>

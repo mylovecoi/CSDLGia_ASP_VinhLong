@@ -45,17 +45,18 @@
             </h3>
         </div>
         <div>
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create") )
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
             {
-                @if (!string.IsNullOrEmpty(maDV)){
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
+                @if (!string.IsNullOrEmpty(maDV))
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvkExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]" asp-route-MadiabanBc="@ViewData["MadiabanBc"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvkExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]" asp-route-MadiabanBc="@ViewData["MadiabanBc"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
                 }
             }
 
@@ -95,18 +96,10 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="Madv" name="Madv">                        
-                        @foreach (var db in dsdiaban.Where(t => t.Level != "ADMIN").OrderByDescending(t => t.Level))
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in donvi)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -177,6 +170,7 @@
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
 
+
                             </td>
                             <td>
                                 <a asp-controller="GiaHhDvk" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -238,7 +232,7 @@
     </div>
 </div>
 
-<script> 
+<script>
     function GetFile(mahs) {
         $.ajax({
             url: '/ThongTinGiayTo/GetList',
@@ -257,5 +251,5 @@
                 }
             }
         })
-    } 
+    }
 </script>

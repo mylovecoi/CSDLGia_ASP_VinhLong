@@ -26,56 +26,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
 
 
-        public IActionResult Index(string Madv)
+        public IActionResult Index(string MadvExcel, string PhanloaiExcel)
         {
             var model = new CSDLGia_ASP.ViewModels.VMImportExcel
             {
                 LineStart = 2,
                 LineStop = 1000,
                 Sheet = 1,
-                MaDv = Madv,
+                MaDv = MadvExcel,
+                Phanloai = PhanloaiExcel,
             };
             ViewData["MenuLv1"] = "menu_giadat";
             ViewData["MenuLv2"] = "menu_dgdct";
             ViewData["MenuLv3"] = "menu_dgdct_tt";
-            ViewData["Madv"] = Madv;
             ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
             return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excels/Excel.cshtml", model);
         }
 
-
-        //[Route("GiaDatPlExcel/Create")]
-        //[HttpGet]
-        //public IActionResult Create(string Madv, string Mahs)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Create"))
-        //        {
-
-        //            ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
-        //            ViewData["MenuLv1"] = "menu_giadat";
-        //            ViewData["MenuLv2"] = "menu_dgdct";
-        //            ViewData["MenuLv3"] = "menu_dgdct_tt";
-        //            ViewData["Madv"] = Madv;
-        //            ViewData["Mahs"] = Mahs;
-        //            ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
-        //            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-        //            ViewData["modelct"] = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
-
-        //            return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Excels/Create.cshtml");
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
         [HttpPost]
         public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel requests)
         {
@@ -154,7 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 {
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
-                    Mahs = Mahs,                   
+                    Mahs = Mahs,
+                    Phanloai = requests.Phanloai,
                 };
                 var modelct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
                 model.GiaDatPhanLoaiCt = modelct.ToList();
@@ -172,79 +140,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel request)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-
-        //        request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-        //        var list_add = new List<GiaDatPhanLoaiCt>();
-        //        int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
-        //        using (var stream = new MemoryStream())
-        //        {
-        //            await request.FormFile.CopyToAsync(stream);
-        //            using (var package = new ExcelPackage(stream))
-        //            {
-        //                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //                ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-        //                var rowcount = worksheet.Dimension.Rows;
-        //                request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-        //                string Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-        //                for (int row = request.LineStart; row <= request.LineStop; row++)
-        //                {
-        //                    list_add.Add(new GiaDatPhanLoaiCt
-        //                    {
-
-        //                        Mahs = Mahs,
-        //                        Trangthai = "CXD",
-        //                        Created_at = DateTime.Now,
-        //                        Updated_at = DateTime.Now,
-        //                        Khuvuc = worksheet.Cells[row, 1].Value != null ?
-        //                                    worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-
-        //                        Vitri = worksheet.Cells[row, 2].Value != null ?
-        //                                   Convert.ToInt32(worksheet.Cells[row, 2].Value) : 0,
-
-        //                        Maloaidat = worksheet.Cells[row, 3].Value != null ?
-        //                                    worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-
-        //                        Diagioitu = worksheet.Cells[row, 4].Value != null ?
-        //                                    worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-
-        //                        Diagioiden = worksheet.Cells[row, 5].Value != null ?
-        //                                    worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-
-        //                        Banggiadat = worksheet.Cells[row, 6].Value != null ?
-        //                                   Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value.ToString()) : 0,
-
-        //                        Giacuthe = worksheet.Cells[row, 7].Value != null ?
-        //                                   Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString()) : 0,
-
-        //                        Hesodc = worksheet.Cells[row, 8].Value != null ?
-        //                                   Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString()) : 0,
-        //                    });
-        //                }
-
-        //            }
-        //        }
-        //        _db.GiaDatPhanLoaiCt.AddRange(list_add);
-        //        _db.SaveChanges();
-        //        return RedirectToAction("Create", "GiaDatPlExcel", new { Madv = Madv, Mahs = Mahs });
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
-
-
-       
-
     }
 }
