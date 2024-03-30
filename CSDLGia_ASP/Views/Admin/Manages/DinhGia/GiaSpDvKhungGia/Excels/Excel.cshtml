@@ -19,6 +19,7 @@
     <!--begin::Form-->
     <form asp-controller="GiaSpDvKhungExcel" asp-action="Import" method="post" enctype="multipart/form-data">
         <input hidden asp-for="Madv">
+        <input hidden asp-for="Mahs">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -27,7 +28,7 @@
                     <span style="font-weight:bold;">Link tải file mẫu FileExcelMauGiaSpDvKhungGia.xlsx</span>
                 </a>
             </div>
-            @* <div class="mb-3 font-weight-bold font-size-lg">
+            <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
             </div>
 
@@ -53,17 +54,7 @@
                         <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1" accept=".doc, .pdf, .xlsx, .txt, .jpg" class="form-control" />
-                    </div>
-                </div>
-            </div> *@
-
+            </div>           
 
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>

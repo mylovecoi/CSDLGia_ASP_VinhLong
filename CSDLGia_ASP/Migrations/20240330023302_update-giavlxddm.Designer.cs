@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240330023302_update-giavlxddm")]
+    partial class updategiavlxddm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11127,9 +11129,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("HienThi")
                         .HasColumnType("nvarchar(max)");
 
@@ -11139,13 +11138,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaSoGoc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Madv")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Manhom")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("STT")
@@ -11155,12 +11148,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tenspdv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

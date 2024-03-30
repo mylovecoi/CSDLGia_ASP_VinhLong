@@ -7,7 +7,7 @@
     var nam_stop = DateTime.Now.Year + 1;
     var nam = ViewData["Nam"].ToString();
     var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung>)ViewData["DanhSachHoSo"];
-    var DanhSachNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungNhom>)ViewData["DanhSachNhom"];
+    // var DanhSachNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungNhom>)ViewData["DanhSachNhom"];
 }
 
 @section custom_style {
@@ -128,7 +128,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
+                        @* <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên nhóm</label><br />
                                 <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
@@ -139,7 +139,7 @@
                                     }
                                 </select>
                             </div>
-                        </div>
+                        </div> *@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
