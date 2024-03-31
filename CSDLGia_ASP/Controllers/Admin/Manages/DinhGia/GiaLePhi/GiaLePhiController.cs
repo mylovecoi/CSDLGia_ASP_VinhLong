@@ -34,12 +34,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
                 {
 
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
+                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = dv.MaDiaBan,
                                        TenDv = dv.TenDv,
                                        MaDv = dv.MaDv,
                                    }).ToList();
