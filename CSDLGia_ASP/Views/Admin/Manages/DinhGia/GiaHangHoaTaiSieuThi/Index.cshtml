@@ -155,7 +155,11 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
-                            <td style="text-align: center"></td>
+                            <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+                            </td>
                             <td>
                                 <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">

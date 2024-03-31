@@ -6,13 +6,13 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 
-    }
+}
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -128,20 +128,13 @@
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var cqcq in dsdonvi)
-                                {
-                                    @if (item.Macqcq == cqcq.MaDv)
-                                    {
-                                        <td style="text-align: center">@cqcq.TenDv</td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
+                            <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+
+
+                            </td>
                             <td width="12%" style="text-align:left;">
                                 <a asp-controller="GiaGiaoDichBDS" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">

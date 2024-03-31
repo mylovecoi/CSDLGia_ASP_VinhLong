@@ -2,8 +2,8 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-
-    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
     var dmNhom = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom>)ViewData["NhomDm"];
 
@@ -40,7 +40,7 @@
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
-            <h3 class="card-label">              
+            <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
                     Quản lý hồ sơ giá lệ phí trước bạ
@@ -87,18 +87,11 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -144,15 +137,9 @@
                                 }
                             </td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
                                 {
-                                    @foreach (var ds in dscqcq)
-                                    {
-                                        @if (item.Macqcq == ds.MaDv)
-                                        {
-                                            <span style="text-align: center">@ds.TenDv</span>
-                                        }
-                                    }
+                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
                                 }
                             </td>
                             <td>
@@ -176,8 +163,8 @@
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Soqd')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
-                                    }                                    
-                                }                               
+                                    }
+                                }
                             </td>
                         </tr>
                     }
@@ -249,7 +236,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Số QĐ:</label>
-                            <label class="form-control" id="soqd_delete" name="soqd_delete"></label>                            
+                            <label class="form-control" id="soqd_delete" name="soqd_delete"></label>
                         </div>
                     </div>
                     <input id="id_delete" name="id_delete" type="hidden" />
@@ -262,7 +249,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- hoàn thành Modal-->
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -286,18 +272,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in company)
-                                            {
-                                                <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>

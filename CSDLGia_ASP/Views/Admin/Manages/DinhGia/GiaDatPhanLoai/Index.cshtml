@@ -53,9 +53,9 @@
                     <i class="la la-plus"></i>Nhận dữ liệu
                 </button>
                 @* <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a> *@
+            asp-route-Madv="@ViewData["Madv"]">
+            <i class="la la-file-excel-o"></i>Nhận dữ liệu
+            </a> *@
             }
         </div>
     </div>
@@ -133,9 +133,9 @@
                             </td>
 
                             <td style="text-align: center">
-                                @if(item.Trangthai == "HT"){
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
-                                }
+
                             </td>
                             <td style="text-align: left;">
 
