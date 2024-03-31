@@ -15,28 +15,48 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-
 @section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
         });
+
+        function exportToExcel(tableId, filename) {
+            var table = document.getElementById(tableId);
+            var currencyCells = table.getElementsByClassName("sotien");
+            Array.from(currencyCells).forEach(cell => {
+                cell.textContent = cell.textContent.replace(/\./g, "");
+            });
+
+            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
     </script>
+
 }
 
 <div class="card card-custom">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-                Tìm kiếm thông tin giá<small>&nbsp;bảng giá các loại đất</small>
-            </h3>
-        </div>
+<div class="card-header flex-wrap border-0 pt-6 pb-0">
+    <div class="card-title">
+        <h3 class="card-label">
+            @ViewData["Title"]
+            <span class="d-block text-muted pt-2 font-size-sm">
+                Thông tin hồ sơ bảng giá các loại đất
+            </span>
+        </h3>
+    </div>
+    <div class="col-xl-6" style="text-align:right;margin-top: auto">
+        <button class="btn btn-primary font-weight-bolder" onclick="exportToExcel('sample_3','DuLieuKetXuat')">
+            <i class="la la-print"></i>Kết xuất
+        </button>
     </div>
 </div>
+
 <hr />
 <form asp-controller="GiaDatDiaBan" asp-action="Search" method="get" id="frm_dct_result">
     <div class="card-body">
@@ -108,6 +128,7 @@
         <button type="button" class="btn btn-danger mr-2" onclick="ValidateDct()"><i class="la la-search"></i>Tìm kiếm</button>
     </div>
 </form>
+</div>
 <hr />
 <div class="card-body">
     <table class="table table-striped table-bordered table-hover" id="sample_3">
