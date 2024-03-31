@@ -136,6 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 
                     var model_join = (from kk in model
                                       join com in _db.Company on kk.Madv equals com.Madv
+                                      join nghe in _db.DmNgheKd.Where(t => t.Manganh == "BOG") on kk.Manghe equals nghe.Manghe
                                       select new VMKkMhBog
                                       {
                                           Id = kk.Id,
@@ -155,6 +156,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                                           Trangthai = kk.Trangthai,
                                           Madv = com.Madv,
                                           Tendn = com.Tendn,
+                                          Diachi = com.Diachi,
+                                          Tel=com.Tel,
+                                          Tennghe= nghe.Tennghe,
                                       });
 
                   
