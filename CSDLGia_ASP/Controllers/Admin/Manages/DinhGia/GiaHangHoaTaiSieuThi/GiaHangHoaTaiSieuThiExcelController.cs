@@ -114,11 +114,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                     Mahanghoa = worksheet.Cells[row, 2].Value != null ?
                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                     Tenhanghoa = worksheet.Cells[row, 3].Value != null ?
-                                                worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                    Giatu = Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                    Giaden = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
-                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, 4].Value != null ?
+                                          worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                    Giatu = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                                   worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                    Giaden = Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                                    worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
                                 });
                             }
                             _db.GiaHangHoaTaiSieuThiCt.AddRange(list_add);

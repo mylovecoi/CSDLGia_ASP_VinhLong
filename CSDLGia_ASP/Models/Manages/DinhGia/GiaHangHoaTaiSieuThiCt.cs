@@ -17,6 +17,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Matt { get; set; }
         public string Mahanghoa { get; set; }
         public string Tenhanghoa { get; set; }
+        public string Dvt { get; set; }
         public double Giatu { get; set; }
         public double Giaden { get; set; }
         public string Trangthai { get; set; }
