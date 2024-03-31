@@ -90,7 +90,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                 Dvt = worksheet.Cells[row, 3].Value != null ?
                                             worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                 Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),                                
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                                Manhom = worksheet.Cells[row, 5].Value != null ?
+                                            worksheet.Cells[row, 5].Value.ToString().Trim() : "",
                             });
                         }
                     }

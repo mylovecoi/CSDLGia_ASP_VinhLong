@@ -149,7 +149,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ khung giá";
                     ViewData["MenuLv1"] = "menu_spdvkhunggia";
                     ViewData["MenuLv2"] = "menu_spdvkhunggia_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaSpDvKhungGia.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.GiaSpDvKhungGia.Where(t => t.Thoidiem.Year == DateTime.Now.Year && t.Trangthai=="HT");
                     ViewData["DanhSachNhom"] = _db.GiaSpDvKhungGiaNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/BaoCao/Index.cshtml");
                 }
