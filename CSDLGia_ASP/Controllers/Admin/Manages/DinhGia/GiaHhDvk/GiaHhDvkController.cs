@@ -49,18 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        }
-                        //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                        //{
-                        //    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        //}
-                        //else
-                        //{                            
-                        //    if (string.IsNullOrEmpty(Madv)) 
-                        //    {
-                        //        Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                        //    }
-                        //}                     
+                        }                    
 
                         IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk;
 
@@ -80,10 +69,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             {
                                 model = model.Where(t => t.Nam == Nam);
                             }
-                            //else
-                            //{
-                            //    model = model.ToList();
-                            //}
                         }
 
                         if (string.IsNullOrEmpty(Thang))
@@ -119,7 +104,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                               Trangthai = kk.Trangthai,
                                               Ipf1 = kk.Ipf1,
                                               Macqcq = kk.Macqcq,
-                                              //Tendiaban = db.TenDiaBan,
                                               Tentt = nhom.Tentt,
                                           });
 
@@ -131,11 +115,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
-                        //ViewData["Madiaban"] = dsdonvi.FirstOrDefault(t => t.MaDv == Madv).MaDiaBan;
-                        ViewData["Thang"] = Thang;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                         var dsDonViTH = (from donvi in _db.DsDonVi
                                           join tk  in _db.Users on donvi.MaDv equals tk.Madv
                                           join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
@@ -145,11 +124,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                               MaDv = donvi.MaDv,
                                               TenDv = donvi.TenDv,                                             
                                           });
-
-                        ViewData["DsDiaBan"] = _db.DsDiaBan;
-
                         ViewData["DsDonViTh"] = dsDonViTH;
-
+                        ViewData["Thang"] = Thang;
+                        ViewData["Nam"] = Nam;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
+                        ViewData["DsDiaBan"] = _db.DsDiaBan;
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";
                         ViewData["MenuLv2"] = "menu_hhdvk_tt";
