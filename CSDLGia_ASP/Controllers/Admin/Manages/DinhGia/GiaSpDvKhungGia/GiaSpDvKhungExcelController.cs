@@ -143,7 +143,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                 Tenspdv = worksheet.Cells[row, 2].Value != null ? worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                 Dvt = worksheet.Cells[row, 3].Value != null ?worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                 Giatoithieu = worksheet.Cells[row, 4].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value.ToString().Trim()) : 0,
-                                Giatoida = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,                               
+                                Giatoida = worksheet.Cells[row, 5].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value.ToString().Trim()) : 0,
+                                Manhom = worksheet.Cells[row, 6].Value != null ? worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                             });
                         }
                     }

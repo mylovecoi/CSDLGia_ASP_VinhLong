@@ -46,7 +46,7 @@
                                 <label>Tên công tác</label>
                                 <input type="text" id="Mota" name="Mota" class="form-control" />
                             </div>
-                        </div>                        
+                        </div>
                     </div>
 
                     <div class="row">
@@ -93,7 +93,7 @@
                                 <input type="text" id="HienThi" name="HienThi" class="form-control" />
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -113,7 +113,7 @@
                 Id: Id
             },
             dataType: 'JSON',
-            success: function (data) {              
+            success: function (data) {
                 console.log(data);
                 var form = $('#frm_philephict');
                 form.find("[name='Id']").val(data.id);
@@ -128,7 +128,43 @@
         })
     }
 
-    function Add(Id) {        
+    var KhoiLuong = document.getElementById("KhoiLuong");
+    var DonGia = document.getElementById("DonGia");
+    var ThanhTien = document.getElementById("ThanhTien");
+
+    // Thêm sự kiện input cho cả hai input đơn giá và số lượng
+    KhoiLuong.addEventListener("input", calculateTotal);
+    DonGia.addEventListener("input", calculateTotal);
+
+    // Hàm tính toán tổng giá trị
+    function calculateTotal() {
+        // Lấy giá trị đơn giá và số lượng từ input
+        var khoiLuong = getdl(KhoiLuong.value);
+        var donGia = getdl(DonGia.value);
+
+        // Tính toán tổng giá trị
+        var thanhTien = khoiLuong * donGia;
+
+        // Hiển thị tổng giá trị trên input total
+        ThanhTien.value = thanhTien; // Giữ hai số lẻ
+    }
+
+    function getdl(str) {
+        if (str == '' || str == null) { return 0; }
+        var kq = 0;
+        //str=str.replace(',',''); hàm này số dang 1,234,564 => 1234,564 (chỉ replace 1 lần)
+        str = str.replace(new RegExp(',', 'g'), '');
+
+        if (str == '' || str == null) { return kq; }
+
+        if (!isNaN(str) || str != '') {
+            kq = str;
+        }
+
+        return parseFloat(kq);
+    }
+
+    function Add(Id) {
         var form = $('#frm_philephict');
         form.find("[name='Id']").val(Id);
         form.find("[name='DonGia']").val(0);

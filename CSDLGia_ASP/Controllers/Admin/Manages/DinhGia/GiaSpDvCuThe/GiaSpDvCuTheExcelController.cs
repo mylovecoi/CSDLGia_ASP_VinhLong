@@ -99,6 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
                                 Mucgia4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                                     worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
+                                Manhom = worksheet.Cells[row, 8].Value != null ? worksheet.Cells[row, 8].Value.ToString().Trim() : "",
                             });
                         }
                     }
