@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 {
     public class GiaGiaoDichBDSController : Controller
     {
@@ -44,33 +44,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
-                        }
 
-                        var model = _db.GiaGiaoDichBDS.Where(t => t.Madv == Madv).ToList();
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS> model = _db.GiaGiaoDichBDS;
+
+                        if (Madv != "all")
+                        {
+                            model = model.Where(t => t.Madv == Madv);
+                        }
 
                         if (string.IsNullOrEmpty(Nam))
                         {
-                            model = model.ToList();
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
                         else
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                             }
                         }
 
@@ -82,6 +78,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.ToList();
                         ViewData["Nam"] = Nam;
@@ -332,7 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
                     var modelct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs);
 
-                    var viewModel = new GiaGiaoDichBDS
+                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
                     {
                         // Thông tin hồ sơ
                         Soqd = model.Soqd,
