@@ -89,5 +89,8 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Level { get; set; }
         [NotMapped]
         public string Tennhomhh { get; set; }
+
+        [NotMapped]
+        public string TenDonVi { get; set; }
     }
 }
