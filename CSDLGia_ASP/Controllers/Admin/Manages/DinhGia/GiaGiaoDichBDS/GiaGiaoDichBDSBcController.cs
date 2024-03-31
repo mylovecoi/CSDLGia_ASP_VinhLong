@@ -18,7 +18,7 @@ using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.Extensions.Hosting;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 {
     public class GiaGiaoDichDBDSBcController : Controller
     {

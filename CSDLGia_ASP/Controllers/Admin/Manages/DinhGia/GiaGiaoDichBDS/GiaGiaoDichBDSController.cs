@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 {
     public class GiaGiaoDichBDSController : Controller
     {
@@ -332,7 +332,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
                     var modelct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs);
 
-                    var viewModel = new GiaGiaoDichBDS
+                    var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
                     {
                         // Thông tin hồ sơ
                         Soqd = model.Soqd,
