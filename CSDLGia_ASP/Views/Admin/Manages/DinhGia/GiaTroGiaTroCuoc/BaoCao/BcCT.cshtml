@@ -30,6 +30,7 @@
         <tr>
             <th width="2%" style="text-align:center">STT</th>
             <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center" width="10%">Đơn vị tính</th>
             <th style="text-align:center" width="10%">Đơn giá</th>
         </tr>
     </thead>
@@ -45,7 +46,7 @@
             {
                 <tr>
                     <td></td>
-                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="5" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
@@ -53,6 +54,7 @@
                     <tr>
                         <td></td>
                         <td style="text-align:left">@item.Mota</td>
+                        <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
                     </tr>
 

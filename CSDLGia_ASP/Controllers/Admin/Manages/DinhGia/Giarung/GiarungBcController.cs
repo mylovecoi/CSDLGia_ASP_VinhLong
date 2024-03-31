@@ -383,7 +383,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.baocao", "Index"))
                 {
 
-                    var model = (from hoso in _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    var model = (from hoso in _db.GiaRung.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaRung
                                  {

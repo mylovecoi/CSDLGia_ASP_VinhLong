@@ -606,17 +606,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     madv = string.IsNullOrEmpty(madv) ? "all" : madv;                    
                     ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? firstDayCurrentYear : ngaynhap_tu;
                     ngaynhap_den = ngaynhap_den == DateTime.MinValue ? lastDayCurrentYear : ngaynhap_den;
-                    //var model = from giakgd in _db.GiaKhungGiaDat 
-                    //             join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
-                    //             select new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
-                    //             {
-                    //                 Id = giakgd.Id,                                     
-                    //                 Mahs = giakgd.Mahs,
-                    //                 Madv = giakgd.Madv,
-                    //                 Thoidiem = giakgd.Thoidiem,
-                    //                 TenDonVi = donvi.TenDv,
-                    //                 Kyhieuvb = giakgd.Kyhieuvb,
-                    //             };
+                  
                     var model = (from giakgdct in _db.GiaKhungGiaDatCt
                                  join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
                                  join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
@@ -681,69 +671,96 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+        [Route("GiaKhungGiaDat/Result")]
+        [HttpPost]
+        public IActionResult Result(string madv, string Vungkt, DateTime ngaynhap_tu, DateTime ngaynhap_den, string SoQuyetDinh = "all")
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.timkiem", "Index"))
+                {
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    madv = string.IsNullOrEmpty(madv) ? "all" : madv;                    
+                    ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? firstDayCurrentYear : ngaynhap_tu;
+                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? lastDayCurrentYear : ngaynhap_den;
+                    //var model = from giakgd in _db.GiaKhungGiaDat 
+                    //             join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
+                    //             select new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
+                    //             {
+                    //                 Id = giakgd.Id,                                     
+                    //                 Mahs = giakgd.Mahs,
+                    //                 Madv = giakgd.Madv,
+                    //                 Thoidiem = giakgd.Thoidiem,
+                    //                 TenDonVi = donvi.TenDv,
+                    //                 Kyhieuvb = giakgd.Kyhieuvb,
+                    //             };
+                    var model = (from giakgdct in _db.GiaKhungGiaDatCt
+                                 join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
+                                 join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
+                                 select new GiaKhungGiaDatCt
+                                 {
+                                     Id = giakgdct.Id,
+                                     Vungkt = giakgdct.Vungkt,
+                                     Mahs = giakgdct.Mahs,
+                                     Madv = giakgd.Madv,
+                                     Thoidiem = giakgd.Thoidiem,
+                                     Tendv = donvi.TenDv,
+                                     SoQD= giakgd.Kyhieuvb,        
+                                     Trangthai = giakgd.Trangthai,
+                                     Giattdb=giakgdct.Giattdb,
+                                     Giatddb=giakgdct.Giatddb,
+                                     Giatdmn=giakgdct.Giatdmn,
+                                     Giatdtd = giakgdct.Giatdtd,
+                                     Giattmn = giakgdct.Giattmn,
+                                     Giatttd = giakgdct.Giatttd
 
-        //[Route("GiaKhungGiaDat/Search/Result")]
-        //[HttpPost]
-        //public IActionResult Result(string madv, string vungkt, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.timkiem", "Index"))
-        //        {
-        //            var model = (from giakgdct in _db.GiaKhungGiaDatCt
-        //                         join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
-        //                         join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
-        //                         select new GiaKhungGiaDatCt
-        //                         {
-        //                             Id = giakgdct.Id,
-        //                             Vungkt = giakgdct.Vungkt,
-        //                             Mahs = giakgdct.Mahs,
-        //                             Madv = giakgd.Madv,
-        //                             Thoidiem = giakgd.Thoidiem,
-        //                             Tendv = donvi.TenDv,
-        //                         });
+                                 });
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai=="HT");
 
-        //            if (madv != "all")
-        //            {
-        //                model = model.Where(t => t.Madv == madv);
-        //            }
 
-        //            if (!string.IsNullOrEmpty(vungkt))
-        //            {
-        //                model = model.Where(t => t.Vungkt.Contains(vungkt));
-        //            }
-        //            else
-        //            {
-        //                model = model.OrderBy(t => t.Vungkt);
-        //            }
+                    if (SoQuyetDinh != "all")
+                    {
+                        model = model.Where(x => x.SoQD == SoQuyetDinh);
 
-        //            if (ngaynhap_tu.ToString("yyMMdd") != "010101")
-        //            {
-        //                model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
-        //            }
+                    }
+                    if (madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == madv);
+                       
+                    }
+                    if (!string.IsNullOrEmpty(Vungkt))
+                    {
+                        model = model.Where(x=>x.Vungkt.Contains(Vungkt));
+                    }
+                    //ViewData["GiaKhungGiaDat"] = _db.GiaKhungGiaDat;
+                    //ViewData["MaDonVi"] = madv;                    
+                    //ViewData["VungKt"] = Vungkt;                    
+                    //ViewData["SoQuyetDinh"] = SoQuyetDinh;
+                    //ViewData["NgayNhapTu"] = ngaynhap_tu;
+                    //ViewData["NgayNhapDen"] = ngaynhap_den; 
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    //ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    //ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá khung giá đất";
+                    //ViewData["MenuLv1"] = "menu_giadat";
+                    //ViewData["MenuLv2"] = "menu_dgkhunggd";
+                    //ViewData["MenuLv3"] = "menu_dgkhunggd_tk";
+                    return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/TimKiem/Result.cshtml", model);
 
-        //            if (ngaynhap_den.ToString("yyMMdd") != "010101")
-        //            {
-        //                model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-        //            }
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
-        //            ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá khung giá đất";
-        //            ViewData["MenuLv1"] = "menu_giadat";
-        //            ViewData["MenuLv2"] = "menu_dgkhunggd";
-        //            ViewData["MenuLv3"] = "menu_dgkhunggd_tk";
-        //            return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/TimKiem/Result.cshtml", model);
-
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
+        
     }
 }

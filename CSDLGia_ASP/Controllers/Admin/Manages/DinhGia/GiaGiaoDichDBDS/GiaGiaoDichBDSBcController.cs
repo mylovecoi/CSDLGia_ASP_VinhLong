@@ -116,9 +116,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Ten = giathuetnct.Ten,
                                      Dvt = giathuetnct.Dvt,
                                      Gia = giathuetnct.Gia,
-                                     Manhom = giathuetn.Manhom,
+                                     Manhom = giathuetnct.Manhom,
                                      Mahs = giathuetn.Mahs,
                                      Trangthai = giathuetn.Trangthai,
+
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");

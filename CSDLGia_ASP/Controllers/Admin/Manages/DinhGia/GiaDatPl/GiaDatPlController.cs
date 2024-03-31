@@ -572,6 +572,60 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+        [Route("GiaDatCuThe/PrintSearch")]
+        [HttpPost]
+        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string mld = "All", string madv = "All")
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
+                {
+                    beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : beginTime;
+                    endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
+                    var model = (from giact in _db.GiaDatPhanLoaiCt
+                                 join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
+                                 join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
+                                 join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
+                                 select new GiaDatPhanLoaiCt
+                                 {
+                                     Id = giact.Id,
+                                     Madv = gia.Madv,
+                                     Tendv = donvi.TenDv,
+                                     Mahs = giact.Mahs,
+                                     Thoidiem = gia.Thoidiem,
+                                     Maloaidat = giact.Maloaidat,
+                                     Loaidat = dm.Loaidat,
+                                     Vitri = giact.Vitri,
+                                     Dientich = giact.Dientich,
+                                     Giacuthe = giact.Giacuthe,
+                                 });
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime);
+                    if (madv != "All")
+                    {
+                        model = model.Where(t => t.Madv == madv);
+                    }
+                    if (mld != "All")
+                    {
+                        model = model.Where(t => t.Maloaidat == mld);
+                    }
+                    model = model.Where(t => t.Giacuthe >= beginPrice);
+                    if (endPrice > 0)
+                    {
+                        model = model.Where(t => t.Giacuthe <= endPrice);
+                    }                    
+                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/TimKiem/PrintSearch.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
 
         public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
         {

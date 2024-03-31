@@ -12,6 +12,7 @@
             <th style="text-align:center">Đơn vị</th>
             <th style="text-align:center">Số QĐ/Thời điểm</th>
             <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center" width="10%">Đơn vị tính</th>
             <th style="text-align:center" width="10%">Đơn giá</th>
         </tr>
     </thead>
@@ -23,6 +24,7 @@
                 <td style="text-align:center">@item.Tendv</td>
                 <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                 <td style="text-align:left">@item.Mota</td>
+                <td style="text-align:center">@item.Dvt</td>
                 <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>                
             </tr>
         }

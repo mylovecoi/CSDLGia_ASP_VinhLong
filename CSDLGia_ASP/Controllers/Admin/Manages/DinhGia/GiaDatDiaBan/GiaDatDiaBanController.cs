@@ -99,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;
                     ViewData["Madv"] = Madv;
-                    ViewData["Title"] = " Thông tin hồ sơ";
+                    ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -175,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
-                        ViewData["Title"] = "Thông tin hồ sơ giá đất theo địa bàn";
+                        ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -187,7 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
-                        ViewData["Title"] = "Thông tin hồ sơ giá đất theo địa bàn";
+                        ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -202,7 +202,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["dsdonvi"] = _db.DsDonVi.ToList();
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
-                        ViewData["Title"] = "Thông tin hồ sơ giá đất";
+                        ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -378,7 +378,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Madv"] = model.Madv;
-                    ViewData["Title"] = "Bảng giá đất theo địa bàn";
+                    ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -416,7 +416,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Madv"] = model.Madv;
-                    ViewData["Title"] = "Bảng giá các loại đất";
+                    ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
@@ -609,7 +609,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
-                    ViewData["Title"] = "Tìm kiếm thông tin định giá đất địa bàn";
+                    ViewData["Title"] = "Tìm kiếm thông tin bảng giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tk";

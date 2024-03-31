@@ -40,8 +40,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Nam"] = DateTime.Now.Year;
                     ViewData["Title"] = "Báo cáo trúng thầu quyền sử dụng đất";
                     ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_GiaTrungThauDat";
-                    ViewData["MenuLv3"] = "menu_GiaTrungThauDat_bc";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_bc";
                     ViewData["DanhSachHoSo"] = _db.GiaDauGiaDat.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/BaoCao/Index.cshtml");
                 }
@@ -78,8 +78,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     ViewData["Title"] = "Báo cáo tổng hợp trúng thầu quyền sử dụng đất";
                     ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_GiaTrungThauDat";
-                    ViewData["MenuLv3"] = "menu_GiaTrungThauDat_bc";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_bc";
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
@@ -152,6 +152,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
 
         [HttpPost("GiaTrungThauDat/BaoCao/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)

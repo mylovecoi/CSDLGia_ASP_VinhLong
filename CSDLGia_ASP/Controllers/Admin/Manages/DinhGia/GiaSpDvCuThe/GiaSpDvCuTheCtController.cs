@@ -53,29 +53,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             model.Updated_at = DateTime.Now;
             _db.GiaSpDvCuTheCt.Update(model);
             _db.SaveChanges();
-            string result = GetDataCt(model.Mahs);
+            string result = GetDataCt(model.Mahs, requets.PhanLoaiHoSo);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
         [Route("DinhGiaSpDvCuTheCt/Delete")]
         [HttpPost]
-        public JsonResult Delete(int Id)
+        public JsonResult Delete(int Id, string PhanLoaiHoSo)
         {
             var model = _db.GiaSpDvCuTheCt.FirstOrDefault(t => t.Id == Id);
             _db.GiaSpDvCuTheCt.Remove(model);
             _db.SaveChanges();
-            var result = GetDataCt(model.Mahs);
+            var result = GetDataCt(model.Mahs, PhanLoaiHoSo);
             var data = new { status = "success", message = result };
             return Json(data);
         }
 
-        public string GetDataCt(string Mahs)
+        public string GetDataCt(string Mahs, string PhanLoaiHoSo)
         {
             var model = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == Mahs).ToList();
-            var hoSo = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
+            //var hoSo = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
             string result = "<div class='card-body' id='frm_data'>";
-            if(hoSo.PhanLoaiHoSo == "CHO") {
+            if(PhanLoaiHoSo == "CHO") {
                 //Hồ sơ giá chợ
                 result += "<table class='table table-striped table-bordered table-hover' id=\"datatable_4\">";
                 result += "<thead>";

@@ -4,7 +4,7 @@
     var hoso = (IEnumerable<GiaDvKcb>)ViewData["ChiTietHs"];
 
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDvKcb>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbCt>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -28,7 +28,7 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
-            <th style="text-align: center">STT</th>
+            <th style="text-align: center" width="2%">TT</th>
             <th style="text-align: center">Mã dịch vụ</th>
             <th style="text-align: center">Tên dịch vụ</th>
             <td style="text-align: center">Đơn giá</td>
@@ -47,18 +47,18 @@
             {
                 <tr>
                     <td></td>
-                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">@hosoindv.Soqd - @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                    <td colspan="6" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
                 @foreach (var item in chitieths)
                 {
 
                     <tr>
-                        <td></td>
+                        <td>@item.Hienthi</td>
                         <td style="text-align: left">@item.Madv</td>
-                        <td style="text-align: left">@item.Tenspdv</td>  
-                        <td style="text-align: center">@item.Giadv</td>
-                        <td style="text-align: center">@item.Ghichu</td>
+                        <td style="text-align: left">@item.Tenspdv</td>
+                        <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giadv)</td>
+                        <td style="text-align: left">@item.Ghichu</td>
                     </tr>
 
                 }

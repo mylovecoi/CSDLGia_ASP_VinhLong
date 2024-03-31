@@ -22,123 +22,179 @@
         $(document).ready(function () {
             TableManaged.init();
         });
+        function Print() {
+            var form = document.getElementById("frm_search");
+            form.submit();
+        }
+        function ClickSearch() {
+            var fromDate = document.getElementById("beginTime").value;
+            var toDate = document.getElementById("endTime").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+            var current_path_url = '/GiaDatCuThe/Search?';
+            var madv = '&madv=' + $('#madv').val();
+            var mld = '&mld=' + $('#mld').val();
+            var endPrice = '&endPrice=' + $('#endPrice').val();
+            var beginPrice = '&beginPrice=' + $('#beginPrice').val();
+            var endTime = '&endTime=' + $('#endTime').val();
+            var beginTime = '&beginTime=' + $('#beginTime').val();           
+
+            var url = current_path_url + madv + mld + endPrice + beginPrice + endPrice + beginTime;
+            window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
+
     </script>
 }
-<form asp-controller="GiaDatPl" asp-action="Search" method="get" enctype="multipart/form-data" id="frm_dct_result">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá các loại đất
+                </span>
+            </h3>
+        </div>
+        <div class="col-xl-6" style="text-align:right;margin-top: auto">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
+                <i class="la la-print"></i>Kết xuất
+            </button>
+        </div>
+    </div>
+    <hr />
     <div class="card-body">
-        <div class="mb-3 font-weight-bold font-size-lg">
-            <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
-        </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="madv" name="madv">
-                        <option value="All">--Tất cả các đơn vị--</option>
-                        @foreach (var db in dsdiaban)
-                        {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-
-                                @foreach (var item in company)
+        <form asp-controller="GiaDatPl" asp-action="PrintSearch" method="post" target="_blank" id="frm_search">
+            <div class="card-body">
+                <div class="mb-3 font-weight-bold font-size-lg">
+                    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold; color:blue">Đơn vị</label>
+                            <select class="form-control select2basic" id="madv" name="madv">
+                                <option value="All">--Tất cả các đơn vị--</option>
+                                @foreach (var db in dsdiaban)
                                 {
+                                    <optgroup label="@db.TenDiaBan">
+                                        @{
+                                            //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
+                                            var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
+                                        }
 
-                                    <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                        @foreach (var item in company)
+                                        {
+
+                                            <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                        }
+                                    </optgroup>
                                 }
-                            </optgroup>
-                        }
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Loại đất</b></label>
+                            <select class="form-control select2basic" asp-for"@mld" id="mld" name="mld">
+                                <option value="All">--Tất cả các loại đất--</option>
+                                @foreach (var item in maloaidat)
+                                {
+                                    <option value="@item.Maloaidat">@item.Loaidat</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Thời gian từ</label>
+                            <input type="date" class="form-control" value="@ViewBag.beginTime.ToString("yyyy-MM-dd")" name="beginTime" id="beginTime" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Thời gian đến</label>
+                            <input type="date" class="form-control" value="@ViewBag.endTime.ToString("yyyy-MM-dd")" name="endTime" id="endTime" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Giá trị từ</label>
+                            <input type="text" class="form-control money" value="@ViewBag.beginPrice" name="beginPrice" id="beginPrice" />
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Giá trị đến</label>
+                            <input type="text" class="form-control money" value="@ViewBag.endPrice" name="endPrice" id="endPrice" />
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label><b>Loại đất</b></label>
-                    <select class="form-control select2basic" asp-for"@mld" id="mld" name="mld">
-                        <option value="All">--Tất cả các loại đất--</option>
-                        @foreach (var item in maloaidat)
-                        {
-                            <option value="@item.Maloaidat">@item.Loaidat</option>
-                        }
-                    </select>
-                </div>
-            </div>
+            @* <div class="card-footer" style="text-align:center">
 
-        </div>
-
+                <button type="button" class="btn btn-danger mr-2" onclick="Print()"><i class="la la-search"></i>Tìm kiếm</button>
+            </div> *@
+        </form>
         <div class="row">
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Thời gian từ</label>
-                    <input type="date" class="form-control" value="@ViewBag.beginTime.ToString("yyyy-MM-dd")" name="beginTime" id="beginTime" />
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Thời gian đến</label>
-                    <input type="date" class="form-control" value="@ViewBag.endTime.ToString("yyyy-MM-dd")" name="endTime" id="endTime" />
-                </div>
+            <div class="col-xl-12" style="text-align:center">
+                <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Giá trị từ</label>
-                    <input type="text" class="form-control money" value="@ViewBag.beginPrice" name="beginPrice" id="beginPrice" />
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Giá trị đến</label>
-                    <input type="text" class="form-control money" value="@ViewBag.endPrice" name="endPrice" id="endPrice" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer" style="text-align:center">
-
-        <button type="button" class="btn btn-danger mr-2" onclick="ValidateDct()"><i class="la la-search"></i>Tìm kiếm</button>
-    </div>
-</form>
-<div class="card-body">
-    <table class="table table-striped table-bordered table-hover" id="sample_3">
-        <thead>
-            <tr style="text-align:center">
-                <th style="text-align: center">STT</th>
-                <th style="text-align: center">Đơn vị nhập</th>
-                <th style="text-align: center">Thời điểm</th>
-                <th style="text-align: center">Phân loại dất</th>
-                <th style="text-align: center">Vị trí</th>
-                <th style="text-align: center">Diện tích</th>
-                <th style="text-align: center">Giá trị</th>
-                <th style="text-align: center">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td style="text-align: center">@(record_id++)</td>
-                    <td style="text-align: center">@item.Tendv</td>
-                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align: center">@item.Loaidat</td>
-                    <td style="text-align: center">@item.Vitri</td>
-                    <td style="text-align: center">@item.Dientich</td>
-                    <td style="text-align: center">@item.Giacuthe</td>
-                    <td style="text-align: center">
-                        <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
-                            <i class="icon-lg la la-eye text-success"></i>
-                        </a>
-                    </td>
+        <hr />
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th style="text-align: center">STT</th>
+                    <th style="text-align: center">Đơn vị nhập</th>
+                    <th style="text-align: center">Thời điểm</th>
+                    <th style="text-align: center">Phân loại dất</th>
+                    <th style="text-align: center">Vị trí</th>
+                    <th style="text-align: center">Diện tích</th>
+                    <th style="text-align: center">Giá trị</th>
+                    <th style="text-align: center">Thao tác</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.Tendv</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                        <td style="text-align: center">@item.Loaidat</td>
+                        <td style="text-align: center">@item.Vitri</td>
+                        <td style="text-align: center">@item.Dientich</td>
+                        <td style="text-align: center">@item.Giacuthe</td>
+                        <td style="text-align: center">
+                            <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<script>
+
+@* <script>
 
     function ValidateDct() {
 
@@ -158,7 +214,7 @@
             }
         }
     }
-</script>
+</script> *@
 
 
 
