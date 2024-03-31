@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
 {
@@ -69,5 +70,7 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
         public string Trangthai_ad { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Tencqcq {  get; set; }    
     }
 }
