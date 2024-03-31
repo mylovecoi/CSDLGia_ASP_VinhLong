@@ -80,6 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             result += "<th rowspan='2'>STT</th>";
             result += "<th rowspan='2'>Mã hàng hóa</th>";
             result += "<th rowspan='2'>Tên hàng hóa</th>";
+            result += "<th rowspan='2'>Đơn vị tính</th>";
             result += "<th colspan='2'>Đơn giá</th>";
             result += "<th rowspan='2'>Thao tác</th>";
             result += "</tr>";
@@ -92,8 +93,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             {
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
-                result += "<td>" + item.Mahanghoa + "</td>";
+                result += "<td style='text-align:center'>" + item.Mahanghoa + "</td>";
                 result += "<td class='success'>" + item.Tenhanghoa + "</td>";
+                result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align: right;font-weight:bold'>" + (item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : null) + "</td>";
                 result += "<td style='text-align: right;font-weight:bold'>" + (item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : null) + "</td>";
                 result += "<td>";

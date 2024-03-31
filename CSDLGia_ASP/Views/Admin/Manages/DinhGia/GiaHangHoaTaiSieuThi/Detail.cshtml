@@ -23,6 +23,7 @@
                     <th rowspan="2">STT</th>
                     <th rowspan="2">Mã hàng hóa</th>
                     <th rowspan="2">Tên hàng hóa</th>
+                    <th rowspan="2">Đơn vị tính</th>
                     <th colspan="2">Đơn giá</th>
                     <th rowspan="2">Thao tác</th>
                 </tr>
@@ -40,6 +41,7 @@
                             <td style="text-align:center">@(record_id++)</td>
                             <td style="text-align:center">@item.Mahanghoa</td>
                             <td style="text-align:center" class="success">@item.Tenhanghoa</td>
+                            <td style="text-align:center">@item.Dvt</td>
                             <td style="text-align:center" ;font-weight:bold">@(@item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : "")</td>
                             <td style="text-align:center" ;font-weight:bold">@(@item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : "")</td>
                             <td>
