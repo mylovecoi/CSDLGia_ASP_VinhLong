@@ -171,13 +171,40 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
                 {
                     var model = _db.ThamDinhGiaDmHh.FirstOrDefault(p => p.Id == Id);
                     _db.ThamDinhGiaDmHh.Remove(model);
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "ThamDinhGiaDmHhCt", new { Manhom = model.Manhom });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteNhom(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.hh", "Edit"))
+                {
+                    var model = _db.DmNhomHh.FirstOrDefault(p => p.Id == Id);
+                    _db.DmNhomHh.Remove(model);
+                    var model_ct = _db.ThamDinhGiaDmHh.Where(p => p.Manhom == model.Manhom).ToList();
+                    _db.ThamDinhGiaDmHh.RemoveRange(model_ct);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "ThamDinhGiaDmHh");
                 }
                 else
                 {

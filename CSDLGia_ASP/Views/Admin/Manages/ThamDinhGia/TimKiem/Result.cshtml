@@ -84,7 +84,7 @@
                             <td style="text-align: center">@item.Dvthamdinh</td>
                             <td style="text-align: center">@item.Dvyeucau</td>
                             <td style="text-align: center">@item.Tents</td>
-                            <td style="text-align: center">@item.Sl</td>
+                            <td style="text-align: center;" class="sotien">@Helpers.ConvertDbToStr(item.Sl)</td>
                             <td style="text-align: right; font-weight:bold;" class="sotien">@Helpers.ConvertDbToStr(item.Giatritstd)</td>
                             <td>
                                 <a asp-controller="ThamDinhGia" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"

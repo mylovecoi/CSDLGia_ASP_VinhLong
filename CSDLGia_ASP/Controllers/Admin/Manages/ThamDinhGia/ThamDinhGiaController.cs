@@ -86,6 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                               Thongtin = tdg.Thongtin,
                                               Trangthai = tdg.Trangthai,
                                               Tennhomhh = dmnhomhh.Tennhom,
+                                              Macqcq = tdg.Macqcq,
                                           });
 
                         if (string.IsNullOrEmpty(Nam))
@@ -113,6 +114,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+                        var cqcq = _db.DsDonVi.ToList();
+                        //Lấy tên đơn vị chủ quản
+                        foreach(var item in model_join)
+                        {
+                            var cq = cqcq.FirstOrDefault(x => x.MaDv == item.Macqcq);
+                            if (cq != null)
+                            {
+                                item.Tencqcq = cq.TenDv;
+                            }
+                        }
+
                         ViewData["DsDiaBan"] = _db.DsDiaBan;
                         ViewData["DmNhomHh"] = _db.DmNhomHh.Where(t => t.Phanloai == "THAMDINHGIA" && t.Theodoi == "TD").ToList();
                         ViewData["Nam"] = Nam;
@@ -592,7 +604,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         [Route("ThamDinhGia/TimKiem/KetQua")]
         [HttpPost]
         public IActionResult Result(string madv, string tenspdv, DateTime ngaynhap_tu, DateTime ngaynhap_den,
-            double giatd_tu, double giatd_den, string tendvtd, string tendvyctd)
+            double giatd_tu, double giatd_den, string tendvtd, string tendvyctd, double sl_tu, double sl_den)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -648,6 +660,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     if (ngaynhap_den.ToString("yyMMdd") != "010101")
                     {
                         model = model.Where(t => t.Thoidiem <= ngaynhap_den);
+                    }
+
+                    //Số lượng
+                    if (sl_tu > 0)
+                    {
+                        model = model.Where(t => t.Sl >= sl_tu);
+                    }
+
+                    if (sl_den > 0)
+                    {
+                        model = model.Where(t => t.Sl <= sl_den);
                     }
 
                     //Giá thị thẩm định

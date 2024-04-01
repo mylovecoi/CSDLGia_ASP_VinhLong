@@ -98,8 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                          });
 
                         var model_join = (from kkj in model_new
-                                          join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
-                                          join db in dsdiaban on kkj.Madiaban equals db.MaDiaBan
+                                          join dv in dsdonvi on kkj.MadvCh equals dv.MaDv                                         
                                           select new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
                                           {
                                               Id = kkj.Id,
@@ -108,7 +107,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                               TendvCh = dv.TenDv,
                                               Macqcq = kkj.Macqcq,
                                               Madiaban = kkj.Madiaban,
-                                              Tendb = db.TenDiaBan,
                                               Madv = kkj.Madv,
                                               Thoidiem = kkj.Thoidiem,
                                               Trangthai = kkj.Trangthai,
@@ -177,7 +175,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
                         var model_join = (from kkj in model_new
                                           join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
-                                          join db in dsdiaban on kkj.Madiaban equals db.MaDiaBan
                                           select new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
                                           {
                                               Id = kkj.Id,
@@ -185,8 +182,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                               MadvCh = kkj.MadvCh,
                                               TendvCh = dv.TenDv,
                                               Macqcq = kkj.Macqcq,
-                                              Madiaban = kkj.Madiaban,
-                                              Tendb = db.TenDiaBan,
+                                              Madiaban = kkj.Madiaban,                                             
                                               Madv = kkj.Madv,
                                               Thoidiem = kkj.Thoidiem,
                                               Trangthai = kkj.Trangthai,
@@ -243,7 +239,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                              Madiaban = kk.Madiaban,
                                              Madv = kk.Madv_ad,
                                              Thoidiem = kk.Thoidiem_ad,
-                                             Trangthai = kk.Trangthai_ad,
+                                             Trangthai = kk.Trangthai,
                                              Diadiem = kk.Diadiem,
                                              Dvyeucau = kk.Dvyeucau,
                                              Sotbkl = kk.Sotbkl,
@@ -256,8 +252,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         /*return Ok(model_new);*/
 
                         var model_join = (from kkj in model_new
-                                          join dv in dsdonvi on kkj.MadvCh equals dv.MaDv
-                                          join db in dsdiaban on kkj.Madiaban equals db.MaDiaBan
+                                          join dv in dsdonvi on kkj.MadvCh equals dv.MaDv                                          
                                           select new CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia
                                           {
                                               Id = kkj.Id,
@@ -265,8 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                               MadvCh = kkj.MadvCh,
                                               TendvCh = dv.TenDv,
                                               Macqcq = kkj.Macqcq,
-                                              Madiaban = kkj.Madiaban,
-                                              Tendb = db.TenDiaBan,
+                                              Madiaban = kkj.Madiaban,                                             
                                               Madv = kkj.Madv,
                                               Thoidiem = kkj.Thoidiem,
                                               Trangthai = kkj.Trangthai,

@@ -91,6 +91,6 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Tennhomhh { get; set; }
 
         [NotMapped]
-        public string TenDonVi { get; set; }
+        public string TenDonVi { get; set; }       
     }
 }
