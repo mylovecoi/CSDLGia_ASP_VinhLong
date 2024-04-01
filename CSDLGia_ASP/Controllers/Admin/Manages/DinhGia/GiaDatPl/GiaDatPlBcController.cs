@@ -105,18 +105,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatPl/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string PhanLoai)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string phanloaihoso)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
                 {
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-                    ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
-                    ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
-
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
                                  join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
@@ -133,11 +127,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Vitri = giact.Vitri,
                                      Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
-                                     Trangthai = gia.Trangthai,
+                                     PhanLoai = gia.Phanloai,
+                                     Trangthai = gia.Trangthai
                                  });
 
+
+              
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop);}
+
+
+                    if (phanloaihoso != "all") { model = model.Where(t => t.PhanLoai == phanloaihoso); }
+
+            
 
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
