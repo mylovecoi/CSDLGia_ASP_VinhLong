@@ -1,5 +1,6 @@
 ﻿@{
     int record_id = 1;
+    var danhmucdonvitinh = (IEnumerable<DmDvt>)ViewData["danhmucdonvitinh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatDm>
 
@@ -52,6 +53,7 @@
                 <tr style="text-align:center">
                     <th width="4%">#</th>
                     <th>Phân loại đất thực tế trên thị trường</th>
+                    <th>Đơn vị tính</th>
                     <th>Theo dõi</th>
                     <th width="12%">Thao tác</th>
                 </tr>
@@ -62,6 +64,7 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td class="active">@item.Ten</td>
+                        <td class="active">@item.Dvt</td>
                         <td  style="text-align: center">
                             @if (item.Theodoi == "TD")
                             {

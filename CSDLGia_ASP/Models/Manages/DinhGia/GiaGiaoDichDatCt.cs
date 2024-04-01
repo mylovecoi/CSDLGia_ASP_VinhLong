@@ -18,8 +18,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }       
         public string Madv { get; set; }
         [NotMapped]
-        public string Tendv { get; set; }
-        
+        public string Tendv { get; set; }        
         public string Manhom { get; set; }
         [NotMapped]
         public string Tennhom { get; set; }

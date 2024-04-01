@@ -276,7 +276,6 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#frm_edit').replaceWith(data.message);
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }

@@ -28,6 +28,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public string Loaidat { get; set; }
         [NotMapped]
+        public string PhanLoai { get; set; }
+        [NotMapped]
         public DateTime Thoidiem { get; set; }
         [NotMapped]
         public double Dientich { get; set; }
