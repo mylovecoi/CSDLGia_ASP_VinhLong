@@ -45,18 +45,17 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giasieuthi.thongtin", "Create"))
             {
-                @* <a class="btn btn-primary font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThi" asp-action="Create"
-            asp-route-Madv="@ViewData["Madv"]">
-            <i class="la la-plus"></i>Thêm mới
-            </a> *@
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
-                <span>&ensp;</span>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThiExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <span>&ensp;</span>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaHangHoaTaiSieuThiExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
 
 
@@ -158,6 +157,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
 
                             </td>
                             <td>

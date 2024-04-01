@@ -45,16 +45,19 @@
         </div>
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Create"))
-            {                
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
+            {
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="NhanExcel"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="NhanExcel"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
 
         </div>
@@ -132,6 +135,7 @@
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
+
                             </td>
 
                             <td>
@@ -162,7 +166,7 @@
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
 
-                                </a>                               
+                                </a>
                             </td>
                         </tr>
                     }

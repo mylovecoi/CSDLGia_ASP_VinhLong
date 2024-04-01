@@ -1,9 +1,7 @@
 ﻿@{
     int record_id = 1;
-    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    // var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    // var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -46,16 +44,18 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Create"))
             {
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
-                    <i class="la la-plus"></i>Nhận dữ liệu
-                </button>
-                @* <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
-            asp-route-Madv="@ViewData["Madv"]">
-            <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a> *@
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                    {
+                        <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                            <i class="la la-plus"></i>Thêm mới
+                        </button>
+                        <button type="button" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
+                            <i class="la la-plus"></i>Nhận dữ liệu
+                        </button>
+                    }
+                }
             }
         </div>
     </div>
@@ -82,6 +82,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
                             <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
@@ -135,6 +136,8 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+
 
                             </td>
                             <td style="text-align: left;">
@@ -269,8 +272,6 @@
     </div>
 </div>
 
-
-
 <!--Chuyển Modal-->
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -290,8 +291,8 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvi)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
                                         <!option value="@item.MaDv">@item.TenDv</!option>
                                     }

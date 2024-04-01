@@ -2,8 +2,8 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    //var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
@@ -50,15 +50,18 @@
         <div>
             @if (ViewData["Donvi"].ToString() != "all" && ViewData["Donvi"].ToString() != "")
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
-                   asp-route-Madv="@ViewData["Donvi"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
+                       asp-route-Madv="@ViewData["Donvi"]">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Donvi"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Donvi"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
         </div>
     </div>
@@ -87,17 +90,10 @@
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Đơn vị</label>
                 <select class="form-control select2basic" id="Donvi" name="Donvi">
-                    @foreach (var db in dsdiaban)
+                    <option value="all">--Tất cả--</option>
+                    @foreach (var item in dsdonvi)
                     {
-                        <optgroup label="@db.TenDiaBan">
-                            @{
-                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                            }
-                            @foreach (var item in company)
-                            {
-                                <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                            }
-                        </optgroup>
+                        <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                     }
                 </select>
             </div>
@@ -140,22 +136,14 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
-                        @if (item.Macqcq != null)
-                        {
-                            @foreach (var ds in dscqcq)
-                            {
-                                @if (item.Macqcq == ds.MaDv)
-                                {
-                                    <td style="text-align: center">@ds.TenDv</td>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <td style="text-align: center"></td>
-                        }
+                        <td style="text-align: center">
+                            @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
-                        <td>  
+
+                        </td>
+
+                        <td>
                             <a asp-controller="Giarung" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
                                 <i class="icon-lg la la-eye text-success"></i>
@@ -239,18 +227,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in company)
-                                            {
-                                                <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>
