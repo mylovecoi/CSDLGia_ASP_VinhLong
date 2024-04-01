@@ -40,7 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";
                     ViewData["MenuLv3"] = "menu_dgtgtc_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem.Year == DateTime.Now.Year && t.Trangthai == "HT");
                     return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/BaoCao/Index.cshtml");
                 }
                 else

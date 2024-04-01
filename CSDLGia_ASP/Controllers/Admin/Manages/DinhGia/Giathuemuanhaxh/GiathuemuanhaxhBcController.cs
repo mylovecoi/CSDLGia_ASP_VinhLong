@@ -35,12 +35,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tmnxh.bc", "Index"))
                 {
-                    ViewData["Nam"] = DateTime.Now.Year;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
+                    ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
+
                     ViewData["Title"] = "Báo cáo giá thuê mua nhà xã hội";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaThueMuaNhaXh.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.GiaThueMuaNhaXh.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
                     return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/BaoCao/Index.cshtml");
                 }
                 else
