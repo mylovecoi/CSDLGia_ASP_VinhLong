@@ -46,13 +46,16 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvCnExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvCnExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
         </div>
     </div>
@@ -132,6 +135,7 @@
                         <td style="text-align: center">
                             @if (!string.IsNullOrEmpty(item.Macqcq))
                                 @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
                         </td>
                         <td width="20%">
                             <a asp-controller="GiaHhDvCn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"

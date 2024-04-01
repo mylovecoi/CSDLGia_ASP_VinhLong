@@ -3,7 +3,7 @@
     var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
-    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
+    var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
     var khuvuc = (IEnumerable<GiaDatDiaBanCt>)ViewData["Khuvuc"];
     var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     int record_id = 1;
@@ -24,14 +24,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input hidden asp-for="Mahs">  
+                <input hidden asp-for="Mahs">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Loại đất</label>
+                            <select id="maloaidat_create" name="maloaidat_create" class="form-control">
+                                @foreach (var item in dmloaidat)
+                                {
+                                    <option value="@item.Maloaidat">@item.Loaidat</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Khu vực tên đường phố</label>
                             <input type="text" id="mota_create" name="mota_create" class="form-control" />
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-4">
@@ -119,7 +132,6 @@
     </div>
 </div>
 
-
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -163,7 +175,6 @@
     </div>
 </div>
 
-
 <!--Delete xóa tất cả phần chi tiết -->
 <div class="modal fade" id="Delete_Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -188,7 +199,6 @@
         </div>
     </div>
 </div>
-
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -215,7 +225,6 @@
     </div>
 </div>
 
-
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -238,7 +247,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="Khuvuc_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -266,171 +274,6 @@
     </div>
 </div>
 
-
-<!--Excel Modal-->
-<div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Nhận dữ liệu từ file excel
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Loại đất</label>
-                            <select id="maloaidat_excel" name="maloaidat_excel" class="form-control">
-                                @foreach (var db in dsloaidat)
-                                {
-                                    <option value="@db.Maloaidat">@db.Loaidat</option>
-
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Xã, phường</label>
-                            <select id="maxp_excel" name="maxp_excel" class="form-control">
-                                @foreach (var db in dsxaphuong)
-                                {
-                                    <option value="@db.Tenxp">@db.Tenxp</option>
-
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Khu vực</label>
-                            <select id="khuvuc_excel" name="khuvuc_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "1" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Điểm đầu</label>
-                            <select id="diemdau_excel" name="diemdau_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "2" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Điểm cuối</label>
-                            <select id="diemcuoi_excel" name="diemcuoi_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "3" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá đất VT1*</label>
-                            <select id="giavt1_excel" name="giavt1_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "4" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá đất VT2*</label>
-                            <select id="giavt2_excel" name="giavt2_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "5" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá đất VT3*</label>
-                            <select id="giavt3_excel" name="giavt3_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "6" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá đất VT4*</label>
-                            <select id="giavt4_excel" name="giavt4_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "7" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Hệ số K*</label>
-                            <select id="hesok_excel" name="hesok_excel" class="form-control">
-                                @foreach (var item in Helpers.GetListColExcel())
-                                {
-                                    <!option value="@item.Value" @(item.Value.ToString() == "8" ? "selected" : "")>@item.Key</!option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Sheet</label>
-                            <input type="number" class="form-control" id="sheet_excel" name="sheet_excel" value="1" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div cla ss="form-group fv-plugins-icon-container">
-                            <label>Từ dòng</label>
-                            <input type="number" class="form-control" id="linestart_excel" name="linestart_excel" value="3" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đến dòng</label>
-                            <input type="number" class="form-control" id="linestop_excel" name="linestop_excel" value="111" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label>File dữ liệu:</label><br />
-                        <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Excel()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
 
     //Thêm khu vực
@@ -447,7 +290,8 @@
             type: 'POST',
             data: {
                 Mahs: $('#Mahs').val(),
-                MoTa: $('#mota_create').val(),               
+                Maloaidat: $('#maloaidat_create').val(),
+                MoTa: $('#mota_create').val(),
                 Diemdau: $('#diemdau_create').val(),
                 Diemcuoi: $('#diemcuoi_create').val(),
                 Loaiduong: $('#loaiduong_create').val(),
@@ -460,7 +304,7 @@
                 HienThi: $('#hienthi_create').val(),
                 SapXep: $('#sapxep_create').val(),
                 MaDv: $('#Madv').val(),
-                
+
             },
             dataType: 'JSON',
 
@@ -539,12 +383,13 @@
 
     //Sửa
 
-    function SetUpdate() {        
+    function SetUpdate() {
         $.ajax({
             url: '/GiaDatDiaBanCt/Update',
             type: 'POST',
             data: {
-                Id: $('#id_edit').val(),               
+                Id: $('#id_edit').val(),
+                Maloaidat: $('#maloaidat_edit').val(),
                 Mota: $('#mota_edit').val(),
                 Diemdau: $('#diemdau_edit').val(),
                 Diemcuoi: $('#diemcuoi_edit').val(),
@@ -596,58 +441,6 @@
                 }
             }
         })
-    }
-
-
-    function Excel() {
-        if ($('#file_excel').val() == '') {
-            toastr.error("File đính kèm không được để trống!!!", "Lỗi!");
-        } else {
-            var file = new FormData();
-            file.append("Mahs", $("#Mahs").val());
-            file.append("Maloaidat", $("#maloaidat_excel").val());
-            file.append("Maxp", $("#maxp_excel").val());
-            file.append("Khuvuc", $("#khuvuc_excel").val());
-            file.append("Diemdau", $("#diemdau_excel").val());
-            file.append("Diemcuoi", $("#diemcuoi_excel").val());
-
-            file.append("Giavt1", $("#giavt1_excel").val());
-            file.append("Giavt2", $("#giavt2_excel").val());
-            file.append("Giavt3", $("#giavt3_excel").val());
-            file.append("Giavt4", $("#giavt4_excel").val());
-            file.append("Giavt5", $("#giavt5_excel").val());
-            file.append("Hesok", $("#hesok_excel").val());
-
-            file.append("FormFile", $("#file_excel")[0].files[0]);
-            file.append("Sheet", $("#sheet_excel").val());
-            file.append("LineStart", $("#linestart_excel").val());
-            file.append("LineStop", $("#linestop_excel").val());
-
-
-            $.ajax({
-                url: '/GiaDatDiaBanCt/Excel',
-                type: 'POST',
-                data: file,
-                processData: false,
-                contentType: false,
-
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
-
-                        $('#frm_data').replaceWith(data.message);
-
-                        $(document).ready(function () {
-                            TableManaged4.init();
-                        });
-
-                        $('#Excel_Modal').modal("hide");
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
     }
 </script>
 

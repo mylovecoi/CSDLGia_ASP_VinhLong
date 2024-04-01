@@ -39,6 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = db.MaDiaBan,
                                        TenDv = dv.TenDv,
                                        MaDv = dv.MaDv,
 
@@ -92,9 +93,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                         ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -110,76 +111,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["MenuLv3"] = "menu_dgkcb_tt";
                         return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
-                    
-                    /*var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                    {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
-                    }
-                    else
-                    {
-                        if (string.IsNullOrEmpty(Madv))
-                        {
-                            Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                        }
-                    }
-
-                    var model = _db.GiaDatDiaBan.Where(t => t.Madv == Madv).ToList();
-
-
-                    
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        model = model.ToList();
-                    }
-                    else
-                    {
-                        if (Nam != "all")
-                        {
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                        }
-                        else
-                        {
-                            model = model.ToList();
-                        }
-                    }
-
-                    
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
-                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dv.Id,
-                                        MaDiaBan = dv.MaDiaBan,
-                                        MaDv = dv.MaDv,
-                                        TenDv = dv.TenDv,
-                                        ChucNang = dv.ChucNang,
-                                        Level = db.Level,
-                                    }).First();
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    {
-                        ViewData["DsDonVi"] = dsdonvi;
-                    }
-                    else
-                    {
-                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
-                    }
-                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
-                    ViewData["Nam"] = Nam;
-                    ViewData["Madv"] = Madv;
-                    ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_giadatdiaban";
-                    ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Index.cshtml", model);*/
-
-
                 }
                 else
                 {
@@ -197,7 +128,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         [HttpGet]
         public IActionResult Create(string soqd, string madiaban, string madv)
         {
-
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Create"))
@@ -244,11 +174,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         };
                         ViewData["Khuvuc"] = _db.GiaDatDiaBanCt.ToList();
                         ViewData["DsDonVi"] = _db.DsDonVi;
-
                         ViewData["MaDv"] = madv;
-                        ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
+                        ViewData["MaDiaBan"] = madiaban;
+                        ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                        ViewData["DsDiaBan"] = _db.DsDiaBan;
                         ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -265,7 +196,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                        ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
+                        ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Edit.cshtml", model);
@@ -280,7 +211,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
                         ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                        ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
+                        ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Show.cshtml", model);
@@ -448,7 +379,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     model.ThongTinGiayTo = thongtingiayto.ToList();
                     ViewData["Khuvuc"] = _db.GiaDatDiaBanCt.ToList();
                     ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
-                    ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
+                    ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Madv"] = model.Madv;

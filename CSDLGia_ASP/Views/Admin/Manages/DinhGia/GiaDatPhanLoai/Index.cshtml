@@ -46,16 +46,15 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Create"))
             {
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
-                <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
-                    <i class="la la-plus"></i>Nhận dữ liệu
-                </button>
-                @* <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatPlExcel" asp-action="Index"
-            asp-route-Madv="@ViewData["Madv"]">
-            <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </a> *@
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
+                        <i class="la la-plus"></i>Nhận dữ liệu
+                    </button>
+                }
             }
         </div>
     </div>
@@ -82,6 +81,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
                             <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
@@ -135,6 +135,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
 
                             </td>
                             <td style="text-align: left;">

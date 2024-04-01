@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -23,36 +23,34 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    HỒ SƠ GIÁ ĐẤT THEO CÔNG BỐ
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                HỒ SƠ GIÁ ĐẤT THEO CÔNG BỐ
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="GiaDatDiaBan" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
-            <div class="card-body">
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="GiaDatDiaBan" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
+        <div class="card-body">
             <input hidden asp-for="Madv">
             <input hidden asp-for="Mahs">
-                <div class="row">
-
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label>Theo thông tư quyết định</label>
-                            <input type="text" class="form-control" asp-for="Soqd" id="Noidung" />
-
-                        </div>
-                       
+            <input hidden asp-for="SoQDTT" />
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Theo thông tư quyết định</label>
+                        <input type="text" class="form-control" asp-for="NoiDungQDTT" />
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Địa bàn</label>
-                            <select class="form-control" id="Madiaban" name="Madiaban">
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" id="Madiaban" name="Madiaban">
                             @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan==Model.Madiaban ? "selected": "")>@item.TenDiaBan</!option>
+                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == Model.Madiaban ? "selected" : "")>@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
@@ -60,10 +58,25 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Nội dung chi tiết</label>
+                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Ghi chú</label>
+                        <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
+                    </div>
+                </div>
             </div>
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
@@ -82,8 +95,8 @@
 
 </div>
 
-@section Scripts{
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

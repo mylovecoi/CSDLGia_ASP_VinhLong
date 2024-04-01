@@ -1,6 +1,6 @@
 ﻿@{
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"]; // truyền sang từ ViewData
-                                                             //var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
 }
 
@@ -33,23 +33,16 @@
         </div>
     </div>
     <!--begin::Form-->
-    @* Mã địa bàn
-    Mã hồ sơ
-    Mã đơn vị gửi hồ sơ lên*@
     <form asp-controller="GiaDatDiaBan" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
         <div class="card-body">
-            <input hidden asp-for="Madv">
-            <input hidden asp-for="Mahs">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <input hidden asp-for="SoQDTT" />
             <div class="row">
-
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Theo thông tư quyết định</label>
-                        <input type="text" class="form-control" value="@Model.NoiDungQDTT" />
-                    </div>
-                    <div hidden class="form-group">
-                        <label hidden>Theo thông tư quyết định</label>
-                        <input hidden type="text" class="form-control" asp-for="SoQDTT" />
+                        <input type="text" class="form-control" asp-for="NoiDungQDTT" />
                     </div>
                 </div>
             </div>
@@ -58,9 +51,9 @@
                     <div class="form-group">
                         <label>Địa bàn</label>
                         <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                            @foreach (var item in dsdonvi)
+                            @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDv" @(item.MaDv == (string)ViewData["MaDv"] ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
@@ -68,7 +61,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
             </div>
@@ -77,13 +70,9 @@
                     <div class="form-group">
                         <label>Nội dung chi tiết</label>
                         <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
-                    </div>                    
+                    </div>
                 </div>
             </div>
-           
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
-
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
@@ -92,6 +81,8 @@
                     </div>
                 </div>
             </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
             <div class="card-footer" style="text-align:center">
                 <a asp-controller="GiaDatDiaBan" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                     <i class="la la-reply"></i>Quay lại

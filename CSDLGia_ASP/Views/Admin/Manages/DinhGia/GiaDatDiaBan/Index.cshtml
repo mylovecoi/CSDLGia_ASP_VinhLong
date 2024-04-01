@@ -49,14 +49,17 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatDiaBanExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatDiaBanExcel" asp-action="Index"
+                    asp-route-Madv="@ViewData["Madv"]">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
+                }
             }
         </div>
     </div>
@@ -86,7 +89,7 @@
                         <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
-                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -215,9 +218,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị nhập liệu</label>
                                 <select name="madv" id="madv" class="form-control">
-                                    @foreach (var db in dsdonvi)
+                                    @foreach (var dv in dsdonvi)
                                     {
-                                        <!option value="@db.MaDv">@db.TenDv</!option>
+                                        <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
                                     }
                                 </select>
                             </div>

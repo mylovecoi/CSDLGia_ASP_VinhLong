@@ -40,6 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = db.MaDiaBan,
                                        TenDv = dv.TenDv,
                                        MaDv = dv.MaDv,
 
