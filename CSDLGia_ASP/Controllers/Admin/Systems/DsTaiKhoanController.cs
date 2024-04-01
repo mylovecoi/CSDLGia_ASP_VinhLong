@@ -251,7 +251,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan/Update")]
         [HttpPost]
-        public IActionResult Update(Users request, string nhaplieu, string tonghop, string quantri, string NewPassword)
+        public IActionResult Update(Users request, string NewPassword)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -260,19 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var check = _db.Users.FirstOrDefault(u => u.Username == request.Username && u.Id != request.Id);
                     if (check == null)
                     {
-                        /*return Ok(NewPassword);*/
                         var model = _db.Users.FirstOrDefault(t => t.Id == request.Id);
-
-                        if (!string.IsNullOrEmpty(NewPassword))
-                        {
-                            string md5_password = "";
-                            using (MD5 md5Hash = MD5.Create())
-                            {
-                                string change = Helpers.GetMd5Hash(md5Hash, NewPassword);
-                                md5_password = change;
-                            }
-                            model.Password = md5_password;
-                        }
 
                         /*string chucnang = "";
                         chucnang += !string.IsNullOrEmpty(nhaplieu) ? "NHAPLIEU;" : "";
@@ -284,7 +272,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         model.Chucnang = request.Chucnang;
                         model.Username = request.Username;
                         model.Updated_at = DateTime.Now;
-                        /*return Ok(model.Password);*/
+                        if (!string.IsNullOrEmpty(NewPassword))
+                        {
+                            string md5_password = "";
+                            using (MD5 md5Hash = MD5.Create())
+                            {
+                                string change = Helpers.GetMd5Hash(md5Hash, NewPassword);
+                                md5_password = change;
+                            }
+                            model.Password = md5_password;
+                        }
                         _db.Users.Update(model);
                         _db.SaveChanges();
                         return RedirectToAction("Index", "DsTaiKhoan", new { MaDv = request.Madv });
@@ -382,7 +379,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan/Permission/Update")]
         [HttpPost]
-        public IActionResult Update(string KeyLink, string Username, string Madv)
+        public IActionResult UpdatePermissions(string KeyLink, string Username, string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
