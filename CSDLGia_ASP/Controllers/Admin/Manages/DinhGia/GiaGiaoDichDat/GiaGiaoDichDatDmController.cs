@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.danhmuc", "Index"))
                 {
                     var model = _db.GiaGiaoDichDatDm.Where(t => t.Manhom == Manhom).ToList();
-
+                    ViewData["danhmucdonvitinh"] = _db.DmDvt;
                     ViewData["Manhom"] = Manhom;
                     ViewData["Tennhom"] = _db.GiaGiaoDichDatNhom.FirstOrDefault(t => t.Manhom == Manhom).Tennhom;
                     ViewData["Title"] = "Thông tin chi tiết giá giao dịch đất thực tế trên thị trường";
@@ -56,7 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDatDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Theodoi)
+        public JsonResult Store(string Manhom, string Tennhom, string Theodoi, string donvitinh)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -69,6 +69,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         Theodoi = Theodoi,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
+                        Dvt = donvitinh,
                     };
                     _db.GiaGiaoDichDatDm.Add(request);
                     _db.SaveChanges();
@@ -96,7 +97,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.danhmuc", "Edit"))
-                {
+                {                   
+                    var dmdvt = _db.DmDvt;
                     var model = _db.GiaGiaoDichDatDm.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -108,7 +110,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Ten + "'/>";
                         result += "</div>";
                         result += "</div>";
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Đơn vị tính</label>";
+                        result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control'>";
+                        foreach (var item in dmdvt)
+                        {
+                            result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";
+                        }
+                        result += "</select>";
 
+                        result += "</div>";
+                        result += "</div>";
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Trạng thái</label>";
@@ -146,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDatDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, string Theodoi , string donvitinh)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -155,6 +168,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     var model = _db.GiaGiaoDichDatDm.FirstOrDefault(t => t.Id == Id);
                     model.Ten = Tennhom;
                     model.Theodoi = Theodoi;
+                    model.Dvt= donvitinh;
                     model.Updated_at = DateTime.Now;
                     _db.GiaGiaoDichDatDm.Update(model);
                     _db.SaveChanges();
