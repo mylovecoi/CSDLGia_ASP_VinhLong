@@ -9146,6 +9146,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Soqdpd")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Tennha")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Thoigiandg")
                         .HasColumnType("datetime2");
 

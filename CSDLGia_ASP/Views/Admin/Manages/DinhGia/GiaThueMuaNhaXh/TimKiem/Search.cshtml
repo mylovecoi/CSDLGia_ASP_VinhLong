@@ -13,6 +13,7 @@
 
     int record_id = 1;
     var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Dmtmnxh"];
+    string PhanLoai = ViewData["PhanLoai"].ToString();
 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt>
@@ -44,7 +45,7 @@
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/Giathuemuanhaxh/Search?';
                     var Madv = '&Madv=' + $('#Madv_Search').val();
-                    var Maso = '&Maso=' + $('#Maso_Search').val();
+                    var Maso = '&PhanLoai=' + $('#PhanLoai_Search').val();
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
@@ -102,12 +103,12 @@
                 <div class="col-xl-8">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Phân loại hồ sơ:</label>
-                        <select class="form-control" id="Maso_Search" name="Maso_Search">
+                        <select class="form-control" id="PhanLoai_Search" name="PhanLoai_Search">
                             <option value="all">--Tất cả --</option>
-                            @foreach (var tn in DanhMucNhom)
-                            {
-                                <!option value="@tn.Maso" @(ViewData["Maso"].ToString() == tn.Maso ? "selected" : "")>@tn.Tennha</!option>
-                            }
+                            <!option value="Nhà ở xã hội" @(PhanLoai == "Nhà ở xã hội" ? "selected" : "" )>Nhà ở xã hội</!option>
+                            <!option value="Nhà ở công vụ" @(PhanLoai == "Nhà ở công vụ" ? "selected" : "" )>Nhà ở công vụ</!option>
+                            <!option value="Nhà ở thuộc sở hữu của nhà nước" @(PhanLoai == "Nhà ở thuộc sở hữu của nhà nước" ? "selected" : "" )>Nhà ở thuộc sở hữu của nhà nước</!option>
+                            <!option value="Nhà ở khác" @(PhanLoai == "Nhà ở khác" ? "selected" : "" )>Nhà ở khác</!option>
                         </select>
                     </div>
                 </div>
@@ -165,6 +166,7 @@
                     <th width="2%" style="text-align:center">STT</th>
                     <th style="text-align:center">Đơn vị</th>
                     <th style="text-align:center">Số QĐ/Thời điểm</th>
+                    <th style="text-align:center">Phân loại</th>
                     <th>Tên nhà</th>
                     <th>Đơn vị thuê</th>
                     <th width="5%">Đơn vị tính</th>
@@ -181,20 +183,8 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align:center">@item.Tendv</td>
                         <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        @if (item.Maso != null)
-                        {
-                            @foreach (var dm in dmtmnxh)
-                            {
-                                @if (item.Maso == dm.Maso)
-                                {
-                                    <td style="text-align: center">@dm.Tennha</td>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <td style="text-align: center"></td>
-                        }                     
+                        <td style="text-align:center">@item.Phanloai </td>
+                        <td style="text-align:center">@item.Tennha</td>                       
                         <td style="text-align:center">@item.Dvthue</td>
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>

@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhDm>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -34,7 +34,7 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
 
-          
+
             }
 
         </div>
@@ -85,76 +85,74 @@
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Thông tin nhà xã hội
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Thời gian hoàn thành</b></label>
-                                <input type="date" id="thoigian_create" name="thoigian_create" class="form-control" />
-                            </div>
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin nhà xã hội
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Thời gian hoàn thành</b></label>
+                            <input type="date" id="thoigian_create" name="thoigian_create" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                         </div>
-                        <div class="col-xl-8">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Tên nhà xã hội*</b></label>
-                                <input type="text" id="tennha_create" name="tennha_create" class="form-control" />
-                            </div>
+                    </div>                  
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Tên nhà xã hội*</b></label>
+                            <input type="text" id="tennha_create" name="tennha_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Địa chỉ</b></label>
-                                <input type="text" id="diachi_create" name="diachi_create" class="form-control" />
-                            </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Địa chỉ</b></label>
+                            <input type="text" id="diachi_create" name="diachi_create" class="form-control" />
                         </div>
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Diện tích</b></label>
-                                <input type="text" id="dientich_create" name="dientich_create" class="form-control" />
-                            </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Diện tích</b></label>
+                            <input type="text" id="dientich_create" name="dientich_create" class="form-control" />
                         </div>
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Hiện trạng</b></label>
-                                <select id="hientrang_create" name="hientrang_create" class="form-control">
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Hiện trạng</b></label>
+                            <select id="hientrang_create" name="hientrang_create" class="form-control">
                                 <option value="Đang cho thuê">Đang cho thuê</option>
                                 <option value="Đang sử dụng">Đang sử dụng</option>
                                 <option value="Đã bán">Đã bán</option>
                                 <option value="Chưa sử dụng">Chưa sử dụng</option>
-                                </select>
-                            </div>
+                            </select>
                         </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Phân loại</b></label>
-                                <select id="phanloai_create" name="phanloai_create" class="form-control">
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phân loại</b></label>
+                            <select id="phanloai_create" name="phanloai_create" class="form-control">
                                 <option value="Nhà ở xã hội">Nhà ở xã hội</option>
                                 <option value="Nhà ở công vụ">Nhà ở công vụ</option>
                                 <option value="Nhà ở thuộc sở hữu của nhà nước">Nhà ở thuộc sở hữu của nhà nước</option>
                                 <option value="Nhà ở khác">Nhà ở khác</option>
-                                </select>
-                            </div>
+                            </select>
                         </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Ghi chú</b></label>
-                                <textarea id="ghichu_create" name="ghichu_create" class="form-control" rows="2"></textarea>
-                            </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Ghi chú</b></label>
+                            <textarea id="ghichu_create" name="ghichu_create" class="form-control" rows="2"></textarea>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold" onclick="GetCreate()">Thêm mới</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-danger font-weight-bold" onclick="GetCreate()">Thêm mới</button>
+            </div>
         </div>
     </div>
 </div>
@@ -197,7 +195,6 @@
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -216,6 +213,7 @@
             type: 'POST',
             data: {
                 Thoigian: $('#thoigian_create').val(),
+                Maso: $('#maso_create').val(),
                 Tennha: $('#tennha_create').val(),
                 Diachi: $('#diachi_create').val(),
                 Dientich: $('#dientich_create').val(),
@@ -232,7 +230,7 @@
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
-                      location.reload();
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -260,7 +258,7 @@
                     });
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#Delete_Modal').modal("hide");
-                      location.reload();
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -278,7 +276,7 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                   
+
                     $('#edit_thongtin').replaceWith(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
@@ -292,6 +290,7 @@
             url: '/GiaThueMuaNhaXh/DanhMuc/Update',
             type: 'POST',
             data: {
+                Maso: $('#maso_edit').val(),
                 Thoigian: $('#thoigian_edit').val(),
                 Tennha: $('#tennha_edit').val(),
                 Diachi: $('#diachi_edit').val(),
@@ -310,7 +309,7 @@
                         TableManaged4.init();
                     });
                     $('#Edit_Modal').modal("hide");
-                      location.reload();
+                    location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
