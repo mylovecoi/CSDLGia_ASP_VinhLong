@@ -5,7 +5,7 @@
     var maloaidat = (IEnumerable<DmLoaiDat>)ViewData["Maloaidat"];
     var mld = ViewData["mld"]!;
     var madv = ViewData["madv"]!;
-
+    var phanloaihoso = ViewData["phanloaihoso"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt>
 @section custom_style {
@@ -36,16 +36,17 @@
                 var toDateObj = new Date(toDate);
 
                 if (fromDateObj <= toDateObj) {
-            var current_path_url = '/GiaDatCuThe/Search?';
-            var madv = '&madv=' + $('#madv').val();
-            var mld = '&mld=' + $('#mld').val();
-            var endPrice = '&endPrice=' + $('#endPrice').val();
-            var beginPrice = '&beginPrice=' + $('#beginPrice').val();
-            var endTime = '&endTime=' + $('#endTime').val();
-            var beginTime = '&beginTime=' + $('#beginTime').val();           
+                    var current_path_url = '/GiaDatCuThe/Search?';
+                    var madv = '&madv=' + $('#madv').val();
+                    var phanloaihoso = '&phanloaihoso=' + $('#phanloaihoso').val();
+                    var mld = '&mld=' + $('#mld').val();
+                    var endPrice = '&endPrice=' + $('#endPrice').val();
+                    var beginPrice = '&beginPrice=' + $('#beginPrice').val();
+                    var endTime = '&endTime=' + $('#endTime').val();
+                    var beginTime = '&beginTime=' + $('#beginTime').val();
 
-            var url = current_path_url + madv + mld + endPrice + beginPrice + endPrice + beginTime;
-            window.location.href = url;
+                    var url = current_path_url + madv + phanloaihoso + mld + endPrice + beginPrice + endPrice + beginTime;
+                    window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
                 }
@@ -104,6 +105,15 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
+                            <label><b>Phân loại hồ sơ</b></label>
+                            <select class="form-control select2basic" asp-for="@phanloaihoso" id="phanloaihoso" name="phanloaihoso">
+                                <option value="Giá đất bồi thường tái định cư"> Giá đất bồi thường tái định cư </option>
+                                <option value="Giá đất thu tiền sử dụng đất"> Giá đất thu tiền sử dụng đất </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group fv-plugins-icon-container">
                             <label><b>Loại đất</b></label>
                             <select class="form-control select2basic" asp-for"@mld" id="mld" name="mld">
                                 <option value="All">--Tất cả các loại đất--</option>
@@ -148,7 +158,7 @@
             </div>
             @* <div class="card-footer" style="text-align:center">
 
-                <button type="button" class="btn btn-danger mr-2" onclick="Print()"><i class="la la-search"></i>Tìm kiếm</button>
+            <button type="button" class="btn btn-danger mr-2" onclick="Print()"><i class="la la-search"></i>Tìm kiếm</button>
             </div> *@
         </form>
         <div class="row">

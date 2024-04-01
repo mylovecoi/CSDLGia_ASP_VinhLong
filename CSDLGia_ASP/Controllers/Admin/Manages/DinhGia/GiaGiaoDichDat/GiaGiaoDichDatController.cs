@@ -171,7 +171,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                             Madv = model.Madv,
-                            Manhom= item.Manhom,                           
+                            Manhom= item.Manhom, 
+                            Dvt= item.Dvt,
                         });
                     }
                     _db.GiaGiaoDichDatCt.AddRange(chitiet);
@@ -663,7 +664,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
         public JsonResult EditCt(int Id)
         {
             var model = _db.GiaGiaoDichDatCt.FirstOrDefault(p => p.Id == Id);
-
+            var danhmucdonvitinh = _db.DmDvt;
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -677,9 +678,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đơn vị tính:</label>";
-                result += "<input type='text' id='donvitinh_edit' name='donvitinh_edit' value='" + model.Dvt + "' class='form-control' style='font-weight: bold'/>";
-                result += "</div>";
+                result += "<label>Đơn vị tính</label>";
+                result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control'>";
+                foreach (var item in danhmucdonvitinh)
+                {
+                    result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";
+                }
+                result += "</select>";
+
                 result += "</div>";
                 result += "</div>";
 
@@ -713,7 +719,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         public string GetDataCt(string Mahs)
         {
-            var model = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == Mahs).ToList();
+            var model = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == Mahs).ToList();            
             var DanhMucNhom = _db.GiaGiaoDichDatNhom;
             int record = 1;
             string result = "";

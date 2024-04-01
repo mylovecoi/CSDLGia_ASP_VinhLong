@@ -32,6 +32,7 @@
         }
     }
 </p>
+<p style="text-align: left; font-size: 16px;">Phân loại hồ sơ: @Model.Phanloai </p>
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
@@ -39,10 +40,11 @@
 
     <thead>
         <tr>
-            <th style="text-align:center;">STT</th>
+            <th style="text-align:center;">STT</th>            
             <th style="text-align:center;">Tên đường, giới hạn, khu vực</th>
             <th style="text-align:center;">Loại đất</th>
             <th style="text-align:center;">Vị trí</th>
+            <th style="text-align:center;">Diện tích</th>
             <th style="text-align:center;">Địa giới - Từ</th>
             <th style="text-align:center;">Địa giới - Đến</th>
             <th style="text-align:center;">Giá đất tại bảng giá</th>
@@ -59,7 +61,7 @@
                 @foreach (var item in Model.GiaDatPhanLoaiCt)
                 {
                     <tr style="text-align:center">
-                        <td style="text-align:center">@(record_id++)</td>
+                        <td style="text-align:center">@(record_id++)</td>                        
                         <td>@item.Khuvuc</td>
                         <td>
                             @foreach (var ten in dmloaidat)
@@ -71,6 +73,7 @@
                             }
                         </td>
                         <td>@item.Vitri</td>
+                        <td>@Helpers.ConvertDbToStr(item.Dientich)</td>
                         <td style="text-align:center;">@item.Diagioitu</td>
                         <td style="text-align:center;">@item.Diagioiden</td>
                         <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
