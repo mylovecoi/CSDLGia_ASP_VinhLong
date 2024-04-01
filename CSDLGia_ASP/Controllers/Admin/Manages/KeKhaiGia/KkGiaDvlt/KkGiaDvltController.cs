@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
@@ -61,7 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
                         if (string.IsNullOrEmpty(Trangthai))
                         {
-                            Trangthai = "CC";
+                            Trangthai = "all";
                         }
 
                         if (string.IsNullOrEmpty(Nam))
@@ -83,7 +84,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             var cskd = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv).ToList();
                             if (cskd.Count > 0)
                             {
-                                var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd && t.Trangthai == Trangthai).ToList();
+                                // var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd).ToList();
+                                 var dsDonViCQ = _db.DsDonVi;
+                                var qModel = _db.KkGia.AsQueryable(); // Không cần ép kiểu, chỉ cần sử dụng truy vấn EntityQueryable
+
+                                qModel = qModel.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd);
+                                if (Trangthai != "all")
+                                    qModel = qModel.Where(x => x.Trangthai == Trangthai);
+
+                                var model = qModel.ToList();
+                                foreach (var item in model)
+                                {
+                                    item.Tencqcq = "";
+                                    var cqcq = dsDonViCQ.FirstOrDefault(x=>x.MaDv == item.Macqcq);
+                                    if (cqcq != null)
+                                        item.Tencqcq = cqcq.TenDv;
+                                }
 
                                 if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                                 {
@@ -96,7 +112,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                                 var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
                                 ViewData["check_tt"] = check_tt;
                                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                                ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                                ViewData["Cqcq"] = dsDonViCQ;
+                                ViewData["Trangthai"] = Trangthai;
+                                //ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                                 ViewData["Cskd"] = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);
                                 ViewData["Madv"] = Madv;
                                 ViewData["Macskd"] = Macskd;

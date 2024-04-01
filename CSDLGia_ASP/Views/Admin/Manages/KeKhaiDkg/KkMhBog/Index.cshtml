@@ -164,7 +164,11 @@
                                     <span><b>@Helpers.ConvertDateToStr(item.Ngaynhan)</b></span>
                                 }
                             </td>
-                            <td style="text-align: left"></td>
+                            <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                    @dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+                            </td>
                             <td>
                                 <a asp-controller="KkMhBog" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                         target="_blank">

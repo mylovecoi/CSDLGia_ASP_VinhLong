@@ -162,12 +162,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     Created_at = model.Created_at,
                 };
 
-                var model_ct = from com_ct in _db.CompanyLvCc.Where(t => t.Mahs == model_new.Mahs && t.Madv == model_new.Madv)
+              
+
+                
+                /* 31/03/2024 
+                Kiểm tra trong TtDnTdCt
+                -1. Đã có bỏ qua ko thêm vào bảng TtDnTdCt
+                -2. Chưa có thì thêm từ CompanyLvCc vào TtDnTdCt
+                */
+                var ttThayDoi = _db.TtDnTdCt.Where(t=>t.Madv == model_new.Madv);
+                if (!ttThayDoi.Any())
+                {
+                    foreach (var item in _db.CompanyLvCc.Where(t => t.Madv == model_new.Madv))
+                    {
+                        var model_ttdntd_ct = new TtDnTdCt
+                        {
+                            Madv = item.Madv,
+                            Manghe = item.Manghe,
+                            Manganh = item.Manganh,
+                            Macqcq = item.Macqcq,
+                            Trangthai = item.Trangthai,
+                            Created_at = DateTime.Now,
+                        };
+                        _db.TtDnTdCt.Add(model_ttdntd_ct);                        
+                    }
+                    _db.SaveChanges();
+                }
+                var model_ct = from com_ct in _db.TtDnTdCt.Where(t => t.Madv == model_new.Madv)
                                join nghe in _db.DmNgheKd on com_ct.Manghe equals nghe.Manghe
                                select new VMCompanyLvCc
                                {
                                    Id = com_ct.Id,
-                                   Mahs = com_ct.Mahs,
                                    Manghe = com_ct.Manghe,
                                    Macqcq = com_ct.Macqcq,
                                    Madv = com_ct.Madv,
@@ -175,23 +200,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                    Tennghe = nghe.Tennghe,
                                    Trangthai = com_ct.Trangthai
                                };
-
                 model_new.VMCompanyLvCc = model_ct.ToList();
 
-                foreach (var item in model_new.VMCompanyLvCc)
-                {
-                    var model_ttdntd_ct = new TtDnTdCt
-                    {
-                        Madv = item.Madv,
-                        Manghe = item.Manghe,
-                        Manganh = item.Manganh,
-                        Macqcq = item.Macqcq,
-                        Trangthai = item.Trangthai,
-                        Created_at = DateTime.Now,
-                    };
-                    _db.TtDnTdCt.Add(model_ttdntd_ct);
-                    _db.SaveChanges();
-                }
 
                 ViewData["Madv"] = Madv;
                 ViewData["DmNganhKd"] = _db.DmNganhKd;

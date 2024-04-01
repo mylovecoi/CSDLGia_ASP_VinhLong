@@ -23,7 +23,7 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO KÊ KHAI, ĐĂNG KÝ GIÁ MẶT HÀNG BÌNH ỔN GIÁ</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">DANH SÁCH ĐƠN VỊ KÊ KHAI GIÁ CÁC MẶT HÀNG BÌNH ỔN GIÁ</p>
 @if ((string)ViewData["time"] == "ngay")
 {
     <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
@@ -41,11 +41,11 @@ else
         <tr>
             <th width="2%" style="text-align: center">STT</th>
             <th style="text-align: center">Doanh nghiệp</th>
-            <th style="text-align: center">Số công văn</th>
-            <th style="text-align: center">Ngày<br />kê khai</th>
+            <th style="text-align: center">Địa chỉ</th>
+            <th style="text-align: center">Điện thoại</th>
+            <th style="text-align: center">Lĩnh vực</th>
+            <th style="text-align: center">Ngày nhận hồ sơ</th>
             <th style="text-align: center">Ngày thực hiện<br />mức giá</th>
-            <th style="text-align: center">Ngày chuyển hồ sơ</th>
-            <th style="text-align: center">Xét duyệt</th>
         </tr>
     </thead>
     <tbody>
@@ -54,18 +54,14 @@ else
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
-                    @item.Tendn<br />
-                    <b>Mã số thuế: </b>@item.Madv<br />
-                    <b>Mã hồ sơ: </b>@item.Mahs
+                    <a asp-controller="KkMhBog" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Tendn</a>
+                    
                 </td>
-                <td style="text-align: center">@item.Socv</td>
-                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                <td>@item.Diachi</td>
+                <td class="text-center">@item.Tel</td>
+                <td>@item.Tennghe</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaychuyen)</td>
-                <td style="text-align: center">
-                    Số hồ sơ nhận: @item.Sohsnhan<br />
-                    Ngày nhận: @Helpers.ConvertDateToStr(item.Ngaynhan)
-                </td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>               
             </tr>
         }
         <tr>

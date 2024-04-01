@@ -33,13 +33,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocSinhHoat")]
         [HttpGet]
-        public IActionResult Index(string Madv, int Nam)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.thongtin", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -48,36 +48,73 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                        TenDv = dv.TenDv,
                                        MaDiaBan = dv.MaDiaBan,
                                        MaDv = dv.MaDv,
-                                   });
+                                   }).ToList();
 
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    if (dsdonvi.Count > 0)
                     {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                        {
+                            Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        }
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh> model = _db.GiaNuocSh;
+
+                        if (Madv != "all")
+                        {
+                            model = model.Where(t => t.Madv == Madv);
+                        }
+
+                        if (string.IsNullOrEmpty(Nam))
+                        {
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                        }
+                        else
+                        {
+                            if (Nam != "all")
+                            {
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                            }
+                        }
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
+
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["Nam"] = Nam;
+                        ViewData["Madv"] = Madv;
+                        ViewData["TenDv"] = Madv != "all" ? dsdonvi.First(t => t.MaDv == Madv).TenDv : "all";
+                        ViewData["Title"] = " Thông tin giá nước sạch sinh hoạt";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgnsh";
+                        ViewData["MenuLv3"] = "menu_dgnsh_tt";
+                        return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Index.cshtml", model);
+                    }
+                    else
+                    {
+                        ViewData["Messages"] = "Thông tin giá nước sạch sinh hoạt";
+                        ViewData["Title"] = " Thông tin giá nước sạch sinh hoạt";
+                        return View("Views/Admin/Error/ThongBaoLoi.cshtml");
                     }
 
-                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh> model = _db.GiaNuocSh;
-                    if (Nam != 0)
-                    {
-                        model = model.Where(t => t.Thoidiem.Year == Nam);
-                    }
-                    if (Madv != "all")
-                    {
-                        model = _db.GiaNuocSh.Where(t => t.Madv == Madv);
-                    }
 
-                    ViewData["DsDonVi"] = dsdonvi;
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Nam"] = Nam;
-                    ViewData["Madv"] = Madv;
-                    ViewData["TenDv"] = Madv != "all" ? dsdonvi.First(t => t.MaDv == Madv).TenDv : "all";
-                    ViewData["Title"] = " Thông tin giá nước sạch sinh hoạt";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/Index.cshtml", model);
                 }
                 else
                 {
@@ -736,7 +773,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocSh/Print")]
         [HttpPost]
-        public IActionResult PrintSearch(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, 
+        public IActionResult PrintSearch(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
                                         double DonGiaTu_Search, double DonGiaDen_Search, string Doituongsd_Search)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -769,7 +806,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     }
 
 
-                   
+
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/TimKiem/Result.cshtml", model);
                 }
                 else

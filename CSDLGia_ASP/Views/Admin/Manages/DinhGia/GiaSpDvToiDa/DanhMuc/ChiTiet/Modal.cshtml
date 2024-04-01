@@ -5,7 +5,7 @@
 
 <!--Create Modal-->
 <form method="post" id="frm_chitiet" asp-controller="GiaSpDvToiDaDm" asp-action="Store">
-    <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade kt_select2_modal" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -32,13 +32,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-4">
-                            <label class="form-control-label">Đơn vị tính</label>
+                        <div class="col-xl-4">                            
                             <div class="form-group fv-plugins-icon-container">
-                                <label>STT báo cáo</label>
-                                <input type="text" id="Dvt" name="Dvt" class="form-control" />
+                                <label>Đơn vị tính</label>
+                                <select class="form-control kt_select2_1_modal" id="Dvt" name="Dvt">
+                                    @foreach (var item in dsdvt)
+                                    {
+                                        <option value="@item.Dvt">@item.Dvt</option>
+                                    }
+                                </select>                               
                             </div>
                         </div>
+
                         <div class="col-xl-4">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>STT báo cáo</label>
@@ -105,9 +110,9 @@
                 var form = $('#frm_chitiet');
                 form.find("[name='Id']").val(data.id);
                 form.find("[name='Tenspdv']").val(data.tenspdv);
-                form.find("[name='Dvt']").val(data.dvt);
+                form.find("[name='Dvt']").val(data.dvt).trigger('change');;
                 form.find("[name='HienThi']").val(data.hienThi);
-                form.find("[name='SapXep']").val(data.sapXep);
+                form.find("[name='SapXep']").val(data.sapxep);
             }
         })
     }
@@ -117,7 +122,7 @@
         var form = $('#frm_chitiet');
         form.find("[name='Id']").val(id_edit);
         form.find("[name='Tenspdv']").val("");
-        form.find("[name='Dvt']").val(data.dvt);
+        //form.find("[name='Dvt']").val(data.dvt);
         form.find("[name='HienThi']").val("");
         form.find("[name='SapXep']").val(1);
 
@@ -141,40 +146,5 @@
                 }
             }
         })
-    }
-
-    function Excel() {
-        if ($('#file_excel').val() == '') {
-            toastr.error("File đính kèm không được để trống!!!", "Lỗi!");
-        } else {
-            var file = new FormData();
-            file.append("Ten", $("#Ten_excel").val());
-            file.append("Mota", $("#Mota_excel").val());
-            file.append("Gia", $("#Gia_excel").val());
-            file.append("Dvt", $("#Dvt_excel").val());
-            file.append("Phanloai", $("#Phanloai_excel").val());
-            file.append("Hientrang", $("#Hientrang_excel").val());
-            file.append("FormFile", $("#file_excel")[0].files[0]);
-            file.append("Sheet", $("#sheet_excel").val());
-            file.append("LineStart", $("#linestart_excel").val());
-            file.append("LineStop", $("#linestop_excel").val());
-            file.append("Manhom", $("#Manhom").val());
-
-            $.ajax({
-                url: '/GiaSpDvToiDaDmCt/Excel',
-                type: 'POST',
-                data: file,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success("Thêm mới thành công!!!", "Thành công!");
-                        location.reload();
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
-    }
+    }    
 </script>

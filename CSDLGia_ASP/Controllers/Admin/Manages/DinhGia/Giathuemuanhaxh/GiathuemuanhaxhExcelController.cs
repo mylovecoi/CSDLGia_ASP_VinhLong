@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,17 +57,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                         _db.SaveChanges();
                     }
 
-                    var model = new GiaThueMuaNhaXhCt
+                    var model = new VMImportExcel
                     {
-                        Maso = "1",
-                        Dvthue = "2",
-                        Dvt = "3",
-                        Dongia = 4,
-                        Dongiathue = 5,
+
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 10000,
-                        Madv = Madv
+                        MaDv = Madv,
+
                     };
 
                     ViewData["MenuLv1"] = "menu_dg";
@@ -89,13 +87,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaThueMuaNhaXhCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(VMImportExcel request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<GiaThueMuaNhaXhCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
+                string Mahs = request.MaDv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 using (var stream = new MemoryStream())
                 {
                     await request.FormFile.CopyToAsync(stream);
@@ -105,30 +104,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             list_add.Add(new GiaThueMuaNhaXhCt
                             {
                                 Mahs = Mahs,
+                                Madv = request.MaDv,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
 
-                                Maso = worksheet.Cells[row, Int16.Parse(request.Maso)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Maso)].Value.ToString().Trim() : "",
+                                Tennha = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                Dvthue = worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvthue)].Value.ToString().Trim() : "",
+                                Dvthue = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
 
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 3].Value != null ?
+                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                Dongia = worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongia.ToString())].Value) : 0,
+                                Dongia = worksheet.Cells[row, 4].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, 4].Value) : 0,
 
-                                Dongiathue = worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Dongiathue.ToString())].Value) : 0,
+                                Dongiathue = worksheet.Cells[row, 5].Value != null ?
+                                           Convert.ToInt32(worksheet.Cells[row, 5].Value) : 0,
+                                Phanloai = worksheet.Cells[row, 6].Value != null ?
+                                            worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                             });
                         }
                     }
@@ -138,7 +139,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                 _db.SaveChanges();
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
                 {
-                    Madv = Madv,
+                    Madv = request.MaDv,
                     Thoidiem = DateTime.Now,
                     Mahs = Mahs
                 };

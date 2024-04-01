@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh>
@@ -89,17 +90,9 @@
                     {
                         <select class="form-control select2basic" id="MaDv_Search" name="MaDv_Search">
                             <option value="all">--Tất cả---</option>
-                            @foreach (var db in dsdiaban)
+                            @foreach (var item in dsdonvi)
                             {
-                                <optgroup label="@db.TenDiaBan">
-                                    @{
-                                        var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                    }
-                                    @foreach (var item in dv)
-                                    {
-                                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                    }
-                                </optgroup>
+                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                             }
                         </select>
                     }
@@ -162,15 +155,8 @@
                             </td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
-                                {
-                                    @foreach (var dv in dsdonvi)
-                                    {
-                                        @if (item.Macqcq == dv.MaDv)
-                                        {
-                                            @dv.TenDv
-                                        }
-                                    }
-                                }
+                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
                             </td>
                             <td>
                                 
@@ -278,18 +264,10 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>

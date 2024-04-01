@@ -27,13 +27,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.bc", "Index"))
                 {
-                    ViewData["Nam"] = DateTime.Now.Year;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
+                    ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
+
                     ViewData["Dsdiaban"] = _db.DsDiaBan;
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang == "TONGHOP");
                     ViewData["Title"] = "Báo cáo tổng hợp tài sản thẩm định giá";
                     ViewData["MenuLv1"] = "menu_tdg";
                     ViewData["MenuLv2"] = "menu_tdg_bc";
-                    ViewData["DanhSachHoSo"] = _db.ThamDinhGia.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.ThamDinhGia.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
                     return View("Views/Admin/Manages/ThamDinhGia/BaoCao/Index.cshtml");
                 }
                 else
@@ -159,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaNhom, string PhanLoaiHoSo)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -187,14 +192,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    //if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop);}
+
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
-
+      
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.ThamDinhGia.Where(t => list_mahs.Contains(t.Mahs));
-
+          
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;

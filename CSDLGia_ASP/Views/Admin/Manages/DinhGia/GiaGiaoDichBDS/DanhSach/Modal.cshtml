@@ -1,6 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var nhomtn = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["NhomTn"];
 }
 <!--Create Modal-->
@@ -34,7 +35,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option value="all" >--Chọn tất cả--</option>
+                                    <option value="all">--Chọn tất cả--</option>
                                     @foreach (var nhom in nhomtn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
@@ -73,18 +74,10 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>
@@ -129,7 +122,7 @@
 </div>
 
 <script>
-    function SetDelete(id,mota) {
+    function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").value = mota;
     }
