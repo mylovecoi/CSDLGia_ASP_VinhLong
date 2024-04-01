@@ -1,0 +1,147 @@
+﻿@{
+    Layout = "_LayoutCongBo.cshtml";
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Madv, #Nam').change(function () {
+                var current_path_url = '/CongBo/TPCNTE6T?';
+                var madv = '&Madv=' + $('#Madv').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var url = current_path_url + madv + nam;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        @*<marquee>
+        <b style="color: #ff0000">Lưu ý:</b> Để thêm mới hồ sơ kê khai giá, các hồ sơ đã tạo từ trước cần được duyệt(trạng thái hồ sơ đã duyệt). Vui lòng kiểm tra lại trạng thái của hồ sơ đã tạo.
+        </marquee>*@
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin kê khai giá thực phẩm chức năng cho trẻ em 6 tuổi
+            </h3>
+        </div>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        @{
+                            var nam_start = DateTime.Now.Year - 5;
+                            var nam_stop = DateTime.Now.Year + 1;
+                            for (var i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        @foreach (var item in dsdonvi)
+                        {
+                            <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>&emsp;@item.Tendn</!option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">#</th>
+                    <th>Ngày kê khai</th>
+                    <th>Ngày thực hiện<br />mức giá kê khai</th>
+                    <th>Số công văn</th>
+                    <th>Số công văn<br />liền kề</th>
+                    <th>Trạng thái</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaynhap)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                            <td class="text-center active">@item.Socv</td>
+                            <td style="text-align: center">@item.Socvlk</td>
+
+                            <td style="text-align: center">
+                                @if (item.Trangthai == "CC")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ chuyển</span>
+                                }
+                                @if (item.Trangthai == "CD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Chờ duyệt</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "CN")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chờ nhận</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                                @if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
+                                }
+                                @if (item.Trangthai == "DD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Đã duyệt</span>
+                                    <br />
+                                    <span>Thời gian chuyển: <br /><b>@Helpers.ConvertDateToStr(item.Ngaychuyen)</b></span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="KkGiaTpcn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
