@@ -38,12 +38,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.baocao", "Index"))
                 {
-                    ViewData["Nam"] = DateTime.Now.Year;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
+                    ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
+
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_hhdvcn";
                     ViewData["MenuLv3"] = "menu_hhdvcn_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaHhDvCn.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.GiaHhDvCn.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
                     ViewData["DanhSachNhom"] = _db.GiaHhDvCnNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvCn/BaoCao/Index.cshtml");
                 }
