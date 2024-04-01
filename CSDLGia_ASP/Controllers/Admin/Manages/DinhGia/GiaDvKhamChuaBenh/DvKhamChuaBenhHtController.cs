@@ -74,6 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         }
 
                         var model_join = from dg in model
+                                         join dv in _db.DsDonVi on dg.Madv equals dv.MaDv
                                          select new VMDinhGiaDvKcb
                                          {
                                              Id = dg.Id,
@@ -90,6 +91,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                              Trangthai_h = dg.Trangthai_h,
                                              Thongtin = dg.Thongtin,
                                              Level = getdonvi.Level,
+                                             Tendv = dv.TenDv
                                          };
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
