@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -50,25 +50,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh> model = _db.GiaThueMuaNhaXh;
+
+                        if (Madv != "all")
                         {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
+                            model = model.Where(t => t.Madv == Madv);
                         }
 
-                        var model = _db.GiaThueMuaNhaXh.Where(t => t.Madv == Madv).ToList();
-                      
                         if (Nam != 0)
                         {
                             model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
-                        }                           
-                     
+                        }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
@@ -78,6 +76,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
