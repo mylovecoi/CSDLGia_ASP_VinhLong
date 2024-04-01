@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -229,6 +230,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                             item.Trangthai = "XD";
                         }
                     }
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Thêm mới",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
                     _db.GiaVatLieuXayDungCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
@@ -310,6 +321,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     model.Ghichu = request.Ghichu;
                     model.Ipf1 = request.Ipf1;
                     model.Updated_at = DateTime.Now;
+
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Cập nhật",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
@@ -429,6 +450,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         model.Thoidiem_h = DateTime.Now;
                         model.Trangthai_h = "HT";
                     }
+
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Hoàn thành",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
 
