@@ -10,6 +10,7 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 {
@@ -190,6 +191,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     };
                     model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == Mahs).ToList();
 
+                    
+                    _db.SaveChanges();
+
                     ViewData["Title"] = "Giá phí, lệ phí";
                     ViewData["MenuLv1"] = "menu_giakhac";
                     ViewData["MenuLv2"] = "menu_plp";
@@ -256,6 +260,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     };
 
                     _db.PhiLePhi.Add(mPhiLePhi);
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = mPhiLePhi.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "Thêm mới"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
 
                     _db.SaveChanges();
 
@@ -342,6 +355,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     model.Thongtin = request.Thongtin;
                     model.Ghichu = request.Ghichu;
                     model.Updated_at = DateTime.Now;
+
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "Cập nhật"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
+                    _db.SaveChanges();
 
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
@@ -469,6 +494,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
                     model.Macqcq = macqcq_chuyen;
                     model.Trangthai = "HT";
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "HT"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
                     if (chk_dvcq != null && chk_dvcq.Level == "T")
                     {
                         model.Madv_t = macqcq_chuyen;

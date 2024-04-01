@@ -37,32 +37,36 @@
                     <td style="text-align: center">
                         @item.TenDangNhap
                     </td>
-                    <td style="text-align: center">@item.ThoiGian</td>
+                    <td style="text-align: center">@Helpers.ConvertDateTimeToStr(item.ThoiGian)</td>
                     <td style="text-align: center">
                         @if (item.TrangThai == "CHT")
                         {
                             <span>Chưa hoàn thành</span>
                         }
-                        @if (item.TrangThai == "BTL")
+                        else if (item.TrangThai == "BTL")
                         {
                             <span>Bị trả lại</span>
                         }
-                        @if (item.TrangThai == "HT")
+                        else if (item.TrangThai == "HT")
                         {
 
                             <span>Đã hoàn thành và gửi đi</span>
                         }
-                        @if (item.TrangThai == "CB")
+                        else if (item.TrangThai == "CB")
                         {
                             <span>Công bố</span>
                         }
-                        @if (item.TrangThai == "HCB")
+                        else if (item.TrangThai == "HCB")
                         {
                             <span>Hủy công bố</span>
                         }
-                        @if (item.TrangThai == "CCB")
+                        else if (item.TrangThai == "CCB")
                         {
                             <span>Chưa công bố</span>
+                        }
+                        else 
+                        {
+                            <span>@item.TrangThai</span>
                         }
                     </td>
                    

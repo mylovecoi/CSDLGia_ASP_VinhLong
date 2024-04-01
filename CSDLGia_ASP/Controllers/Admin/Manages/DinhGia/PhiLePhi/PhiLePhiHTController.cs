@@ -285,6 +285,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         model.Trangthai_ad = null;
                     }
 
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "Bị trả lại"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
 
@@ -324,6 +333,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         model.Trangthai_t = "CB";
                     }
 
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "Công bố"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "PhiLePhiHT");
@@ -361,6 +379,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         model.Thoidiem_t = DateTime.Now;
                         model.Trangthai_t = "HCB";
                     }
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "Hủy công bố"
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
 
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
