@@ -46,15 +46,12 @@
             {
                 @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
                 {
-                    @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
-                    {
-                        <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                            <i class="la la-plus"></i>Thêm mới
-                        </button>
-                        <button type="button" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
-                            <i class="la la-plus"></i>Nhận dữ liệu
-                        </button>
-                    }
+                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
+                    <button type="button" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
+                        <i class="la la-plus"></i>Nhận dữ liệu
+                    </button>
                 }
             }
         </div>
@@ -136,6 +133,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
 
 
 
