@@ -35,11 +35,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
-                    ViewData["Nam"] = DateTime.Now.Year;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
+                    ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
+
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaSpDvCuThe.Where(t => t.Thoidiem.Year == DateTime.Now.Year);
+                    ViewData["DanhSachHoSo"] = _db.GiaSpDvCuThe.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+
                     ViewData["DanhSachNhom"] = _db.GiaSpDvCuTheNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/BaoCao/Index.cshtml");
                 }
