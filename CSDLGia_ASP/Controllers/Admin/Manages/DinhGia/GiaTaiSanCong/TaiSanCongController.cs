@@ -36,49 +36,61 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                                    select new VMDsDonVi
                                    {
                                        Id = dv.Id,
+                                       MaDiaBan = dv.MaDiaBan,
                                        TenDiaBan = db.TenDiaBan,
-                                       MaDv = dv.MaDv
+                                       MaDv = dv.MaDv,
+                                       TenDv = dv.TenDv,
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                         }
-                        else
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong> model = _db.GiaTaiSanCong;
+
+                        if (Madv != "all")
                         {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
+                            model = model.Where(t => t.Madv == Madv);
                         }
 
-
-                        var model = _db.GiaTaiSanCong.Where(t => t.Madv == Madv).ToList();
                         if (string.IsNullOrEmpty(Nam))
                         {
-                            model = model.ToList();
-
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
                         else
                         {
-
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                             }
                         }
 
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-
                         ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_tsc";
