@@ -208,13 +208,11 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.nhaosinhvien.baocao", Name = "ĐG - Giá cho thuê nhà ở sinh viên - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds", Name = "ĐG - Giá giao dịch bất động sản" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", Name = "ĐG - Giá giao dịch bất động sản" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", Name = "ĐG - Giá giao dịch bất động sản - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", Name = "ĐG - Giá giao dịch bất động sản - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", Name = "ĐG - Giá giao dịch bất động sản - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.xetduyet", Name = "ĐG - Giá giao dịch bất động sản - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.timkiem", Name = "ĐG - Giá giao dịch bất động sản - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giaodichbds.baocao", Name = "ĐG - Giá giao dịch bất động sản - Báo cáo" });
-
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi", Name = "ĐG - Giá siêu thị" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.danhmucsieuthi", Name = "ĐG - Giá siêu thị - Danh mục siêu thị" });
@@ -389,12 +387,11 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.datcuthe.timkiem", Name = "ĐG - Giá đất cụ thể - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.datcuthe.baocao", Name = "ĐG - Giá đất cụ thể - Báo cáo" });
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.danhmuc", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.baocao", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Báo cáo" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd", Name = "ĐG - Khung giá đất" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.thongtin", Name = "ĐG - Khung giá đất - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.xetduyet", Name = "ĐG - Khung giá đất - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.timkiem", Name = "ĐG - Khung giá đất- Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.baocao", Name = "ĐG - Khung giá đất - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb", Name = "Giá đất địa bàn" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.thongtu", Name = "Giá đất địa bàn - Thông tư" });
@@ -403,17 +400,21 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.timkiem", Name = "Giá đất địa bàn - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giadatdb.baocao", Name = "Giá đất địa bàn - Báo cáo" });
 
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.danhmuc", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.baocao", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Báo cáo" });
+            
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat", Name = "ĐG - Giá trúng thầu quyền sử dụng đất" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.thongtin", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.timkiem", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.baocao", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Báo cáo" });
 
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd", Name = "ĐG - Khung giá đất" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.thongtin", Name = "ĐG - Khung giá đất - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.xetduyet", Name = "ĐG - Khung giá đất - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.timkiem", Name = "ĐG - Khung giá đất- Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.khunggd.baocao", Name = "ĐG - Khung giá đất - Báo cáo" });
+            
 
 
             // Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu
