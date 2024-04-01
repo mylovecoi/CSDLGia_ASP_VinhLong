@@ -2,7 +2,7 @@
     Layout = null;
 }
 <!--Đất cụ thể(đất phân loại)-->
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_dgdct">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -15,7 +15,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.thongtin", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgdct_tt">
                         <a asp-controller="GiaDatPl" asp-action="Index" class="menu-link">
@@ -27,7 +27,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.xetduyet", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.xetduyet", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgdct_ht">
                         <a asp-controller="GiaDatPlHt" asp-action="Index" class="menu-link">
@@ -39,7 +39,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.timkiem", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgdct_tk">
                         <a asp-controller="GiaDatPl" asp-action="Search" class="menu-link">
@@ -51,7 +51,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.datcuthe.baocao", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgdct_bc">
                         <a asp-controller="GiaDatPlBc" asp-action="Index" class="menu-link">
@@ -68,7 +68,7 @@
 }
 
 <!--Khung giá đất-->
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -81,7 +81,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd.thongtin", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd_tt">
                         <a asp-controller="GiaKhungGiaDat" asp-action="Index" class="menu-link">
@@ -93,7 +93,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd.xetduyet", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.xetduyet", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd_xd">
                         <a asp-controller="GiaKhungGiaDatXd" asp-action="Index" class="menu-link">
@@ -105,7 +105,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd.timkiem", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.timkiem", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd_tk">
                         <a asp-controller="GiaKhungGiaDat" asp-action="Search" class="menu-link">
@@ -117,7 +117,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.khunggd.baocao", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dgkhunggd_bc">
                         <a asp-controller="GiaKhungGiaDatBc" asp-action="Index" class="menu-link">
@@ -225,7 +225,7 @@
 }
 
 <!--Giá đất giao dịch thực tế trên thị trường-->
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -238,7 +238,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.danhmuc", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.danhmuc", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong_dm">
                         <a asp-controller="GiaGiaoDichDatNhom" asp-action="Index" class="menu-link">
@@ -250,7 +250,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.thongtin", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong_tt">
                         <a asp-controller="GiaGiaoDichDat" asp-action="Index" class="menu-link">
@@ -262,7 +262,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.xetduyet", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong_xd">
                         <a asp-controller="GiaGiaoDichDatXd" asp-action="Index" class="menu-link">
@@ -274,7 +274,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.timkiem", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong_tk">
                         <a asp-controller="GiaGiaoDichDat" asp-action="Search" class="menu-link">
@@ -286,7 +286,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giagiaodichdattrenthitruong.baocao", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_dg_giaodichdattrenthitruong_bc">
                         <a asp-controller="GiaGiaoDichDatBc" asp-action="Index" class="menu-link">
@@ -303,7 +303,7 @@
 }
 
 <!-- Giá Trúng thầu sd đất  -->
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.daugiadat", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_dgd">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -317,7 +317,7 @@
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.thongtin", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.daugiadat.thongtin", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_giadgd_tt">
                         <a asp-controller="GiaTrungThauDat" asp-action="Index" class="menu-link">
@@ -329,7 +329,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.xetduyet", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.daugiadat.xetduyet", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_giadgd_ht">
                         <a asp-controller="GiaTrungThauDatHt" asp-action="Index" class="menu-link">
@@ -341,7 +341,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.timkiem", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.daugiadat.timkiem", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_giadgd_tk">
                         <a asp-controller="GiaTrungThauDat" asp-action="Search" class="menu-link">
@@ -353,7 +353,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.baocao", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.nuocsh.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_giadgd_bc">
                         <a asp-controller="GiaTrungThauDatBc" asp-action="Index" class="menu-link">
