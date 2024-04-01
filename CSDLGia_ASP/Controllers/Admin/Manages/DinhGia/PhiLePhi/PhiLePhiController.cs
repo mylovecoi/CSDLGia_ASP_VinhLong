@@ -51,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
 
-                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb> model = _db.GiaDvKcb;
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi> model = _db.PhiLePhi;
 
                         if (Madv != "all")
                         {
