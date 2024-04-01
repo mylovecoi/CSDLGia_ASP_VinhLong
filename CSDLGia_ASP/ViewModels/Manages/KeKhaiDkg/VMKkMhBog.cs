@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg
 {
@@ -71,6 +72,11 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg
         public string Tendn { get; set; }
         public string Tendb { get; set; }
         public string Level { get; set; }
+        public string Diachi { get; set; }
+        public string Tel { get; set; }
+
         public List<KkMhBogCt> KkMhBogCt { get; set; }
+       
+
     }
 }

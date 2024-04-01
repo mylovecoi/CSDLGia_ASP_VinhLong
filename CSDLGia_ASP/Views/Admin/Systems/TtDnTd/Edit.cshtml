@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -11,111 +11,111 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged4.init();
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin doanh nghiệp<small>&nbsp;chỉnh sửa</small><br />
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin doanh nghiệp<small>&nbsp;chỉnh sửa</small><br />
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="TtDnTd" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_update">
-            <div class="card-body">
-                <div class="row">
-                    <input asp-for="Madiaban">
-                    <input asp-for="Mahs">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Tên doanh nghiệp*</label>
-                            <input type="text" class="form-control" asp-for="Tendn" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Mã số thuế</label>
-                            <input type="text" class="form-control" asp-for="Madv" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số điện thoại trụ sở chính</label>
-                            <input type="text" class="form-control" asp-for="Tel" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Số fax trụ sở chính</label>
-                            <input type="text" class="form-control" asp-for="Fax" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Địa chỉ trụ sở</label>
-                            <input type="text" class="form-control" asp-for="Diachi" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" asp-for="Email" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Chức danh</label>
-                            <input type="text" class="form-control" asp-for="Chucdanh" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Họ tên người ký</label>
-                            <input type="text" class="form-control" asp-for="Nguoiky" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Địa danh</label>
-                            <input type="text" class="form-control" asp-for="Diadanh" />
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Giấy đăng ký kinh doanh</label><br />
-                            <input type="file" asp-for="Giayphepkdupload" />
-                        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="TtDnTd" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_update">
+        <div class="card-body">
+            <div class="row">
+                <input asp-for="Madiaban" type="hidden" />
+                <input asp-for="Mahs" type="hidden" />
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Tên doanh nghiệp*</label>
+                        <input type="text" class="form-control" asp-for="Tendn" />
                     </div>
                 </div>
-
-                @await Html.PartialAsync("~/Views/Admin/Systems/TtDnTd/Detail.cshtml")
-
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Mã số thuế</label>
+                        <input type="text" class="form-control" asp-for="Madv" readonly />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số điện thoại trụ sở chính</label>
+                        <input type="text" class="form-control" asp-for="Tel" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số fax trụ sở chính</label>
+                        <input type="text" class="form-control" asp-for="Fax" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa chỉ trụ sở</label>
+                        <input type="text" class="form-control" asp-for="Diachi" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" asp-for="Email" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Chức danh</label>
+                        <input type="text" class="form-control" asp-for="Chucdanh" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Họ tên người ký</label>
+                        <input type="text" class="form-control" asp-for="Nguoiky" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa danh</label>
+                        <input type="text" class="form-control" asp-for="Diadanh" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Giấy đăng ký kinh doanh</label><br />
+                        <input type="file" asp-for="Giayphepkdupload" />
+                    </div>
+                </div>
             </div>
-            <div class="card-footer" style="text-align:center">
-                <a asp-controller="TtDnTd" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
-                    <i class="la la-reply"></i>Quay lại
-                </a>&ensp;
-                <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-                <button type="button" class="btn btn-primary mr-2" onclick="Validate()"><i class="la la-check"></i>Cập nhật</button>
-            </div>
-        </form>
-        <!--end::Form-->
-    </div>
-    <script>
-        function Validate() {
-            if ($('#Tendn').val().trim() == '') {
-                toastr.error("Tên doanh nghiệp không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_update").submit();
-            }
+
+            @await Html.PartialAsync("~/Views/Admin/Systems/TtDnTd/Detail.cshtml")
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="TtDnTd" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
+            <button type="button" class="btn btn-primary mr-2" onclick="Validate()"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function Validate() {
+        if ($('#Tendn').val().trim() == '') {
+            toastr.error("Tên doanh nghiệp không được để trống!", "Lỗi!!!")
+        } else {
+            document.getElementById("frm_update").submit();
         }
-    </script>
-    @section Scripts{
+    }
+</script>
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
