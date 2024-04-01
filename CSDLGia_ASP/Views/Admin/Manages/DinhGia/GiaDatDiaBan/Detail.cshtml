@@ -2,23 +2,6 @@
 @{
     var mahs = ViewData["Mahs"];
 }
-@*Khi sử dụng chức năng edit thì dùng*@
-@* <div class="col-md-12">
-
-
-    <div class="card-toolbar">
-        <button type="button" data-target="#Modal_Create" data-toggle="modal" class="btn btn-light-primary">
-            <i class="la la-plus"></i>Thêm mới
-        </button>
-        <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
-            <i class="la la-file-excel-o"></i>Nhận dữ liệu
-        </button>&ensp;
-        <button type="button" data-target="#Delete_Modal2" data-toggle="modal" class="btn btn-light-warning">
-            <i class="la la-lock"></i>Xóa chi tiết
-        </button>&ensp;
-    </div>
-
-</div>  *@
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -41,6 +24,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>STT</th>
+                    <th>Loại đất</th>
                     <th>Tên đường phố</th>
                     <th>Loại đường</th>
                     <th>Điểm đầu</th>
@@ -65,6 +49,7 @@
                             <tr style="text-align:center">
 
                                 <td>@item.Sapxep</td>
+                                <td class="active">@item.Maloaidat</td>
                                 <td class="active">@item.Mota</td>
                                 <td class="active">@item.Loaiduong</td>
                                 <td class="active">@item.Diemdau</td>

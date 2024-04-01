@@ -74,7 +74,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 var dmloaidat = _db.DmLoaiDat.ToList();
                 foreach (var item in dmloaidat)
                 {
-                    /*result+="<option value ='"+@item.Maloaidat+"'>"+@item.Loaidat+"</ option >";*/
                     result += "<option value='" + item.Maloaidat + "' " + ((string)model.Maloaidat == item.Maloaidat ? "selected" : "") + ">" + item.Loaidat + "</option>";
                 }
                 result += "</select>";

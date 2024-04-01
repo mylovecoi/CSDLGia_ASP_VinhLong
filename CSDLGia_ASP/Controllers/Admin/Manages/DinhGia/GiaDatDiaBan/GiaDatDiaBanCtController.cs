@@ -23,14 +23,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv,string Mahs, string Mota,  string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, 
+        public JsonResult Store(string MaDv,string Mahs, string Maloaidat, string Mota,  string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok, 
             Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
         {
             // Tạo 1 bản nghi mới trang thái CXD nếu thêm chi tiết xong quay lại
             var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
             {
                 Mahs = Mahs,
-                //Maloaidat = Maloaidat,
+                Maloaidat = Maloaidat,
                 //Maxp = Maxp,
                 //Khuvuc = Khuvuc,
                 HienThi = Hienthi,
@@ -98,25 +98,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
                 result += "<div class='row'>";
 
-                //result += "<div class='col-xl-6'>";
-                //result += "<div class='form-group fv-plugins-icon-container'>";
-                //result += "<label>Loại đất</label>";
-                //result += "<select id='maloaidat_edit' name='maloaidat_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
-                //var dsloaidat = _db.DmLoaiDat.ToList();
-                //foreach (var item in dsloaidat)
-                //{
-                //    result += "<option value ='" + @item.Maloaidat + "'>" + @item.Loaidat + "</ option >";
-                //}
-                //result += "</select>";
-                //result += "</div>";
-                //result += "</div>";
-
-                //result += "<div class='col-xl-6'>";
-                //result += "<div class='form-group fv-plugins-icon-container'>";
-                //result += "<label>Xã phường</label>";
-                //result += "<input type='text' id='xaphuong_edit' name='xaphuong_edit' value='" + model.Maxp + "' class='form-control'>";
-                //result += "</div>";
-                //result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Loại đất</label>";
+                result += "<select id='maloaidat_edit' name='maloaidat_edit' class='form-control select2basic' tabindex='-1' title=''>";
+                var dsloaidat = _db.DmLoaiDat.ToList();
+                foreach (var item in dsloaidat)
+                {
+                    result += "<option value ='" + @item.Maloaidat + "' " + ((string)model.Maloaidat == item.Maloaidat ? "selected" : "") + ">" + @item.Loaidat + "</ option >";
+                }
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -218,15 +211,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Loaiduong, string Mota, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, 
+        public JsonResult Update(int Id, string Loaiduong, string Maloaidat, string Mota, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, 
             Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
         {
-            //Tìm id cần sửa
-            //Update dữ liệu mới
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             model.Id = Id;
-            //model.Maloaidat = Maloaidat;
-            //model.Maxp = Maxp;
+            model.Maloaidat = Maloaidat;
             model.HienThi = Hienthi;
             model.Sapxep = SapXep;
             model.Mota = Mota;
@@ -243,7 +233,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             _db.GiaDatDiaBanCt.Update(model);
             _db.SaveChanges();
 
-            //Trả về kết quả với dữ liệu mới
             string result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -349,8 +338,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             result += "<tr style='text-align:center'>";
 
             result += "<th width='2%'>STT</th>";
-            //result += "<th>Xã phường</th>";
-            //result += "<th>Loại đất</th>";
+            result += "<th>Loại đất</th>";
             result += "<th>Tên đường phố</th>";
             result += "<th>Loại đường</th>";  
             result += "<th>Điểm đầu</th>";
@@ -370,8 +358,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "<tr>";
 
                 result += "<td style='text-align:center'>" + item.Sapxep + "</td>";
-                //result += "<td style='text-align:center'>" + item.Maxp + "</td>";
-                //result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
+                result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
                 result += "<td style='text-align:center'>" + item.Mota + "</td>";
                 result += "<td style='text-align:center'>" + item.Loaiduong + "</td>";
                 result += "<td style='text-align:center'>" + item.Diemdau + "</td>";

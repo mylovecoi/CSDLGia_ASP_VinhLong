@@ -33,8 +33,85 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "T")
                 {
-                    //Check Madv lần đầu tiên nếu không có thì lấy Madv đầu tiên trong bảng DsDonVi
-                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
+                                   select new VMDsDonVi
+                                   {
+                                       Id = dv.Id,
+                                       TenDiaBan = db.TenDiaBan,
+                                       TenDv = dv.TenDv,
+                                       MaDv = dv.MaDv,
+
+                                   }).ToList();
+
+                    if (dsdonvi.Count > 0)
+                    {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                        {
+                            Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        }
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan> model = _db.GiaDatDiaBan;
+
+                        if (Madv != "all")
+                        {
+                            model = model.Where(t => t.Madv == Madv);
+                        }
+
+                        if (string.IsNullOrEmpty(Nam))
+                        {
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                        }
+                        else
+                        {
+                            if (Nam != "all")
+                            {
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                            }
+                        }
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Nam"] = Nam;
+                        ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
+                        ViewData["MenuLv1"] = "menu_giadat";
+                        ViewData["MenuLv2"] = "menu_giadatdiaban";
+                        ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
+                        return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Index.cshtml", model);
+                    }
+                    else
+                    {
+                        ViewData["Messages"] = "Thông tin hồ sơ giá dịch vụ khám chữa bệnh.";
+                        ViewData["Title"] = " Thông tin hồ sơ giá dịch vụ khám chữa bệnh";
+                        ViewData["MenuLv1"] = "menu_dg";
+                        ViewData["MenuLv2"] = "menu_dgkcb";
+                        ViewData["MenuLv3"] = "menu_dgkcb_tt";
+                        return View("Views/Admin/Error/ThongBaoLoi.cshtml");
+                    }
+                    
+                    /*var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -53,7 +130,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model = _db.GiaDatDiaBan.Where(t => t.Madv == Madv).ToList();
 
 
-                    //Check nam
+                    
                     if (string.IsNullOrEmpty(Nam))
                     {
                         model = model.ToList();
@@ -70,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         }
                     }
 
-                    // Lấy tên đơn vị từ Madv
+                    
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -91,11 +168,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     {
                         ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                     }
-                    ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["DsDv"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     ViewData["Nam"] = Nam;
                     ViewData["Madv"] = Madv;
@@ -103,7 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Index.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Index.cshtml", model);*/
 
 
                 }
