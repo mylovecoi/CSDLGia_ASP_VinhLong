@@ -63,6 +63,9 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public double Giadv { get; set; }
 
         [NotMapped]
+        public string Tendv { get; set; }
+
+        [NotMapped]
         public List<GiaDvKcbCt> GiaDvKcbCt { get; set; }
         [NotMapped]
         public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }

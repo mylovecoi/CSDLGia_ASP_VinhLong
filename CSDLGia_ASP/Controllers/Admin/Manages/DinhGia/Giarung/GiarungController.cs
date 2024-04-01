@@ -32,20 +32,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
         [Route("GiaRung")]
         [HttpGet]
-        public IActionResult Index(string Madv, int Nam)
+        public IActionResult Index(string Madv, string Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                 {
-                    List<GiaRung> model = new List<GiaRung>();
-                    Nam = Nam==0 ? DateTime.Now.Year : Nam;
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = db.MaDiaBan,
                                        MaDv = dv.MaDv,
                                        TenDv = dv.TenDv
                                    }).ToList();
@@ -53,30 +52,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     if (dsdonvi.Count > 0)
                     {
 
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                            ViewData["DsDonVi"] = dsdonvi;
-                            model = _db.GiaRung.Where(t => t.Madv == Madv && t.Thoidiem.Year == Nam).ToList();
+                        }
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung> model = _db.GiaRung;
+
+                        if (Madv != "all")
+                        {
+                            model = model.Where(t => t.Madv == Madv);
+                        }
+
+                        if (string.IsNullOrEmpty(Nam))
+                        {
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
                         else
                         {
-                            if (string.IsNullOrEmpty(Madv))
+                            if (Nam != "all")
                             {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                                //model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                                model = _db.GiaRung.Where(t => t.Madv == Madv && t.Thoidiem.Year == Nam).ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                             }
-                            else
-                            {
-                                model = _db.GiaRung.Where(t => t.Madv == Madv && t.Thoidiem.Year == Nam).ToList();
-                            }
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
 
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["DsDiaBanAll"] = _db.DsDiaBan.ToList();
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Nam"] = Nam;
                         ViewData["Donvi"] = Madv;
                         ViewData["Loairung"] = _db.GiaRungDm.ToList();

@@ -3,125 +3,6 @@
     var dmtmnxh = (IEnumerable<GiaThueMuaNhaXhDm>)ViewData["Dmtmnxh"];
 }
 
-<!--Create Modal-->
-<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Thông tin chi tiết hồ sơ
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Tên nhà</b></label>
-                            <select id="tennha_create" name="tennha_create" class="form-control">
-                                @foreach (var item in dmtmnxh)
-                                {
-                                    <option value="@item.Maso">@item.Tennha</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Đơn vị thuê</b></label>
-                            <input type="text" id="donvithue_create" name="donvithue_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Địa chỉ</b></label>
-                            <input type="text" id="diachi_create" name="diachi_create" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Số QĐ phê duyệt chủ trương</b></label>
-                            <input type="text" id="sqdct_create" name="sqdct_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Thời điểm PD chủ trương</b></label>
-                            <input type="date" id="tdqdct_create" name="tdqdct_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Số QĐ phê duyệt giá</b></label>
-                            <input type="text" id="sqdg_create" name="sqdg_create" class="form-control" />
-                        </div>
-                    </div>    
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Thời điểm PD giá</b></label>
-                            <input type="date" id="tdqdg_create" name="tdqdg_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Hợp đồng số</b></label>
-                            <input type="text" id="hdso_create" name="hdso_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Thời hạn</b></label>
-                            <input type="text" id="thoihan_create" name="thoihan_create" class="form-control" />
-                        </div>
-                    </div>                
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Từ ngày</b></label>
-                            <input type="date" id="tungay_create" name="tungay_create" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Đến ngày</b></label>
-                            <input type="date" id="denngay_create" name="denngay_create" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4">
-                        <label class="form-control-label">Đơn vị tính</label><br />
-                        <select id="dvt_create" class="form-control" name="dvt_create">
-                            @foreach (var item in dmdvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Giá bán*</b></label>
-                            <input type="text" id="giaban_create" name="giaban_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Giá thuê*</b></label>
-                            <input type="text" id="giathue_create" name="giathue_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -144,68 +25,8 @@
     </div>
 </div>
 
-<!--Delete Modal-->
-<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label text-dark">
-                    Đồng ý xóa thông tin???
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row text-left">
-                    <input hidden id="id_delete" name="id_delete" />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script>
-    function SetStore() {
-        $.ajax({
-            url: '/GiaThueMuaNhaXhCt/Store',
-            type: 'POST',
-            data: {
-                Mahs: $('#Mahs').val(),
-                Maso: $('#tennha_create').val(),
-                Dvthue: $('#donvithue_create').val(),
-                Diachi: $('#diachi_create').val(),
-                Soqdpd: $('#sqdct_create').val(),
-                Thoigianpd: $('#tdqdct_create').val(),
-                Soqddg: $('#sqdg_create').val(),
-                Thoigiandg: $('#tdqdg_create').val(),
-                Hdthue: $('#hdso_create').val(),
-                Ththue: $('#thoihan_create').val(),
-                Tungay: $('#tungay_create').val(),
-                Denngay: $('#denngay_create').val(),
-                Dvt: $('#dvt_create').val(),
-                Dongia: $('#giaban_create').val(),
-                Dongiathue: $('#giathue_create').val(),
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Create_Modal').modal("hide");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
-    }
+<script>    
 
     function SetEdit(id_edit) {
         $.ajax({
@@ -233,7 +54,6 @@
             type: 'POST',
             data: {
                 Mahs: $('#Mahs').val(),
-                Maso: $('#tennha_edit').val(),
                 Dvthue: $('#donvithue_edit').val(),
                 Diachi: $('#diachi_edit').val(),
                 Soqdpd: $('#sqdct_edit').val(),

@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ghichu { get; set; }
         [NotMapped]
         public double Dientich { get; set; }
-        [NotMapped]
+        
         public string Tennha { get; set; }
         [NotMapped]
         public int LineStart { get; set; }

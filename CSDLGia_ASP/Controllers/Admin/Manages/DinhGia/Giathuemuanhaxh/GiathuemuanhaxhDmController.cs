@@ -65,8 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 Dientich = Dientich,
                 Hientrang = Hientrang,
                 Phanloai = Phanloai,
-                Ghichu = Ghichu,
-                Maso = DateTime.Now.ToString("yyMMddssmmHH"),
+                Ghichu = Ghichu,               
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -93,7 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += "<label><b>Thời gian hoàn thành</b></label>";
                 result += "<input type='date' id='thoigian_edit' name='thoigian_edit' value='" + Helpers.ConvertDateToFormView(model.Thoigian) + "' class='form-control'/>";
                 result += "</div>";
-                result += "</div>";
+                result += "</div>";             
 
                 result += "<div class='col-xl-8'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -166,9 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
         [HttpPost]
         public JsonResult Update(int Id, DateTime Thoigian, string Tennha, string Diachi, double Dientich, string Hientrang, string Phanloai, string Ghichu)
         {
-            var model = _db.GiaThueMuaNhaXhDm.FirstOrDefault(t => t.Id == Id);
-
-
+            var model = _db.GiaThueMuaNhaXhDm.FirstOrDefault(t => t.Id == Id);          
             model.Thoigian = Thoigian;
             model.Tennha = Tennha;
             model.Diachi = Diachi;

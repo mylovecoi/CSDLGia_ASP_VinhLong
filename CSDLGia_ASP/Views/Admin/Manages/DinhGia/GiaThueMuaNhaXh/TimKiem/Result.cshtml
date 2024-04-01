@@ -14,6 +14,7 @@
             <th width="2%" style="text-align:center">STT</th>
             <th style="text-align:center">Đơn vị</th>
             <th style="text-align:center">Số QĐ/Thời điểm</th>
+            <th style="text-align:center">Phân loại</th>
             <th style="text-align:center">Tên nhà</th>
             <th style="text-align:center">Đơn vị thuê</th>
             <th width="5%">Đơn vị tính</th>
@@ -29,22 +30,10 @@
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
                     <td style="text-align:center">@item.Tendv</td>
-                    <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    @if (item.Maso != null)
-                    {
-                        @foreach (var dm in dmtmnxh)
-                        {
-                            @if (item.Maso == dm.Maso)
-                            {
-                                <td style="text-align: left">@dm.Tennha</td>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <td style="text-align: center"></td>
-                    }
-                    <td style="text-align:center">@item.Dvthue</td>
+                    <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>                   
+                    <td style="text-align:center">@item.Phanloai</td>
+                    <td style="text-align:left">@item.Tennha</td>
+                    <td style="text-align:left">@item.Dvthue</td>
                     <td style="text-align:center">@item.Dvt</td>
                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongiathue)</td>

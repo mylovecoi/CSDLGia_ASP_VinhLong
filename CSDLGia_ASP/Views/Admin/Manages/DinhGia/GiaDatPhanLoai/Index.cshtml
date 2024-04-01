@@ -1,9 +1,7 @@
 ﻿@{
     int record_id = 1;
-    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    // var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    // var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -48,12 +46,15 @@
             {
                 @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
                 {
-                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
-                        <i class="la la-plus"></i>Thêm mới
-                    </button>
-                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
-                        <i class="la la-plus"></i>Nhận dữ liệu
-                    </button>
+                    @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                    {
+                        <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
+                            <i class="la la-plus"></i>Thêm mới
+                        </button>
+                        <button type="button" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#Excel_Modal">
+                            <i class="la la-plus"></i>Nhận dữ liệu
+                        </button>
+                    }
                 }
             }
         </div>
@@ -135,6 +136,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
 
 
                             </td>
@@ -270,8 +272,6 @@
     </div>
 </div>
 
-
-
 <!--Chuyển Modal-->
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -291,8 +291,8 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvi)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
                                         <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
