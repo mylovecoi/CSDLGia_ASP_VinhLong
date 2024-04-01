@@ -76,11 +76,11 @@
                 <label style="font-weight:bold; color:blue">Năm</label>
                 <select class="form-control" id="Nam" name="Nam">
                     @{
-                        int nam_start = DateTime.Now.Year - 5;
-                        int nam_stop = DateTime.Now.Year + 1;
-                        for (int i = nam_start; i <= nam_stop; i++)
+                        var nam_start = DateTime.Now.Year - 5;
+                        var nam_stop = DateTime.Now.Year + 1;
+                        for (var i = nam_start; i <= nam_stop; i++)
                         {
-                            <!option value="@i" @((int)ViewData["Nam"] == i ? "selected" : "")>Năm @i</!option>
+                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "") > Năm @i</!option>
                         }
                     }
                 </select>
