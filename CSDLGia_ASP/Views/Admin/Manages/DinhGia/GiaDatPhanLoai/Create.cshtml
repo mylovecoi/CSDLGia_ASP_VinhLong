@@ -1,6 +1,7 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat;
 @{
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -42,10 +43,10 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn áp dụng</label><br />
-                        <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan">
-                            @foreach (var item in dsdonvi)
+                        <select class="form-control select2basic" asp-for="Madiaban">
+                            @foreach (var item in dsdiaban)
                             {
-                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                <!option value="@item.MaDiaBan" @* @((string)ViewData["Madv"] == item.Ma ? "selected" : "") *@>&emsp;@item.TenDiaBan</!option>
                             }
                         </select>
                     </div>
