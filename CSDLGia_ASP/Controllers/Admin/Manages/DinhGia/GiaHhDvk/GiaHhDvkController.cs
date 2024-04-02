@@ -627,7 +627,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
                                  });
-
+                    /*return Ok(model);*/
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
@@ -658,6 +658,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     {
                         model = model.Where(t => t.Mahs == mahs);
                     }
+
                     if (!string.IsNullOrEmpty(Tenhhdv))
                     {
                         model = model.Where(t => t.Tenhhdv.ToLower().Contains(Tenhhdv.ToLower()));
@@ -668,7 +669,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["MenuLv2"] = "menu_hhdvk_tk";
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TimKiem/Result.cshtml", model);
-
                 }
                 else
                 {
