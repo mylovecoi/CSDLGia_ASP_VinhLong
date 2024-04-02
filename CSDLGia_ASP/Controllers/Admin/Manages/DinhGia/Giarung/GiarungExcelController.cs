@@ -72,7 +72,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tt";
-                    ViewData["Madv"] = Madv;
+                    ViewData["Loairung"] = _db.GiaRungDm;
                     ViewData["Title"] = "Thông tin hồ sơ giá rừng";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/Excels/Excel.cshtml", model);
 
@@ -124,6 +124,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
 
+                                string MaNhom = requests.MaNhom == "all" ? worksheet.Cells[row, 17].Value != null ?
+                                                worksheet.Cells[row, 17].Value.ToString().Trim() : "" : requests.MaNhom;
+
                                 list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaRungCt
                                 {
                                     Mahs = Mahs,
@@ -162,8 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                                     worksheet.Cells[row, 15].Value.ToString().Trim() : ""),
                                     GiaBoiThuong6 = Helpers.ConvertStrToDb(worksheet.Cells[row, 16].Value != null ?
                                                     worksheet.Cells[row, 16].Value.ToString().Trim() : ""),
-                                    Manhom = worksheet.Cells[row, 17].Value != null ?
-                                                worksheet.Cells[row, 17].Value.ToString().Trim() : "",
+                                    Manhom = MaNhom,
                                     Style = strStyle.ToString(),
                                 });
                                 line++;
