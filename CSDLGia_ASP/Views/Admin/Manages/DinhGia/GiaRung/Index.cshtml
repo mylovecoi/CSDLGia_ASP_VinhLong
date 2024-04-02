@@ -5,6 +5,9 @@
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var DanhMucNhom = ViewData["Loairung"]
+                 as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>
+                 ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>();
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
 
@@ -52,10 +55,9 @@
             {
                 @if (ViewData["Donvi"].ToString() != "all" && ViewData["Donvi"].ToString() != "")
                 {
-                    <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
-                       asp-route-Madv="@ViewData["Donvi"]">
+                    <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal">
                         <i class="la la-plus"></i>Thêm mới
-                    </a>
+                    </button>
 
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiarungExcel" asp-action="Index"
                        asp-route-Madv="@ViewData["Donvi"]">
@@ -140,12 +142,7 @@
                         <td style="text-align: center">
                             @if (!string.IsNullOrEmpty(item.Macqcq))
                                 @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
-
-
-
-
                         </td>
-
                         <td>
                             <a asp-controller="Giarung" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
@@ -175,7 +172,6 @@
                                 <i class="icon-lg la la-redo-alt text-danger"></i>
 
                             </a>
-
                         </td>
                     </tr>
                 }
@@ -183,7 +179,44 @@
         </tbody>
     </table>
 </div>
-
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="Giarung" asp-action="Create" method="get">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thêm mới hồ sơ giá rừng ???
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Phân loại hồ sơ</label>
+                                <select class="form-control" id="Manhom_create" name="Manhom_create">
+                                    <option value="all">--Tất cả--</option>
+                                    @foreach (var nhom in DanhMucNhom)
+                                    {
+                                        <!option value="@nhom.Manhom">@nhom.Tennhom</!option>
+                                    }
+                                </select>
+                                <input hidden id="Madv_create" name="Madv_create" value="@ViewData["Donvi"]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

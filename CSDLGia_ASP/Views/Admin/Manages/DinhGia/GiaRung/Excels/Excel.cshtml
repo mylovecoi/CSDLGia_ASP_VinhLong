@@ -1,7 +1,9 @@
 ﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @{
-    var Madv = ViewData["Madv"];
+    var DanhMucNhom = ViewData["Loairung"]
+                as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>
+                ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>();
 }
 
 @section custom_style {
@@ -22,7 +24,7 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiarungExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden asp-for="MaDv"  />
+        <input hidden asp-for="MaDv" />
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -30,7 +32,24 @@
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                     <span style="font-weight:bold;">Link tải file mẫu FileExcelGiarung.xlsx</span>
                 </a>
-            </div>                
+            </div>
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ:</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Phân loại hồ sơ:</label>
+                        <select class="form-control" asp-for="MaNhom">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var nhom in DanhMucNhom)
+                            {
+                                <!option value="@nhom.Manhom">@nhom.Tennhom</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
