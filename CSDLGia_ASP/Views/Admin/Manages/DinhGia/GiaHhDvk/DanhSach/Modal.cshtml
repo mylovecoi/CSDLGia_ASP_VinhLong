@@ -5,13 +5,15 @@
     var nhomhhdvk = (IEnumerable<GiaHhDvkNhom>)ViewData["Nhomhhdvk"];
     var hoso = (IEnumerable<GiaHhDvkTh>)ViewData["Hoso"];
     int record_id = 1;
+    var nam_start = DateTime.Now.Year - 5;
+    var nam_stop = DateTime.Now.Year + 1;
 }
 
 <!--Tổng hợp HH-DV Modal-->
 <div class="modal fade" id="CreateTH_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form asp-controller="GiaHhDvk" asp-action="CreateTH" method="get">
-            <input type="hidden" id="Madv" name="Madv" value="@((string)ViewData["Madv"])" />
+            <input type="hidden" id="MadvTh" name="MadvTh" value="@((string)ViewData["Madv"])" />
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -27,7 +29,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Theo thông tư quyết định</label>
-                                <select class="form-control" name="Matt">
+                                <select class="form-control" name="MattTh">
                                     @foreach (var item in nhomhhdvk)
                                     {
                                         <!option value="@item.Matt" @((string)ViewData["Matt"] == item.Matt ? "selected" : "")>@item.Tentt</!option>
@@ -38,7 +40,7 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Tháng</label>
-                                <select class="form-control" name="Thang">
+                                <select class="form-control" id="ThangTh" name="ThangTh">
                                     @for (var i = 1; i <= 12; i++)
                                     {
                                         <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
@@ -49,15 +51,13 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label>Năm</label>
-                                <select class="form-control" name="Nam">
-                                    @{
-                                        var nam_start = DateTime.Now.Year - 5;
-                                        var nam_stop = DateTime.Now.Year + 1;
-                                        for (var i = nam_start; i <= nam_stop; i++)
+                                <select class="form-control" id="NamTh" name="NamTh">
+                                        
+                                        @for (var i = nam_start; i <= nam_stop; i++)
                                         {
                                             <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
                                         }
-                                    }
+                                    
                                 </select>
                             </div>
                         </div>
@@ -66,10 +66,11 @@
                         <thead>
                             <tr style="text-align:center">
                                 <th width="4%">#</th>
-                                <th>Số quyết định</th>
-                                <th>Ngày nhập</th>
-                                <th>Tên đơn vị cập nhật</th>
-                                <th>Địa bàn áp dụng</th>
+                                <th>Thông tư</th>
+                                <th>Số báo cáo</th>
+                                <th>Thông tư báo cáo</th>
+                                <th>Ngày báo cáo</th>
+                                <th>Ngày chốt báo cáo</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -81,20 +82,16 @@
                                     <tr>
                                         <td style="text-align: center">@(record_id++)</td>
                                         <td style="text-align: center">
-                                            Tháng @item.Thang năm @item.Nam
-                                        </td>
-                                        <td style="text-align: center"></td>
-                                        <td>
-                                            @if (!string.IsNullOrEmpty(item.Madv))
-                                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv
-
+                                            @if (!string.IsNullOrEmpty(item.Matt))
+                                                @nhomhhdvk.FirstOrDefault(x => x.Matt == item.Matt).Tentt
 
                                         </td>
-                                        <td>
-                                            
-                                        </td>
+                                        <td style="text-align: center">@item.Sobc</td>
+                                        <td style="text-align: center">@item.Ttbc</td>
+                                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaybc)</td>
+                                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaychotbc)</td>
                                         <td style="text-align: center">
-                                            <input type="checkbox" value="@item.Mahs" name="Hoso" checked />
+                                            <input type="checkbox" value="@item.Mahs" name="HosoTh" id="HosoTh" checked />
                                         </td>
                                     </tr>
                                 }
@@ -176,14 +173,12 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Năm</label>
                                 <select class="form-control" id="NamBc" name="NamBc">
-                                    @{
-                                        var nam_start = DateTime.Now.Year - 5;
-                                        var nam_stop = DateTime.Now.Year + 1;
-                                        for (var i = nam_start; i <= nam_stop; i++)
+                                    
+                                        @for (var i = nam_start; i <= nam_stop; i++)
                                         {
                                             <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
                                         }
-                                    }
+                                    
                                 </select>
                             </div>
                         </div>
