@@ -119,6 +119,7 @@
                     <th>Số quyết định<br />Ngày báo cáo</th>
                     <th>Số QĐ liền kề<br />Ngày báo cáo liền kề</th>
                     <th>Trạng thái</th>
+                    <th>Ghi chú</th>
                     <th>Cơ quan tiếp nhận</th>
                     <th width="20%">Thao tác</th>
                 </tr>
@@ -170,6 +171,7 @@
                                     <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
                                 }
                             </td>
+                            <td style="text-align: center">@item.Ghichu</td>
                             <td style="text-align: left">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv

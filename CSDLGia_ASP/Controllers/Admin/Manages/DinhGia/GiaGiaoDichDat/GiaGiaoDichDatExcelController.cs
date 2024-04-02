@@ -29,15 +29,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Create"))
                 {
                     var model = new GiaGiaoDichDatCt
-                    {
-                        Ten = "1",
-                        Dvt = "2",
-                        Gia = 3,
+                    {                
+                        Madv=Madv,
                         Sheet = 1,
                         LineStart = 2,
-                        LineStop = 1000,
-                       
+                        LineStop = 1000,                       
                     };
+                    ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
@@ -91,11 +89,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaGiaoDichDatCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaGiaoDichDatCt request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
+                var Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<GiaGiaoDichDatCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -108,32 +106,48 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                        
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
+                            string MaNhom = request.Manhom == "all" ? worksheet.Cells[row, 4].Value != null ?
+                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "" : request.Manhom;
                             list_add.Add(new GiaGiaoDichDatCt
                             {
                                 Mahs = Mahs,
+                                Madv=request.Madv,
+                                Manhom = MaNhom,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
+                                Ten = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Dvt = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                Gia = Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
+                                                    worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
 
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Gia.ToString())].Value) : 0,
-                             
                             });
                         }
                     }
-
                 }
                 _db.GiaGiaoDichDatCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaGiaoDichDatExcel", new { Madv = Madv, Mahs = Mahs });
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat
+                {
+                    Mahs = Mahs,
+                    Madv = request.Madv,
+                    Manhom = request.Manhom,
+                };
+                model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
+                ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;
+                ViewData["Manhom"] = request.Manhom;
+                ViewData["Madv"] = request.Madv;
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
+                ViewData["MenuLv1"] = "menu_giadat";
+                ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
+                ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/DanhSach/Create.cshtml", model);                
             }
             else
             {

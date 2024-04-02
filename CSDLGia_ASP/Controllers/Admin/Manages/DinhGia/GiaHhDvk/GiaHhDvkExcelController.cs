@@ -120,12 +120,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "";
                                 if (item.Mahhdv == mahhdvInLine)
                                 {
-
                                     loaigia = worksheet.Cells[row, 6].Value != null ?
                                                 worksheet.Cells[row, 6].Value.ToString().Trim() : "";
-                                    gialk = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                    gialk = Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                                 worksheet.Cells[row, 7].Value.ToString().Trim() : "");
-                                    gia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
+                                    gia = Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
                                                 worksheet.Cells[row, 8].Value.ToString().Trim() : "");
                                     nguontt = worksheet.Cells[row, 11].Value != null ?
                                                 worksheet.Cells[row, 11].Value.ToString().Trim() : "";
@@ -141,6 +140,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                 Madv = item.Madv,
                                 Mahhdv = item.Mahhdv,
                                 Trangthai = item.Trangthai,
+                                Loaigia = loaigia,
+                                Nguontt = nguontt,
                                 Gialk = gialk,
                                 Gia = gia,
                                 Ghichu = ghichu
