@@ -627,12 +627,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
                                  });
-                    /*return Ok(model);*/
+                    
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-
+                    return Ok(model);
                     if (matt != "all")
                     {
                         model = model.Where(t => t.Matt == matt);
