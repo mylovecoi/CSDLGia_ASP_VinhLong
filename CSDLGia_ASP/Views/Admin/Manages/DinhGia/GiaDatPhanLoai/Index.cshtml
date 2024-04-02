@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai>
 
@@ -108,7 +109,7 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
 
-                            <td>@item.Tendiaban </td>
+                            <td>@dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan</td>
 
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 
