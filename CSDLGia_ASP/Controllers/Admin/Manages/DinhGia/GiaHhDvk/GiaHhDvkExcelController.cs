@@ -144,8 +144,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                 Nguontt = nguontt,
                                 Gialk = gialk,
                                 Gia = gia,
-                                Loaigia = loaigia,
-                                Nguontt = nguontt,
                                 Ghichu = ghichu
                             });
                         }
