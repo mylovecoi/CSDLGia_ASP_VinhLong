@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("GiaDatDiaBan")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -60,17 +60,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                             model = model.Where(t => t.Madv == Madv);
                         }
 
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
+                            model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
                         }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -179,7 +171,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
-                        ViewData["DsDiaBan"] = _db.DsDiaBan;
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -189,7 +181,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     }
                     else if (model != null && model.Trangthai != "HT")
                     {
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         var model_ct = _db.GiaDatDiaBanCt.Where(t => t.Mahs == model.Mahs).ToList();
                         model.GiaDatDiaBanCt = model_ct;
                         ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
@@ -199,6 +190,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                         ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Edit.cshtml", model);
                     }
                     else
