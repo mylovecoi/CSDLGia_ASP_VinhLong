@@ -142,7 +142,7 @@
     }
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        var gia = $('#gia_edit').val().replace(',', '.');
         $.ajax({
             url: '/GiaGiaoDichBDSCt/Update',
             type: 'POST',
