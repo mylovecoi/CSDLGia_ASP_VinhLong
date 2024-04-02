@@ -103,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<input type='text' id='Dientich_edit' name='Dientich_edit' value='" + @model.Dientich + "' class='form-control' />";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'>";
+                result += "<div class='col-xl-4'>";
                 result += "<label class='form-control-label'><b>Đơn vị tính*</b></label>";
                 result += "<select type='text' id='Dvt_edit' name='Dvt_edit' class='form-control'>";
                 foreach (var item in DmDvt)
@@ -118,13 +118,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<i class='fa fa-plus'></i>";
                 result += "</button>";
                 result += "</div>";*/
-                result += "<div class='col-xl-3'>";
+                result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá khởi điểm</b></label>";
                 result += "<input type='text' id='Giakhoidiem_edit' name='Giakhoidiem_edit' value='" + @model.Giakhoidiem + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'>";
+                result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá đấu giá</b></label>";
                 result += "<input type='text' id='Giadaugia_edit' name='Giadaugia_edit' value='" + @model.Giadaugia + "' class='form-control money text-right' style='font-weight: bold'/>";

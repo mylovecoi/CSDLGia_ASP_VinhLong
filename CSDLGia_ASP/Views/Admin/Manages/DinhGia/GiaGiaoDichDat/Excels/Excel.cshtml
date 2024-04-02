@@ -2,6 +2,7 @@
 
 @{
     var Madv = ViewData["Madv"];
+    var DanhMucNhom = (IEnumerable<GiaGiaoDichDatNhom>)ViewData["DanhMucNhom"];
 }
 
 @section custom_style {
@@ -37,39 +38,16 @@
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select asp-for="Ten" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
+                        <label style="font-weight: bold; color: blue">Phân loại nhóm hàng hóa dịch vụ:</label>
+                        <select asp-for="Manhom" class="form-control">
+                            <option value="all">--Chọn tất cả--</option>
+                            @foreach (var item in DanhMucNhom)
                             {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
+                                <option value="@item.Manhom">@item.Tennhom</option>
                             }
                         </select>
                     </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Gia" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-
+                </div>    
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">
