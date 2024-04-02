@@ -1,6 +1,7 @@
 ﻿@{
 
     var DanhSachHoSo = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>)ViewData["DanhSachHoSo"];
+    var DanhSachLoaiDat = ViewData["DanhSachLoaiDat"] as IEnumerable<CSDLGia_ASP.Models.Systems.DmLoaiDat> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DmLoaiDat>();
 }
 
 @section custom_style {
@@ -80,6 +81,7 @@
                                 <input type="date" id="denngay" name="denngay" value="@ViewData["ngayden"]" class="form-control" style="text-align: center">
                             </div>
                         </div>
+
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Chức danh ký:</label>
@@ -143,7 +145,19 @@
                                     {
                                         <option value="@item.Mahs">Số QĐ: @item.Soqd - Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
                                     }
-                                  
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label><b>Loại đất</b></label>
+                                <select type="date" id="MaloaidatTongHop" name="MaloaidatTongHop" class="form-control">
+                                    <option value="all">--Tất cả--</option>
+                                    @foreach (var item in DanhSachLoaiDat)
+                                    {
+                                        <option value="@item.Maloaidat">@item.Loaidat</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -164,7 +178,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="button" class="btn btn-primary font-weight-bold" onclick="BaoCaoCt()">Đồng ý</button>
-                   
+
                 </div>
             </div>
         </form>

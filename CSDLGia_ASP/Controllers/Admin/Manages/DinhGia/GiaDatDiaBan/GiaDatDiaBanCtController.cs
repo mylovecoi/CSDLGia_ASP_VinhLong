@@ -183,13 +183,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "</div>";
 
                 result += "<div class='row'>";
-                result += "<div class='col -xl-4'>";
+                result += "<div class='col-xl-4'>";
                 result += "<div class='form -group fv-plugins-icon-container'>";
                 result += "<label>STT báo cáo</label>";
                 result += "<input type='text' id='hienthi_create' name='hienthi_edit' value='" + model.HienThi + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col -xl-4'>";
+                result += "<div class='col-xl-4'>";
                 result += "<div class='form -group fv-plugins-icon-container'>";
                 result += "<label>Sắp xếp</label>";
                 result += "<input type='text' id='sapxep_create' name='sapxep_edit' value='" + model.Sapxep + "' class='form-control'/>";
@@ -211,8 +211,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Loaiduong, string Maloaidat, string Mota, string Diemdau, string Diemcuoi, Double Hesok, Double Giavt1, Double Giavt2, 
-            Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
+        public JsonResult Update(int Id, string Loaiduong, string Maloaidat, string Mota, string Diemdau, string Diemcuoi, double Hesok, 
+                                    double Giavt1, double Giavt2, double Giavt3, double Giavt4, double Giavt5, string Hienthi, double SapXep)
         {
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             model.Id = Id;
@@ -331,7 +331,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         public string GetData(string Mahs)
         {
-            var model = _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList().OrderBy(x => x.Sapxep);           
+            var model = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList().OrderBy(x => x.Sapxep)
+                         join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
+                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt{
+                            Id = dat.Id,
+                            HienThi = dat.HienThi,
+                            Maloaidat = dat.Maloaidat,
+                            Mota = dat.Mota,
+                            Diemdau = dat.Diemdau,
+                            Diemcuoi = dat.Diemcuoi,
+                            Loaiduong = dat.Loaiduong,
+                            Hesok = dat.Hesok,
+                            Giavt1 = dat.Giavt1,
+                            Giavt2 = dat.Giavt2,
+                            Giavt3 = dat.Giavt3,
+                            Giavt4 = dat.Giavt4,
+                            Giavt5 = dat.Giavt5,
+                            Loaidat = dm.Loaidat
+                         
+                         });           
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
             result += "<thead>";
@@ -357,18 +375,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             {
                 result += "<tr>";
 
-                result += "<td style='text-align:center'>" + item.Sapxep + "</td>";
-                result += "<td style='text-align:center'>" + item.Maloaidat + "</td>";
+                result += "<td style='text-align:center'>" + item.HienThi + "</td>";
+                result += "<td style='text-align:center'>" + item.Loaidat + "</td>";
                 result += "<td style='text-align:center'>" + item.Mota + "</td>";
                 result += "<td style='text-align:center'>" + item.Loaiduong + "</td>";
                 result += "<td style='text-align:center'>" + item.Diemdau + "</td>";
                 result += "<td style='text-align:center'>" + item.Diemcuoi + "</td>";
-                result += "<td style='text-align:center'>" + item.Hesok + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giavt1) + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giavt2) + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giavt3) + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
+                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Hesok) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt1) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt2) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt3) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

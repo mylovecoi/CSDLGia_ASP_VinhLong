@@ -45,5 +45,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Soqd { get; set; }
         public string  TenDiaBan { get; set; }
         public DateTime Thoidiem { get; set; }
+
+        public string Loaidat { get; set; }
     }
 }

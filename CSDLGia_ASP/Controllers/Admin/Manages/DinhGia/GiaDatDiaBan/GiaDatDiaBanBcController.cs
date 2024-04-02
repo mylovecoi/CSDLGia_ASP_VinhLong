@@ -43,6 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
                     ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
 
+                    ViewData["DanhSachLoaiDat"] = _db.DmLoaiDat;
                     ViewData["Title"] = "Báo cáo giá đất địa bàn";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
@@ -106,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("GiaDatDiaBan/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string MaloaidatTongHop)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -115,37 +116,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     var model = from dgct in _db.GiaDatDiaBanCt
                                 join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
+                                join dm in _db.DmLoaiDat on dgct.Maloaidat equals dm.Maloaidat
+                                join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                                 {
                                     Id = dg.Id,
                                     Mahs = dg.Mahs,
-                                    Thoidiem = dg.Thoidiem,
-                                    MaDv = dgct.MaDv,
-                                    Trangthai = dg.Trangthai,
-
+                                    Soqd = dg.Soqd,
+                                    Loaidat = dm.Loaidat,
                                     Mota = dgct.Mota,
-                                    Loaiduong = dgct.Loaiduong,
                                     Diemdau = dgct.Diemdau,
                                     Diemcuoi = dgct.Diemcuoi,
+                                    Loaiduong = dgct.Loaiduong,
+                                    Thoidiem = dg.Thoidiem,
                                     Hesok = dgct.Hesok,
+                                    MaDv = dgct.MaDv,
                                     Giavt1 = dgct.Giavt1,
                                     Giavt2 = dgct.Giavt2,
                                     Giavt3 = dgct.Giavt3,
                                     Giavt4 = dgct.Giavt4,
                                     Giavt5 = dgct.Giavt5,
+                                    Trangthai = dg.Trangthai,
+                                    Madiaban = dg.Madiaban,
+                                    TenDiaBan = diaban.TenDiaBan,
+                                    Maloaidat = dgct.Maloaidat
 
                                 };
-           
+
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                   
+
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+                    if (MaloaidatTongHop != "all") { model = model.Where(t => t.Maloaidat == MaloaidatTongHop); }
 
                     List<string> list_madv = model.Select(t => t.MaDv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaDatDiaBan.Where(t => list_mahs.Contains(t.Mahs));
-
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;

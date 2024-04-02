@@ -28,12 +28,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Create"))
                 {
-                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
-                    {
+                    var model = new GiaKhungGiaDatCt
+                    {                       
+                        Madv = Madv,
                         LineStart = 2,
                         LineStop = 1000,
-                        Sheet = 1,
-                        MaDv = Madv,
+                        Sheet = 1,                        
                     };
 
                     ViewData["MenuLv1"] = "menu_dg";
@@ -93,13 +93,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(GiaXayDungMoiCt request, string Madv, string Mahs)
+        public async Task<IActionResult> Import(GiaKhungGiaDatCt request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
+                var Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
-                var list_add = new List<GiaXayDungMoiCt>();
+                var list_add = new List<GiaKhungGiaDatCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
                 {
@@ -110,33 +110,52 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
-                        Mahs = request.Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                       
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
-                            list_add.Add(new GiaXayDungMoiCt
+                            list_add.Add(new GiaKhungGiaDatCt
                             {
                                 Mahs = Mahs,
                                 Trangthai = "CXD",
                                 Created_at = DateTime.Now,
                                 Updated_at = DateTime.Now,
-                                Tennhom = worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Tennhom)].Value.ToString().Trim() : "",
-                                Manhom = worksheet.Cells[row, Int16.Parse(request.Manhom)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Manhom)].Value.ToString().Trim() : "",
-                                Ten = worksheet.Cells[row, Int16.Parse(request.Ten)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Ten)].Value.ToString().Trim() : "",
-                                Dvt = worksheet.Cells[row, Int16.Parse(request.Dvt)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Dvt)].Value.ToString().Trim() : "",
-                                Gia = worksheet.Cells[row, Int16.Parse(request.Gia)].Value != null ?
-                                            worksheet.Cells[row, Int16.Parse(request.Gia)].Value.ToString().Trim() : "",
+                                Vungkt = worksheet.Cells[row, 1].Value != null ?
+                                            worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                Giattdb = Helpers.ConvertStrToDb(worksheet.Cells[row, 2].Value != null ?
+                                                    worksheet.Cells[row, 2].Value.ToString().Trim() : ""),
+                               Giatddb = Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
+                                                    worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
+                               Giatttd = Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                               Giatdtd = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                               Giattmn = Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                    worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                               Giatdmn = Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),  
+                               
                             });
                         }
                     }
-
                 }
-                _db.GiaXayDungMoiCt.AddRange(list_add);
+                _db.GiaKhungGiaDatCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "GiaXayDungMoiExcel", new { Madv = Madv, Mahs = Mahs });
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat
+                {
+                    Mahs = Mahs,
+                    Madv = request.Madv,
+                    PhanLoaiHoSo = "HOSOCHITIET",
+
+                };
+                model.GiaKhungGiaDatCt = _db.GiaKhungGiaDatCt.Where(x=>x.Mahs== Mahs).ToList();
+                ViewData["Madv"] = request.Madv;
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["Title"] = "Bảng giá khung giá đất";
+                ViewData["MenuLv1"] = "menu_giadat";
+                ViewData["MenuLv2"] = "menu_dgkhunggd";
+                ViewData["MenuLv3"] = "menu_dgkhunggd_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Create.cshtml", model);
+                
             }
             else
             {

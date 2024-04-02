@@ -767,7 +767,7 @@ namespace CSDLGia_ASP.Helper
             double val = 0;
             if (!string.IsNullOrEmpty(str))
             {                
-                string numericString = Regex.Replace(str, @"[^\d.]", "").Replace(',', '.');
+                string numericString = Regex.Replace(str, @"[^\d,]", "").Replace(',', '.');
 
                 // Lấy thông tin về cài đặt vùng của hệ thống
                 CultureInfo culture = CultureInfo.CurrentCulture;

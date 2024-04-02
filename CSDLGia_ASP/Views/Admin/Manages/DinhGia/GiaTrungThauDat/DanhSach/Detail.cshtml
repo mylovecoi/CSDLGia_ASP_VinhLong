@@ -52,7 +52,7 @@
                                 <td style="text-align:center">@item.Dvt</td>
                                 <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giakhoidiem)</td>
                                 <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giadaugia)</td>
-                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giadaugia / item.Dientich)</td>
+                                <td style="text-align:center">@(Helpers.ConvertDbToStr(item.Giadaugia / item.Dientich)).Replace(",",".")</td>
 
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"

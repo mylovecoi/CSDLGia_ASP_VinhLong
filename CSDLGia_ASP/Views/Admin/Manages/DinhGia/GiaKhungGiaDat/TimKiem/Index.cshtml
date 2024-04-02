@@ -47,11 +47,11 @@
                 var toDateObj = new Date(toDate);
 
                 if (fromDateObj <= toDateObj) {
-                    var current_path_url = '/GiaDatCuThe/Search?';
+                    var current_path_url = '/GiaKhungGiaDat/Search?';
                     var SoQuyetDinh = '&SoQuyetDinh=' + $('#SoQuyetDinh').val();
                     var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
                     var ngaynhap_den = '&ngaynhap_den=' + $('#ngaynhap_den').val();
-                    var Vungkt = '&Vungkt=' + $('#Vungkt').val();
+                    var Vungkt = '&Vungkt=' + $('#VungKt_Search').val();
                     var madv = '&madv=' + $('#madv').val();
                     var url = current_path_url + SoQuyetDinh + ngaynhap_tu + ngaynhap_den + Vungkt + madv;
                     window.location.href = url;
@@ -108,7 +108,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label>Vùng kinh tế</label>
-                            <input class="form-control" name="VungKt" asp-for="@VungKt" id="VungKt" />
+                            <input class="form-control" name="VungKt" asp-for="@VungKt" id="VungKt_Search" />
                         </div>
                     </div>
                 </div>

@@ -202,7 +202,7 @@
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
@@ -212,11 +212,9 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row text-left">
-                    <input hidden id="id_delete" name="id_delete" />
-                </div>
-            </div>
+
+            <input hidden id="id_delete" name="id_delete" />
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
@@ -295,12 +293,12 @@
                 Diemdau: $('#diemdau_create').val(),
                 Diemcuoi: $('#diemcuoi_create').val(),
                 Loaiduong: $('#loaiduong_create').val(),
-                Hesok: $('#hesok_create').val(),
-                Giavt1: $('#giavt1_create').val(),
-                Giavt2: $('#giavt2_create').val(),
-                Giavt3: $('#giavt3_create').val(),
-                Giavt4: $('#giavt4_create').val(),
-                Giavt5: $('#giavt5_create').val(),
+                Hesok: $('#hesok_create').val().replace(/\,/g, '.'),
+                Giavt1: $('#giavt1_create').val().replace(/\,/g, '.'),
+                Giavt2: $('#giavt2_create').val().replace(/\,/g, '.'),
+                Giavt3: $('#giavt3_create').val().replace(/\,/g, '.'),
+                Giavt4: $('#giavt4_create').val().replace(/\,/g, '.'),
+                Giavt5: $('#giavt5_create').val().replace(/\,/g, '.'),
                 HienThi: $('#hienthi_create').val(),
                 SapXep: $('#sapxep_create').val(),
                 MaDv: $('#Madv').val(),
@@ -394,12 +392,12 @@
                 Diemdau: $('#diemdau_edit').val(),
                 Diemcuoi: $('#diemcuoi_edit').val(),
                 Loaiduong: $('#loaiduong_edit').val(),
-                Hesok: $('#hesok_edit').val(),
-                Giavt1: $('#giavt1_edit').val(),
-                Giavt2: $('#giavt2_edit').val(),
-                Giavt3: $('#giavt3_edit').val(),
-                Giavt4: $('#giavt4_edit').val(),
-                Giavt5: $('#giavt5_edit').val(),
+                Hesok: $('#hesok_edit').val().replace(/\,/g, '.'),
+                Giavt1: $('#giavt1_edit').val().replace(/\,/g, '.'),
+                Giavt2: $('#giavt2_edit').val().replace(/\,/g, '.'),
+                Giavt3: $('#giavt3_edit').val().replace(/\,/g, '.'),
+                Giavt4: $('#giavt4_edit').val().replace(/\,/g, '.'),
+                Giavt5: $('#giavt5_edit').val().replace(/\,/g, '.'),
                 HienThi: $('#hienthi_edit').val(),
                 SapXep: $('#sapxep_edit').val(),
             },
