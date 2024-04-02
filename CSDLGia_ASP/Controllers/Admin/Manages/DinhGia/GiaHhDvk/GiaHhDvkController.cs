@@ -886,5 +886,96 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 return Json(data);
             }
         }
+
+        [Route("GiaHhDvk/CreateTH")]
+        [HttpGet]
+        public IActionResult CreateTH(string Matt, string Thang, string Nam, string maDV, string[] Hoso)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
+                {
+
+                    var modelcthskk = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
+                    var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+
+                    var model = new GiaHhDvkTh
+                    {
+                        Madv = maDV,
+                        Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
+                        Matt = Matt,
+                        Trangthai = "CHT",
+                        Thang = Thang,
+                        Nam = Nam,
+                        Ttbc = "Tổng hợp số liệu tháng " + Thang + " năm " + Nam,
+                        Mahstonghop = string.Join(",", Hoso)
+                    };
+                    //Lấy danh sách chi tiết hồ sơ
+                    var dsHoSoChiTiet = _db.GiaHhDvkCt.Where(item => Hoso.Contains(item.Mahs)).ToList();
+                    //Trường mảng mahs rỗng
+
+                    //Trường mảng mahs có dữ liệu
+
+                    //Lấy danh mục hàng hoá
+                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+                    var chiTiet = new List<GiaHhDvkThCt>();
+                    foreach (var item in dmHangHoa)
+                    {
+                        //Lấy ds chi tiết
+                        var ct = dsHoSoChiTiet.Where(x => x.Mahhdv == item.Mahhdv);
+                        var Gia = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
+                        var Gialk = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
+
+                        chiTiet.Add(new GiaHhDvkThCt
+                        {
+                            Mahs = model.Mahs,
+                            Mahhdv = item.Mahhdv,
+                            Gialk = (double)Gialk,
+                            Gia = (double)Gia,
+                        });
+                    }
+                    _db.GiaHhDvkTh.Add(model);
+                    _db.GiaHhDvkThCt.AddRange(chiTiet);
+                    _db.SaveChanges();
+                    //Đẩy dữ liệu qua view
+                    var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs)
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        select new GiaHhDvkThCt
+                                        {
+                                            Id = ct.Id,
+                                            Manhom = ct.Manhom,
+                                            Mahhdv = ct.Mahhdv,
+                                            Mahs = ct.Mahs,
+                                            Gia = ct.Gia,
+                                            Gialk = ct.Gialk,
+                                            Loaigia = ct.Loaigia,
+                                            Nguontt = ct.Nguontt,
+                                            Ghichu = ct.Ghichu,
+                                            Created_at = ct.Created_at,
+                                            Updated_at = ct.Updated_at,
+                                            Tenhhdv = dm.Tenhhdv,
+                                            Dacdiemkt = dm.Dacdiemkt,
+                                            Dvt = dm.Dvt,
+                                        }).ToList();
+
+                    model.GiaHhDvkThCt = modelct_join;
+                    ViewData["DmDvt"] = _db.DmDvt.ToList();
+                    ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác thêm mới";
+                    ViewData["MenuLv1"] = "menu_hhdvk";
+                    ViewData["MenuLv2"] = "menu_hhdvk_th";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Create.cshtml", model);
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
     }
 }
