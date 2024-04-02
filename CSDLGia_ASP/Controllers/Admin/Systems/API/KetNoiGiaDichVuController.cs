@@ -92,8 +92,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Ok(vMAPIDVLT.thongbao);
                 // Do something with the deserialized object
             }
-            catch (JsonException ex)
-            { }
+            catch{  }
+            //catch (JsonException ex)
+          
             //Chuyển đổi dữ liệu
             var model = JsonConvert.DeserializeObject<List<VMDoanhNghiepCsKd>>(ketQua);
             var dn = new List<DoanhNghiepDVLT>();
@@ -195,8 +196,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Ok(vMAPIDVLT.thongbao);
                 // Do something with the deserialized object
             }
-            catch (JsonException ex)
-            {}
+            //catch (JsonException ex)
+            //{}
+
+            catch {  }
 
 
             var model = JsonConvert.DeserializeObject<List<VMHoSoKeKhaiGia>>(ketQua);
