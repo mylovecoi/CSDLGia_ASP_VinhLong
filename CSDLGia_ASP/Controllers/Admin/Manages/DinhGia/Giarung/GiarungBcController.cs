@@ -147,7 +147,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      GiaBoiThuong6 = hosoct.GiaBoiThuong6,
                                      Manhom = hosoct.Manhom,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     STTHienThi = hosoct.STTHienThi,
+                                     STTSapXep = hosoct.STTSapXep,
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
@@ -164,7 +166,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;
                     ViewData["NgayDen"] = ngayden;
-
+                    ViewData["DmNhom"] = _db.GiaRungDm;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá rừng";

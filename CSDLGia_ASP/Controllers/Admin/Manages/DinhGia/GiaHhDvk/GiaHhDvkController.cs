@@ -632,7 +632,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-                    return Ok(model);
+                    //return Ok(model);
                     if (matt != "all")
                     {
                         model = model.Where(t => t.Matt == matt);
