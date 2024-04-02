@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+
+
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+    <thead>
+        <tr>
+            <th style="text-align:center" width="2%">STT</th>
+            <th style="text-align:center">Quyết định</th>
+            <th style="text-align:center">Ngày áp dụng</th>
+            <th style="text-align:center">Địa bàn</th>
+            <th style="text-align:center">Loại đất</th>
+            <th style="text-align:left">Tên đường phố</th>
+            <th style="text-align:center">Loại đường</th>
+            <th style="text-align:center">Hệ số K</th>
+            <th style="text-align:center">VT1</th>
+            <th style="text-align:center">VT2</th>
+            <th style="text-align:center">VT3</th>
+            <th style="text-align:center">VT4</th>
+            <th style="text-align:center">VT5</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(record_id++)</td>
+                <td>@item.Soqd</td>
+                <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td>@item.TenDiaBan</td>
+                <td>@item.Loaidat</td>
+                <td>@item.Mota</td>
+                <td>@item.Loaiduong</td>
+                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Hesok) </td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

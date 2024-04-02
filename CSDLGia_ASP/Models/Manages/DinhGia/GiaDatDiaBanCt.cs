@@ -38,6 +38,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public string Loaidat { get; set; }
 
+        [NotMapped]
+        public string Soqd { get;set; }
+        [NotMapped]
+        public string TenDiaBan { get; set; }
+        
+
 
     }
 }
