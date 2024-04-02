@@ -2,6 +2,7 @@
     Layout = "_LayoutReports";
     var donvis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
     var hoso = (IEnumerable<GiaRung>)ViewData["ChiTietHs"];
+    var DmNhom = (IEnumerable<GiaRungDm>)ViewData["DmNhom"];
 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungCt>
@@ -30,7 +31,7 @@
         <tr>
        
             <th rowspan="3" width="2%" style="text-align:center">Mã TTR</th>
-            <th rowspan="3" width="2%" style="text-align:center">Trạng thái rừng</th>
+            <th rowspan="3" style="text-align:center">Trạng thái rừng</th>
             <th colspan="6" width="30%" style="text-align:center">Giá rừng</th>
             <th colspan="2" width="10%" rowspan="2" style="text-align:center">Giá cho thuê quyền sử dụng rừng/năm</th>
             <th colspan="6" width="30%" style="text-align:center">Giá bồi thường thiệt hại đối với rừng tự nhiên</th>
@@ -75,29 +76,42 @@
                     <td></td>
                     <td colspan="15" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
+                @foreach( var nhom in DmNhom.OrderBy(t=>t.STTSapXep))
                 {
-                    <tr>
-                        <td style="text-align: center">@item.Manhom</td>
-                        <td style="text-align:left">@item.MoTa</td>
-                        <td style="text-align:center">@item.GiaRung1</td>
-                        <td style="text-align:center">@item.GiaRung2</td>
-                        <td style="text-align:center">@item.GiaRung3</td>
-                        <td style="text-align:center">@item.GiaRung4</td>
-                        <td style="text-align:center">@item.GiaRung5</td>
-                        <td style="text-align:center">@item.GiaRung6</td>
-                        <td style="text-align:center">@item.GiaChoThue1</td>
-                        <td style="text-align:center">@item.GiaChoThue2</td>
-                        <td style="text-align:center">@item.GiaBoiThuong1</td>
-                        <td style="text-align:center">@item.GiaBoiThuong2</td>
-                        <td style="text-align:center">@item.GiaBoiThuong3</td>
-                        <td style="text-align:center">@item.GiaBoiThuong4</td>
-                        <td style="text-align:center">@item.GiaBoiThuong5</td>
-                        <td style="text-align:center">@item.GiaBoiThuong6</td>
-                    </tr>
+                    var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs && t.Manhom == nhom.Manhom);
+                    if (chitieths.Any())
+                    {
+                        <tr>
+                            <td></td>
+                            <td colspan="15" class="text-uppercase" style="font-weight: bold; text-align: center;">@nhom.Tennhom</td>
+                        </tr>
+                        @foreach (var item in chitieths.OrderBy(t=>t.STTSapXep))
+                        {
+                            <tr>
+                                <td style="text-align: center">@item.STTHienThi</td>
+                                <td style="text-align:left">@item.MoTa</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung1)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung2)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung3)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung4)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung5)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaRung6)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaChoThue1)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaChoThue2)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong1)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong2)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong3)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong4)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong5)</td>
+                                <td style="text-align:center">@Helpers.ConvertDbToStr(item.GiaBoiThuong6)</td>
+                            </tr>
+
+                        }
+                    }
 
                 }
+              
+               
 
             }
         }

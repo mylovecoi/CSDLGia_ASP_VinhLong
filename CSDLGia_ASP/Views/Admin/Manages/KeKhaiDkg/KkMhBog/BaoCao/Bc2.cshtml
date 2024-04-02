@@ -1,12 +1,11 @@
 ﻿@{
     Layout = "_LayoutReports";
     var record_id = 1;
-    var record_id_ct = 1;
+
     var cts = (IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBogCt>)ViewData["ct"];
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg.VMKkMhBog>
-<br />
-<br />
+
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
@@ -19,10 +18,6 @@
             </b>
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
-    </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO KÊ KHAI, ĐĂNG KÝ GIÁ MẶT HÀNG BÌNH ỔN GIÁ</p>
@@ -38,13 +33,12 @@ else
 {
     <p style="text-align: center; font-size: 16px;">Thời điểm: Quý @ViewData["quy"] năm @ViewData["nam"]</p>
 }
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Doanh nghiệp</th>
+            <th style="text-align: center">Tên hàng hóa, dịch vụ</th>
             <th style="text-align: center">Quy cách chất lượng</th>
-            <th style="text-align: center">Mô tả</th>
             <th style="text-align: center">Đơn vị<br />tính</th>
             <th style="text-align: center">Mức giá<br />liền kề</th>
             <th style="text-align: center">Mức giá<br />kê khai</th>
@@ -70,10 +64,9 @@ else
             foreach (var ct in cts.Where(t => t.Mahs == item.Mahs))
             {
                 <tr>
-                    <td></td>
-                    <td style="text-align: center">@(record_id_ct++)</td>
-                    <td style="text-align: left">@ct.Quycach</td>
-                    <td style="text-align: center">@ct.Tenhh</td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: left">@ct.Tenhh</td>
+                    <td style="text-align: left">@ct.Plhh</td>
                     <td style="text-align: center">@ct.Dvt</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Gialk)</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Giakk)</td>

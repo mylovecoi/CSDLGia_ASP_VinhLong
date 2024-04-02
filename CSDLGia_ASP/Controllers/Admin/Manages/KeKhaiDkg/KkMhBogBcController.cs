@@ -221,6 +221,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                                           Trangthai = kk.Trangthai,
                                           Madv = com.Madv,
                                           Tendn = com.Tendn,
+
                                       });
 
                     if (phanloai == "ngaychuyen")

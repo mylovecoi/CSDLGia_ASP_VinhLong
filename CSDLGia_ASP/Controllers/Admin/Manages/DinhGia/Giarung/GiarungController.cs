@@ -130,51 +130,58 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
         [Route("GiaRung/Create")]
         [HttpGet]
-        public IActionResult Create(string Madv)
+        public IActionResult Create(string Madv_create, string Manhom_create)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
                 {
-                    var modelct_cxd = _db.GiaRungCt.Where(t => t.Madv == Madv && t.Trangthai == "CXD");
+                    var modelct_cxd = _db.GiaRungCt.Where(t => t.Madv == Madv_create && t.Trangthai == "CXD");
                     if (modelct_cxd.Any())
                     {
                         _db.GiaRungCt.RemoveRange(modelct_cxd);
                         _db.SaveChanges();
                     }
-                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv_create);
                     if (model_file_cxd.Any())
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
                         foreach (var file in model_file_cxd)
                         {
-                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
-                            FileInfo fi = new FileInfo(path_del);
-                            if (fi != null)
+                            if (!string.IsNullOrEmpty(file.FileName))
                             {
-                                System.IO.File.Delete(path_del);
-                                fi.Delete();
+                                string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                                FileInfo fi = new FileInfo(path_del);
+                                if (fi != null)
+                                {
+                                    System.IO.File.Delete(path_del);
+                                    fi.Delete();
+                                }
                             }
                         }
                         _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                         _db.SaveChanges();
                     }
-                    string Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                    string Mahs = Madv_create + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     var model = new VMDinhGiaRung
                     {
-                        Madv = Madv,
+                        Madv = Madv_create,
                         Thoidiem = DateTime.Now,
                         Mahs = Mahs,
                         Dvt = "Triệu đồng/ha"
                     };
-                    var data_dm = _db.GiaRungDmCt;
+                    IQueryable<GiaRungDmCt> data_dm = _db.GiaRungDmCt;
+                    if(Manhom_create != "all")
+                    {
+                        data_dm = data_dm.Where(t => t.Manhom == Manhom_create);
+                    }
                     var chitiet = new List<GiaRungCt>();
                     foreach (var item in data_dm)
                     {
                         chitiet.Add(new GiaRungCt
                         {
                             Mahs = Mahs,
-                            Madv = Madv,
+                            Madv = Madv_create,
                             Trangthai = "CXD",
                             Style = item.Style,
                             STTHienThi = item.STTHienThi,
@@ -618,8 +625,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
                     MoTa = string.IsNullOrEmpty(MoTa) ? "" : MoTa;
 
-
-
                     var model = (from hosoct in _db.GiaRungCt
                                  join hoso in _db.GiaRung on hosoct.Mahs equals hoso.Mahs
                                  join nhom in _db.GiaRungDm on hosoct.Manhom equals nhom.Manhom
@@ -650,6 +655,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
+
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" );
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
@@ -671,7 +677,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["DonGiaDen"] = DonGiaDen;
                     ViewData["MoTa"] = MoTa;
                     ViewData["DanhSachHoSo"] = _db.GiaRung.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
-
+                    ViewData["DanhMucNhom"] = _db.GiaRungDm;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin định giá rừng";

@@ -18,10 +18,6 @@
             <hr style="width: 15%;vertical-align: top; margin-top: 2px; font-weight: bold">
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align: top;">Số: .........</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
-    </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;">DANH SÁCH ĐƠN VỊ KÊ KHAI GIÁ CÁC MẶT HÀNG BÌNH ỔN GIÁ</p>
 @if ((string)ViewData["time"] == "ngay")
@@ -36,10 +32,11 @@ else
 {
     <p style="text-align: center; font-size: 16px;">Thời điểm: Quý @ViewData["quy"] năm @ViewData["nam"]</p>
 }
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
+            <th style="text-align: center">Số hồ sơ</th>
             <th style="text-align: center">Doanh nghiệp</th>
             <th style="text-align: center">Địa chỉ</th>
             <th style="text-align: center">Điện thoại</th>
@@ -54,9 +51,10 @@ else
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
                 <td>
-                    <a asp-controller="KkMhBog" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Tendn</a>
-                    
+                    <a asp-controller="KkMhBog" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@Helpers.ConvertDateToStr(item.Thoidiem)</a>
+
                 </td>
+                <td>@item.Tendn</td>
                 <td>@item.Diachi</td>
                 <td class="text-center">@item.Tel</td>
                 <td>@item.Tennghe</td>
