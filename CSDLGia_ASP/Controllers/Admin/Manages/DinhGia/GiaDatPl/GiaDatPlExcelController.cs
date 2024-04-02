@@ -124,10 +124,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     Mahs = Mahs,
                     Phanloai = requests.Phanloai,
                 };
+
                 var modelct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
                 model.GiaDatPhanLoaiCt = modelct.ToList();
+
                 ViewData["Mahs"] = model.Mahs;
                 ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                 ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();                
                 ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                 ViewData["MenuLv1"] = "menu_giadat";
