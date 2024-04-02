@@ -5,12 +5,12 @@
 }
 @*@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat>*@
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -120,7 +120,7 @@
                                 @if (item.Trangthai == "HCB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
-                                  
+
                                 }
                                 @if (item.Trangthai == "CCB")
                                 {
@@ -131,14 +131,17 @@
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.xetduyet", "Approve"))
                                 {
+                                    <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chi tiết"
+                                       target="_blank">
+                                        <i class="icon-lg la la-eye text-success"></i>
+                                    </a>
+                                    <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                       target="_blank">
+                                        <i class="icon-lg la la-redo-alt text-danger"></i>
+
+                                    </a>
                                     @if (item.Level == "ADMIN")
-
                                     {
-                                        <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chi tiết"
-                                           target="_blank">
-                                            <i class="icon-lg la la-eye text-success"></i>
-                                        </a>
-
                                         @if (item.Trangthai == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
@@ -146,21 +149,37 @@
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
                                         }
-
-                                        @if (item.Trangthai == "HCB" || item.Trangthai == "CCB" || item.Trangthai == "HT")
+                                        else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
                                                     onclick="CongBo('@item.Mahs')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
+
+                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                <i class="icon-lg la la-reply text-danger "></i>
+                                            </button>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
+                                        {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
                                                     onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
 
-                                        }
+                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
+                                                    onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                                <i class="icon-lg la la-check text-primary "></i>
+                                            </button>
 
+                                        }
                                     }
+
                                     <div class="dropdown dropdown-inline">
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
                                             <i class="icon-lg la la-cog "></i>

@@ -543,7 +543,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year,12,31) : endTime;
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
-                                 join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
                                  join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
                                  select new GiaDatPhanLoaiCt
                                  {
@@ -552,12 +551,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Tendv = donvi.TenDv,
                                      Mahs = giact.Mahs,
                                      Thoidiem = gia.Thoidiem,
-                                     Maloaidat = giact.Maloaidat,
-                                     Loaidat = dm.Loaidat,
-                                     Vitri = giact.Vitri,
-                                     Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai= gia.Phanloai,
+                                     Khuvuc = giact.Khuvuc,
                                  });
                     model = model.Where(x=>x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai== phanloaihoso);
                     if (madv != "All")
@@ -613,7 +609,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
-                                 join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
                                  join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
                                  select new GiaDatPhanLoaiCt
                                  {
@@ -622,12 +617,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Tendv = donvi.TenDv,
                                      Mahs = giact.Mahs,
                                      Thoidiem = gia.Thoidiem,
-                                     Maloaidat = giact.Maloaidat,
-                                     Loaidat = dm.Loaidat,
-                                     Vitri = giact.Vitri,
-                                     Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
+                                     Khuvuc = giact.Khuvuc,
                                  });
                     model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai==phanloaihoso);
                     if (madv != "All")
@@ -698,9 +690,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     }
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_giadat";
-                    ViewData["MenuLv2"] = "menu_dgdct";
-                    ViewData["MenuLv3"] = "menu_dgdct_tt";
+
                     return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
 
 
