@@ -27,8 +27,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVtXk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgvtxk.giakkxd", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi;
                     var dsdiaban = _db.DsDiaBan;
+                    var dsdonvi = (from dv in _db.DsDonVi
+                                   join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
+                                   select new VMDsDonVi
+                                   {
+                                       Id = dv.Id,
+                                       MaDiaBan = dv.MaDiaBan,
+                                       MaDv = dv.MaDv,
+                                       TenDv = dv.TenDv,
+                                       ChucNang = dv.ChucNang,
+                                       Level = db.Level,
+                                   });
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {

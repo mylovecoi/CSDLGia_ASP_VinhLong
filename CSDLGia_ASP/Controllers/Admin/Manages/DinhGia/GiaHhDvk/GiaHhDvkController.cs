@@ -128,6 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Thang"] = Thang;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
+                        ViewData["Hoso"] = _db.GiaHhDvkTh.Where(t=>t.Thang == Thang && t.Nam == Nam).ToList();
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                         ViewData["DsDiaBan"] = _db.DsDiaBan;
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
@@ -889,58 +890,55 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvk/CreateTH")]
         [HttpGet]
-        public IActionResult CreateTH(string Matt, string Thang, string Nam, string maDV, string[] Hoso)
+        public IActionResult CreateTH(string MattTh, string ThangTh, string NamTh, string MadvTh, string[] HosoTh)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
                 {
+                    var modelct = _db.GiaHhDvkThCt.Where(t => HosoTh.Contains(t.Mahs)).ToList();
 
-                    var modelcthskk = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
-                    var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
-
-                    var model = new GiaHhDvkTh
+                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                     {
-                        Madv = maDV,
-                        Mahs = DateTime.Now.ToString("yyMMddssmmHH"),
-                        Matt = Matt,
-                        Trangthai = "CHT",
-                        Thang = Thang,
-                        Nam = Nam,
-                        Ttbc = "Tổng hợp số liệu tháng " + Thang + " năm " + Nam,
-                        Mahstonghop = string.Join(",", Hoso)
+                        Mahs = MadvTh + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Matt = MattTh,
+                        Madv = MadvTh,
+                        Thang = ThangTh,
+                        Nam = NamTh,
+                        Thoidiem = DateTime.Now,
+                        Thoidiemlk = DateTime.Now,
                     };
-                    //Lấy danh sách chi tiết hồ sơ
-                    var dsHoSoChiTiet = _db.GiaHhDvkCt.Where(item => Hoso.Contains(item.Mahs)).ToList();
-                    //Trường mảng mahs rỗng
 
-                    //Trường mảng mahs có dữ liệu
-
-                    //Lấy danh mục hàng hoá
-                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
-                    var chiTiet = new List<GiaHhDvkThCt>();
+                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == MattTh);
+                    var chiTiet = new List<GiaHhDvkCt>();
                     foreach (var item in dmHangHoa)
                     {
                         //Lấy ds chi tiết
-                        var ct = dsHoSoChiTiet.Where(x => x.Mahhdv == item.Mahhdv);
-                        var Gia = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
+                        var ct = modelct.Where(x => x.Mahhdv == item.Mahhdv);
+                        var Gia = ct.Any() ? ct.Sum(x => x.Gia) / ct.Count() : 0;
                         var Gialk = ct.Any() ? ct.Sum(x => x.Gialk) / ct.Count() : 0;
 
-                        chiTiet.Add(new GiaHhDvkThCt
+                        chiTiet.Add(new GiaHhDvkCt
                         {
                             Mahs = model.Mahs,
                             Mahhdv = item.Mahhdv,
                             Gialk = (double)Gialk,
                             Gia = (double)Gia,
+                            Manhom = item.Manhom,
+                            Loaigia = "Giá bán lẻ",
+                            Nguontt = "Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định",
+                            Trangthai = "CXD",
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
                         });
                     }
-                    _db.GiaHhDvkTh.Add(model);
-                    _db.GiaHhDvkThCt.AddRange(chiTiet);
+                    _db.GiaHhDvk.Add(model);
+                    _db.GiaHhDvkCt.AddRange(chiTiet);
                     _db.SaveChanges();
-                    //Đẩy dữ liệu qua view
-                    var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs)
+
+                    var modelct_join = (from ct in _db.GiaHhDvkCt.Where(x => x.Mahs == model.Mahs)
                                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
-                                        select new GiaHhDvkThCt
+                                        select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
                                             Manhom = ct.Manhom,
@@ -958,12 +956,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                             Dvt = dm.Dvt,
                                         }).ToList();
 
-                    model.GiaHhDvkThCt = modelct_join;
+                    model.GiaHhDvkCt = modelct_join;
+
+                    ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
-                    ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác thêm mới";
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_th";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Create.cshtml", model);
+                    ViewData["MenuLv2"] = "menu_hhdvk_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/DanhSach/Create.cshtml", model);
 
                 }
                 else
