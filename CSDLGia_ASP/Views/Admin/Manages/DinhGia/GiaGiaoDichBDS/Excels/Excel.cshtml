@@ -2,6 +2,7 @@
 
 @{
     var Madv = ViewData["Madv"];
+    var danhmuc = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["DanhMuc"];
 }
 
 @section custom_style {
@@ -22,7 +23,7 @@
     </div>
     <!--begin::Form-->
     <form asp-controller="GiaGiaoDichBDSExcel" asp-action="Import" method="post" enctype="multipart/form-data">
-        <input hidden name="Madv" value="@Madv" />
+        <input hidden name="Madv" value="@Madv" />        
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
@@ -38,38 +39,16 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Phân loại</label>
-                        <select asp-for="Ten" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
+                        <select  class="form-control" asp-for="Manhom">
+                            <option value="all"> Chọn tất cả</option>
+                            @foreach (var item in danhmuc)
                             {
-                                <option value="@item.Value">@item.Key</option>
+                                <option value="@item.Manhom">@item.Tennhom</option>
                             }
                         </select>
 
                     </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn vị tính</label>
-                        <select asp-for="Dvt" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight: bold; color: blue">Đơn giá</label>
-                        <select asp-for="Gia" class="form-control">
-                            @foreach (var item in Helpers.GetListColExcel())
-                            {
-                                <option value="@item.Value">@item.Key</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-
+                </div>      
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">

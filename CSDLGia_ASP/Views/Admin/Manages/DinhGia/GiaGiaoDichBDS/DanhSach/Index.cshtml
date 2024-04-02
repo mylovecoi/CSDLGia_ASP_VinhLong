@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var nhomtn = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["NhomTn"];
+    
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS>
 
@@ -55,7 +56,7 @@
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiaGiaoDichBDSExcel" asp-action="Index"
                        asp-route-Madv="@ViewData["Madv"]">
                         <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                    </a>
+                    </a>                   
                 }
             }
 
