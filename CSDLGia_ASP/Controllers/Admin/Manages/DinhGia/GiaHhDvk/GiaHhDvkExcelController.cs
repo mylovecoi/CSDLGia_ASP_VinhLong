@@ -143,6 +143,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                 Trangthai = item.Trangthai,
                                 Gialk = gialk,
                                 Gia = gia,
+                                Loaigia = loaigia,
+                                Nguontt = nguontt,
                                 Ghichu = ghichu
                             });
                         }
