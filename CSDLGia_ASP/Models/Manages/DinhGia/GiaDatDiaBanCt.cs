@@ -35,6 +35,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public DateTime Thoidiem { get; set; }
 
+        [NotMapped]
+        public string Loaidat { get; set; }
+
 
     }
 }

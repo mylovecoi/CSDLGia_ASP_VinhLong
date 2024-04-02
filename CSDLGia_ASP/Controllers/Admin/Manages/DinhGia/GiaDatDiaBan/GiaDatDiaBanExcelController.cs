@@ -67,11 +67,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan request, IFormFile Ipf1upload)
+        public async Task<IActionResult> Import(CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
                 request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
                 var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
@@ -107,32 +106,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                 Giavt4 = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,
                                 Giavt5 = worksheet.Cells[row, 11].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 11].Value.ToString().Trim()) : 0,
                                 Maloaidat = worksheet.Cells[row, 12].Value != null ? worksheet.Cells[row, 12].Value.ToString().Trim() : "",
+                                Trangthai = "XD",
+                                MaDv = request.Madv
                             });
                         }
                     }
                 }
-                if (Ipf1upload != null && Ipf1upload.Length > 0)
-                {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                    string extension = Path.GetExtension(Ipf1upload.FileName);
-                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                    string path = Path.Combine(wwwRootPath + "/Upload/File/DinhGia/GiaDatDiaBan", filename);
-                    using (var FileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await Ipf1upload.CopyToAsync(FileStream);
-                    }
-                    request.Ipf1 = filename;
-                }
-
+               
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                 {
+                    NoiDungQDTT = request.NoiDungQDTT,
                     Mahs = request.Mahs,
                     Madv = request.Madv,
-                    Soqd = request.Soqd,
+                    Soqd = request.SoQDTT,
+                    SoQDTT = request.SoQDTT,
                     Madiaban = request.Madiaban,
                     Thoidiem = request.Thoidiem,
-                    Ipf1 = request.Ipf1,
                     Trangthai = "CHT",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
