@@ -113,7 +113,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 {
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
-                                 join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
                                  join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
                                  select new GiaDatPhanLoaiCt
                                  {
@@ -122,11 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Tendv = donvi.TenDv,
                                      Mahs = giact.Mahs,
                                      Thoidiem = gia.Thoidiem,
-                                     Maloaidat = giact.Maloaidat,
-                                     Loaidat = dm.Loaidat,
-                                     Vitri = giact.Vitri,
-                                     Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
+                                     Khuvuc = giact.Khuvuc,
                                      PhanLoai = gia.Phanloai,
                                      Trangthai = gia.Trangthai
                                  });
