@@ -45,16 +45,18 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaVatLieuXayDung" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Thêm mới
-                </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaVatLieuXayDungExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="GiaVatLieuXayDung" asp-action="Create"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Thêm mới
+                    </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaVatLieuXayDungExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
-
         </div>
     </div>
     <hr />
@@ -80,20 +82,11 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in donvi)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
-
                     </select>
                 </div>
             </div>
@@ -135,20 +128,11 @@
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var cqcq in dsdonvi)
-                                {
-                                    @if (item.Macqcq == cqcq.MaDv)
-                                    {
-                                        <td style="text-align: center">@cqcq.TenDv</td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
+                                <td style="text-align: center">
+                                    @if (!string.IsNullOrEmpty(item.Macqcq))
+                                        @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+                                </td>
                             <td width="12%">
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">

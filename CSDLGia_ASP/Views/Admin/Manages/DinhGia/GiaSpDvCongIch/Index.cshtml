@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var nhomtn = (IEnumerable<GiaSpDvCongIchNhom>)ViewData["NhomTn"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
@@ -86,17 +87,10 @@
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Đơn vị</label>
                 <select class="form-control select2basic" id="Madv" name="Madv">
-                    @foreach (var db in dsdiaban)
+                    <option value="all">--Tất cả--</option>
+                    @foreach (var item in dsdonvi)
                     {
-                        <optgroup label="@db.TenDiaBan">
-                            @{
-                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                            }
-                            @foreach (var item in donvi)
-                            {
-                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                            }
-                        </optgroup>
+                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                     }
                 </select>
             </div>
@@ -138,22 +132,11 @@
                                 <p>Lý do:&nbsp;@item.Lydo</p>
                             }
                         </td>
+                        <td style="text-align: center">
+                            @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
-                        @if (item.Macqcq != null)
-                        {
-                            @foreach (var cqcq in dsdonvi)
-                            {
-                                @if (item.Macqcq == cqcq.MaDv)
-                                {
-                                    <td style="text-align: center">@cqcq.TenDv</td>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <td style="text-align: center"></td>
-                        }
-
+                        </td>
                         <td>
                             <a asp-controller="GiaSpDvCongIch" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
@@ -161,7 +144,7 @@
                             </a>
                             <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                 <i class="icon-lg la la-file-alt text-dark"></i>
-                            </button>                            
+                            </button>
                             @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
 
                             {
@@ -237,8 +220,6 @@
     </div>
 </div>
 
-
-
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -264,9 +245,7 @@
     </div>
 </div>
 
-
-<!--complete Modal-->
-
+<!--Complete Modal-->
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="GiaSpDvCongIch" asp-action="Complete">
@@ -285,18 +264,10 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>

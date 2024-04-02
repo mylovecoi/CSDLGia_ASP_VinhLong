@@ -33,47 +33,62 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.thongtin", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "T")
                 {
 
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
                                        Id = dv.Id,
                                        TenDiaBan = db.TenDiaBan,
+                                       MaDiaBan = dv.MaDiaBan,
+                                       TenDv = dv.TenDv,
                                        MaDv = dv.MaDv
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                         }
-                        else
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuoc> model = _db.GiaTroGiaTroCuoc;
+
+                        if (Madv != "all")
                         {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
+                            model = model.Where(t => t.Madv == Madv);
                         }
-
-
-                        var model = _db.GiaTroGiaTroCuoc.Where(t => t.Madv == Madv).ToList();
 
                         if (string.IsNullOrEmpty(Nam))
                         {
-                            model = model.ToList();
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
                         else
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                             }
                         }
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                        {
+                            ViewData["DsDonVi"] = dsdonvi;
+                        }
+                        else
+                        {
+                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
 
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;

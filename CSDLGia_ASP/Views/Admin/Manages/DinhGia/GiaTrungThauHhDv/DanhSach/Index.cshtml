@@ -2,6 +2,8 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan>
 
@@ -42,14 +44,17 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaTrungThauHhDv" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaTrungThauHhDvExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="GiaTrungThauHhDv" asp-action="Create"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaTrungThauHhDvExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
 
         </div>
@@ -77,23 +82,14 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
             </div>
-
-
         </div>
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
@@ -119,6 +115,7 @@
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
                                     @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban).TenDiaBan
 
+
                             </td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@item.Thongtinqd</td>
@@ -142,6 +139,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
                             </td>
                             <td>
                                 <a asp-controller="GiaTrungThauHhDv" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -224,18 +222,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in company)
-                                            {
-                                                <!option value="@item.MaDv" >@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>
