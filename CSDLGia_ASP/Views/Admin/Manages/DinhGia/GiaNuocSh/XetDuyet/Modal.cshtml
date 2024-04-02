@@ -7,10 +7,7 @@
     string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
     string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
 }
-}
-}
 <!--Trả lại Modal-->
-
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="GiaNuocShXd" asp-action="TraLai" id="frm_tralai">
@@ -44,7 +41,6 @@
         </form>
     </div>
 </div>
-
 
 <!--Tổng hợp Modal-->
 <div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,6 +83,7 @@
         </form>
     </div>
 </div>
+
 <!-- Chuyển xét duyệt Modal-->
 <div class="modal fade" id="ChuyenXd_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
