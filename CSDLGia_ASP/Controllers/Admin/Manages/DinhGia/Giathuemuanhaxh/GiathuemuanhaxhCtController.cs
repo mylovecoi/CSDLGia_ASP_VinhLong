@@ -23,41 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
         public GiaThueMuaNhaXhCtController(CSDLGiaDBContext db)
         {
             _db = db;
-        }
-
-        [Route("GiaThueMuaNhaXhCt/Store")]
-        [HttpPost]
-        public JsonResult Store(string Mahs, string Maso, string Dvthue, string Diachi, string Soqdpd, DateTime Thoigianpd, string Soqddg
-            , DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
-        {
-            var model = new GiaThueMuaNhaXhCt
-            {
-                Mahs = Mahs,
-                Maso = Maso,
-                Dvthue = Dvthue,
-                Diachi = Diachi,
-                Soqdpd = Soqdpd,
-                Thoigianpd = Thoigianpd,
-                Soqddg = Soqddg,
-                Thoigiandg = Thoigiandg,
-                Hdthue = Hdthue,
-                Ththue = Ththue,
-                Tungay = Tungay,
-                Denngay = Denngay,
-                Dvt = Dvt,
-                Dongia = Dongia,
-                Dongiathue = Dongiathue,
-                Trangthai = "CXD",
-                Created_at = DateTime.Now,
-                Updated_at = DateTime.Now,
-            };
-            _db.GiaThueMuaNhaXhCt.Add(model);
-            _db.SaveChanges();
-
-            string result = GetData(Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
+        }       
 
         [Route("GiaThueMuaNhaXhCt/Edit")]
         [HttpPost]
@@ -74,12 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Tên nhà</label>";
-                result += "<select id='tennha_edit' name='tennha_edit' class='form-control'>";
-                foreach (var item in dmtmnxh)
-                {
-                    result += "<option value='" + item.Maso + "' " + ((string)model.Maso == item.Maso ? "selected" : "") + ">" + item.Tennha + "</option>";
-                }
-                result += "</select>";
+                result += "<label class='form-control'>" + model.Tennha + "</label>";               
                 result += "</div>";
                 result += "</div>";
 
@@ -193,12 +154,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 
         [Route("GiaThueMuaNhaXhCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Maso, string Dvthue, string Diachi, string Soqdpd, DateTime Thoigianpd, string Soqddg
+        public JsonResult Update(int Id,  string Dvthue, string Diachi, string Soqdpd, DateTime Thoigianpd, string Soqddg
             , DateTime Thoigiandg, string Hdthue, string Ththue, DateTime Tungay, DateTime Denngay, string Dvt, double Dongia, double Dongiathue)
         {
             var model = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Id == Id);
 
-            model.Maso = Maso;
             model.Dvthue = Dvthue;
             model.Diachi = Diachi;
             model.Soqdpd = Soqdpd;
@@ -217,18 +177,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
             _db.GiaThueMuaNhaXhCt.Update(model);
             _db.SaveChanges();
             string result = GetData(model.Mahs);
-            var data = new { status = "success", message = result };
-            return Json(data);
-        }
-
-        [Route("GiaThueMuaNhaXhCt/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaThueMuaNhaXhCt.FirstOrDefault(t => t.Id == Id);
-            _db.GiaThueMuaNhaXhCt.Remove(model);
-            _db.SaveChanges();
-            var result = GetData(model.Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
         }
@@ -256,15 +204,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += "<tr style='text-align:center'>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
 
-                result += "<td style='text-align:center'>";
-                foreach (var tn in dm)
-                {
-                    if (item.Maso == tn.Maso)
-                    {
-                        result += "<span>" + tn.Tennha + "</span>";
-                    }
-                }
-                result += "</td>";
+                result += "<td style='text-align:center'>" + item.Tennha +  "</td>";
 
                 result += "<td style='text-align:center'>" + item.Dvthue + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
@@ -275,10 +215,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa'";
-                result += " data-target='#Delete_Modal' data-toggle='modal' onclick='GetDelete(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button></td></tr>";
+                result += "</td></tr>";
             }
             result += "</tbody>";
             return result;

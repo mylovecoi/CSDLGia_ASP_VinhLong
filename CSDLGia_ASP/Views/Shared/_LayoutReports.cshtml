@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>@ViewData["Title"] | QLNCC</title>
+    <title>@ViewData["Title"] | CSDLGiá</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -14,6 +14,10 @@
 
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+   @*  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script> *@
+
 
     <style type="text/css">
        
@@ -40,9 +44,9 @@
             margin: auto;
         }
 
-            table tr td:first-child {
-                text-align: center;
-            }
+        table tr td:first-child {
+            text-align: center;
+        }
 
         td, th {
             padding: 5px;
@@ -132,6 +136,8 @@
             #myBtn:hover {
                 color: #3699FF;
             }
+
+      
     </style>
     @RenderSection("custom_style", required: false)
     <script>
@@ -144,13 +150,33 @@
             fileDownload.download = $('#title').val() + '.doc';
             fileDownload.click();
             document.body.removeChild(fileDownload);
-        }        
-        function exportTableToExcel(type) {
-            var data = document.getElementById('data_render');
-            var excelFile = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
-            XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
-            XLSX.writeFile(excelFile, $('#title').val() + '.' + type);
+        }    
+        
+        async function exportTableToExcel() {
+            const table = document.getElementById('data_render');           
+
+            // Tạo worksheet từ bảng HTML
+            const ws = XLSX.utils.table_to_sheet(table, { sheet: "Sheet1", raw: true });
+
+            // Thiết lập border cho từng ô trong worksheet
+            for (const cellRange in ws) {
+                if (cellRange[0] === '!') continue; // Bỏ qua các ô không phải dữ liệu
+                ws[cellRange].s = { border: { top: { style: "thin", color: { auto: 1 } }, bottom: { style: "thin", color: { auto: 1 } }, left: { style: "thin", color: { auto: 1 } }, right: { style: "thin", color: { auto: 1 } } } };
+            }
+
+            // Tạo workbook và thêm worksheet vào
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            // thử chặn chỗ này
+
+            // Xuất file Excel
+            XLSX.writeFile(wb, $('#title').val() + '.xlsx');
+           
         }
+
+
+       
+        
 
         //Get the button
         var mybutton = document.getElementById("myBtn");
@@ -190,7 +216,7 @@
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-primary" onclick="exportTableToExcel('xlsx')">
+                    <button type="button" class="btn btn-primary" onclick="exportTableToExcel()">
                         <i class="far fa-file-excel"></i>&ensp;Export Excel
                     </button>
                 </li>

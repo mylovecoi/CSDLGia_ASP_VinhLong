@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -48,33 +48,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
-                        }
 
-                        var model = _db.GiaSpDvToiDa.Where(t => t.Madv == Madv).ToList();
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa> model = _db.GiaSpDvToiDa;
+
+                        if (Madv != "all")
+                        {
+                            model = model.Where(t => t.Madv == Madv);
+                        }
 
                         if (string.IsNullOrEmpty(Nam))
                         {
-                            model = model.ToList();
+                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
                         else
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                             }
                         }
 
@@ -86,7 +82,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
-
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                         ViewData["NhomTn"] = _db.GiaSpDvToiDaNhom.ToList();
                         ViewData["Nam"] = Nam;
@@ -168,7 +173,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                         {
                             Mahs = model.Mahs,
                             Tenspdv = item.Tenspdv,
-                            Maspdv = item.Maspdv,                           
+                            Maspdv = item.Maspdv,
                             Dvt = item.Dvt,
                             HienThi = item.HienThi,
                             Style = item.Style,
@@ -202,7 +207,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        
+
         [Route("GiaSpDvToiDa/Store")]
         [HttpPost]
         public IActionResult Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa request)
@@ -335,7 +340,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Title"] = "Bảng giá tính sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_thongtin";
-                    
+
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Create.cshtml", model);
 
                 }
@@ -360,7 +365,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Index"))
                 {
-                    var model = _db.GiaSpDvToiDa.FirstOrDefault(t => t.Mahs == Mahs);                    
+                    var model = _db.GiaSpDvToiDa.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaSpDvToiDaCt = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == model.Mahs).ToList();
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ tối đa";
                     ViewData["Ipf1"] = model.Ipf1;
@@ -582,7 +587,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     {
                         model = model.Where(t => t.Tenspdv.ToLower().Contains(tenhanghoa.ToLower()));
                     }
-                   
+
                     //Địa bàn áp dụng
                     if (Madiaban != "all")
                     {
@@ -616,7 +621,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-       
+
         [Route("GiaSpDvToiDa/Print")]
         [HttpGet]
         public IActionResult Print(string Mahs)

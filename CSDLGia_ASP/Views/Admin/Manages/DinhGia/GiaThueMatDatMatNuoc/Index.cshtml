@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var nhomtn = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["NhomTn"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
@@ -56,10 +57,9 @@
                     </button>
 
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiaThueDNExcel" asp-action="Index" asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
                 }
-
             }
         </div>
     </div>
@@ -70,11 +70,11 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam_Search" name="Nam_Search">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
                             int nam_start = DateTime.Now.Year - 5;
                             int nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            for (int i = nam_start; i <= nam_stop; i++)
                             {
                                 <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
                             }
@@ -86,17 +86,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Donvi_Search" name="Donvi_Search">
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -124,13 +117,9 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
-                                @foreach (var ds in dsdiabanAll)
-                                {
-                                    @if (item.Madiaban == ds.MaDiaBan)
-                                    {
-                                        <span>@ds.TenDiaBan</span>
-                                    }
-                                }
+                                @if (!string.IsNullOrEmpty(item.Madiaban))
+                                    @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban).TenDiaBan
+
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -150,21 +139,11 @@
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
+                                <td style="text-align: center">
+                                    @if (!string.IsNullOrEmpty(item.Macqcq))
+                                        @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
-                            @if (item.Macqcq != null)
-                            {
-                                @foreach (var ds in dscqcq)
-                                {
-                                    @if (item.Macqcq == ds.MaDv)
-                                    {
-                                        <td style="text-align: center">@ds.TenDv</td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td style="text-align: center"></td>
-                            }
+                                </td>
 
                             <td>
 
@@ -175,13 +154,13 @@
                                 <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
-                               
+
                                 @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
                                 {
                                     <a asp-controller="GiaThueDN" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
-                                    
+
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
                                         <i class="icon-lg la la-check text-primary"></i>
                                     </button>
@@ -345,18 +324,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in company)
-                                            {
-                                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
                                 </select>
                             </div>
@@ -379,6 +350,6 @@
 
     function SetComplete(mahs) {
         document.getElementById("mahs_complete").value = mahs;
-    }   
+    }
 </script>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ThongTinGiayTo/Show.cshtml")

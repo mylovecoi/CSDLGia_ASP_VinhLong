@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -424,6 +425,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                         model.Trangthai_ad = null;
                     }
 
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Bị trả lại",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
+
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
 
@@ -451,6 +462,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
                     model.Trangthai_ad = "CB";
                     model.Congbo = "DACONGBO";
+
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Công bố",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
@@ -480,6 +500,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     model.Trangthai_ad = "HCB";
                     model.Congbo = "CHUACONGBO";
 
+                    var trangthaihoso = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TrangThai = "Hủy công bố",
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now
+                    };
+                    _db.TrangThaiHoSo.Add(trangthaihoso);
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
 

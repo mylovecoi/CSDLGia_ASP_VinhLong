@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGiaCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, string Sl, double Ngiadn, double Giadn, double Ngiatd, double Giatd, string Ghichu)
+        public JsonResult Store(string Mahs, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, double Sl, double Ngiadn, double Giadn, double Ngiatd, double Giatd, string Ghichu)
         {
             var model = new ThamDinhGiaCt
             {
@@ -165,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGiaCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, string Sl, double Ngiadn, double Giadn, double Ngiatd, double Giatd, string Ghichu)
+        public JsonResult Update(int Id, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, double Sl, double Ngiadn, double Giadn, double Ngiatd, double Giatd, string Ghichu)
         {
             var model = _db.ThamDinhGiaCt.FirstOrDefault(t => t.Id == Id);
             model.Mats = Mats;

@@ -38,7 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "H")
+                    var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
                                    {
@@ -50,25 +50,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                    }).ToList();
                     if (dsdonvi.Count > 0)
                     {
+                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
+
+                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh> model = _db.GiaThueMuaNhaXh;
+
+                        if (Madv != "all")
                         {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
+                            model = model.Where(t => t.Madv == Madv);
                         }
 
-                        var model = _db.GiaThueMuaNhaXh.Where(t => t.Madv == Madv).ToList();
-                      
                         if (Nam != 0)
                         {
                             model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
-                        }                           
-                     
+                        }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
@@ -78,6 +76,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                         {
                             ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
                         }
+                        var dsDonViTH = (from donvi in _db.DsDonVi
+                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                         {
+                                             MaDiaBan = donvi.MaDiaBan,
+                                             MaDv = donvi.MaDv,
+                                             TenDv = donvi.TenDv,
+                                         });
+                        ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -142,13 +150,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                         _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                         _db.SaveChanges();
                     }
-
+                    string Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh
                     {
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
-                        Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = Mahs,
                     };
+                    var danhmuc = _db.GiaThueMuaNhaXhDm.Where(t=>t.Hientrang != "Đã bán");
+
+                    if (danhmuc.Any())
+                    {
+                        List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt> list_add = new List<GiaThueMuaNhaXhCt>();
+                        foreach(var item in danhmuc)
+                        {
+                            list_add.Add(new GiaThueMuaNhaXhCt
+                            {
+                                Tennha = item.Tennha,
+                                Phanloai = item.Phanloai,
+                                Mahs = Mahs,
+                                Trangthai = "CXD"
+                            });
+                        }
+                        _db.GiaThueMuaNhaXhCt.AddRange(list_add);
+                        _db.SaveChanges();
+                    }
+                    model.GiaThueMuaNhaXhCt = _db.GiaThueMuaNhaXhCt.Where(t => t.Mahs == Mahs).ToList();
 
           
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
@@ -548,7 +575,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 
         [Route("GiaThueMuaNhaXh/Search")]
         [HttpGet]
-        public IActionResult Search(string Madv, string Maso, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen)
+        public IActionResult Search(string Madv, string PhanLoai, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -564,18 +591,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     NgayDen = NgayDen.HasValue ? NgayDen : lastDayCurrentYear;
                     DonGiaTu = DonGiaTu == 0 ? 0 : DonGiaTu;
                     DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
-                    Maso = string.IsNullOrEmpty(Maso) ? "all" : Maso;
+                    PhanLoai = string.IsNullOrEmpty(PhanLoai) ? "all" : PhanLoai;
 
 
                     var model = (from hosoct in _db.GiaThueMuaNhaXhCt
-                                 join hoso in _db.GiaThueMuaNhaXh on hosoct.Mahs equals hoso.Mahs
-                                 join nhom in _db.GiaThueMuaNhaXhDm on hosoct.Maso equals nhom.Maso
+                                 join hoso in _db.GiaThueMuaNhaXh on hosoct.Mahs equals hoso.Mahs                                
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
                                  {
                                      Madv = hoso.Madv,
                                      Tendv = donvi.TenDv,
-                                     Tennha = nhom.Tennha,
+                                     Tennha = hosoct.Tennha,
+                                     Phanloai = hosoct.Phanloai,
                                      SoQD = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Dvt = hosoct.Dvt,  
@@ -583,17 +610,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      Dongiathue = hosoct.Dongiathue,                                    
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
-                                     Maso = hosoct.Maso
+                                     Maso = hosoct.Maso,
+                                     Dvthue = hosoct.Dvthue
                                  });
 
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" && t.Dongia >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
-                    if (Maso != "all") { model = model.Where(t => t.Maso == Maso); }
+                    if (PhanLoai != "all") { model = model.Where(t => t.Phanloai == PhanLoai); }
                     if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen); }   
                     if(Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
 
                     ViewData["Madv"] = Madv;
-                    ViewData["Maso"] = Maso;
+                    ViewData["PhanLoai"] = PhanLoai;
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
@@ -605,7 +633,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Tìm kiếm thông tin giá thuê mua nhà xã hội";
-                    ViewData["Dmtmnxh"] = _db.GiaThueMuaNhaXhDm.ToList();
+                    
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmnxh";
                     ViewData["MenuLv3"] = "menu_dgtmnxh_tk";
@@ -626,21 +654,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 
         [Route("GiaThueMuaNhaXh/PrintSearch")]
         [HttpPost]
-        public IActionResult Print(string Madv_Search, string Maso_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search)
+        public IActionResult Print(string Madv_Search, string PhanLoai_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Edit"))
                 {
+
                     var model = (from hosoct in _db.GiaThueMuaNhaXhCt
                                  join hoso in _db.GiaThueMuaNhaXh on hosoct.Mahs equals hoso.Mahs
-                                 join nhom in _db.GiaThueMuaNhaXhDm on hosoct.Maso equals nhom.Maso
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
                                  {
                                      Madv = hoso.Madv,
                                      Tendv = donvi.TenDv,
-                                     Tennha = nhom.Tennha,
+                                     Tennha = hosoct.Tennha,
+                                     Phanloai = hosoct.Phanloai,
                                      SoQD = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Dvt = hosoct.Dvt,
@@ -648,12 +677,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      Dongiathue = hosoct.Dongiathue,
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
-                                     Maso = hosoct.Maso
+                                     Maso = hosoct.Maso,
+                                     Dvthue = hosoct.Dvthue,
                                  });
+
 
                     model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Trangthai == "HT" && t.Dongia >= DonGiaTu_Search);
                     if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Maso_Search != "all") { model = model.Where(t => t.Maso == Maso_Search); }
+                    if (PhanLoai_Search != "all") { model = model.Where(t => t.Phanloai == PhanLoai_Search); }
                     if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongia <= DonGiaDen_Search); }
                     if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
 

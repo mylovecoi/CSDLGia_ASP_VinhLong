@@ -7,13 +7,15 @@
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
 
 
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th width="2%" style="text-align:center">STT</th>
             <th style="text-align:center">Đơn vị</th>
             <th style="text-align:center">Số QĐ/Thời điểm</th>
             <th style="text-align:center">Tên vật liệu xây dựng</th>
+            <th style="text-align:center">Tiêu chuẩn kỹ thuật</th>
+            <th style="text-align:center">Đơn vị tính</th>
             <th style="text-align:center">Đơn giá</th>
         </tr>
     </thead>
@@ -26,8 +28,10 @@
                     <td style="text-align: center">@(record_id++)</td>
                     <td style="text-align:center">@item.Tendv</td>
                     <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align:center">@item.Tenvlxd</td>
-                    <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Gia)</td>
+                    <td style="text-align:left">@item.Tenvlxd</td>
+                    <td style="text-align:left">@item.Tieuchuan</td>
+                    <td style="text-align:center">@item.Dvt</td>
+                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Gia)</td>
                 </tr>
             }
         }

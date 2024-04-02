@@ -16,7 +16,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Thongsokt { get; set; }
         public string Nguongoc { get; set; }
         public string Dvt { get; set; }
-        public string Sl { get; set; }
+        public double Sl { get; set; }
         public double Nguyengiadenghi { get; set; }
         public double Giadenghi { get; set; }
         public double Nguyengiathamdinh { get; set; }

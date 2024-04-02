@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     var nhomtn = (IEnumerable<GiaSpDvKhungGiaNhom>)ViewData["NhomTn"];
 }
@@ -46,15 +47,17 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Create"))
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                        <i class="la la-plus"></i>Thêm mới
+                    </button>
 
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvKhungExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
-
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaSpDvKhungExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
         </div>
 
@@ -83,17 +86,10 @@
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Đơn vị</label>
                 <select class="form-control select2basic" id="Madv" name="Madv">
-                    @foreach (var db in dsdiaban)
+                    <option value="all">--Tất cả--</option>
+                    @foreach (var item in dsdonvi)
                     {
-                        <optgroup label="@db.TenDiaBan">
-                            @{
-                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                            }
-                            @foreach (var item in donvi)
-                            {
-                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                            }
-                        </optgroup>
+                        <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                     }
                 </select>
             </div>
@@ -123,6 +119,7 @@
                             @if (!string.IsNullOrEmpty(item.Madiaban))
                                 @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban).TenDiaBan
 
+
                         </td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -146,6 +143,7 @@
                         <td style="text-align: center">
                             @if (!string.IsNullOrEmpty(item.Macqcq))
                                 @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
 
                         </td>
                         <td width="20%">
@@ -284,20 +282,12 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
+                                    @foreach (var item in dsdonvith)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <!option value="@item.MaDv">@item.TenDv</!option>
                                     }
-                                </select>
+                                </select
                             </div>
                         </div>
                     </div>
@@ -360,11 +350,9 @@
             }
         })
     }
-    @*function SetComplete(id) {
-        document.getElementById("mahs_complete ").value = id;
-        }*@
-        function SetComplete(mahs) {
-            document.getElementById("mahs_chuyen").value = mahs;
-        }
+
+    function SetComplete(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
+    }
 
 </script>

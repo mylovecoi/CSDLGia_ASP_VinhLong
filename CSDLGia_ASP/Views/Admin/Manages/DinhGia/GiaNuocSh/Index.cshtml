@@ -51,14 +51,14 @@
                 @if (ViewData["MaDv"].ToString() != "all")
                 {
                     <a class="btn btn-primary font-weight-bolder" asp-controller="GiaNuocSh" asp-action="Create"
-                    asp-route-Madv="@ViewData["Madv"]">
+                       asp-route-Madv="@ViewData["Madv"]">
                         <i class="la la-plus"></i>Thêm mới
                     </a>
                     <span>&ensp;</span>
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiaNuocSh" asp-action="NhanExcel"
-                    asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
                 }
             }
 
@@ -99,7 +99,7 @@
                     else
                     {
                         <lable class="form-controll">@ViewData["TenDv"]</lable>
-                        <input hidden id="MaDv_Search" name="MaDv_Search" value="@ViewData["MaDv"]" class="form-control"/>
+                        <input hidden id="MaDv_Search" name="MaDv_Search" value="@ViewData["MaDv"]" class="form-control" />
                     }
                 </div>
             </div>
@@ -157,9 +157,10 @@
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
 
+
                             </td>
                             <td>
-                                
+
                                 <a asp-controller="GiaNuocSh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
@@ -184,7 +185,7 @@
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Soqd')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
-                                    }                                   
+                                    }
                                 }
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
@@ -221,7 +222,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Số QĐ:</label>
-                                <label class="form-control" id="soqd_delete" name="soqd_delete"></label>                                
+                                <label class="form-control" id="soqd_delete" name="soqd_delete"></label>
                             </div>
                         </div>
                     </div>
@@ -293,6 +294,6 @@
     function SetComplete(mahs, soqd) {
         document.getElementById("mahs_complete").value = mahs;
         document.getElementById("soqd_chuyen").innerHTML = soqd;
-    }  
+    }
 </script>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaNuocSh/ThongTinGiayTo/Show.cshtml")

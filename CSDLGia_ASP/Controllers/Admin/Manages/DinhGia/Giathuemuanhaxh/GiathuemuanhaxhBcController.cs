@@ -117,13 +117,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 
                     var model = (from hosoct in _db.GiaThueMuaNhaXhCt
                                  join hoso in _db.GiaThueMuaNhaXh on hosoct.Mahs equals hoso.Mahs
-                                 join nhom in _db.GiaThueMuaNhaXhDm on hosoct.Maso equals nhom.Maso
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt
                                  {
                                      Madv = hoso.Madv,
                                      Tendv = donvi.TenDv,
-                                     Tennha = nhom.Tennha,
+                                     Tennha = hosoct.Tennha,
+                                     Phanloai = hosoct.Phanloai,
                                      SoQD = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Dvt = hosoct.Dvt,
@@ -131,9 +131,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      Dongiathue = hosoct.Dongiathue,
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
-                                     Maso = hosoct.Maso
+                                     Maso = hosoct.Maso,
+                                     Dvthue = hosoct.Dvthue,
                                  });
-
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 

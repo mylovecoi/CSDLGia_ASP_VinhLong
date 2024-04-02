@@ -60,7 +60,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             }
                         }
 
-                       
+                        if (string.IsNullOrEmpty(Trangthai))
+                        {
+                            Trangthai = "all";
+                        }
 
                         if (string.IsNullOrEmpty(Nam))
                         {

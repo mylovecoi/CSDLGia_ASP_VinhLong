@@ -48,9 +48,9 @@
             </h3>
         </div>
         <div>
-            @if (ViewData["Donvi"].ToString() != "all" && ViewData["Donvi"].ToString() != "")
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
             {
-                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                @if (ViewData["Donvi"].ToString() != "all" && ViewData["Donvi"].ToString() != "")
                 {
                     <a class="btn btn-primary font-weight-bolder" asp-controller="Giarung" asp-action="Create"
                        asp-route-Madv="@ViewData["Donvi"]">
@@ -75,12 +75,13 @@
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Năm</label>
                 <select class="form-control" id="Nam" name="Nam">
+                    <option value="all">--Tất cả--</option>
                     @{
-                        int nam_start = DateTime.Now.Year - 5;
-                        int nam_stop = DateTime.Now.Year + 1;
-                        for (int i = nam_start; i <= nam_stop; i++)
+                        var nam_start = DateTime.Now.Year - 5;
+                        var nam_stop = DateTime.Now.Year + 1;
+                        for (var i = nam_start; i <= nam_stop; i++)
                         {
-                            <!option value="@i" @((int)ViewData["Nam"] == i ? "selected" : "")>Năm @i</!option>
+                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "") > Năm @i</!option>
                         }
                     }
                 </select>
@@ -139,6 +140,8 @@
                         <td style="text-align: center">
                             @if (!string.IsNullOrEmpty(item.Macqcq))
                                 @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+
+
 
 
                         </td>

@@ -40,6 +40,7 @@
 
     <tr>
 
+        <th style="text-align: center">Phân loại</th>
         <th style="text-align: center">Tên nhà</th>
         <th style="text-align: center">Đơn vị thuê</th>
         <th style="text-align: center">Đơn vị tính</th>
@@ -52,19 +53,14 @@
         @foreach (var item in Model.GiaThueMuaNhaXhCt)
         {
             <tr>
-                <td style="text-align:center">
-                    @foreach (var tn in dmtmnxh)
-                    {
-                        @if (item.Maso == tn.Maso)
-                        {
-                            <span>@tn.Tennha</span>
-                        }
-                    }
+                <td>@item.Phanloai</td>
+                <td style="text-align:left">
+                    @item.Tennha
                 </td>
-                <td style="text-align:center">@item.Dvthue</td>
+                <td style="text-align:left">@item.Dvthue</td>
                 <td style="text-align:center">@item.Dvt</td>
-                <td style="text-align:center">@item.Dongia</td>
-                <td style="text-align:center">@item.Dongiathue</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongiathue)</td>
             </tr>
         }
     }

@@ -389,7 +389,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         Soqd = model.Soqd,
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
-                        Ghichu = model.Ghichu
+                        Ghichu = model.Ghichu,
+                        Phanloai= model.Phanloai,
+
                     };
 
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
@@ -529,14 +531,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuThe/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string mld = "All", string madv = "All")
+        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice,string phanloaihoso, string mld="All", string madv ="All")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
                 {
-                    beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : beginTime;
-                    endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
+                    phanloaihoso = string.IsNullOrEmpty(phanloaihoso) ? "Giá đất bồi thường tái định cư" : phanloaihoso;
+                    beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year,01,01) : beginTime;
+                    endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year,12,31) : endTime;
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
                                  join dm in _db.DmLoaiDat on giact.Maloaidat equals dm.Maloaidat
@@ -553,8 +556,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Vitri = giact.Vitri,
                                      Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
+                                     PhanLoai= gia.Phanloai,
                                  });
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime);
+                    model = model.Where(x=>x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai== phanloaihoso);
                     if (madv != "All")
                     {
                         model = model.Where(t => t.Madv == madv);
@@ -573,6 +577,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewBag.beginPrice = beginPrice;
                     ViewBag.endPrice = endPrice;
                     ViewData["mld"] = mld;
+                    ViewData["phanloaihoso"] = phanloaihoso;
                     ViewData["madv"] = madv;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -596,12 +601,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
         [Route("GiaDatCuThe/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string mld = "All", string madv = "All")
+        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice,string phanloaihoso, string mld = "All", string madv = "All")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.timkiem", "Index"))
                 {
+                    phanloaihoso = string.IsNullOrEmpty(phanloaihoso) ? "Giá đất bồi thường tái định cư" : phanloaihoso;
                     beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : beginTime;
                     endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
                     var model = (from giact in _db.GiaDatPhanLoaiCt
@@ -620,8 +626,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Vitri = giact.Vitri,
                                      Dientich = giact.Dientich,
                                      Giacuthe = giact.Giacuthe,
+                                     PhanLoai = gia.Phanloai,
                                  });
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime);
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai==phanloaihoso);
                     if (madv != "All")
                     {
                         model = model.Where(t => t.Madv == madv);
