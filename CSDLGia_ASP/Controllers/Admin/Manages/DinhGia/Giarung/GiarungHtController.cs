@@ -541,8 +541,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.tgtc.htg", "Index"))
                 {
                     var model = _db.GiaRung.Where(t => t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
+
                     List<string> list_donvi = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
+
                     List<string> list_hoso = model.Select(t => t.Mahs).ToList();
                     var model_hosoct = _db.GiaRungCt.Where(t => list_hoso.Contains(t.Mahs));
 

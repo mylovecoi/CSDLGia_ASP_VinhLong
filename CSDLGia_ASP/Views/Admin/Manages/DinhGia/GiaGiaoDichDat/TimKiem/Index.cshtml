@@ -24,17 +24,37 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
-        });
+        });        
+    </script>
+    <script>
+        function Print() {
+            var form = document.getElementById("frm_search");
+            form.submit();
+        }
+        function ClickSearch() {
+            var fromDate = document.getElementById("ngaynhap_tu").value;
+            var toDate = document.getElementById("ngaynhap_den").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
 
-        function exportToExcel(tableId, filename) {
-            var table = document.getElementById(tableId);
-            var currencyCells = table.getElementsByClassName("sotien");
-            Array.from(currencyCells).forEach(cell => {
-                cell.textContent = cell.textContent.replace(/\./g, "");
-            });
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaGiaoDichDat/Search?';
+                    var madv = '&madv=' + $('#madv').val();
+                    var manhom = '&manhom=' + $('#manhom').val();
+                    var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
+                    var ngaynhap_den = '&ngaynhap_den=' + $('#ngaynhap_den').val();
+                    var gia_tu = '&gia_tu=' + $('#gia_tu').val();
+                    var gia_den = '&gia_den=' + $('#gia_den').val();
 
-            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-            XLSX.writeFile(wb, filename + ".xlsx");
+                    var url = current_path_url + madv + manhom + ngaynhap_tu + ngaynhap_den + gia_tu + gia_den;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
         }
     </script>
 
@@ -52,13 +72,13 @@
             </h3>
         </div>
         <div class="col-xl-6" style="text-align:right;margin-top: auto">
-            <button class="btn btn-primary font-weight-bolder" onclick="exportToExcel('sample_3','DuLieuKetXuat')">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
                 <i class="la la-print"></i>Kết xuất
             </button>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaGiaoDichDat" asp-action="Search" method="get" id="frm_dgthuetn_timkiem">
+    <form asp-controller="GiaGiaoDichDat" asp-action="PrintSearch" target="_blank" method="post" id="frm_search">
         <div class="card-body">
             <div class="row">
                 <div class="col-xl-6">
@@ -122,7 +142,7 @@
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <button type="button" class="btn btn-danger mr-2" onclick="ValThueTnTk()"><i class="la la-search"></i>Tìm kiếm</button>
+            <button type="button" class="btn btn-danger mr-2" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
         </div>
     </form>
     <!--end::Form-->
@@ -136,9 +156,9 @@
                 <th style="text-align: center">Đơn vị nhập</th>
                 <th style="text-align: center">Thời điểm</th>
                 <th style="text-align: center">Nhóm đất</th>
-                <th style="text-align: center">Tên loại đất</th>
+                <th style="text-align: center">Phân loại đất thực tế trên thị trường</th>
                 <th style="text-align: center">Đơn vị tính</th>
-                <th style="text-align: center">Giá kỳ này</th>
+                <th style="text-align: center">Giá giao dịch</th>
                 <th style="text-align: center">Thao tác</th>
             </tr>
         </thead>

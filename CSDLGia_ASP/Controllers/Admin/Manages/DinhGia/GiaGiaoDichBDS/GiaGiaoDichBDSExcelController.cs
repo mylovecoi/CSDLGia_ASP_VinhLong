@@ -144,6 +144,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 model.GiaGiaoDichBDSCt = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs).ToList();
                 ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
                 ViewData["Title"] = "Bảng giá giao dịch bất động sản";
+                ViewData["MenuLv1"] = "menu_dg";
+                ViewData["MenuLv2"] = "menu_dg_giaodichbds";
+                ViewData["MenuLv3"] = "menu_dg_giaodichbds_tt";
                 return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Create.cshtml", model);
             }
             else

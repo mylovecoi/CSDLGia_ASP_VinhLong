@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatCt>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th style="text-align: center" width="2%">TT</th>
+            <th style="text-align: center">Đơn vị nhập</th>
+            <th style="text-align: center">Thời điểm</th>
+            <th style="text-align: center">Nhóm đất</th>
+            <th style="text-align: center">Phân loại đất thực tế trên thị trường</th>
+            <th style="text-align: center">Đơn vị tính</th>
+            <th style="text-align: center">Giá giao dịch</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: left">@item.Tendv</td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: left">@item.Tennhom</td>
+                    <td style="text-align: left">@item.Ten</td>
+                    <th style="text-align: center">@item.Dvt</th>
+                    <td style="text-align: center" class="sotien" font-weight:bold;">@Helpers.ConvertDbToStr(item.Gia)</td>                   
+                </tr>
+            }
+        }
+    </tbody>
+</table>
