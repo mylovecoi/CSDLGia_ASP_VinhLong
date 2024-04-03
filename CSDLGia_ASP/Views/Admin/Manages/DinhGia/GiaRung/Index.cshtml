@@ -8,6 +8,7 @@
     var DanhMucNhom = ViewData["Loairung"]
                  as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>
                  ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm>();
+    int Nam = ViewData["Nam"] as int? ?? 0; 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung>
 
@@ -79,11 +80,11 @@
                 <select class="form-control" id="Nam" name="Nam">
                     <option value="all">--Tất cả--</option>
                     @{
-                        var nam_start = DateTime.Now.Year - 5;
-                        var nam_stop = DateTime.Now.Year + 1;
-                        for (var i = nam_start; i <= nam_stop; i++)
+                        int nam_start = DateTime.Now.Year - 5;
+                        int nam_stop = DateTime.Now.Year + 1;
+                        for (int i = nam_start; i <= nam_stop; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "") > Năm @i</!option>
+                            <!option value="@i" @(Nam == i ? "selected" : "") > Năm @i</!option>
                         }
                     }
                 </select>

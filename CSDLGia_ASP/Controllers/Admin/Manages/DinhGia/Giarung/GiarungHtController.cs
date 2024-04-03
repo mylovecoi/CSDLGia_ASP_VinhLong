@@ -24,11 +24,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         {
             _db = db;
         }
-        
+
         [Route("GiaRung/XetDuyet")]
         [HttpGet]
 
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -77,20 +77,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     if (getdonvi.Level == "ADMIN")
                     {
                         var model = _db.GiaRung.Where(t => t.Madv_ad == Madv).ToList();
-                        if (string.IsNullOrEmpty(Nam))
+
+                        if (Nam != 0)
                         {
-                            model = model.ToList();
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
+                            model = model.Where(t => t.Thoidiem_ad.Year == Nam).ToList();
                         }
                         var model_join = from dg in model
                                          select new VMDinhGiaRung
@@ -101,7 +91,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                              Madv_t = dg.Madv_t,
                                              Madv_h = dg.Madv_h,
                                              Mahs = dg.Mahs,
-                                             Thoidiem = dg.Thoidiem_ad,
+                                             //Thoidiem = dg.Thoidiem_ad,
+                                             Thoidiem = dg.Thoidiem,
                                              Soqd = dg.Soqd,
                                              Madiaban = getdonvi.MaDiaBan,
                                              Trangthai_ad = dg.Trangthai_ad,
@@ -132,20 +123,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     else if (getdonvi.Level == "T")
                     {
                         var model = _db.GiaRung.Where(t => t.Madv_t == Madv).ToList();
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            model = model.ToList();
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
+                            model = model.Where(t => t.Thoidiem_t.Year == Nam).ToList();
                         }
                         var model_join = from dg in model
                                          select new VMDinhGiaRung
@@ -156,7 +136,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                              Macqcq_t = dg.Macqcq_t,
                                              Macqcq_h = dg.Macqcq_h,
                                              Mahs = dg.Mahs,
-                                             Thoidiem = dg.Thoidiem_t,
+                                             //Thoidiem = dg.Thoidiem_t,
+                                             Thoidiem = dg.Thoidiem,
                                              Soqd = dg.Soqd,
                                              Madiaban = getdonvi.MaDiaBan,
                                              Trangthai_ad = dg.Trangthai_ad,
@@ -187,21 +168,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     else
                     {
                         var model = _db.GiaRung.Where(t => t.Madv_h == Madv).ToList();
-                        if (string.IsNullOrEmpty(Nam))
+
+                        if (Nam != 0)
                         {
-                            model = model.ToList();
+                            model = model.Where(t => t.Thoidiem_h.Year == Nam).ToList();
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
-                        }
+
                         var model_join = from dg in model
                                          select new VMDinhGiaRung
                                          {
@@ -211,7 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                              Macqcq_t = dg.Macqcq_t,
                                              Macqcq_h = dg.Macqcq_h,
                                              Mahs = dg.Mahs,
-                                             Thoidiem = dg.Thoidiem_h,
+                                             //Thoidiem = dg.Thoidiem_h,
+                                             Thoidiem = dg.Thoidiem,
                                              Soqd = dg.Soqd,
                                              Madiaban = getdonvi.MaDiaBan,
                                              Trangthai_ad = dg.Trangthai_ad,
@@ -272,7 +245,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                     };
                     var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
                     model.Macqcq = Macqcq;
-                    model.Thoidiem = DateTime.Now;
+                    //model.Thoidiem = DateTime.Now;
                     model.Trangthai = "HT";
                     if (chk_dvcq != null && chk_dvcq.Level == "T")
                     {
@@ -570,7 +543,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     var model = _db.GiaRung.Where(t => t.Trangthai == "HT" && t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden);
                     List<string> list_donvi = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
-                    List<string> list_hoso = model.Select(t=>t.Mahs).ToList();
+                    List<string> list_hoso = model.Select(t => t.Mahs).ToList();
                     var model_hosoct = _db.GiaRungCt.Where(t => list_hoso.Contains(t.Mahs));
 
                     ViewData["DonVis"] = model_donvi;
@@ -593,7 +566,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
-        
+
 
     }
 }
