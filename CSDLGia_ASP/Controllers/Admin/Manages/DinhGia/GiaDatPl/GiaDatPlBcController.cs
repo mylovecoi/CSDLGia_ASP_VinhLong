@@ -47,7 +47,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaDatPhanLoai.Where(t => t.Trangthai == "HT");
                     return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/BaoCao/Index.cshtml");
                 }
                 else
@@ -105,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatPl/BaoCao/BcCT")]
         [HttpPost]
-        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky, string phanloaihoso)
+        public IActionResult BcCT(DateTime? ngaytu, DateTime? ngayden, string mahsth, string chucdanhky, string hotennguoiky, string phanloaihoso)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -122,16 +122,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Mahs = giact.Mahs,
                                      Thoidiem = gia.Thoidiem,
                                      Giacuthe = giact.Giacuthe,
-                                     Khuvuc = giact.Khuvuc,
                                      PhanLoai = gia.Phanloai,
+                                     Khuvuc = giact.Khuvuc,
                                      Trangthai = gia.Trangthai
                                  });
 
-
-              
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop);}
+                    if (mahsth != "all") { model = model.Where(t => t.Mahs == mahsth);}
 
 
                     if (phanloaihoso != "all") { model = model.Where(t => t.PhanLoai == phanloaihoso); }

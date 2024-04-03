@@ -145,7 +145,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Thông tin hồ sơ: </label><br />
-                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                <select class="form-control" id="mahsth" name="mahsth" width="100%">
                                     <option value="all">--Tất cả---</option>
                                     @foreach (var item in DanhSachHoSo)
                                     {
@@ -199,7 +199,7 @@
                     success: function (data) {
                         if (data.status == 'success') {
                             toastr.success("Thành công!");
-                            $('#MaHsTongHop').replaceWith(data.message);
+                            $('#mahsth').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
                         }

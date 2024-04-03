@@ -1,10 +1,7 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var maloaidat = (IEnumerable<DmLoaiDat>)ViewData["Maloaidat"];
-    var mld = ViewData["mld"]!;
-    var madv = ViewData["madv"]!;
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var phanloaihoso = ViewData["phanloaihoso"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt>
@@ -39,13 +36,12 @@
                     var current_path_url = '/GiaDatCuThe/Search?';
                     var madv = '&madv=' + $('#madv').val();
                     var phanloaihoso = '&phanloaihoso=' + $('#phanloaihoso').val();
-                    var mld = '&mld=' + $('#mld').val();
                     var endPrice = '&endPrice=' + $('#endPrice').val();
                     var beginPrice = '&beginPrice=' + $('#beginPrice').val();
                     var endTime = '&endTime=' + $('#endTime').val();
                     var beginTime = '&beginTime=' + $('#beginTime').val();
 
-                    var url = current_path_url + madv + phanloaihoso + mld + endPrice + beginPrice + endPrice + beginTime;
+                    var url = current_path_url + madv + phanloaihoso + endPrice + beginPrice + endPrice + beginTime;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -85,20 +81,10 @@
                             <label style="font-weight:bold; color:blue">Đơn vị</label>
                             <select class="form-control select2basic" id="madv" name="madv">
                                 <option value="All">--Tất cả các đơn vị--</option>
-                                @foreach (var db in dsdiaban)
+                                @foreach (var item in dscqcq)
                                 {
-                                    <optgroup label="@db.TenDiaBan">
-                                        @{
-                                            //var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
-                                            var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                        }
 
-                                        @foreach (var item in company)
-                                        {
-
-                                            <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                        }
-                                    </optgroup>
+                                    <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                                 }
                             </select>
                         </div>

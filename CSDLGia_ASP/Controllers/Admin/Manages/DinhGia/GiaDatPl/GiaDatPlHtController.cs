@@ -66,7 +66,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam) && t.Madv_h == Madv).ToList();
+                                //model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam) && t.Madv_h == Madv).ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam) && t.Madv_h == Madv).ToList();
                             }
                             else
                             {
@@ -82,7 +83,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_h,
-                                             Thoidiem = kk.Thoidiem_h,
+                                             //Thoidiem = kk.Thoidiem_h,
+                                             Thoidiem = kk.Thoidiem,
                                              Thongtin = kk.Thongtin,
                                              Trangthai = kk.Trangthai_h,
                                              Soqd = kk.Soqd,
@@ -133,7 +135,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam) && t.Madv_t == Madv).ToList();
+                                //model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam) && t.Madv_t == Madv).ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam) && t.Madv_t == Madv).ToList();
                             }
                             else
                             {
@@ -150,7 +153,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                              MadvCh = GetMadvChuyen(Madv, kk),
                                              Macqcq = Madv,
                                              Madv = kk.Madv_t,
-                                             Thoidiem = kk.Thoidiem_t,
+                                             //Thoidiem = kk.Thoidiem_t,
+                                             Thoidiem = kk.Thoidiem,
                                              Thongtin = kk.Thongtin,
                                              Trangthai = kk.Trangthai_t,
                                              Soqd = kk.Soqd,
@@ -201,7 +205,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             if (Nam != "all")
                             {
-                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam) && t.Madv_ad == Madv).ToList();
+                                //model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam) && t.Madv_ad == Madv).ToList();
+                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam) && t.Madv_ad == Madv).ToList();
                             }
                             else
                             {
@@ -579,7 +584,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 var model = _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                string result = "<select class='form-control' id='mahsth' name='mahsth'>";
                 result += "<option value='all'>--Tất cả---</option>";
 
                 if (model.Any())
