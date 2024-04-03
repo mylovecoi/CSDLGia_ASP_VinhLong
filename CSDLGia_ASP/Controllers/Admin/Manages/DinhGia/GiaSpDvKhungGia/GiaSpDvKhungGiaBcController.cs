@@ -187,6 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ttqd = hoso.Ttqd,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ khung giá";

@@ -80,7 +80,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
-                                     Ghichu = hoso.Ghichu,
+                                     Thongtin = hoso.Thongtin,
+
                                  });
 
                     ViewData["Title"] = "Báo cáo giá rừng";

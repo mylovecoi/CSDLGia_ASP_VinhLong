@@ -78,6 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Mota = hoso.Mota,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá dịch vụ khám chữa bệnh";
