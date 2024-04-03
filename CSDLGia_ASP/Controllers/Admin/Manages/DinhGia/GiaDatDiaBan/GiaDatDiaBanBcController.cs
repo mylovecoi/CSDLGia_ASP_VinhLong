@@ -79,7 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                      TenDonVi = hoso.TenDonVi,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-                                     GhiChu = hoso.GhiChu,
+                                     NoiDungQDTT = hoso.NoiDungQDTT,
                                      Thoidiem = hoso.Thoidiem,
                                  });
 
