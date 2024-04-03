@@ -20,17 +20,35 @@
         $(document).ready(function () {
             TableManaged.init();
         });
-
-        function exportToExcel(tableId, filename) {
-            var table = document.getElementById(tableId);
-            var currencyCells = table.getElementsByClassName("sotien");
-            Array.from(currencyCells).forEach(cell => {
-                cell.textContent = cell.textContent.replace(/\./g, "");
-            });
-
-            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-            XLSX.writeFile(wb, filename + ".xlsx");
+        function Print() {
+            var form = document.getElementById("frm_search");
+            form.submit();
         }
+        function ClickSearch() {
+            var fromDate = document.getElementById("ngaynhap_tu").value;
+            var toDate = document.getElementById("ngaynhap_den").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaGiaoDichBDS/Search?';
+                    var gia_tu = '&gia_tu=' + $('#gia_tu').val();
+                    var gia_den = '&gia_den=' + $('#gia_den').val();
+                    var ngaynhap_den = '&ngaynhap_den=' + $('#ngaynhap_den').val();
+                    var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
+                    var manhom = '&manhom=' + $('#manhom').val();
+                    var madv = '&madv=' + $('#madv').val();
+                    var url = current_path_url + gia_tu + gia_den + ngaynhap_tu + ngaynhap_den + manhom + madv;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
     </script>
 
 }
@@ -46,13 +64,13 @@
             </h3>
         </div>
         <div class="col-xl-6" style="text-align:right;margin-top: auto">
-            <button class="btn btn-primary font-weight-bolder" onclick="exportToExcel('sample_3','DuLieuKetXuat')">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
                 <i class="la la-print"></i>Kết xuất
             </button>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="GiaGiaoDichBDS" asp-action="Search" method="get" id="frm_dgthuetn_timkiem">
+    <form asp-controller="GiaGiaoDichBDS" asp-action="PrintSearch" method="post" target="_blank" id="frm_search">
         <div class="card-body">
             <div class="row">
                 <div class="col-xl-6">
@@ -108,7 +126,7 @@
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <button type="button" class="btn btn-danger mr-2" onclick="ValThueTnTk()"><i class="la la-search"></i> Tìm kiếm </button>
+            <button type="button" class="btn btn-danger mr-2" onclick="ClickSearch()"><i class="la la-search"></i> Tìm kiếm </button>
         </div>
     </form>
     <!--end::Form-->
@@ -132,7 +150,7 @@
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    <td style="text-align: center">
+                    <td style="text-align: left">
                         @foreach (var ds in dsdonvi)
                         {
                             @if (item.Madv == ds.MaDv)
@@ -142,9 +160,9 @@
                         }
                     </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                    <td style="text-align: center">@item.Ten</td>
+                    <td style="text-align: left">@item.Ten</td>
                     <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: center" class="sotien">@item.Gia</td>
+                    <td style="text-align: right" class="sotien">@item.Gia</td>
                     <td style="text-align: center">
                         <a asp-controller="GiaGiaoDichBDS" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">
@@ -156,24 +174,6 @@
         </tbody>
     </table>
 </div>
-<script>
-    function ValThueTnTk() {
-        var date_tu = new Date($('#ngaynhap_tu').val());
-        var date_den = new Date($('#ngaynhap_den').val());
-        var date_tu_int = date_tu.getTime();
-        var date_den_int = date_den.getTime();
-
-        if (date_tu_int > date_den_int) {
-            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
-        } else {
-            if ($('#gia_tu').val() > $('#gia_den').val()) {
-                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_dgthuetn_timkiem").submit();
-            }
-        }
-    }
-</script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
