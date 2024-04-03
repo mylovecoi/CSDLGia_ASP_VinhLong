@@ -90,6 +90,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                          });
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["DanhMucNhom"] = _db.PhiLePhiNhom;
