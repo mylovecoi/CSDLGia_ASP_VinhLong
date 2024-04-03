@@ -27,12 +27,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuThe")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, string Nam ="all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
                 {
+                    
                     var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
                                    select new VMDsDonVi
@@ -59,19 +60,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         {
                             model = model.Where(t => t.Madv == Madv);
                         }
-
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam !="all")
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
-                        }
+                            model = model.Where(x=>x.Thoidiem.Year ==Convert.ToInt32(Nam));
+                        }                        
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
