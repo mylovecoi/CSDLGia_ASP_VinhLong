@@ -118,25 +118,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 result += "<input type='number' id='sl_edit' name='sl_edit' class='form-control' value='" + model.Sl + "' />";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đơn giá đề nghị*</label>";
-                result += "<input type='text' id='nguyengiadenghi_edit' name='nguyengiadenghi_edit' value='" + Helpers.ConvertDbToStr(model.Nguyengiadenghi) + "' class='form-control money text-right' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá trị đề nghị*</label>";
-                result += "<input type='text' id='giadenghi_edit' name='giadenghi_edit' value='" + Helpers.ConvertDbToStr(model.Giadenghi) + "' class='form-control money text-right' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-3'>";
+                //result += "<div class='col-xl-3'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Đơn giá đề nghị*</label>";
+                //result += "<input type='text' id='nguyengiadenghi_edit' name='nguyengiadenghi_edit' value='" + Helpers.ConvertDbToStr(model.Nguyengiadenghi) + "' class='form-control money text-right' style='font-weight: bold'/>";
+                //result += "</div>";
+                //result += "</div>";
+                //result += "<div class='col-xl-3'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Giá trị đề nghị*</label>";
+                //result += "<input type='text' id='giadenghi_edit' name='giadenghi_edit' value='" + Helpers.ConvertDbToStr(model.Giadenghi) + "' class='form-control money text-right' style='font-weight: bold'/>";
+                //result += "</div>";
+                //result += "</div>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá thẩm định*</label>";
                 result += "<input type='text' id='nguyengiathamdinh_edit' name='nguyengiathamdinh_edit' value='" + Helpers.ConvertDbToStr(model.Nguyengiathamdinh) + "' class='form-control money text-right' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-3'>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá trị tài sản thẩm định*</label>";
                 result += "<input type='text' id='giatritstd_edit' name='giatritstd_edit' value='" + Helpers.ConvertDbToStr(model.Giatritstd) + "' class='form-control money text-right' style='font-weight: bold'/>";
@@ -165,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGiaCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, double Sl, double Ngiadn, double Giadn, double Ngiatd, double Giatd, string Ghichu)
+        public JsonResult Update(int Id, string Mats, string Tents, string Qccl, string Tskt, string Xuatxu, string Dvt, double Sl, double Ngiatd, double Giatd, string Ghichu)
         {
             var model = _db.ThamDinhGiaCt.FirstOrDefault(t => t.Id == Id);
             model.Mats = Mats;
@@ -175,8 +175,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             model.Nguongoc = Xuatxu;
             model.Dvt = Dvt;
             model.Sl = Sl;
-            model.Nguyengiadenghi = Ngiadn;
-            model.Giadenghi = Giadn;
+            //model.Nguyengiadenghi = Ngiadn;
+            //model.Giadenghi = Giadn;
             model.Nguyengiathamdinh = Ngiatd;
             model.Giatritstd = Giatd;
             model.Ghichu = Ghichu;
@@ -216,8 +216,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             result += "<th>Xuất xứ</th>";
             result += "<th>Đơn vị tính</th>";
             result += "<th>Số lượng</th>";
-            result += "<th>Đơn giá đề nghị</th>";
-            result += "<th>Giá trị đề nghị</th>";
+            //result += "<th>Đơn giá đề nghị</th>";
+            //result += "<th>Giá trị đề nghị</th>";
             result += "<th>Đơn giá thẩm định</th>";
             result += "<th>Giá trị thẩm định</th>";
             result += "<th>Ghi chú</th>";
@@ -236,8 +236,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 result += "<td>" + item.Nguongoc + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:center'>" + item.Sl + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Nguyengiadenghi) + "</td>";
-                result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Giadenghi) + "</td>";
+                //result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Nguyengiadenghi) + "</td>";
+                //result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Giadenghi) + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Nguyengiathamdinh) + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Giatritstd) + "</td>";
                 result += "<td>" + item.Ghichu + "</td>";
