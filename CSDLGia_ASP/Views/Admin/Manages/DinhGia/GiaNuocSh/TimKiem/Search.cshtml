@@ -209,7 +209,7 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            toastr.success("Thành công!");
+                            @* toastr.success("Thành công!"); *@
                             $('#mahs_Search').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
