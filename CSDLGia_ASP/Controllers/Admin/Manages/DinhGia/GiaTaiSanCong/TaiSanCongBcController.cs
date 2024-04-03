@@ -78,6 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Thongtin = hoso.Thongtin,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá tài sản công";

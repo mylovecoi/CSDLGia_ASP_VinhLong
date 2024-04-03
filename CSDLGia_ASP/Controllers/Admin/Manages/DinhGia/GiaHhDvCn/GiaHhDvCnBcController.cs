@@ -82,6 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                                      Soqd = hoso.Soqd,
                                      Ghichu = hoso.Ghichu,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ttqd = hoso.Ttqd,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";

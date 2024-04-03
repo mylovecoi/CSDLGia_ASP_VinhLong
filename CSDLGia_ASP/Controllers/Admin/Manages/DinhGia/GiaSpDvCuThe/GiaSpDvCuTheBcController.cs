@@ -78,6 +78,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     GhiChu = hoso.GhiChu,
+
                                  });
 
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ  cụ thể";
