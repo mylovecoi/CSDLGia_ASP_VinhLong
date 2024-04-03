@@ -10,33 +10,23 @@
     var Giadaugia_tu = ViewData["Giadaugia_tu"];
     var Giadaugia_den = ViewData["Giadaugia_den"];
     var ten = ViewData["ten"];
+    var Phanloai = ViewData["Phanloai"];
 }
-
+@model IEnumerable<GiaDauGiaDatCt>
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script {
+@section custom_script
+{
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
         });
-
-        function exportToExcel(tableId, filename) {
-            var table = document.getElementById(tableId);
-            var currencyCells = table.getElementsByClassName("sotien");
-            Array.from(currencyCells).forEach(cell => {
-                cell.textContent = cell.textContent.replace(/\./g, "");
-            });
-
-            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-            XLSX.writeFile(wb, filename + ".xlsx");
-        }
     </script>
 }
 
@@ -51,13 +41,13 @@
             </h3>
         </div>
         <div class="col-xl-6" style="text-align:right;margin-top: auto">
-            <button class="btn btn-primary font-weight-bolder" onclick="exportToExcel('sample_3','DuLieuKetXuat')">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
                 <i class="la la-print"></i>Kết xuất
             </button>
         </div>
     </div>
     <hr />
-    <form asp-controller="GiaTrungThauDat" asp-action="Search" method="get" id="frm_search">
+    <form asp-controller="GiaTrungThauDat" asp-action="PrintSearch" method="post" target="_blank" id="frm_search">
         <div class="card-body">
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
@@ -88,6 +78,17 @@
                     <div class="form-group">
                         <label>Tên dự án</label>
                         <input type="text" class="form-control" asp-for="@ten" name="ten" id="ten" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Phân loại</label>
+                        <select class="form-control" asp-for="@Phanloai" id="PhanLoai">
+                            @foreach (var item in Helpers.PlDauGiaDat())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
@@ -137,7 +138,7 @@
         </div>
 
         <div class="card-footer" style="text-align:center">
-            <button type="button" onclick="valedate()" class="btn btn-danger mr-2"><i class="la la-search"></i> Tìm kiếm </button>
+            <button type="button" onclick="ClickSearch()" class="btn btn-danger mr-2"><i class="la la-search"></i> Tìm kiếm </button>
         </div>
     </form>
 </div>
@@ -147,8 +148,12 @@
         <thead>
             <tr style="text-align:center">
                 <th style="text-align: center">STT</th>
-                <td style="text-align: center">Thời điểm</td>
                 <th style="text-align: center">Tên dự án</th>
+                <th style="text-align: center">Số lô</th>
+                <th style="text-align: center">Số thửa</th>
+                <th style="text-align: center">Tờ bản đồ</th>
+                <th style="text-align: center">Diện tích</th>
+                <td style="text-align: center">Thời điểm</td>
                 <th style="text-align: center">Giá khởi điểm</th>
                 <th style="text-align: center">Giá trúng thầu</th>
                 <th>Thao tác</th>
@@ -161,8 +166,12 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: center">@item.Tenduan</td>
+                        <td style="text-align: center">@item.TenDuAn</td>
+                        <td style="text-align: center">@item.Solo</td>
+                        <td style="text-align: center">@item.Sothua</td>
+                        <td style="text-align: center">@item.Tobanbo</td>
+                        <td style="text-align: center">@item.Dientich</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
                         <td style="text-align: center" class="sotien">@item.Giakhoidiem</td>
                         <td style="text-align: center" class="sotien">@item.Giadaugia</td>
                         <td>
@@ -179,33 +188,37 @@
 </div>
 
 <script>
-    function valedate() {
-        if ($('#beginTime').val().trim() != "" && $('#endTime').val().trim() != "") {
-            if ($('#beginTime').val().trim() > $('#endTime').val().trim()) {
-                toastr.error("Thời gian từ không được nhỏ hơn thời gian đến!", "Lỗi!!!")
-            }
-            else {
-                if ($('#Giakhoidiem_tu').val().trim() > $('#Giakhoidiem_den').val().trim()) {
-                    toastr.error("Giá khởi điểm từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
-                } else {
-                    if ($('#Giadaugia_tu').val().trim() > $('#Giadaugia_den').val().trim()) {
-                        toastr.error("Giá đấu giá từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
-                    } else {
-                        document.getElementById("frm_search").submit();
-                    }
-                }
-            }
+    function Print() {
+        var form = document.getElementById("frm_search");
+        form.submit();
+    }
+    function ClickSearch() {
+        var fromDate = document.getElementById("beginTime").value;
+        var toDate = document.getElementById("endTime").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
         } else {
-            if ($('#Giakhoidiem_tu').val().trim() > $('#Giakhoidiem_den').val().trim()) {
-                toastr.error("Giá khởi điểm từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+                var current_path_url = '/GiaTrungThauDat/Search?';
+                var madv = '&madv=' + $('#maDv').val();
+                var ten = '&ten=' + $('#ten').val();
+                var PhanLoai = '&PhanLoai=' + $('#PhanLoai').val();
+                var endTime = '&endTime=' + $('#endTime').val();
+                var beginTime = '&beginTime=' + $('#beginTime').val();
+                var Giakhoidiem_tu = '&Giakhoidiem_tu=' + $('#Giakhoidiem_tu').val();
+                var Giakhoidiem_den = '&Giakhoidiem_den=' + $('#Giakhoidiem_den').val();
+                var Giadaugia_den = '&Giadaugia_den=' + $('#Giadaugia_den').val();
+                var Giadaugia_tu = '&Giadaugia_tu=' + $('#Giadaugia_tu').val();
+                var url = current_path_url + madv + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
+                window.location.href = url;
             } else {
-                if ($('#Giadaugia_tu').val().trim() > $('#Giadaugia_den').val().trim()) {
-                    toastr.error("Giá đấu giá từ không được nhỏ hơn giá khởi điểm đến!", "Lỗi!!!")
-                } else {
-                    document.getElementById("frm_search").submit();
-                }
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
             }
         }
     }
-
 </script>
+
+
