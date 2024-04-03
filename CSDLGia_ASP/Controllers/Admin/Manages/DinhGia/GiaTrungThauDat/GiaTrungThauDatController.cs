@@ -440,13 +440,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Soqdgiakhoidiem = model.Soqdgiakhoidiem,
                         Soqdkqdaugia = model.Soqdkqdaugia,
                         Soqdpagia = model.Soqdpagia,
-                        Phanloai = model.Phanloai
+                        Phanloai = model.Phanloai,
+                        Maxp = model.Maxp,
+
                     };
                     var model_ct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
                     var donvi = _db.DsDonVi.First(t => t.MaDv == model.Madv);
                     ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
-                    ViewData["TenDonVi"] = donvi.TenDv;                    
+                    ViewData["TenDonVi"] = donvi.TenDv;
+                    ViewData["XaPhuong"] = _db.DsXaPhuong.FirstOrDefault(x => x.Maxp == model.Maxp).Tenxp;
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
                 }
                 else

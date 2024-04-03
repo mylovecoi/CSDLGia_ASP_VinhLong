@@ -78,6 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Mota = hoso.Mota,
                                  });
 
                     ViewData["Title"] = "Báo cáo nước sinh hoạt";
@@ -133,6 +134,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
                                      STTHienthi = hosoct.STTHienthi
+                                     
                                  });
 
                     model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && t.Trangthai == "HT");
@@ -173,7 +175,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 var model = _db.GiaNuocSh.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                string result = "<select class='form-control' id='mahs' name='mahs'>";
+                string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
                 result += "<option value='all'>--Tất cả---</option>";
 
                 if (model.Any())

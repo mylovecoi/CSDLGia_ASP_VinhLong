@@ -560,10 +560,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         model = model.Where(t => t.Madv == madv);
                     }
-                    if (mld != "All")
-                    {
-                        model = model.Where(t => t.Maloaidat == mld);
-                    }
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
                     {
@@ -573,11 +569,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewBag.endTime = endTime;
                     ViewBag.beginPrice = beginPrice;
                     ViewBag.endPrice = endPrice;
-                    ViewData["mld"] = mld;
                     ViewData["phanloaihoso"] = phanloaihoso;
-                    ViewData["madv"] = madv;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";

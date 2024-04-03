@@ -26,8 +26,9 @@
     <thead>
         <tr>
             <th width="2%" style="text-align: center">STT</th>
-            <th style="text-align: center">Mô tả</th>
+            <th style="text-align: center">Mã hồ sơ</th>
             <th style="text-align: center">Số QĐ</th>
+            <th style="text-align: center">Mô tả</th>
             <th style="text-align: center">Ngày chuyển hồ sơ</th>
             <th style="text-align: center">Ngày xét duyệt</th>
         </tr>
@@ -42,6 +43,7 @@
                     <b>Mã hồ sơ: </b><a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" target="_blank">@item.Mahs</a>
                 </td>
                 <td style="text-align: center">@item.Soqd</td>
+                <td style="text-align: center">@item.Ttqd</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
 

@@ -79,6 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                      Mahs = hoso.Mahs,
                                      Soqdpagia = hoso.Soqdpagia,
                                      Thoidiem = hoso.Thoidiem,
+                                     Thongtin = hoso.Thongtin,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp trúng thầu quyền sử dụng đất";

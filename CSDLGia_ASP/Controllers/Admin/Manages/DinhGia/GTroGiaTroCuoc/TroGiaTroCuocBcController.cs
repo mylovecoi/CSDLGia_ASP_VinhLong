@@ -72,6 +72,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ttqd = hoso.Ttqd,
                                  });
                     ViewData["Title"] = "Báo cáo mức trợ giá trợ cước";
                     ViewData["MenuLv1"] = "menu_dg";
