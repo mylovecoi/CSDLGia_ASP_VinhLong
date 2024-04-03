@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -24,5 +25,13 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Sotobanbo { get; set; }
         public string TrangThai { get; set; }
         public string MaDv { get; set; }
+        [NotMapped]
+        public DateTime ThoiDiem { get; set; }
+        [NotMapped]
+        public string SoQuyetDinh { get; set; }
+        [NotMapped]
+        public string PhanLoai { get; set; }
+        [NotMapped]
+        public string TenDuAn { get; set; }
     }
 }

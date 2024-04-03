@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr style="text-align:center">
+            <th style="text-align: center">STT</th>
+            <th style="text-align: center">Tên dự án</th>
+            <th style="text-align: center">Số lô</th>
+            <th style="text-align: center">Số thửa</th>
+            <th style="text-align: center">Tờ bản đồ</th>
+            <th style="text-align: center">Diện tích</th>
+            <td style="text-align: center">Thời điểm</td>
+            <th style="text-align: center">Giá khởi điểm</th>
+            <th style="text-align: center">Giá trúng thầu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align: center">@item.TenDuAn</td>
+                    <td style="text-align: center">@item.Solo</td>
+                    <td style="text-align: center">@item.Sothua</td>
+                    <td style="text-align: center">@item.Tobanbo</td>
+                    <td style="text-align: center">@item.Dientich</td>
+                    <td style="text-align: center">@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
+                    <td style="text-align: center" class="sotien">@item.Giakhoidiem</td>
+                    <td style="text-align: center" class="sotien">@item.Giadaugia</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
