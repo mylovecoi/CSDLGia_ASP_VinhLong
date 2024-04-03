@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Admin\Manages\DinhGia\GiaDatDiaBan\TimKiem\1.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.0.7" />
     <PackageReference Include="Handsontable" Version="12.3.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
@@ -77,7 +73,6 @@
     <None Include="Views\Admin\Manages\ChiSoGiaTd\Hoso\Modal.cshtml" />
     <None Include="Views\Admin\Manages\ChiSoGiaTd\Xetduyet\Index.cshtml" />
     <None Include="Views\Admin\Manages\ChiSoGiaTd\Xetduyet\Modal.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaDatDiaBan\TimKiem\1.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\BaoCao\BcCT.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\BaoCao\BcTH.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaLePhi\BaoCao\Index.cshtml" />
