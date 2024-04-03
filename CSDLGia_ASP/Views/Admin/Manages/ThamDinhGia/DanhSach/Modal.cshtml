@@ -67,12 +67,12 @@
                         </div>
                     </div>
                     @* <div class="col-xl-1">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>&nbsp;&nbsp;&nbsp;</label><br />
-                            <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
-                                <i class="la la-plus"></i>
-                            </button>
-                        </div>
+                    <div class="form-group fv-plugins-icon-container">
+                    <label>&nbsp;&nbsp;&nbsp;</label><br />
+                    <button type="button" class="btn btn-default" data-target="#Dvt_Modal" data-toggle="modal">
+                    <i class="la la-plus"></i>
+                    </button>
+                    </div>
                     </div> *@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
@@ -80,25 +80,25 @@
                             <input type="number" id="sl_create" name="sl_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn giá đề nghị*</label>
-                            <input type="text" id="nguyengiadenghi_create" name="nguyengiadenghi_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
+                    @* <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                    <label>Đơn giá đề nghị*</label>
+                    <input type="text" id="nguyengiadenghi_create" name="nguyengiadenghi_create" class="form-control money text-right" style="font-weight: bold" />
+                    </div>
                     </div>
                     <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Giá trị đề nghị*</label>
-                            <input type="text" id="giadenghi_create" name="giadenghi_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
+                    <div class="form-group fv-plugins-icon-container">
+                    <label>Giá trị đề nghị*</label>
+                    <input type="text" id="giadenghi_create" name="giadenghi_create" class="form-control money text-right" style="font-weight: bold" />
                     </div>
-                    <div class="col-xl-3">
+                    </div> *@
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn giá thẩm định*</label>
                             <input type="text" id="nguyengiathamdinh_create" name="nguyengiathamdinh_create" class="form-control money text-right" style="font-weight: bold" />
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá trị tài sản thẩm định*</label>
                             <input type="text" id="giatritstd_create" name="giatritstd_create" class="form-control money text-right" style="font-weight: bold" />
@@ -144,7 +144,7 @@
 
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label text-dark">
@@ -154,11 +154,7 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row text-left">
-                    <input hidden id="id_delete" name="id_delete" />
-                </div>
-            </div>
+            <input hidden id="id_delete" name="id_delete" />
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="SetDelete()">Đồng ý</button>
@@ -351,7 +347,7 @@
         $('#dvt_create').val(element.cells.item(5).innerText).trigger('change');
         $('#Hh_Modal').modal('hide');
     }
-    
+
     function addhhedit(mahh) {
         var element = document.getElementById(mahh);
         $('#mats_edit').val(element.cells.item(1).innerText);
@@ -372,7 +368,7 @@
             $('#dvt_create').val(gt).trigger('change');
         }
     }
-    
+
     function DvtEdit() {
         if ($('#dvt_add_edit').val().trim() == '') {
             toastr.error("Đơn vị tính không được để trống!!!", "Lỗi!");
@@ -394,54 +390,54 @@
                 if ($('#sl_create').val() < 1) {
                     toastr.error("Số lượng phải lớn hơn 0!!!", "Lỗi!");
                 } else {
-                    if ($('#nguyengiadenghi_create').val().trim() == '') {
-                        toastr.error("Đơn giá đề nghị không được để trống!!!", "Lỗi!");
+                    // if ($('#nguyengiadenghi_create').val().trim() == '') {
+                    //     toastr.error("Đơn giá đề nghị không được để trống!!!", "Lỗi!");
+                    // } else {
+                    //     if ($('#giadenghi_create').val().trim() == '') {
+                    //         toastr.error("Giá trị đề nghị không được để trống!!!", "Lỗi!");
+                    //     } else {
+                    if ($('#nguyengiathamdinh_create').val().trim() == '') {
+                        toastr.error("Đơn giá thẩm định không được để trống!!!", "Lỗi!");
                     } else {
-                        if ($('#giadenghi_create').val().trim() == '') {
-                            toastr.error("Giá trị đề nghị không được để trống!!!", "Lỗi!");
+                        if ($('#giatritstd_create').val().trim() == '') {
+                            toastr.error("Giá trị tài sản thẩm định không được để trống!!!", "Lỗi!");
                         } else {
-                            if ($('#nguyengiathamdinh_create').val().trim() == '') {
-                                toastr.error("Đơn giá thẩm định không được để trống!!!", "Lỗi!");
-                            } else {
-                                if ($('#giatritstd_create').val().trim() == '') {
-                                    toastr.error("Giá trị tài sản thẩm định không được để trống!!!", "Lỗi!");
-                                } else {
-                                    $.ajax({
-                                        url: '/ThamDinhGiaCt/Store',
-                                        type: 'POST',
-                                        data: {
-                                            Mahs: $('#Mahs').val(),
-                                            Mats: $('#mats_create').val(),
-                                            Tents: $('#tents_create').val(),
-                                            Qccl: $('#qccl_create').val(),
-                                            Tskt: $('#tskt_create').val(),
-                                            Xuatxu: $('#xuatxu_create').val(),
-                                            Dvt: $('#dvt_create').val(),
-                                            Sl: $('#sl_create').val(),
-                                            Ngiadn: $('#nguyengiadenghi_create').val(),
-                                            Giadn: $('#giadenghi_create').val(),
-                                            Ngiatd: $('#nguyengiathamdinh_create').val(),
-                                            Giatd: $('#giatritstd_create').val(),
-                                            Ghichu: $('#ghichu_create').val(),
-                                        },
-                                        dataType: 'JSON',
-                                        success: function (data) {
-                                            if (data.status == 'success') {
-                                                toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                                                $('#frm_data').replaceWith(data.message);
-                                                $(document).ready(function () {
-                                                    TableManaged4.init();
-                                                });
-                                                $('#Create_Modal').modal("hide");
-                                            } else {
-                                                toastr.error(data.message, "Lỗi!");
-                                            }
-                                        }
-                                    })
+                            $.ajax({
+                                url: '/ThamDinhGiaCt/Store',
+                                type: 'POST',
+                                data: {
+                                    Mahs: $('#Mahs').val(),
+                                    Mats: $('#mats_create').val(),
+                                    Tents: $('#tents_create').val(),
+                                    Qccl: $('#qccl_create').val(),
+                                    Tskt: $('#tskt_create').val(),
+                                    Xuatxu: $('#xuatxu_create').val(),
+                                    Dvt: $('#dvt_create').val(),
+                                    Sl: $('#sl_create').val(),
+                                    // Ngiadn: $('#nguyengiadenghi_create').val(),
+                                    // Giadn: $('#giadenghi_create').val(),
+                                    Ngiatd: $('#nguyengiathamdinh_create').val(),
+                                    Giatd: $('#giatritstd_create').val(),
+                                    Ghichu: $('#ghichu_create').val(),
+                                },
+                                dataType: 'JSON',
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                                        $('#frm_data').replaceWith(data.message);
+                                        $(document).ready(function () {
+                                            TableManaged4.init();
+                                        });
+                                        $('#Create_Modal').modal("hide");
+                                    } else {
+                                        toastr.error(data.message, "Lỗi!");
+                                    }
                                 }
-                            }
+                            })
                         }
                     }
+                    //     }
+                    // }
                 }
             }
         }
@@ -477,58 +473,58 @@
                 if ($('#sl_edit').val() < 1) {
                     toastr.error("Số lượng phải lớn hơn 0!!!", "Lỗi!");
                 } else {
-                    if ($('#nguyengiadenghi_edit').val().trim() == '') {
-                        toastr.error("Đơn giá đề nghị không được để trống!!!", "Lỗi!");
+                    // if ($('#nguyengiadenghi_edit').val().trim() == '') {
+                    //     toastr.error("Đơn giá đề nghị không được để trống!!!", "Lỗi!");
+                    // } else {
+                    //     if ($('#giadenghi_edit').val().trim() == '') {
+                    //         toastr.error("Giá trị đề nghị không được để trống!!!", "Lỗi!");
+                    //     } else {
+                    if ($('#nguyengiathamdinh_edit').val().trim() == '') {
+                        toastr.error("Đơn giá thẩm định không được để trống!!!", "Lỗi!");
                     } else {
-                        if ($('#giadenghi_edit').val().trim() == '') {
-                            toastr.error("Giá trị đề nghị không được để trống!!!", "Lỗi!");
+                        if ($('#giatritstd_edit').val().trim() == '') {
+                            toastr.error("Giá trị tài sản thẩm định không được để trống!!!", "Lỗi!");
                         } else {
-                            if ($('#nguyengiathamdinh_edit').val().trim() == '') {
-                                toastr.error("Đơn giá thẩm định không được để trống!!!", "Lỗi!");
-                            } else {
-                                if ($('#giatritstd_edit').val().trim() == '') {
-                                    toastr.error("Giá trị tài sản thẩm định không được để trống!!!", "Lỗi!");
-                                } else {
-                                    var ngiadn = $('#nguyengiadenghi_edit').val().replace(',', '');
-                                    var giadn = $('#giadenghi_edit').val().replace(',', '');
-                                    var ngiatd = $('#nguyengiathamdinh_edit').val().replace(',', '');
-                                    var giatd = $('#giatritstd_edit').val().replace(',', '');
-                                    $.ajax({
-                                        url: '/ThamDinhGiaCt/Update',
-                                        type: 'POST',
-                                        data: {
-                                            Mats: $('#mats_edit').val(),
-                                            Tents: $('#tents_edit').val(),
-                                            Qccl: $('#qccl_edit').val(),
-                                            Tskt: $('#tskt_edit').val(),
-                                            Xuatxu: $('#xuatxu_edit').val(),
-                                            Dvt: $('#dvt_edit').val(),
-                                            Sl: $('#sl_edit').val(),
-                                            Ngiadn: ngiadn,
-                                            Giadn: giadn,
-                                            Ngiatd: ngiatd,
-                                            Giatd: giatd,
-                                            Ghichu: $('#ghichu_edit').val(),
-                                            Id: $('#id_edit').val()
-                                        },
-                                        dataType: 'JSON',
-                                        success: function (data) {
-                                            if (data.status == 'success') {
-                                                toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                                                $('#frm_data').replaceWith(data.message);
-                                                $(document).ready(function () {
-                                                    TableManaged4.init();
-                                                });
-                                                $('#Edit_Modal').modal("hide");
-                                            } else {
-                                                toastr.error(data.message, "Lỗi!");
-                                            }
-                                        }
-                                    })
+                            // var ngiadn = $('#nguyengiadenghi_edit').val().replace(',', '');
+                            // var giadn = $('#giadenghi_edit').val().replace(',', '');
+                            var ngiatd = $('#nguyengiathamdinh_edit').val().replace(',', '');
+                            var giatd = $('#giatritstd_edit').val().replace(',', '');
+                            $.ajax({
+                                url: '/ThamDinhGiaCt/Update',
+                                type: 'POST',
+                                data: {
+                                    Mats: $('#mats_edit').val(),
+                                    Tents: $('#tents_edit').val(),
+                                    Qccl: $('#qccl_edit').val(),
+                                    Tskt: $('#tskt_edit').val(),
+                                    Xuatxu: $('#xuatxu_edit').val(),
+                                    Dvt: $('#dvt_edit').val(),
+                                    Sl: $('#sl_edit').val(),
+                                    // Ngiadn: ngiadn,
+                                    // Giadn: giadn,
+                                    Ngiatd: ngiatd,
+                                    Giatd: giatd,
+                                    Ghichu: $('#ghichu_edit').val(),
+                                    Id: $('#id_edit').val()
+                                },
+                                dataType: 'JSON',
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                                        $('#frm_data').replaceWith(data.message);
+                                        $(document).ready(function () {
+                                            TableManaged4.init();
+                                        });
+                                        $('#Edit_Modal').modal("hide");
+                                    } else {
+                                        toastr.error(data.message, "Lỗi!");
+                                    }
                                 }
-                            }
+                            })
                         }
                     }
+                    //     }
+                    // }
                 }
             }
         }
