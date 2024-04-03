@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Diagioitu = Diagioitu,
                 Diagioiden = Diagioiden,
                 Hesodc = Hesodc,
-                Madv= MaDv,
+                Madv = MaDv,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
                 Trangthai = "Disabled",
@@ -63,76 +63,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên đường, giới hạn, khu vực</b></label>";
-                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + @model.Khuvuc + "' class='form-control'/>";
+                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + model.Khuvuc + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Loại đất</b></label>";
-                result += "<select class='form-control' id='mld_edit' name='mld_edit'>";
-                var dmloaidat = _db.DmLoaiDat.ToList();
-                foreach (var item in dmloaidat)
-                {
-                    result += "<option value='" + item.Maloaidat + "' " + ((string)model.Maloaidat == item.Maloaidat ? "selected" : "") + ">" + item.Loaidat + "</option>";
-                }
-                result += "</select>";
+                result += "<label><b>Giá đất cụ thể</b></label>";
+                result += "<input type='text' id='giact_edit' name='giact_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Giacuthe + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "</div>";//end row
-
-                result += "<div class='row'>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Vị trí</b></label>";
-                result += "<select id='vt_edit' name='vt_edit' class='form-control'>";
-                result += "<option value='1' " + (model.Vitri == 1 ? "selected" : "") + ">1</option>";
-                result += "<option value='2' " + (model.Vitri == 2 ? "selected" : "") + ">2</option>";
-                result += "<option value='3' " + (model.Vitri == 3 ? "selected" : "") + ">3</option>";
-                result += "<option value='4' " + (model.Vitri == 4 ? "selected" : "") + ">4</option>";
-                result += "<option value='5' " + (model.Vitri == 5 ? "selected" : "") + ">5</option>";
-                result += "</select>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Giá tại bảng giá</b></label>";
-                result += "<input type='text' id='giabg_edit' name='giabg_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Banggiadat + "'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Giá đất cụ thể</b></label>";
-                result += "<input type='text' id='giact_edit' name='giact_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Giacuthe + "'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới - Từ</b></label>";
-                result += "<input type='text' id='diagioitu_edit' name='diagioitu_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Diagioitu + "'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Địa giới - Đến </b></label>";
-                result += "<input type='text' id='diagioiden_edit' name='diagioiden_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Diagioiden + "'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-3'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Hệ số điều chỉnh</b></label>";
-                result += "<input type='number' step='any' id='hs_edit' name='hs_edit' class='form-control money text-right' style='font-weight: bold' value='" + @model.Hesodc + "'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "</div>"; //end row
 
                 result += "</div>"; // end body
 
@@ -184,45 +126,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             var model = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs).ToList();
             var dmloaidat = _db.DmLoaiDat.ToList();
-            int record_id = 1;
 
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
+            result += "<th>#</th>";
             result += "<th>STT</th>";
             result += "<th>Tên đường, giới hạn, khu vực</th>";
-            result += "<th>Loại đất</th>";
-            result += "<th>Vị trí</th>";
-            result += "<th>Giá đất tại bảng giá</th>";
-            result += "<th>Địa giới - Từ</th>";
-            result += "<th>Địa giới - Đến</th>";
             result += "<th>Giá đất cụ thể</th>";
-            result += "<th>Hệ số điều chỉnh</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
-            foreach (var item in model)
+            foreach (var item in model.OrderBy(t => t.STTSapXep))
             {
-                result += "<tr tyle='text-align:center'> >";
-                result += "<td style='text-align:center'>" + record_id++ + "</td>";
-                result += "<td style='text-align:center'>" + item.Khuvuc + "</td>";
-                result += "<td style='text-align:center'>";
-                foreach (var ten in dmloaidat)
-                {
-                    if (ten.Maloaidat == item.Maloaidat)
-                    {
-                        result += "<span>" + ten.Loaidat + "</span>";
-                    }
-                }
-                result += "</td>";
-                result += "<td style='text-align:center' >" + item.Vitri + "</td>";
-                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Banggiadat) + "</td>";
-                result += "<td style='text-align:center; font-weight: bold'>" + item.Diagioitu + "</td>";
-                result += "<td style='text-align:center; font-weight: bold'>" + item.Diagioiden + "</td>";
+                result += "<tr style='text-align:center'>";
+                result += "<td style='text-align:center'>" + item.STTSapXep + "</td>";
+                result += "<td style='text-align:center'>" + item.STTHienThi + "</td>";
+                result += "<td>" + item.Khuvuc + "</td>";
                 result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
-                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Hesodc) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

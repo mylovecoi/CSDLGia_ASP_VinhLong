@@ -1,8 +1,8 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTH"];
-}
+    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvith = (IEnumerable<VMDsDonVi>)ViewData["DsDonViTH"];
+    }
 <!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -96,17 +96,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="macqcq" name="macqcq">
-                                    @foreach (var db in dsdiaban.Where(t => t.Level == "ADMIN"))
+                                    @foreach (var item in dsdonvith.Where(x => x.Level == "ADMIN"))
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var dv = dsdonvith.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "TONGHOP");
-                                            }
-                                            @foreach (var item in dv)
-                                            {
-                                                <option value="@item.MaDv">@item.TenDv</option>
-                                            }
-                                        </optgroup>
+                                        <option value="@item.MaDv">@item.TenDv</option>
                                     }
                                 </select>
                             </div>

@@ -32,7 +32,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
         [Route("GiaRung")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -65,18 +65,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                             model = model.Where(t => t.Madv == Madv);
                         }
 
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                            model = model.Where(t => t.Thoidiem.Year == Nam);
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
-                        }
+
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
@@ -171,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Dvt = "Triệu đồng/ha"
                     };
                     IQueryable<GiaRungDmCt> data_dm = _db.GiaRungDmCt;
-                    if(Manhom_create != "all")
+                    if (Manhom_create != "all")
                     {
                         data_dm = data_dm.Where(t => t.Manhom == Manhom_create);
                     }
@@ -349,7 +342,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         _db.SaveChanges();
                     }
 
-                    return RedirectToAction("Index", "Giarung", new { request.Madv });
+                    return RedirectToAction("Index", "Giarung", new { Madv = request.Madv, Nam = request.Thoidiem.Year });
                 }
                 else
                 {
@@ -420,7 +413,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
-                {        
+                {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Madiaban = request.Madiaban;
                     model.Soqd = request.Soqd;
@@ -440,7 +433,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                             item.Trangthai = "XD";
                         }
                         _db.GiaRungCt.UpdateRange(modelct);
-                    }     
+                    }
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
                     if (model_file.Any())
                     {
@@ -449,7 +442,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     }
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "Giarung", new { request.Madv });
+                    return RedirectToAction("Index", "Giarung", new { Madv = request.Madv, Nam = request.Thoidiem.Year });
                 }
                 else
                 {
@@ -650,23 +643,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      GiaBoiThuong3 = hosoct.GiaBoiThuong3,
                                      GiaBoiThuong4 = hosoct.GiaBoiThuong4,
                                      GiaBoiThuong5 = hosoct.GiaBoiThuong5,
-                                     GiaBoiThuong6 = hosoct.GiaBoiThuong6,                        
+                                     GiaBoiThuong6 = hosoct.GiaBoiThuong6,
                                      Manhom = hosoct.Manhom,
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
 
-                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" );
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
-                    if(DonGiaTu > 0) { model = model.Where(t => t.GiaRung1 >= DonGiaTu); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.GiaRung1 >= DonGiaTu); }
                     if (DonGiaDen > 0) { model = model.Where(t => t.GiaRung1 <= DonGiaDen); }
-                    if (Mahs != "all") { model= model.Where(t=>t.Mahs == Mahs); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
                     if (!string.IsNullOrEmpty(MoTa))
                     {
                         model = model.Where(t => t.MoTa.ToLower().Contains(MoTa.ToLower()));
                     }
-               
+
 
                     ViewData["Madv"] = Madv;
                     ViewData["Manhom"] = Manhom;
@@ -751,7 +744,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         model = model.Where(t => t.MoTa.ToLower().Contains(MoTa_Search.ToLower()));
                     }
 
-                    ViewData["Title"] = " Tìm kiếm thông tin định giá rừng";                 
+                    ViewData["Title"] = " Tìm kiếm thông tin định giá rừng";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Result.cshtml", model);
                 }
                 else

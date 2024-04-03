@@ -34,14 +34,15 @@
     <!--begin::Form-->
     <form asp-controller="GiaDatDiaBan" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_datdiaban_store">
         <div class="card-body">
-            <input hidden asp-for="Madv">
-            <input hidden asp-for="Mahs">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs"/>
             <input hidden asp-for="SoQDTT" />
+            <input hidden asp-for="Soqd"/>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Theo thông tư quyết định</label>
-                        <input type="text" class="form-control" asp-for="NoiDungQDTT" />
+                        <input type="text" class="form-control" asp-for="NoiDungQDTT" readonly />
                     </div>
                 </div>
                 <div class="col-xl-6">

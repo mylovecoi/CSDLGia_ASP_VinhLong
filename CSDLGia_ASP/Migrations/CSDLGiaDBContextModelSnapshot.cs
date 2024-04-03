@@ -1607,8 +1607,20 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maloaidat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("STTHienThi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("STTSapXep")
+                        .HasColumnType("int");
+
                     b.Property<double>("Sapxep")
                         .HasColumnType("float");
+
+                    b.Property<string>("Style")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Trangthai")
                         .HasColumnType("nvarchar(max)");

@@ -130,8 +130,7 @@
                             </td>
                                 <td style="text-align: center">
                                     @if (!string.IsNullOrEmpty(item.Macqcq))
-                                        @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
-
+                                        @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
                                 </td>
                             <td width="12%">
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"

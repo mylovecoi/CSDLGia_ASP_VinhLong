@@ -594,7 +594,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
         [Route("GiaKhungGiaDat/Search")]
         [HttpGet]
-        public IActionResult Search(string madv, string Vungkt, DateTime ngaynhap_tu, DateTime ngaynhap_den, string SoQuyetDinh = "all")
+        public IActionResult Search(string madv, DateTime ngaynhap_tu, DateTime ngaynhap_den, string Vungkt, string SoQuyetDinh = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -643,10 +643,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     }
                     if (!string.IsNullOrEmpty(Vungkt))
                     {
-                        model = model.Where(x=>x.Vungkt.Contains(Vungkt));
+                        model = model.Where(x=>x.Vungkt.ToLower().Contains(Vungkt.ToLower()));
                     }
                     ViewData["GiaKhungGiaDat"] = _db.GiaKhungGiaDat;
-                    ViewData["MaDonVi"] = madv;                    
+                    ViewData["MaDonVi"] = madv;
                     ViewData["VungKt"] = Vungkt;                    
                     ViewData["SoQuyetDinh"] = SoQuyetDinh;
                     ViewData["NgayNhapTu"] = ngaynhap_tu;

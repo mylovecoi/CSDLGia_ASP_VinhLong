@@ -79,35 +79,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                                 list_add.Add(new GiaDatPhanLoaiCt
                                 {
-
                                     Mahs = Mahs,
+                                    Madv = requests.MaDv,
                                     Trangthai = "CXD",
+                                    STTSapXep = line,
                                     Created_at = DateTime.Now,
                                     Updated_at = DateTime.Now,
-                                    Khuvuc = worksheet.Cells[row, 1].Value != null ?
-                                             worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                    Maloaidat = worksheet.Cells[row, 2].Value != null ?
-                                             worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    STTHienThi = worksheet.Cells[row, 1].Value != null ?
+                                                worksheet.Cells[row, 1].Value.ToString().Trim() : "",
 
-                                    Vitri = worksheet.Cells[row, 3].Value != null ?
-                                            Helpers.ConvertStrToInt(worksheet.Cells[row, 3].Value.ToString()) : 0,
+                                    Khuvuc = worksheet.Cells[row, 2].Value != null ?
+                                             worksheet.Cells[row, 2].Value.ToString().Trim() : "",                                 
 
-                                    Banggiadat = worksheet.Cells[row, 4].Value != null ?
-                                            Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value.ToString()) : 0,
+                                    Giacuthe = worksheet.Cells[row, 3].Value != null ?
+                                            Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value.ToString()) : 0,
 
-                                    Diagioitu = worksheet.Cells[row, 5].Value != null ?
-                                             worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-
-                                    Diagioiden = worksheet.Cells[row, 6].Value != null ?
-                                             worksheet.Cells[row, 6].Value.ToString().Trim() : "",                                    
-
-                                    Giacuthe = worksheet.Cells[row, 7].Value != null ?
-                                            Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value.ToString()) : 0,
-
-                                    Hesodc = worksheet.Cells[row, 8].Value != null ?
-                                            Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value.ToString()) : 0,
-                                    
+                                    Style = strStyle.ToString(),
                                 });
                                 line++;
                             }
@@ -124,10 +112,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     Mahs = Mahs,
                     Phanloai = requests.Phanloai,
                 };
+
                 var modelct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
                 model.GiaDatPhanLoaiCt = modelct.ToList();
+
                 ViewData["Mahs"] = model.Mahs;
                 ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                 ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();                
                 ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                 ViewData["MenuLv1"] = "menu_giadat";

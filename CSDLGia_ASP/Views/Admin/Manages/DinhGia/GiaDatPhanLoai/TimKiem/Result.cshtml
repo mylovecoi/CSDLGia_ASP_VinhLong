@@ -112,19 +112,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Loại đất</b></label>
-                            <select class="form-control select2basic" asp-for"@mld" id="mld" name="mld">
-                                <option value="All">--Tất cả các loại đất--</option>
-                                @foreach (var item in maloaidat)
-                                {
-                                    <option value="@item.Maloaidat">@item.Loaidat</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="row">
@@ -156,10 +143,6 @@
                     </div>
                 </div>
             </div>
-            @* <div class="card-footer" style="text-align:center">
-
-            <button type="button" class="btn btn-danger mr-2" onclick="Print()"><i class="la la-search"></i>Tìm kiếm</button>
-            </div> *@
         </form>
         <div class="row">
             <div class="col-xl-12" style="text-align:center">
@@ -173,9 +156,6 @@
                     <th style="text-align: center">STT</th>
                     <th style="text-align: center">Đơn vị nhập</th>
                     <th style="text-align: center">Thời điểm</th>
-                    <th style="text-align: center">Phân loại dất</th>
-                    <th style="text-align: center">Vị trí</th>
-                    <th style="text-align: center">Diện tích</th>
                     <th style="text-align: center">Giá trị</th>
                     <th style="text-align: center">Thao tác</th>
                 </tr>
@@ -187,9 +167,6 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.Tendv</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: center">@item.Loaidat</td>
-                        <td style="text-align: center">@item.Vitri</td>
-                        <td style="text-align: center">@item.Dientich</td>
                         <td style="text-align: center">@item.Giacuthe</td>
                         <td style="text-align: center">
                             <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -203,28 +180,6 @@
         </table>
     </div>
 </div>
-
-@* <script>
-
-    function ValidateDct() {
-
-        var date_tu = new Date($('#beginTime').val());
-        var date_den = new Date($('#endTime').val());
-        var date_tu_int = date_tu.getTime();
-
-        var date_den_int = date_den.getTime();
-
-        if (date_tu_int > date_den_int) {
-            toastr.error("Thời gian nhập đến phải lớn hơn thời gian nhập từ!", "Lỗi!!!")
-        } else {
-            if ($('#beginPrice').val() > $('#endPrice').val()) {
-                toastr.error("Giá trị đến phải lớn hơn Giá trị từ!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_dct_result").submit();
-            }
-        }
-    }
-</script> *@
 
 
 

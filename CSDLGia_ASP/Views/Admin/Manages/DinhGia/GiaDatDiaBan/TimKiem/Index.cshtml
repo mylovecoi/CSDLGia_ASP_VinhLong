@@ -109,19 +109,19 @@
                     <label>Loại đường</label>
                     <input type="text" asp-for="@loaiDuong" class="form-control" name="loaiDuong" />
                 </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Hệ số K</label>
-                    <input type="number" step="0.1" asp-for="@heSoK" class="form-control" name="heSoK" />
-                </div>
-            </div>
+            </div>            
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Mô tả</label>
                     <input asp-for="@moTa" class="form-control" name="moTa" />
                 </div>
             </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Đơn giá từ</label>
+                        <input type="text" class="form-control" name="heSoK" />
+                    </div>
+                </div>
         </div>
     </div>
     <div class="card-footer" style="text-align:center">
@@ -141,6 +141,11 @@
                 <th style="text-align:left">Tên đường phố</th>
                 <th style="text-align:center">Loại đường</th>
                 <th style="text-align:center">Hệ số K</th>
+                <th style="text-align:center">VT1</th>
+                <th style="text-align:center">VT2</th>
+                <th style="text-align:center">VT3</th>
+                <th style="text-align:center">VT4</th>
+                <th style="text-align:center">VT5</th>
                 <th style="text-align:center">Thao tác</th>
             </tr>
         </thead>
@@ -154,7 +159,12 @@
                     <td>@item.TenDiaBan</td>
                     <td>@item.Mota</td>
                     <td>@item.Loaiduong</td>
-                    <td>@Helpers.ConvertDbToStr(item.Hesok)</td>
+                    <td style="text-align:center">@Helpers.ConvertDbToStr(item.Hesok) </td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
                     <td>
                         <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">

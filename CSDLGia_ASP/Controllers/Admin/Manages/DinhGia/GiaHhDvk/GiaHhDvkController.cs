@@ -360,6 +360,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                         }).ToList();
 
                     model.GiaHhDvkCt = modelct_join.ToList();
+                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t=>t.Mahs == model.Mahs).ToList();
 
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");

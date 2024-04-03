@@ -59,8 +59,8 @@
                     <tr style="text-align: center">
                         <td>@(record_id++)</td>
                         <td class="active">@item.Soqd</td>
-                        <td class="active">@item.Ngayqd_banhanh</td>
-                        <td class="active">@item.Ngayqd_apdung</td>
+                        <td class="active">@Helpers.ConvertDateToStr(item.Ngayqd_banhanh)</td>
+                        <td class="active">@Helpers.ConvertDateToStr(item.Ngayqd_apdung)</td>
                         <td class="active">@item.Mota</td>
                         <td class="active"></td>
                         <td>

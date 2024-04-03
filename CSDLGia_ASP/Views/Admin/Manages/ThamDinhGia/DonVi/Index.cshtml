@@ -47,9 +47,11 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
+                    <th>Mã GCN</th>
                     <th>Tên đơn vị</th>
                     <th>Người đại diện</th>
-                    <th>Chức vụ</th>
+                    <th>Số thẻ</th>
+                    <th>Chức danh đk hành nghề</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -58,8 +60,10 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.Maso</td>
                         <td class="success">@item.Tendv</td>
                         <td>@item.Nguoidaidien</td>
+                        <td>@item.Sothe</td>
                         <td>@item.Chucvu</td>
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Edit"))

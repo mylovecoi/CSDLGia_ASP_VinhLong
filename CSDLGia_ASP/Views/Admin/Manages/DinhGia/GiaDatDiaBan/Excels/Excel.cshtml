@@ -35,11 +35,10 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
             <div class="row">
-
                 <div class="col-xl-12">
                     <div class="form-group fv-plugins-icon-container">
                         <label>Số quyết định</label>
-                        <select id="soqd" name="soqd" class="form-control">
+                        <select asp-for="SoQDTT" class="form-control">
                                     @foreach (var qd in soqd)
                                     {
                                 <!option value="@qd.Soqd">@qd.Mota</!option>
@@ -47,8 +46,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
@@ -63,28 +60,16 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Ngày áp dụng</label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Nội dung chi tiết</label>
                         <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-2">
-                    <div class="form-group">
-                        <label>File đính kèm</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".jpg,.docx,.doc, .pdf, .xlsx, .xls" class="form-control" />
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Ghi chú</label>
@@ -92,35 +77,33 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-3 font-weight-bold font-size-lg">
+                <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
+            </div>
             <div class="row">
-                <div class="mb-3 font-weight-bold font-size-lg">
-                    <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" />
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Sheet*</label>
-                            <input type="number" class="form-control" asp-for="Sheet" />
-                        </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận từ dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStart" />
                     </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Nhận từ dòng*</label>
-                            <input type="number" class="form-control" asp-for="LineStart" />
-                        </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận đến dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStop" />
                     </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>Nhận đến dòng*</label>
-                            <input type="number" class="form-control" asp-for="LineStop" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label>File dữ liệu</label> <br />
-                            <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
-                            <span asp-validation-for="FormFile" class="form-text text-danger"></span>
-                        </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>File dữ liệu</label> <br />
+                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
             </div>

@@ -450,7 +450,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Mahs == mahs_cb);
 
                     model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai = "CB";
+                    model.Trangthai_ad = "CB";
                     model.Congbo = "DACONGBO";
                     if (model.Macqcq_h == model.Madv_ad)
                     {

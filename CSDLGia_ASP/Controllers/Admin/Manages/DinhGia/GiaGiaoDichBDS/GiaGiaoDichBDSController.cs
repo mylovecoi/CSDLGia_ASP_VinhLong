@@ -123,14 +123,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
         [Route("GiaGiaoDichBDS/Create")]
         [HttpGet]
-        public IActionResult Create(string maNhom, string MadvBc)
+        public IActionResult Create( string maNhom, string MadvBc)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
                 {
 
-                    string Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                   var  Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     this.RemoveData_ChuaXacDinh(MadvBc);
 
                     var danhmuc = _db.GiaGiaoDichBDSDm.ToList();
