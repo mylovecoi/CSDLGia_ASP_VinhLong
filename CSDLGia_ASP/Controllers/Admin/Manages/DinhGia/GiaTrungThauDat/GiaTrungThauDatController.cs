@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, string Nam = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -52,22 +52,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                         IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat> model = _db.GiaDauGiaDat;
 
+                      
                         if (Madv != "all")
                         {
                             model = model.Where(t => t.Madv == Madv);
                         }
-
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != "all")
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
+                            model = model.Where(x => x.Thoidiem.Year == Convert.ToInt32(Nam));
                         }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
