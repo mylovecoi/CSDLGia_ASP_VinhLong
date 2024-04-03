@@ -120,7 +120,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label><b>Từ ngày</b></label>
@@ -194,7 +193,7 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            toastr.success("Thành công!");
+                            // toastr.success("Thành công!");
                             $('#MaHsTongHop').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
