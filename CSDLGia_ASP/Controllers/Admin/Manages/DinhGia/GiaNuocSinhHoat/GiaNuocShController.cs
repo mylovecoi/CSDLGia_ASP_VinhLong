@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
         [Route("GiaNuocSinhHoat")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -65,17 +65,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                             model = model.Where(t => t.Madv == Madv);
                         }
 
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != 0)
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
+                            model = model.Where(t => t.Thoidiem.Year == Nam);
                         }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
