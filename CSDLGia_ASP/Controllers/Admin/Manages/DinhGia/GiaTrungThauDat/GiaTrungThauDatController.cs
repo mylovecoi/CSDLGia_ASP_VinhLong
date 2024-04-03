@@ -460,11 +460,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
         [Route("GiaTrungThauDat/Search")]
         [HttpGet]
         public IActionResult Search(DateTime beginTime, DateTime endTime,
-            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string maDv = "all")
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string madv = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -474,26 +473,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
                     var model_join = from dgct in _db.GiaDauGiaDatCt
                                      join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
-                                     select new GiaDauGiaDat
+                                     select new GiaDauGiaDatCt
                                      {
                                          Id = dgct.Id,
                                          Mahs = dgct.Mahs,
-                                         Madv = dgct.MaDv,
-                                         Tenduan = dg.Tenduan,
+                                         Mota = dgct.Mota,
+                                         Solo = dgct.Solo,
+                                         Sothua = dgct.Sothua,
+                                         Tobanbo = dgct.Tobanbo,
+                                         Dientich = dgct.Dientich,
+                                         Dvt = dgct.Dvt,
                                          Giakhoidiem = dgct.Giakhoidiem,
                                          Giadaugia = dgct.Giadaugia,
-                                         Thoidiem = dg.Thoidiem,
-                                         Trangthai = dg.Trangthai,
-
+                                         ThoiDiem = dg.Thoidiem,
+                                         SoQuyetDinh = dg.Soqddaugia,
+                                         PhanLoai = dg.Phanloai,
+                                         TrangThai = dg.Trangthai,
+                                         TenDuAn = dg.Tenduan,
+                                         MaDv = dg.Madv,
                                      };
-                    model_join = model_join.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.Trangthai == "HT");
+                    model_join = model_join.Where(x => x.ThoiDiem >= beginTime && x.ThoiDiem <= endTime && x.TrangThai == "HT");
                     if (!string.IsNullOrEmpty(ten))
                     {
-                        model_join = model_join.Where(t => t.Tenduan.Contains(ten));
+                        model_join = model_join.Where(t => t.TenDuAn.Contains(ten));
                     }
-                    if (maDv != "all")
+                    if (madv != "all")
                     {
-                        model_join = model_join.Where(t => t.Madv == maDv);
+                        model_join = model_join.Where(t => t.MaDv == madv);
                     }
                     if (Giakhoidiem_tu != 0)
                     {
@@ -511,7 +517,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         model_join = model_join.Where(t => t.Giadaugia <= Giadaugia_den);
                     }
-
+                    if (PhanLoai != "all")
+                    {
+                        model_join = model_join.Where(t => t.PhanLoai == PhanLoai);
+                    }
+                    ViewData["Phanloai"] = PhanLoai;
                     ViewData["beginTime"] = beginTime;
                     ViewData["endTime"] = endTime;
                     ViewData["Giakhoidiem_den"] = Giakhoidiem_den;
@@ -519,7 +529,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Giadaugia_tu"] = Giadaugia_tu;
                     ViewData["Giadaugia_den"] = Giadaugia_den;
                     ViewData["ten"] = ten;
-                    ViewData["maDv"] = maDv;
+                    ViewData["maDv"] = madv;
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -540,5 +550,174 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+        [Route("GiaTrungThauDat/Search")]
+        [HttpPost]
+        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime,
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string madv = "all")
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.timkiem", "Index"))
+                {
+                    beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : beginTime;
+                    endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
+                    var model_join = from dgct in _db.GiaDauGiaDatCt
+                                     join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
+                                     select new GiaDauGiaDatCt
+                                     {
+                                         Id = dgct.Id,
+                                         Mahs = dgct.Mahs,
+                                         Mota = dgct.Mota,
+                                         Solo = dgct.Solo,
+                                         Sothua = dgct.Sothua,
+                                         Tobanbo = dgct.Tobanbo,
+                                         Dientich = dgct.Dientich,
+                                         Dvt = dgct.Dvt,
+                                         Giakhoidiem = dgct.Giakhoidiem,
+                                         Giadaugia = dgct.Giadaugia,
+                                         ThoiDiem = dg.Thoidiem,
+                                         SoQuyetDinh = dg.Soqddaugia,
+                                         PhanLoai = dg.Phanloai,
+                                         TrangThai = dg.Trangthai,
+                                         TenDuAn = dg.Tenduan,
+                                         MaDv = dg.Madv,
+                                     };
+                    model_join = model_join.Where(x => x.ThoiDiem >= beginTime && x.ThoiDiem <= endTime && x.TrangThai == "HT");
+                    if (!string.IsNullOrEmpty(ten))
+                    {
+                        model_join = model_join.Where(t => t.TenDuAn.Contains(ten));
+                    }
+                    if (madv != "all")
+                    {
+                        model_join = model_join.Where(t => t.MaDv == madv);
+                    }
+                    if (Giakhoidiem_tu != 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakhoidiem >= Giakhoidiem_tu);
+                    }
+                    if (Giakhoidiem_den != 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakhoidiem <= Giakhoidiem_den);
+                    }
+                    if (Giadaugia_tu != 0)
+                    {
+                        model_join = model_join.Where(t => t.Giadaugia >= Giadaugia_tu);
+                    }
+                    if (Giadaugia_den != 0)
+                    {
+                        model_join = model_join.Where(t => t.Giadaugia <= Giadaugia_den);
+                    }
+                    if (PhanLoai != "all")
+                    {
+                        model_join = model_join.Where(t => t.PhanLoai == PhanLoai);
+                    }
+                    ViewData["Phanloai"] = PhanLoai;
+                    ViewData["beginTime"] = beginTime;
+                    ViewData["endTime"] = endTime;
+                    ViewData["Giakhoidiem_den"] = Giakhoidiem_den;
+                    ViewData["Giakhoidiem_tu"] = Giakhoidiem_tu;
+                    ViewData["Giadaugia_tu"] = Giadaugia_tu;
+                    ViewData["Giadaugia_den"] = Giadaugia_den;
+                    ViewData["ten"] = ten;
+                    ViewData["maDv"] = madv;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgd";
+                    ViewData["MenuLv3"] = "menu_giadgd_tk";
+                    return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/PrintSearch.cshtml", model_join);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        //[Route("GiaTrungThauDat/Search")]
+        //[HttpGet]
+        //public IActionResult Search(DateTime beginTime, DateTime endTime,
+        //    double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string maDv = "all")
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+        //    {
+        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.daugiadat.timkiem", "Index"))
+        //        {
+        //            beginTime = beginTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : beginTime;
+        //            endTime = endTime == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : endTime;
+        //            var model_join = from dgct in _db.GiaDauGiaDatCt
+        //                             join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
+        //                             select new GiaDauGiaDat
+        //                             {
+        //                                 Id = dgct.Id,
+        //                                 Mahs = dgct.Mahs,
+        //                                 Madv = dgct.MaDv,
+        //                                 Tenduan = dg.Tenduan,
+        //                                 Giakhoidiem = dgct.Giakhoidiem,
+        //                                 Giadaugia = dgct.Giadaugia,
+        //                                 Thoidiem = dg.Thoidiem,
+        //                                 Trangthai = dg.Trangthai,
+
+        //                             };
+        //            model_join = model_join.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.Trangthai == "HT");
+        //            if (!string.IsNullOrEmpty(ten))
+        //            {
+        //                model_join = model_join.Where(t => t.Tenduan.Contains(ten));
+        //            }
+        //            if (maDv != "all")
+        //            {
+        //                model_join = model_join.Where(t => t.Madv == maDv);
+        //            }
+        //            if (Giakhoidiem_tu != 0)
+        //            {
+        //                model_join = model_join.Where(t => t.Giakhoidiem >= Giakhoidiem_tu);
+        //            }
+        //            if (Giakhoidiem_den != 0)
+        //            {
+        //                model_join = model_join.Where(t => t.Giakhoidiem <= Giakhoidiem_den);
+        //            }
+        //            if (Giadaugia_tu != 0)
+        //            {
+        //                model_join = model_join.Where(t => t.Giadaugia >= Giadaugia_tu);
+        //            }
+        //            if (Giadaugia_den != 0)
+        //            {
+        //                model_join = model_join.Where(t => t.Giadaugia <= Giadaugia_den);
+        //            }
+
+        //            ViewData["beginTime"] = beginTime;
+        //            ViewData["endTime"] = endTime;
+        //            ViewData["Giakhoidiem_den"] = Giakhoidiem_den;
+        //            ViewData["Giakhoidiem_tu"] = Giakhoidiem_tu;
+        //            ViewData["Giadaugia_tu"] = Giadaugia_tu;
+        //            ViewData["Giadaugia_den"] = Giadaugia_den;
+        //            ViewData["ten"] = ten;
+        //            ViewData["maDv"] = maDv;
+
+        //            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
+        //            ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+        //            ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
+        //            ViewData["MenuLv1"] = "menu_giadat";
+        //            ViewData["MenuLv2"] = "menu_dgd";
+        //            ViewData["MenuLv3"] = "menu_giadgd_tk";
+        //            return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/TimKiem/Index.cshtml", model_join);
+        //        }
+        //        else
+        //        {
+        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+        //            return View("Views/Admin/Error/Page.cshtml");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View("Views/Admin/Error/SessionOut.cshtml");
+        //    }
+        //}
     }
 }
