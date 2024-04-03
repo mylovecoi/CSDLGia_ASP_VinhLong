@@ -12,6 +12,9 @@
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:@ViewData["TenDonVi"]
 </p>
+<p style="text-align: left; font-size: 16px;">
+    Xã/Phường:@ViewData["XaPhuong"]
+</p>
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
@@ -27,6 +30,8 @@
             <th style="text-align:center">Dvt</th>
             <th style="text-align:center">Giá khởi điểm</th>
             <th style="text-align:center">Giá đấu giá</th>
+            <th style="text-align:center">Giá tính tiền sử dụng đất
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +51,7 @@
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:center">@item.Giakhoidiem</td>
                         <td style="text-align:center">@item.Giadaugia</td>
-
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(item.Giadaugia / item.Dientich)</td>
                     </tr>
                 }
 
