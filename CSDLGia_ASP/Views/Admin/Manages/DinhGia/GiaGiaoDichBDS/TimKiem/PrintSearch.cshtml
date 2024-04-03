@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSCt>
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+            <th style="text-align: center">STT</th>
+            <th style="text-align: center">Đơn vị nhập</th>
+            <th style="text-align: center">Thời điểm</th>
+            <th style="text-align: center">Phân loại bất động sản</th>
+            <th style="text-align: center">Đơn vị tính</th>
+            <th style="text-align: center">Giá giao dịch</th>
+            <th style="text-align: center">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center">@(record_id++)</td>
+                <td style="text-align: left">
+                    @foreach (var ds in dsdonvi)
+                    {
+                        @if (item.Madv == ds.MaDv)
+                        {
+                            @ds.TenDv
+                        }
+                    }
+                </td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td style="text-align: left">@item.Ten</td>
+                <td style="text-align: center">@item.Dvt</td>
+                <td style="text-align: right" class="sotien">@item.Gia</td>                
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+

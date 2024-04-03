@@ -150,6 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                             Updated_at = DateTime.Now,
                             Madv = MadvBc,
                             Manhom = item.Manhom,
+                            Dvt = item.Dvt,
                         });
                     }
                     _db.GiaGiaoDichBDSCt.AddRange(chitiet);
@@ -430,48 +431,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }
+        }       
 
-        //[Route("GiaGiaoDichBDS/TimKiem")]
-        //[HttpGet]
-        //public IActionResult Search()
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Index"))
-        //        {
-
-        //            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-        //            {
-        //                ViewData["Madv"] = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-        //            }
-        //            else
-        //            {
-        //                ViewData["Madv"] = "";
-        //            }
-        //            ViewData["DsDiaBan"] = _db.DsDiaBan;
-        //            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-        //            ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.Where(t => t.Theodoi == "TD").ToList();
-        //            ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
-        //            ViewData["MenuLv1"] = "menu_dg";
-        //            ViewData["MenuLv2"] = "menu_dg_giaodichbds";
-        //            ViewData["MenuLv3"] = "menu_dg_giaodichbds_tk";
-        //            return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/TimKiem/Index.cshtml");
-
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
-
-        [Route("GiaGiaoDichBDS/TimKiem")]
+        [Route("GiaGiaoDichBDS/Search")]
         [HttpGet]
         public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
         {
@@ -524,6 +486,72 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";
                     ViewData["MenuLv3"] = "menu_dg_giaodichbds_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/TimKiem/Index.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("GiaGiaoDichBDS/PrintSearch")]
+        [HttpPost]
+        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Index"))
+                {
+                    ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : ngaynhap_tu;
+                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : ngaynhap_den;
+                    var model = (from giathuetnct in _db.GiaGiaoDichBDSCt
+                                 join giathuetn in _db.GiaGiaoDichBDS on giathuetnct.Mahs equals giathuetn.Mahs
+                                 join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
+                                 select new GiaGiaoDichBDSCt
+                                 {
+                                     Madv = giathuetn.Madv,
+                                     Thoidiem = giathuetn.Thoidiem,
+                                     Ten = giathuetnct.Ten,
+                                     Dvt = giathuetnct.Dvt,
+                                     Gia = giathuetnct.Gia,
+                                     Manhom = giathuetnct.Manhom,
+                                     Mahs = giathuetn.Mahs,
+                                     Trangthai = giathuetn.Trangthai,
+
+                                 });
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai == "HT");
+                    if (madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == madv);
+                    }
+
+                    if (manhom != "all")
+                    {
+                        model = model.Where(t => t.Manhom == manhom);
+                    }
+                    model = model.Where(t => t.Gia >= gia_tu);
+                    if (gia_den > 0)
+                    {
+                        model = model.Where(t => t.Gia <= gia_den);
+                    }
+                    ViewData["ngaynhap_tu"] = ngaynhap_tu;
+                    ViewData["ngaynhap_den"] = ngaynhap_den;
+                    ViewData["gia_tu"] = gia_tu;
+                    ViewData["gia_den"] = gia_den;
+                    ViewData["madv"] = madv;
+                    ViewData["manhom"] = manhom;
+                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.Where(t => t.Theodoi == "TD").ToList();
+                    ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dg_giaodichbds";
+                    ViewData["MenuLv3"] = "menu_dg_giaodichbds_tk";
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/TimKiem/PrintSearch.cshtml", model);
                 }
                 else
                 {

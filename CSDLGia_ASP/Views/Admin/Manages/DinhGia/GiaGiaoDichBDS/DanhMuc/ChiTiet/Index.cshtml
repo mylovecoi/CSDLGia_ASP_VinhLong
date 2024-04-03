@@ -34,9 +34,11 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
-            @* <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+            <a class="btn btn-light-success font-weight-bolder" asp-controller="GiaGiaoDichBDSDm" asp-action="NhanExcel"
+               asp-route-Manhom="@ViewData["Manhom"]">
                 <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </button>&ensp; *@
+            </a>
+            &ensp;
             <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
                 <i class="la la-lock"></i>Khóa/Mở khóa
             </button>&ensp;
@@ -52,6 +54,7 @@
                 <tr style="text-align:center">
                     <th width="4%">#</th>
                     <th>Phân loại nhà</th>
+                    <th>Đơn vị tính</th>
                     <th>Theo dõi</th>
                     <th width="12%">Thao tác</th>
                 </tr>
@@ -62,6 +65,7 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td class="active">@item.Ten</td>
+                        <td class="active">@item.Dvt</td>
                         <td  style="text-align: center">
                             @if (item.Theodoi == "TD")
                             {

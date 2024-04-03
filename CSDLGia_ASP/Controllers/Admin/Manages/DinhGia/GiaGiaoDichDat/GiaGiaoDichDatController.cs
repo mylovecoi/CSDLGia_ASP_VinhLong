@@ -517,7 +517,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             }
         }
 
-        [Route("GiaGiaoDichDat/TimKiem")]
+        [Route("GiaGiaoDichDat/Search")]
         [HttpGet]
         public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
         {
@@ -592,29 +592,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
             }
         }
 
-        [Route("GiaGiaoDichDat/TimKiem/KetQua")]
+        [Route("GiaGiaoDichDat/PrintSearch")]
         [HttpPost]
-        public IActionResult Result(string madv, string manhom, DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den)
+        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Index"))
                 {
+                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : ngaynhap_den;
+                    ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : ngaynhap_tu;
+
                     var model = (from giathuetnct in _db.GiaGiaoDichDatCt
                                  join giathuetn in _db.GiaGiaoDichDat on giathuetnct.Mahs equals giathuetn.Mahs
                                  join donvi in _db.DsDonVi on giathuetn.Madv equals donvi.MaDv
-                                 /*join nhomtn in _db.GiaGiaoDichDatNhom on giathuetn.Manhom equals nhomtn.Manhom*/
+                                 join nhomtn in _db.GiaGiaoDichDatNhom on giathuetnct.Manhom equals nhomtn.Manhom
                                  select new GiaGiaoDichDatCt
                                  {
                                      Id = giathuetnct.Id,
                                      Gia = giathuetnct.Gia,
                                      Mahs = giathuetnct.Mahs,
                                      Madv = giathuetn.Madv,
-                                     Manhom = giathuetn.Manhom,
+                                     Manhom = giathuetnct.Manhom,
                                      Thoidiem = giathuetn.Thoidiem,
                                      Tendv = donvi.TenDv,
-                                     /*Tennhom = nhomtn.Tennhom,*/
+                                     Ten = giathuetnct.Ten,
+                                     Trangthai = giathuetn.Trangthai,
+                                     Dvt = giathuetnct.Dvt,
+                                     Tennhom = nhomtn.Tennhom,
                                  });
+                    model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && x.Trangthai == "HT");
 
                     if (madv != "all")
                     {
@@ -625,28 +632,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     {
                         model = model.Where(t => t.Manhom == manhom);
                     }
-
-                    if (ngaynhap_tu.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem >= ngaynhap_tu);
-                    }
-
-                    if (ngaynhap_den.ToString("yyMMdd") != "010101")
-                    {
-                        model = model.Where(t => t.Thoidiem <= ngaynhap_den);
-                    }
-
                     model = model.Where(t => t.Gia >= gia_tu);
                     if (gia_den > 0)
                     {
                         model = model.Where(t => t.Gia <= gia_den);
                     }
+                    ViewData["ngaynhap_tu"] = ngaynhap_tu;
+                    ViewData["ngaynhap_den"] = ngaynhap_den;
+                    ViewData["gia_tu"] = gia_tu;
+                    ViewData["gia_den"] = gia_den;
+                    ViewData["madv"] = madv;
+                    ViewData["manhom"] = manhom;
 
+
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["NhomTn"] = _db.GiaGiaoDichDatNhom.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch đất thực tế trên thị trường";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dg_giaodichdattrenthitruong";
                     ViewData["MenuLv3"] = "menu_dg_giaodichdattrenthitruong_tk";
-                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/Result.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/TimKiem/PrintSearch.cshtml", model);
 
                 }
                 else
