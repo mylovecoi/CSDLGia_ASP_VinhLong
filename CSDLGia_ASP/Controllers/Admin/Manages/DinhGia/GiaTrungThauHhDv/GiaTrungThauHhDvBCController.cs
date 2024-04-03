@@ -78,7 +78,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Trangthai = hoso.Trangthai,
-                                 });
+                                     Thongtinqd = hoso.Thongtinqd,
+                });
 
                     ViewData["Title"] = "Báo cáo giá trúng thầu hàng hóa được mua sắm theo quy định của pháp luật về đấu thầu";
                     ViewData["MenuLv1"] = "menu_mts";

@@ -80,7 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
-
+                                     Ghichu = hoso.Ghichu,
                                  });
                     ViewData["Title"] = "Báo cáo vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";

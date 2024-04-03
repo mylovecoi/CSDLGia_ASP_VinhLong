@@ -78,12 +78,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                  {
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
-                                     Kyhieuvb = hoso.Kyhieuvb,
-                                     Ghichu = hoso.Ghichu,
+                                     Kyhieuvb = hoso.Kyhieuvb, 
                                      Thoidiem = hoso.Thoidiem,
+                                     Ghichu = hoso.Ghichu,
                                  });
 
-                    ViewData["Title"] = "Báo cáo tổng hợp giá  khung giá đất";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá khung giá đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
@@ -134,6 +134,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                      Giatdtd = giakgdct.Giatdtd,
                                      Giattmn = giakgdct.Giattmn,
                                      Giatttd = giakgdct.Giatttd
+
 
                                  });
 
