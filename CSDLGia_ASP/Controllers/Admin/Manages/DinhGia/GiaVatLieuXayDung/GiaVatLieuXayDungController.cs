@@ -90,6 +90,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                          });
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
                         ViewData["Title"] = "Thông tin vật liệu xây dựng";
