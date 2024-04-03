@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
@@ -138,9 +138,9 @@
                             </td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
-                                {
-                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
-                                }
+                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
                             </td>
                             <td>
                                 <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"

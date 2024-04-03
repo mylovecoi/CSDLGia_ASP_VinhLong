@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
                 {
 
                     var dsdonvi = (from db in _db.DsDiaBan
@@ -86,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
                         ViewData["MenuLv1"] = "menu_giakhac";
                         ViewData["MenuLv2"] = "menu_dglp";
@@ -120,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
                 {
                     var modelcxd = _db.GiaPhiLePhiCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv_create);
                     if (modelcxd.Any())
@@ -203,7 +203,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
                 {                   
                     var model = new GiaPhiLePhi
                     {
@@ -252,14 +252,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-
         [Route("DinhGiaLePhi/Edit")]
         [HttpGet]
         public IActionResult Edit(string Mahs)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_new = new GiaPhiLePhi
@@ -308,7 +307,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
                 {                   
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;
@@ -342,14 +341,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-
         [Route("DinhGiaLePhi/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Delete"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Id == id_delete);
 
@@ -396,7 +394,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Show"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Show"))
                 {
                     var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     string TenNhom = _db.GiaPhiLePhiNhom.FirstOrDefault(t=>t.Manhom == model.Manhom)?.Tennhom ?? "";
@@ -435,7 +433,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-
         [Route("DinhGiaLePhi/Search")]
         [HttpGet]
         public IActionResult Search(string Madv, string tsp, DateTime? beginTime, DateTime? endTime, string mahs,
@@ -443,7 +440,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.timkiem", "Index"))
                 {
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
@@ -555,7 +552,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.timkiem", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.timkiem", "Edit"))
                 {
 
                     var model_join = from dgct in _db.GiaPhiLePhiCt
