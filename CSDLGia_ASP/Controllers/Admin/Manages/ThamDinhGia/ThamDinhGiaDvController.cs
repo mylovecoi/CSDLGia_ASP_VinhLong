@@ -125,13 +125,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "</div>";
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Chức vụ</label>";
+                        result += "<label>Chức danh đăng ký hành nghề</label>";
                         result += "<input type='text' id='chucvu_edit' name='chucvu_edit' class='form-control' value='" + model.Chucvu + "'/>";
                         result += "</div>";
                         result += "</div>";
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã thẻ thẩm định</label>";
+                        result += "<label>Số thẻ</label>";
                         result += "<input type='text' id='sothe_edit' name='sothe_edit' class='form-control' value='" + model.Sothe + "'/>";
                         result += "</div>";
                         result += "</div>";
@@ -281,9 +281,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                                  worksheet.Cells[row,2].Value.ToString().Trim() : "",
                                     Tendv = worksheet.Cells[row, 3].Value != null ?
                                                  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                    Diachi = worksheet.Cells[row, 4].Value != null ?
+                                    Nguoidaidien = worksheet.Cells[row, 4].Value != null ?
                                                  worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                                    Nguoidaidien = worksheet.Cells[row, 5].Value != null ?
+                                    Sothe = worksheet.Cells[row, 5].Value != null ?
                                                  worksheet.Cells[row, 5].Value.ToString().Trim() : "",
                                     Chucvu = worksheet.Cells[row, 6].Value != null ?
                                                  worksheet.Cells[row, 6].Value.ToString().Trim() : "",

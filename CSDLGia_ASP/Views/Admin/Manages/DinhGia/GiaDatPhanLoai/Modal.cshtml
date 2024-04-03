@@ -27,58 +27,8 @@
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Loại đất</b></label>
-                            <select class="form-control" id="mld_create" name="mld_create">
-                                @foreach (var item in dmloaidat)
-                                {
-                                    <option value="@item.Maloaidat">@item.Loaidat</option>
-
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Vị trí</b></label>
-                            <select id="vt_create" name="vt_create" class="form-control">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Giá tại bảng giá</b></label>
-                            <input type="text" id="giabg_create" name="giabg_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá đất cụ thể</b></label>
                             <input type="text" id="giact_create" name="giact_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Địa giới - Từ</b></label>
-                            <input type="text" id="diagioitu_create" name="giact_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Địa giới - Đến</b></label>
-                            <input type="text" id="diagioiden_create" name="giact_create" class="form-control money text-right" style="font-weight: bold" />
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label><b>Hệ số điều chỉnh</b></label>
-                            <input type="number" step="any" id="hs_create" name="hs_create" class="form-control" style="font-weight: bold" />
                         </div>
                     </div>
                 </div>
@@ -147,14 +97,8 @@
             type: 'POST',
             data: {
                 Mahs: $('#mahs_create').val(),
-                Maloaidat: $('#mld_create').val(),
-                Diagioitu: $('#diagioitu_create').val(),
-                Diagioiden: $('#diagioiden_create').val(),
                 Khuvuc: $('#tenduong_create').val(),
-                Vitri: $('#vt_create').val(),
-                Banggiadat: $('#giabg_create').val(),
                 Giacuthe: $('#giact_create').val(),
-                Hesodc: $('#hs_create').val(),
                 MaDv: $('#Madv').val(),
             },
             dataType: 'JSON',
@@ -198,14 +142,8 @@
             type: 'POST',
             data: {
                 Mahs: $('#mahs_edit').val(),
-                Maloaidat: $('#mld_edit').val(),
                 Khuvuc: $('#tenduong_edit').val(),
-                Diagioitu: $('#diagioitu_edit').val(),
-                Diagioiden: $('#diagioiden_edit').val(),
-                Vitri: $('#vt_edit').val(),
-                Banggiadat: $('#giabg_edit').val(),
                 Giacuthe: $('#giact_edit').val(),
-                Hesodc: $('#hs_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

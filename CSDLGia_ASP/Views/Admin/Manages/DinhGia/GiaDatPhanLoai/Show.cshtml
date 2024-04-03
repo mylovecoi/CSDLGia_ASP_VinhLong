@@ -42,15 +42,7 @@
         <tr>
             <th style="text-align:center;">STT</th>            
             <th style="text-align:center;">Tên đường, giới hạn, khu vực</th>
-            <th style="text-align:center;">Loại đất</th>
-            <th style="text-align:center;">Vị trí</th>
-            <th style="text-align:center;">Diện tích</th>
-            <th style="text-align:center;">Địa giới - Từ</th>
-            <th style="text-align:center;">Địa giới - Đến</th>
-            <th style="text-align:center;">Giá đất tại bảng giá</th>
             <th style="text-align:center;">Giá đất cụ thể</th>
-            <th style="text-align:center;">Hệ số điều chỉnh</th>
-         
         </tr>
     </thead>
     <tbody>
@@ -63,23 +55,7 @@
                     <tr style="text-align:center">
                         <td style="text-align:center">@(record_id++)</td>                        
                         <td>@item.Khuvuc</td>
-                        <td>
-                            @foreach (var ten in dmloaidat)
-                            {
-                                @if (ten.Maloaidat == item.Maloaidat)
-                                {
-                                    <span>@ten.Loaidat</span>
-                                }
-                            }
-                        </td>
-                        <td>@item.Vitri</td>
-                        <td>@Helpers.ConvertDbToStr(item.Dientich)</td>
-                        <td style="text-align:center;">@item.Diagioitu</td>
-                        <td style="text-align:center;">@item.Diagioiden</td>
-                        <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Banggiadat)</td>
                         <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
-                        <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Hesodc)</td>
-                      
                     </tr>
                 }
             }
