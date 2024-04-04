@@ -135,7 +135,7 @@
                                         <ul class="menu-nav">
                                             <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                                                 <a href="javascript:;" class="menu-link menu-toggle">
-                                                    <span class="menu-text">Hàng hóa, dịch vụ</span>
+                                                    <span class="menu-text">Cơ sở dữ liệu về mức giá hàng hóa, dịch vụ</span>
                                                     <span class="menu-desc"></span>
                                                     <i class="menu-arrow"></i>
                                                 </a>
@@ -154,88 +154,137 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span>
-                                                                <span class="menu-text">Định giá (Phần I)</span>
+                                                                <span class="menu-text">Định giá</span>
                                                                 <i class="menu-arrow"></i>
                                                             </a>
-                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right menu-submenu-fixed" style=" width:1000px">
                                                                 <ul class="menu-subnav">
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaThueDNCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá thuê mặt đất-nước</span>
-                                                                        </a>
-                                                                    </li>
+                                                                    <ul class="menu-content">                         
+                                                                        <li class="menu-item">
+                                                                            <ul class="menu-inner">
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaThueDNCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá thuê mặt đất-nước</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiarungCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá rừng</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaThueMuaNhaXhCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá thuê mua nhà xã hội</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="TaiSanCongCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Tài sản công</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaGiaoDichBDSCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá giao dịch bất động sản</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="menu-item">
 
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiarungCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá rừng</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaGiaoDichBDSCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá giao dịch bất động sản</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaThueMuaNhaXhCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá thuê mua nhà XH</span>
-                                                                        </a>
-                                                                    </li>
+                                                                            <ul class="menu-inner">
+                                                                               
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaNuocShCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá nước sạch sinh hoạt</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaThueTSanCongCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá thuê tài sản công</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaSpDvCongIchCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá SP, DVCI, DVSNC, HH-DV đặt hàng</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaoDucDaoTao" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá dịch vụ giáo dục đào tạo</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="menu-item"> 
+                                                                            <ul class="menu-inner">                                                                                  
+                                                                              
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="DvKhamChuaBenh" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá dịch vụ khám chữa bệnh</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="TroGiaTroCuoc" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Mức trợ giá, trợ cước</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaThueTaiNguyenCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá thuế tài nguyên</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá hàng hóa tại siêu thị</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
 
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaNuocShCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá nước sạch sinh hoạt</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaThueTSanCongCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá thuê tài sản công</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaSpDvCongIchCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá sản phẩm, dịch vụ công ích,... đặt hàng</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaoDucDaoTao" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá dịch vụ GD-ĐT</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="DvKhamChuaBenh" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá dịch vụ KCB</span>
-                                                                        </a>
-                                                                    </li>
+                                                                    </ul>
                                                                 </ul>
                                                             </div>
                                                         </li>
+
                                                         <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                                                             <a href="javascript:;" class="menu-link menu-toggle">
                                                                 <span class="svg-icon menu-icon">
@@ -249,70 +298,144 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span>
-                                                                <span class="menu-text">Định giá (Phần II)</span>
+                                                                <span class="menu-text">Mức giá kê khai đăng ký</span>
                                                                 <i class="menu-arrow"></i>
                                                             </a>
-                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right menu-submenu-fixed" style=" width:1000px">
                                                                 <ul class="menu-subnav">
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="TroGiaTroCuoc" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Mức trợ giá, trợ cước</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaHhDvCn" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaDatPlCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá đất cụ thể</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaThueTaiNguyenCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá thuế tài nguyên</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaDatDiaBanCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá đất theo địa bàn</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaTrungThauDat" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá đấu giá đất</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="menu-item" aria-haspopup="true">
-                                                                        <a asp-controller="GiaVatLieuXayDungCongBo" asp-action="Index" class="menu-link" target="_blank">
-                                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                                <span></span>
-                                                                            </i>
-                                                                            <span class="menu-text">Giá vật liệu xây dựng</span>
-                                                                        </a>
-                                                                    </li>
+                                                                    <ul class="menu-content">
+                                                                        <li class="menu-item">
+                                                                            <ul class="menu-inner">
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="DVLT" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Dịch vụ lưu trú</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="XMTXD" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Xi măng, thép xây dựng</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="THAN" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Than</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="TACN" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Thức ăn chăn nuôi</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="GIAY" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="menu-item">
+
+                                                                            <ul class="menu-inner">
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="SACH" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Sách giáo khoa</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="ETANOL" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Etanol nhiên liệu tự nhiên không biến tính;khí tự nhiên hóa lỏng(LNG);Khí thiên nhiên nén(CNG)</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="CongBo" asp-action="TPCNTE6T" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Thực phẩm chức năng cho trẻ em 6 tuổi</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Cước vận tải hành khách bằng xe buýt theo tuyến cố định</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Cước vận tải hành khách bằng ôtô tuyến cố định</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="menu-item">
+                                                                            <ul class="menu-inner">
+                                                                              
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Cước vận tải hành khách bằng taxi</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Vật liệu xây dựng</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Dịch vụ khám chữa bệnh cho người tại cơ sở khám chữa bệnh tư nhân; khám chữa bệnh theo yêu cầu tại cơ sở khám chữa bệnh của nhà nước</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="#" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Dịch vụ hỗ trợ hoạt động thương mại tại cửa khẩu</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+
+                                                                    </ul>
                                                                 </ul>
                                                             </div>
                                                         </li>
+
                                                         <li class="menu-item" aria-haspopup="true">
                                                             <a target="_blank" asp-controller="KkMhBogCongBo" asp-action="Index" class="menu-link">
                                                                 <span class="svg-icon menu-icon">
@@ -326,7 +449,7 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span>
-                                                                <span class="menu-text">Bình ổn giá</span>
+                                                                <span class="menu-text">Mặt hàng kê khai giá</span>
                                                             </a>
                                                         </li>
                                                         <li class="menu-item" aria-haspopup="true">
@@ -346,6 +469,22 @@
                                                             </a>
                                                         </li>
                                                         <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="GiaSpDvCuTheCongBo" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Sản phẩm dịch vụ tối đa</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
                                                             <a target="_blank" asp-controller="GiaSpDvKhungGiaCongBo" asp-action="Index" class="menu-link">
                                                                 <span class="svg-icon menu-icon">
                                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
@@ -358,7 +497,91 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span>
-                                                                <span class="menu-text">Sản phẩm dịch vụ khung giá</span>
+                                                                <span class="menu-text">Khung giá sản phẩm dịch vụ</span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                            <a href="javascript:;" class="menu-link menu-toggle">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Giá đất</span>
+                                                                <i class="menu-arrow"></i>
+                                                            </a>
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right menu-submenu-fixed" style=" width:1000px">
+                                                                <ul class="menu-subnav">
+                                                                    <ul class="menu-content">
+                                                                        <li class="menu-item">
+                                                                            <ul class="menu-inner">
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaDatPlCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá đất cụ thể</span>
+                                                                                    </a>
+                                                                                </li>        
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaThueMuaNhaXhCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Khung giá đất</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaDatDiaBanCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Bảng giá đất</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiarungCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá đất giao dịch thực tế trên thị trường</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaTrungThauDat" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá trúng thầu quyền sử dụng đất</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>                              
+                                                                    </ul>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li class="menu-item" aria-haspopup="true">
+                                                            <a target="_blank" asp-controller="GiaSpDvKhungGiaCongBo" asp-action="Index" class="menu-link">
+                                                                <span class="svg-icon menu-icon">
+                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24" />
+                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
+                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                    <!--end::Svg Icon-->
+                                                                </span>
+                                                                <span class="menu-text">Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</span>
                                                             </a>
                                                         </li>
                                                         <li class="menu-item" aria-haspopup="true">
@@ -377,8 +600,8 @@
                                                                 <span class="menu-text">Giá HH-DV khác</span>
                                                             </a>
                                                         </li>
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a target="_blank" asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                            <a href="javascript:;" class="menu-link menu-toggle">
                                                                 <span class="svg-icon menu-icon">
                                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
                                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -390,185 +613,61 @@
                                                                     </svg>
                                                                     <!--end::Svg Icon-->
                                                                 </span>
-                                                                <span class="menu-text">Giá lệ phí trước bạ</span>
+                                                                <span class="menu-text">Các loại giá khác</span>
+                                                                <i class="menu-arrow"></i>
                                                             </a>
+                                                            <div class="menu-submenu menu-submenu-classic menu-submenu-right menu-submenu-fixed" style=" width:1000px">
+                                                                <ul class="menu-subnav">
+                                                                    <ul class="menu-content">
+                                                                        <li class="menu-item">
+                                                                            <ul class="menu-inner">
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaHhDvCn" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a target="_blank" asp-controller="GiaLePhi" asp-action="Index" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá lệ phí trước bạ</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a target="_blank" asp-controller="CongBo" asp-action="PhiLePhi" class="menu-link">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá phí, lệ phí</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="menu-item" aria-haspopup="true">
+                                                                                    <a asp-controller="GiaVatLieuXayDungCongBo" asp-action="Index" class="menu-link" target="_blank">
+                                                                                        <i class="menu-bullet menu-bullet-line">
+                                                                                            <span></span>
+                                                                                        </i>
+                                                                                        <span class="menu-text">Giá vật liệu xây dựng</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                       
+                                                                    </ul>
+                                                                </ul>
+                                                            </div>
                                                         </li>
 
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a target="_blank" asp-controller="CongBo" asp-action="PhiLePhi" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Giá phí, lệ phí</span>
-                                                            </a>
-                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>
-                                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
-                                                <a href="javascript:;" class="menu-link menu-toggle">
-                                                    <span class="menu-text">Kê khai - đăng ký giá</span>
-                                                    <span class="menu-desc"></span>
-                                                    <i class="menu-arrow"></i>
-                                                </a>
-                                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-                                                    <ul class="menu-subnav">
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="DVLT" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Dịch vụ lưu trú</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="XMTXD" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Xi măng, thép xây dựng</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="THAN" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Than</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="TACN" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Thức ăn chăn nuôi</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="GIAY" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Giấy in, viết ( dạng cuộn ) giấy in báo sản xuất trong nước</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="SACH" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Sách giáo khoa</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="ETANOL" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Etanol nhiên liệu tự nhiên không biến tính;khí tự nhiên hóa lỏng(LNG);Khí thiên nhiên nén(CNG)</span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="menu-item" aria-haspopup="true">
-                                                            <a asp-controller="CongBo" asp-action="TPCNTE6T" class="menu-link">
-                                                                <span class="svg-icon menu-icon">
-                                                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Box2.svg-->
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24" />
-                                                                            <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000" />
-                                                                            <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3" />
-                                                                        </g>
-                                                                    </svg>
-                                                                    <!--end::Svg Icon-->
-                                                                </span>
-                                                                <span class="menu-text">Thực phẩm chức năng cho trẻ em 6 tuổi</span>
-                                                            </a>
-                                                        </li>
-                                                        
-                                                    </ul>
-                                                </div>
-                                            </li>
+                                            
                                             <li class="menu-item" aria-haspopup="true">                                                
-                                                <a asp-controller="ThamDinhGia" asp-action="CongBo" class="menu-link">                                                   
+                                                <a asp-controller="ThamDinhGia" asp-action="CongBo" class="menu-link">
                                                     <span class="menu-text">Thẩm định giá</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="menu-item" aria-haspopup="true">
-                                                <a asp-controller="CongBo" asp-action="BinhOnGia" class="menu-link">
-                                                    <span class="menu-text">Kê khai giá</span>
                                                 </a>
                                             </li>
 
