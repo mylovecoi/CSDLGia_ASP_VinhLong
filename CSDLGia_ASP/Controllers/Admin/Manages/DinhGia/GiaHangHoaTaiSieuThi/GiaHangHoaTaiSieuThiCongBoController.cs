@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
             _db = db;
         }
 
-        [Route("GiaNuocSh/CongBo")]
+        [Route("GiaHHTaiSieuThi/CongBo")]
         [HttpGet]
         public IActionResult Index(string Madv, string Nam)
         {

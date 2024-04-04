@@ -153,7 +153,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;
                     ViewData["NgayDen"] = ngayden;
-
+                    ViewData["DmNhom"] = _db.GiaThueMatDatMatNuocNhom;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá thuê mặt đất mặt nước";
