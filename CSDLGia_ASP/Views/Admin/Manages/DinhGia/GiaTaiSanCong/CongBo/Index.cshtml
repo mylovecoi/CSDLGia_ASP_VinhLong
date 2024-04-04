@@ -1,11 +1,11 @@
 ﻿@{
-    Layout = "_LayoutCongBo.cshtml";
+    Layout = "_LayoutCongBo";
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -24,7 +24,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/GiaThueMuaNhaXh/CongBo?';
+                var current_path_url = '/GiaTaiSanCong/CongBo?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -40,7 +40,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá thuê mua nhà xã hội
+                    Thông tin hồ sơ giá tài sản công
                 </span>
             </h3>
         </div>
@@ -109,7 +109,7 @@
                                 }
                             </td>
                             <td>
-                                <a asp-controller="GiaThueMuaNhaXhCongBo" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="TaiSanCongCb" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -125,4 +125,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTaiSanCong/ThongTinGiayTo/Show.cshtml")

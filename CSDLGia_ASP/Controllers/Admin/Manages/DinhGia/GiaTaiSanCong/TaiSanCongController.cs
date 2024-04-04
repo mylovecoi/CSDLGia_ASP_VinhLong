@@ -442,7 +442,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
             }
         }
 
-
         [Route("GiaTaiSanCong/Search")]
         [HttpGet]
         public IActionResult Search(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Tentaisan)
