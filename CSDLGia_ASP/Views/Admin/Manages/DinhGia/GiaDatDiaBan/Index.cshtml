@@ -118,7 +118,9 @@
                             <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center" width="10%">@item.Soqd</td>
                             <td style="text-align: center">
-                                @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
+                                @if (!string.IsNullOrEmpty(item.Madiaban))
+                                    @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
+
                             </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
@@ -150,6 +152,7 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
 
 
 
