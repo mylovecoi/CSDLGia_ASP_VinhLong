@@ -76,7 +76,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-                                     Thoidiem = hoso.Thoidiem
+                                     Thoidiem = hoso.Thoidiem,
+                                      Ttqd = hoso.Ttqd,
 
                                  });
                     ViewData["Title"] = "Báo cáo giá phí lệ phí";

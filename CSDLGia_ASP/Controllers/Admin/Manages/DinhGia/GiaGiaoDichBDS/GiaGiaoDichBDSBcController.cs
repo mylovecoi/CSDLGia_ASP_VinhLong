@@ -79,6 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ghichu = hoso.Ghichu,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá giao dịch bất động sản";

@@ -151,9 +151,9 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: center">@item.Tendv</td>
+                        <td style="text-align: left">@item.Tendv</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: center">@item.Giacuthe</td>
+                        <td style="text-align: right">@item.Giacuthe</td>
                         <td style="text-align: center">
                             <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">

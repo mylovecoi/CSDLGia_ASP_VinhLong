@@ -79,6 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Thongtinhs = hoso.Thongtinhs,
                                  });
 
                     ViewData["Title"] = "Báo cáo giá thuê tài sản công";

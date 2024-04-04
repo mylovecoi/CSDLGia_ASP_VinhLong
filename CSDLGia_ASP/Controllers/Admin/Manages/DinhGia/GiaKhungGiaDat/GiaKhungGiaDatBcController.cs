@@ -78,12 +78,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                  {
                                      TenDonVi = donvi.TenDv,
                                      Mahs = hoso.Mahs,
-                                     Kyhieuvb = hoso.Kyhieuvb,
-                                     Ghichu = hoso.Ghichu,
+                                     Kyhieuvb = hoso.Kyhieuvb, 
                                      Thoidiem = hoso.Thoidiem,
+                                     Ghichu = hoso.Ghichu,
                                  });
 
-                    ViewData["Title"] = "Báo cáo tổng hợp giá  khung giá đất";
+                    ViewData["Title"] = "Báo cáo tổng hợp giá khung giá đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgkhunggd";
                     ViewData["MenuLv3"] = "menu_dgkhunggd_bc";
@@ -135,6 +135,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
                                      Giattmn = giakgdct.Giattmn,
                                      Giatttd = giakgdct.Giatttd
 
+
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
@@ -169,5 +170,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaKhungGiaDat
             }
         }
 
+        [HttpPost("GiaKhungGiaDat/BaoCao/GetListHoSo")]
+        public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                var model = _db.GiaKhungGiaDat.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
+                result += "<option value='all'>--Tất cả---</option>";
+
+                if (model.Any())
+                {
+                    foreach (var item in model)
+                    {
+                        result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Kyhieuvb + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
+                    }
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
     }
 }

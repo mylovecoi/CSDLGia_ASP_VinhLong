@@ -79,6 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ghichu = hoso.Ghichu,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá hàng hóa tại siêu thị";

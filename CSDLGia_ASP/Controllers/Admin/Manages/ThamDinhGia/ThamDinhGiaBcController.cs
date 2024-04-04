@@ -139,6 +139,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                      Mahs = hoso.Mahs,
                                      Soqdpheduyet = hoso.Soqdpheduyet,
                                      Thoidiem = hoso.Thoidiem,
+                                     Ghichu = hoso.Ghichu,
                                  });
 
                     ViewData["Title"] = "Báo cáo thẩm định giá";

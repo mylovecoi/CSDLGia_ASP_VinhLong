@@ -35,9 +35,12 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
             }&ensp;
-            <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+            &ensp;
+            <a class="btn btn-light-success font-weight-bolder" asp-controller="GiaGiaoDichDatDm" asp-action="NhanExcel"
+               asp-route-Manhom="@ViewData["Manhom"]">
                 <i class="la la-file-excel-o"></i>Nhận dữ liệu
-            </button>&ensp;
+            </a>
+            &ensp;
             <button type="button" data-target="#Lock_Modal" data-toggle="modal" class="btn btn-light-warning">
                 <i class="la la-lock"></i>Khóa/Mở khóa
             </button>&ensp;

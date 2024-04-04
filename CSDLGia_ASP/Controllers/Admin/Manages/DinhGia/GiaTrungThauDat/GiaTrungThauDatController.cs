@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, string Nam = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -52,22 +52,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                         IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat> model = _db.GiaDauGiaDat;
 
+                      
                         if (Madv != "all")
                         {
                             model = model.Where(t => t.Madv == Madv);
                         }
-
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != "all")
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
+                            model = model.Where(x => x.Thoidiem.Year == Convert.ToInt32(Nam));
                         }
 
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
@@ -166,7 +158,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     //var dsdv = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI" && t.MaDv == Madv).OrderBy(t => t.Id).Select(t => t.MaDv).First();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == Madv).TenDv;
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(t => t.Madiaban == MaDiaBan).ToList();
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
@@ -440,13 +432,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Soqdgiakhoidiem = model.Soqdgiakhoidiem,
                         Soqdkqdaugia = model.Soqdkqdaugia,
                         Soqdpagia = model.Soqdpagia,
-                        Phanloai = model.Phanloai
+                        Phanloai = model.Phanloai,
+                        Maxp = model.Maxp,
+
                     };
                     var model_ct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
                     var donvi = _db.DsDonVi.First(t => t.MaDv == model.Madv);
                     ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
-                    ViewData["TenDonVi"] = donvi.TenDv;                    
+                    ViewData["TenDonVi"] = donvi.TenDv;
+                    ViewData["XaPhuong"] = _db.DsXaPhuong.FirstOrDefault(x => x.Maxp == model.Maxp).Tenxp;
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
                 }
                 else
