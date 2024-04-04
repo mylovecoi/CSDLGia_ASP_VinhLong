@@ -19,231 +19,46 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDNCongBo
         {
             _db = db;
         }
-        [Route("GiaThueDNCongBo/CongBo")]
+        [Route("GiaThueMatDatMatNuoc/CongBo")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(string Madv, int Nam)
         {
-            var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Trangthai == "HT").ToList();
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            if (string.IsNullOrEmpty(Nam))
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc> model = _db.GiaThueMatDatMatNuoc.Where(t => t.Congbo == "DACONGBO");
+
+            if (Madv != "all")
             {
-                Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                model = model.Where(t => Helpers.ConvertYearToStr(t.Thoidiem.Year) == Nam).ToList();
-            }
-            else
-            {
-                if (Nam != "all")
-                {
-                    model = model.Where(t => Helpers.ConvertYearToStr(t.Thoidiem.Year) == Nam).ToList();
-                }
-                else
-                {
-                    model = model.ToList();
-                }
+                model = model.Where(t => t.Madv == Madv);
             }
 
-            ViewData["DsDonVi"] = _db.DsDonVi;
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+            }
+
+            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
             ViewData["DsDiaBan"] = _db.DsDiaBan;
             ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
             ViewData["Madv"] = Madv;
             ViewData["Nam"] = Nam;
-            ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
-            ViewData["MenuLv1"] = "menu_dg";
-            ViewData["MenuLv2"] = "menu_dgtmdmn";
-            ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
+            ViewData["Title"] = "Công bố giá thuê mặt đất mặt nước";
             ViewBag.bSession = true;
             return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model);
+        }
 
-
-
-
-
-
-
-
-
-
-            /*var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
-                            join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                            select new VMDsDonVi
-                            {
-                                Id = dv.Id,
-                                MaDiaBan = dv.MaDiaBan,
-                                MaDv = dv.MaDv,
-                                ChucNang = dv.ChucNang,
-                                Level = db.Level,
-                            }).First();
-
-
-            if (getdonvi.Level == "ADMIN")
-            {
-                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_ad == Madv).ToList();
-                if (string.IsNullOrEmpty(Nam))
-                {
-                    model = model.ToList();
-                }
-                else
-                {
-                    if (Nam != "all")
-                    {
-                        model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam)).ToList();
-                    }
-                    else
-                    {
-                        model = model.ToList();
-                    }
-                }
-                var model_join = from dg in model
-                                 select new VMDinhGiaThueDN
-                                 {
-                                     Id = dg.Id,
-                                     Macqcq = Madv,
-                                     Madv = dg.Madv,
-                                     Madv_t = dg.Madv_t,
-                                     Madv_h = dg.Madv_h,
-                                     Mahs = dg.Mahs,
-                                     Thoidiem = dg.Thoidiem_ad,
-                                     Soqd = dg.Soqd,
-                                     Madiaban = getdonvi.MaDiaBan,
-                                     Trangthai_ad = dg.Trangthai_ad,
-                                     Trangthai_t = dg.Trangthai_t,
-                                     Trangthai_h = dg.Trangthai_h,
-                                     Thongtin = dg.Thongtin,
-                                     Level = getdonvi.Level,
-                                 };
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                {
-                    ViewData["DsDonVi"] = dsdonvi;
-                }
-                else
-                {
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                }
-
-                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                ViewData["Madv"] = Madv;
-                ViewData["Nam"] = Nam;
-                ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
-                ViewData["MenuLv1"] = "menu_dg";
-                ViewData["MenuLv2"] = "menu_dgtmdmn";
-                ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
-                ViewBag.bSession = true;
-                return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
-            }
-            else if (getdonvi.Level == "T")
-            {
-                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_t == Madv).ToList();
-                if (string.IsNullOrEmpty(Nam))
-                {
-                    model = model.ToList();
-                }
-                else
-                {
-                    if (Nam != "all")
-                    {
-                        model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam)).ToList();
-                    }
-                    else
-                    {
-                        model = model.ToList();
-                    }
-                }
-                var model_join = from dg in model
-                                 select new VMDinhGiaThueDN
-                                 {
-                                     Id = dg.Id,
-                                     Madv = dg.Madv,
-                                     Macqcq = Madv,
-                                     Macqcq_t = dg.Macqcq_t,
-                                     Macqcq_h = dg.Macqcq_h,
-                                     Mahs = dg.Mahs,
-                                     Thoidiem = dg.Thoidiem_t,
-                                     Soqd = dg.Soqd,
-                                     Madiaban = getdonvi.MaDiaBan,
-                                     Trangthai_ad = dg.Trangthai_ad,
-                                     Trangthai_t = dg.Trangthai_t,
-                                     Trangthai_h = dg.Trangthai_h,
-                                     Thongtin = dg.Thongtin,
-                                     Level = getdonvi.Level,
-                                 };
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                {
-                    ViewData["DsDonVi"] = dsdonvi;
-                }
-                else
-                {
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                }
-
-                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                ViewData["Madv"] = Madv;
-                ViewData["Nam"] = Nam;
-                ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
-                ViewData["MenuLv1"] = "menu_dg";
-                ViewData["MenuLv2"] = "menu_dgtmdmn";
-                ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
-                ViewBag.bSession = true;
-                return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
-            }
-            else
-            {
-                var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Madv_h == Madv).ToList();
-                if (string.IsNullOrEmpty(Nam))
-                {
-                    model = model.ToList();
-                }
-                else
-                {
-                    if (Nam != "all")
-                    {
-                        model = model.Where(t => t.Thoidiem_h.Year == int.Parse(Nam)).ToList();
-                    }
-                    else
-                    {
-                        model = model.ToList();
-                    }
-                }
-                var model_join = from dg in model
-                                 select new VMDinhGiaThueDN
-                                 {
-                                     Id = dg.Id,
-                                     Madv = dg.Madv,
-                                     Macqcq = Madv,
-                                     Macqcq_t = dg.Macqcq_t,
-                                     Macqcq_h = dg.Macqcq_h,
-                                     Mahs = dg.Mahs,
-                                     Thoidiem = dg.Thoidiem_h,
-                                     Soqd = dg.Soqd,
-                                     Madiaban = getdonvi.MaDiaBan,
-                                     Trangthai_ad = dg.Trangthai_ad,
-                                     Trangthai_t = dg.Trangthai_t,
-                                     Trangthai_h = dg.Trangthai_h,
-                                     Thongtin = dg.Thongtin,
-                                     Level = getdonvi.Level,
-                                 };
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                {
-                    ViewData["DsDonVi"] = dsdonvi;
-                }
-                else
-                {
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                }
-
-                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                ViewData["Madv"] = Madv;
-                ViewData["Nam"] = Nam;
-                ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
-                ViewData["MenuLv1"] = "menu_dg";
-                ViewData["MenuLv2"] = "menu_dgtmdmn";
-                ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
-                ViewBag.bSession = true;
-                return View("Views/Admin/Systems/CongBo/GiaThueDNCongBo.cshtml", model_join);
-
-            }*/
+        [Route("GiaThueMatDatMatNuoc/CongBo/Show")]
+        [HttpGet]
+        public IActionResult Show(string Mahs)
+        {
+            var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
+            var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
+            model.GiaThueMatDatMatNuocCt = modelct.ToList();
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+            ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
+            return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model);
         }
     }
 }

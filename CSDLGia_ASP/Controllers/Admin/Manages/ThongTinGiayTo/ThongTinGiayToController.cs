@@ -291,37 +291,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
         [HttpPost]
         public JsonResult GetList(string Mahs)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            var model = _db.ThongTinGiayTo.Where(t => t.Mahs == Mahs);
+            string result = "<div class='modal-body' id='giayto_data'>";
+            int record_id = 1;
+            if (model.Any())
             {
-                var model = _db.ThongTinGiayTo.Where(t => t.Mahs == Mahs);
-                string result = "<div class='modal-body' id='giayto_data'>";
-                int record_id = 1;
-                if (model.Any())
+                foreach (var item in model)
                 {
-                    foreach (var item in model)
-                    {
-                        result += "<p>";
-                        result += (record_id++) + "." + item.MoTa + " ";
-                        result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
-                        result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                        result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
-                        result += "</p>";
-                    }
+                    result += "<p>";
+                    result += (record_id++) + "." + item.MoTa + " ";
+                    result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                    result += "</p>";
                 }
-                else
-                {
-                    result += "<p>Không tìm thấy thông tin giấy tờ theo hồ sơ</p>";
-                }
-                result += "</div>";
-
-                var data = new { status = "success", message = result };
-                return Json(data);
             }
             else
             {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
+                result += "<p>Không tìm thấy thông tin giấy tờ theo hồ sơ</p>";
             }
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
         }
     }
 }
