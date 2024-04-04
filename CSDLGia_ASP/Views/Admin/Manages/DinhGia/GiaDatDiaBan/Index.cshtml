@@ -5,6 +5,7 @@
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
     //test
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
@@ -56,9 +57,9 @@
                     </button>
 
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatDiaBanExcel" asp-action="Index"
-                    asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
                 }
             }
         </div>
@@ -117,7 +118,7 @@
                             <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center" width="10%">@item.Soqd</td>
                             <td style="text-align: center">
-                                @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan
+                                @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
                             </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
@@ -148,7 +149,9 @@
                             </td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
-                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
 
 
                             </td>
@@ -325,7 +328,7 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Show.cshtml")
 <script>
-    function SetDelete(id,mota) {
+    function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").innerHTML = mota;
     }

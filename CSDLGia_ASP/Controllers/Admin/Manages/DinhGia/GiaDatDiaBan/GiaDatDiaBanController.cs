@@ -88,6 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                         ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
                         ViewData["MenuLv1"] = "menu_giadat";

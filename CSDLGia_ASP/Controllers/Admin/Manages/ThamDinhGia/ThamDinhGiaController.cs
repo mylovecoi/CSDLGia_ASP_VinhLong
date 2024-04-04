@@ -116,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         }
                         var cqcq = _db.DsDonVi.ToList();
                         //Lấy tên đơn vị chủ quản
-                        foreach(var item in model_join)
+                        foreach (var item in model_join)
                         {
                             var cq = cqcq.FirstOrDefault(x => x.MaDv == item.Macqcq);
                             if (cq != null)
@@ -705,7 +705,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         [Route("ThamDinhGia/CongBo")]
         [HttpGet]
         public IActionResult CongBo(string Nam, string Madv)
-        {           
+        {
 
             var model = _db.ThamDinhGia.Where(t => t.Trangthai == "HT").ToList();
             var model_join = (from tdg in model
@@ -755,9 +755,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 }
             }
 
-          
-                ViewData["DsDonVi"] = _db.DsDonVi;
-            
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
             ViewData["DsDiaBan"] = _db.DsDiaBan;
             ViewData["DmNhomHh"] = _db.DmNhomHh.Where(t => t.Phanloai == "THAMDINHGIA" && t.Theodoi == "TD").ToList();
             ViewData["Nam"] = Nam;
@@ -766,9 +765,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             ViewData["Title"] = "Công bố hồ sơ thẩm định giá";
 
             return View("Views/Admin/Systems/CongBo/ThamDinhGia.cshtml", model_join);
-            //return View("Views/Admin/Manages/ThamDinhGia/DanhSach/CongBo.cshtml", model_join);
-
-
         }
     }
 }

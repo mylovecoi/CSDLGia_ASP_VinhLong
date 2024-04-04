@@ -1,19 +1,18 @@
-﻿
-@{
+﻿@{
     Layout = "_LayoutCongBo.cshtml";
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN>
+@* @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueDN> *@
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -24,9 +23,9 @@
         });
 
         $(function () {
-            $('#Donvi, #Nam').change(function () {
-                var current_path_url = '/GiaThueMatDatMatNuoc/XetDuyet?';
-                var madv = '&Madv=' + $('#Donvi').val();
+            $('#Madv, #Nam').change(function () {
+                var current_path_url = '/GiaThueDNCongBo/CongBo?';
+                var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
                 window.location.href = url;
@@ -42,7 +41,7 @@
                 Thông tin hoàn thành định giá<small>&nbsp;thuê mặt đất mặt nước</small><br />
             </h3>
         </div>
-       
+
     </div>
 
     <hr />
@@ -67,18 +66,10 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="Donvi" name="Donvi">
-                        @foreach (var db in dsdiaban)
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -94,7 +85,7 @@
                     <th>Vị trí đất</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
-                  
+
                 </tr>
             </thead>
             <tbody>
@@ -105,62 +96,15 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Madv))
+                                    @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
 
-                                @if (dsdonvi != null)
-                                {
-                                    @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai_h == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_h)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else if (item.Trangthai_t == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_t)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Madv)
-                                            {
-                                                <span>@ten.TenDv </span>
-                                            }
-                                        }
-                                    }
-                                }
+
+
+
                             </td>
                             <td style="text-align: center">
-                                @foreach (var ds in dsdiaban)
-                                {
-                                    @if (item.Madiaban == ds.MaDiaBan)
-                                    {
-                                        <span>@ds.TenDiaBan</span>
-                                    }
-                                }
+                                @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td class="text-center danger">@item.Vitri</td>
