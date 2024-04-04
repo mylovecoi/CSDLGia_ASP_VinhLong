@@ -131,6 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         ViewData["Hoso"] = _db.GiaHhDvkTh.Where(t=>t.Thang == Thang && t.Nam == Nam).ToList();
                         ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                         ViewData["DsDiaBan"] = _db.DsDiaBan;
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa, dịch vụ khác";
                         ViewData["MenuLv1"] = "menu_hhdvk";
                         ViewData["MenuLv2"] = "menu_hhdvk_tt";
@@ -364,6 +365,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";

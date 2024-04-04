@@ -83,7 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["ADMIN"] = _db.DsDiaBan.Where(t => t.Level == "ADMIN");
                         ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
                         ViewData["MenuLv1"] = "menu_giadat";

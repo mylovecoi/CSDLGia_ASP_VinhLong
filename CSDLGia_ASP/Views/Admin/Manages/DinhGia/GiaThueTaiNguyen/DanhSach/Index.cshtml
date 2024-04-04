@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var nhomtn = (IEnumerable<GiaThueTaiNguyenNhom>)ViewData["NhomTn"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen>
@@ -143,7 +144,8 @@
                             </td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
-                                    @dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq).TenDv
+                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
 
 
 

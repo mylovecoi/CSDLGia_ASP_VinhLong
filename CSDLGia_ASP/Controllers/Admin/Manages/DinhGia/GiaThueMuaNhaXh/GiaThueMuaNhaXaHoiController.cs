@@ -88,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                        ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Title"] = " Thông tin hồ sơ giá thuê mua nhà xã hội";
                         ViewData["MenuLv1"] = "menu_dg";

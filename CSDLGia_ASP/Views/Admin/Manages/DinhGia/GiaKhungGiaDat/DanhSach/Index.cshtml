@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat>
 
@@ -148,10 +149,9 @@
                                 }
                             </td>
                             <td style="text-align: left" width="15%">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    @dsdonvi.FirstOrDefault(x=>x.MaDv== item.Macqcq).TenDv
-                                }
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
                             </td>
                             <td width="12%" style="text-align:left;">
                                 <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">

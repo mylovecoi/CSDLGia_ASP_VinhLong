@@ -105,6 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                          });
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Nam"] = Nam;
                         ViewData["Thang"] = Thang;
                         ViewData["Madv"] = Madv;

@@ -93,6 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                          });
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["NhomTn"] = _db.GiaSpDvKhungGiaNhom.ToList();
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;

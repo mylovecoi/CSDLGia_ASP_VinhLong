@@ -92,6 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         ViewData["Nam"] = Nam;
                         ViewData["Donvi"] = Madv;
                         ViewData["Loairung"] = _db.GiaRungDm.ToList();
+                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
                         ViewData["Title"] = " Quản lý thông tin hồ sơ giá rừng";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgr";
