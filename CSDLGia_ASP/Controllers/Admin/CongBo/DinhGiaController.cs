@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -403,9 +404,111 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             return View("Views/Admin/CongBo/DinhGia/GiaDvGiaoDucDaoTao.cshtml", model);
         }
 
-        [Route("CongBo/GiaDichVuDaoTao/Show")]
+        [Route("CongBo/GiaDvGiaoDucDaoTao/Show")]
         [HttpGet]
         public IActionResult GiaDvGiaoDucDaoTaoShow(string Mahs)
+        {
+            var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
+            model.GiaDvGdDtCt = _db.GiaDvGdDtCt.Where(t => t.Mahs == model.Mahs).ToList();
+
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+            ViewData["Title"] = "Xem chi tiết giá dịch vụ giáo dục đào tạo";
+            return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Show.cshtml", model);
+        }
+
+        [Route("CongBo/GiaDvKcb")]
+        [HttpGet]
+        public IActionResult GiaDvKcb(string Madv, int Nam)
+        {
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb> model = _db.GiaDvKcb.Where(t => t.Congbo == "DACONGBO");
+
+            if (Madv != "all")
+            {
+                model = model.Where(t => t.Madv == Madv);
+            }
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+            }
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
+            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["Madv"] = Madv;
+            ViewData["Nam"] = Nam;
+            ViewData["Title"] = "Công bố giá dịch vụ khám chữa bệnh";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giadvkcbcb";
+            ViewBag.bSession = false;
+            return View("Views/Admin/CongBo/DinhGia/GiaDvKcb.cshtml", model);
+        }
+
+        [Route("CongBo/GiaDvKcb/Show")]
+        [HttpGet]
+        public IActionResult GiaDvKcbShow(string Mahs)
+        {
+            var model = _db.GiaDvKcb.FirstOrDefault(t => t.Mahs == Mahs);
+            var model_new = new VMDinhGiaDvKcb
+            {
+                Madv = model.Madv,
+                Mahs = model.Mahs,
+                Manhom = model.Manhom,
+                Soqd = model.Soqd,
+                Thoidiem = model.Thoidiem,
+                Mota = model.Mota
+
+            };
+
+            var model_ct = _db.GiaDvKcbCt.Where(t => t.Mahs == model_new.Mahs);
+
+            model_new.GiaDvKcbCt = model_ct.ToList();
+
+            var groupmanhom = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs).Select(item => item.Manhom).Distinct().ToList();
+            ViewData["GroupMaNhom"] = groupmanhom;
+            ViewData["GiaDvKcbNhom"] = _db.GiaDvKcbNhom.ToList();
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+            ViewData["Title"] = "Xem chi tiết giá dịch vụ khám chữa bệnh";
+            return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/Show.cshtml", model);
+        }
+
+        [Route("CongBo/GiaTroGiaTroCuoc")]
+        [HttpGet]
+        public IActionResult GiaTroGiaTroCuoc(string Madv, int Nam)
+        {
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDt> model = _db.GiaDvGdDt.Where(t => t.Congbo == "DACONGBO");
+
+            if (Madv != "all")
+            {
+                model = model.Where(t => t.Madv == Madv);
+            }
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+            }
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
+            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["Madv"] = Madv;
+            ViewData["Nam"] = Nam;
+            ViewData["Title"] = "Công bố giá dịch vụ giáo dục đào tạo";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giagddtcb";
+            ViewBag.bSession = false;
+            return View("Views/Admin/CongBo/DinhGia/GiaDvGiaoDucDaoTao.cshtml", model);
+        }
+
+        [Route("CongBo/GiaTroGiaTroCuoc/Show")]
+        [HttpGet]
+        public IActionResult GiaTroGiaTroCuocShow(string Mahs)
         {
             var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
             model.GiaDvGdDtCt = _db.GiaDvGdDtCt.Where(t => t.Mahs == model.Mahs).ToList();
