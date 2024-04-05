@@ -19,6 +19,7 @@
                             <input type="text" id="tendv_create" name="tendv_create" class="form-control" />
                         </div>
                     </div>
+                   
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Địa chỉ trụ sở*</label>
@@ -59,6 +60,16 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label>Ngày dừng theo dõi</label>
                             <input type="date" id="ngaydungtd_create" name="ngaydungtd_create" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Theo dõi</label>
+                            <select id="theodoi_create" name="theodoi_create" class="form-control">
+                                <option value="TD">Theo dõi</option>
+                                <option value="KTD">Ngừng theo dõi</option>  
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -211,6 +222,7 @@
                             Ngaycap: $('#ngaycap_create').val(),
                             Soqddungtd: $('#soqddungtd_create').val(),
                             Ngaydungtd: $('#ngaydungtd_create').val(),
+                            Theodoi: $('#theodoi_create').val(),
                         },
                         dataType: 'JSON',
                         success: function (data) {
@@ -264,6 +276,7 @@
                         url: '/ThamDinhGia/Donvi/Update',
                         type: 'POST',
                         data: {
+                            Theodoi: $('#theodoi_edit').val(),
                             Tendv: $('#tendv_edit').val(),
                             Diachi: $('#diachi_edit').val(),
                             Nguoidaidien: $('#nguoidaidien_edit').val(),

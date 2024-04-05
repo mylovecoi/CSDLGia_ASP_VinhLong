@@ -11,7 +11,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Magoc { get; set; }
         public string Capdo { get; set; }
         public string Maloaidat { get; set; }
-        
+        public bool NhapGia { get; set; } = false;
 
         public string Manhom { get; set; }
         public double SapXep { get; set; }

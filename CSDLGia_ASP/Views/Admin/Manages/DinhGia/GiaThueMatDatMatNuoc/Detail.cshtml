@@ -88,10 +88,14 @@
                                     <td style="text-align:center; @HtmlStyle">@item.TyLe3</td>
                                     <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
                                     <td>
-                                        <button type="button" data-target="#Edit_Modal" data-toggle="modal"
-                                                onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                            <i class="icon-lg la la-edit text-primary"></i>
-                                        </button>
+                                        @if (item.NhapGia == true)
+                                        {
+                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                           onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                <i class="icon-lg la la-edit text-primary"></i>
+                                            </button>
+                                        }
+                                       
                                     </td>
                                 </tr>
                             }

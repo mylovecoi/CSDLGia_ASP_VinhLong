@@ -47,7 +47,16 @@
                             <label>Vị trí, địa bàn:</label>
                             <input type="text" id="loaidat_create" name="loaidat_create" class="form-control" />
                         </div>
-                    </div>                   
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Nhập giá</label>
+                            <select id="nhapgia_create" name="nhapgia_create" class="form-control" >
+                                <option value="false">Không nhập</option>
+                                <option value="true">Nhập</option> 
+                            </select>
+                        </div>
+                    </div>
                 </div>   
             </div>
             <div class="modal-footer">
@@ -164,6 +173,7 @@
                 url: '/GiaThueDNDMCT/Store',
                 type: 'POST',
                 data: {
+                    Nhapgia: $('#nhapgia_create').val(),
                     Manhom: $('#Manhom').val(),
                     Loaidat: $('#loaidat_create').val(),
                     HienThi: $('#hienthi_create').val(),
@@ -215,7 +225,8 @@
             $.ajax({
                 url: '/GiaThueDNDMCT/Update',
                 type: 'POST',
-                data: {                   
+                data: {
+                    Nhapgia: $('#nhapgia_edit').val(),
                     Loaidat: $('#loaidat_edit').val(),
                     Hientrang: $('#hientrang_edit').val(),
                     HienThi: $('#hienthi_edit').val(),

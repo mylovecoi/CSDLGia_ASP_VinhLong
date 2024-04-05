@@ -180,12 +180,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             HienThi = item.HienThi,
                             MaNhom = item.Manhom,
                             Style = item.Style,
+                            NhapGia = item.NhapGia,
                             Trangthai = "CXD",
                             Madv = Madv,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
                         });
                     }
+
+                  
+                  
+
                     _db.GiaThueMatDatMatNuocCt.AddRange(chitiet);
                     _db.SaveChanges();
 
@@ -470,6 +475,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
                     model.GiaThueMatDatMatNuocCt = modelct.ToList();
+                    ViewData["DsNhom"] = _db.GiaThueMatDatMatNuocNhom;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";

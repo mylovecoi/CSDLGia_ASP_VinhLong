@@ -12,6 +12,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Diachi { get; set; }
         public string Nguoidaidien { get; set; }
         public string Chucvu { get; set; }
+        public string Theodoi { get; set; }
         public string Sothe { get; set; }
         public DateTime Ngaycap { get; set; }
         public string Soqddungtd { get; set; }
