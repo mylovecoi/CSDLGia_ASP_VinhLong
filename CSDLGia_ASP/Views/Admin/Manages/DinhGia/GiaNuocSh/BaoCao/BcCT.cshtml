@@ -33,7 +33,6 @@
             <th style="text-align:center">Tỷ trọng tiêu thụ (%)</th>
             <th style="text-align:center">Sản lượng<br />(m3)</th>
             <th style="text-align:center">Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
-            <th style="text-align:center">Thuế suất (%)</th>
             <th style="text-align:center">Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
         </tr>
 
@@ -61,8 +60,7 @@
                         <td style="text-align:center;">@item.TyTrongTieuThu</td>
                         <td style="text-align:center;">@item.SanLuong</td>
                         <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1)</td>
-                        <td style="text-align:center;">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
-                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2) / 100)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia2)</td>
                     </tr>
 
                 }

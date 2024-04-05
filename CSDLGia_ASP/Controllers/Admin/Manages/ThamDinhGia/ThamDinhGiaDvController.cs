@@ -54,7 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 
         [Route("ThamDinhGia/Donvi/Store")]
         [HttpPost]
-        public JsonResult Store(string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap, string Soqddungtd, DateTime Ngaydungtd)
+        public JsonResult Store(string Tendv, string Diachi, string Nguoidaidien, string Chucvu, string Sothe, DateTime Ngaycap, string Soqddungtd, DateTime Ngaydungtd, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -62,6 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 {
                     var request = new ThamDinhGiaDv
                     {
+                        Theodoi  = Theodoi,
                         Maso = DateTime.Now.ToString("yyMMddssmmHH"),
                         Tendv = Tendv,
                         Diachi = Diachi,
@@ -151,6 +152,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Ngày dừng theo dõi</label>";
                         result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Theo dõi </label>";
+                        result += "<select class='form-control' id='theodoi_edit' name='theodoi_edit' style='width:100%'>";
+                        result += "<option value='TD'>Theo dõi</option >";
+                        result += "<option value='KTD'>Ngừng theo dõi</option >";
+                        result += "</select>";
                         result += "</div>";
                         result += "</div>";
 

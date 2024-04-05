@@ -44,5 +44,6 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime ThoiDiem { get; set; }
         [NotMapped]
         public string Tennhom { get; set; }
+        public bool NhapGia { get; set; } = false;
     }
 }

@@ -70,7 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thuế suất:</label>";
+                result += "<label>Đơn giá đã bao gồm thuế GTGT (đồng/m3)</label>";
                 result += "<input type='number' id='dongia2_edit' name='dongia2_edit' value='" + model.DonGia2 + "' class='form-control text-right' step='0.1'/>";
                 result += "</div>";
                 result += "</div>";
@@ -124,9 +124,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             result += "<th>Mục đích sử dụng</th>";
             result += "<th>Tỷ trọng tiêu thụ (%)</th>";
             result += "<th>Sản lượng (m3)</th>";
-            result += "<th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>";
-            result += "<th>Thuế suất (%)</th>";
-            result += "<th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>";
+            result += "<th>Đơn giá chưa bao gồm thuế GTGT(đồng/m3)</th>";
+            result += "<th>Đơn giá đã bao gồm thuế GTGT (đồng/m3)</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -142,8 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TyTrongTieuThu + "</td>";
                 result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.SanLuong + "</td>";
                 result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.DonGia1) + "</td>";
-                result += "<td style='text-align:center;" + HtmlStyle + "'>" + (item.DonGia2 == 0 ? "" : item.DonGia2) + "</td>";
-                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2) / 100) + "</td>";
+                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.DonGia2) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

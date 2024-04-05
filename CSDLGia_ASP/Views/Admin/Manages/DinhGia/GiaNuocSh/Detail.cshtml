@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="col-xl-4">
+    @* <div class="col-xl-4">
         <div class="form-group">
             <label>Địa bàn</label>
             <select class="form-control select2basic" asp-for="Madiaban">
@@ -37,7 +37,7 @@
                 }
             </select>
         </div>
-    </div>
+    </div> *@
 </div>
 @* <div class="row">
     <div class="col-xl-4">
@@ -93,7 +93,6 @@
                     <th>Tỷ trọng tiêu thụ (%)</th>
                     <th>Sản lượng<br />(m3)</th>
                     <th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
-                    <th>Thuế suất (%)</th>
                     <th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
                     <th>Thao tác</th>
                 </tr>
@@ -113,9 +112,7 @@
                             <td style="text-align:center; @HtmlStyle">@item.TyTrongTieuThu</td>
                             <td style="text-align:center; @HtmlStyle">@item.SanLuong</td>
                             <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1)</td>
-                            <td style="text-align:center; @HtmlStyle">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
-                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2)/100)</td>
-
+                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.DonGia2)</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

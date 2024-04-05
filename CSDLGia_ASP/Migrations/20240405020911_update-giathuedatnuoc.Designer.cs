@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240405020911_update-giathuedatnuoc")]
+    partial class updategiathuedatnuoc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -8846,9 +8848,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("NhapGia")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PhanLoaiDatNuoc")
                         .HasColumnType("nvarchar(max)");
 
@@ -8912,8 +8911,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Maso")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("NhapGia")
-                        .HasColumnType("bit");
+                    b.Property<string>("NhapGia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("SapXep")
                         .HasColumnType("float");
@@ -13930,9 +13929,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tendv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")

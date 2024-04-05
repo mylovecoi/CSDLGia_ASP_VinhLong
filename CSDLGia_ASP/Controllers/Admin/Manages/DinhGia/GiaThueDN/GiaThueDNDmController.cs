@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Index"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.Where(x => x.Manhom == Manhom);
-                    
+
                     if (model.Any())
                     {
                         ViewData["STT"] = model.Max(x => x.SapXep) + 1;
@@ -46,11 +46,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     {
                         ViewData["STT"] = 1;
                     }
+                 
                     ViewData["Title"] = "Danh mục mặt đất, mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     ViewData["Tennhom"] = _db.GiaThueMatDatMatNuocNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? "";
+
                     ViewData["Manhom"] = Manhom;
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/ChiTiet/Index.cshtml", model);
                 }
@@ -69,7 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         // thêm dữ liệu vào bảng GiaThueDNDm
         [Route("GiaThueDNDMCT/Store")]
         [HttpPost]
-        public JsonResult Store(string Loaidat, string MaNhom, string HienThi, double SapXep, string[] Style)
+        public JsonResult Store(string Loaidat, string MaNhom, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -81,8 +83,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Manhom = MaNhom,
                         HienThi = HienThi,
                         SapXep = SapXep,
-                        Loaidat = Loaidat,
+                        Loaidat = Loaidat, 
                         Style = str_style,
+                        NhapGia = Nhapgia,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -122,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    return RedirectToAction("Index", "GiaThueDNDm", new {Manhom = Manhom});
+                    return RedirectToAction("Index", "GiaThueDNDm", new { Manhom = Manhom });
                 }
                 else
                 {
@@ -173,12 +176,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Loại mặt đất mặt nước<span class='require'>*</span></label>";
                         result += "<input type='text' class='form-control' id='loaidat_edit' name='loaidat_edit' value='" + model.Loaidat + "'/>";
                         result += "</div>";
-                        result += "</div>";  
+                        result += "</div>";
+
+
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Nhập giá </label>";
+                        result += "<select class='form-control' id='nhapgia_edit' name='nhapgia_edit' style='width:100%'>";
+                        result += "<option value='false'>Không nhập giá</option >";
+                        result += "<option value='true'>Nhập giá</option >";
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
 
                         result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
@@ -208,16 +223,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         // Cập nhật thông tin mới
         [Route("GiaThueDNDMCT/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style)
+        public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style, bool Nhapgia )
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
-                {                    
+                {
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == Id);
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                     model.Loaidat = Loaidat;
                     model.HienThi = HienThi;
+                    model.NhapGia = Nhapgia;
                     model.SapXep = SapXep;
                     model.Style = str_style;
                     model.Updated_at = DateTime.Now;
@@ -247,7 +263,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.Where(t => t.Manhom == manhom_remove);
-                
+
                     _db.GiaThueMatDatMatNuocDm.RemoveRange(model);
                     _db.SaveChanges();
                     ViewData["MenuLv1"] = "menu_dg";
@@ -342,7 +358,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                 {
                                     SapXep = line,
                                     HienThi = worksheet.Cells[row, 1].Value != null ?
-                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",                                  
+                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                     Loaidat = worksheet.Cells[row, 2].Value != null ?
                                                  worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                     Style = strStyle.ToString(),
