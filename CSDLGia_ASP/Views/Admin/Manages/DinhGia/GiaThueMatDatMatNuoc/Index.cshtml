@@ -6,6 +6,7 @@
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var nhomtn = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["NhomTn"];
+    var dsDiaBanApDung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
@@ -118,9 +119,7 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
-                                    @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
-
-
+                                    @(dsDiaBanApDung.FirstOrDefault(x => x.Mahuyen == item.Madiaban)?.Tenhuyen ?? "")
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -143,10 +142,7 @@
                                 <td style="text-align: center">
                                     @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-
                                 </td>
-
                             <td>
 
                                 <a asp-controller="GiaThueDN" target="_blank" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem hồ sơ"
