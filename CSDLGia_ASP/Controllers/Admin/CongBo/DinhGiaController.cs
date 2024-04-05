@@ -320,6 +320,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
             var modelct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs);
             model.GiaThueTaiSanCongCt = modelct.ToList();
+
+            ViewData["GiaThueTaiSanCongDm"] = _db.GiaThueTaiSanCongDm.ToList();
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["Title"] = "Chi tiết giá thuê tài sản công";
@@ -363,6 +365,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Mahs == Mahs);
             var modelct = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs);
             model.GiaSpDvCongIchCt = modelct.ToList();
+
+            ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom;
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["Title"] = "Chi tiết giá sản phẩm dịch vụ công ích";
