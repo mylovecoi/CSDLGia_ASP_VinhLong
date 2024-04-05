@@ -4,7 +4,7 @@
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDt>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -23,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/GiaGiaoDichBDS/CongBo?';
+                var current_path_url = '/CongBo/GiaDvGiaoDucDaoTao?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -39,8 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá giao dịch bất động sản
-                </span>
+                    Thông tin hồ sơ giá dịch vụ giáo dục đào tạo
             </h3>
         </div>
 
@@ -69,7 +68,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                    <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
                             <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
@@ -98,7 +97,7 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
-                            <td>@item.Cqbh</td>
+                            <td>@item.Mota</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
@@ -108,7 +107,7 @@
                                 }
                             </td>
                             <td>
-                                <a asp-controller="GiaGiaoDichBDSCongBo" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="DinhGia" asp-action="GiaDvGiaoDucDaoTaoShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -116,7 +115,6 @@
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
                             </td>
-
                         </tr>
                     }
                 }
@@ -124,4 +122,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaoDucDaoTao/ThongTinGiayTo/Show.cshtml")

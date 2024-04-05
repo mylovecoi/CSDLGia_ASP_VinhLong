@@ -1,11 +1,10 @@
 ﻿@{
-    Layout = "_LayoutCongBo";
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -24,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/GiaTaiSanCong/CongBo?';
+                var current_path_url = '/CongBo/GiaSpDvCi?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -40,7 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá tài sản công
+                    Thông tin hồ sơ giá sản phẩm dịch vụ công ích
                 </span>
             </h3>
         </div>
@@ -99,7 +98,7 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
-                            <td>@item.Mota</td>
+                            <td>@item.Noidung</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
@@ -109,7 +108,7 @@
                                 }
                             </td>
                             <td>
-                                <a asp-controller="TaiSanCongCb" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="DinhGia" asp-action="GiaSpDvCiShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -125,4 +124,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTaiSanCong/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/ThongTinGiayTo/Show.cshtml")
