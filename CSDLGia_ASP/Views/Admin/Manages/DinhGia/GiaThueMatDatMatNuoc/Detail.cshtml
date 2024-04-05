@@ -1,5 +1,5 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdiaban = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
     var DanhMucNhom = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["GiaThueDNNhom"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
@@ -17,7 +17,7 @@
             <select class="form-control select2basic" asp-for="Madiaban">
                 @foreach (var item in dsdiaban)
                 {
-                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                    <option value="@item.Mahuyen">@item.Tenhuyen</option>
 
                 }
             </select>

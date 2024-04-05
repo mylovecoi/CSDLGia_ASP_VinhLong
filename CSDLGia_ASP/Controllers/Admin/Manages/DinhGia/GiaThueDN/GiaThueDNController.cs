@@ -88,6 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         ViewData["DsDonViTh"] = dsDonViTH;
                         ViewData["Nam"] = Nam;
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                        ViewData["DsDiaBanApDung"] = _db.Districts;
                         ViewData["DsDiaBanAll"] = _db.DsDiaBan;
                         ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                         ViewData["Madv"] = Madv;
@@ -195,8 +196,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     _db.SaveChanges();
 
                     model.GiaThueMatDatMatNuocCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? "";
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDiaBanApDung"] = _db.Districts.Where(x=>diaBanApDung.Contains(x.Mahuyen));
                     ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -395,7 +398,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     model.GiaThueMatDatMatNuocCt = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs).ToList();
                     model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t => t.Mahs == Mahs).ToList();
                     ViewData["GiaThueDNNhom"] = _db.GiaThueMatDatMatNuocNhom;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? "";
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsDiaBanApDung"] = _db.Districts.Where(x => diaBanApDung.Contains(x.Mahuyen));
                     ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
