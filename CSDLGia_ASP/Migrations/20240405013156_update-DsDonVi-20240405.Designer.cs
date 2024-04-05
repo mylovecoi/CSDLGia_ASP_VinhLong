@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240405013156_update-DsDonVi-20240405")]
+    partial class updateDsDonVi20240405
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1100,13 +1102,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Lydo_t")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaHuyen")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MaLoaiDat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaXa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Macqcq")

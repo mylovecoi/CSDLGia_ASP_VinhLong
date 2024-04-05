@@ -2,7 +2,10 @@
 @{
     var DsDonVi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     //var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    // var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
+    var Xas = (IEnumerable<DsXaPhuong>)ViewData["Xas"];
+    var TenDiaBan = ViewData["TenDiaBan"];
 }
 
 @section custom_style {
@@ -20,6 +23,25 @@
         $(document).ready(function () {
             TableManaged4.init();
         });
+        function GetTowns() {
+            $.ajax({
+                url: '/Ajax/GetTowns',
+                type: 'POST',
+                data: {
+                    MaHuyen: $('#MaHuyen').val(),
+                    KeySelect: 'MaXa'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#MaXa').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
     </script>
 }
 <div class="card card-custom">
@@ -51,14 +73,37 @@
                             }
                         </select>
                     </div>
-                </div>
+                </div>     
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Xã/phường</label>
-                        <select class="form-control" id="Maxp" name="Maxp">
-                            @foreach (var item in DsXaPhuong)
+                        <label>Địa bàn:</label>
+                        <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan:</label>
+                        @* <select class="form-control" asp-for="Madiaban">
+                        @foreach (var item in DsDiaBan)
+                        {
+                        <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                        }
+                        </select> *@
+                    </div>
+                </div>
+               @*  <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Quận/Huyện</label>
+                        <select class="form-control" asp-for="MaHuyen" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
+                            @foreach (var item in Huyens)
                             {
-                                <!option value="@item.Maxp" @((string)ViewData["Maxp"] == item.Maxp ? "selected" : "")>@item.Tenxp</!option>
+                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
+                            }
+                        </select>
+                    </div>
+                </div> *@
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Xã/Phường</label>
+                        <select class="form-control" asp-for="Maxp" id="Maxp" name="Maxp">
+                            @foreach (var item in Xas)
+                            {
+                                <option value="@item.Maxp">@item.Tenxp</option>
                             }
                         </select>
                     </div>

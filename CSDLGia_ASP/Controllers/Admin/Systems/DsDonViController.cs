@@ -32,6 +32,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
                     var dsdonvi = _db.DsDonVi.Where(t => t.MaDiaBan == MaDiaBan).ToList();
 
+                    var dsDiaBanApDung = _db.Districts.ToList();
+                    foreach (var item in dsdonvi)
+                    {
+                        foreach(var db in dsDiaBanApDung)
+                        {
+                            if (!string.IsNullOrEmpty(item.DiaBanApDung))
+                                if (item.DiaBanApDung.Contains(db.Mahuyen))
+                                    item.TenDiaBanApDung += db.Tenhuyen + ";";
+                        }
+                    }
                     ViewData["DsDiaBan"] = dsdiaban;
                     ViewData["MaDiaBan"] = MaDiaBan;
                     ViewData["TenDiaBan"] = dsdiaban.Where(t => t.MaDiaBan == MaDiaBan).ToList();
@@ -67,7 +77,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
                     ViewData["MenuLv3"] = "menu_dsdonvi";
-
+                    ViewData["DsDiaBanApDung"] = _db.Districts.ToList();
                     return View("Views/Admin/Systems/DsDonVi/Create.cshtml");
                 }
                 else
@@ -110,6 +120,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             NguoiKy = request.NguoiKy,
                             DiaDanh = request.DiaDanh,
                             ChucNang = request.ChucNang,
+                            NhapLieu = request.NhapLieu,
+                            XetDuyet = request.XetDuyet,
+                            CongBo = request.CongBo,
+                            QuanTri = request.QuanTri,
+                            DiaBanApDung = request.DiaBanApDung,
                             Created_At = DateTime.Now,
                             Updated_At = DateTime.Now,
                         };
@@ -155,6 +170,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.DsDonVi.FirstOrDefault(t => t.Id == Id);
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == model.MaDiaBan).ToList();
+                    ViewData["DsDiaBanApDung"] = _db.Districts.ToList();
+
                     ViewData["MaDiaBan"] = model.MaDiaBan;
                     ViewData["Title"] = "Chỉnh sửa Danh sách đơn vị";
                     ViewData["MenuLv1"] = "menu_hethong";
@@ -198,6 +215,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     model.NguoiKy = request.NguoiKy;
                     model.DiaDanh = request.DiaDanh;
                     model.ChucNang = request.ChucNang;
+                    model.NhapLieu = request.NhapLieu;
+                    model.XetDuyet = request.XetDuyet;
+                    model.CongBo = request.CongBo;
+                    model.QuanTri = request.QuanTri;
+                    model.DiaBanApDung = request.DiaBanApDung;
                     model.Updated_At = DateTime.Now;
                     _db.DsDonVi.Update(model);
                     _db.SaveChanges();

@@ -2,9 +2,11 @@
 @{
     var DsDonVi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    // var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     var TenDonVi = ViewData["TenDonVi"];
-
+    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
+    var Xas = (IEnumerable<DsXaPhuong>)ViewData["Xas"];
+    var TenDiaBan = ViewData["TenDiaBan"];
 }
 
 @section custom_style {
@@ -22,6 +24,25 @@
         $(document).ready(function () {
             TableManaged4.init();
         });
+        function GetTowns() {
+            $.ajax({
+                url: '/Ajax/GetTowns',
+                type: 'POST',
+                data: {
+                    MaHuyen: $('#MaHuyen').val(),
+                    KeySelect: 'MaXa'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#MaXa').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
     </script>
 }
 <div class="card card-custom">
@@ -37,21 +58,46 @@
         <div class="card-body">
             <input hidden  asp-for="Madv" />
             <input hidden asp-for="Mahs" />
+            <input hidden asp-for="Madiaban" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
             <div class="row">
-                <div class="col-xl-6">
+                @* <div class="col-xl-6">
                     <div class="form-group">
                         <label>Quận/huyện</label>
                         <label class="form-control"> @TenDonVi</label>
                     </div>
-                </div>
+                </div> *@
+
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Xã/phường</label>
-                        <select class="form-control" asp-for="Maxp">
-                            @foreach (var item in DsXaPhuong)
+                        <label>Địa bàn:</label>
+                        <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan</label>
+                        @* <select class="form-control" asp-for="Madiaban">
+                            @foreach (var item in DsDiaBan)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select> *@
+                    </div>
+                </div>
+                @* <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Quận/Huyện</label>
+                        <select class="form-control" asp-for="MaHuyen" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">                            
+                            @foreach (var item in Huyens)
+                            {
+                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
+                            }
+                        </select>
+                    </div>
+                </div> *@
+                <div class="col-xl-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label>Xã/Phường</label>
+                        <select class="form-control" asp-for="Maxp" id="MaXa" name="MaXa">                           
+                            @foreach (var item in Xas)
                             {
                                 <option value="@item.Maxp">@item.Tenxp</option>
                             }

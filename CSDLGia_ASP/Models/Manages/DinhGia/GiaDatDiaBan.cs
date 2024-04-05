@@ -48,6 +48,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string CodeExcel { get; set; }
         public string GhiChu { get; set; }
         public string MaLoaiDat { get; set; }
+        public string MaHuyen { get; set; }
+        public string MaXa { get; set; }
         [NotMapped]
         public List<GiaDatDiaBanCt> GiaDatDiaBanCt { get; set; }
         [NotMapped]

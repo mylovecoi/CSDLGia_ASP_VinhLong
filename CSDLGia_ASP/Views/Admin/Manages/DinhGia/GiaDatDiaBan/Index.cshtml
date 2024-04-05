@@ -9,6 +9,9 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
+    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
+    var Xas = (IEnumerable<Towns>)ViewData["Xas"];
+
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 
@@ -77,7 +80,7 @@
                             int nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @(Nam == i ? "selected" : "")>@i</!option>
+                                    <!option value="@i" @(Nam == i ? "selected" : "")>@i</!option>
                             }
                         }
                     </select>
@@ -121,6 +124,7 @@
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
                                     @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
 
+
                             </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
@@ -152,11 +156,6 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-
-
-
-
                             </td>
 
                             <td width="12%" style="text-align:left;">
@@ -230,18 +229,32 @@
                                     }
                                 </select>
                             </div>
-                        </div>
+                        </div>    
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Địa bàn</label>
-                                <select name="madiaban" id="madiaban" class="form-control">
-                                    @foreach (var db in dsdiabanhuyen)
+                                <label>Quận/Huyện</label>
+                                <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
+                                    <option value="">---Chọn Quận/Huyện---</option>
+                                    @foreach (var item in Huyens)
                                     {
-                                        <option value="@db.MaDiaBan">@db.TenDiaBan</option>
+                                        <option value="@item.Mahuyen">@item.Tenhuyen</option>
                                     }
                                 </select>
                             </div>
                         </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Xã/Phường</label>
+                                <select class="form-control" id="MaXa" name="MaXa">
+                                    <option value="">---Chọn Xã/Phường</option>
+                                    @foreach (var item in Xas)
+                                    {
+                                        <option value="@item.Maxa">@item.Tenxa</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Nội dung quyết định</label>
@@ -331,6 +344,28 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Show.cshtml")
 <script>
+    function GetTowns() {
+        $.ajax({
+            url: '/Ajax/GetTownsNoAll',
+            type: 'POST',
+            data: {
+                MaHuyen: $('#MaHuyen').val(),
+                KeySelect: 'MaXa'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#MaXa').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+
+
     function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").innerHTML = mota;

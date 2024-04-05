@@ -55,6 +55,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Phanloai { get; set; }
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
+        //public string MaHuyen { get; set; }
+        //public string MaXa { get; set; }
         [NotMapped]
         public string Level { get; set; }
         [NotMapped]

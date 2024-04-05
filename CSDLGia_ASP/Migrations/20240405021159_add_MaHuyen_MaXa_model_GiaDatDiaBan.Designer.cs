@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240405021159_add_MaHuyen_MaXa_model_GiaDatDiaBan")]
+    partial class add_MaHuyen_MaXa_model_GiaDatDiaBan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -14806,14 +14808,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("ChucVuKyThay")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("CongBo")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("Created_At")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("DiaBanApDung")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
@@ -14856,9 +14852,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<DateTime>("Updated_At")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("XetDuyet")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
