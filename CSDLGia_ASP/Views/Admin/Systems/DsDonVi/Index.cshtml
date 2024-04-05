@@ -4,22 +4,22 @@
     int record_id = 1;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Systems.DsDonVi>
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#MaDiaBan').change(function() {
+        $(function () {
+            $('#MaDiaBan').change(function () {
                 var current_path_url = '/DsDonVi?';
                 var madiaban = '&MaDiaBan=' + $('#MaDiaBan').val();
                 var url = current_path_url + madiaban;
@@ -29,18 +29,18 @@
 
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh sách đơn vị<small>&nbsp;quản lý</small>
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh sách đơn vị<small>&nbsp;quản lý</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="DsDonVi" asp-action="Create"
-               asp-route-MaDiaBan="@ViewData["MaDiaBan"]">
+                   asp-route-MaDiaBan="@ViewData["MaDiaBan"]">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -62,13 +62,21 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <table class="table table-striped table-bordered table-hover" id="sample_4">
                 <thead>
                     <tr style="text-align:center">
-                        <th width="5%">#</th>
-                        <th width="15%">Mã đơn vị</th>
-                        <th>Tên đơn vị</th>
-                        <th width="15%">Thao tác</th>
+                        <th rowspan="2" width="5%">#</th>
+                        <th rowspan="2" width="8%">Mã đơn vị</th>
+                        <th rowspan="2">Tên đơn vị</th>
+                        <th colspan="4">Chức năng</th>
+                        <th rowspan="2">Địa bàn áp dụng</th>
+                        <th rowspan="2" width="10%">Thao tác</th>
+                    </tr>
+                    <tr>
+                        <th width="5%">Nhập liệu</th>
+                        <th width="5%">Xét duyệt</th>
+                        <th width="5%">Công bố</th>
+                        <th width="5%">Quản trị</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,19 +86,44 @@
                             <td style="text-align:center" width="5%">@(record_id++)</td>
                             <td class="text-center">@item.MaDv</td>
                             <td class="active">@item.TenDv</td>
+                            <td style="text-align:center">
+                                @if (item.NhapLieu)
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.XetDuyet)
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.CongBo)
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.QuanTri)
+                                {
+                                    <i class="la la-check icon-2x text-info mr-5"></i>
+                                }
+                            </td>
+                            <td style="text-align:center">@item.TenDiaBanApDung</td>
                             <td>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Edit"))
                                 {
                                     <a asp-controller="DsDonVi" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </a>
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </a>
                                 }
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Delete"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.TenDv')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
                                 }
 
                             </td>

@@ -29,7 +29,10 @@ namespace CSDLGia_ASP.Models.Systems
         public bool NhapLieu { get; set; }
         public bool QuanTri { get; set; }
         public string DiaBanApDung { get; set; }//Các địa bàn áp dụng (Huyện A;Huyện B;....)
+        
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
+        [NotMapped]
+        public string TenDiaBanApDung { get; set; }
     }
 }
