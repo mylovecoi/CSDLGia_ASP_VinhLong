@@ -24,6 +24,11 @@ namespace CSDLGia_ASP.Models.Systems
         public string NguoiKy { get; set; }
         public string DiaDanh { get; set; }
         public string ChucNang { get; set; }
+        public bool XetDuyet { get; set; }
+        public bool CongBo { get; set; }
+        public bool NhapLieu { get; set; }
+        public bool QuanTri { get; set; }
+        public string DiaBanApDung { get; set; }//Các địa bàn áp dụng (Huyện A;Huyện B;....)
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
     }
