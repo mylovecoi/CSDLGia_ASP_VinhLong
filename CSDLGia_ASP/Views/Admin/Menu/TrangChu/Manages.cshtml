@@ -1,6 +1,9 @@
 ﻿@{
     Layout = null;
 }
+
+@await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages.cshtml")
+
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
 {
     <li class="menu-section">
@@ -30,7 +33,7 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    @await Html.PartialAsync("~/Views/Admin/Menu/Manages/DinhGia.cshtml")
+                    @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages/DinhGia.cshtml")
                 </ul>
             </div>
         </li>
@@ -59,7 +62,7 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    @await Html.PartialAsync("~/Views/Admin/Menu/Manages/KeKhaiGia.cshtml")
+                    @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages/KeKhaiGia.cshtml")
                 </ul>
             </div>
         </li>
@@ -458,7 +461,7 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    @await Html.PartialAsync("~/Views/Admin/Menu/Manages/GiaDat.cshtml")
+                    @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages/GiaDat.cshtml")
                 </ul>
             </div>
         </li>
@@ -668,7 +671,7 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-                    @await Html.PartialAsync("~/Views/Admin/Menu/Manages/GiaKhac.cshtml")
+                    @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages/GiaKhac.cshtml")
                 </ul>
             </div>
         </li>

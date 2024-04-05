@@ -1,20 +1,18 @@
 ﻿@{
-    Layout = "_LayoutCongBo.cshtml";
-}
-
-@{
+    Layout = "_LayoutCongBo";
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaThueTsc>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCong>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -26,7 +24,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/GiaThueTscHt?';
+                var current_path_url = '/GiaThueTaiSanCong/CongBo?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -40,11 +38,15 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin hoàn thành định giá<small>&nbsp;Thuê tài sản công </small><br />
-
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá thuê tài sản công
+                </span>
             </h3>
         </div>
+
     </div>
+
     <hr />
     <div class="card-body">
         <div class="row">
@@ -52,13 +54,13 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
                             }
                         }
                     </select>
@@ -68,17 +70,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
-                                }
-                                @foreach (var item in dv)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -88,10 +83,12 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">STT</th>
-                    <th>Cơ quan chuyển hồ sơ</th>
-                    <th>Địa bàn</th>
-                    <th>Thời điểm<br />xác đinh</th>
-                    <th>Trạng thái</th>   
+                    <th width="10%">Số QĐ</th>
+                    <th>Mô tả</th>
+                    <th>Thời điểm xác định</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -101,86 +98,25 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">
-
-                                @if (dsdonvi != null)
-                                {
-                                    @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai_h == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_h)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else if (item.Trangthai_t == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_t)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Madv)
-                                            {
-                                                <span>@ten.TenDv </span>
-                                            }
-                                        }
-                                    }
-                                }
-                            </td>
-                            <td class="text-center danger"></td>
+                            <td style="text-align: center">@item.Soqd</td>
+                            <td>@item.Thongtinhs</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
-                                    <br />
-                                }
-                                else if (item.Trangthai_ad == "HCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ công bố</span>
-                                    <br />
-                                }
-                                else if (item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ hoàn thành</span>
-                                    <br />
-                                }
-                                else if (item.Trangthai_ad == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                    <br />
-                                }
-                                else
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
                                     <br />
                                 }
                             </td>
-
-                           
+                            <td>
+                                <a asp-controller="GiaThueTSanCongCongBo" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
+                            </td>
                         </tr>
                     }
                 }
@@ -188,5 +124,4 @@
         </table>
     </div>
 </div>
-
-
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTsc/ThongTinGiayTo/Show.cshtml")

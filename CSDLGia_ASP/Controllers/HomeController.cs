@@ -24,19 +24,19 @@ namespace CSDLGia_ASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            ViewBag.bSession = false;
+            var serverName = Request.Host.Host;
+
+            HttpContext.Session.SetString("ServerName", serverName);
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                /*return RedirectToAction("Index", "CongBo");*/
-                return RedirectToAction("Login", "Login");
+                ViewBag.bSession = true;
             }
-            else
-            {
-                var model = _db.Supports;
-                ViewData["Title"] = "Trang chủ";
-                ViewData["MenuLv1"] = "menu_home";
-                return View("Views/Admin/Home/Index.cshtml", model);
-            }
-            
+            var model = _db.Supports;
+            ViewData["Title"] = "Trang chủ";
+            ViewData["MenuLv1"] = "menu_home";
+            return View("Views/Admin/Home/Index.cshtml", model);
         }
 
         [Route("ChangePassword")]
@@ -135,6 +135,13 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
-
+        [Route("MobileApp")]
+        [HttpGet]
+        public IActionResult MobileApp()
+        {
+            ViewBag.bSession = false;
+            ViewData["Title"] = "Ứng dụng điện thoại";
+            return View("Views/Admin/Systems/CongBo/MobileApp.cshtml");
+        }
     }
 }
