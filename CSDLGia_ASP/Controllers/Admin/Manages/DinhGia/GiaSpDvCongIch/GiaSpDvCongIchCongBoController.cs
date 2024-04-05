@@ -42,8 +42,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá sản phẩm dịch vụ công ích";
             ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giaspdvci";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giaspdvcicb";
             ViewBag.bSession = false;
             return View("Views/Admin/Systems/CongBo/GiaSpDvCongIchCongBo.cshtml", model);
         }

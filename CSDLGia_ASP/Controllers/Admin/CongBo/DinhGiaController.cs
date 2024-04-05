@@ -41,8 +41,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá thuê mặt đất mặt nước";
             ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giathuedn";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giathuedncb";
             ViewBag.bSession = false;
             return View("Views/Admin/CongBo/DinhGia/GiaThueMatDatMatNuoc.cshtml", model);
         }
@@ -84,8 +84,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá rừng";
             ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giarung";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giarungcb";
             ViewBag.bSession = false;
             return View("Views/Admin/CongBo/DinhGia/GiaRung.cshtml", model);
         }
@@ -130,7 +130,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Công bố giá thuê mua nhà xã hội";
             ViewData["MenuLv1"] = "menu_cb";
             ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giathuemuanhaxh";
+            ViewData["MenuLv3"] = "menu_giathuemuanhaxhcb";
             ViewBag.bSession = false;
             return View("Views/Admin/CongBo/DinhGia/GiaThueMuaNhaXh.cshtml", model);
         }
@@ -174,7 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Công bố giá nước sinh hoạt";
             ViewData["MenuLv1"] = "menu_cb";
             ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giancsh";
+            ViewData["MenuLv3"] = "menu_giancshcb";
             ViewBag.bSession = false;
             return View("Views/Admin/CongBo/DinhGia/GiaNuocSh.cshtml", model);
         }

@@ -43,8 +43,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá giao dịch bất động sản";
             ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giagdbds";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giagdbdscb";
             ViewBag.bSession = false;
             return View("Views/Admin/Systems/CongBo/GiaGiaoDichBDSCongBo.cshtml", model);
         }

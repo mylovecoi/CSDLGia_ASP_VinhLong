@@ -93,7 +93,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Quận/Huyện</label>
-                        <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
+                        <select class="form-control" asp-for="@MaHuyen" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
                             <option value="all">---Chọn Quận/Huyện---</option>
                             @foreach (var item in Huyens)
                             {
@@ -105,7 +105,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Xã/Phường</label>
-                        <select class="form-control" id="MaXa" name="MaXa">
+                        <select class="form-control" asp-for="@MaXa" id="MaXa" name="MaXa">
                             <option value="all">---Chọn Xã/Phường</option>
                             @foreach (var item in Xas)
                             {
