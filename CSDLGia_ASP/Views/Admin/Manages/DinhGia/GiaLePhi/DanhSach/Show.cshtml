@@ -10,27 +10,10 @@
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi;
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ  </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
-<p>Phân loại hồ sơ: @Model.Phanloai</p>
-<p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
-</p>
+<p>Phân loại hồ sơ: @Model.Tennhom</p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
+    Mô tả: @Model.Mota
 </p>
 
 <br />
@@ -49,13 +32,18 @@
         {
             @if (Model.GiaPhiLePhiCt != null)
             {
-                @foreach (var item in Model.GiaPhiLePhiCt.OrderBy(t=>t.STTSapxep))
+                @foreach (var item in Model.GiaPhiLePhiCt.OrderBy(t => t.STTSapxep))
                 {
                     string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                     <tr>
                         <td style="text-align:center;@HtmlStyle">@item.STTHienthi</td>
                         <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
-                        <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
+                        <td style="text-align:center; @HtmlStyle">
+                            @if (item.Phantram != 0)
+                                @item.Phantram
+
+
+                        </td>
                         <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
                     </tr>
                 }
