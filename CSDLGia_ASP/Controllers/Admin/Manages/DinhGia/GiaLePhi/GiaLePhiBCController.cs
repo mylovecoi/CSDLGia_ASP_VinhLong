@@ -80,6 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Thongtin = hoso.Thongtin,
+                                     Mota = hoso.Mota,
                                  });
 
                     ViewData["Title"] = "Báo cáo tổng hợp giá  giá lệ phí trước bạ";

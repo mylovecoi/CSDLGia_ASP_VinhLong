@@ -43,8 +43,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCongCongBo
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá thuê tài sản công";
             ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dg";
-            ViewData["MenuLv3"] = "menu_giathuetscong";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giathuetscongcb";
             ViewBag.bSession = false;
             return View("Views/Admin/Systems/CongBo/GiaThueTSCCongBo.cshtml", model);
         }

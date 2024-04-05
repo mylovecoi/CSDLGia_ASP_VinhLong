@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
@@ -210,6 +211,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Mahs = request.Mahs,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
+                        Manhom = request.Manhom,
                         Soqd = request.Soqd,
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
@@ -405,7 +407,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                         Thongtin = model.Thongtin,
                         Mota = model.Mota,
                         Ghichu = model.Ghichu,
-                        Phanloai = TenNhom
+                        Tennhom = TenNhom
                     };
                     var model_ct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
 

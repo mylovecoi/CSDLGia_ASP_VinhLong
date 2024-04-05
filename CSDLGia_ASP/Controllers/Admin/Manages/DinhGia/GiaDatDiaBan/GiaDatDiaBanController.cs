@@ -618,7 +618,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model = from dgct in _db.GiaDatDiaBanCt
                                 join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
                                 join dm in _db.DmLoaiDat on dgct.Maloaidat equals dm.Maloaidat
-                                join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
+                                //join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                                 {
                                     Id = dg.Id,
@@ -639,7 +639,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Giavt5 = dgct.Giavt5,
                                     Trangthai = dg.Trangthai,
                                     Madiaban = dg.Madiaban,
-                                    TenDiaBan = diaban.TenDiaBan,
+                                    //TenDiaBan = diaban.TenDiaBan,
                                     Maloaidat = dgct.Maloaidat,
                                     MaHuyen=dg.MaHuyen,
                                     MaXa=dg.MaXa,
@@ -672,7 +672,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         model = model.Where(t => t.Maloaidat == Maloaidat);
                     }
                     ViewData["Huyens"]=_db.Districts;
-                    ViewData["Xas"] = new List<Towns>();
+                    ViewData["Xas"] = _db.Towns;
                     ViewData["MaHuyen"] = MaHuyen;
                     ViewData["MaXa"] = MaXa;
                     ViewData["NgayTu"] = NgayTu;
