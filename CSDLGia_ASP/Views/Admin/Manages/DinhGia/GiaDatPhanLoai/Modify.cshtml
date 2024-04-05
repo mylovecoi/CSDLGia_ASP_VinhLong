@@ -2,6 +2,7 @@
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
+    var TenDiaBan = ViewData["TenDiaBan"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -40,13 +41,8 @@
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Địa bàn</label>
-                        <select class="form-control" id="MaDiaBan" name="MaDiaBan">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <!option value="@item.MaDiaBan" @(@Model.Madiaban==item.MaDiaBan ? "selected" : "" )>@item.TenDiaBan</!option>
-                            }
-                        </select>
+                        <label>Địa bàn áp dụng</label><br />
+                        <label class="form-control" style="color:blue;">@TenDiaBan</label>
                     </div>
                 </div>
                 <div class="col-xl-4">

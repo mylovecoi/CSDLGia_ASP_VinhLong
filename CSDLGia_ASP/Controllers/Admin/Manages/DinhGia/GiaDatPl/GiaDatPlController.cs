@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
@@ -148,14 +149,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
                     }
                     _db.SaveChanges();
+                    var donvi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == Madv);
+                    var MaDiaBan = _db.DsDiaBan.FirstOrDefault(x=>x.MaDiaBan == donvi.MaDiaBan).MaDiaBan;
                     var model = new VMDinhGiaDat
                     {
                         Madv = Madv,
                         Phanloai = Phanloai,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Madiaban = MaDiaBan,
                         ThongTinGiayTo = new List<CSDLGia_ASP.Models.Manages.DinhGia.ThongTinGiayTo>(),
                     };
+                    ViewData["TenDiaBan"]= _db.DsDiaBan.FirstOrDefault(x=>x.MaDiaBan == MaDiaBan).TenDiaBan;
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
@@ -338,13 +343,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         Thongtin = model.Thongtin,
                         Ghichu = model.Ghichu,
                         ThongTinGiayTo = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs).ToList(),
-
                     };
-
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
-
                     model_new.GiaDatPhanLoaiCt = model_ct.ToList();
-
+                    ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();

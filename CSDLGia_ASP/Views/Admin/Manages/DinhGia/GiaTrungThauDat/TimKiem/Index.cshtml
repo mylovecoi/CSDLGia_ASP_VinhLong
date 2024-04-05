@@ -2,6 +2,7 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+    
 
     var beginTime = ((DateTime)ViewData["beginTime"]).ToString("yyyy-MM-dd");
     var endTime = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");
@@ -11,6 +12,8 @@
     var Giadaugia_den = ViewData["Giadaugia_den"];
     var ten = ViewData["ten"];
     var Phanloai = ViewData["Phanloai"];
+    var MaDiaBan = ViewData["MaDiaBan"];
+
 }
 @model IEnumerable<GiaDauGiaDatCt>
 @section custom_style {
@@ -78,6 +81,18 @@
                     <div class="form-group">
                         <label>Tên dự án</label>
                         <input type="text" class="form-control" asp-for="@ten" name="ten" id="ten" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa bàn</label>
+                        <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan">
+                            <option value="all"> --Tất cả ---</option>
+                            @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -204,6 +219,8 @@
             if (fromDateObj <= toDateObj) {
                 var current_path_url = '/GiaTrungThauDat/Search?';
                 var madv = '&madv=' + $('#maDv').val();
+                var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
+                
                 var ten = '&ten=' + $('#ten').val();
                 var PhanLoai = '&PhanLoai=' + $('#PhanLoai').val();
                 var endTime = '&endTime=' + $('#endTime').val();
@@ -212,7 +229,7 @@
                 var Giakhoidiem_den = '&Giakhoidiem_den=' + $('#Giakhoidiem_den').val();
                 var Giadaugia_den = '&Giadaugia_den=' + $('#Giadaugia_den').val();
                 var Giadaugia_tu = '&Giadaugia_tu=' + $('#Giadaugia_tu').val();
-                var url = current_path_url + madv + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
+                var url = current_path_url + madv + MaDiaBan + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
                 window.location.href = url;
             } else {
                 toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");

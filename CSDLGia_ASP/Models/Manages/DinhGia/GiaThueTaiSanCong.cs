@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -47,6 +48,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string CodeExcel { get; set; }
         [NotMapped]
         public string TenDonVi { get; set; }
+        [NotMapped]
+        public List<GiaThueTaiSanCongCt> GiaThueTaiSanCongCt { get; set; }
 
     }
 }

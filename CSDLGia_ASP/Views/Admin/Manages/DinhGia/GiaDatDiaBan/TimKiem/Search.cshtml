@@ -7,9 +7,12 @@
     double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
 
     var DanhSachHoSo = (IEnumerable<GiaDatDiaBan>)ViewData["DanhSachHoSo"];
-    var DiaBan = ViewData["DsDiaBan"] as IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DsDiaBan>(); 
+    // var DiaBan = ViewData["DsDiaBan"] as IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DsDiaBan>();
     var DanhSachLoaiDat = ViewData["DanhSachLoaiDat"] as IEnumerable<CSDLGia_ASP.Models.Systems.DmLoaiDat> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DmLoaiDat>();
-
+    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
+    var Xas = (IEnumerable<Towns>)ViewData["Xas"];
+    var MaHuyen = ViewData["MaHuyen"];
+    var MaXa = ViewData["MaXa"];
     int record_id = 1;
 
 }
@@ -41,7 +44,8 @@
 
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaDatDiaBan/Search?';
-                    var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan_Search').val();
+                    var MaHuyen = '&MaHuyen=' + $('#MaHuyen').val();
+                    var MaXa = '&MaXa=' + $('#MaXa').val();
                     var Maloaidat = '&Maloaidat=' + $('#Maloaidat_Search').val();
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
@@ -50,7 +54,7 @@
                     var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
                     var Mota = '&Mota=' + $('#Mota_Search').val();
 
-                    var url = current_path_url + MaDiaBan + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Mota;
+                    var url = current_path_url + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Mota + MaHuyen + MaXa;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -87,17 +91,33 @@
         <form asp-controller="GiaDatDiaBan" asp-action="PrintSearch" method="post" target="_blank" id="frm_search">
             <div class="row">
                 <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold;">Địa bàn</label>
-                        <select class="form-control" id="MaDiaBan_Search" name="MaDiaBan_Search">
-                            <option value="all">--Tất cả--</option>
-                            @foreach (var item in DiaBan)
+                    <div class="form-group">
+                        <label>Quận/Huyện</label>
+                        <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
+                            <option value="all">---Chọn Quận/Huyện---</option>
+                            @foreach (var item in Huyens)
                             {
-                                <!option value="@item.MaDiaBan" @(ViewData["MaDiaBan"].ToString() == item.MaDiaBan ? "selected" : "")>@item.TenDiaBan</!option>
+                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
                             }
                         </select>
                     </div>
                 </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Xã/Phường</label>
+                        <select class="form-control" id="MaXa" name="MaXa">
+                            <option value="all">---Chọn Xã/Phường</option>
+                            @foreach (var item in Xas)
+                            {
+                                <option value="@item.Maxa">@item.Tenxa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+
+
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Loại đất</label>
@@ -154,9 +174,10 @@
                 </div>
             </div>
         </form>
+        <hr />
         <div class="row">
             <div class="col-xl-12" style="text-align:center">
-                    <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
+                <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
             </div>
         </div>
         <hr />
@@ -211,6 +232,27 @@
 </div>
 
 <script>
+    function GetTowns() {
+        $.ajax({
+            url: '/Ajax/GetTownsNoAll',
+            type: 'POST',
+            data: {
+                MaHuyen: $('#MaHuyen').val(),
+                KeySelect: 'MaXa'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#MaXa').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+
     function GetList() {
         var fromDate = document.getElementById("NgayTu_Search").value;
         var toDate = document.getElementById("NgayDen_Search").value;

@@ -144,11 +144,11 @@
                                 </a>
                             </li>
                             <!--Manages-->
-                            @await Html.PartialAsync("~/Views/Admin/Menu/Manages.cshtml")
+                            @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages.cshtml")
                             <!--Settings-->
-                            @await Html.PartialAsync("~/Views/Admin/Menu/Settings.cshtml")
+                            @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Settings.cshtml")
                             <!--Systems-->
-                            @await Html.PartialAsync("~/Views/Admin/Menu/Systems.cshtml")
+                            @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Systems.cshtml")
 
                         </ul>
                         <!--end::Menu Nav-->
@@ -178,7 +178,7 @@
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
                         <div class="topbar">
-                            <div class="topbar-item" data-offset="10px,0px" aria-expanded="false">
+                            @* <div class="topbar-item" data-offset="10px,0px" aria-expanded="false">
                                 <a asp-controller="CongBo" asp-action="Index" target="_blank" title="Trang công bố">
                                     <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
                                         <span class="svg-icon svg-icon-xl svg-icon-primary">
@@ -195,7 +195,7 @@
                                         <span class="pulse-ring"></span>
                                     </div>
                                 </a>
-                            </div>
+                            </div> *@
                             <!--begin::Toggle-->
                             <!--begin::Quick Actions-->
                             <div class="dropdown">
@@ -268,16 +268,23 @@
                             <!--end::Quick Actions-->
                             <!--begin::User-->
                             <div class="topbar-item">
-                                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
-                                    <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Xin chào,</span>
-                                    <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                                        @Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name")
-                                    </span>
-                                    <span class="symbol symbol-lg-30 symbol-25 symbol-light-success">
-                                        <img src="@Url.Content("~/Admin/assets/media/users/blank.png" + Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Avatar"))" width="35" height="35" />
-                                        <i class="symbol-badge bg-primary"></i>
-                                    </span>
-                                </div>
+                                @if (ViewBag.bSession == true || !string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("SsAdmin")))
+                                {
+                                    <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
+                                        <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Xin chào,</span>
+                                        <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+                                            @Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name")
+                                        </span>
+                                        <span class="symbol symbol-lg-30 symbol-25 symbol-light-success">
+                                            <img src="@Url.Content("~/Admin/assets/media/users/blank.png" + Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Avatar"))" width="35" height="35" />
+                                            <i class="symbol-badge bg-primary"></i>
+                                        </span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Login" asp-action="Login" class="text-bold text-primary no-underline">Đăng nhập</a>
+                                }
                             </div>
                             <!--end::User-->
                         </div>

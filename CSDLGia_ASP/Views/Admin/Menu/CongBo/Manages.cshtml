@@ -1,0 +1,851 @@
+﻿@{
+    Layout = null;
+}
+
+<!--Công bố-->
+<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_cb">
+    <a href="javascript:;" class="menu-link menu-toggle">
+        <span class="svg-icon menu-icon">
+            <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24"></rect>
+                    <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                    <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                </g>
+            </svg>
+            <!--end::Svg Icon-->
+        </span>
+        <span class="menu-text text-truncate" title="Công Bố">Công Bố</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="menu-submenu">
+        <i class="menu-arrow"></i>
+        <ul class="menu-subnav">
+            <!--Giá HH - DV do UBND tỉnh định giá-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_dg">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Giá HH - DV do UBND tỉnh định giá">Định giá</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/DinhGia.cshtml")
+                    </ul>
+                </div>
+            </li>
+
+            <!--Mức giá kê khai - đăng ký-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_kknygia"
+                title="Giá kê khai của hàng hóa, dịch vụ thuộc danh mục Giá kê khai">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Mức giá kê khai - đăng ký">Mức giá kê khai - đăng ký</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/KeKhaiGia.cshtml")
+                    </ul>
+                </div>
+            </li>
+
+            <!--Mặt hàng bình ổn giá-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_bog">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Mặt hàng kê khai giá">Mặt hàng kê khai giá</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.ttdn", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_ttdnbog">
+                                <a asp-controller="TtDnTd" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Thông tin doanh nghiệp">Thông tin doanh nghiệp</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.ttdntdxd", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_ttdntdxdbog">
+                                <a asp-controller="TtDnTdXd" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Xét duyệt thông tin thay đổi doanh nghiệp">Xét duyệt thông tin thay đổi doanh nghiệp</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.phanloai", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_phanloai">
+                                <a asp-controller="MhBog" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Danh mục HH - DV thực hiện bình ổn giá">Danh mục HH - DV thực hiện bình ổn giá</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.thongtin", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_thongtin">
+                                <a asp-controller="KkMhBog" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_xetduyet">
+                                <a asp-controller="KkMhBogXd" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_timkiem">
+                                <a asp-controller="KkMhBog" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.baocao", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_baocao">
+                                <a asp-controller="KkMhBogBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+
+            <!--Sản phẩm dịch vụ cụ thể-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvcuthe">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Giá sản phẩm dịch vụ cụ thể">Giá sản phẩm dịch vụ cụ thể</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.danhmuc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvcuthe_dm">
+                                <a asp-controller="GiaSpDvCuTheNhom" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvcuthe_thongtin">
+                                <a asp-controller="GiaSpDvCuThe" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvcuthe_ht">
+                                <a asp-controller="GiaSpDvCuTheHt" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvcuthe_tk">
+                                <a asp-controller="GiaSpDvCuThe" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvcuthe_bc">
+                                <a asp-controller="GiaSpDvCuTheBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+
+            <!--Sản phẩm dịch vụ tối đa-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvtoida">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Giá sản phẩm dịch vụ tối đa">Giá sản phẩm dịch vụ tối đa</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_dm">
+                                <a asp-controller="GiaSpDvToiDaNhom" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.thongtin", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_thongtin">
+                                <a asp-controller="GiaSpDvToiDa" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_ht">
+                                <a asp-controller="GiaSpDvToiDaHt" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_tk">
+                                <a asp-controller="GiaSpDvToiDa" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.baocao", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvtoida_bc">
+                                <a asp-controller="GiaSpDvToiDaBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+
+            <!--Khung giá sản phẩm, dịch vụ-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_spdvkhunggia">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Khung giá sản phẩm, dịch vụ">Khung giá sản phẩm, dịch vụ</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.danhmuc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvkhunggia_dm">
+                                <a asp-controller="GiaSpDvKhungGiaNhom" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvkhunggia_thongtin">
+                                <a asp-controller="GiaSpDvKhungGia" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvkhunggia.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvkhunggia_ht">
+                                <a asp-controller="GiaSpDvKhungGiaHt" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvkhunggia_tk">
+                                <a asp-controller="GiaSpDvKhungGia" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.baocao", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_spdvkhunggia_bc">
+                                <a asp-controller="GiaSpDvKhungGiaBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+
+            <!--Giá đất -->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_giadat">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Giá đất">Giá đất</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/GiaDat.cshtml")
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Giá Trúng thầu hàng hóa dịch vụ  -->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_mts">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu">Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_giamts_tt">
+                                <a asp-controller="GiaTrungThauHhDv" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.xetduyet", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_giamts_ht">
+                                <a asp-controller="GiaTrungThauHhDvHt" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.timkiem", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_giamts_tk">
+                                <a asp-controller="GiaTrungThauHhDv" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.baocao", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_giamts_bc">
+                                <a asp-controller="GiaTrungThauHhDvBC" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo thống kê</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+
+            <!--Quản lý giá thị trường hàng hóa, dịch vụ khác do UBND tỉnh, thành phố trực thuộc trung ương và các Bộ quản lý ngành, lĩnh vực tự quy định thuộc nội dung CSDL giá của mình -->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_hhdvk">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Quản lý giá thị trường hàng hóa, dịch vụ khác do UBND tỉnh, thành phố trực thuộc trung ương và các Bộ quản lý ngành, lĩnh vực tự quy định thuộc nội dung CSDL giá của mình ">Giá HH - DV khác</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_dm">
+                                <a asp-controller="GiaHhDvkNhom" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục hàng hóa dịch vụ</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dmdv", "Index"))
+                        {
+                            @* <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_dmdv">
+                        <a asp-controller="GiaHhDvkDmDv" asp-action="Index" class="menu-link">
+                        <i class="menu-bullet menu-bullet-line">
+                        <span></span>
+                        </i>
+                        <span class="menu-text text-truncate">Danh mục hàng hóa dịch vụ(đơn vị)</span>
+                        </a>
+                        </li> *@
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_tt">
+                                <a asp-controller="GiaHhDvk" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_xd">
+                                <a asp-controller="GiaHhDvkXd" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_th">
+                                <a asp-controller="GiaHhDvkTh" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tổng hợp giá hàng hóa, dịch vụ</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tk", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_tk">
+                                <a asp-controller="GiaHhDvk" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_bc">
+                                <a asp-controller="GiaHhDvkBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+
+            <!--Cách loại giá khác-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_giakhac">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate" title="Các loại giá khác">Các loại giá khác</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/GiaKhac.cshtml")
+                    </ul>
+                </div>
+            </li>
+
+            <!--Thẩm định giá-->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_tdg"
+                title="">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate">Thẩm định giá</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_dv">
+                                <a asp-controller="ThamDinhGiaDv" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục đơn vị</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.hh", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_hh">
+                                <a asp-controller="ThamDinhGiaDmHh" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Danh mục hàng hóa</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_tt">
+                                <a asp-controller="ThamDinhGia" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Thông tin hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.xd", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_xd">
+                                <a asp-controller="ThamDinhGiaXd" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Xét duyệt hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tk", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_tk">
+                                <a asp-controller="ThamDinhGia" asp-action="Search" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Tìm kiếm hồ sơ</span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.bc", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_tdg_bc">
+                                <a asp-controller="ThamDinhGiaBc" asp-action="Index" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate">Báo cáo tổng hợp</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+
+            <!--Văn bản quản lý nhà nước về giá - phí, lệ phí -->
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_vbql"
+                title="Văn bản quản lý nhà nước về giá - phí, lệ phí">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16"></rect>
+                                <path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text text-truncate">Văn bản quản lý nhà nước về giá - phí, lệ phí</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+
+                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Index"))
+                        {
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="quyetdinh" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các quyết định, văn bản quản lý, điều hành về giá">Các quyết định, văn bản quản lý, điều hành về giá</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="vbhd" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các văn bản hướng dẫn, tham gia, góp ý">Các văn bản hướng dẫn, tham gia, góp ý</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="baocao" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Báo cáo tình hình giá cả thị trường">Báo cáo tình hình giá cả thị trường</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="tailieu" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các báo cáo, tài liệu học tập kinh nghiệm">Các báo cáo, tài liệu học tập kinh nghiệm</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="khoahoc" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Kết quả, đề tài nghiên cứu khoa học">Kết quả, đề tài nghiên cứu khoa học</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="qdmhbog" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các quyết định mặt hàng thực hiện bình ổn giá">Các quyết định mặt hàng thực hiện bình ổn giá</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true" id="menu_vbqlds">
+                                <a asp-controller="VbQlNn" asp-action="Index" asp-route-Loaivb="vbkhac" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-line">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text text-truncate" title="Các báo cáo, văn bản có liên quan khác">Các báo cáo, văn bản có liên quan khác</span>
+                                </a>
+                            </li>
+
+
+                        }
+
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+

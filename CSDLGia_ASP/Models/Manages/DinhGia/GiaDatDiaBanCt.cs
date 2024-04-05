@@ -42,7 +42,15 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Soqd { get;set; }
         [NotMapped]
         public string TenDiaBan { get; set; }
-        
+        [NotMapped]
+        public string MaHuyen { get; set; }
+        [NotMapped]
+        public string MaXa { get; set; }
+        [NotMapped]
+        public string TenHuyen { get; set; }
+        [NotMapped]
+        public string TenXa { get; set; }
+
 
 
     }

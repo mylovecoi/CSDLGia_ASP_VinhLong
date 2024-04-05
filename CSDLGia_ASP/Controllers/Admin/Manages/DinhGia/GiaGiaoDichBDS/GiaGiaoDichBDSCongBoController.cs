@@ -37,13 +37,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
             }
 
-            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+            ViewData["DsDonVi"] = _db.DsDonVi;
             ViewData["DsDiaBan"] = _db.DsDiaBan;
-            ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
             ViewData["Madv"] = Madv;
             ViewData["Nam"] = Nam;
             ViewData["Title"] = "Công bố giá giao dịch bất động sản";
-            ViewBag.bSession = true;
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dg";
+            ViewData["MenuLv3"] = "menu_giagdbds";
+            ViewBag.bSession = false;
             return View("Views/Admin/Systems/CongBo/GiaGiaoDichBDSCongBo.cshtml", model);
         }
 
