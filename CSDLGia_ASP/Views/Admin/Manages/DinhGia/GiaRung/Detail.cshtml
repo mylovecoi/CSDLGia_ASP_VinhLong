@@ -54,7 +54,7 @@
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
-<div class="card card-custom" style="border: 1px solid #60aee4;">   
+<div class="card card-custom" style="border: 1px solid #60aee4;">
     <div class="card-body" id="frm_data">
         @foreach (var nhom in NhomDm)
         {
@@ -155,7 +155,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()">Cập nhật</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()" id="btn_GiaRung">Cập nhật</button>
+                <div id="loading_GiaRung" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -174,6 +178,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -182,21 +189,23 @@
     }
 
     function SetUpdate() {
-        @* var GiaRung1 = $('#GiaRung1_edit').val().replace(/\./g, ','); *@
-        var GiaRung1 = $('#GiaRung1_edit').val().replace(/\,/g, '.');
-        var GiaRung2 = $('#GiaRung2_edit').val().replace(/\,/g, '.');
-        var GiaRung3 = $('#GiaRung3_edit').val().replace(/\,/g, '.');
-        var GiaRung4 = $('#GiaRung4_edit').val().replace(/\,/g, '.');
-        var GiaRung5 = $('#GiaRung5_edit').val().replace(/\,/g, '.');
-        var GiaRung6 = $('#GiaRung6_edit').val().replace(/\,/g, '.');
-        var GiaChoThue1 = $('#GiaChoThue1_edit').val().replace(/\,/g, '.');
-        var GiaChoThue2 = $('#GiaChoThue2_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong1 = $('#GiaBoiThuong1_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong2 = $('#GiaBoiThuong2_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong3 = $('#GiaBoiThuong3_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong4 = $('#GiaBoiThuong4_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong5 = $('#GiaBoiThuong5_edit').val().replace(/\,/g, '.');
-        var GiaBoiThuong6 = $('#GiaBoiThuong6_edit').val().replace(/\,/g, '.');
+        document.getElementById("btn_GiaRung").style.display = "none";
+        document.getElementById("loading_GiaRung").style.display = "block";
+
+        var GiaRung1 = $('#GiaRung1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaRung2 = $('#GiaRung2_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaRung3 = $('#GiaRung3_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaRung4 = $('#GiaRung4_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaRung5 = $('#GiaRung5_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaRung6 = $('#GiaRung6_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaChoThue1 = $('#GiaChoThue1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaChoThue2 = $('#GiaChoThue2_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong1 = $('#GiaBoiThuong1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong2 = $('#GiaBoiThuong2_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong3 = $('#GiaBoiThuong3_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong4 = $('#GiaBoiThuong4_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong5 = $('#GiaBoiThuong5_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var GiaBoiThuong6 = $('#GiaBoiThuong6_edit').val().replace(/\./g, "").replace(/,/g, ".");
 
         $.ajax({
             url: '/GiaRungCt/Update',
@@ -231,6 +240,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                document.getElementById("btn_GiaRung").style.display = "block";
+                document.getElementById("loading_GiaRung").style.display = "none";
             }
         })
     }

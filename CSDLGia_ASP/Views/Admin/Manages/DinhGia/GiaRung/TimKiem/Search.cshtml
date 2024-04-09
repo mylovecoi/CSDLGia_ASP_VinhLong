@@ -28,6 +28,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -47,8 +48,8 @@
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
                     var NoiDung = '&MoTa=' + $('#Mota_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(",", ".");
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(",", ".");
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
 
                     var url = current_path_url + Madv + Manhom + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + NoiDung;
                     window.location.href = url;
@@ -143,13 +144,13 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá từ</label>
-                        <input type="text" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá đến</label>
-                        <input type="text" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
                     </div>
                 </div>
             </div>

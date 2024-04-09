@@ -43,14 +43,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='text' id='GiaRung1_edit' name='GiaRung1_edit' value='" + model.GiaRung1 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung1_edit' name='GiaRung1_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung1) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='text' id='GiaRung2_edit' name='GiaRung2_edit' value='" + model.GiaRung1 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung2_edit' name='GiaRung2_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung1) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -60,14 +60,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='text' id='GiaRung3_edit' name='GiaRung3_edit' value='" + model.GiaRung3 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung3_edit' name='GiaRung3_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung3) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='text' id='GiaRung4_edit' name='GiaRung4_edit' value='" + model.GiaRung4 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung4_edit' name='GiaRung4_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung4) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -77,14 +77,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='text' id='GiaRung5_edit' name='GiaRung5_edit' value='" + model.GiaRung5 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung5_edit' name='GiaRung5_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung5) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='text' id='GiaRung6_edit' name='GiaRung6_edit' value='" + model.GiaRung6 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaRung6_edit' name='GiaRung6_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung6) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -94,14 +94,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='text' id='GiaChoThue1_edit' name='GiaChoThue1_edit' value='" + model.GiaChoThue1 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaChoThue1_edit' name='GiaChoThue1_edit' value='" + Helpers.ConvertDbToStr(model.GiaChoThue1) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='text' id='GiaChoThue2_edit' name='GiaChoThue2_edit' value='" + model.GiaChoThue2 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaChoThue2_edit' name='GiaChoThue2_edit' value='" + Helpers.ConvertDbToStr(model.GiaChoThue2) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -112,14 +112,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='number' id='GiaBoiThuong1_edit' name='GiaBoiThuong1_edit' value='" + model.GiaBoiThuong1 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong1_edit' name='GiaBoiThuong1_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong1) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='number' id='GiaBoiThuong2_edit' name='GiaBoiThuong2_edit' value='" + model.GiaBoiThuong2 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong2_edit' name='GiaBoiThuong2_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong2) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -129,14 +129,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='number' id='GiaBoiThuong3_edit' name='GiaBoiThuong3_edit' value='" + model.GiaBoiThuong3 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong3_edit' name='GiaBoiThuong3_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong3) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='number' id='GiaBoiThuong4_edit' name='GiaBoiThuong4_edit' value='" + model.GiaBoiThuong4 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong4_edit' name='GiaBoiThuong4_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong4) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -146,18 +146,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối thiểu</b></label>";
-                result += "<input type='number' id='GiaBoiThuong5_edit' name='GiaBoiThuong5_edit' value='" + model.GiaBoiThuong5 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong5_edit' name='GiaBoiThuong5_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong5) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='number' id='GiaBoiThuong6_edit' name='GiaBoiThuong6_edit' value='" + model.GiaBoiThuong6 + "' class='form-control'/>";
+                result += "<input type='text' id='GiaBoiThuong6_edit' name='GiaBoiThuong6_edit' value='" + Helpers.ConvertDbToStr(model.GiaBoiThuong6) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
-
 
                 result += "</div>";
                 result += "</div>";

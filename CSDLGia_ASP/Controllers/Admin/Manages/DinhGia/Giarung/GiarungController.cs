@@ -653,8 +653,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
-                    if (DonGiaTu > 0) { model = model.Where(t => t.GiaRung1 >= DonGiaTu); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.GiaRung1 <= DonGiaDen); }
+
+                    if (DonGiaTu > 0)
+                    {
+                        model = model.Where(t => t.GiaRung1 >= DonGiaTu || t.GiaRung3 >= DonGiaTu || t.GiaRung5 >= DonGiaTu || t.GiaChoThue1 >= DonGiaTu
+                                            || t.GiaBoiThuong1 >= DonGiaTu || t.GiaBoiThuong3 >= DonGiaTu || t.GiaBoiThuong5 >= DonGiaTu );
+                    }
+                    if (DonGiaDen > 0)
+                    {
+                        model = model.Where(t => t.GiaRung2 <= DonGiaDen || t.GiaRung4 <= DonGiaDen || t.GiaRung6 <= DonGiaDen || t.GiaChoThue2 <= DonGiaDen
+                                            || t.GiaBoiThuong2 <= DonGiaDen || t.GiaBoiThuong4 <= DonGiaDen || t.GiaBoiThuong6 <= DonGiaDen);
+                    }
+
+
                     if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
                     if (!string.IsNullOrEmpty(MoTa))
                     {
@@ -667,8 +678,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["MoTa"] = MoTa;
                     ViewData["DanhSachHoSo"] = _db.GiaRung.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     ViewData["DanhMucNhom"] = _db.GiaRungDm;
