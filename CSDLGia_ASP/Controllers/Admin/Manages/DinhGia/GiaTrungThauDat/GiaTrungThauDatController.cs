@@ -124,30 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.thongtin", "Create"))
                 {
-                    // xóa giá giá trúng thầu đất chi tiết chưa xác định
-                    var check = _db.GiaDauGiaDatCt.Where(t => t.MaDv == Madv && t.TrangThai == "CXD");
-                    if (check.Any())
-                    {
-                        _db.GiaDauGiaDatCt.RemoveRange(check);
-                    }
-                    // xóa thông tin giấy tờ chưa lưu lại
-                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
-                    if (model_file_cxd.Any())
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        foreach (var file in model_file_cxd)
-                        {
-                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
-                            FileInfo fi = new FileInfo(path_del);
-                            if (fi != null)
-                            {
-                                System.IO.File.Delete(path_del);
-                                fi.Delete();
-                            }
-                        }
-                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
-                    }
-                    _db.SaveChanges();
+                    this.RemoveData_Ct_CXD(Madv);
                     var MaDiaBan = _db.DsDonVi.FirstOrDefault(x => x.MaDv == Madv).MaDiaBan;
                     var model = new GiaDauGiaDat
                     {
@@ -187,7 +164,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(GiaDauGiaDat request)
+        public  IActionResult Store(GiaDauGiaDat request)
         {
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -216,19 +193,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         //MaHuyen=request.MaHuyen,
                     };
                     _db.GiaDauGiaDat.Add(model);
-                    // Lưu lại giá trúng thầu đất chi tiết chưa xác định
-                    var modelCt_cxd = _db.GiaDauGiaDatCt.Where(x => x.Mahs == model.Mahs && x.TrangThai == "CXD").ToList();
-                    if (modelCt_cxd.Any())
-                    {
-                        modelCt_cxd.ForEach(x => x.TrangThai = "XD");
-                    }
-                    // Lưu lại giấy tờ chưa xác định
-                    var giayto_cxd = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs && x.Status == "CXD").ToList();
-                    if (giayto_cxd.Any())
-                    {
-                        giayto_cxd.ForEach(x => x.Status = "XD");
-                    }
-                    await _db.SaveChangesAsync();
+                    this.SaveData_Ct_CXD(model.Mahs);
+                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaTrungThauDat", new { Madb = request.Madiaban });
                 }
                 else
@@ -253,30 +219,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.thongtin", "Edit"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
-                    // xóa giá giá trúng thầu đất chi tiết chưa xác định
-                    var check = _db.GiaDauGiaDatCt.Where(t => t.MaDv == model.Madv && t.TrangThai == "CXD");
-                    if (check.Any())
-                    {
-                        _db.GiaDauGiaDatCt.RemoveRange(check);
-                    }
-                    // xóa thông tin giấy tờ chưa lưu lại
-                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == model.Madv);
-                    if (model_file_cxd.Any())
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        foreach (var file in model_file_cxd)
-                        {
-                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
-                            FileInfo fi = new FileInfo(path_del);
-                            if (fi != null)
-                            {
-                                System.IO.File.Delete(path_del);
-                                fi.Delete();
-                            }
-                        }
-                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
-                    }
-                    _db.SaveChanges();
+                    
                     var model_new = new GiaDauGiaDat
                     {
                         Madv = model.Madv,
@@ -326,7 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDat/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(GiaDauGiaDat request)
+        public  IActionResult Update(GiaDauGiaDat request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -346,19 +289,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     model.Updated_at = DateTime.Now;
                     //model.MaHuyen = request.MaHuyen;                    
                     _db.GiaDauGiaDat.Update(model);
-                    // Lưu lại giá trúng thầu đất chi tiết chưa xác định
-                    var modelCt_cxd = _db.GiaDauGiaDatCt.Where(x => x.Mahs == model.Mahs && x.TrangThai == "CXD").ToList();
-                    if (modelCt_cxd.Any())
-                    {
-                        modelCt_cxd.ForEach(x => x.TrangThai = "XD");
-                    }
-                    // Lưu lại giấy tờ chưa xác định
-                    var giayto_cxd = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs && x.Status == "CXD").ToList();
-                    if (giayto_cxd.Any())
-                    {
-                        giayto_cxd.ForEach(x => x.Status = "XD");
-                    }
-                    await _db.SaveChangesAsync();
+                    this.SaveData_Ct_CXD(model.Mahs);
+                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaTrungThauDat", new { Madb = request.Madiaban });
                 }
                 else
@@ -655,6 +587,50 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+        private void RemoveData_Ct_CXD(string maDv )
+        {
+            // xóa giá giá trúng thầu đất chi tiết chưa xác định
+            var check = _db.GiaDauGiaDatCt.Where(t => t.MaDv == maDv && t.TrangThai == "CXD");
+            if (check.Any())
+            {
+                _db.GiaDauGiaDatCt.RemoveRange(check);
+            }
+            // xóa thông tin giấy tờ chưa lưu lại
+            var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == maDv);
+            if (model_file_cxd.Any())
+            {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                foreach (var file in model_file_cxd)
+                {
+                    string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                    FileInfo fi = new FileInfo(path_del);
+                    if (fi != null)
+                    {
+                        System.IO.File.Delete(path_del);
+                        fi.Delete();
+                    }
+                }
+                _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+            }
+            _db.SaveChanges();
+        }
+        private void SaveData_Ct_CXD(string maHs)
+        {
+            // Lưu lại giá trúng thầu đất chi tiết chưa xác định
+            var modelCt_cxd = _db.GiaDauGiaDatCt.Where(x => x.Mahs == maHs && x.TrangThai == "CXD").ToList();
+            if (modelCt_cxd.Any())
+            {
+                modelCt_cxd.ForEach(x => x.TrangThai = "XD");
+            }
+            // Lưu lại giấy tờ chưa xác định
+            var giayto_cxd = _db.ThongTinGiayTo.Where(x => x.Mahs == maHs && x.Status == "CXD").ToList();
+            if (giayto_cxd.Any())
+            {
+                giayto_cxd.ForEach(x => x.Status = "XD");
+            }
+            _db.SaveChanges();
         }
 
         //[Route("GiaTrungThauDat/Search")]

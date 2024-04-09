@@ -123,8 +123,6 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
                                     @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
-
-
                             </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
@@ -233,8 +231,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Quận/Huyện</label>
-                                <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
-                                    <option value="">---Chọn Quận/Huyện---</option>
+                                <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">                                   
                                     @foreach (var item in Huyens)
                                     {
                                         <option value="@item.Mahuyen">@item.Tenhuyen</option>
@@ -346,7 +343,7 @@
 <script>
     function GetTowns() {
         $.ajax({
-            url: '/Ajax/GetTownsNoAll',
+            url: '/Ajax/GetTowns',
             type: 'POST',
             data: {
                 MaHuyen: $('#MaHuyen').val(),
@@ -363,15 +360,10 @@
             }
         })
     }
-
-
-
     function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("MoTaDelete").innerHTML = mota;
     }
-
-
     function Chuyen(mahs) {
         document.getElementById("mahs_chuyen").value = mahs;
     }

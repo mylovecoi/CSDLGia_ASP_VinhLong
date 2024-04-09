@@ -24,7 +24,7 @@ namespace CSDLGia_ASP.Controllers
                 {
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
-                    //result += "<option value='all'>---Chọn đơn vị---</option>";
+                    result += "<option value='all'>---Chọn đơn vị---</option>";
                     result += "</select>";
                     var data = new { status = "success", message = result };
                     return Json(data);
@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers
                     var towns = _db.Towns.Where(t => t.Mahuyen == MaHuyen);
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
-                    //result += "<option value='all'>---Chọn đơn vị---</option>";
+                    result += "<option value='all'>---Chọn đơn vị---</option>";
                     foreach (var item in towns)
                     {
                         result += "<option value='" + item.Maxa + "'>" + item.Tenxa + "</option>";

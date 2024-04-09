@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 Madv = MaDv,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
-                Trangthai = "Disabled",
+                Trangthai = "CXD",
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();

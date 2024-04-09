@@ -236,8 +236,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Edit"))
                 {
-                    var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
-                    this.RemoveData_ChuaXacDinh(model.Madv);
+                    var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);                   
                     var model_ct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == model.Mahs);
 
                     model.GiaGiaoDichBDSCt = model_ct.ToList();
