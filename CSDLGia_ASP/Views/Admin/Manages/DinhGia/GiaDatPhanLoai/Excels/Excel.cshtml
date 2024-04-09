@@ -1,8 +1,35 @@
-﻿@model CSDLGia_ASP.ViewModels.VMImportExcel
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+}
+@model CSDLGia_ASP.ViewModels.VMImportExcel
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {    
+    <script>        
+        function GetXaPhuong() {
+            $.ajax({
+                url: '/Ajax/GetXaPhuong',
+                type: 'POST',
+                data: {
+                    MaDiaBan: $('#Madiaban').val(),
+                    KeySelect: 'Maxp'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#Maxp').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    </script>
 }
 
 <div class="card card-custom">
@@ -30,6 +57,31 @@
             </div>            
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Địa bàn áp dụng</label><br />
+                        <select class="form-control" id="MadiabanBc" name="MadiabanBc" onchange="GetXaPhuong()">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Xã phường</label><br />
+                        <select class="form-control" name="Maxp" id="Maxp">
+                            <option value="all">--Chọn xã phường--</option>
+                            @foreach (var item in dsxaphuong)
+                            {
+                                <option value="@item.Maxp">@item.Tenxp</option>
+                            }
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-xl-3">

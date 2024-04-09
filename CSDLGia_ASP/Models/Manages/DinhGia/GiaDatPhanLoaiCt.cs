@@ -23,6 +23,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }        
         public string Madv { get; set; }
+        public string MaDiaBan { get; set; }
+        public string MaXaPhuong { get; set; }
         [NotMapped]
         public string Tendv { get; set; }
         [NotMapped]

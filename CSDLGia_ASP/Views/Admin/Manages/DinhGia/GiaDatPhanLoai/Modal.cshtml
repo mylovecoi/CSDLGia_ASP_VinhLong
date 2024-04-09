@@ -1,7 +1,8 @@
-﻿
-@{
+﻿@{
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
     var mahs = ViewData["Mahs"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 
 }
 <!--Create Modal-->
@@ -19,6 +20,28 @@
             <div class="modal-body">
                 <input type="hidden" value="@mahs" id="mahs_create" />
                 <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label>Địa bàn áp dụng</label><br />
+                            <select class="form-control" id="MaDiaBanChiTiet" onchange="GetXaPhuongChiTiet()">
+                                @foreach (var item in dsdiaban)
+                                {
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label>Xã phường</label><br />
+                            <select class="form-control" id="MaXaPhuongChiTiet">
+                                @foreach (var item in dsxaphuong)
+                                {
+                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên đường, giới hạn, khu vực<span class="text-danger">*</span></b></label>
@@ -80,7 +103,6 @@
                 </button>
             </div>
             <div class="modal-body" id="edit_thongtin">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -91,6 +113,34 @@
 </div>
 
 <script>
+    function SetChiTiet() {
+        var madiaban = $('#Madiaban').val();
+        var maxa = $('#Maxp').val();
+        $('#MaDiaBanChiTiet').val(madiaban);
+        if (maxa !="all") {
+            $('#MaXaPhuongChiTiet').val(maxa);
+        }
+
+    }
+    function GetXaPhuongChiTiet() {
+        $.ajax({
+            url: '/Ajax/GetXaPhuongNoAll',
+            type: 'POST',
+            data: {
+                MaDiaBan: $('#MaDiaBanChiTiet').val(),
+                KeySelect: 'MaXaPhuongChiTiet'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#MaXaPhuongChiTiet').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
     function SetStore() {
         $.ajax({
             url: '/GiaDatCuTheCt/Store',
@@ -100,6 +150,8 @@
                 Khuvuc: $('#tenduong_create').val(),
                 Giacuthe: $('#giact_create').val(),
                 MaDv: $('#Madv').val(),
+                MaDiaBan: $('#MaDiaBanChiTiet').val(),
+                MaXaPhuong: $('#MaXaPhuongChiTiet').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -144,7 +196,9 @@
                 Mahs: $('#mahs_edit').val(),
                 Khuvuc: $('#tenduong_edit').val(),
                 Giacuthe: $('#giact_edit').val(),
-                Id: $('#id_edit').val()
+                Id: $('#id_edit').val(),
+                MaDiaBan: $('#MaDiaBanChiTiet_edit').val(),
+                MaXaPhuong: $('#MaXaPhuongChiTiet_edit').val(),
             },
             dataType: 'JSON',
             success: function (data) {

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
+using CSDLGia_ASP.Models.Systems;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
@@ -36,6 +37,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 MaDv = MadvExcel,
                 Phanloai = PhanloaiExcel,
             };
+            var DsDiaBan = _db.DsDiaBan;            
+            ViewData["DsDiaBan"] = DsDiaBan;
+            ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(x => x.Madiaban == DsDiaBan.FirstOrDefault().MaDiaBan);
             ViewData["MenuLv1"] = "menu_giadat";
             ViewData["MenuLv2"] = "menu_dgdct";
             ViewData["MenuLv3"] = "menu_dgdct_tt";
@@ -76,9 +80,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 StringBuilder strStyle = new StringBuilder();
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+                                var MaXaPhuong = requests.Maxp == "all" ? (worksheet.Cells[row, 4].Value != null ?
+                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "") :requests.Maxp;
 
                                 list_add.Add(new GiaDatPhanLoaiCt
                                 {
+                                    MaDiaBan=requests.MadiabanBc,
+                                    MaXaPhuong=MaXaPhuong,
                                     Mahs = Mahs,
                                     Madv = requests.MaDv,
                                     Trangthai = "CXD",
@@ -107,6 +115,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 var model = new CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat
                 {
+                    Madiaban= requests.MadiabanBc,
+                    Maxp=requests.Maxp,
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
                     Mahs = Mahs,

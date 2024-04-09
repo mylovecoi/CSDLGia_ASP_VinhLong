@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -18,10 +19,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Store(string MaDv, string MaDiaBan, string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = new GiaDatPhanLoaiCt
             {
+                MaDiaBan = MaDiaBan,
+                MaXaPhuong = MaXaPhuong,
                 Mahs = Mahs,
                 Khuvuc = Khuvuc,
                 Maloaidat = Maloaidat,
@@ -50,7 +53,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         [HttpPost]
         public JsonResult Edit(int Id)
         {
+            var dsdiaban = _db.DsDiaBan;
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);
+            var dsxaphuong = _db.DsXaPhuong.Where(x => x.Madiaban == model.MaDiaBan);
 
             if (model != null)
             {
@@ -59,6 +64,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<input hidden type='text' id='mahs_edit' name='mahs_edit' value='" + model.Mahs + "' class='form-control'/>";
 
                 result += "<div class='row'>";
+
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group'>";
+                result += "<label>Địa bàn áp dụng</label><br />";
+                result += "<select class='form-control' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
+                foreach (var item in dsdiaban)
+                {
+                    result += "<option value='" + item.MaDiaBan + "'"+ ((string)model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
+                }
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group'>";
+                result += "<label>Xã phường</label><br />";
+                result += "<select class='form-control' id='MaXaPhuongChiTiet_edit'>";
+                foreach (var item in dsxaphuong)
+                {
+                    result = "<option value='" + item.Maxp + "'"+ ((string)model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                }
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
 
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
@@ -91,9 +119,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Update(int Id,string MaDiaBan,string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
+            model.MaDiaBan = MaDiaBan;
+            model.MaXaPhuong = MaXaPhuong;
             model.Khuvuc = Khuvuc;
             model.Maloaidat = Maloaidat;
             model.Vitri = Vitri;

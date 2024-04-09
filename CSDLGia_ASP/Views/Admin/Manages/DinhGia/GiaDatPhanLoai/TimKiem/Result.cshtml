@@ -2,7 +2,10 @@
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
+    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     var phanloaihoso = ViewData["phanloaihoso"];
+    var MaDiaBan = ViewData["MaDiaBan"];
+    var MaXaPhuong = ViewData["MaXaPhuong"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt>
 @section custom_style {
@@ -19,6 +22,25 @@
         $(document).ready(function () {
             TableManaged.init();
         });
+        function GetXaPhuong() {
+            $.ajax({
+                url: '/Ajax/GetXaPhuong',
+                type: 'POST',
+                data: {
+                    MaDiaBan: $('#MaDiaBan').val(),
+                    KeySelect: 'MaXaPhuong'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#MaXaPhuong').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
         function Print() {
             var form = document.getElementById("frm_search");
             form.submit();
@@ -85,6 +107,29 @@
                                 {
 
                                     <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Địa bàn áp dụng</label><br />
+                            <select class="form-control" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
+                                @foreach (var item in dsdiaban)
+                                {
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Xã phường</label><br />
+                            <select class="form-control" asp-for="@MaXaPhuong" id="MaXaPhuong">
+                                <option value="all">--Chọn xã phường--</option>
+                                @foreach (var item in dsxaphuong)
+                                {
+                                    <option value="@item.Maxp">@item.Tenxp</option>
                                 }
                             </select>
                         </div>

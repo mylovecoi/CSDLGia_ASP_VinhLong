@@ -14,6 +14,90 @@ namespace CSDLGia_ASP.Controllers
             _db = db;
         }
 
+
+
+
+        [Route("Ajax/GetXaPhuong")]
+        [HttpPost]
+        public JsonResult GetSeSelectXaPhuong(string MaDiaBan, string KeySelect)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (string.IsNullOrEmpty(MaDiaBan))
+                {
+                    string result = "";
+                    result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                    result += "<option value='all'>---Chọn xã phường---</option>";
+                    result += "</select>";
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+                else
+                {
+                    var xaphuong = _db.DsXaPhuong.Where(t => t.Madiaban == MaDiaBan);
+                    string result = "";
+                    result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                    result += "<option value='all'>---Chọn xã phường---</option>";
+                    foreach (var item in xaphuong)
+                    {
+                        result += "<option value='" + item.Maxp + "'>" + item.Tenxp + "</option>";
+                    }
+                    result += "</select>";
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+        [Route("Ajax/GetXaPhuongNoAll")]
+        [HttpPost]
+        public JsonResult GetSeSelectXaPhuongNoAll(string MaDiaBan, string KeySelect)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (string.IsNullOrEmpty(MaDiaBan))
+                {
+                    string result = "";
+                    result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                    result += "</select>";
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+                else
+                {
+                    var xaphuong = _db.DsXaPhuong.Where(x=>x.Madiaban !=null);
+                    if (MaDiaBan != "all")
+                    {
+                        xaphuong = xaphuong.Where(x => x.Madiaban == MaDiaBan);
+                    }
+
+                    string result = "";
+                    result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                    foreach (var item in xaphuong)
+                    {
+                        result += "<option value='" + item.Maxp + "'>" + item.Tenxp + "</option>";
+                    }
+                    result += "</select>";
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+
+
+
+
+
         [Route("Ajax/GetTowns")]
         [HttpPost]
         public JsonResult GetSeSelectTowns(string MaHuyen, string KeySelect)

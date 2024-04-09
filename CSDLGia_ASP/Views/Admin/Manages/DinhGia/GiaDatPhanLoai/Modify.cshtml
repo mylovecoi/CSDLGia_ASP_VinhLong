@@ -3,6 +3,7 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var mahs = ViewData["Mahs"];
     var TenDiaBan = ViewData["TenDiaBan"];
+    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -19,6 +20,25 @@
         $(document).ready(function () {
             TableManaged4.init();
         });
+        function GetXaPhuong() {
+            $.ajax({
+                url: '/Ajax/GetXaPhuong',
+                type: 'POST',
+                data: {
+                    MaDiaBan: $('#Madiaban').val(),
+                    KeySelect: 'Maxp'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#Maxp').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
     </script>
 }
 <div class="card card-custom">
@@ -42,7 +62,24 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn áp dụng</label><br />
-                        <label class="form-control" style="color:blue;">@TenDiaBan</label>
+                        <select class="form-control" asp-for="Madiaban" onchange="GetXaPhuong()">
+                            @foreach (var item in dsdiaban)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Xã phường</label><br />
+                        <select class="form-control" asp-for="Maxp" id="Maxp">
+                            <option value="all">--Chọn đơn vị--</option>
+                            @foreach (var item in dsxaphuong)
+                            {
+                                <option value="@item.Maxp">@item.Tenxp</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col-xl-4">
