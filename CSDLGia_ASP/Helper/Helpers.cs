@@ -503,6 +503,8 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsdiaban", Name = "Danh sách địa bàn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsdonvi", Name = "Danh sách đơn vị sử dụng" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsxaphuong", Name = "Danh sách xã, phường, thị trấn" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dshotro", Name = "Danh sách cán bộ hỗ trợ" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.hethongchung", Name = "Thông tin hệ thống chung" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc", Name = "Quản trị danh mục" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnganhnghekd", Name = "Danh mục ngành nghề kinh doanh" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmloaidat", Name = "Danh mục loại đất" });
