@@ -158,7 +158,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     if (danhmuc.Any())
                     {
                         List<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt> list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt>();
-                        foreach(var dm in danhmuc)
+                        foreach (var dm in danhmuc)
                         {
                             list_add.Add(new Models.Manages.DinhGia.GiaTaiSanCongCt()
                             {
@@ -172,7 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         _db.GiaTaiSanCongCt.AddRange(list_add);
                         _db.SaveChanges();
                     }
-                    
+
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
                     {
@@ -181,7 +181,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
                     model.GiaTaiSanCongCt = _db.GiaTaiSanCongCt.Where(t => t.Mahs == Mahs).ToList();
-                    
+
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
 
@@ -285,7 +285,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     };
 
                     model_new.GiaTaiSanCongCt = _db.GiaTaiSanCongCt.Where(t => t.Mahs == model_new.Mahs).ToList();
-                    model_new.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t=>t.Mahs == model_new.Mahs).ToList();
+                    model_new.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t => t.Mahs == model_new.Mahs).ToList();
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
@@ -485,8 +485,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                                  });
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
-                    if (DonGiaTu > 0) { model = model.Where(t => t.Giathue >= DonGiaTu); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.Giathue <= DonGiaDen); }
+                    if (DonGiaTu > 0)
+                    {
+                        model = model.Where(t => t.Giathue >= DonGiaTu || t.Giaconlai >= DonGiaTu || t.Giapheduyet >= DonGiaTu || t.Giathue >= DonGiaTu);
+                    }
+                    if (DonGiaDen > 0)
+                    {
+                        model = model.Where(t => t.Giathue <= DonGiaDen || t.Giaconlai <= DonGiaDen || t.Giapheduyet <= DonGiaDen || t.Giathue <= DonGiaDen);
+                    }
                     if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
                     if (!string.IsNullOrEmpty(Tentaisan))
                     {
@@ -498,13 +504,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Tentaisan"] = Tentaisan;
                     ViewData["DanhSachHoSo"] = _db.GiaTaiSanCong.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    ViewData["Cqcq"] = _db.DsDonVi;
 
                     ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -527,7 +533,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
         [Route("GiaTaiSanCong/PrintSearch")]
         [HttpPost]
-        public IActionResult Print(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, 
+        public IActionResult Print(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
                                     double DonGiaTu_Search, double DonGiaDen_Search, string Tentaisan_Search)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -565,7 +571,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     }
 
                     ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
-                
+
 
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/TimKiem/Result.cshtml", model);
                 }

@@ -119,7 +119,7 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
-                                    @(dsDiaBanApDung.FirstOrDefault(x => x.Mahuyen == item.Madiaban)?.Tenhuyen ?? "")
+                                    @(dsdiabanAll.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -139,12 +139,11 @@
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
                             </td>
-                                <td style="text-align: center">
-                                    @if (!string.IsNullOrEmpty(item.Macqcq))
-                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-                                </td>
+                            <td style="text-align: center">
+                                @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @(dsdonvith.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+                            </td>
                             <td>
-
                                 <a asp-controller="GiaThueDN" target="_blank" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem hồ sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
@@ -175,7 +174,6 @@
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
 
                                 </a>
-
                             </td>
                         </tr>
                     }

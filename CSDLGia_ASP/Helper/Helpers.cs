@@ -689,16 +689,32 @@ namespace CSDLGia_ASP.Helper
                 }
                 else
                 {
-                    // Nếu không phải là số nguyên, định dạng theo dạng #,##
-                    string formatted = number.ToString("#,##0.##");
-                    if (formatted.EndsWith(".00"))
+                    // Nếu không phải là số nguyên, định dạng theo dạng #,###
+                    string formatted = number.ToString("#,##0.###");
+                    int indexOfDecimal = formatted.IndexOf('.');
+                    if (indexOfDecimal != -1)
                     {
-                        formatted = formatted.Substring(0, formatted.Length - 3);
-                    }
-                    if (formatted.EndsWith(".0"))
-                    {
-                        formatted = formatted.Substring(0, formatted.Length - 1);
-                    }
+                        int lengthToRemove = 0;
+                        for (int i = formatted.Length - 1; i > indexOfDecimal; i--)
+                        {
+                            if (formatted[i] == '0')
+                            {
+                                lengthToRemove++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        if (lengthToRemove > 0)
+                        {
+                            // Kiểm tra xem vị trí loại bỏ và số lượng ký tự loại bỏ có hợp lệ không
+                            if (indexOfDecimal + 3 + lengthToRemove <= formatted.Length)
+                            {
+                                formatted = formatted.Remove(indexOfDecimal + 3, lengthToRemove);
+                            }
+                        }
+                    }                   
                     return formatted.Replace(".", "*").Replace(",", ".").Replace("*", ",");
                 }
             }
@@ -1608,6 +1624,6 @@ namespace CSDLGia_ASP.Helper
             {
                 return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
             }
-        }
+        }        
     }
 }

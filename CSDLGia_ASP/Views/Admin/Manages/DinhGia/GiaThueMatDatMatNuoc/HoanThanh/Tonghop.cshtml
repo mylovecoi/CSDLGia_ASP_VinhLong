@@ -67,9 +67,9 @@
                                 <tr>
                                     <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
                                     <td style="text-align:left; @HtmlStyle">@item.LoaiDat</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe1</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe2</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe3</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe1)</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe2)</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe3)</td>
                                     <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
                                 </tr>
                                 }

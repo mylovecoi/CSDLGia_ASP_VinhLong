@@ -1,5 +1,5 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var DanhMucNhom = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["GiaThueDNNhom"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc;
@@ -17,8 +17,7 @@
             <select class="form-control select2basic" asp-for="Madiaban">
                 @foreach (var item in dsdiaban)
                 {
-                    <option value="@item.Mahuyen">@item.Tenhuyen</option>
-
+                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                 }
             </select>
         </div>
@@ -26,13 +25,13 @@
     <div class="col-xl-4">
         <div class="form-group">
             <label>Số quyết định</label>
-            <input type="text" class="form-control" asp-for="Soqd" />
+            <input type="text" class="form-control" asp-for="Soqd" required/>
         </div>
     </div>
     <div class="col-xl-4">
         <div class="form-group">
             <label>Thời điểm*</label>
-            <input type="date" class="form-control" asp-for="Thoidiem"/>
+            <input type="date" class="form-control" asp-for="Thoidiem" required/>
         </div>
     </div>
 
@@ -46,6 +45,7 @@
 
 <!--Thông tin giấy tời-->
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/ThongTinGiayTo/Index.cshtml")
+<br />
 
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
@@ -83,18 +83,18 @@
                                 <tr>
                                     <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
                                     <td style="text-align:left; @HtmlStyle">@item.LoaiDat</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe1</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe2</td>
-                                    <td style="text-align:center; @HtmlStyle">@item.TyLe3</td>
-                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe1)</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe2)</td>
+                                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDbToStr(item.TyLe3)</td>
+                                    <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia1)</td>
                                     <td>
-                                        @if (item.NhapGia == true)
-                                        {
+                                      @*   @if (item.NhapGia == true)
+                                        { *@
                                             <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                                            onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                                 <i class="icon-lg la la-edit text-primary"></i>
                                             </button>
-                                        }
+                                        @* } *@
                                        
                                     </td>
                                 </tr>

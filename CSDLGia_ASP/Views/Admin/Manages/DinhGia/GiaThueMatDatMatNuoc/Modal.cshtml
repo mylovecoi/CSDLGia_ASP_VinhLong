@@ -35,6 +35,9 @@
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
+                    $(document).ready(function () {                       
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -43,16 +46,21 @@
     }
 
     function SetUpdate() {
+        var dongia = $('#dongia1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var tyle1 = $('#tyle1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var tyle2 = $('#tyle2_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var tyle3 = $('#tyle3_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaThueMatDatMatNuocCt/Update',
             type: 'POST',
             data: {
                 Loaidat: $('#loaidat_edit').val(),
-                TyLe1: $('#tyle1_edit').val(),
-                TyLe2: $('#tyle2_edit').val(),
-                TyLe3: $('#tyle3_edit').val(),
-                Dongia1: $('#dongia1_edit').val(),
+                TyLe1: tyle1,
+                TyLe2: tyle2,
+                TyLe3: tyle3,
+                Dongia1: dongia,
                 Style: $('#style_edit').val(),
+                NhapGia: $('#nhapgia_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
@@ -62,8 +70,7 @@
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
                         TableManagedClass.init();
-                    });
-                    MoneyMask();
+                    });                   
                     $('#Edit_Modal').modal("hide");
                 } else {
                     toastr.error(data.message, "Lỗi!");

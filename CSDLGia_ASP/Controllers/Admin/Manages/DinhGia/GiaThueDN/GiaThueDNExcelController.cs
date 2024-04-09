@@ -120,17 +120,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                     LoaiDat = worksheet.Cells[row, 2].Value != null ?
                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                    TyLe1 = worksheet.Cells[row, 3].Value != null ?
-                                                worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                    TyLe2 = worksheet.Cells[row, 4].Value != null ?
-                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "",
-                                    TyLe3 = worksheet.Cells[row, 5].Value != null ?
-                                                worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                    TyLe1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
+                                                    worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
+                                    TyLe2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                                    TyLe3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
                                     Dongia1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
                                     Style = strStyle.ToString(),
-                                
-                                    MaNhom = str_manhom
+                                    MaNhom = str_manhom,
+                                    NhapGia = true,                                
                                 });
                                 line++;
                             }
@@ -162,9 +162,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
-
-
     }
 }

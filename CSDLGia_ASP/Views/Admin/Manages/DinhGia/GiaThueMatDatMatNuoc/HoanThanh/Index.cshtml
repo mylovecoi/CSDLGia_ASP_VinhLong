@@ -78,17 +78,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Donvi" name="Donvi">
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Chọn--</option>
+                        @foreach (var item in dscqcq)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -113,62 +106,12 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">
-
-                                @if (dsdonvi != null)
-                                {
-                                    @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai_h == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_h)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else if (item.Trangthai_t == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_t)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Madv)
-                                            {
-                                                <span>@ten.TenDv </span>
-                                            }
-                                        }
-                                    }
-                                }
+                                @if (!string.IsNullOrEmpty(item.Madv))
+                                    @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
                             </td>
-                            <td style="text-align: center">
-                                @foreach (var ds in dsdiaban)
-                                {
-                                    @if (item.Madiaban == ds.MaDiaBan)
-                                    {
-                                        <span>@ds.TenDiaBan</span>
-                                    }
-                                }
+                            <td style="text-align: center">  
+                                @if (!string.IsNullOrEmpty(item.Madiaban))
+                                    @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
@@ -207,7 +150,7 @@
                                 </a>
                                 <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                     <i class="icon-lg la la-file-alt text-dark"></i>
-                                </button>                              
+                                </button>
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.htg", "Approve"))
                                 {
                                     @if (item.Level == "ADMIN")

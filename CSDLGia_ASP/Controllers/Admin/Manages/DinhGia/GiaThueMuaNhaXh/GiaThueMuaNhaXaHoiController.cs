@@ -614,10 +614,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      Dvthue = hosoct.Dvthue
                                  });
 
-                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" && t.Dongia >= DonGiaTu);
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" && t.Dongia >= DonGiaTu || t.Dongiathue >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (PhanLoai != "all") { model = model.Where(t => t.Phanloai == PhanLoai); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen); }   
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen || t.Dongiathue <= DonGiaDen); }   
                     if(Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
 
                     ViewData["Madv"] = Madv;
@@ -625,8 +625,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["DanhSachHoSo"] = _db.GiaThueMuaNhaXh.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
 

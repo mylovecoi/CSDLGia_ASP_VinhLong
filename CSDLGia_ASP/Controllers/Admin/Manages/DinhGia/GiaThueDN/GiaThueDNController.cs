@@ -62,7 +62,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             model = model.Where(t => t.Madv == Madv);
                         }
 
-
                         if (Nam != 0)
                         {
                             model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
@@ -160,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Madv = Madv,
                         Thoidiem = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
-                        PhanLoaiHoSo = "HOSOCHITIET",
+                        //PhanLoaiHoSo = "HOSOCHITIET",
                     };
                     IEnumerable<GiaThueMatDatMatNuocDm> danhmuc = _db.GiaThueMatDatMatNuocDm;
                     if (maNhom != "all")
@@ -185,21 +184,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             Trangthai = "CXD",
                             Madv = Madv,
                             Created_at = DateTime.Now,
-                            Updated_at = DateTime.Now,
+                            Updated_at = DateTime.Now,                            
                         });
-                    }
-
-                  
+                    }                
                   
 
                     _db.GiaThueMatDatMatNuocCt.AddRange(chitiet);
                     _db.SaveChanges();
-
                     model.GiaThueMatDatMatNuocCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+
                     var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
                     string diaBanApDung = donVi?.DiaBanApDung ?? "";
-                    //ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDiaBanApDung"] = _db.Districts.Where(x=>diaBanApDung.Contains(x.Mahuyen));
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    //ViewData["DsDiaBanApDung"] = _db.Districts.Where(x=>diaBanApDung.Contains(x.Mahuyen));
                     ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -400,8 +397,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["GiaThueDNNhom"] = _db.GiaThueMatDatMatNuocNhom;
                     var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
                     string diaBanApDung = donVi?.DiaBanApDung ?? "";
-                    //ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDiaBanApDung"] = _db.Districts.Where(x => diaBanApDung.Contains(x.Mahuyen));
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    //ViewData["DsDiaBanApDung"] = _db.Districts.Where(x => diaBanApDung.Contains(x.Mahuyen));
                     ViewData["Title"] = "Chỉnh sửa giá thuê mặt dất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -555,8 +552,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["LoaiDat"] = LoaiDat;
                     ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     ViewData["DanhMucNhom"] = _db.GiaThueMatDatMatNuocNhom;

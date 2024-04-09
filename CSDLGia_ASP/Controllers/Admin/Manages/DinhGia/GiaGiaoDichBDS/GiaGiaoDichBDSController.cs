@@ -465,8 +465,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     }
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
                     ViewData["ngaynhap_den"] = ngaynhap_den;
-                    ViewData["gia_tu"] = gia_tu;
-                    ViewData["gia_den"] = gia_den;
+                    ViewData["gia_tu"] = Helpers.ConvertDbToStr(gia_tu);
+                    ViewData["gia_den"] = Helpers.ConvertDbToStr(gia_den);
                     ViewData["madv"] = madv;
                     ViewData["manhom"] = manhom;
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
@@ -565,17 +565,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row text-left'>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá giao dịch bất động sản (đồng)</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
-                result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị tính</label>";
-                result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá giao dịch bất động sản (đồng)</label>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + Helpers.ConvertDbToStr(model.Gia) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
 
                 result += "</div>";
@@ -635,7 +635,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         result += "<td class='text-center'>" + record++ + "</td>";
                         result += "<td class='active' style='font-weight:bold'>" + item.Ten + "</td>";
                         result += "<td >" + item.Dvt + "</td>";
-                        result += "<td style='text-align:right; font-weight:bold'>" + item.Gia + "</td>";
+                        result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
                         result += "<td>";
                         result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";
                         result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

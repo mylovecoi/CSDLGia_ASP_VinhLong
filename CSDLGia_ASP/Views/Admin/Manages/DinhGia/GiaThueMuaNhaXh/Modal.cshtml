@@ -40,7 +40,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -49,6 +51,8 @@
     }
 
     function SetUpdate() {
+        var dongia = $('#giaban_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var dongiathue = $('#giathue_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaThueMuaNhaXhCt/Update',
             type: 'POST',
@@ -65,8 +69,8 @@
                 Tungay: $('#tungay_edit').val(),
                 Denngay: $('#denngay_edit').val(),
                 Dvt: $('#dvt_edit').val(),
-                Dongia: $('#giaban_edit').val(),
-                Dongiathue: $('#giathue_edit').val(),
+                Dongia: dongia,
+                Dongiathue: dongiathue,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
