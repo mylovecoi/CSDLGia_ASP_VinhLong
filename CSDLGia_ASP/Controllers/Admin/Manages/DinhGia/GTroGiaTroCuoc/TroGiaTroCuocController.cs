@@ -413,10 +413,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     var model_ct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == Mahs);
 
                     model_new.GiaTroGiaTroCuocCt = model_ct.ToList();
+
+                    ViewData["GiaTroGiaTroCuocDm"] = _db.GiaTroGiaTroCuocDm.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-                    ViewData["GiaTroGiaTroCuocDm"] = _db.GiaTroGiaTroCuocDm.ToList();
-
                     ViewData["Title"] = "Thông tin Mức giá trợ giá trợ cước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";

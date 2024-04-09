@@ -26,7 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
         [Route("GiaGiaoDichBDS/DanhSach")]
         [HttpGet]
-        public IActionResult Index(string Nam, string Madv)
+        public IActionResult Index(string Madv, string Nam = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -56,20 +56,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         {
                             model = model.Where(t => t.Madv == Madv);
                         }
-
-                        if (string.IsNullOrEmpty(Nam))
+                        if (Nam != "all")
                         {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                             model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                         }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
-                        }
-
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
                         {
                             ViewData["DsDonVi"] = dsdonvi;
@@ -124,14 +114,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
         [Route("GiaGiaoDichBDS/Create")]
         [HttpGet]
-        public IActionResult Create( string maNhom, string MadvBc)
+        public IActionResult Create(string maNhom, string MadvBc)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Create"))
                 {
 
-                   var  Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH");
+                    var Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH");
                     this.RemoveData_ChuaXacDinh(MadvBc);
 
                     var danhmuc = _db.GiaGiaoDichBDSDm.ToList();
@@ -236,7 +226,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.thongtin", "Edit"))
                 {
-                    var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);                   
+                    var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_ct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == model.Mahs);
 
                     model.GiaGiaoDichBDSCt = model_ct.ToList();
@@ -354,11 +344,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         //Gia = modelct.Gia,
                     };
                     viewModel.GiaGiaoDichBDSCt = modelct.ToList();
-                    var donvi = _db.DsDonVi.First(x=>x.MaDv==model.Madv);
+                    var donvi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
                     ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
-                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x=>x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
                     ViewData["TenDonVi"] = donvi.TenDv;
-                    ViewData["Title"] = "Bảng giá giao dịch bất động sản";                    
+                    ViewData["Title"] = "Bảng giá giao dịch bất động sản";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", viewModel);
 
                 }
@@ -431,7 +421,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }       
+        }
 
         [Route("GiaGiaoDichBDS/Search")]
         [HttpGet]
@@ -634,7 +624,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     result += "<th width='2%'>#</th>";
                     result += "<th width='25%'>Phân loại nhà cho thuê</th>";
                     result += "<th>Đơn vị tính</th>";
-                    result += "<th>Giá cho thuê (đồng)</th>";                   
+                    result += "<th>Giá cho thuê (đồng)</th>";
                     result += "<th width='9%'>Thao tác</th>";
                     result += "</tr>";
                     result += "</thead>";

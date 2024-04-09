@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                 result += "<div class='row'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Vùng kinh tế</b></label>";
+                result += "<label><b>Vùng kinh tế<span class='text-danger'>*</span></b></label>";
                 result += "<input type='text' id='vungkt_edit' name='vungkt_edit' value='" + @model.Vungkt + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";

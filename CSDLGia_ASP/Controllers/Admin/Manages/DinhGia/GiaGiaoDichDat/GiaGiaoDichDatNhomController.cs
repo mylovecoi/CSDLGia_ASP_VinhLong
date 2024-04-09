@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên nhóm đất thực tế trên thị trường*</label>";
+                        result += "<label>Tên nhóm đất thực tế trên thị trường<span class='text-danger'>*</span></label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
                         result += "</div>";

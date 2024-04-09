@@ -143,14 +143,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã loại đất<span class='require'>*</span></label>";
+                        result += "<label>Mã loại đất<span class='require text-danger'>*</span></label>";
                         result += "<input type='text' class='form-control' id='maloaidat_edit' name='maloaidat_edit' value='" + model.Maloaidat + "'/>";
                         result += "</div>";
                         result += "</div>";
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Loại đất<span class='require'>*</span></label>";
+                        result += "<label>Loại đất<span class='require text-danger'>*</span></label>";
                         result += "<input type='text' class='form-control' id='loaidat_edit' name='loaidat_edit' value='" + model.Loaidat + "'/>";
                         result += "</div>";
                         result += "</div>";

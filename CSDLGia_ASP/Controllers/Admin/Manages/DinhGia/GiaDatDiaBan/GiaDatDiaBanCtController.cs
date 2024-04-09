@@ -142,7 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Hệ số K</label>";
+                result += "<label>Hệ số</label>";
                 result += "<input type='text' id='hesok_edit' name='hesok_edit' value='" + model.Hesok + "' class='form-control'>";
                 result += "</div>";
                 result += "</div>";

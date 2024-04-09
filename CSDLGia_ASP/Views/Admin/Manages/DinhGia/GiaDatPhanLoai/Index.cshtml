@@ -64,7 +64,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
@@ -140,8 +140,6 @@
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
 
-
-
                             </td>
                             <td style="text-align: left;">
 
@@ -192,20 +190,23 @@
                 <div class="modal-body">
                     <div class="row">
                         <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
+
+                        <div class="form-group" style="width:100%">
+                            <div class="col-xl-12">
                                 <label><b>Phân loại hồ sơ</b></label>
-                                <select id="Phanloai" name="Phanloai" class="form-control">
+                            </div>
+                            <div class="col-xl-12">
+                                <select id="Phanloai" name="Phanloai" class="form-control select2basic" style="width:100%">
                                     <option value="Giá đất bồi thường tái định cư">Giá đất bồi thường tái định cư</option>
                                     <option value="Giá đất thu tiền sử dụng đất">Giá đất thu tiền sử dụng đất</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">Thêm mới</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger font-weight-bold">Thêm mới</button>
+                    </div>
                 </div>
             </form>
         </div>

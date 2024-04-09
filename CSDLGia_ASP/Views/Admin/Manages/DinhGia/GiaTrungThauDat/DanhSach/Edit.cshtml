@@ -63,9 +63,9 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-6">
+                @* <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Dịa bàn</label>
+                        <label>Địa bàn</label>
                         <select class="form-control" id="Madv" name="Madv" disabled>
                             @foreach (var item in DsDonVi)
                             {
@@ -73,7 +73,7 @@
                             }
                         </select>
                     </div>
-                </div>     
+                </div>      *@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn:</label>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Tên dự án*</label>
+                        <label>Tên dự án<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Tenduan" />
                     </div>
                 </div>
@@ -120,37 +120,37 @@
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Thời điểm*</label>
+                        <label>Thời điểm<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" asp-for="Thoidiem" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số quyết định phương án đấu giá*</label>
+                        <label>Số quyết định phương án đấu giá<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqdpagia" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số quyết định đấu giá*</label>
+                        <label>Số quyết định đấu giá<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqddaugia" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số quyết định phê duyệt giá khởi điểm*</label>
+                        <label>Số quyết định phê duyệt giá khởi điểm<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqdgiakhoidiem" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số quyết định công nhận kết quả trúng đấu giá*</label>
+                        <label>Số quyết định công nhận kết quả trúng đấu giá<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqdkqdaugia" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Phân loại*</label>
+                        <label>Phân loại<span class="text-danger">*</span></label>
                         <select class="form-control" asp-for="Phanloai">
                             @foreach (var item in Helpers.PlDauGiaDat())
                             {

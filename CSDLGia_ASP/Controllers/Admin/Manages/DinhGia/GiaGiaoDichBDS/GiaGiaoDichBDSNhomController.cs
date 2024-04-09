@@ -99,7 +99,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         result += "</div>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên nhóm bất động sản*</label>";
+                        result += "<label>Tên nhóm bất động sản<span class='text-danger'>*</span></label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
                         result += "</div>";
