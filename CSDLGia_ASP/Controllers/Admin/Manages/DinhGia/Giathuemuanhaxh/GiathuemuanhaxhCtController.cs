@@ -127,14 +127,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá bán*</b></label>";
-                result += "<input type='text' id='giaban_edit' name='giaban_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongia + "'/>";
+                result += "<input type='text' id='giaban_edit' name='giaban_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + model.Dongia + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá thuê*</b></label>";
-                result += "<input type='text' id='giathue_edit' name='giathue_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Dongiathue + "'/>";
+                result += "<input type='text' id='giathue_edit' name='giathue_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + model.Dongiathue + "'/>";
                 result += "</div>";
                 result += "</div>";
 

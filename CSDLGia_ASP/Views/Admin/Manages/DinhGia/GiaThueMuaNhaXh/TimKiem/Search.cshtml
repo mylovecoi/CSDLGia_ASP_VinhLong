@@ -3,9 +3,7 @@
 
     string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
     string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
-    double DonGiaTu = ViewData["DonGiaTu"] as double? ?? 0;
-    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
-
+   
     var DanhSachHoSo = (IEnumerable<GiaThueMuaNhaXh>)ViewData["DanhSachHoSo"];
     var DanhMucNhom = ViewData["Dmtmnxh"]
                     as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhDm>
@@ -31,6 +29,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -49,8 +48,8 @@
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val();
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
 
                     var url = current_path_url + Madv + Maso + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen;
                     window.location.href = url;
@@ -141,13 +140,13 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá từ</label>
-                        <input type="number" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@DonGiaTu" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá đến</label>
-                        <input type="number" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@DonGiaDen" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
                     </div>
                 </div>
             </div>
