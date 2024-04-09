@@ -30,9 +30,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string LoaiDat { get; set; }
         public string MaNhom { get; set; }
 
-        public string TyLe1 { get; set; }
-        public string TyLe2 { get; set; }
-        public string TyLe3 { get; set; }
+        public double TyLe1 { get; set; }
+        public double TyLe2 { get; set; }
+        public double TyLe3 { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Madv { get; set; }

@@ -13,6 +13,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 {
@@ -43,7 +44,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 result += "<label class='form-control'>" + model.LoaiDat + "</label>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-12'>";
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Nhập giá</b></label>";
+                result += "<label>Nhập giá</label>";
+                result += "<select id='nhapgia_edit' name='nhapgia_edit' class='form-control'>";
+                result += "<option value='true' " + (model.NhapGia ? "selected" : "") + ">Nhập giá</option>";
+                result += "<option value='false' " + (!model.NhapGia ? "selected" : "") + ">Không nhập giá</option>";
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-8'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
                 result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
@@ -55,29 +66,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Ngành, nghề đặc biệt ưu đãi đầu tư:</label>";
-                result += "<input type='text' id='tyle1_edit' name='tyle1_edit' class='form-control' style='font-weight: bold' value='" + model.TyLe1 + "'/>";
+                result += "<input type='text' id='tyle1_edit' name='tyle1_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.TyLe1) + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Ngành, nghề ưu đãi đầu tư:</label>";
-                result += "<input type='text' id='tyle2_edit' name='tyle2_edit' class='form-control' style='font-weight: bold' value='" + model.TyLe2 + "'/>";
+                result += "<input type='text' id='tyle2_edit' name='tyle2_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.TyLe2) + "'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Ngành, nghề khác:</label>";
-                result += "<input type='text' id='tyle3_edit' name='tyle3_edit' class='form-control' style='font-weight: bold' value='" + model.TyLe3 + "'/>";
+                result += "<input type='text' id='tyle3_edit' name='tyle3_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.TyLe3) + "'/>";
                 result += "</div>";
                 result += "</div>";
-
-
+                
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá:</label>";
-                result += "<input type='number' id='dongia1_edit' name='dongia1_edit' class='form-control' style='font-weight: bold' value='" + model.Dongia1 + "'/>";
+                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.Dongia1) + "'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -99,15 +109,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueMatDatMatNuocCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string[] Style, double Dongia1, string TyLe1, string TyLe2, string TyLe3)
+        public JsonResult Update(int Id, string[] Style, double Dongia1, double TyLe1, double TyLe2, double TyLe3, bool NhapGia)
         {
             var model = _db.GiaThueMatDatMatNuocCt.FirstOrDefault(t => t.Id == Id);
             string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
 
-            model.Dongia1 = Dongia1;
-            model.TyLe1 = TyLe1;
-            model.TyLe2 = TyLe2;
-            model.TyLe3 = TyLe3;
+            model.NhapGia = NhapGia;
+            model.Dongia1 = NhapGia ? Dongia1 : 0;
+            model.TyLe1 = NhapGia ? TyLe1 : 0;
+            model.TyLe2 = NhapGia ? TyLe2 : 0;
+            model.TyLe3 = NhapGia ? TyLe3 : 0;
             model.Style = str_style;
             model.Updated_at = DateTime.Now;
             _db.GiaThueMatDatMatNuocCt.Update(model);
@@ -164,9 +175,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         result += "<tr>";
                         result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.SapXep + "</td>";
                         result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.LoaiDat + "</td>";
-                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TyLe1 + "</td>";
-                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TyLe2 + "</td>";
-                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TyLe3 + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.TyLe1) + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.TyLe2) + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.TyLe3) + "</td>";
                         result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Dongia1) + "</td>";
                         result += "<td>";
                         result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

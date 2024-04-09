@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" /> *@
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" /> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Page Vendors Styles(used by this page)-->
     <link href="~/Admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
@@ -36,16 +36,15 @@
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
     @RenderSection("custom_style", required: false)
     <style>
-      /*  .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-text {
+        /*  .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-text {
 
-            font-size: 14px !important;
+                    font-size: 14px !important;
 
-        }*/
-   .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
+                }*/
+        .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
             color: #a2a3b7;
             font-size: 14px;
-        } 
-
+        }
     </style>
 
 </head>
@@ -170,7 +169,6 @@
                             <!--begin::Header Menu-->
                             <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
                                 <!--begin::Header Nav-->
-
                                 <!--end::Header Nav-->
                             </div>
                             <!--end::Header Menu-->
@@ -179,22 +177,22 @@
                         <!--begin::Topbar-->
                         <div class="topbar">
                             @* <div class="topbar-item" data-offset="10px,0px" aria-expanded="false">
-                                <a asp-controller="CongBo" asp-action="Index" target="_blank" title="Trang công bố">
-                                    <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
-                                        <span class="svg-icon svg-icon-xl svg-icon-primary">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <rect x="0" y="0" width="24" height="24" />
-                                                    <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
-                                                    <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
-                                                    <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
-                                                    <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
-                                                </g>
-                                            </svg>
-                                        </span>
-                                        <span class="pulse-ring"></span>
-                                    </div>
-                                </a>
+                            <a asp-controller="CongBo" asp-action="Index" target="_blank" title="Trang công bố">
+                            <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
+                            <span class="svg-icon svg-icon-xl svg-icon-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
+                            <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
+                            <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
+                            <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
+                            </g>
+                            </svg>
+                            </span>
+                            <span class="pulse-ring"></span>
+                            </div>
+                            </a>
                             </div> *@
                             <!--begin::Toggle-->
                             <!--begin::Quick Actions-->
@@ -326,7 +324,7 @@
                                 <a href="#" class="btn btn-sm btn-light font-weight-bold mr-2">
                                     <span id='ct6' @*class="label label-white font-weight-bold label-light-danger label-inline"*@
                                           class="text-primary font-size-base font-weight-bolder"
-                                          @*style="font-size:12px; width:170px; height:30px; font-weight:bold"*@></span>
+                                    @*style="font-size:12px; width:170px; height:30px; font-weight:bold"*@></span>
                                 </a>
                             </div>
                             <!--end::Toolbar-->
@@ -336,8 +334,8 @@
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
                         <!--begin::Container-->
-                     @*   <div class="container">*@
-                            <div style="width:100%">
+                        @*   <div class="container">*@
+                        <div style="width:100%">
                             <!--begin::Row-->
                             @RenderBody()
                             <!--end::Row-->
@@ -446,30 +444,30 @@
             <!--begin::Nav-->
             <div class="navi navi-spacer-x-0 p-0">
                 @* <a asp-controller="Home" asp-action="ChangePassword" class="navi-item">
-                    <div class="navi-link">
-                        <div class="symbol symbol-40 bg-light mr-3">
-                            <div class="symbol-label">
-                                <span class="svg-icon svg-icon-md svg-icon-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <mask fill="white">
-                                                <use xlink:href="#path-1"></use>
-                                            </mask>
-                                            <g></g>
-                                            <path d="M7,10 L7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 L17,10 L18,10 C19.1045695,10 20,10.8954305 20,12 L20,18 C20,19.1045695 19.1045695,20 18,20 L6,20 C4.8954305,20 4,19.1045695 4,18 L4,12 C4,10.8954305 4.8954305,10 6,10 L7,10 Z M12,5 C10.3431458,5 9,6.34314575 9,8 L9,10 L15,10 L15,8 C15,6.34314575 13.6568542,5 12,5 Z" fill="#000000"></path>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="navi-text">
-                            <div class="font-weight-bold">Mật khẩu truy cập</div>
-                            <div class="text-muted">
-                                Thay đổi mật khẩu
-                                <span class="label label-light-primary label-inline font-weight-bold">Cập nhật</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="navi-link">
+                <div class="symbol symbol-40 bg-light mr-3">
+                <div class="symbol-label">
+                <span class="svg-icon svg-icon-md svg-icon-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <mask fill="white">
+                <use xlink:href="#path-1"></use>
+                </mask>
+                <g></g>
+                <path d="M7,10 L7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 L17,10 L18,10 C19.1045695,10 20,10.8954305 20,12 L20,18 C20,19.1045695 19.1045695,20 18,20 L6,20 C4.8954305,20 4,19.1045695 4,18 L4,12 C4,10.8954305 4.8954305,10 6,10 L7,10 Z M12,5 C10.3431458,5 9,6.34314575 9,8 L9,10 L15,10 L15,8 C15,6.34314575 13.6568542,5 12,5 Z" fill="#000000"></path>
+                </g>
+                </svg>
+                </span>
+                </div>
+                </div>
+                <div class="navi-text">
+                <div class="font-weight-bold">Mật khẩu truy cập</div>
+                <div class="text-muted">
+                Thay đổi mật khẩu
+                <span class="label label-light-primary label-inline font-weight-bold">Cập nhật</span>
+                </div>
+                </div>
+                </div>
                 </a> *@
 
                 <a asp-controller="Home" asp-action="ChangePassword" class="navi-item">
@@ -550,6 +548,10 @@
         <!--begin::Page Scripts(used by this page)-->
         <script src="~/Admin/assets/js/pages/widgets.js"></script>
         <!--end::Page Scripts-->
+        <!--begin::Page Jquery mask (used by this page)-->
+        @*  <script src="~/Admin/assets/js/jquery-3.6.0.min.js"></script>
+        <script src="~/Admin/assets/js/jquery.mask.min.js"></script> *@
+        <!--end::Page Jquery mask-->
         <script>
             $(document).ready(function () {
                 var menu1 = document.getElementById("MenuLv1").value;
@@ -575,34 +577,25 @@
                 if (menuminimize == 'True') {
                     document.getElementById('kt_body').className += " aside-minimize";
                 }
-            });
-            function MoneyMask() {
-                $('.money').mask('000,000,000,000,000', {
-                    reverse: true
+            });         
+            function MoneyDecimalMask() {              
+                $('.money-decimal-mask').inputmask({
+                    alias: 'numeric',
+                    groupSeparator: '.',
+                    radixPoint: ',', // Dấu phân cách thập phân
+                    autoGroup: true,
+                    allowMinus: false, // Không cho phép nhập số âm
+                    digits: 3, // Số lượng chữ số thập phân
+                    placeholder: "0",
+                    rightAlign: true, // Căn lề sang phải
+                    onBeforePaste: function (pastedValue, opts) {
+                        // Xử lý trường hợp khi người dùng dán giá trị vào input
+                        var processedValue = pastedValue.replace(/[^0-9,]/g, ''); // Loại bỏ các ký tự không phải là số hoặc dấu phân cách
+                        return processedValue;
+                    }
                 });
             }
-            function SetValue(value, id_set) {
-                document.getElementById(id_set).value = value;
-            }
-            function SetMenuMinimize() {
-                $.ajax({
-                    url: '/Ajax/SetMenuMinimize',
-                    type: 'GET',
-                    dataType: 'JSON',
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                            document.getElementById('MenuMinimize').value = data.message;
-                            if (data.message == 'True') {
-                                document.getElementById('kt_body').className += " aside-minimize";
-                            }
-
-                        } else {
-                            toastr.error(data.message, "Lỗi!");
-                        }
-                    }
-                })
-            }
+           
         </script>
         <script type="text/javascript">
             function display_ct6() {

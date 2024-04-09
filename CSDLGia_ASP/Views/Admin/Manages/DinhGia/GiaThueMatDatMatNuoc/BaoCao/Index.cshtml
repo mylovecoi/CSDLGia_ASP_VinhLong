@@ -206,7 +206,6 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            toastr.success("Thành công!");
                             $('#MaHsTongHop').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
