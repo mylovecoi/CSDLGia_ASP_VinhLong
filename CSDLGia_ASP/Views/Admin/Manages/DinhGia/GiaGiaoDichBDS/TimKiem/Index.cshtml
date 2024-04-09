@@ -19,6 +19,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
         function Print() {
             var form = document.getElementById("frm_search");
@@ -35,8 +36,8 @@
 
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaGiaoDichBDS/Search?';
-                    var gia_tu = '&gia_tu=' + $('#gia_tu').val();
-                    var gia_den = '&gia_den=' + $('#gia_den').val();
+                    var gia_tu = '&gia_tu=' + $('#gia_tu').val().replace(/\./g, "").replace(/,/g, ".");
+                    var gia_den = '&gia_den=' + $('#gia_den').val().replace(/\./g, "").replace(/,/g, ".");
                     var ngaynhap_den = '&ngaynhap_den=' + $('#ngaynhap_den').val();
                     var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
                     var manhom = '&manhom=' + $('#manhom').val();
@@ -114,13 +115,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Giá trị từ</label>
-                        <input type="text" id="gia_tu" asp-for="@ViewData["gia_tu"]" name="gia_tu" class="form-control money" />
+                        <input type="text" id="gia_tu" asp-for="@ViewData["gia_tu"]" name="gia_tu" class="form-control money-decimal-mask" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Giá trị đến</label>
-                        <input type="text" id="gia_den" asp-for="@ViewData["gia_den"]" name="gia_den" class="form-control money" />
+                        <input type="text" id="gia_den" asp-for="@ViewData["gia_den"]" name="gia_den" class="form-control money-decimal-mask" />
                     </div>
                 </div>
             </div>
@@ -162,7 +163,7 @@
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align: left">@item.Ten</td>
                     <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: right" class="sotien">@item.Gia</td>
+                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gia)</td>
                     <td style="text-align: center">
                         <a asp-controller="GiaGiaoDichBDS" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                            target="_blank">
