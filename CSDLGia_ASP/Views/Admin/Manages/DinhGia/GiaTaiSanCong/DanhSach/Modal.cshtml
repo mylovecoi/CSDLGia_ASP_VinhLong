@@ -32,8 +32,10 @@
             dataType: 'JSON',
             success: function(data) {
                 if (data.status == 'success') {
-                    toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -48,10 +50,10 @@
             data: {
                 Tentaisan: $('#Tentaisan_edit').val(),
                 Dacdiem: $('#Dacdiem_edit').val(),
-                Giathue: $('#Giathue_edit').val(),
-                Giaconlai: $('#Giaconlai_edit').val(),
-                Giapheduyet: $('#Giapheduyet_edit').val(),
-                Giaban: $('#Giaban_edit').val(),
+                Giathue: $('#Giathue_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giaconlai: $('#Giaconlai_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giapheduyet: $('#Giapheduyet_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giaban: $('#Giaban_edit').val().replace(/\./g, "").replace(/,/g, "."),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
