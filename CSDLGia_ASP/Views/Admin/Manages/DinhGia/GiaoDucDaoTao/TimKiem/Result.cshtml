@@ -10,6 +10,7 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
             <thead>
                 <tr style="text-align:center">
+                    <th style="text-align:center">STT</th>
                     <th style="text-align:center">Đơn vị</th>
                     <th style="text-align:center">Số QĐ/Thời điểm</th>
                     <th style="text-align:center">Hồ sơ</th>
@@ -30,9 +31,9 @@
                             <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
                             <td style="text-align:center">@item.Tennhom</td>
                             <td style="text-align:left">@item.Mota</td>
-                            <td style="text-align:right">@item.Giathanhthi1</td>
-                            <td style="text-align:right">@item.Gianongthon1</td>
-                            <td style="text-align:right">@item.Giamiennui1</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
                         </tr>
                     }
                 }

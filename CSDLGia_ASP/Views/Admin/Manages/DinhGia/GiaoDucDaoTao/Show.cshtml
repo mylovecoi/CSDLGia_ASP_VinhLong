@@ -35,7 +35,6 @@
         }
     }
 </p>
-
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <p style="text-align:right">Đơn vị tính: nghìn đồng/học sinh/tháng</p>
@@ -51,7 +50,6 @@
        
     </thead>
     <tbody>
-
         @if (GiaDvGdDtCt != null)
         {
             @foreach (var item in GiaDvGdDtCt)
@@ -59,16 +57,11 @@
                 <tr>
                     <td style="text-align:center">@(record_id++)</td>
                     <td style="text-align:left">@item.Mota</td>
-
-                    <td style="text-align:center">@item.Giathanhthi1</td>
-                    <td style="text-align:center">@item.Gianongthon1</td>
-                    <td style="text-align:center">@item.Giamiennui1</td>
-
-                 
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>                 
                 </tr>
             }
         }
-
     </tbody>
-
 </table>
