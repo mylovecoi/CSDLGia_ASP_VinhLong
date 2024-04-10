@@ -2,6 +2,8 @@
 
 @{
     var Madv = ViewData["Madv"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 
 @section custom_style {
@@ -34,6 +36,36 @@
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
+
+            <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Địa bàn</label>
+                        <select class="form-control select2basic" id="MadiabanBc" name="MadiabanBc" onchange="GetXaPhuong()>
+                        @foreach (var item in dsdiaban)
+                        {
+                        <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="form-group">
+                    <label>Xã phường</label><br />
+                        <select class="form-control select2basic" id="Maxp">
+                        <option value="all">--Chọn xã phường--</option>
+                                @foreach (var item in dsXaPhuong)
+                                {
+                            <option value="@item.Maxp">@item.Tenxp</option>
+                                }
+                    </select>
+                </div>
+            </div>
+            </div>
+
+
+
+
             <div class="row">
                 <div class="col-xl-3">
                     <div class="form-group">
@@ -76,3 +108,24 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script>
+    function GetXaPhuong() {
+        $.ajax({
+            url: '/Ajax/GetXaPhuong',
+            type: 'POST',
+            data: {
+                MaDiaBan: $('#MadiabanBc').val(),
+                KeySelect: 'Maxp'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#Maxp').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

@@ -42,12 +42,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         LineStart = 4,
                         LineStop = 3000,
                     };
-
                     ViewData["Title"] = "Bảng giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_tt";
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong;
                     ViewData["Soqd"] = _db.GiaDatDiaBanTt.ToList();
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Excels/Excel.cshtml", model);
 
@@ -84,10 +84,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         var rowcount = worksheet.Dimension.Rows;
                         request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
                         int stt = 1;
+
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
+                            string MaXaPhuong = request.MaXa == "all" ? (worksheet.Cells[row, 13].Value != null ? worksheet.Cells[row, 13].Value.ToString().Trim() : "") : request.MaXa;
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                             {
+                                Madiaban=request.Madiaban,
+                                Maxp=MaXaPhuong,
                                 Mahs = request.Mahs,
                                 Created_at = DateTime.Now,
                                 Sapxep = stt++,
@@ -111,10 +115,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         }
                     }
                 }
-               
+
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                 {
+                    
                     NoiDungQDTT = request.NoiDungQDTT,
+                    Noidung=request.Noidung,
                     Mahs = request.Mahs,
                     Madv = request.Madv,
                     Soqd = request.SoQDTT,
@@ -125,6 +131,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,
+                    MaXa= request.MaXa,                    
                 };
                 _db.GiaDatDiaBan.Add(model);
                 _db.GiaDatDiaBanCt.AddRange(list_add);

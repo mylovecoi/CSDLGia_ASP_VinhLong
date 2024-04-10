@@ -36,7 +36,8 @@
                             <th width="10%">Sửa</th>
                             <th width="10%">Xóa</th>
                             <th width="10%">Chuyển/<br />Xét Duyệt</th>
-                            <th width="15%">Thao tác</th>
+                            <th width="10%">Công bố</th>
+                            <th width="10%">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,6 +90,16 @@
                                     </td>
                                     <td style="text-align:center">
                                         @if (item.Approve)
+                                        {
+                                            <i class="la la-check icon-2x text-info mr-5"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="la la-remove icon-2x text-danger mr-5"></i>
+                                        }
+                                    </td>
+                                    <td style="text-align:center">
+                                        @if (item.Public)
                                         {
                                             <i class="la la-check icon-2x text-info mr-5"></i>
                                         }
@@ -264,6 +275,7 @@
         document.getElementById("Edit").checked = false;
         document.getElementById("Delete").checked = false;
         document.getElementById("Approve").checked = false;
+        document.getElementById("Public").checked = false;
     }
     function StorePermission() {
         if ($('#roles').val() != '') {
@@ -278,6 +290,7 @@
                     Edit: $('#Edit').is(":checked"),
                     Delete: $('#Delete').is(":checked"),
                     Approve: $('#Approve').is(":checked"),
+                    Public: $('#Public').is(":checked"),
                     Status: 'Disable'
                    
                 },
@@ -329,6 +342,7 @@
                 Edit: $('#Edit_edit').is(":checked"),
                 Delete: $('#Delete_edit').is(":checked"),
                 Approve: $('#Approve_edit').is(":checked"),
+                Public: $('#Public_edit').is(":checked"),
                 Username: $('#KeyLink').val(),
                 Status: 'Disable',
                 Id: $('#Id_edit').val(),

@@ -3,31 +3,31 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh sách địa bàn<small>&nbsp;quản lý</small>
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Create"))
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh sách địa bàn<small>&nbsp;quản lý</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
@@ -42,6 +42,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
+                    <th>Địa bàn cấp trên</th>
                     <th width="15%">Mã đơn vị</th>
                     <th>Tên địa bàn</th>
                     <th width="20%">Phân loại</th>
@@ -53,8 +54,29 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align:left">
+                            @(!string.IsNullOrEmpty(item.MaDiaBanCq) ? Model.FirstOrDefault(t => t.MaDiaBan == item.MaDiaBanCq)?.TenDiaBan ?? "" : "")
+                        </td>
                         <td class="text-center">@item.MaDiaBan</td>
-                        <td class="active">@item.TenDiaBan</td>
+                        <td class="active">
+                            @if (item.Level == "ADMIN")
+                            {
+                                <span></span>
+                            }
+                            else if (item.Level == "T")
+                            {
+                                <span>&emsp;</span>
+                            }
+                            else if (item.Level == "H")
+                            {
+                                <span>&emsp;&emsp;</span>
+                            }
+                            else
+                            {
+                                <span>&emsp;&emsp;&emsp;</span>
+                            }
+                            @item.TenDiaBan
+                        </td>
                         @if (@item.Level == "ADMIN")
                         {
                             <td>Đơn vị tổng hợp toàn Tỉnh</td>
@@ -67,11 +89,15 @@
                         {
                             <td>Đơn vị hành chính cấp Huyện</td>
                         }
+                        @if (@item.Level == "X")
+                        {
+                            <td>Đơn vị hành chính cấp X</td>
+                        }
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                        data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                             }
@@ -79,7 +105,7 @@
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.TenDiaBan')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.TenDiaBan')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }

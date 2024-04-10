@@ -5,7 +5,9 @@
     var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 
-    }
+
+
+}
 <br />
 <br />
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
@@ -13,11 +15,11 @@
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
 <p style="text-align: left; font-size: 16px;">
-    Địa bàn:@ViewData["TenXa"] - @ViewData["TenHuyen"]
+    Địa bàn:@ViewData["TenXa"] - @ViewData["TenDiaBan"]
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm:@Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
-    
+
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
     {
@@ -33,7 +35,7 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
 
     <thead>
-        <tr >
+        <tr>
             <th style="text-align:center">STT</th>
             <th style="text-align:center">Loại đất</th>
             <th style="text-align:center">Tên đường phố</th>
@@ -51,10 +53,83 @@
     <tbody>
         @if (Model != null)
         {
-            @if (Model.GiaDatDiaBanCt != null)
+            @if (Model.GiaDatDiaBanCt.Any())
             {
+                @foreach (var diaban in dsdiaban)
+                {
+                    var dataDiaBan = Model.GiaDatDiaBanCt.Where(x => x.Madiaban == diaban.MaDiaBan);
+                    if (dataDiaBan.Any())
+                    {
+                        var dataAllXa = dataDiaBan.Where(x => x.Maxp == "all" || string.IsNullOrEmpty(x.Maxp));
+                        <tr>
+                            <td colspan="12" style="text-align:left; font-weight:bold;">@diaban.TenDiaBan</td>
+                        </tr>
+                        if (dataAllXa.Any())
+                        {
+                            @foreach (var allXa in dataAllXa)
+                            {
+                                <tr style="text-align:center">
+                                    <td style="text-align:center">@allXa.HienThi</td>
+                                    <td style="text-align:center">@allXa.Loaidat</td>
+                                    <td class="active" style="text-align:left">@allXa.Mota</td>
+                                    <td class="active">@allXa.Loaiduong</td>
+                                    <td class="active" style="text-align:left">@allXa.Diemdau</td>
+                                    <td class="active" style="text-align:left">@allXa.Diemcuoi </td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Hesok)</td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Giavt1)</td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Giavt2)</td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Giavt3)</td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Giavt4)</td>
+                                    <td class="active">@Helpers.ConvertDbToStr(allXa.Giavt5)</td>
+                                </tr>
+                            }
+                        }
+                        @foreach (var xa in dsxaphuong)
+                        {
+                            var data = dataDiaBan.Where(x => x.Maxp == xa.Maxp);
+                            if (data.Any())
+                            {
+                                <tr>
+                                    <td colspan="12" style="text-align:left; font-weight:bold;"> &emsp; @xa.Tenxp</td>
+                                </tr>
+                                @foreach (var item in data)
+                                {
+                                    <tr style="text-align:center">
+                                        <td style="text-align:center">@item.HienThi</td>
+                                        <td style="text-align:center">@item.Loaidat</td>
+                                        <td class="active" style="text-align:left">@item.Mota</td>
+                                        <td class="active">@item.Loaiduong</td>
+                                        <td class="active" style="text-align:left">@item.Diemdau</td>
+                                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Hesok)</td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                                        <td class="active">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
 
-                @foreach (var item in Model.GiaDatDiaBanCt.OrderBy(x=>x.Sapxep))
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                @foreach (var item in Model.GiaDatDiaBanCt.OrderBy(x => x.Sapxep))
                 {
                     <tr style="text-align:center">
 

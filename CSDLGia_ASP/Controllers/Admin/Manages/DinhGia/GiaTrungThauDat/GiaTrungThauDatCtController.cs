@@ -1,6 +1,8 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Models.Temp.TempSystems;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -18,11 +20,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDatCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv, string Mahs, string Solo, string Sothua, string Tobando, string Mota,
+        public JsonResult Store(string MaDv,string MaDiaBan, string MaXaPhuong, string Mahs, string Solo, string Sothua, string Tobando, string Mota,
             double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
         {
             var model = new GiaDauGiaDatCt
             {
+                MaDiaBan = MaDiaBan,
+                Maxp = MaXaPhuong,
                 Mahs = Mahs,
                 Solo = Solo,
                 Sothua = Sothua,
@@ -67,11 +71,41 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             var DmDvt = _db.DmDvt.ToList();
             var model = _db.GiaDauGiaDatCt.FirstOrDefault(p => p.Id == Id);
+            var diaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.MaDiaBan);
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
                 result += "<div class='row'>";
+
+
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Địa bàn</label>";
+                result += "<label class='form-control' style='color:blue'>" + diaban.TenDiaBan + "</label>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group' style='width:100%'>";
+                result += "<label>Xã/phường</label>";
+                result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";
+                result += "<option value='all'>--Chọn xã phường--</option>";
+                var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == model.MaDiaBan);
+                if (!DsXaPhuong.Any())
+                {
+                    DsXaPhuong = _db.DsXaPhuong;
+                }
+                foreach (var item in DsXaPhuong)
+                {
+                    result += "<option value='" + item.Maxp + "'" + (model.Maxp == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                }
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+
+
+
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Số lô</b></label>";
@@ -120,13 +154,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá khởi điểm</b></label>";
-                result += "<input type='text' id='Giakhoidiem_edit' name='Giakhoidiem_edit' value='" + @model.Giakhoidiem + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Giakhoidiem_edit' name='Giakhoidiem_edit' value='" + Helpers.ConvertDbToStr(model.Giakhoidiem) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá đấu giá</b></label>";
-                result += "<input type='text' id='Giadaugia_edit' name='Giadaugia_edit' value='" + @model.Giadaugia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Giadaugia_edit' name='Giadaugia_edit' value='" + Helpers.ConvertDbToStr(model.Giadaugia) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 /*result += "<div class='col-xl-3'>";
@@ -151,7 +185,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDatCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Solo, string Sothua, string Tobando, string Mota,
+        public JsonResult Update(int Id,string MaXaPhuong, string Solo, string Sothua, string Tobando, string Mota,
             double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
         {
             var model = _db.GiaDauGiaDatCt.FirstOrDefault(t => t.Id == Id);
@@ -165,6 +199,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             model.Giadaugia = Giadaugia;
             model.Giasddat = Giadaugia / Dientich;
             model.Updated_at = DateTime.Now;
+            model.Maxp=MaXaPhuong;
             _db.GiaDauGiaDatCt.Update(model);
             _db.SaveChanges();
 
@@ -233,9 +268,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     result += "<td style='text-align:center'>" + item.Tobanbo + "</td>";
                     result += "<td style='text-align:center'>" + item.Dientich + "</td>";
                     result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giakhoidiem + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giadaugia + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giasddat + "</td>";
+                    result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giakhoidiem) + "</td>";
+                    result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giadaugia) + "</td>";
+                    result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Giasddat) + "</td>";
                     result += "<td>";
                     result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                     result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

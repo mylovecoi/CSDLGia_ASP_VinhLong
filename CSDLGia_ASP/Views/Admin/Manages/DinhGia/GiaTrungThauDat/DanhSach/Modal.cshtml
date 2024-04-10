@@ -1,5 +1,7 @@
 ﻿@{
     var DmDvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+    var TenDiaBan = ViewData["TenDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -16,6 +18,24 @@
             <div class="modal-body">
                 @* <input type="hidden" value="@ViewData["Mahs"]" id="Mahs_create" name="Mahs_create" /> *@
                 <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label>Địa bàn:</label>
+                            <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group" style="width:100%">
+                            <label>Xã/Phường</label>
+                            <select class="form-control select2basic" id="MaXaPhuong_create" name="MaXaPhuong_create" style="width:100%">
+                                <option value="">---Chọn Xã/Phường</option>
+                                @foreach (var item in DsXaPhuong)
+                                {
+                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Số lô</b></label>
@@ -38,13 +58,13 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên người sử dụng</b></label>
-                            <input type="text" id="Mota_create" name="Mota_create" class="form-control"></input>
+                            <input type="text" id="Mota_create" name="Mota_create" class="form-control">
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Diện tích</b></label>
-                            <input type="text" id="Dientich_create" name="Dientich_create" class="form-control" />
+                            <input type="text" id="Dientich_create" name="Dientich_create" class="form-control " />
                         </div>
                     </div>
                     <div class="col-xl-4">
@@ -65,13 +85,13 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá khởi điểm</b></label>
-                            <input type="text" id="Giakhoidiem_create" name="Giakhoidiem_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="Giakhoidiem_create" name="Giakhoidiem_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá đấu giá</b></label>
-                            <input type="text" id="Giadaugia_create" name="Giadaugia_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="Giadaugia_create" name="Giadaugia_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     @* <div class="col-xl-3">
@@ -222,9 +242,11 @@
                 Mota: $('#Mota_create').val(),
                 Dientich: $('#Dientich_create').val(),
                 Dvt: $('#Dvt_create').val(),
-                Giakhoidiem: $('#Giakhoidiem_create').val(),
-                Giadaugia: $('#Giadaugia_create').val(),
+                Giakhoidiem: $('#Giakhoidiem_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giadaugia: $('#Giadaugia_create').val().replace(/\./g, "").replace(/,/g, "."),
                 MaDv: $('#Madv').val(),
+                MaDiaBan: $('#Madiaban').val(),
+                MaXaPhuong: $('#MaXaPhuong_create').val(),
                 
                 // Giasddat: $('#Giasddat_create').val(),
             },
@@ -256,6 +278,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {                        
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -274,9 +299,10 @@
                 Mota: $('#Mota_edit').val(),
                 Dientich: $('#Dientich_edit').val(),
                 Dvt: $('#Dvt_edit').val(),
-                Giakhoidiem: $('#Giakhoidiem_edit').val(),
-                Giadaugia: $('#Giadaugia_edit').val(),
-                Id: $('#id_edit').val()
+                Giakhoidiem: $('#Giakhoidiem_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giadaugia: $('#Giadaugia_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Id: $('#id_edit').val(),
+                MaXaPhuong: $('#MaXaPhuong_edit').val(),
             },
             dataType: 'JSON',
             success: function (data) {

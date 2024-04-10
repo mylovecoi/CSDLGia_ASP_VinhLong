@@ -1,0 +1,169 @@
+﻿@using CSDLGia_ASP.Models.Systems
+@{
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var chucnang = (IEnumerable<GroupPermissions>)ViewData["ChucNang"];
+}
+
+@model CSDLGia_ASP.Models.tblHeThong
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Chỉnh sửa cấu hình hệ thống
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="HeThongChung" asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <input hidden asp-for="Id" />
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Cấp bản quyền cho đơn vị<span class="require">*</span></label>
+                        <input type="text" class="form-control" asp-for="TenDonVi" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <input type="text" class="form-control" asp-for="DiaChi" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" class="form-control" asp-for="DienThoai" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Tài liệu hướng dẫn sử dụng</label>
+                        <input type="file" name="FileImportHDSD" />
+                        @if (!string.IsNullOrEmpty(Model.FileHDSDBase64))
+                        {
+                            <br />
+                            <button onclick="downloadFile('@Model.FileHDSDBase64', '@Model.FileHDSD')">Tải file @Model.FileHDSD</button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Tài liệu hướng dẫn đăng ký tài khoản</label>
+                        <input type="file" name="FileImportDangKy" />
+                        @if (!string.IsNullOrEmpty(Model.FileDangKyBase64))
+                        {
+                            <br />
+                            <button onclick="downloadFile('@Model.FileDangKyBase64', '@Model.FileDangKy')">Tải file @Model.FileDangKy</button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <h4>Thiết lập kết nối CSDL của Bộ</h4>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Link API xác thực : </label>
+                        <input type="text" class="form-control" asp-for="LinkAPIXacthuc" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Mã xác thực:</label>
+                        <input type="text" class="form-control" asp-for="TokenLGSP" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Mã địa bàn hành chính</label>
+                        <input type="text" class="form-control" asp-for="MaDiaBanHanhChinh" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Mã đơn vị thu thập</label>
+                        <input type="text" class="form-control" asp-for="MaDonViThuThap" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="HeThongChung" asp-action="Index" class="btn btn-danger mr-2">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Cập nhật</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+<script>
+    function downloadFile(base64String, fileName) {
+        // Tạo một blob từ chuỗi base64
+        var byteCharacters = atob(base64String);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += 512) {
+            var slice = byteCharacters.slice(offset, offset + 512);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, { type: 'application/octet-stream' });
+
+        // Tạo một đường link tạm thời để tải xuống
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+
+        // Tải tệp xuống
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

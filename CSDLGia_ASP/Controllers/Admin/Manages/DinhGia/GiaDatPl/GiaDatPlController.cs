@@ -498,6 +498,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                             model = model.Where(x=>x.MaXaPhuong==MaXaPhuong);
                         }
                     }
+                    var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == MaDiaBan);
                     ViewBag.beginTime = beginTime;
                     ViewBag.endTime = endTime;
                     ViewBag.beginPrice = beginPrice;
@@ -506,7 +507,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MaXaPhuong"] = MaXaPhuong;
                     ViewData["phanloaihoso"] = phanloaihoso;
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong;
+                    ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
                     ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";

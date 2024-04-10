@@ -46,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsDiaBan/Store")]
         [HttpPost]
-        public JsonResult Store(string TenDiaBan, string PhanLoai)
+        public JsonResult Store(string TenDiaBan, string PhanLoai, string MaDiaBanCq)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -59,6 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             MaDiaBan = DateTime.Now.ToString("yyMMddssmmHH"),
                             TenDiaBan = TenDiaBan,
                             Level = PhanLoai,
+                            MaDiaBanCq = MaDiaBanCq,
                             Created_At = DateTime.Now,
                             Updated_At = DateTime.Now,
                         };
@@ -95,6 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Edit"))
                 {
+                    var dsdiaban = _db.DsDiaBan;
                     var model = _db.DsDiaBan.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
@@ -110,25 +112,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<label>Phân loại: </label>";
                         result += "<select id='phanloai_edit' name='phanloai_edit' class='form-control'>";
 
-                        if (model.Level == "ADMIN")
-                        {
-                            result += "<option value='ADMIN' selected>Đơn vị tổng hợp toàn Tỉnh</option>";
-                            result += "<option value='T'>Đơn vị hành chính cấp Tỉnh</option>";
-                            result += "<option value='H'>Đơn vị hành chính cấp Huyện</option>";
-                        }
-                        if (model.Level == "T")
-                        {
-                            result += "<option value='ADMIN'>Đơn vị tổng hợp toàn Tỉnh</option>";
-                            result += "<option value='T' selected>Đơn vị hành chính cấp Tỉnh</option>";
-                            result += "<option value='H'>Đơn vị hành chính cấp Huyện</option>";
-                        }
-                        if (model.Level == "H")
-                        {
-                            result += "<option value='ADMIN'>Đơn vị tổng hợp toàn Tỉnh</option>";
-                            result += "<option value='T'>Đơn vị hành chính cấp Tỉnh</option>";
-                            result += "<option value='H' selected>Đơn vị hành chính cấp Huyện</option>";
-                        }
+                        result += "<option value='ADMIN' " + (model.Level == "ADMIN" ? "selected" : "") + ">Đơn vị tổng hợp toàn Tỉnh</option>";
+                        result += "<option value='T'" + (model.Level == "T" ? "selected" : "") + ">Đơn vị hành chính cấp Tỉnh</option>";
+                        result += "<option value='H'" + (model.Level == "H" ? "selected" : "") + ">Đơn vị hành chính cấp Huyện</option>";
+                        result += "<option value='X'" + (model.Level == "X" ? "selected" : "") + ">Đơn vị hành chính cấp Xã</option>";
 
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Địa bàn cấp trên: </label>";
+                        result += "<select id='madiabancq_edit' name='madiabancq_edit' class='form-control'>";
+                        result += "<option value=''>--Chọn--</option>";
+                        foreach (var diaban in dsdiaban)
+                        {
+                            result += "<option value='" + diaban.MaDiaBan + "'" + (model.MaDiaBanCq == diaban.MaDiaBan ? " selected" : "") + ">" + diaban.TenDiaBan + "</option>";
+                        }
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
@@ -159,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsDiaBan/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string TenDiaBan, string PhanLoai)
+        public JsonResult Update(int Id, string TenDiaBan, string PhanLoai, string MaDiaBanCq)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -170,6 +171,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         var model = _db.DsDiaBan.FirstOrDefault(t => t.Id == Id);
                         model.TenDiaBan = TenDiaBan;
                         model.Level = PhanLoai;
+                        model.MaDiaBanCq = MaDiaBanCq;
                         model.Updated_At = DateTime.Now;
                         _db.DsDiaBan.Update(model);
                         _db.SaveChanges();

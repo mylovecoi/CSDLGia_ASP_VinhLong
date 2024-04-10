@@ -40,9 +40,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             if (username != null && password != null)
             {
                 var model = _db.Users.FirstOrDefault(u => u.Username == username);
+                //Lấy thông tin trong bảng hệ thống để gán
+                var heThong = _db.tblHeThong.FirstOrDefault();
+                if (heThong != null)
+                {
+                    HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
+                    HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
+                }
 
-
-                if(model.Level != "DN")
+                if (model.Level != "DN")
                 {
                     if (model != null)
                     {

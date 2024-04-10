@@ -1,11 +1,12 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdv = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
     var khuvuc = (IEnumerable<GiaDatDiaBanCt>)ViewData["Khuvuc"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var TenDiaBan = ViewData["TenDiaBan"];
     int record_id = 1;
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
@@ -26,10 +27,28 @@
             <div class="modal-body">
                 <input hidden asp-for="Mahs">
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
+                            <label>Địa bàn</label>
+                            <label class="form-control" style="color:blue">@TenDiaBan</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group" style="width:100%">
+                            <label>Xã/phường</label>
+                            <select asp-for="MaXa" id="MaXaPhuong_create" name="MaXaPhuong_create" class="form-control select2basic" style="width:100%">
+                                <option value="all">--Chọn xã phường-- </option>
+                                @foreach (var item in DsXaPhuong)
+                                {
+                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group" style="width:100%">
                             <label>Loại đất</label>
-                            <select id="maloaidat_create" name="maloaidat_create" class="form-control">
+                            <select id="maloaidat_create" name="maloaidat_create" class="form-control select2basic" style="width:100%">
                                 @foreach (var item in dmloaidat)
                                 {
                                     <option value="@item.Maloaidat">@item.Loaidat</option>
@@ -71,19 +90,19 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Hệ số</label>
-                            <input type="number" step="0.1" id="hesok_create" name="hesok_create" class="form-control" />
+                            <input id="hesok_create" name="hesok_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí I</label>
-                            <input type="number" step="0.1" id="giavt1_create" name="giavt1_create" class="form-control" />
+                            <input id="giavt1_create" name="giavt1_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí II</label>
-                            <input type="number" step="0.1" id="giavt2_create" name="giavt2_create" class="form-control" />
+                            <input id="giavt2_create" name="giavt2_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
 
@@ -93,19 +112,19 @@
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí III</label>
-                            <input type="number" step="0.1" id="giavt3_create" name="giavt3_create" class="form-control" />
+                            <input id="giavt3_create" name="giavt3_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí IV</label>
-                            <input type="number" step="0.1" id="giavt4_create" name="giavt4_create" class="form-control" />
+                            <input id="giavt4_create" name="giavt4_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá vị trí V</label>
-                            <input type="number" step="0.1" id="giavt5_create" name="giavt5_create" class="form-control" />
+                            <input id="giavt5_create" name="giavt5_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                 </div>
@@ -287,18 +306,20 @@
             url: '/GiaDatDiaBanCt/Store',
             type: 'POST',
             data: {
+                MaDiaBan: $('#Madiaban').val(),
+                MaXaPhuong: $('#MaXaPhuong_create').val(),
                 Mahs: $('#Mahs').val(),
                 Maloaidat: $('#maloaidat_create').val(),
                 MoTa: $('#mota_create').val(),
                 Diemdau: $('#diemdau_create').val(),
                 Diemcuoi: $('#diemcuoi_create').val(),
                 Loaiduong: $('#loaiduong_create').val(),
-                Hesok: $('#hesok_create').val().replace(/\,/g, '.'),
-                Giavt1: $('#giavt1_create').val().replace(/\,/g, '.'),
-                Giavt2: $('#giavt2_create').val().replace(/\,/g, '.'),
-                Giavt3: $('#giavt3_create').val().replace(/\,/g, '.'),
-                Giavt4: $('#giavt4_create').val().replace(/\,/g, '.'),
-                Giavt5: $('#giavt5_create').val().replace(/\,/g, '.'),
+                Hesok: $('#hesok_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt1: $('#giavt1_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt2: $('#giavt2_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt3: $('#giavt3_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt4: $('#giavt4_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt5: $('#giavt5_create').val().replace(/\./g, "").replace(/,/g, "."),
                 HienThi: $('#hienthi_create').val(),
                 SapXep: $('#sapxep_create').val(),
                 MaDv: $('#Madv').val(),
@@ -392,14 +413,15 @@
                 Diemdau: $('#diemdau_edit').val(),
                 Diemcuoi: $('#diemcuoi_edit').val(),
                 Loaiduong: $('#loaiduong_edit').val(),
-                Hesok: $('#hesok_edit').val().replace(/\,/g, '.'),
-                Giavt1: $('#giavt1_edit').val().replace(/\,/g, '.'),
-                Giavt2: $('#giavt2_edit').val().replace(/\,/g, '.'),
-                Giavt3: $('#giavt3_edit').val().replace(/\,/g, '.'),
-                Giavt4: $('#giavt4_edit').val().replace(/\,/g, '.'),
-                Giavt5: $('#giavt5_edit').val().replace(/\,/g, '.'),
+                Hesok: $('#hesok_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt1: $('#giavt1_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt2: $('#giavt2_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt3: $('#giavt3_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt4: $('#giavt4_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giavt5: $('#giavt5_edit').val().replace(/\./g, "").replace(/,/g, "."),
                 HienThi: $('#hienthi_edit').val(),
                 SapXep: $('#sapxep_edit').val(),
+                MaXaPhuong: $('#MaXaPhuong_edit').val(),
             },
             dataType: 'JSON',
 
@@ -434,6 +456,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
