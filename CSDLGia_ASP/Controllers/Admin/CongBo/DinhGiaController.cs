@@ -57,7 +57,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             model.GiaThueMatDatMatNuocCt = modelct.ToList();
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
+            ViewData["DsNhom"] = _db.GiaThueMatDatMatNuocNhom;
+            ViewData["Title"] = "Chi tiết giá thuê mặt đất mặt nước";
             return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model);
         }
 
@@ -528,5 +529,99 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Xem chi tiết giá trợ giá trợ cước";
             return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/Show.cshtml", model_new);
         }
+
+
+        [Route("CongBo/GiaThueTaiNguyen")]
+        [HttpGet]
+        public IActionResult GiaThueTaiNguyen(string Madv, int Nam)
+        {
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen> model = _db.GiaThueTaiNguyen.Where(t => t.Congbo == "DACONGBO");
+
+            if (Madv != "all")
+            {
+                model = model.Where(t => t.Madv == Madv);
+            }
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+            }
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
+            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["Madv"] = Madv;
+            ViewData["Nam"] = Nam;
+            ViewData["Title"] = "Công bố giá thuế tài nguyên";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giathuetncb";
+            ViewBag.bSession = false;
+            return View("Views/Admin/CongBo/DinhGia/GiaThueTaiNguyen.cshtml", model);
+        }
+
+        [Route("CongBo/GiaThueTaiNguyen/Show")]
+        [HttpGet]
+        public IActionResult GiaThueTaiNguyenShow(string Mahs)
+        {
+            var model = _db.GiaThueTaiNguyen.FirstOrDefault(t => t.Mahs == Mahs);
+            model.GiaThueTaiNguyenCt = _db.GiaThueTaiNguyenCt.Where(t => t.Mahs == model.Mahs).ToList();
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+            ViewData["Title"] = "Xem chi tiết giá thuế tài nguyên";
+            ViewData["MenuLv1"] = "menu_dg";
+            ViewData["MenuLv2"] = "menu_dgthuetn";
+            ViewData["MenuLv3"] = "menu_dgthuetn_tt";
+            return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Show.cshtml", model);
+        }
+
+
+        [Route("CongBo/GiaHangHoaTaiSieuThi")]
+        [HttpGet]
+        public IActionResult GiaHangHoaTaiSieuThi(string Madv, int Nam)
+        {
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi> model = _db.GiaHangHoaTaiSieuThi.Where(t => t.Congbo == "DACONGBO");
+
+            if (Madv != "all")
+            {
+                model = model.Where(t => t.Madv == Madv);
+            }
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+            }
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
+            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["Madv"] = Madv;
+            ViewData["Nam"] = Nam;
+            ViewData["Title"] = "Công bố giá hàng hóa tại siêu thị";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giahhstcb";
+            ViewBag.bSession = false;
+            return View("Views/Admin/CongBo/DinhGia/GiaHangHoaTaiSieuThi.cshtml", model);
+        }
+
+        [Route("CongBo/GiaHangHoaTaiSieuThi/Show")]
+        [HttpGet]
+        public IActionResult GiaHangHoaTaiSieuThiShow(string Mahs)
+        {
+            var model = _db.GiaHangHoaTaiSieuThi.FirstOrDefault(t => t.Mahs == Mahs);
+            model.GiaHangHoaTaiSieuThiCt = _db.GiaHangHoaTaiSieuThiCt.Where(t => t.Mahs == model.Mahs).ToList();
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+            ViewData["Title"] = "Xem chi tiết hàng hóa tại siêu thị";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dgcb";
+            ViewData["MenuLv3"] = "menu_giahhstcb";
+            return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/DanhSach/Show.cshtml", model);
+        }
+
+
     }
 }
