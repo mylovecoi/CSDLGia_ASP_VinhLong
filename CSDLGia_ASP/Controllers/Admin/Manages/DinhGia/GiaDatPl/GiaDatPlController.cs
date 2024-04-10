@@ -337,6 +337,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Chỉnh sửa giá đất cụ thể";

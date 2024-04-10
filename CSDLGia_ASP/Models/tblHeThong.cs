@@ -11,5 +11,15 @@
         public string DienThoai { get; set; }
         public string SoFax { get; set; }
         public string Email { get; set; }
+        public string LinkAPIXacthuc { get; set; }
+        public string TokenLGSP { get; set; }
+        public string MaDiaBanHanhChinh { get; set; }
+        public string MaDonViThuThap { get; set; }
+        public string FileHDSD { get; set; }
+        public string FileHDSDBase64 { get; set; }
+        public string FileQuyChe { get; set; }
+        public string FileQuyCheBase64 { get; set; }
+        public string FileDangKy { get; set; }
+        public string FileDangKyBase64 { get; set; }
     }
 }
