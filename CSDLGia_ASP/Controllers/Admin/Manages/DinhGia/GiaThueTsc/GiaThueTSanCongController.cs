@@ -450,27 +450,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                                      Dvt = hosoct.Dvt,
                                      Dongiathue = hosoct.Dongiathue,
                                      Sotienthuenam = hosoct.Sotienthuenam,
-
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
-                    if (DonGiaTu > 0) { model = model.Where(t => t.Dongiathue >= DonGiaTu); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongiathue <= DonGiaDen); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.Dongiathue >= DonGiaTu || t.Sotienthuenam >= DonGiaTu); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongiathue <= DonGiaDen || t.Sotienthuenam <= DonGiaDen); }
                     if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
                     if (!string.IsNullOrEmpty(Tentaisan))
                     {
                         model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan.ToLower()));
                     }
 
-
                     ViewData["Madv"] = Madv;
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Tentaisan"] = Tentaisan;
                     ViewData["DanhSachHoSo"] = _db.GiaThueTaiSanCong.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
