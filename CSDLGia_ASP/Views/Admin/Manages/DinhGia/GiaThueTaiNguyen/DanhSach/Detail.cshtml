@@ -139,7 +139,9 @@
                 if (data.status == 'success') {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -148,7 +150,7 @@
     }
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaThueTaiNguyenCt/Update',
             type: 'POST',

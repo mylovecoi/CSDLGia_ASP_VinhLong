@@ -227,9 +227,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Create"))
-                {
-               
-
+                {     
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen
                     {
                         Mahs = request.Mahs,
@@ -579,8 +577,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Ten"] = Ten;
                     ViewData["DanhSachHoSo"] = _db.GiaThueTaiNguyen.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     ViewData["DanhMucNhom"] = _db.GiaThueTaiNguyenNhom;
@@ -682,7 +680,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá tính thuế tài nguyên (đồng)</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + Helpers.ConvertDbToStr(model.Gia) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
