@@ -307,6 +307,7 @@ namespace CSDLGia_ASP.Database
 
         //API
         public DbSet<KetNoiAPI> KetNoiAPI { get; set; }
+        public DbSet<KetNoiAPI_DanhSach> KetNoiAPI_DanhSach { get; set; }
         public DbSet<KetNoiAPI_HoSo> KetNoiAPI_HoSo { get; set; }
         public DbSet<KetNoiAPI_HoSo_ChiTiet> KetNoiAPI_HoSo_ChiTiet { get; set; }
         public DbSet<DmChucnang> DmChucnang { get; set; }
