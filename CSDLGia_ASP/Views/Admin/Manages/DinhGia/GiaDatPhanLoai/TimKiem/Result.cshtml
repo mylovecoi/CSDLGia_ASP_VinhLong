@@ -57,13 +57,15 @@
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaDatCuThe/Search?';
                     var madv = '&madv=' + $('#madv').val();
+                    var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
+                    var MaXaPhuong = '&MaXaPhuong=' + $('#MaXaPhuong').val();
                     var phanloaihoso = '&phanloaihoso=' + $('#phanloaihoso').val();
                     var endPrice = '&endPrice=' + $('#endPrice').val();
                     var beginPrice = '&beginPrice=' + $('#beginPrice').val();
                     var endTime = '&endTime=' + $('#endTime').val();
                     var beginTime = '&beginTime=' + $('#beginTime').val();
 
-                    var url = current_path_url + madv + phanloaihoso + endPrice + beginPrice + endPrice + beginTime;
+                    var url = current_path_url + madv + MaDiaBan + MaXaPhuong + phanloaihoso + endPrice + beginPrice + endPrice + beginTime;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -115,6 +117,7 @@
                         <div class="form-group">
                             <label>Địa bàn áp dụng</label><br />
                             <select class="form-control" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
+                                <option>--Chọn địa bàn--</option>
                                 @foreach (var item in dsdiaban)
                                 {
                                     <option value="@item.MaDiaBan">@item.TenDiaBan</option>
