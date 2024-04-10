@@ -1,5 +1,4 @@
 ﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Migrations;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
