@@ -19,7 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("Permissions/Store")]
         [HttpPost]
-        public JsonResult Store(string Username, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, string Status)
+        public JsonResult Store(string Username, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, bool Public, string Status)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -38,6 +38,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Edit = Edit,
                         Delete = Delete,
                         Approve = Approve,
+                        Public = Public,
                         Status = Status,
                     };
                     _db.Permissions.Add(request);
@@ -62,7 +63,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("Permissions/StoreSinglePermission")]
         [HttpPost]
-        public JsonResult StoreSinglePermission(string Username, string Tendangnhap, string Madv, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, string Status)
+        public JsonResult StoreSinglePermission(string Username, string Tendangnhap, string Madv, string Roles, bool Index, bool Create, bool Edit, 
+                                                bool Delete, bool Approve, bool Public, string Status)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -80,6 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Edit = Edit,
                         Delete = Delete,
                         Approve = Approve,
+                        Public = Public,
                         Status = Status,
                     };
                     _db.Permissions.Add(request);
@@ -186,6 +189,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<input type='checkbox' id='Approve_edit' name='Approve_edit'/><span></span>Xét duyệt";
                         result += "</label>";
                     }
+                    if (model.Public)
+                    {
+                        result += "<label class='checkbox'>";
+                        result += "<input type='checkbox' checked id='Public_edit' name='Public_edit' /><span></span>Công bố";
+                        result += "</label>";
+                    }
+                    else
+                    {
+                        result += "<label class='checkbox'>";
+                        result += "<input type='checkbox' id='Public_edit' name='Public_edit'/><span></span>Công bố";
+                        result += "</label>";
+                    }
                     result += "</div>";
                     result += "<input hidden id='Id_edit' name='Id_edit' value='" + model.Id + "'>";
                     result += "</div>";
@@ -213,7 +228,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("Permissions/Update")]
         [HttpPost]
-        public JsonResult Update(string Username, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, string Status, int Id)
+        public JsonResult Update(string Username, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, 
+                                bool Public, string Status, int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -223,6 +239,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 model.Edit = Edit;
                 model.Delete = Delete;
                 model.Approve = Approve;
+                model.Public = Public;
                 model.Status = Status;
 
                 _db.Permissions.Update(model);
@@ -241,7 +258,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("Permissions/UpdateSinglePermission")]
         [HttpPost]
-        public JsonResult UpdateSinglePermission(string Username, string Tendangnhap, string Madv, string Roles, bool Index, bool Create, bool Edit, bool Delete, bool Approve, string Status, int Id)
+        public JsonResult UpdateSinglePermission(string Username, string Tendangnhap, string Madv, string Roles, bool Index, bool Create, bool Edit, 
+                                                bool Delete, bool Approve, bool Public, string Status, int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -251,6 +269,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 model.Edit = Edit;
                 model.Delete = Delete;
                 model.Approve = Approve;
+                model.Public = Public;
                 model.Status = Status;
 
                 _db.Permissions.Update(model);
@@ -303,7 +322,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             result += "<th width='10%'>Sửa</th>";
             result += "<th width='10%'>Xóa</th>";
             result += "<th width='10%'>Chuyển/<br>Xét Duyệt</th>";
-            result += "<th width='15%'>Thao tác</th>";
+            result += "<th width='10%'>Công bố</th>";
+            result += "<th width='10%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
@@ -360,6 +380,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "</td>";
                     result += "<td style='text-align:center'>";
                     if (item.Approve)
+                    {
+                        result += "<i class='la la-check icon-2x text-info mr-5'></i>";
+                    }
+                    else
+                    {
+                        result += "<i class='la la-remove icon-2x text-danger mr-5'></i>";
+                    }
+                    result += "</td>";
+                    result += "<td style='text-align:center'>";
+                    if (item.Public)
                     {
                         result += "<i class='la la-check icon-2x text-info mr-5'></i>";
                     }
@@ -399,6 +429,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             result += "<th width='10%'>Sửa</th>";
             result += "<th width='10%'>Xóa</th>";
             result += "<th width='10%'>Chuyển/<br>Xét Duyệt</th>";
+            result += "<th width='10%'>Công bố</th>";
             result += "<th width='15%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -456,6 +487,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "</td>";
                     result += "<td style='text-align:center'>";
                     if (item.Approve)
+                    {
+                        result += "<i class='la la-check icon-2x text-info mr-5'></i>";
+                    }
+                    else
+                    {
+                        result += "<i class='la la-remove icon-2x text-danger mr-5'></i>";
+                    }
+                    result += "</td>";
+                    result += "<td style='text-align:center'>";
+                    if (item.Public)
                     {
                         result += "<i class='la la-check icon-2x text-info mr-5'></i>";
                     }

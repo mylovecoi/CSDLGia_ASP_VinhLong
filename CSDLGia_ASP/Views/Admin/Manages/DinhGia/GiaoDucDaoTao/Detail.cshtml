@@ -80,9 +80,9 @@
                                 <tr>
                                     <td style="text-align:center">@(record_id++)</td>
                                     <td style="text-align:left">@item.Mota</td>
-                                    <td style="text-align:right">@item.Giathanhthi1</td>
-                                    <td style="text-align:right">@item.Gianongthon1</td>
-                                    <td style="text-align:right">@item.Giamiennui1</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
                                     <td>
                                         <button type="button" onclick="GetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
@@ -136,6 +136,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                     $('#Edit_Modal').modal();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
@@ -150,9 +153,9 @@
             url: '/DinhGiaGdDtCt/Update',
             type: 'POST',
             data: {
-                Thanhthi1: $('#tt1_edit').val(),
-                Nongthon1: $('#nt1_edit').val(),
-                Miennui1: $('#mn1_edit').val(),
+                Thanhthi1: $('#tt1_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Nongthon1: $('#nt1_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Miennui1: $('#mn1_edit').val().replace(/\./g, "").replace(/,/g, "."),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

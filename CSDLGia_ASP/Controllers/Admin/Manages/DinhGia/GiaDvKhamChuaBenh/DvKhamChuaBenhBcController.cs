@@ -130,6 +130,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
                                      Ghichu = hosoct.Ghichu,
+                                     Sapxep = hosoct.Sapxep,
+                                     Hienthi = hosoct.Hienthi
                                  });
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
                     if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }

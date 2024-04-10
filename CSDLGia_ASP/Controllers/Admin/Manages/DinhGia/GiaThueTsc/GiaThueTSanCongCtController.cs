@@ -139,12 +139,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn giá thuê</b></label>";
-                result += "<input type='text' id='Dongiathue_edit' name='Dongiathue_edit' value='" + model.Dongiathue + "' class='form-control money text-right' style = 'font-weight: bold'/>";
+                result += "<input type='text' id='Dongiathue_edit' name='Dongiathue_edit' value='" + Helpers.ConvertDbToStr(model.Dongiathue) + "' class='form-control money-decimal-mask' style = 'font-weight: bold'/>";
                 result += "</div></div>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Thành tiền</b></label>";
-                result += "<input type='text' id='Sotienthuenam_edit' name='Sotienthuenam_edit' value='" + model.Sotienthuenam + "' class='form-control money text-right' style = 'font-weight: bold'/>";
+                result += "<input type='text' id='Sotienthuenam_edit' name='Sotienthuenam_edit' value='" + Helpers.ConvertDbToStr(model.Sotienthuenam) + "' class='form-control money-decimal-mask' style = 'font-weight: bold'/>";
                 result += "</div></div>";
                 result += "</div>";
                 result += "</div>";

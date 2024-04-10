@@ -174,7 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         }
 
 
-        [HttpPost("GiaThueTaiNguyenBc/BaoCao/GetListHoSo")]
+        [HttpPost("GiaThueTaiNguyenBc/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

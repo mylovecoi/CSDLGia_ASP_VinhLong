@@ -8,6 +8,7 @@ namespace CSDLGia_ASP.Models.Systems
         [Key]
         public int Id { get; set; }
         public string MaDiaBan { get; set; }
+        public string MaDiaBanCq { get; set; }
         [Required]
         public string TenDiaBan { get; set; }
         public string Level { get; set; }

@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                      Giamiennui1 = hosoct.Giamiennui1,
                                      MaNhom = hosoct.MaNhom,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,                                     
                                  });
 
                     model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && t.Trangthai == "HT");

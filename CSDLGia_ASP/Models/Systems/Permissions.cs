@@ -25,6 +25,7 @@ namespace CSDLGia_ASP.Models.Systems
         public bool Delete { get; set; }
 
         public bool Approve { get; set; }
+        public bool Public { get; set; }
 
         public string Status { get; set; }
     }

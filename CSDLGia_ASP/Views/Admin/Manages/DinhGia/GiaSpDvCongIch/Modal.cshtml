@@ -170,9 +170,11 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {
-                  
+                if (data.status == 'success') {                  
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -182,10 +184,10 @@
 
 
     function SetUpdate() {
-        var giatu = $('#Mucgiatu_edit').val().replace(',', '');
-        var giaden = $('#Mucgiaden_edit').val().replace(',', '');
-        var gia3 = $('#Mucgia3_edit').val().replace(',', '');
-        var gia4 = $('#Mucgia4_edit').val().replace(',', '');
+        var giatu = $('#Mucgiatu_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var giaden = $('#Mucgiaden_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var gia3 = $('#Mucgia3_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var gia4 = $('#Mucgia4_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaSpDvCongIchCt/Update',
             type: 'POST',

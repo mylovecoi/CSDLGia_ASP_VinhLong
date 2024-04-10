@@ -80,6 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
                                      Ghichu = hoso.Ghichu,
+                                     
                                  });
 
                     ViewData["Title"] = "Báo cáo giá sản phẩm dịch vụ công ích";
@@ -138,7 +139,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Mucgia4 = hosoct.Mucgia4,
                                      Manhom = hosoct.Manhom,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     HienThi = hosoct.HienThi,
+                                     Sapxep = hosoct.Sapxep
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");

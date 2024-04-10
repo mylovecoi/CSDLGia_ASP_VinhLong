@@ -103,13 +103,13 @@
             data: {
                 Id: id_edit
             },
-
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {
-                    
+                if (data.status == 'success') {                    
                     $('#edit_thongtin').replaceWith(data.message);
-                    //MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -118,7 +118,7 @@
     }
 
     function SetUpdate() {
-        var gia = $('#Giadv_edit').val().replace(',', '');
+        var gia = $('#Giadv_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/DinhGiaDvKcb/UpdateCt',
             type: 'POST',

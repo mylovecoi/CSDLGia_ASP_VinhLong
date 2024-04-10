@@ -14799,6 +14799,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaDiaBan")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MaDiaBanCq")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TenDiaBan")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -14846,6 +14849,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailQt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaCqcq")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaDiaBan")
@@ -15528,6 +15534,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Public")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Roles")
                         .IsRequired()

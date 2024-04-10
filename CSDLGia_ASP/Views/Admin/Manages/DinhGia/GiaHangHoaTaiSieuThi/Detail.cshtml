@@ -42,8 +42,8 @@
                             <td style="text-align:center">@item.Mahanghoa</td>
                             <td style="text-align:center" class="success">@item.Tenhanghoa</td>
                             <td style="text-align:center">@item.Dvt</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : "")</td>
-                            <td style="text-align:center" ;font-weight:bold">@(@item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : "")</td>
+                            <td style="text-align:right" ;font-weight:bold">@(@item.Giatu != 0 ? Helpers.ConvertDbToStr(item.Giatu) : "")</td>
+                            <td style="text-align:right" ;font-weight:bold">@(@item.Giaden != 0 ? Helpers.ConvertDbToStr(item.Giaden) : "")</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                         onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -94,7 +94,9 @@
                 if (data.status == 'success') {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -103,8 +105,8 @@
     }
 
     function SetUpdate() {
-        var giatu = $('#giatu_edit').val().replace(',', '');
-        var giaden = $('#giaden_edit').val().replace(',', '');
+        var giatu = $('#giatu_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var giaden = $('#giaden_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaHangHoaTaiSieuThiCt/Update',
             type: 'POST',

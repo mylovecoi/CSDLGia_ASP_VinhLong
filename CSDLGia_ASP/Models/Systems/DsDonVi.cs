@@ -10,6 +10,7 @@ namespace CSDLGia_ASP.Models.Systems
         public int Id { get; set; }
         public string MaDiaBan { get; set; }
         public string MaQhNs { get; set; }
+        public string MaCqcq { get; set; }
         public string MaDv { get; set; }
         public string TenDv { get; set; }
         public string DiaChi { get; set; }

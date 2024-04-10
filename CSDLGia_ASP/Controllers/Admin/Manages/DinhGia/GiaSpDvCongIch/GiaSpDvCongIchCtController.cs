@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -31,28 +32,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá 1</label>";
-                result += "<input type='text' id='Mucgiatu_edit' name='Mucgiatu_edit' value='" + model.Mucgiatu + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgiatu_edit' name='Mucgiatu_edit' value='" + model.Mucgiatu + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá 2</label>";
-                result += "<input type='text' id='Mucgiaden_edit' name='Mucgiaden_edit' value='" + model.Mucgiaden + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgiaden_edit' name='Mucgiaden_edit' value='" + model.Mucgiaden + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá 3</label>";
-                result += "<input type='text' id='Mucgia3_edit' name='Mucgia3_edit' value='" + model.Mucgia3 + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgia3_edit' name='Mucgia3_edit' value='" + model.Mucgia3 + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Mức giá 4</label>";
-                result += "<input type='text' id='Mucgia4_edit' name='Mucgia4_edit' value='" + model.Mucgia4 + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Mucgia4_edit' name='Mucgia4_edit' value='" + model.Mucgia4 + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -124,13 +125,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     foreach (var item in data.OrderBy(t=>t.Sapxep))
                     {
                         result += "<tr>";
-                        result += "<td style='text-align:left'>" + item.HienThi + "</td>";
+                        result += "<td style='text-align:center'>" + item.HienThi + "</td>";
                         result += "<td style='text-align:left'>" + item.Ten + "</td>";
                         result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-                        result += "<td style='text-align:center'>" + item.Mucgiatu + "</td>";
-                        result += "<td style='text-align:center'>" + item.Mucgiaden + "</td>";
-                        result += "<td style='text-align:center'>" + item.Mucgia3 + "</td>";
-                        result += "<td style='text-align:center'>" + item.Mucgia4 + "</td>";
+                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiatu) + "</td>";
+                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiaden) + "</td>";
+                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgia3) + "</td>";
+                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgia4) + "</td>";
 
                         result += "<td>";
                         result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

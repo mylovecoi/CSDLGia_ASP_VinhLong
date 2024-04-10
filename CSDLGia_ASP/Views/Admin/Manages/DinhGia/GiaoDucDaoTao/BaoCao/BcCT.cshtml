@@ -24,7 +24,6 @@
 
 <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayTu"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["NgayDen"])</p>
 
-
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr style="text-align:center">
@@ -55,18 +54,16 @@
                     <tr>
                         <th></th>
                         <td style="text-align:left">@item.Mota</td>
-                        <td style="text-align:right">@item.Giathanhthi1</td>
-                        <td style="text-align:right">@item.Gianongthon1</td>
-                        <td style="text-align:right">@item.Giamiennui1</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
                     </tr>
-
                 }
 
             }
         }
     </tbody>
 </table>
-
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
