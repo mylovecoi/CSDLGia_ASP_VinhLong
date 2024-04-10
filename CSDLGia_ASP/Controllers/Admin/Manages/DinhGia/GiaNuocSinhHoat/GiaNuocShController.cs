@@ -92,7 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                         ViewData["Nam"] = Nam;
                         ViewData["Madv"] = Madv;
-                        ViewData["TenDv"] = Madv != "all" ? dsdonvi.First(t => t.MaDv == Madv).TenDv : "all";
+                        ViewData["TenDv"] = Madv != "all" ? dsdonvi.FirstOrDefault(t => t.MaDv == Madv)?.TenDv : "all";
                         ViewData["Title"] = " Thông tin giá nước sạch sinh hoạt";
                         ViewData["MenuLv1"] = "menu_dg";
                         ViewData["MenuLv2"] = "menu_dgnsh";
@@ -725,9 +725,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
                                  });
-                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.DonGia1 >= DonGiaTu);
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.DonGia1 >= DonGiaTu || t.DonGia2 >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.DonGia1 <= DonGiaDen); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.DonGia1 <= DonGiaDen || t.DonGia2 <= DonGiaDen); }
                     if (!string.IsNullOrEmpty(Doituongsd))
                     {
                         model = model.Where(t => t.Doituongsd.ToLower().Contains(Doituongsd.ToLower()));
@@ -737,8 +737,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Doituongsd"] = Doituongsd;
                     ViewData["DanhSachHoSo"] = _db.GiaNuocSh.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 

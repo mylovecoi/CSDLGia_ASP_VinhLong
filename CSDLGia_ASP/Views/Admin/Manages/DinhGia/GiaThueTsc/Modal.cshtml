@@ -27,8 +27,7 @@
     </div>
 </div>
 
-<script>   
-
+<script>
     function SetEdit(id_edit) {
         $.ajax({
             url: '/DinhGiaThueTscCt/Edit',
@@ -41,6 +40,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -56,39 +58,39 @@
 
         // }
         // else {
-            $.ajax({
-                url: '/DinhGiaThueTscCt/Update',
-                type: 'POST',
-                data: {
-                    Dvthue: $('#Dvthue_edit').val(),
-                    Diachi: $('#Diachi_edit').val(),
-                    // Soqdpd: $('#Soqdpd_edit').val(),
-                    // Thoigianpd: $('#Thoigianpd_edit').val(),
-                    // Soqddg: $('#Soqddg_edit').val(),
-                    // Thoigiandg: $('#Thoigiandg_edit').val(),
-                    Hdthue: $('#Hdthue_edit').val(),
-                    Ththue: $('#Ththue_edit').val(),
-                    Thuetungay: $('#Thuetungay_edit').val(),
-                    // Thuedenngay: $('#Thuedenngay_edit').val(),
-                    Dvt: $('#Dvt_edit').val(),
-                    Dongiathue: $('#Dongiathue_edit').val(),
-                    Sotienthuenam: $('#Sotienthuenam_edit').val(),
-                    Id: $('#id_edit').val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                        $('#frm_data').replaceWith(data.message);
-                        $(document).ready(function () {
-                            TableManaged4.init();
-                        });
-                        $('#Edit_Modal').modal("hide");
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
+        $.ajax({
+            url: '/DinhGiaThueTscCt/Update',
+            type: 'POST',
+            data: {
+                Dvthue: $('#Dvthue_edit').val(),
+                Diachi: $('#Diachi_edit').val(),
+                // Soqdpd: $('#Soqdpd_edit').val(),
+                // Thoigianpd: $('#Thoigianpd_edit').val(),
+                // Soqddg: $('#Soqddg_edit').val(),
+                // Thoigiandg: $('#Thoigiandg_edit').val(),
+                Hdthue: $('#Hdthue_edit').val(),
+                Ththue: $('#Ththue_edit').val(),
+                Thuetungay: $('#Thuetungay_edit').val(),
+                // Thuedenngay: $('#Thuedenngay_edit').val(),
+                Dvt: $('#Dvt_edit').val(),
+                Dongiathue: $('#Dongiathue_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Sotienthuenam: $('#Sotienthuenam_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
                 }
-            })
+            }
+        })
         // }
     }
 

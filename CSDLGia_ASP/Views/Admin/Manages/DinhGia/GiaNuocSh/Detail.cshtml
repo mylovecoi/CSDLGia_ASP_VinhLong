@@ -164,10 +164,11 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
-                    MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }

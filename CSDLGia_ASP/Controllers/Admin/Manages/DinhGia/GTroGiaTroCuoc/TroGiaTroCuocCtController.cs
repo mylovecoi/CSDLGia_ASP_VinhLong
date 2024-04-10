@@ -103,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='Dongia_edit' name='Dongia_edit' value='" + model.Dongia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='Dongia_edit' name='Dongia_edit' value='" + model.Dongia + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";

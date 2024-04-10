@@ -25,8 +25,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.xetduyet", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
+                    var dsdonvi = _db.DsDonVi;
+                    var dsdiaban = _db.DsDiaBan;
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                     {

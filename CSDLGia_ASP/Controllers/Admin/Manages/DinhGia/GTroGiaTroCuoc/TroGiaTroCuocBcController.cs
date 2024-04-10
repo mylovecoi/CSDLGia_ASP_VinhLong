@@ -127,8 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Dvt = hosoct.Dvt
                                  });
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop && t.Mahs == PhanLoaiHoSo); }
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == PhanLoaiHoSo); }
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 

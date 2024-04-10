@@ -4,6 +4,7 @@
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 <br />
 <br />
@@ -21,7 +22,7 @@
         }
     }
 </p>
-<p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
     Cơ quan tiếp nhận:
     @foreach (var dsonvi in dsdonvi)
@@ -46,19 +47,37 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null)
+        @if (Model.GiaDatPhanLoaiCt.Any())
         {
-            @if (Model.GiaDatPhanLoaiCt != null)
+            @foreach (var diaban in dsdiaban)
             {
-                @foreach (var item in Model.GiaDatPhanLoaiCt)
+                var dataDiaBan = Model.GiaDatPhanLoaiCt.Where(x=>x.MaDiaBan == diaban.MaDiaBan);
+                if (dataDiaBan.Any())
                 {
-                    <tr style="text-align:center">
-                        <td style="text-align:center">@(record_id++)</td>                        
-                        <td>@item.Khuvuc</td>
-                        <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                    <tr>
+                        <td colspan="3" style="text-align:left; font-weight:bold;">@diaban.TenDiaBan</td>
                     </tr>
+                    @foreach (var xa in DsXaPhuong)
+                    {
+                        var data = dataDiaBan.Where(x => x.MaXaPhuong == xa.Maxp);                        
+                        if (data.Any())
+                        {
+                            <tr>
+                                <td colspan="3" style="text-align:left; font-weight:bold;"> &emsp; @xa.Tenxp</td>
+                            </tr>
+                            @foreach (var item in data)
+                            {
+                                <tr style="text-align:center">
+                                    <td style="text-align:center">@(record_id++)</td>
+                                    <td style="text-align:left"> @item.Khuvuc</td>
+                                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                                </tr>
+                            }
+                        }
+                    }
                 }
-            }
+
+            }    
         }
     </tbody>
 </table>

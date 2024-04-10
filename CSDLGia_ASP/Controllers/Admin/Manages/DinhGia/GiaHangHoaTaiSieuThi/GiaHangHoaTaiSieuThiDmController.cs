@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     ViewData["Title"] = "Danh mục siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgsieuthi";
-                    ViewData["MenuLv3"] = "menu_dgnsh_dmsieuthi";
+                    ViewData["MenuLv3"] = "menu_dgnsh_dmhhtaisieuthi";
                     return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/DanhMuc/Index.cshtml", model);
                 }
                 else
