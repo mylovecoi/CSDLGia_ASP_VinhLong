@@ -68,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group'>";
                 result += "<label>Địa bàn áp dụng</label><br />";
-                result += "<select class='form-control' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
+                result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
                 foreach (var item in dsdiaban)
                 {
                     result += "<option value='" + item.MaDiaBan + "'"+ (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
@@ -79,7 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form-group'>";
                 result += "<label>Xã phường</label><br />";
-                result += "<select class='form-control' id='MaXaPhuongChiTiet_edit'>";
+                result += "<select class='form-control select2basic' id='MaXaPhuongChiTiet_edit'>";
                 foreach (var item in dsxaphuong)
                 {
                     result += "<option value='" + item.Maxp + "'"+ (model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";

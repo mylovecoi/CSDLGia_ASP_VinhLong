@@ -3,6 +3,8 @@
     var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var TenDiaBan = ViewData["TenDiaBan"];
+    var TenXa = ViewData["TenXa"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
 @section custom_style {
@@ -47,13 +49,14 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Địa bàn</label>
-                        <select class="form-control" id="Madiaban" name="Madiaban">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == Model.Madiaban ? "selected" : "")>@item.TenDiaBan</!option>
-                            }
-                        </select>
+                        <label>Địa bàn: </label>
+                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenDiaBan </label>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Xã/Phường: </label>
+                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenXa </label>
                     </div>
                 </div>
                 <div class="col-xl-6">

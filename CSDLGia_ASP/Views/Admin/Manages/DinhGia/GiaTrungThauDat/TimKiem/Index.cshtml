@@ -12,7 +12,11 @@
     var Giadaugia_den = ViewData["Giadaugia_den"];
     var ten = ViewData["ten"];
     var Phanloai = ViewData["Phanloai"];
+    
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     var MaDiaBan = ViewData["MaDiaBan"];
+    var MaXa = ViewData["MaXa"];
 
 }
 @model IEnumerable<GiaDauGiaDatCt>
@@ -77,13 +81,40 @@
                         <br />
                     </div>
                 </div>
+
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Quận/Huyện</label>
+                        <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
+                            <option value="all">---Chọn địa bàn---</option>
+                            @foreach (var item in DsDiaBan)
+                            {
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Xã/Phường</label>
+                        <select class="form-control" asp-for="@MaXa" id="MaXa" name="MaXa">
+                            <option value="all">---Chọn Xã/Phường</option>
+                            @foreach (var item in DsXaPhuong)
+                            {
+                                <option value="@item.Maxp">@item.Tenxp</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Tên dự án</label>
                         <input type="text" class="form-control" asp-for="@ten" name="ten" id="ten" />
                     </div>
                 </div>
-                <div class="col-xl-6">
+                @* <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
                         <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan">
@@ -94,7 +125,7 @@
                             }
                         </select>
                     </div>
-                </div>
+                </div> *@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Phân loại</label>
@@ -207,6 +238,25 @@
         var form = document.getElementById("frm_search");
         form.submit();
     }
+    function GetXaPhuong() {
+        $.ajax({
+            url: '/Ajax/GetXaPhuong',
+            type: 'POST',
+            data: {
+                MaDiaBan: $('#MaDiaBan').val(),
+                KeySelect: 'MaXa'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#MaXa').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
     function ClickSearch() {
         var fromDate = document.getElementById("beginTime").value;
         var toDate = document.getElementById("endTime").value;
@@ -220,6 +270,7 @@
                 var current_path_url = '/GiaTrungThauDat/Search?';
                 var madv = '&madv=' + $('#maDv').val();
                 var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
+                var MaXa = '&MaXa=' + $('#MaXa').val();
                 
                 var ten = '&ten=' + $('#ten').val();
                 var PhanLoai = '&PhanLoai=' + $('#PhanLoai').val();
@@ -229,7 +280,7 @@
                 var Giakhoidiem_den = '&Giakhoidiem_den=' + $('#Giakhoidiem_den').val();
                 var Giadaugia_den = '&Giadaugia_den=' + $('#Giadaugia_den').val();
                 var Giadaugia_tu = '&Giadaugia_tu=' + $('#Giadaugia_tu').val();
-                var url = current_path_url + madv + MaDiaBan + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
+                var url = current_path_url + madv + MaDiaBan + MaXa + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
                 window.location.href = url;
             } else {
                 toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");

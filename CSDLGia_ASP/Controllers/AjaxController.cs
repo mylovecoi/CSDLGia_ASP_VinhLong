@@ -33,8 +33,14 @@ namespace CSDLGia_ASP.Controllers
                     return Json(data);
                 }
                 else
-                {
-                    var xaphuong = _db.DsXaPhuong.Where(t => t.Madiaban == MaDiaBan);
+                {                    
+                   
+                    var xaphuong = _db.DsXaPhuong.Where(x => x.Madiaban == MaDiaBan);
+                    if (!xaphuong.Any())
+                    {
+                        xaphuong = _db.DsXaPhuong;
+                    }
+                    
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
                     result += "<option value='all'>---Chọn xã phường---</option>";
@@ -69,10 +75,10 @@ namespace CSDLGia_ASP.Controllers
                 }
                 else
                 {
-                    var xaphuong = _db.DsXaPhuong.Where(x=>x.Madiaban !=null);
-                    if (MaDiaBan != "all")
+                    var xaphuong = _db.DsXaPhuong.Where(x => x.Madiaban == MaDiaBan);
+                    if (!xaphuong.Any())
                     {
-                        xaphuong = xaphuong.Where(x => x.Madiaban == MaDiaBan);
+                        xaphuong = _db.DsXaPhuong;
                     }
 
                     string result = "";

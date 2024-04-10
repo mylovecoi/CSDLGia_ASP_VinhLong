@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string PhanLoai { get; set; }
         [NotMapped]
         public string TenDuAn { get; set; }
-        [NotMapped]
         public string MaDiaBan { get; set; }
+        public string Maxp { get; set; }
     }
 }

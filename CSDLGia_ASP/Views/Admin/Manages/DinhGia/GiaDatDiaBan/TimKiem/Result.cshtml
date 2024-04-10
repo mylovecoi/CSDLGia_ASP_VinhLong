@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "_LayoutReports";
     int record_id = 1;
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>
 

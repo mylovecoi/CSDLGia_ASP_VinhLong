@@ -37,7 +37,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         Sheet = 1,
                         MaDv = Madv,
                     };
-
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["DsXaPhuong"] = _db.DsXaPhuong;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
@@ -77,8 +78,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
                     for (int row = requests.LineStart; row <= requests.LineStop; row++)
                     {
+                        string MaXaPhuong = requests.Maxp == "all" ? (worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 11].Value.ToString().Trim() : "") : requests.Maxp;
                         list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt
                         {
+                            MaDiaBan=requests.MadiabanBc,
+                            Maxp= MaXaPhuong,
                             Mahs = Mahs,
                             MaDv = requests.MaDv,
                             TrangThai = "CXD",
@@ -117,6 +121,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             _db.SaveChanges();
             var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat
             {
+                Madiaban=requests.MadiabanBc,
+                Maxp= requests.Maxp,
                 Madv = requests.MaDv,
                 Thoidiem = DateTime.Now,
                 Mahs = Mahs,
@@ -124,11 +130,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             var modelct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
             model.GiaDauGiaDatCt = modelct.ToList();
 
-            var MaDiaBan = _db.DsDonVi.FirstOrDefault(x => x.MaDv == requests.MaDv).MaDiaBan;
+            
+            var XaPhuong = _db.DsXaPhuong.FirstOrDefault(x => x.Maxp == requests.Maxp);
+            var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == requests.MadiabanBc);
+            ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == requests.MadiabanBc).TenDiaBan;
+            ViewData["TenXaPhuong"] = XaPhuong != null ? XaPhuong.Tenxp : "Tất cả";
 
             ViewData["DmDvt"] = _db.DmDvt.ToList();
             ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == requests.MaDv).TenDv;
-            ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(t => t.Madiaban == MaDiaBan).ToList();
+            ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
             ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
             ViewData["DsDiaBan"] = _db.DsDiaBan;
             ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";

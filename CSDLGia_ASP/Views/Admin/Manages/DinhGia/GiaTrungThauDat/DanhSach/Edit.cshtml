@@ -6,6 +6,7 @@
     var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
     var Xas = (IEnumerable<DsXaPhuong>)ViewData["Xas"];
     var TenDiaBan = ViewData["TenDiaBan"];
+    var TenXaPhuong = ViewData["TenXaPhuong"];
 }
 
 @section custom_style {
@@ -77,35 +78,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn:</label>
-                        <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan:</label>
-                        @* <select class="form-control" asp-for="Madiaban">
-                        @foreach (var item in DsDiaBan)
-                        {
-                        <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                        }
-                        </select> *@
+                        <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan</label>
                     </div>
                 </div>
-               @*  <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label>Quận/Huyện</label>
-                        <select class="form-control" asp-for="MaHuyen" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
-                            @foreach (var item in Huyens)
-                            {
-                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
-                            }
-                        </select>
-                    </div>
-                </div> *@
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label>Xã/Phường</label>
-                        <select class="form-control" asp-for="Maxp" id="Maxp" name="Maxp">
-                            @foreach (var item in Xas)
-                            {
-                                <option value="@item.Maxp">@item.Tenxp</option>
-                            }
-                        </select>
+                        <label class="form-control" style="color:blue; font-weight:bold;">@TenXaPhuong</label>
                     </div>
                 </div>
                 <div class="col-xl-12">

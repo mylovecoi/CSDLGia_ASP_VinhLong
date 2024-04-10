@@ -4,14 +4,16 @@
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
+    var MaDiaBan = ViewData["MaDiaBan"];
     //test
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
-    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
-    var Xas = (IEnumerable<Towns>)ViewData["Xas"];
-
+    // var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
+    // var Xas = (IEnumerable<Towns>)ViewData["Xas"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan>
 
@@ -32,11 +34,12 @@
         });
 
         $(function () {
-            $('#Madv, #Nam').change(function () {
+            $('#Madv, #Nam, #MaDiaBan_search').change(function () {
                 var current_path_url = '/GiaDatDiaBan?';
                 var madv = '&Madv=' + $('#Madv').val();
+                var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan_search').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var url = current_path_url + madv + MaDiaBan + nam;
                 window.location.href = url;
             })
         });
@@ -80,7 +83,7 @@
                             int nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
                             {
-                                    <!option value="@i" @(Nam == i ? "selected" : "")>@i</!option>
+                                <!option value="@i" @(Nam == i ? "selected" : "")>@i</!option>
                             }
                         }
                     </select>
@@ -94,6 +97,18 @@
                         @foreach (var item in dsdonvi)
                         {
                             <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group" style="width:100%">
+                    <label>Địa bàn</label>
+                    <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan_search" name="MaDiaBan_search" style="width:100%">
+                    <option value="all">-- Chọn địa bàn --</option>
+                        @foreach (var item in DsDiaBan)
+                        {
+                            <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                         }
                     </select>
                 </div>
@@ -123,6 +138,10 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
                                     @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
+
+
+
+
                             </td>
                             <td style="text-align: center" width="15%">
                                 @if (item.Trangthai == "CHT")
@@ -154,6 +173,10 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
+
+
                             </td>
 
                             <td width="12%" style="text-align:left;">
@@ -216,54 +239,56 @@
                 </div>
                 <hr />
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Đơn vị nhập liệu</label>
-                                <select name="madv" id="madv" class="form-control">
-                                    @foreach (var dv in dsdonvi)
-                                    {
-                                        <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-                                    }
-                                </select>
-                            </div>
-                        </div>    
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Quận/Huyện</label>
-                                <select class="form-control" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">                                   
-                                    @foreach (var item in Huyens)
-                                    {
-                                        <option value="@item.Mahuyen">@item.Tenhuyen</option>
-                                    }
-                                </select>
-                            </div>
+                    <div class="form-group" style="width:100%">
+                        <div class="col-xl-12" >
+                            <label>Đơn vị nhập liệu</label>
                         </div>
                         <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Xã/Phường</label>
-                                <select class="form-control" id="MaXa" name="MaXa">
-                                    <option value="">---Chọn Xã/Phường</option>
-                                    @foreach (var item in Xas)
-                                    {
-                                        <option value="@item.Maxa">@item.Tenxa</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Nội dung quyết định</label>
-                                <select name="soqd" class="form-control">
-                                    @foreach (var qd in soqd)
-                                    {
-                                        <!option value="@qd.Soqd">@qd.Mota</!option>
-                                    }
-                                </select>
-                            </div>
+                            <select name="madv" id="madv" class="form-control select2basic" style="width:100%">
+                                @foreach (var dv in dsdonvi)
+                                {
+                                    <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                                }
+                            </select>
                         </div>
                     </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group" style="width:100%">
+                            <label>Địa bàn</label>
+                            <select class="form-control select2basic" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()" style="width:100%">
+                                @foreach (var item in DsDiaBan)
+                                {
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group" style="width:100%">
+                            <label>Xã/Phường</label>
+                            <select class="form-control select2basic" id="MaXaPhuong" name="MaXaPhuong" style="width:100%">
+                                <option value="">---Chọn Xã/Phường</option>
+                                @foreach (var item in DsXaPhuong)
+                                {
+                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Nội dung quyết định</label>
+                            <select name="soqd" class="form-control">
+                                @foreach (var qd in soqd)
+                                {
+                                    <!option value="@qd.Soqd">@qd.Mota</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -341,19 +366,19 @@
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Show.cshtml")
 <script>
-    function GetTowns() {
+    function GetXaPhuong() {
         $.ajax({
-            url: '/Ajax/GetTowns',
+            url: '/Ajax/GetXaPhuong',
             type: 'POST',
             data: {
-                MaHuyen: $('#MaHuyen').val(),
-                KeySelect: 'MaXa'
+                MaDiaBan: $('#MaDiaBan').val(),
+                KeySelect: 'MaXaPhuong'
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
                     toastr.success('Success');
-                    $('#MaXa').html(data.message);
+                    $('#MaXaPhuong').html(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
