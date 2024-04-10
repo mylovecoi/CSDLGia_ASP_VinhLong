@@ -56,17 +56,17 @@
                     <td colspan="6" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
+                @foreach (var item in chitieths.OrderBy(t=>t.Sapxep))
                 {
 
                     <tr>
-                        <td></td>
+                        <td style="text-align:center">@item.HienThi</td>
                         <td style="text-align:left">@item.Ten</td>
                         <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@item.Mucgiatu</td>
-                        <td style="text-align:center">@item.Mucgiaden</td>
-                        <td style="text-align:center">@item.Mucgia3</td>
-                        <td style="text-align:center">@item.Mucgia4</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiatu)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiaden)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia3)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia4)</td>
                     </tr>
 
                 }

@@ -28,6 +28,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -46,8 +47,8 @@
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(",", ".");//.replace(/\./g, ',');
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(",", ".");//.replace(/\./g, ',');
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
                     var NoiDung = '&Ten=' + $('#Ten_Search').val();
 
                     var url = current_path_url + Madv + Manhom + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + NoiDung;
@@ -141,16 +142,16 @@
                     <input id="Ten_Search" name="Ten_Search" class="form-control" value="@ViewData["MoTa"]" />
                 </div>
                 <div class="col-xl-3">
-                <div class="form-group">
-                <label style="font-weight:bold;">Đơn giá từ:</label>
-                <input type="text" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
-                </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn giá từ:</label>
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
+                    </div>
                 </div>
                 <div class="col-xl-3">
-                <div class="form-group">
-                <label style="font-weight:bold;">Đơn giá đến:</label>
-                <input type="text" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
-                </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn giá đến:</label>
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
+                    </div>
                 </div>
             </div>
         </form>
@@ -191,10 +192,10 @@
                         <td style="text-align:center">@item.Tennhom</td>
                         <td style="text-align:left">@item.Ten</td>
                         <td style="text-align:center">@item.Dvt</td>
-                        <td style="text-align:center">@item.Mucgiatu</td>
-                        <td style="text-align:center">@item.Mucgiaden</td>
-                        <td style="text-align:center">@item.Mucgia3</td>
-                        <td style="text-align:center">@item.Mucgia4</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiatu)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiaden)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia3)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia4)</td>
                         <td>
                             <a asp-controller="GiaSpDvCongIch" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
                                target="_blank">

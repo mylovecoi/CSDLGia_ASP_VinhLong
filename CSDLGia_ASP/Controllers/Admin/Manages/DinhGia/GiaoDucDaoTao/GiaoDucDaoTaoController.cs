@@ -586,10 +586,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
-                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.Giathanhthi1 >= DonGiaTu);
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Trangthai == "HT" && t.Giathanhthi1 >= DonGiaTu || t.Gianongthon1 >= DonGiaTu || t.Giamiennui1 >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (MaNhom != "all") { model = model.Where(t => t.MaNhom == MaNhom); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.Giathanhthi1 <= DonGiaDen); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Giathanhthi1 <= DonGiaDen || t.Gianongthon1 <= DonGiaDen || t.Giamiennui1 <= DonGiaDen); }
                     if (!string.IsNullOrEmpty(Mota))
                     {
                         model = model.Where(t => t.Mota.ToLower().Contains(Mota.ToLower()));
@@ -600,15 +600,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Mota"] = Mota;
                     ViewData["DanhMucNhom"] = _db.GiaDvGdDtNhom;
                     ViewData["DanhSachHoSo"] = _db.GiaDvGdDt.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-             
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["Cqcq"] = _db.DsDonVi;
+
 
                     ViewData["Title"] = "Tìm kiếm thông tin định giá giáo dục đào tạo";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -637,7 +637,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Index"))
-                {                  
+                {
 
                     var model = (from hosoct in _db.GiaDvGdDtCt
                                  join hoso in _db.GiaDvGdDt on hosoct.Mahs equals hoso.Mahs
@@ -666,7 +666,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     {
                         model = model.Where(t => t.Mota.ToLower().Contains(Mota_Search.ToLower()));
                     }
-                  
+
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/TimKiem/Result.cshtml", model);
                 }
                 else

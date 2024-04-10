@@ -10,7 +10,6 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
 }
 
 <div class="card card-custom">
@@ -36,7 +35,6 @@
                                     Báo cáo tổng hợp
                                 </span>
                             </button>
-
                         </li>
                         <li>
                             <button data-target="#Report_Modal_CT" data-toggle="modal" class="btn btn-link" style="text-align:left">
@@ -44,7 +42,6 @@
                                     Báo cáo chi tiết
                                 </span>
                             </button>
-
                         </li>
                     </ol>
                 </div>
@@ -186,7 +183,7 @@
             if (fromDateObj <= toDateObj) {
 
                 $.ajax({
-                    url: '/GiaThueTaiNguyenXd/GetListHoSo',
+                    url: '/GiaThueTaiNguyenBc/GetListHoSo',
                     type: 'POST',
                     data: {
                         ngaytu: fromDate,
@@ -195,7 +192,6 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            toastr.success("Thành công!");
                             $('#MaHsTongHop').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
