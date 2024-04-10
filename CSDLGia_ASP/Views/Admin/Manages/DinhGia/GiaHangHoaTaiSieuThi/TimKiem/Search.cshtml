@@ -3,8 +3,7 @@
 
     string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
     string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
-    double DonGiaTu = ViewData["DonGiaTu"] as double? ?? 0;
-    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
+   
 
     var DanhSachHoSo = (IEnumerable<GiaHangHoaTaiSieuThi>)ViewData["DanhSachHoSo"];
 
@@ -26,6 +25,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -43,8 +43,8 @@
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val();
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
 
                     var url = current_path_url + Madv + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen;
                     window.location.href = url;
@@ -123,13 +123,13 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá từ</label>
-                        <input type="number" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@DonGiaTu" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá đến</label>
-                        <input type="number" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@DonGiaDen" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
                     </div>
                 </div>
             </div>
@@ -164,9 +164,9 @@
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align:center">@item.Tendv</td>
                             <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td style="text-align:center">@item.Tenhanghoa</td>
-                            <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giatu)</td>
-                            <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giaden)</td>
+                            <td style="text-align:left">@item.Tenhanghoa</td>
+                            <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Giatu)</td>
+                            <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Giaden)</td>
                             <td>
                                 <a asp-controller="GiaHangHoaTaiSieuThi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
                                    target="_blank">
@@ -203,8 +203,7 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            toastr.success("Thành công!");
-                            $('#mahs_Search').replaceWith(data.message);
+                            $('#Mahs_Search').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
                         }

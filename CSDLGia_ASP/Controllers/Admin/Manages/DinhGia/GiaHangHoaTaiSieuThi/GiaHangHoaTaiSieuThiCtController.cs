@@ -28,14 +28,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá từ</label>";
-                result += "<input type='text' id='giatu_edit' name='gia_edit' value='" + model.Giatu + "' class='form-control money text-right' />";
+                result += "<input type='text' id='giatu_edit' name='gia_edit' value='" + model.Giatu + "' class='form-control money-decimal-mask' />";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá đến</label>";
-                result += "<input type='text' id='giaden_edit' name='gia1_edit' value='" + model.Giaden + "' class='form-control money text-right' />";
+                result += "<input type='text' id='giaden_edit' name='gia1_edit' value='" + model.Giaden + "' class='form-control money-decimal-mask' />";
                 result += "</div>";
                 result += "</div>";
 
