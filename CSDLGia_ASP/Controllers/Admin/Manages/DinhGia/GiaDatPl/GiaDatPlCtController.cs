@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             var dsdiaban = _db.DsDiaBan;
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);
-            var dsxaphuong = _db.DsXaPhuong.Where(x => x.Madiaban == model.MaDiaBan);
+            var dsxaphuong = _db.DsXaPhuong;            
 
             if (model != null)
             {
@@ -71,7 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<select class='form-control' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
                 foreach (var item in dsdiaban)
                 {
-                    result += "<option value='" + item.MaDiaBan + "'"+ ((string)model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
+                    result += "<option value='" + item.MaDiaBan + "'"+ (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -82,7 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<select class='form-control' id='MaXaPhuongChiTiet_edit'>";
                 foreach (var item in dsxaphuong)
                 {
-                    result = "<option value='" + item.Maxp + "'"+ ((string)model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                    result += "<option value='" + item.Maxp + "'"+ (model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -98,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Giá đất cụ thể</b></label>";
-                result += "<input type='text' id='giact_edit' name='giact_edit' class='form-control money text-right' style='font-weight: bold' value='" + model.Giacuthe + "'/>";
+                result += "<input type='text' id='giact_edit' name='giact_edit' class='form-control money-decimal-mask' value='" + Helpers.ConvertDbToStr(model.Giacuthe) + "'/>";
                 result += "</div>";
                 result += "</div>";
 
