@@ -55,23 +55,22 @@
                 if (dataDiaBan.Any())
                 {
                     <tr>
-                        <td colspan="3" style="text-align:left">@diaban.TenDiaBan</td>
+                        <td colspan="3" style="text-align:left; font-weight:bold;">@diaban.TenDiaBan</td>
                     </tr>
                     @foreach (var xa in DsXaPhuong)
                     {
-                        var data = Model.GiaDatPhanLoaiCt.Where(x => x.MaXaPhuong == xa.Maxp);
-                        <tr>
-                            <td colspan="3" style="text-align:left">@xa.Tenxp</td>
-
-                        </tr>
+                        var data = dataDiaBan.Where(x => x.MaXaPhuong == xa.Maxp);                        
                         if (data.Any())
                         {
+                            <tr>
+                                <td colspan="3" style="text-align:left; font-weight:bold;"> &emsp; @xa.Tenxp</td>
+                            </tr>
                             @foreach (var item in data)
                             {
                                 <tr style="text-align:center">
                                     <td style="text-align:center">@(record_id++)</td>
-                                    <td>@item.Khuvuc</td>
-                                    <td style="text-align:center;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                                    <td style="text-align:left"> @item.Khuvuc</td>
+                                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                                 </tr>
                             }
                         }
