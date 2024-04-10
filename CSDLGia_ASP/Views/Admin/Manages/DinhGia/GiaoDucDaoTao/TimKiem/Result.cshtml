@@ -8,37 +8,37 @@
 
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-            <thead>
-                <tr style="text-align:center">
-                    <th style="text-align:center">STT</th>
-                    <th style="text-align:center">Đơn vị</th>
-                    <th style="text-align:center">Số QĐ/Thời điểm</th>
-                    <th style="text-align:center">Hồ sơ</th>
-                    <th style="text-align:center">Tên sản phẩm dịch vụ</th>
-                    <th style="text-align:center">Thành thị</th>
-                    <th style="text-align:center">Nông thôn</th>
-                    <th style="text-align:center">Miền núi</th>
+    <thead>
+        <tr style="text-align:center">
+            <th style="text-align:center">STT</th>
+            <th style="text-align:center">Đơn vị</th>
+            <th style="text-align:center">Số QĐ/Thời điểm</th>
+            <th style="text-align:center">Hồ sơ</th>
+            <th style="text-align:center">Tên sản phẩm dịch vụ</th>
+            <th style="text-align:center">Thành thị</th>
+            <th style="text-align:center">Nông thôn</th>
+            <th style="text-align:center">Miền núi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align:center">@item.Tendv</td>
+                    <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
+                    <td style="text-align:center">@item.Tennhom</td>
+                    <td style="text-align:left">@item.Mota</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
                 </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align:center">@item.Tendv</td>
-                            <td style="text-align:center">@item.SoQD <br />@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
-                            <td style="text-align:center">@item.Tennhom</td>
-                            <td style="text-align:left">@item.Mota</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
-                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+            }
+        }
+    </tbody>
+</table>
 
 
 

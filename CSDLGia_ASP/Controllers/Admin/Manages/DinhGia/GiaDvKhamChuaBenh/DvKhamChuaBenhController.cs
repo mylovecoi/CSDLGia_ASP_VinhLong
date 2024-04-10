@@ -617,8 +617,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["Tenspdv"] = Tenspdv;
                     ViewData["DanhSachHoSo"] = _db.GiaDvKcb.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
                     ViewData["DanhMucNhom"] = _db.GiaDvKcbNhom;
@@ -712,7 +712,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Đơn giá</b></label>";
-                result += "<input type='text' id='Giadv_edit' name='Giadv_edit'  value='" + model.Giadv + "' class='form-control money text-right' style='font-weight: bold' />";
+                result += "<input type='text' id='Giadv_edit' name='Giadv_edit'  value='" + model.Giadv + "' class='form-control money-decimal-mask' style='font-weight: bold' />";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -817,7 +817,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     }
                 }
 
-                result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
+                result += "<table class='table table-striped table-bordered table-hover class-nosort'>";
                 result += "<thead>";
                 result += "<tr style='text-align:center'>";
                 result += "<th>STT</th>";
@@ -838,7 +838,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     result += "<td style='text-align:center'></td>";
                     result += "<td style='text-align:center'>" + item.Madichvu + "</td>";
                     result += "<td style='text-align:left'>" + item.Tenspdv + "</td>";
-                    result += "<td style='text-align:center'>" + item.Giadv + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giadv) + "</td>";
                     result += "<td style='text-align:center'>" + item.Ghichu + "</td>";
                     result += "<td><button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa' data-toggle='modal'";
                     result += "data-target = '#Edit_Modal' onclick = 'SetEdit(`" + item.Id + "`)'>";
