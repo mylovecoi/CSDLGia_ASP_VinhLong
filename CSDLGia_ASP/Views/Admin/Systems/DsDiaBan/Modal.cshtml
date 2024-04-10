@@ -1,4 +1,6 @@
 ﻿<!--Create Modal-->
+@model IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan>
+
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -26,6 +28,19 @@
                                 <option value="ADMIN">Đơn vị tổng hợp toàn Tỉnh</option>
                                 <option value="T">Đơn vị hành chính cấp Tỉnh</option>
                                 <option value="H">Đơn vị hành chính cấp Huyện</option>
+                                <option value="X">Đơn vị hành chính cấp Xã</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Địa bàn cấp trên:</label>
+                            <select id="madiabancq_create" name="madiabancq_create" class="form-control">
+                                <option value="">--Chọn--</option>
+                                @foreach(var item in Model)
+                                {
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                }
                             </select>
                         </div>
                     </div>
@@ -120,7 +135,8 @@
             type: 'POST',
             data: {
                 TenDiaBan: $('#tendiaban_create').val(),
-                PhanLoai: $('#phanloai_create').val()
+                PhanLoai: $('#phanloai_create').val(),
+                MaDiaBanCq: $('#madiabancq_create').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -167,6 +183,7 @@
             data: {
                 TenDiaBan: $('#tendiaban_edit').val(),
                 PhanLoai: $('#phanloai_edit').val(),
+                MaDiaBanCq: $('#madiabancq_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
