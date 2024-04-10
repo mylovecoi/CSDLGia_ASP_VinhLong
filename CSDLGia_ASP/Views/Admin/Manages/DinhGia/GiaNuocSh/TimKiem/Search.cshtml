@@ -2,9 +2,7 @@
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 
     string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
-    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
-    double DonGiaTu = ViewData["DonGiaTu"] as double? ?? 0;
-    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
+    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");  
 
     var DanhSachHoSo = (IEnumerable<GiaNuocSh>)ViewData["DanhSachHoSo"];
 
@@ -26,6 +24,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -43,8 +42,8 @@
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
-                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val();
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
                     var Doituongsd = '&Doituongsd=' + $('#Doituongsd_Search').val();
 
                     var url = current_path_url + Madv + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Doituongsd;
@@ -124,13 +123,13 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá từ</label>
-                        <input type="number" class="form-control" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@DonGiaTu" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn giá đến</label>
-                        <input type="number" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@DonGiaDen" />
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -155,7 +154,6 @@
                     <th>Tỷ trọng tiêu thụ (%)</th>
                     <th>Sản lượng<br />(m3)</th>
                     <th>Đơn giá chưa bao gồm thuế GTGT<br />(đồng/m3)</th>
-                    <th>Thuế suất (%)</th>
                     <th>Đơn giá đã bao gồm thuế GTGT<br />(đồng/m3)</th>
                     <th width="5%" style="text-align:center">Thao tác</th>
                 </tr>
@@ -172,8 +170,7 @@
                         <td style="text-align:center;">@item.TyTrongTieuThu</td>
                         <td style="text-align:center;">@item.SanLuong</td>
                         <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1)</td>
-                        <td style="text-align:center;">@(item.DonGia2 == 0 ? "" : @item.DonGia2)</td>
-                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia1 + (item.DonGia1 * item.DonGia2) / 100)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGia2)</td>
                         <td>
                             <a asp-controller="GiaNuocSh" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
                                target="_blank">

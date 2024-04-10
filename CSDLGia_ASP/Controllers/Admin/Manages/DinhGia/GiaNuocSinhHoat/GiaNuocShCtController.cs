@@ -50,28 +50,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Tỷ trọng tiêu thụ</label>";
-                result += "<input type='number' id='tytrongtieuthu_edit' name='tytrongtieuthu_edit' class='form-control' value='" + model.TyTrongTieuThu + "'  />";
+                result += "<input type='text' id='tytrongtieuthu_edit' name='tytrongtieuthu_edit' class='form-control money-decimal-mask' value='" + model.TyTrongTieuThu + "' />";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Sản lượng</label>";
-                result += "<input type='number' id='sanluong_edit' name='sanluong_edit' value='" + model.SanLuong + "' class='form-control' />";
+                result += "<input type='text' id='sanluong_edit' name='sanluong_edit' value='" + model.SanLuong + "' class='form-control money-decimal-mask' />";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn giá chưa thuế:</label>";
-                result += "<input type='number' id='dongia1_edit' name='dongia1_edit' value='" + model.DonGia1 + "' class='form-control text-right' />";
+                result += "<input type='text' id='dongia1_edit' name='dongia1_edit' value='" + Helpers.ConvertDbToStr(model.DonGia1) + "' class='form-control money-decimal-mask' />";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Đơn giá đã bao gồm thuế GTGT (đồng/m3)</label>";
-                result += "<input type='number' id='dongia2_edit' name='dongia2_edit' value='" + model.DonGia2 + "' class='form-control text-right' step='0.1'/>";
+                result += "<label>Đơn giá sau thuế </label>";
+                result += "<input type='text' id='dongia2_edit' name='dongia2_edit' value='" + Helpers.ConvertDbToStr(model.DonGia2) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
 
