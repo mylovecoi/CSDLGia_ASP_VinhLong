@@ -63,6 +63,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -76,7 +79,7 @@
             type: 'POST',
             data: {
                 Maspdv: $('#Maspdv_edit').val(),
-                Dongia: $('#Dongia_edit').val(),
+                Dongia: $('#Dongia_edit').val().replace(/\./g, "").replace(/,/g, "."),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

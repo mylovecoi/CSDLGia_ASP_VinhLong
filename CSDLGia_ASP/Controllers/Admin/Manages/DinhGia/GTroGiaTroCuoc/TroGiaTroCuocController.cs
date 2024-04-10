@@ -457,8 +457,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
                     MoTa = string.IsNullOrEmpty(MoTa) ? "" : MoTa;
 
-
-
                     var model = (from hosoct in _db.GiaTroGiaTroCuocCt
                                  join hoso in _db.GiaTroGiaTroCuoc on hosoct.Mahs equals hoso.Mahs
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
@@ -484,13 +482,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                         model = model.Where(t => t.Mota.ToLower().Contains(MoTa.ToLower()));
                     }
 
-
                     ViewData["Madv"] = Madv;
                     ViewData["NgayTu"] = NgayTu;
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["MoTa"] = MoTa;
                     ViewData["DanhSachHoSo"] = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
