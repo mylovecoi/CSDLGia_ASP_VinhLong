@@ -406,7 +406,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.baocao", Name = "ĐG - Giá giao dịch dất thực tế trên thị trường - Báo cáo" });
-            
+
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat", Name = "ĐG - Giá trúng thầu quyền sử dụng đất" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.thongtin", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", Name = "ĐG - Giá trúng thầu quyền sử dụng đất - Xét duyệt" });
@@ -509,6 +509,11 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnganhnghekd", Name = "Danh mục ngành nghề kinh doanh" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmloaidat", Name = "Danh mục loại đất" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnhomhh", Name = "Danh mục nhóm hàng hóa" });
+            //API
+            roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản trị kết nối API" });
+            roldelist.Add(new VMRoleList { Role = "hethong.api.doanhngiepdvlt", Name = "Danh sách doanh nghiệp kê khai dịch vụ lưu trú" });
+            roldelist.Add(new VMRoleList { Role = "hethong.api.hosodvlt", Name = "Danh sách hồ sơ kê khai dịch vụ lưu trú" });
+            roldelist.Add(new VMRoleList { Role = "hethong.api.csdlqg", Name = "Danh sách kết nối cơ sở dữ liệu quốc gia" });
 
             return roldelist;
         }
@@ -684,10 +689,10 @@ namespace CSDLGia_ASP.Helper
             {
                 //string str = String.Format("{0:n0}", db);
                 //return str;
-                if (Math.Abs(number % 1) < double.Epsilon)               
+                if (Math.Abs(number % 1) < double.Epsilon)
                 {
                     // Nếu là số nguyên, định dạng theo dạng #,###
-                    return number.ToString("#,##0").Replace(",",".");
+                    return number.ToString("#,##0").Replace(",", ".");
                 }
                 else
                 {
@@ -716,7 +721,7 @@ namespace CSDLGia_ASP.Helper
                                 formatted = formatted.Remove(indexOfDecimal + 3, lengthToRemove);
                             }
                         }
-                    }                   
+                    }
                     return formatted.Replace(".", "*").Replace(",", ".").Replace("*", ",");
                 }
             }
@@ -784,7 +789,7 @@ namespace CSDLGia_ASP.Helper
         {
             double val = 0;
             if (!string.IsNullOrEmpty(str))
-            {                
+            {
                 string numericString = Regex.Replace(str, @"[^\d,]", "").Replace(',', '.');
 
                 // Lấy thông tin về cài đặt vùng của hệ thống
@@ -1386,6 +1391,29 @@ namespace CSDLGia_ASP.Helper
             return csg;
         }
 
+        public static KeyValuePair<string, string>[] getDSChucNangCSDLQG()
+        {
+            return new[]
+            {
+                new KeyValuePair<string, string>("giahhdvk", "Giá thị trường hàng hóa, dịch vụ"),
+                new KeyValuePair<string, string>("giahhdvkdm", "Danh mục hàng hóa, dịch vụ thu thập giá thị trường của Tỉnh"),
+                new KeyValuePair<string, string>("giathuetainguyen", "Giá tính thuế tài nguyên do UBND tỉnh ban hành"),
+                new KeyValuePair<string, string>("giaspdvcongichdm", "Danh mục dịch vụ thu gom rác thải của Tỉnh"),
+                new KeyValuePair<string, string>("giaspdvcongich", "Dịch vụ thu gom, vận chuyển rác thải sinh hoạt tại sử dụng nguồn vốn ngân sách Nhà nước tại địa phương"),
+                new KeyValuePair<string, string>("giaphilephidm", "Danh mục đối tượng tính lệ phí trước bạ do UBND Tỉnh quy định"),
+                new KeyValuePair<string, string>("giaphilephi", "Giá tính lệ phí trước bạ do UBND Tỉnh quy định"),
+                new KeyValuePair<string, string>("thamdinhgia", "Dữ liệu giá trị tài sản thẩm định giá Nhà nước do Hội đồng thẩm định giá Nhà nước định giá"),
+                new KeyValuePair<string, string>("dkg", "Hồ sơ đăng ký giá tại địa phương"),
+                new KeyValuePair<string, string>("dkgdm", "Danh mục hàng hóa, dịch vụ đăng ký giá"),
+                new KeyValuePair<string, string>("dkgkh", "Danh mục kho hàng của doanh nghiệp đăng ký giá"),
+                new KeyValuePair<string, string>("dkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp đăng ký giá"),
+                new KeyValuePair<string, string>("kkg", "Hồ sơ kê khai giá tại địa phương"),
+                new KeyValuePair<string, string>("kkgdm", "Danh mục hàng hóa, dịch vụ kê khai giá"),
+                new KeyValuePair<string, string>("kkgkh", "Danh mục kho hàng của doanh nghiệp kê khai giá"),
+                new KeyValuePair<string, string>("kkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp kê khai giá"),
+            };
+        }
+
         /*public static string checkManhom(int tiento, int hauto)
         {
             if (hauto == 9)
@@ -1626,6 +1654,6 @@ namespace CSDLGia_ASP.Helper
             {
                 return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
             }
-        }        
+        }
     }
 }
