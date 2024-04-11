@@ -10,7 +10,6 @@ namespace CSDLGia_ASP.Services
     {
         List<DsDonVi> GetListDonvi(string Madv);
         List<DsDonVi> GetListDonviCapDuoi (string Madv);
-        List<DsDonVi> GetListDonviCapTren(string Madv);
     }
     public class DsDonviService: IDsDonviService
     {
