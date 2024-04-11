@@ -26,7 +26,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính</label>
-                            <select class="form-control" id="donvitinh_create" name="donvitinh_create">
+                            <select class="form-control select2basic" id="donvitinh_create" name="donvitinh_create" style="width:100%">
                                 @foreach(var item in danhmucdonvitinh){
                                     <option value="@item.Dvt"> @item.Dvt</option>
                                 }
@@ -323,6 +323,7 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2basic').select2();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }

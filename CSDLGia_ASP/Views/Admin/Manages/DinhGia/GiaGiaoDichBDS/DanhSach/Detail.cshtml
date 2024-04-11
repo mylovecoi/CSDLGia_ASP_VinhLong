@@ -135,6 +135,7 @@
                     $('#edit_thongtin').replaceWith(data.message);
                     $(document).ready(function () {
                         MoneyDecimalMask();
+                        $('.select2basic').select2();
                     });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");

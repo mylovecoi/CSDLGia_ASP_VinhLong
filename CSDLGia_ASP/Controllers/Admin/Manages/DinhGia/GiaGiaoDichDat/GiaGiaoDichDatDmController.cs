@@ -115,7 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
-                        result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control'>";
+                        result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control select2basic' style='width:100%'>";
                         foreach (var item in dmdvt)
                         {
                             result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";

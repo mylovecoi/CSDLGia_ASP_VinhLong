@@ -116,7 +116,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label>Địa bàn áp dụng</label><br />
-                            <select class="form-control" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
+                            <select class="form-control select2basic" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
                                 <option>--Chọn địa bàn--</option>
                                 @foreach (var item in dsdiaban)
                                 {
@@ -128,7 +128,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label>Xã phường</label><br />
-                            <select class="form-control" asp-for="@MaXaPhuong" id="MaXaPhuong">
+                            <select class="form-control select2basic" asp-for="@MaXaPhuong" id="MaXaPhuong">
                                 <option value="all">--Chọn xã phường--</option>
                                 @foreach (var item in dsxaphuong)
                                 {

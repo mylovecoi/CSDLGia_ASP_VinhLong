@@ -559,19 +559,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
         public JsonResult EditCt(int Id)
         {
             var model = _db.GiaGiaoDichBDSCt.FirstOrDefault(p => p.Id == Id);
-
+            var danhmucdonvitinh = _db.DmDvt;
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row text-left'>";
                 result += "</div>";
+
+                //result += "<div class='col-xl-12'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Đơn vị tính</label>";
+                //result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control' style='font-weight: bold'/>";
+                //result += "</div>";
+                //result += "</div>";
+
+                
+                result += "<div class='form-group' style='width:100%'>";
                 result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị tính</label>";
-                result += "<input type='text' id='Dvt_edit' name='Dvt_edit' value='" + model.Dvt + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<select id='Dvt_edit' name='Dvt_edit' class='form-control select2basic' style='width:100%'>";
+                foreach (var item in danhmucdonvitinh)
+                {
+                    result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";
+                }
+                result += "</select>";
+
                 result += "</div>";
                 result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá giao dịch bất động sản (đồng)</label>";

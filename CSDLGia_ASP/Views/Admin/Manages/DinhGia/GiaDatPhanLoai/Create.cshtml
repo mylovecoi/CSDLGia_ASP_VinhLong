@@ -64,7 +64,7 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn áp dụng</label><br />
-                        <select class="form-control" id="Madiaban" asp-for="Madiaban" onchange="GetXaPhuong()">
+                        <select class="form-control select2basic" id="Madiaban" asp-for="Madiaban" onchange="GetXaPhuong()">
                             @foreach (var item in dsdiaban)
                             {
                                 <option value="@item.MaDiaBan">@item.TenDiaBan</option>
@@ -75,7 +75,7 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Xã phường</label><br />
-                        <select class="form-control" asp-for="Maxp" id="Maxp">
+                        <select class="form-control select2basic" asp-for="Maxp" id="Maxp">
                             <option value="all">--Chọn xã phường--</option>
                             @foreach (var item in dsxaphuong)
                             {
