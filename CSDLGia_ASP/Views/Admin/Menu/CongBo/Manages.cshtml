@@ -187,8 +187,8 @@
             </li>
 
             <!-- Giá Trúng thầu hàng hóa dịch vụ  -->
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_mtscb">
-                <a href="javascript:;" class="menu-link menu-toggle">
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_giatrungthauhanghoadichvucb">
+                <a asp-controller="GiaKhac" asp-action="TrungThauHangHoaDichVu" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -201,21 +201,14 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-text text-truncate" title="Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu">Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</span>
-                    <i class="menu-arrow"></i>
+            
                 </a>
-                <div class="menu-submenu">
-                    <i class="menu-arrow"></i>
-                    <ul class="menu-subnav">
-
-                        
-
-                    </ul>
-                </div>
+               
             </li>
 
             <!--Quản lý giá thị trường hàng hóa, dịch vụ khác do UBND tỉnh, thành phố trực thuộc trung ương và các Bộ quản lý ngành, lĩnh vực tự quy định thuộc nội dung CSDL giá của mình -->
             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_hhdvkcb">
-                <a href="javascript:;" class="menu-link menu-toggle">
+                <a asp-controller="GiaKhac" asp-action="HangHoaDichVuKhac" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -227,16 +220,8 @@
                         </svg>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-text text-truncate" title="Quản lý giá thị trường hàng hóa, dịch vụ khác do UBND tỉnh, thành phố trực thuộc trung ương và các Bộ quản lý ngành, lĩnh vực tự quy định thuộc nội dung CSDL giá của mình ">Giá HH - DV khác</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="menu-submenu">
-                    <i class="menu-arrow"></i>
-                    <ul class="menu-subnav">
-                        
-
-                    </ul>
-                </div>
+                    <span class="menu-text text-truncate" title="Quản lý giá thị trường hàng hóa, dịch vụ khác do UBND tỉnh, thành phố trực thuộc trung ương và các Bộ quản lý ngành, lĩnh vực tự quy định thuộc nội dung CSDL giá của mình ">Giá HH - DV khác</span> 
+                </a> 
             </li>
 
             <!--Cách loại giá khác-->
@@ -259,7 +244,7 @@
                 <div class="menu-submenu">
                     <i class="menu-arrow"></i>
                     <ul class="menu-subnav">
-                        @* @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/GiaKhac.cshtml") *@
+                        @await Html.PartialAsync("~/Views/Admin/Menu/CongBo/Manages/GiaKhac.cshtml")
                     </ul>
                 </div>
             </li>
