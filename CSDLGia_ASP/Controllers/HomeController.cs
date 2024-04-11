@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,12 @@ namespace CSDLGia_ASP.Controllers
     {
 
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _dsDiaBanService;
 
-        public HomeController(CSDLGiaDBContext db)
+        public HomeController(CSDLGiaDBContext db, IDsDiaBanService dsDiaBanService)
         {
             _db = db;
+            _dsDiaBanService = dsDiaBanService;
         }
 
         [Route("")]

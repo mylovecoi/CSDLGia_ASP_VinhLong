@@ -728,7 +728,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
 
         [Route("KetNoiAPI/DanhSachKetNoi")]
-        public IActionResult DanhSachKetNoi(string Maso)
+        public IActionResult DanhSachKetNoi_20240410(string Maso)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -804,7 +804,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                         case "giahhdvk":
                             {
                                 var dSHoSo = _db.GiaHhDvkTh.Where(x => x.Mahs == maHS).ToList();
-                                var dSChiTiet = _db.GiaHhDvkThCt.Where(x => x.Mahs == maHS).ToList().OrderBy(x=>x.Mahhdv);
+                                var dSChiTiet = _db.GiaHhDvkThCt.Where(x => x.Mahs == maHS).ToList().OrderBy(x => x.Mahhdv);
 
                                 //string jsonHoSo = Newtonsoft.Json.JsonSerializer.Serialize(dSHoSo);
                                 //JsonDocument docHoSo = JsonDocument.Parse(jsonHoSo);
@@ -832,7 +832,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                         }
                                         else { sHoSo += "["; }
                                     }
-                                    
+
                                     if (dSTruongChiTiet.Any())
                                     {
                                         foreach (var cths in dSChiTiet)
@@ -884,6 +884,89 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     }
                     return Ok(Json(sKQ));
 
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [Route("KetNoiAPI/DanhSachCSDLQuocGia")]
+        [HttpGet]
+        public IActionResult DanhSachCSDLQuocGia()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.api.csdlqg", "Create"))
+                {
+
+                    //Tạo mảng lưu các danh sách trường kết nối để chọn trong danh sách
+
+                    var model = _db.KetNoiAPI_DanhSach.ToList();
+                    ViewData["Title"] = "Thiết lập chung kết nối API";
+                    ViewData["MenuLv1"] = "menu_hethong";
+                    ViewData["MenuLv2"] = "menu_qthethong";
+                    ViewData["MenuLv3"] = "menu_qlketnoi";
+                    ViewData["MenuLv4"] = "menu_dsketnoicsdlquocgia";
+                    return View("Views/Admin/Systems/API/DanhSachKetNoi.cshtml", model);
+
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult LuuThietLapCSDLQG(KetNoiAPI_DanhSach request)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.api.chung", "Create"))
+                {
+                    var model = _db.KetNoiAPI_DanhSach.FirstOrDefault(x => x.Maso == request.Maso);
+                    if (model == null)
+                    {
+                        var ketNoi = new KetNoiAPI_DanhSach()
+                        {
+                            Maso = request.Maso,
+                            LinkNhanGet = request.LinkNhanGet,
+                            LinkNhanPost = request.LinkNhanPost,
+                            LinkNhanPut = request.LinkNhanPut,
+                            LinkTruyenGet = request.LinkTruyenGet,
+                            LinkTruyenPost = request.LinkTruyenPost,
+                            LinkTruyenPut = request.LinkTruyenPut,
+                        };
+                        _db.KetNoiAPI_DanhSach.Add(ketNoi);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        model.LinkNhanGet = request.LinkNhanGet;
+                        model.LinkNhanPost = request.LinkNhanPost;
+                        model.LinkNhanPut = request.LinkNhanPut;
+                        model.LinkTruyenGet = request.LinkTruyenGet;
+                        model.LinkTruyenPost = request.LinkTruyenPost;
+                        model.LinkTruyenPut = request.LinkTruyenPut;
+                        _db.KetNoiAPI_DanhSach.Update(model);
+                        _db.SaveChanges();
+                    }
+
+                    return RedirectToAction("DanhSachCSDLQuocGia", "API");
                 }
                 else
                 {

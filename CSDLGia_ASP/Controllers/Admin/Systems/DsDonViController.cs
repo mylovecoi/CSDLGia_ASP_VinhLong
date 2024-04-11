@@ -19,32 +19,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsDonVi")]
         [HttpGet]
-        public IActionResult Index(string MaDiaBan)
+        public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Index"))
                 {
-                    var dsdiaban = _db.DsDiaBan;
-                    if (string.IsNullOrEmpty(MaDiaBan))
-                    {
-                        MaDiaBan = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
-                    }
-                    var dsdonvi = _db.DsDonVi.Where(t => t.MaDiaBan == MaDiaBan).ToList();
+                    //var dsdiaban = _db.DsDiaBan;
+                    //if (string.IsNullOrEmpty(MaDiaBan))
+                    //{
+                    //    MaDiaBan = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
+                    //}
+                    var dsdonvi = _db.DsDonVi.ToList();
 
-                    var dsDiaBanApDung = _db.Districts.ToList();
-                    foreach (var item in dsdonvi)
-                    {
-                        foreach(var db in dsDiaBanApDung)
-                        {
-                            if (!string.IsNullOrEmpty(item.DiaBanApDung))
-                                if (item.DiaBanApDung.Contains(db.Mahuyen))
-                                    item.TenDiaBanApDung += db.Tenhuyen + ";";
-                        }
-                    }
-                    ViewData["DsDiaBan"] = dsdiaban;
-                    ViewData["MaDiaBan"] = MaDiaBan;
-                    ViewData["TenDiaBan"] = dsdiaban.Where(t => t.MaDiaBan == MaDiaBan).ToList();
+                    //var dsDiaBanApDung = _db.Districts.ToList();
+                    //foreach (var item in dsdonvi)
+                    //{
+                    //    foreach(var db in dsDiaBanApDung)
+                    //    {
+                    //        if (!string.IsNullOrEmpty(item.DiaBanApDung))
+                    //            if (item.DiaBanApDung.Contains(db.Mahuyen))
+                    //                item.TenDiaBanApDung += db.Tenhuyen + ";";
+                    //    }
+                    //}
+                    //ViewData["DsDonvi"] = _db.DsDonVi;
+                    //ViewData["DsDiaBan"] = dsdiaban;
+                    //ViewData["MaDiaBan"] = MaDiaBan;
+                    //ViewData["TenDiaBan"] = dsdiaban.Where(t => t.MaDiaBan == MaDiaBan).ToList();
                     ViewData["Title"] = "Danh sách đơn vị";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
@@ -71,6 +72,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Create"))
                 {
+                    ViewData["DsDonvi"] = _db.DsDonVi;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == MaDiaBan).ToList();
                     ViewData["MaDiaBan"] = MaDiaBan;
                     ViewData["Title"] = "Thêm mới Danh sách đơn vị";
@@ -125,6 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             CongBo = request.CongBo,
                             QuanTri = request.QuanTri,
                             DiaBanApDung = request.DiaBanApDung,
+                            MaCqcq = request.MaCqcq,
                             Created_At = DateTime.Now,
                             Updated_At = DateTime.Now,
                         };
@@ -171,6 +174,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == model.MaDiaBan).ToList();
                     ViewData["DsDiaBanApDung"] = _db.Districts.ToList();
+                    ViewData["DsDonvi"] = _db.DsDonVi;
 
                     ViewData["MaDiaBan"] = model.MaDiaBan;
                     ViewData["Title"] = "Chỉnh sửa Danh sách đơn vị";
@@ -220,6 +224,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     model.CongBo = request.CongBo;
                     model.QuanTri = request.QuanTri;
                     model.DiaBanApDung = request.DiaBanApDung;
+                    model.MaCqcq = request.MaCqcq;
                     model.Updated_At = DateTime.Now;
                     _db.DsDonVi.Update(model);
                     _db.SaveChanges();

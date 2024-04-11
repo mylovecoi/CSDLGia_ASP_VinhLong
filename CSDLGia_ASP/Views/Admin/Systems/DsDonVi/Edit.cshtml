@@ -2,6 +2,7 @@
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdiabanapdung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
+    var DsDonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
 }
 
 @model CSDLGia_ASP.Models.Systems.DsDonVi
@@ -213,7 +214,20 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Đơn vị cấp trên</label>
+                        <select asp-for="MaCqcq" class="form-control">
+                            <option value="">--Chọn--</option>
+                            @foreach (var item in DsDonvi)
+                            {
+                                <option value="@item.MaDv">@item.TenDv</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">

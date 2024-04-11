@@ -19,5 +19,6 @@ namespace CSDLGia_ASP.Models.Systems.API
         public string Ghichu { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+
     }
 }

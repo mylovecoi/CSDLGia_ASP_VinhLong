@@ -49,7 +49,7 @@
     <hr />
     <div class="card-body">
         <div class="mb-12">
-            <div class="row">
+            @*<div class="row">
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Địa bàn</label>
@@ -61,11 +61,12 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <table class="table table-striped table-bordered table-hover" id="sample_4">
                 <thead>
                     <tr style="text-align:center">
                         <th rowspan="2" width="5%">#</th>
+                        <th rowspan="2" width="8%">Đơn vị chủ quản</th>
                         <th rowspan="2" width="8%">Mã đơn vị</th>
                         <th rowspan="2">Tên đơn vị</th>
                         <th colspan="4">Chức năng</th>
@@ -84,6 +85,9 @@
                     {
                         <tr>
                             <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td class="text-left">
+                                @(!string.IsNullOrEmpty(item.MaCqcq) ? Model.FirstOrDefault(t => t.MaDv == item.MaCqcq)?.TenDv ?? "" : "")
+                            </td>
                             <td class="text-center">@item.MaDv</td>
                             <td class="active">@item.TenDv</td>
                             <td style="text-align:center">
