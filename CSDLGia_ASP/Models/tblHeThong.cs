@@ -1,4 +1,7 @@
-﻿namespace CSDLGia_ASP.Models
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CSDLGia_ASP.Models
 {
     public class tblHeThong
     {
@@ -21,5 +24,11 @@
         public string FileQuyCheBase64 { get; set; }
         public string FileDangKy { get; set; }
         public string FileDangKyBase64 { get; set; }
+        [NotMapped]
+        public IFormFile FileImportHDSD { get; set; }
+        [NotMapped]
+        public IFormFile FileImportQuyChe { get; set; }
+        [NotMapped]
+        public IFormFile FileImportDangKy { get; set; }
     }
 }

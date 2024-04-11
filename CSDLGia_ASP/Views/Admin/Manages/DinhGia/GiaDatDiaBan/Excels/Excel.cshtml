@@ -1,11 +1,39 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        function GetXaPhuong() {
+            $.ajax({
+                url: '/Ajax/GetXaPhuong',
+                type: 'POST',
+                data: {
+                    MaDiaBan: $('#MaDiaBan').val(),
+                    KeySelect: 'Maxp'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#Maxp').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    </script>
 }
 
 <div class="card card-custom">
@@ -49,11 +77,23 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
-                        <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                                    @foreach (var item in dsdiaban)
-                                    {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
-                                    }
+                        <select class="form-control select2basic" id="Madiaban" name="Madiaban" onchange="GetXaPhuong()>
+                            @foreach (var item in dsdiaban)
+                            {
+                            <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Xã phường</label><br />
+                        <select class="form-control select2basic" id="Maxp">
+                            <option value="all">--Chọn xã phường--</option>
+                                            @foreach (var item in dsXaPhuong)
+                                            {
+                                <option value="@item.Maxp">@item.Tenxp</option>
+                                            }
                         </select>
                     </div>
                 </div>

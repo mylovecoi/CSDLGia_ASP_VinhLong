@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240410080258_add_colum_MaDiaBan_Maxp_model_GiaDauGiaDatCt")]
+    partial class add_colum_MaDiaBan_Maxp_model_GiaDauGiaDatCt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -14078,48 +14080,6 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("KetNoiAPI");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Ghichu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkNhanGet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkNhanPost")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkNhanPut")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkTruyenGet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkTruyenPost")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkTruyenPut")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Maso")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KetNoiAPI_DanhSach");
-                });
-
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_HoSo", b =>
                 {
                     b.Property<int>("Id")
@@ -14841,9 +14801,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaDiaBan")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaDiaBanCq")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenDiaBan")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -14891,9 +14848,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailQt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaCqcq")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaDiaBan")
@@ -15576,9 +15530,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Public")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Roles")
                         .IsRequired()

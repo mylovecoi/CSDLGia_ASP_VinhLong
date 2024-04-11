@@ -1,4 +1,8 @@
 ﻿<!--Create Modal-->
+@using Microsoft.AspNetCore.Http;
+@{
+    var linkAPIXacthuc = HttpContextAccessor.HttpContext.Session.GetString("LinkAPIXacthuc");
+}
 
 <div class="modal fade" id="TruyenHoSo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -16,7 +20,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Link API token</label>
-                            <input type="text" id="mota_create" name="mota_create" class="form-control" />
+                            <input type="text" name="LinkAPIXacthuc" value="@linkAPIXacthuc" class="form-control" />
                         </div>
                     </div>
                 </div>

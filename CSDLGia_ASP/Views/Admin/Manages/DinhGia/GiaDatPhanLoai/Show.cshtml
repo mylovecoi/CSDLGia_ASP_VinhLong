@@ -54,9 +54,21 @@
                 var dataDiaBan = Model.GiaDatPhanLoaiCt.Where(x=>x.MaDiaBan == diaban.MaDiaBan);
                 if (dataDiaBan.Any())
                 {
+                    var dataAllXa = dataDiaBan.Where(x=>x.MaXaPhuong=="all"|| string.IsNullOrEmpty(x.MaXaPhuong));
                     <tr>
                         <td colspan="3" style="text-align:left; font-weight:bold;">@diaban.TenDiaBan</td>
                     </tr>
+                    if (dataAllXa.Any())
+                    {
+                        @foreach (var allXa in dataAllXa)
+                        {
+                            <tr style="text-align:center">
+                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="text-align:left"> @allXa.Khuvuc</td>
+                                <td style="text-align:right;">@Helpers.ConvertDbToStr(allXa.Giacuthe)</td>
+                            </tr>
+                        }
+                    }
                     @foreach (var xa in DsXaPhuong)
                     {
                         var data = dataDiaBan.Where(x => x.MaXaPhuong == xa.Maxp);                        

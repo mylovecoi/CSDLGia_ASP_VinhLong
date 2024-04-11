@@ -9,9 +9,9 @@
     var DanhSachHoSo = (IEnumerable<GiaDatDiaBan>)ViewData["DanhSachHoSo"];
     // var DiaBan = ViewData["DsDiaBan"] as IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DsDiaBan>();
     var DanhSachLoaiDat = ViewData["DanhSachLoaiDat"] as IEnumerable<CSDLGia_ASP.Models.Systems.DmLoaiDat> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DmLoaiDat>();
-    var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
-    var Xas = (IEnumerable<Towns>)ViewData["Xas"];
-    var MaHuyen = ViewData["MaHuyen"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var MaDiaBan = ViewData["MaDiaBan"];
     var MaXa = ViewData["MaXa"];
     int record_id = 1;
 
@@ -32,7 +32,25 @@
         $(document).ready(function () {
             TableManaged.init();
         });
-
+        function GetXaPhuong() {
+            $.ajax({
+                url: '/Ajax/GetXaPhuong',
+                type: 'POST',
+                data: {
+                    MaDiaBan: $('#MaDiaBan').val(),
+                    KeySelect: 'MaXa'
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success');
+                        $('#MaXa').html(data.message);
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
         function ClickSearch() {
             var fromDate = document.getElementById("NgayTu_Search").value;
             var toDate = document.getElementById("NgayDen_Search").value;
@@ -44,7 +62,7 @@
 
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaDatDiaBan/Search?';
-                    var MaHuyen = '&MaHuyen=' + $('#MaHuyen').val();
+                    var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
                     var MaXa = '&MaXa=' + $('#MaXa').val();
                     var Maloaidat = '&Maloaidat=' + $('#Maloaidat_Search').val();
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
@@ -54,7 +72,7 @@
                     var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
                     var Mota = '&Mota=' + $('#Mota_Search').val();
 
-                    var url = current_path_url + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Mota + MaHuyen + MaXa;
+                    var url = current_path_url + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Mota + MaDiaBan + MaXa;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -93,11 +111,11 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Quận/Huyện</label>
-                        <select class="form-control" asp-for="@MaHuyen" id="MaHuyen" name="MaHuyen" onchange="GetTowns()">
-                            <option value="all">---Chọn Quận/Huyện---</option>
-                            @foreach (var item in Huyens)
+                        <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
+                            <option value="all">---Chọn địa bàn---</option>
+                            @foreach (var item in DsDiaBan)
                             {
-                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
@@ -107,9 +125,9 @@
                         <label>Xã/Phường</label>
                         <select class="form-control" asp-for="@MaXa" id="MaXa" name="MaXa">
                             <option value="all">---Chọn Xã/Phường</option>
-                            @foreach (var item in Xas)
+                            @foreach (var item in DsXaPhuong)
                             {
-                                <option value="@item.Maxa">@item.Tenxa</option>
+                                <option value="@item.Maxp">@item.Tenxp</option>
                             }
                         </select>
                     </div>
@@ -208,7 +226,10 @@
                         <td>@(record_id++)</td>
                         <td>@item.Soqd</td>
                         <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td>@item.TenDiaBan</td>
+                        <td>
+                        @(string.IsNullOrEmpty(item.Maxp)|| item.Maxp =="all")?"": @(DsXaPhuong.First(x=>x.Maxp==item.Maxp).Tenxp +" - ")
+                        @item.TenDiaBan
+                        </td>
                         <td>@item.Loaidat</td>
                         <td>@item.Mota</td>
                         <td>@item.Loaiduong</td>

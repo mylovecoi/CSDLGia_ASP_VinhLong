@@ -4,7 +4,9 @@
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     // var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
     // var Xas = (IEnumerable<Towns>)ViewData["Xas"];
-    var TenHuyen = ViewData["TenHuyen"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var TenDiaBan = ViewData["TenDiaBan"];
     var TenXa = ViewData["TenXa"];
 }
 
@@ -24,26 +26,28 @@
     <script>
         $(document).ready(function () {
             TableManaged4.init();
+            MoneyDecimalMask();
         });
-        function GetTowns() {
-            $.ajax({
-                url: '/Ajax/GetTownsNoAll',
-                type: 'POST',
-                data: {
-                    MaHuyen: $('#MaHuyen').val(),
-                    KeySelect: 'MaXa'
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success('Success');
-                        $('#MaXa').html(data.message);
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
+
+        // function GetTowns() {
+        //     $.ajax({
+        //         url: '/Ajax/GetTownsNoAll',
+        //         type: 'POST',
+        //         data: {
+        //             MaHuyen: $('#MaHuyen').val(),
+        //             KeySelect: 'MaXa'
+        //         },
+        //         dataType: 'JSON',
+        //         success: function (data) {
+        //             if (data.status == 'success') {
+        //                 toastr.success('Success');
+        //                 $('#MaXa').html(data.message);
+        //             } else {
+        //                 toastr.error(data.message, "Lỗi!");
+        //             }
+        //         }
+        //     })
+        // }
     </script>
 }
 <div class="card card-custom">
@@ -61,7 +65,7 @@
             <input hidden asp-for="Mahs" />
             <input hidden asp-for="SoQDTT" />
             <input hidden asp-for="Soqd" />
-            <input hidden asp-for="MaHuyen" />
+            <input hidden asp-for="Madiaban" />
             <input hidden asp-for="MaXa" />
             <div class="row">
                 <div class="col-xl-12">
@@ -85,8 +89,8 @@
                 </div> *@
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Quận/Huyện: </label>
-                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenHuyen </label>
+                        <label>Địa bàn: </label>
+                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenDiaBan </label>
                     </div>
                 </div>
                 <div class="col-xl-6">

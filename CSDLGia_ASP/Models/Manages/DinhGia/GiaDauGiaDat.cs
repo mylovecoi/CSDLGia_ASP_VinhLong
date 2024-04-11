@@ -69,6 +69,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
         [NotMapped]
         public string TenDonVi { get; set; }
+        [NotMapped]
+        public string TenDiaBan { get; set; }
 
     }
 }

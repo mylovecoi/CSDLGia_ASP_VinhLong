@@ -23,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/CongBo/GiaDatCuThe?';
+                var current_path_url = '/CongBo/GiaKhungGiaDat?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -39,7 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá đất cụ thể
+                    Thông tin hồ sơ khung giá đất
                 </span>
             </h3>
         </div>
@@ -97,8 +97,8 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">@item.Soqd</td>
-                            <td>@item.Thongtin</td>
+                            <td style="text-align: center"></td>
+                            <td></td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
@@ -124,4 +124,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaKhungGiaDat/ThongTinGiayTo/Show.cshtml")

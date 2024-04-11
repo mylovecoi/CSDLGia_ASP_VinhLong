@@ -33,8 +33,8 @@
                     <td style="text-align: center">@item.Tobanbo</td>
                     <td style="text-align: center">@item.Dientich</td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
-                    <td style="text-align: center" class="sotien">@item.Giakhoidiem</td>
-                    <td style="text-align: center" class="sotien">@item.Giadaugia</td>
+                    <td style="text-align: center" class="sotien">@Helpers.ConvertDbToStr(item.Giakhoidiem)</td>
+                    <td style="text-align: center" class="sotien">@Helpers.ConvertDbToStr(item.Giadaugia)</td>
                 </tr>
             }
         }
