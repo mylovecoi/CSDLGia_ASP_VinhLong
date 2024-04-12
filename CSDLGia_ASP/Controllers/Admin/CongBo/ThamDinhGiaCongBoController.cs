@@ -64,5 +64,24 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Xem chi tiết hồ sơ thẩm định giá";
             return View("Views/Admin/Manages/ThamDinhGia/DanhSach/Show.cshtml", model);
         }
+
+        [Route("CongBo/DonViThamDinhGia")]
+        [HttpGet]
+        public IActionResult DonViThamDinhGia(string Madv, int Nam)
+        {
+            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+            IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv> model = _db.ThamDinhGiaDv;           
+
+            ViewData["DsDonVi"] = _db.DsDonVi;
+            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["Madv"] = Madv;
+            ViewData["Nam"] = Nam;
+            ViewData["Title"] = "Công bố thông tin đơn vị thẩm định giá";
+            ViewData["MenuLv1"] = "menu_cb";
+            ViewData["MenuLv2"] = "menu_dvtdgcb";
+            ViewBag.bSession = false;
+            return View("Views/Admin/CongBo/ThamDinhGia/DonViThamDinhGia.cshtml", model);
+        }
     }
 }
