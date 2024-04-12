@@ -66,9 +66,9 @@
 
                 <tr>
                     <td></td>
-                    <td colspan="12" style="font-weight: bold; padding-left: 2em;">@ViewData["TenTinh"]</td>
+                    <td colspan="12" style="font-weight: bold; padding-left: 4em;"> @ViewData["TenTinh"]</td>
                 </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
+                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);                
                 @foreach (var huyen in DsDiaBanHuyen)
                 {
                     var datahuyen = chitieths.Where(x => x.MaDiaBanCapHuyen==huyen.MaDiaBan);
@@ -76,7 +76,7 @@
                     {
                         <tr>
                             <td></td>
-                            <td colspan="12" style="font-weight: bold; padding-left: 2em;"> &emsp; @huyen.TenDiaBan</td>
+                            <td colspan="12" style="font-weight: bold; padding-left: 6em;">@huyen.TenDiaBan</td>
                         </tr>
                         foreach (var xa in DsDiaBanXa)
                         {
@@ -85,7 +85,7 @@
                             {
                                 <tr>
                                     <td></td>
-                                    <td colspan="12" style="font-weight: bold; padding-left: 2em;"> &emsp;&emsp;@xa.TenDiaBan</td>
+                                    <td colspan="12" style="font-weight: bold; padding-left: 8em;">@xa.TenDiaBan</td>
                                 </tr>
                                 @foreach (var item in dataXa.OrderBy(t => t.Sapxep))
                                 {

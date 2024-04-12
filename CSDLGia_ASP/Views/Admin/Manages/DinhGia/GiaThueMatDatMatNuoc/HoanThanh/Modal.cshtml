@@ -1,9 +1,4 @@
-﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-
-}
-
+﻿
 <!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -16,6 +11,7 @@
                     
                 </div>
                 <div class="modal-body">
+                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
@@ -23,9 +19,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <input hidden id="id_tralai" name="id_tralai" />
-                    <input hidden id="madv_tralai" name="madv_tralai" />
                 </div>
 
                 <div class="modal-footer">
@@ -36,6 +30,69 @@
         </form>
     </div>
 </div>
+
+<!--Duyet Modal-->
+<div class="modal fade" id="Duyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueDNHt" asp-action="Duyet">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý duyệt hồ sơ
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_duyet" name="soqd_duyet"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_duyet" name="mahs_duyet" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Hủy Duyet Modal-->
+<div class="modal fade" id="HuyDuyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="GiaThueDNHt" asp-action="HuyDuyet">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hủy duyệt hồ sơ
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_huyduyet" name="soqd_huyduyet"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_huyduyet" name="mahs_huyduyet" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -51,7 +108,15 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_cb" name="mahs_cb" type="hidden" />
-                    <input id="trangthai_cb" name="trangthai_cb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_cb" name="soqd_cb"></label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -77,7 +142,14 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_hcb" name="mahs_hcb" type="hidden" />
-                    <input id="trangthai_hcb" name="trangthai_hcb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_hcb" name="soqd_hcb"></label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -88,75 +160,25 @@
     </div>
 </div>
 
-<!-- Chuyển hoàn thành Modal-->
-<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form asp-controller="GiaThueDNHt" asp-action="ChuyenHoanThanh">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
-                                    {
-                                        @if (db.Level == "ADMIN")
-                                        {
-                                            <optgroup label="@db.TenDiaBan">
-                                                @{
-                                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                                }
-                                                @foreach (var item in company)
-                                                {
-                                                    <!option value="@item.MaDv">@item.TenDv</!option>
-                                                }
-                                            </optgroup>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <input hidden id="mahs_complete" name="mahs_complete" />
-                    <input hidden id="madv_hientai" name="madv_hientai" value="@ViewData["Madv"]" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
 <script>
-    function SetComplete(mahs) {
-        document.getElementById("mahs_complete").value = mahs;
-    }
-    function TraLai(id, madv) {
+    function SetDuyet(mahs, soqd){
+        document.getElementById("mahs_duyet").value = mahs;
+        document.getElementById("soqd_duyet").innerHTML = soqd;
+    } 
+    function SetHuyDuyet(mahs, soqd){
+        document.getElementById("mahs_huyduyet").value = mahs;
+        document.getElementById("soqd_huyduyet").innerHTML = soqd;
+    }  
+    function TraLai(id) {
         document.getElementById("id_tralai").value = id;
-        document.getElementById("madv_tralai").value = madv;
     }
-    function CongBo(mahs_cb, trangthai_cb) {
-        document.getElementById("mahs_cb").value = mahs_cb;
-        document.getElementById("trangthai_cb").value = trangthai_cb;
+    function CongBo(mahs, soqd) {
+        document.getElementById("mahs_cb").value = mahs;
+        document.getElementById("soqd_cb").innerHTML = soqd;
     }
-
-    function HuyCongBo(mahs_hcb, trangthai_hcb) {
-        document.getElementById("mahs_hcb").value = mahs_hcb;
-        document.getElementById("trangthai_hcb").value = trangthai_hcb;
+    function HuyCongBo(mahs, soqd) {
+        document.getElementById("mahs_hcb").value = mahs;
+        document.getElementById("soqd_hcb").innerHTML = soqd;
     }
 
     function ValidateXetDuyet() {

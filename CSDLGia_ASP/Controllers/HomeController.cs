@@ -1,10 +1,13 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Services;
+using CSDLGia_ASP.ViewModels.Manages.DashBoard;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -36,6 +39,30 @@ namespace CSDLGia_ASP.Controllers
             {
                 ViewBag.bSession = true;
             }
+            //
+            List<VMThongTinHoSo> data = new List<VMThongTinHoSo>();
+            var data_cb = _db.GiaNuocSh.Where(t => t.Trangthai == "HT");
+            if (data_cb.Any())
+            {
+                foreach(var item in data_cb)
+                {
+                    data.Add(new VMThongTinHoSo
+                    {
+                        SoQD = item.Soqd,
+                        NgayQD = item.Thoidiem,
+                        TenDonVi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == item.Madv)?.TenDv ?? "",
+                        NgayQDLK = DateTime.MinValue,
+                        SoQDLk = "",
+                        TenDonViXetDuyet = _db.DsDonVi.FirstOrDefault(t => t.MaDv == item.Macqcq)?.TenDv ?? "",
+                        Controller = "GiaNuocSh",
+                        Action= "Show",
+                        MaHoso = item.Mahs
+                    });
+                }
+            }
+            ViewData["ThongTinHoSo"] = data;
+            //
+
             var model = _db.Supports;
             ViewData["Title"] = "Trang chủ";
             ViewData["MenuLv1"] = "menu_home";

@@ -1,12 +1,12 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
-    var nhomtn = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["NhomTn"];
-    var dsDiaBanApDung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    // var dsdiabanAll = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanAll"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
+    // var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
+    // var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
+    var NhomTn = (IEnumerable<GiaThueMatDatMatNuocNhom>)ViewData["NhomTn"];
+    // var dsDiaBanApDung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc>
@@ -51,7 +51,7 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Create"))
             {
-                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                @if (ViewData["Madv"].ToString() != "all")
                 {
                     <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                         <i class="la la-plus"></i>Thêm mới
@@ -101,12 +101,11 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="2%">STT</th>
-                    <th width="10%">Địa bàn</th>
+                    <th width="10%">Đơn vị</th>
                     <th width="10%">Số QĐ</th>
                     <th width="10%">Thời điểm</th>
                     <th>Mô tả</th>
                     <th width="10%">Trạng thái</th>
-                    <th width="10%">Cơ quan tiếp nhận</th>
                     <th width="15%">Thao tác</th>
                 </tr>
             </thead>
@@ -117,32 +116,40 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">
-                                @if (!string.IsNullOrEmpty(item.Madiaban))
-                                    @(dsdiabanAll.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
+                            <td style="text-align: left">
+                                @if (!string.IsNullOrEmpty(item.Madv))
+                                    @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
+
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align:left">@item.Ghichu</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
-                                }
-                                @if (item.Trangthai == "CHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "BTL")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
-                                    <p>Lý do:&nbsp;@item.Lydo</p>
-                                }
+                                <span style="width: 112px;">
+                                    @if (item.Trangthai == "CC")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-xl label-light-info label-inline">Chờ chuyển</span>
+                                    }
+                                    else if (item.Trangthai == "CD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "DD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "BTL")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
+                                        <p>Lý do:&nbsp;@item.Lydo</p>
+                                    }
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
+                                    }
+                                </span>
                             </td>
-                            <td style="text-align: center">
-                                @if (!string.IsNullOrEmpty(item.Macqcq))
-                                @(dsdonvith.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-                            </td>
+
                             <td>
                                 <a asp-controller="GiaThueDN" target="_blank" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem hồ sơ"
                                    target="_blank">
@@ -152,14 +159,17 @@
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
 
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
+                                @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
-                                    <a asp-controller="GiaThueDN" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </a>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Edit"))
+                                    {
+                                        <a asp-controller="GiaThueDN" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
 
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary"></i>
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                        <i class="icon-lg la la-mail-forward text-primary"></i>
                                     </button>
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Delete"))
                                     {
@@ -172,7 +182,6 @@
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
-
                                 </a>
                             </td>
                         </tr>
@@ -185,7 +194,7 @@
 
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <form asp-controller="GiaThueDN" asp-action="Create" method="get">
             <div class="modal-content">
                 <div class="modal-header">
@@ -196,13 +205,12 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <hr />
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị báo cáo</label>
-                                <select name="Madv" class="form-control">
+                                <select name="Madv" id="Madv" class="form-control">
                                     @foreach (var dv in dsdonvi)
                                     {
                                         <!option value="@dv.MaDv" @((string)@ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
@@ -215,7 +223,7 @@
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
                                     <option value="all">--Chọn tất cả các nhóm--</option>
-                                    @foreach (var nhom in nhomtn)
+                                    @foreach (var nhom in NhomTn)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
                                     }
@@ -227,49 +235,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!--Tổng hợp Modal-->
-<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="GiaXayDungMoi" asp-action="Create" method="get">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Tổng hợp hồ sơ giá xây dựng mới
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <hr />
-                <table class="table table-striped table-bordered table-hover" id="sample_3">
-                    <thead>
-                        <tr style="text-align:center">
-                            <th width="4%">STT</th>
-                            <th>Đơn vị báo cáo</th>
-                            <th>Chọn hồ sơ để tổng hợp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center" width="3%">@(record_id++)</td>
-                            <td style="text-align: center" width="10%">Sở tài chính</td>
-                            <td style="text-align: center" width="12%">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
                 </div>
             </div>
         </form>
@@ -305,25 +270,30 @@
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GiaThueDNHt" asp-action="HoanThanh">
+            <form asp-controller="GiaThueDN" asp-action="Chuyen">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <p style="color:blue">Hồ sơ sẽ được chuyển lên đơn vị chủ quản. Bạn cần liên hệ đơn vị chủ quản để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control select2basic" id="Macqcq" name="Macqcq">
-                                    @foreach (var item in dsdonvith)
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>

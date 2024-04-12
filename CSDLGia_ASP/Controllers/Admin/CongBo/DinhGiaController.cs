@@ -745,5 +745,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Xem chi tiết hàng hóa dịch vụ tối đa";
             return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/Show.cshtml", model);
         }
+
+
     }
 }

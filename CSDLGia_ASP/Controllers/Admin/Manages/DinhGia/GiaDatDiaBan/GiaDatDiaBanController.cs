@@ -35,7 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index") || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "T")
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -225,7 +225,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         Thoidiem = request.Thoidiem,
                         Ipf1 = request.Ipf1,
                         NoiDungQDTT = request.NoiDungQDTT,
-                        Trangthai = "CHT",
+                        Trangthai = "CC",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -370,7 +370,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_ct = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs)
@@ -392,11 +392,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                         Giavt5 = dat.Giavt5,
                                         Loaidat = dm.Loaidat,
                                         Sapxep = dat.Sapxep,
-                                        Madiaban = dat.Madiaban,                                       
+                                        Madiaban = dat.Madiaban,
+                                        MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dat.Madiaban).MaDiaBanCq,
                                     });
                     model.GiaDatDiaBanCt = model_ct.ToList();
                     
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;                    
+                    ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;                    
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x=>x.Level=="H");
                     ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x=>x.Level=="X");
                     ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();                    
@@ -459,50 +461,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         //Madv_ad --> mã đơn vị chuyển hồ sơ lên
         [Route("GiaDatDiaBan/Complete")]
         [HttpPost]
-        public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
+        public IActionResult Complete(string mahs_complete, string trangthai_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.thongtin", "Approve"))
                 {
-                    var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_chuyen);
+                    var model = _db.GiaDatDiaBan.FirstOrDefault(p => p.Mahs == mahs_complete);
+                    model.Trangthai = trangthai_complete;
+                    model.Updated_at = DateTime.Now;
 
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dvcq.Id,
-                                        MaDiaBan = dvcq.MaDiaBan,
-                                        MaDv = dvcq.MaDv,
-                                        TenDv = dvcq.TenDv,
-                                        Level = db.Level,
-                                    };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
-                    model.Macqcq = macqcq_chuyen;
-                    model.Trangthai = "HT";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = macqcq_chuyen;
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CHT";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = macqcq_chuyen;
-                        model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CHT";
-                    }
-                    else
-                    {
-                        model.Madv_h = macqcq_chuyen;
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CHT";
-                    }
                     _db.GiaDatDiaBan.Update(model);
                     _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaDatDiaBan", new { model.Madv });
-
+                    return RedirectToAction("Index", "GiaDatDiaBan", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -514,11 +485,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }
+        }        
 
         [Route("GiaDatDiaBan/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Mota, string Maloaidat, string MaDiaBan = "all",string Maxp="all")
+        public IActionResult Search(DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Maloaidat, string MaDiaBan = "all",string Maxp="all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -531,8 +502,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     NgayDen = NgayDen.HasValue ? NgayDen : lastDayCurrentYear;
                     Mahs = string.IsNullOrEmpty(Mahs) ? "all" : Mahs;
                     DonGiaTu = DonGiaTu == 0 ? 0 : DonGiaTu;
-                    DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
-                    Mota = string.IsNullOrEmpty(Mota) ? "" : Mota;
+                    DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;                   
                     Maloaidat = string.IsNullOrEmpty(Maloaidat) ? "all" : Maloaidat;
 
                     var model = from dgct in _db.GiaDatDiaBanCt
@@ -564,8 +534,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     TenDiaBan = diaban.TenDiaBan,
 
                                 };
-
-                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" && t.Giavt5 >= DonGiaTu);
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai) && t.Giavt5 >= DonGiaTu);
                     
                     if (Mahs != "all")
                     {
@@ -574,11 +544,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     if (DonGiaDen > 0)
                     {
                         model = model.Where(t => t.Giavt1 <= DonGiaDen);
-                    }
-                    if (!string.IsNullOrEmpty(Mota))
-                    {
-                        model = model.Where(t => t.Mota.ToLower().Contains(Mota.ToLower()));
-                    }
+                    }                   
                     if (Maloaidat != "all")
                     {
                         model = model.Where(t => t.Maloaidat == Maloaidat);
@@ -594,8 +560,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         {
                             model = model.Where(x => x.Maxp == Maxp);
                         }
-                    }
-                    
+                    }                   
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDiaBanXaPhuong"] = DsXaPhuong;                   
@@ -605,10 +570,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["NgayDen"] = NgayDen;
                     ViewData["Mahs"] = Mahs;
                     ViewData["DonGiaTu"] = DonGiaTu;
-                    ViewData["DonGiaDen"] = DonGiaDen;
-                    ViewData["Mota"] = Mota;
+                    ViewData["DonGiaDen"] = DonGiaDen;                  
                     ViewData["Maloaidat"] = Maloaidat;
-                    ViewData["DanhSachHoSo"] = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaDatDiaBan.Where(t => list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhSachLoaiDat"] = _db.DmLoaiDat;
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
@@ -632,19 +596,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
         [Route("GiaDatDiaBan/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(string MaDiaBan_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                    double DonGiaTu_Search, double DonGiaDen_Search, string Mota_Search, string Maloaidat_Search, string MaDiaBan = "all")
+        public IActionResult PrintSearch( DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
+                                    double DonGiaTu_Search, double DonGiaDen_Search, string Maloaidat_Search, string MaDiaBan = "all", string Maxp = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.timkiem", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.timkiem", "Index"))
                 {
                     var model = from dgct in _db.GiaDatDiaBanCt
                                 join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
                                 join dm in _db.DmLoaiDat on dgct.Maloaidat equals dm.Maloaidat
-                                //join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
-                                //join huyen in _db.Districts on dg.MaHuyen equals huyen.Mahuyen
-                                //join xa in _db.Towns on dg.MaXa equals xa.Maxa
+                                join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                                 {
                                     Id = dg.Id,
@@ -664,34 +626,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Giavt4 = dgct.Giavt4,
                                     Giavt5 = dgct.Giavt5,
                                     Trangthai = dg.Trangthai,
-                                    Madiaban = dgct.Madiaban,
+                                    Madiaban = dg.Madiaban,
+                                    Maxp = dgct.Madiaban,
                                     Maloaidat = dgct.Maloaidat,
-                                    Maxp = dgct.Maxp,
-                                    //MaHuyen=dg.MaHuyen,
-                                    //MaXa=dg.MaXa,
-                                    //TenHuyen = huyen.Tenhuyen,
-                                    //TenXa = xa.Tenxa,
+                                    TenDiaBan = diaban.TenDiaBan,
+                                    MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dgct.Madiaban).MaDiaBanCq,
                                 };
-
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Trangthai == "HT" && t.Giavt5 >= DonGiaTu_Search);
-                    if (MaDiaBan_Search != "all") { model = model.Where(t => t.Madiaban == MaDiaBan_Search); }
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai) && t.Giavt5 >= DonGiaTu_Search);                    
                     if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giavt1 <= DonGiaDen_Search); }
-                    if (!string.IsNullOrEmpty(Mota_Search))
-                    {
-                        model = model.Where(t => t.Mota.ToLower().Contains(Mota_Search.ToLower()));
-                    }
+                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giavt1 <= DonGiaDen_Search); }                    
                     if (Maloaidat_Search != "all")
                     {
                         model = model.Where(t => t.Maloaidat == Maloaidat_Search);
                     }
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(x => x.Madiaban == MaDiaBan);                       
+                        model = model.Where(x => x.Madiaban == MaDiaBan);
+                        if (Maxp != "all")
+                        {
+                            model = model.Where(x => x.Maxp == Maxp);
+                        }
                     }
+                    ViewData["TenTinh"]=_db.DsDiaBan.FirstOrDefault(x=>string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x=>x.Level == "H");                    
-                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x=>x.Level == "X");                    
-
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x=>x.Level == "X");
+                    
                     ViewData["Title"] = " Tìm kiếm thông tin định giá đất địa bàn";
 
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/TimKiem/Result.cshtml", model);
