@@ -1,10 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Thông tin hỗ trợ";
+﻿@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@model IEnumerable<CSDLGia_ASP.Models.Systems.Supports>
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
 
 <div class="text-center pt-10 pb-10">
     <h1 class="font-weight-bolder text-dark mb-6" style="text-transform:uppercase">PHẦN MỀM CƠ SỞ DỮ LIỆU VỀ GIÁ</h1>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Actions.cshtml")
-@await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Supports.cshtml")
+@* @await Html.PartialAsync("~/Views/Admin/Home/Dashboard/Supports.cshtml") *@

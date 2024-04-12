@@ -56,5 +56,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
         public string Ipf1 { get; set; }
         [NotMapped]
         public IFormFile Ipf1upload { get; set; }
+
+        public string Mota { get; set; }
     }
 }

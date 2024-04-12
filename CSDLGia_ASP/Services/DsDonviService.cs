@@ -53,12 +53,24 @@ namespace CSDLGia_ASP.Services
                     ListDonVi.Add(new DsDonVi
                     {
                         MaDv = item.MaDv,
-                        TenDv = item.TenDv
+                        TenDv = item.TenDv,
                     });
                     if (!string.IsNullOrEmpty(item.MaDv))
                     {
                         Recursive(ListDonVi, item.MaDv);
                     }
+                }
+            }
+            else
+            {
+                if (ListDonVi.FirstOrDefault(t => t.MaDv == Madv) == null)
+                {
+                    var data = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv);
+                    ListDonVi.Add(new DsDonVi
+                    {
+                        MaDv = data.MaDv,
+                        TenDv = data.TenDv
+                    });
                 }
             }
         }
