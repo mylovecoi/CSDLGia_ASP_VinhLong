@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -8,10 +9,12 @@ namespace CSDLGia_ASP.Controllers
     public class AjaxController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private IDsDiaBanService _IDsDiaBan;
 
-        public AjaxController(CSDLGiaDBContext db)
+        public AjaxController(CSDLGiaDBContext db, IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
 
@@ -19,34 +22,35 @@ namespace CSDLGia_ASP.Controllers
 
         [Route("Ajax/GetXaPhuong")]
         [HttpPost]
-        public JsonResult GetSeSelectXaPhuong(string MaDiaBan, string KeySelect)
+        public JsonResult GetSeSelectXaPhuong(string MaDiaBanHuyen, string KeySelect)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (string.IsNullOrEmpty(MaDiaBan))
+                if (string.IsNullOrEmpty(MaDiaBanHuyen))
                 {
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
-                    result += "<option value='all'>---Chọn xã phường---</option>";
+                    //result += "<option value='all'>---Chọn xã phường---</option>";
                     result += "</select>";
                     var data = new { status = "success", message = result };
                     return Json(data);
                 }
                 else
-                {                    
-                   
-                    var xaphuong = _db.DsXaPhuong.Where(x => x.Madiaban == MaDiaBan);
-                    if (!xaphuong.Any())
-                    {
-                        xaphuong = _db.DsXaPhuong;
-                    }
+                {
+
+                    //var xaphuong = _db.DsDiaBan.Where(x =>x.Level=="X" && x.MaDiaBanCq == MaDiaBanHuyen);
+                    //if (!xaphuong.Any())
+                    //{
+                    //    xaphuong = _db.DsDiaBan.Where(x=>x.Level=="X");
+                    //}
+                    var xaphuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanHuyen).Where(x=>x.Level=="X");
                     
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
                     result += "<option value='all'>---Chọn xã phường---</option>";
                     foreach (var item in xaphuong)
                     {
-                        result += "<option value='" + item.Maxp + "'>" + item.Tenxp + "</option>";
+                        result += "<option value='" + item.MaDiaBan + "'>" + item.TenDiaBan + "</option>";
                     }
                     result += "</select>";
                     var data = new { status = "success", message = result };

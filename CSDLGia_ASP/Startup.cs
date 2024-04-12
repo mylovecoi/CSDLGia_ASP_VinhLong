@@ -1,4 +1,5 @@
 using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -37,12 +38,16 @@ namespace CSDLGia_ASP
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            
+            services.AddScoped<IDsDiaBanService, DsDiaBanService>();
+            services.AddScoped<IDsDonviService, DsDonviService>();
 
             services.AddHttpContextAccessor();
             services.AddMvc().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddPageRoute("/Login", "");
             });
+
             //services.Configure<RequestLocalizationOptions>(options =>
             //{
             //    options.DefaultRequestCulture = new RequestCulture("vi-VN");

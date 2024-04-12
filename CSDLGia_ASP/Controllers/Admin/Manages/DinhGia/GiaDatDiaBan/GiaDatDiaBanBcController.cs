@@ -79,8 +79,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                      TenDonVi = hoso.TenDonVi,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-                                     NoiDungQDTT = hoso.NoiDungQDTT,
+                                     Noidung = hoso.Noidung,
                                      Thoidiem = hoso.Thoidiem,
+                                     
                                  });
 
                     ViewData["Title"] = "Báo cáo giá đất địa bàn";
@@ -137,9 +138,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Giavt4 = dgct.Giavt4,
                                     Giavt5 = dgct.Giavt5,
                                     Trangthai = dg.Trangthai,
-                                    Madiaban = dg.Madiaban,
+                                    Madiaban = dgct.Madiaban,
                                     TenDiaBan = diaban.TenDiaBan,
-                                    Maloaidat = dgct.Maloaidat
+                                    Maloaidat = dgct.Maloaidat,
+                                    MaDiaBanCapHuyen= _db.DsDiaBan.FirstOrDefault(x=>x.MaDiaBan== dgct.Madiaban).MaDiaBanCq,
 
                                 };
 
@@ -153,6 +155,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaDatDiaBan.Where(t => list_mahs.Contains(t.Mahs));
+                    ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x=>x.Level== "ADMIN").TenDiaBan;
+                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;

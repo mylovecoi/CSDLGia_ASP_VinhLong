@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBanHuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
+    var DsDiaBanXa = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXa"];
+    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];   
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 
 
@@ -15,7 +15,7 @@
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
 <p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
 <p style="text-align: left; font-size: 16px;">
-    Địa bàn:@ViewData["TenXa"] - @ViewData["TenDiaBan"]
+    Địa bàn:@ViewData["TenDiaBan"]
 </p>
 <p style="text-align: left; font-size: 16px;">Thời điểm:@Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="text-align: left; font-size: 16px;">
@@ -55,12 +55,12 @@
         {
             @if (Model.GiaDatDiaBanCt.Any())
             {
-                @foreach (var diaban in dsdiaban)
+                @foreach (var diaban in DsDiaBanHuyen)
                 {
                     var dataDiaBan = Model.GiaDatDiaBanCt.Where(x => x.Madiaban == diaban.MaDiaBan);
                     if (dataDiaBan.Any())
                     {
-                        var dataAllXa = dataDiaBan.Where(x => x.Maxp == "all" || string.IsNullOrEmpty(x.Maxp));
+                        var dataAllXa = dataDiaBan.Where(x => x.Madiaban == "all" || string.IsNullOrEmpty(x.Madiaban));
                         <tr>
                             <td colspan="12" style="text-align:left; font-weight:bold;">@diaban.TenDiaBan</td>
                         </tr>
@@ -84,13 +84,13 @@
                                 </tr>
                             }
                         }
-                        @foreach (var xa in dsxaphuong)
+                        @foreach (var xa in DsDiaBanXa)
                         {
-                            var data = dataDiaBan.Where(x => x.Maxp == xa.Maxp);
+                            var data = dataDiaBan.Where(x => x.Madiaban == xa.MaDiaBan);
                             if (data.Any())
                             {
                                 <tr>
-                                    <td colspan="12" style="text-align:left; font-weight:bold;"> &emsp; @xa.Tenxp</td>
+                                    <td colspan="12" style="text-align:left; font-weight:bold;"> &emsp; @xa.TenDiaBan</td>
                                 </tr>
                                 @foreach (var item in data)
                                 {

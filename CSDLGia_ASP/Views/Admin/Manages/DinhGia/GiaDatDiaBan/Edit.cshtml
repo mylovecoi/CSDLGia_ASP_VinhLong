@@ -2,9 +2,8 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"]; // truyền sang từ ViewData
     var spdv = (IEnumerable<GiaHhDvCnDm>)ViewData["Spdv"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
-    var TenDiaBan = ViewData["TenDiaBan"];
-    var TenXa = ViewData["TenXa"];
+    var dsxaphuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
+    var TenDiaBan = ViewData["TenDiaBan"];    
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
 @section custom_style {
@@ -40,7 +39,7 @@
             <input hidden asp-for="Mahs"/>
             <input hidden asp-for="SoQDTT" />
             <input hidden asp-for="Soqd"/>
-            <div class="row">
+           @*  <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
                         <label>Theo thông tư quyết định</label>
@@ -81,7 +80,7 @@
                         <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
                     </div>
                 </div>
-            </div>
+            </div> *@
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
             <div class="card-footer" style="text-align:center">

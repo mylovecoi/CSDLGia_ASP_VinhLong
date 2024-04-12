@@ -39,7 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá đất cụ thể
+                    Thông tin hồ sơ giá trúng thầu đất
                 </span>
             </h3>
         </div>
@@ -98,7 +98,7 @@
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
                             <td style="text-align: center">@item.Soqd</td>
-                            <td>@item.Thongtin</td>
+                            <td></td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai_ad == "CB")
@@ -124,4 +124,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatPhanLoai/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/ThongTinGiayTo/Show.cshtml")
