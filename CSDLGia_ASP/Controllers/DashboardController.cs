@@ -23,11 +23,7 @@ namespace CSDLGia_ASP.Controllers
         {
             string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
                                                                                .FirstOrDefault()?.Mahs;
-            var datact = new List<GiaDatDiaBanCt>();
-            if (Mahs != null)
-            {
-                datact = _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList();
-            }
+
             string result = "<div class='tab-content' id='data_load'>";
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
@@ -45,20 +41,43 @@ namespace CSDLGia_ASP.Controllers
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
-            foreach (var item in datact.OrderBy(t => t.Sapxep))
+            if (Mahs != null)
             {
-                result += "<tr>";
-                result += "<td>" + item.Loaidat + "</td>";
-                result += "<td>" + item.Mota + "</td>";
-                result += "<td>" + item.Loaiduong + "</td>";
-                result += "<td>" + item.Diemdau + "<br />" +  item.Diemcuoi + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Hesok) + "</td>";
-                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt1) + "</td>";
-                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt2) +"</td>";
-                result += "<td style='text-align:right'>"+ Helpers.ConvertDbToStr(item.Giavt3) +"</td>";
-                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
-                result += "<td style='text-align:right'>" + @Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
-                result += "</tr>";
+                var datact = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs)
+                              join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
+                              select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
+                              {
+                                  Id = dat.Id,
+                                  HienThi = dat.HienThi,
+                                  Maloaidat = dat.Maloaidat,
+                                  Mota = dat.Mota,
+                                  Diemdau = dat.Diemdau,
+                                  Diemcuoi = dat.Diemcuoi,
+                                  Loaiduong = dat.Loaiduong,
+                                  Hesok = dat.Hesok,
+                                  Giavt1 = dat.Giavt1,
+                                  Giavt2 = dat.Giavt2,
+                                  Giavt3 = dat.Giavt3,
+                                  Giavt4 = dat.Giavt4,
+                                  Giavt5 = dat.Giavt5,
+                                  Loaidat = dm.Loaidat,
+                                  Sapxep = dat.Sapxep
+                              });
+                foreach (var item in datact.OrderBy(t => t.Sapxep))
+                {
+                    result += "<tr>";
+                    result += "<td>" + item.Loaidat + "</td>";
+                    result += "<td>" + item.Mota + "</td>";
+                    result += "<td>" + item.Loaiduong + "</td>";
+                    result += "<td>" + item.Diemdau + "<br />" + item.Diemcuoi + "</td>";
+                    result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Hesok) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt1) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt2) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt3) + "</td>";
+                    result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
+                    result += "<td style='text-align:right'>" + @Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
+                    result += "</tr>";
+                }
             }
             result += "</tbody>";
             result += "</table>";

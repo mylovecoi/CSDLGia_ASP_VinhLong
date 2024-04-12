@@ -64,17 +64,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
         [Route("DanhMucLePhi/Store")]
         [HttpPost]
-        public JsonResult Store(int Stt, string HienThi, string SttHienthi, string Manhom, string[] Style)
+        public JsonResult Store(GiaPhiLePhiDm requests, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                 var model = new GiaPhiLePhiDm
                 {
-                    Stt = Stt,
-                    HienThi = HienThi,
-                    SttHienthi = SttHienthi,
-                    Manhom = Manhom,
+                    Stt = requests.Stt,
+                    HienThi = requests.HienThi,
+                    SttHienthi = requests.SttHienthi,
+                    Manhom = requests.Manhom,
+                    NhanHieu = requests.NhanHieu,
+                    NuocSxLr = requests.NuocSxLr,
+                    TheTich = requests.TheTich,
+                    SoNguoiTaiTrong = requests.SoNguoiTaiTrong,
                     Style = str_style,
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,
@@ -188,15 +192,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "</select>";
                 result += "</div>";
                 result += "</div>";
-
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Nhãn hiệu:</label>";
+                result += "<input type='text' id='nhanhieu_edit' name='nhanhieu_edit' value='" + model.NhanHieu + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Nước sản xuất, lắp ráp:</label>";
+                result += "<input type='text' id='nuocsxlr_edit' name='nuocsxlr_edit' value='" + model.NuocSxLr + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Nội dung hiển thị:</label>";
+                result += "<label>Kiểu loại:</label>";
                 result += "<input type='text' id='hienthi_edit' name='hienthi_edit' value='" + model.HienThi + "' class='form-control'/>";
-
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Thể tích làm việc:</label>";
+                result += "<input type='text' id='thetich_edit' name='thetich_edit' value='" + model.TheTich + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Số người cho phép trở/ Tải trọng:</label>";
+                result += "<input type='text' id='songuoitaitrong_edit' name='songuoitaitrong_edit' value='" + model.SoNguoiTaiTrong + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
                 result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
                 result += "</div>";
 
                 var data = new { status = "success", message = result };
@@ -316,8 +342,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                     Stt = line,
                                     SttHienthi = worksheet.Cells[row, 1].Value != null ?
                                                  worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                    HienThi = worksheet.Cells[row, 2].Value != null ?
+                                    NhanHieu = worksheet.Cells[row, 2].Value != null ?
                                                  worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    NuocSxLr = worksheet.Cells[row, 3].Value != null ?
+                                                 worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    HienThi = worksheet.Cells[row, 4].Value != null ?
+                                                 worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                    TheTich = worksheet.Cells[row, 5].Value != null ?
+                                                 worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                    SoNguoiTaiTrong = worksheet.Cells[row, 6].Value != null ?
+                                                 worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                                     Style = strStyle.ToString(),
                                     Manhom = requests.MaNhom
                                 });

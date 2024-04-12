@@ -13,7 +13,7 @@
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
         $(document).ready(function () {
-            TableManaged4.init();
+            TableManagedClass.init();
         });
     </script>
 }
@@ -38,21 +38,12 @@
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="Validatelp()"><i class="la la-check"></i>Thêm mới</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
-    function Validatelp() {
-        if ($('#Thoidiem').val().trim() == '') {
-            toastr.error("Ngày quyết định không được để trống!", "Lỗi!!!")
-        } else {
-            document.getElementById("frm_r_store").submit();
-        }
 
-    }
-</script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

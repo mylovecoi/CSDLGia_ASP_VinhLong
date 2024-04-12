@@ -39,6 +39,7 @@
                     <div class="form-group">
                         <label>Phân loại hồ sơ:*</label>
                         <select class="form-control" asp-for="MaNhom">
+                            <option value="all">--Tất cả--</option>
                             @foreach(var item in GiaPhiLePhiNhom)
                             {
                                 <option value="@item.Manhom">@item.Tennhom</option>

@@ -16,68 +16,69 @@
             </b>
             <hr style="width: 15%;vertical-align: top; margin-top: 2px">
         </td>
-    </tr>   
+    </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
     TỔNG HỢP GIÁ LỆ PHÍ TRƯỚC BẠ
 </p>
-@foreach (var dv in DonVis)
-{
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+    <thead>
+        <tr>
+            <th style="text-align:center; font-weight:bold" width="5%">STT</th>
+            <th style="text-align:center; font-weight:bold" width="10%">Nhãn hiệu</th>
+            <th style="text-align:center; font-weight:bold" width="10%">Nước sản xuất, lắp ráp</th>
+            <th style="text-align:center; font-weight:bold">Kiểu loại</th>
+            <th style="text-align:center; font-weight:bold" width="10%">Thể tích</th>
+            <th style="text-align:center; font-weight:bold" width="10%">Số người/ Tải trọng</th>
+            <th style="text-align:center; font-weight:bold" width="10%">Giá tính LPTB</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dv in DonVis)
+        {
 
-    <p style="text-align: center; font-size: 16px; font-style:italic">
-        @dv.TenDv
-    </p>
-    var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
-    @foreach(var hoso in hosodonvi)
-    {
-        <p style="text-align: left; font-size: 16px; font-style:italic">
-           Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
-        </p>
-        <p style="text-align: left; font-size: 16px; font-style:italic">
-           Phân loại hồ sơ: @hoso.Phanloai
-        </p>
-        <p style="text-align: left; font-size: 16px; font-style:italic">
-          @hoso.Mota
-        </p>        
-        var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
-        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
-            <thead>
+            var hosodonvi = Model.Where(t => t.Madv == dv.MaDv);
+            if (hosodonvi.Any())
+            {
                 <tr>
-                    <th style="text-align:center; font-weight:bold" width="5%">STT</th>
-                    <th style="text-align:center; font-weight:bold">Tên phí, lệ phí</th>
-                    <th style="text-align:center; font-weight:bold">Phần trăm</th>
-                    <th style="text-align:center; font-weight:bold">Mức thu</th>
+                    <td></td>
+                    <td colspan="6" style="text-align:left; font-weight:bold;text-transform:uppercase">@dv.TenDv</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
+                @foreach (var hoso in hosodonvi)
                 {
-                    string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                     <tr>
-                        <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
-                        <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
-                        <td style="text-align:center; @HtmlStyle">@item.Phantram</td>
-                        <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
-                       
+                        <td></td>
+                        <td colspan="6" style="text-align:left; font-weight:bold;">
+                            &emsp; Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)
+                        </td>
                     </tr>
+                    var hosoct = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
+                    @foreach (var item in hosoct.OrderBy(t => t.STTSapxep))
+                    {
+                        string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                        <tr>
+                            <td style="text-align:center;@HtmlStyle">@item.STTHienthi</td>
+                            <td style="text-align:left; @HtmlStyle">@item.NhanHieu</td>
+                            <td style="text-align:center; @HtmlStyle">@item.NuocSxLr</td>
+                            <td style="text-align:left; @HtmlStyle">@item.Ptcp</td>
+                            <td style="text-align:center; @HtmlStyle">@item.TheTich</td>
+                            <td style="text-align:center; @HtmlStyle">@item.SoNguoiTaiTrong</td>
+                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
+                        </tr>
+                    }
                 }
-            </tbody>
-        </table>
-    }
-}
+            }
+        }
+    </tbody>
+</table>
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0px auto; border-collapse: collapse;font-size:14px">
     <tr>
         <td width="45%" style="text-align: left">
-            <br /><br /><br /><br />
-            <span style="font-style:italic; font-weight: bold">Nơi nhận</span><br />
-            <span>- UBND tỉnh;</span><br />
-            <span>- Bộ tài chính;</span><br />
-            <span>- Lưu: VT, QLGCS.</span>
         </td>
         <td width="55%" style="text-align: center">
             <span style="font-weight: bold; text-transform:uppercase">
-                @ViewData["ChucDanhNguoiKy"]               
+                @ViewData["ChucDanhNguoiKy"]
             </span><br />
             <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
         </td>

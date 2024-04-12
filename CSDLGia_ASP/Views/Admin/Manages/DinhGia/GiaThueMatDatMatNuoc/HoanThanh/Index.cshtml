@@ -28,11 +28,10 @@
         });
 
         $(function () {
-            $('#Donvi, #Nam').change(function () {
+            $('#Nam').change(function () {
                 var current_path_url = '/GiaThueMatDatMatNuoc/XetDuyet?';
-                var madv = '&Madv=' + $('#Donvi').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var url = current_path_url +  nam;
                 window.location.href = url;
             })
         });

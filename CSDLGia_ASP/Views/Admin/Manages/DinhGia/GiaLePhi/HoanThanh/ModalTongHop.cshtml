@@ -40,18 +40,18 @@
                                 <input type="date" class="form-control" id="ngayden" name="ngayden" value="@ToDate" onchange="GetList()" />
                             </div>
                         </div>
-                        <div class="col-xl-12">
+                        @* <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Thông tin hồ sơ: </label><br />
                                 <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
                                     <option value="all">--Tất cả---</option>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.Where(t => t.Thoidiem >= firstDayOfYear && t.Thoidiem <= lastDayOfYear))
                                     {
                                         <option value="@item.Mahs">Số QĐ: @item.Soqd- Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem) </option>
                                     }
                                 </select>
                             </div>
-                        </div>
+                        </div> *@
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Chức danh ký:</label>

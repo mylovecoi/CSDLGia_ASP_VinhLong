@@ -119,7 +119,6 @@
                             <td style="text-align: left">
                                 @if (!string.IsNullOrEmpty(item.Madv))
                                     @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
-
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -141,7 +140,7 @@
                                     else if (item.Trangthai == "BTL")
                                     {
                                         <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
-                                        <p>Lý do:&nbsp;@item.Lydo</p>
+                                        <span>Lý do:&nbsp;@item.Lydo</span>
                                     }
                                     else
                                     {
@@ -167,10 +166,12 @@
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
-
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-mail-forward text-primary"></i>
-                                    </button>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Approve"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                            <i class="icon-lg la la-mail-forward text-primary"></i>
+                                        </button>
+                                    }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Delete"))
                                     {
 
@@ -303,7 +304,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
             </form>
         </div>

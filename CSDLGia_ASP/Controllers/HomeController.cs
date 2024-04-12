@@ -48,7 +48,26 @@ namespace CSDLGia_ASP.Controllers
             var datact = new List<GiaDatDiaBanCt>();
             if(Mahs != null)
             {
-                datact = _db.GiaDatDiaBanCt.Where(t=>t.Mahs == Mahs).ToList();
+                datact = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs)
+                          join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
+                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
+                          {
+                              Id = dat.Id,
+                              HienThi = dat.HienThi,
+                              Maloaidat = dat.Maloaidat,
+                              Mota = dat.Mota,
+                              Diemdau = dat.Diemdau,
+                              Diemcuoi = dat.Diemcuoi,
+                              Loaiduong = dat.Loaiduong,
+                              Hesok = dat.Hesok,
+                              Giavt1 = dat.Giavt1,
+                              Giavt2 = dat.Giavt2,
+                              Giavt3 = dat.Giavt3,
+                              Giavt4 = dat.Giavt4,
+                              Giavt5 = dat.Giavt5,
+                              Loaidat = dm.Loaidat,
+                              Sapxep = dat.Sapxep
+                          }).ToList();
             }           
             ViewData["ThongTinHoSo"] = datact;           
             //

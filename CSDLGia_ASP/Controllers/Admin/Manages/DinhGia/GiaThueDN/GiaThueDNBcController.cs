@@ -137,7 +137,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                      Dongia1 = hosoct.Dongia1,
                                      MaNhom = hosoct.MaNhom,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Mahs = hoso.Mahs,
+                                     SapXep = hosoct.SapXep,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && list_trangthai.Contains(t.Trangthai));
