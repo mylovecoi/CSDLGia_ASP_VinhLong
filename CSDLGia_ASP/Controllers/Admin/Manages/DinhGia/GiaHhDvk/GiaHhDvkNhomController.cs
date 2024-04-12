@@ -29,6 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Title"] = "Thông tin nhóm hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_dm";
+                    ViewData["maKetNoiAPI"] = "giahhdvkdm";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else

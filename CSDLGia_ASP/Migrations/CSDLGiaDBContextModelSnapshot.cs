@@ -13988,6 +13988,42 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("ThamDinhGiaDv");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDvLichSu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileQD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdDV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Maso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NgayQD")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SoQD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Theodoi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ThamDinhGiaDvLichSu");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn", b =>
                 {
                     b.Property<int>("Id")

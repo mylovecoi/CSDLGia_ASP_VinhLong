@@ -119,10 +119,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Ten + "'/>";
                         result += "</div>";
                         result += "</div>";
+
+                        result += "<div class='form-group' style='width:100%'>";
                         result += "<div class='col-xl-12'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
-                        result += "<select id='Dvt_edit' name='Dvt_edit' class='form-control'>";
+                        result += "</div>";
+                        result += "<div class='col-xl-12'>";
+                        result += "<select id='Dvt_edit' name='Dvt_edit' class='form-control select2basic' style='width:100%'>";
                         foreach (var item in dmdvt)
                         {
                             result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";
@@ -131,6 +134,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
                         result += "</div>";
                         result += "</div>";
+                        //result += "<div class='col-xl-12'>";
+                        //result += "<div class='form-group fv-plugins-icon-container'>";
+                        //result += "<label>Đơn vị tính</label>";
+                        //result += "<select id='Dvt_edit' name='Dvt_edit' class='form-control'>";
+                        //foreach (var item in dmdvt)
+                        //{
+                        //    result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";
+                        //}
+                        //result += "</select>";
+
+                        //result += "</div>";
+                        //result += "</div>";
+
+
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Trạng thái</label>";

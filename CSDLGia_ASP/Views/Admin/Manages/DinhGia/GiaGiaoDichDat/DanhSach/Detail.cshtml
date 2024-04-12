@@ -83,7 +83,11 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    $(document).ready(function () {                        
+                        MoneyDecimalMask();
+                        $('.select2basic').select2();
+                    });
+                    // MoneyMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -92,7 +96,7 @@
     }
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaGiaoDichDatCt/Update',
             type: 'POST',

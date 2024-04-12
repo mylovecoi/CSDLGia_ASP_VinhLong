@@ -20,6 +20,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
         });
 
         $(function () {
@@ -53,7 +54,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;

@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             var dsdiaban = _db.DsDiaBan;
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);
-            var dsxaphuong = _db.DsXaPhuong;            
+            var dsxaphuong = _db.DsXaPhuong;
 
             if (model != null)
             {
@@ -65,24 +65,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 result += "<div class='row'>";
 
-                result += "<div class='col-xl-4'>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group'>";
                 result += "<label>Địa bàn áp dụng</label><br />";
-                result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
+                result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()' style='width:100%'>";
                 foreach (var item in dsdiaban)
                 {
-                    result += "<option value='" + item.MaDiaBan + "'"+ (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
+                    result += "<option value='" + item.MaDiaBan + "'" + (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-4'>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group'>";
                 result += "<label>Xã phường</label><br />";
-                result += "<select class='form-control select2basic' id='MaXaPhuongChiTiet_edit'>";
+                result += "<select class='form-control select2basic' id='MaXaPhuongChiTiet_edit' style='width:100%'>";
                 foreach (var item in dsxaphuong)
                 {
-                    result += "<option value='" + item.Maxp + "'"+ (model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                    result += "<option value='" + item.Maxp + "'" + (model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -119,7 +119,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id,string MaDiaBan,string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Update(int Id, string MaDiaBan, string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
             model.MaDiaBan = MaDiaBan;
