@@ -30,7 +30,8 @@ namespace CSDLGia_ASP.Services
                     list.Add(new DsDiaBan
                     {
                         MaDiaBan = model.MaDiaBan,
-                        TenDiaBan = model.TenDiaBan
+                        TenDiaBan = model.TenDiaBan,
+                        Level = model.Level,
                     });
                     Recursive(list, model.MaDiaBan);
                 }
@@ -48,7 +49,8 @@ namespace CSDLGia_ASP.Services
                 list.Add(new DsDiaBan
                 {
                     MaDiaBan = childDiaBan.MaDiaBan,
-                    TenDiaBan = childDiaBan.TenDiaBan
+                    TenDiaBan = childDiaBan.TenDiaBan,
+                    Level = childDiaBan.Level,
                 });
                 Recursive(list, childDiaBan.MaDiaBan);
             }

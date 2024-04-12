@@ -50,6 +50,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string TenHuyen { get; set; }
         [NotMapped]
         public string TenXa { get; set; }
+        [NotMapped]
+        public string MaDiaBanCapHuyen { get; set; }
 
 
 

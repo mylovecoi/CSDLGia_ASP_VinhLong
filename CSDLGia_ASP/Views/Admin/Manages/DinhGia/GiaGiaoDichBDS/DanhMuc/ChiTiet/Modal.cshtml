@@ -23,10 +23,13 @@
                             <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
+
+                    <div class="form-group fv-plugins-icon-container" style="width:100%">
+                        <div class="col-xl-12">
                             <label>Đơn vị tính</label>
-                            <select id="Dvt_create" name="Dvt_create" class="form-control select2basic">
+                        </div>
+                        <div class="col-xl-12">
+                            <select id="Dvt_create" name="Dvt_create" class="form-control select2basic" style="width:100%">
                                 @foreach (var item in DmDvt)
                                 {
                                     <option value="@item.Dvt">@item.Dvt</option>
@@ -293,7 +296,7 @@
                     Manhom: $('#Manhom').val(),
                     Tennhom: $('#tennhom_create').val(),
                     Theodoi: $('#theodoi_create').val(),
-                    Dvt: $('#Dvt_create').val(),                    
+                    Dvt: $('#Dvt_create').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {
@@ -324,6 +327,9 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
+                    $(document).ready(function () {
+                        $('.select2basic').select2();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }

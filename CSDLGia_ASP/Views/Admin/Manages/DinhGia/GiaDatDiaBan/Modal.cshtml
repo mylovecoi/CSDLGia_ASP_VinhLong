@@ -4,8 +4,8 @@
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
     var khuvuc = (IEnumerable<GiaDatDiaBanCt>)ViewData["Khuvuc"];
-    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    // var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
     var TenDiaBan = ViewData["TenDiaBan"];
     int record_id = 1;
 }
@@ -27,20 +27,19 @@
             <div class="modal-body">
                 <input hidden asp-for="Mahs">
                 <div class="row">
-                    <div class="col-xl-6">
+                    @* <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Địa bàn</label>
                             <label class="form-control" style="color:blue">@TenDiaBan</label>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-6">
                         <div class="form-group" style="width:100%">
                             <label>Xã/phường</label>
-                            <select asp-for="MaXa" id="MaXaPhuong_create" name="MaXaPhuong_create" class="form-control select2basic" style="width:100%">
-                                <option value="all">--Chọn xã phường-- </option>
+                            <select asp-for="MaXa" id="MaDiaBan_create" name="MaDiaBan_create" class="form-control select2basic" style="width:100%">                               
                                 @foreach (var item in DsXaPhuong)
                                 {
-                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                 }
                             </select>
                         </div>
@@ -306,8 +305,8 @@
             url: '/GiaDatDiaBanCt/Store',
             type: 'POST',
             data: {
-                MaDiaBan: $('#Madiaban').val(),
-                MaXaPhuong: $('#MaXaPhuong_create').val(),
+                MaDiaBan: $('#MaDiaBan_create').val(),
+                
                 Mahs: $('#Mahs').val(),
                 Maloaidat: $('#maloaidat_create').val(),
                 MoTa: $('#mota_create').val(),
@@ -458,6 +457,7 @@
                     $('#edit_thongtin').replaceWith(data.message);
                     $(document).ready(function () {
                         MoneyDecimalMask();
+                        $('.select2basic').select2();
                     });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");

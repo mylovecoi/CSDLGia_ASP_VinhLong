@@ -139,7 +139,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Thông tin hồ sơ: </label><br />
-                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                <select class="form-control select2basic" id="MaHsTongHop" name="MaHsTongHop" style="width:100%">
                                     <option value="all">--Tất cả---</option>
                                     @foreach (var item in DanhSachHoSo)
                                     {
@@ -152,7 +152,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label><b>Loại đất</b></label>
-                                <select type="date" id="MaloaidatTongHop" name="MaloaidatTongHop" class="form-control">
+                                <select type="date" id="MaloaidatTongHop" name="MaloaidatTongHop" style="width:100%" class="form-control select2basic">
                                     <option value="all">--Tất cả--</option>
                                     @foreach (var item in DanhSachLoaiDat)
                                     {

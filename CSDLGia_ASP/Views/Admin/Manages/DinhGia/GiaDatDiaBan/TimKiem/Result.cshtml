@@ -1,8 +1,9 @@
 ﻿@{
     Layout = "_LayoutReports";
     int record_id = 1;
-    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var TenTinh = ViewData["TenTinh"];
+    var DsDiaBanHuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
+    var DsDiaBanXa = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXa"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt>
 
@@ -15,8 +16,7 @@
         <tr>
             <th style="text-align:center" width="2%">STT</th>
             <th style="text-align:center">Quyết định</th>
-            <th style="text-align:center">Ngày áp dụng</th>
-            <th style="text-align:center">Địa bàn</th>
+            <th style="text-align:center">Ngày áp dụng</th>            
             <th style="text-align:center">Loại đất</th>
             <th style="text-align:left">Tên đường phố</th>
             <th style="text-align:center">Loại đường</th>
@@ -30,24 +30,47 @@
 
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        <tr>
+            <td colspan="12" style="font-weight:bold;text-align:left">&emsp; @TenTinh</td>
+        </tr>
+        @foreach (var huyen in DsDiaBanHuyen)
         {
-            <tr>
-                <td>@(record_id++)</td>
-                <td>@item.Soqd</td>
-                <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                <td>@item.TenXa , @item.TenHuyen</td>
-                <td>@item.Loaidat</td>
-                <td>@item.Mota</td>
-                <td>@item.Loaiduong</td>
-                <td style="text-align:center">@Helpers.ConvertDbToStr(item.Hesok) </td>
-                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
-                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
-                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
-                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
-            </tr>
+            var dataHuyen = Model.Where(x=>x.MaDiaBanCapHuyen== huyen.MaDiaBan);
+            if (dataHuyen.Any())
+            {
+                <tr>
+                    <td colspan="12" style="font-weight:bold;text-align:left">&emsp;&emsp; @huyen.TenDiaBan</td>
+                </tr>
+            }
+            foreach (var xa in DsDiaBanXa.Where(x=>x.MaDiaBanCq == huyen.MaDiaBan))
+            {
+                var dataXa = dataHuyen.Where(x=>x.Maxp == xa.MaDiaBan);
+                if (dataXa.Any())
+                {
+                    <tr>
+                        <td colspan="12" style="font-weight:bold;text-align:left">&emsp;&emsp;&emsp; @xa.TenDiaBan</td>
+                    </tr>
+                    @foreach (var item in dataXa)
+                    {
+                        <tr>
+                            <td>@(record_id++)</td>
+                            <td>@item.Soqd</td>
+                            <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td>@item.Loaidat</td>
+                            <td>@item.Mota</td>
+                            <td>@item.Loaiduong</td>
+                            <td style="text-align:center">@Helpers.ConvertDbToStr(item.Hesok) </td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                        </tr>
+                    }
+                }
+            }
         }
+       
     </tbody>
 </table>
 

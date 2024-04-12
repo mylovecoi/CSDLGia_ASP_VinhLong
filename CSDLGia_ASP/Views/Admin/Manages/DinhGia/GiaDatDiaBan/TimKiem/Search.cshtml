@@ -4,15 +4,15 @@
     string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
     string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
     double DonGiaTu = ViewData["DonGiaTu"] as double? ?? 0;
-    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;
+    double DonGiaDen = ViewData["DonGiaDen"] as double? ?? 0;    
 
     var DanhSachHoSo = (IEnumerable<GiaDatDiaBan>)ViewData["DanhSachHoSo"];
     // var DiaBan = ViewData["DsDiaBan"] as IEnumerable<CSDLGia_ASP.Models.Systems.DsDiaBan> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DsDiaBan>();
     var DanhSachLoaiDat = ViewData["DanhSachLoaiDat"] as IEnumerable<CSDLGia_ASP.Models.Systems.DmLoaiDat> ?? Enumerable.Empty<CSDLGia_ASP.Models.Systems.DmLoaiDat>();
-    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
-    var MaDiaBan = ViewData["MaDiaBan"];
-    var MaXa = ViewData["MaXa"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
+    var DsDiaBanXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXaPhuong"];
+    var MaDiaBan = ViewData["MaDiaBan"];    
+    var Maxp = ViewData["Maxp"];
     int record_id = 1;
 
 }
@@ -38,14 +38,14 @@
                 url: '/Ajax/GetXaPhuong',
                 type: 'POST',
                 data: {
-                    MaDiaBan: $('#MaDiaBan').val(),
-                    KeySelect: 'MaXa'
+                    MaDiaBanHuyen: $('#MaDiaBan').val(),
+                    KeySelect: 'Maxp'
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.status == 'success') {
                         toastr.success('Success');
-                        $('#MaXa').html(data.message);
+                        $('#Maxp').html(data.message);
                     } else {
                         toastr.error(data.message, "Lỗi!");
                     }
@@ -64,16 +64,15 @@
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaDatDiaBan/Search?';
                     var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
-                    var MaXa = '&MaXa=' + $('#MaXa').val();
+                    var Maxp = '&Maxp=' + $('#Maxp').val();                    
                     var Maloaidat = '&Maloaidat=' + $('#Maloaidat_Search').val();
                     var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
                     var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
                     var Mahs = '&Mahs=' + $('#Mahs_Search').val();
                     var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val();
-                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();
-                    var Mota = '&Mota=' + $('#Mota_Search').val();
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val();                    
 
-                    var url = current_path_url + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Mota + MaDiaBan + MaXa;
+                    var url = current_path_url + Maloaidat + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + MaDiaBan + Maxp ;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -111,7 +110,7 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Quận/Huyện</label>
+                        <label>Địa bàn</label>
                         <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
                             <option value="all">---Chọn địa bàn---</option>
                             @foreach (var item in DsDiaBan)
@@ -123,24 +122,21 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Xã/Phường</label>
-                        <select class="form-control select2basic" asp-for="@MaXa" id="MaXa" name="MaXa">
-                            <option value="all">---Chọn Xã/Phường</option>
-                            @foreach (var item in DsXaPhuong)
+                        <label>Xã/phường</label>
+                        <select class="form-control select2basic" asp-for="@Maxp" id="Maxp" name="Maxp">
+                            <option value="all">---Chọn địa bàn---</option>
+                            @foreach (var item in DsDiaBanXaPhuong)
                             {
-                                <option value="@item.Maxp">@item.Tenxp</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
                 </div>
-
-
-
-
+                
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Loại đất</label>
-                        <select class="form-control select2basic" id="Maloaidat_Search" name="Maloaidat_Search">
+                        <select class="form-control select2basic"  id="Maloaidat_Search" name="Maloaidat_Search">
                             <option value="all">--Tất cả--</option>
                             @foreach (var item in DanhSachLoaiDat)
                             {
@@ -186,11 +182,7 @@
                         <label style="font-weight:bold;">Đơn giá đến</label>
                         <input type="number" class="form-control" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@DonGiaDen" />
                     </div>
-                </div>
-                <div class="col-xl-6">
-                    <label style="font-weight:bold;">Mô tả</label>
-                    <input id="Mota_Search" name="Mota_Search" class="form-control" value="@ViewData["Mota"]" />
-                </div>
+                </div>                
             </div>
         </form>
         <hr />
@@ -227,8 +219,7 @@
                         <td>@(record_id++)</td>
                         <td>@item.Soqd</td>
                         <td>@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td>
-                        @(string.IsNullOrEmpty(item.Maxp)|| item.Maxp =="all")?"": @(DsXaPhuong.First(x=>x.Maxp==item.Maxp).Tenxp +" - ")
+                        <td>                        
                         @item.TenDiaBan
                         </td>
                         <td>@item.Loaidat</td>

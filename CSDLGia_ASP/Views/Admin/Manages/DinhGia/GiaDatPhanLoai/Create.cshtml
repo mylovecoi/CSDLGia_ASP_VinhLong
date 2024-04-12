@@ -74,9 +74,9 @@
                     </div>
                 </div>
                 <div class="col-xl-4">
-                    <div class="form-group select2basic">
-                        <label>Xã phường <span class="text-danger">*</span></label><br />
-                        <select class="form-control" asp-for="Maxp" id="Maxp">
+                    <div class="form-group">
+                        <label>Xã phường</label><br />
+                        <select class="form-control select2basic" asp-for="Maxp" id="Maxp">
                             <option value="all">--Chọn xã phường--</option>
                             @foreach (var item in dsxaphuong)
                             {

@@ -22,10 +22,10 @@
             <div class="modal-body">
                 <input type="hidden" value="@mahs" id="mahs_create" />
                 <div class="row">
-                    <div class="col-xl-4">
-                        <div class="form-group">
+                    <div class="col-xl-6">
+                        <div class="form-group ">
                             <label>Địa bàn áp dụng</label><br />
-                            <select class="form-control" id="MaDiaBanChiTiet" onchange="GetXaPhuongChiTiet()">
+                            <select class="form-control select2basic" id="MaDiaBanChiTiet" style="width:100%" onchange="GetXaPhuongChiTiet()">
                                 @foreach (var item in dsdiaban)
                                 {
                                     <option value="@item.MaDiaBan">@item.TenDiaBan</option>
@@ -33,10 +33,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4">
-                        <div class="form-group">
+                    <div class="col-xl-6">
+                        <div class="form-group ">
                             <label>Xã phường</label><br />
-                            <select class="form-control" id="MaXaPhuongChiTiet">
+                            <select class="form-control select2basic" id="MaXaPhuongChiTiet" style="width:100%">
                                 @foreach (var item in dsxaphuong)
                                 {
                                     <option value="@item.Maxp">@item.Tenxp</option>
@@ -186,6 +186,7 @@
                     $('#edit_thongtin').replaceWith(data.message);
                     $(document).ready(function () {
                         MoneyDecimalMask();
+                        $('.select2basic').select2();
                     });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
