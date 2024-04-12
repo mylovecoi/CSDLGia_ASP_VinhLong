@@ -1,18 +1,13 @@
 ﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Reflection.Metadata;
 using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {

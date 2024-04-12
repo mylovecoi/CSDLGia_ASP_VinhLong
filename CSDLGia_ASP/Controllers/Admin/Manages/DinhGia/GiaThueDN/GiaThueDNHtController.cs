@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
 
-                    List<string> list_trangthai = new List<string> { "CD", "HT", "DD",  "CB" };
+                    List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB" };
 
                     var model = _db.GiaThueMatDatMatNuoc.Where(t => list_trangthai.Contains(t.Trangthai));
                     if (Nam != 0)
@@ -53,7 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                          Soqd = dg.Soqd,
                                          TenDv = donvi.TenDv,
                                          Trangthai = dg.Trangthai
-                                     };                 
+                                     };
 
                     ViewData["Nam"] = Nam;
                     ViewData["Title"] = "Hoàn thành định giá thuê mặt đất mặt nước";
@@ -82,9 +82,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(p => p.Mahs == mahs_duyet);
-                    
+
                     model.Updated_at = DateTime.Now;
-                    model.Trangthai = "DD";                   
+                    model.Trangthai = "DD";
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
@@ -129,7 +129,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
+        public IActionResult TraLai(int id_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -137,55 +137,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Id == id_tralai);
 
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
-                    {
+                    model.Trangthai = "BTL";
+                    model.Lydo = Lydo;
 
-                        model.Macqcq = null;
-                        model.Trangthai = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Trangthai_h = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Trangthai_t = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Trangthai_ad = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-                    if (madv_tralai == model.Madv_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Madv_h = null;
-                        model.Thoidiem_h = DateTime.MinValue;
-                        model.Trangthai_h = null;
-                    }
-                    if (madv_tralai == model.Madv_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Madv_t = null;
-                        model.Thoidiem_t = DateTime.MinValue;
-                        model.Trangthai_t = null;
-                    }
-                    if (madv_tralai == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Madv_ad = null;
-                        model.Thoidiem_ad = DateTime.MinValue;
-                        model.Trangthai_ad = null;
-                    }
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
@@ -208,7 +162,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
-                    return RedirectToAction("Index", "GiaThueDNHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaThueDNHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -232,7 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "CB";
-                  
+
 
                     _db.GiaThueMatDatMatNuoc.Update(model);
                     _db.SaveChanges();
@@ -276,7 +230,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == mahs_hcb);
-                   
+
                     model.Trangthai = "DD";
                     model.Updated_at = DateTime.Now;
 

@@ -1,5 +1,5 @@
 ﻿@{
-    string maHoSo = ViewData["StringValue"] as string;
+    string maHoSo = (string)ViewData["maHoSoTruyen"] ?? "";
 }
 <div class="dropdown dropdown-inline">
     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
@@ -24,10 +24,10 @@
                 <a asp-controller="API" asp-action="XemHoso" asp-route-Maso="@(ViewData["maKetNoiAPI"]?? "")" asp-route-MaHS="@maHoSo" class="navi-link" target="_blank">
                     <span class="navi-icon"><i class="la la-file-text-o"></i></span>
                     <span class="navi-text">Xem thông tin hồ sơ</span>
-                </a>                
+                </a>
             </li>
             <li class="navi-item">
-                <a type="button" data-target="#TruyenHoSo_Modal" data-toggle="modal" class="navi-link border-0 btn-clean" title="Thêm mới">
+                <a type="button" data-target="#TruyenHoSo_Modal" data-toggle="modal" onclick="setTruyenDuLieu('@maHoSo')" class="navi-link border-0 btn-clean" title="Thêm mới">
                     <i class="la la-file-text-o"></i>Truyền dữ liệu
                 </a>
             </li>

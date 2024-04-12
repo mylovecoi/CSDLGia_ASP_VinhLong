@@ -44,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Dvt"] = _db.DmDvt;
                     ViewData["Title"] = "Thông tin chi tiết hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_dm";
+                    ViewData["MenuLv2"] = "menu_hhdvk_dm";                    
                     foreach (var item in model)
                     {
                         var foundItem = dmDvts.FirstOrDefault(x => x.Madvt == item.Dvt);

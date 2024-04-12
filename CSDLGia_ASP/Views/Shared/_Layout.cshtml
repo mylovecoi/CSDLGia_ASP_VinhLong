@@ -45,6 +45,18 @@
             color: #a2a3b7;
             font-size: 14px;
         }
+
+        #loadingOverlay {
+            display: none; /* Mặc định ẩn đi */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 20px;
+            /* background-color: rgba(255, 255, 255, 0.8); /* Màu nền với độ trong suốt */ */
+            border-radius: 10px; /* Điều chỉnh bo tròn theo nhu cầu */
+            z-index: 9999; /* Đảm bảo hiển thị trên cùng */
+        }
     </style>
 
 </head>
@@ -518,6 +530,15 @@
                 <!--end::Svg Icon-->
             </span>
         </div>
+
+        <!--begin::Loading-->
+        <div id="loadingOverlay">
+            <button type="button" class="btn btn-primary spinner spinner-white spinner-left mr-20">
+                Loading...
+            </button>
+        </div>
+        <!--end::Loading-->
+
         <!--end::Scrolltop-->
         <!--end::Demo Panel-->
         <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
@@ -627,6 +648,7 @@
         @await RenderSectionAsync("Scripts", required: false)
     </div>
 </body>
+
 <!--end::Body-->
 </html>
 <div class="modal fade" id="Logout_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

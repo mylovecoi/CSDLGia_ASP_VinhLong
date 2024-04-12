@@ -1,12 +1,15 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Models.Systems.API;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OfficeOpenXml.Drawing.Chart;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -47,7 +50,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                     HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
                     HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
                 }
+                //Lấy các thông tin về kết nối API
+                //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();
+                var dsKetNoi = _db.KetNoiAPI_DanhSach.ToList();
 
+                // Chuyển đổi danh sách các đối tượng thành chuỗi JSON với key là trường khóa
+                Dictionary<string, KetNoiAPI_DanhSach> dictionary = dsKetNoi.ToDictionary(item => item.Maso, item => item);
+                string json = JsonConvert.SerializeObject(dictionary);
+
+                // Lưu chuỗi JSON vào session
+                HttpContext.Session.SetString("LinkAPIKetNoi", json);
+
+                //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
+                //
                 if (model.Level != "DN")
                 {
                     if (model != null)

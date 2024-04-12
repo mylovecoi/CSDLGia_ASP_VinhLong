@@ -3,17 +3,19 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems.API;
 using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
+using CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia;
+using CSDLGia_ASP.ViewModels.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {
@@ -665,6 +667,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [Route("KetNoiAPI/ThietLapHoso/Default")]
         [HttpPost]
         public IActionResult ThietLapHosoDefault(string phanloai_default)
@@ -725,7 +728,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Json(data);
             }
         }
-
 
         [Route("KetNoiAPI/DanhSachKetNoi")]
         public IActionResult DanhSachKetNoi_20240410(string Maso)
@@ -973,6 +975,66 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
                     return Json(data);
                 }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TruyenDuLieuCSDLQG(VMHoSoTruyenCSDLQG request)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                string maBearer = "Bearer ";
+                //Lấy mã kết nối
+
+                HttpClient client_layma = new HttpClient();
+                // Thêm các header cần thiết
+                client_layma.DefaultRequestHeaders.Add("lgspaccesstoken", request.TokenLGSP);
+                var httpRequest = new HttpRequestMessage(HttpMethod.Post, request.LinkAPIXacthuc);
+                // Dữ liệu gửi đi
+                var requestData = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("grant_type", "client_credentials")
+                });
+                // Thêm Content-Type vào header của nội dung
+                requestData.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+
+                httpRequest.Content = requestData;
+                var response = await client_layma.SendAsync(httpRequest);
+                // Đọc nội dung phản hồi
+                string ketQuaLayMa = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    JObject jsonObject = JObject.Parse(ketQuaLayMa);
+                    maBearer += (string)jsonObject["access_token"];
+                }
+                else
+                {
+                    return Ok("Không thể kết nối đến LGSP để lấy mã kết nối. Mã lỗi:" + response.StatusCode);
+                }
+
+                //Tạo hồ sơ truyền dữ liệu
+                switch (request.MaKetNoiAPI)
+                {
+                    case "giahhdvk":
+                        {
+
+                            break;
+                        }
+                    case "giahhdvkdm":
+                        {
+                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x=>x.Matt == request.Mahs).OrderBy(x=>x.Mahhdv);
+                            return Ok(model_giahhdvkdm);
+                            break;
+                        }
+                }
+
+                return Ok(maBearer);
             }
             else
             {
