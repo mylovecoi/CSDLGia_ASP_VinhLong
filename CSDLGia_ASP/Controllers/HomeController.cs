@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Manages.DashBoard;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -39,28 +41,16 @@ namespace CSDLGia_ASP.Controllers
             {
                 ViewBag.bSession = true;
             }
-            //
-            List<VMThongTinHoSo> data = new List<VMThongTinHoSo>();
-            var data_cb = _db.GiaNuocSh.Where(t => t.Trangthai == "HT");
-            if (data_cb.Any())
+
+            //Lấy data default cho bảng giá đất            
+            string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t=>t.Thoidiem)
+                                                                                .FirstOrDefault()?.Mahs;
+            var datact = new List<GiaDatDiaBanCt>();
+            if(Mahs != null)
             {
-                foreach(var item in data_cb)
-                {
-                    data.Add(new VMThongTinHoSo
-                    {
-                        SoQD = item.Soqd,
-                        NgayQD = item.Thoidiem,
-                        TenDonVi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == item.Madv)?.TenDv ?? "",
-                        NgayQDLK = DateTime.MinValue,
-                        SoQDLk = "",
-                        TenDonViXetDuyet = _db.DsDonVi.FirstOrDefault(t => t.MaDv == item.Macqcq)?.TenDv ?? "",
-                        Controller = "GiaNuocSh",
-                        Action= "Show",
-                        MaHoso = item.Mahs
-                    });
-                }
-            }
-            ViewData["ThongTinHoSo"] = data;
+                datact = _db.GiaDatDiaBanCt.Where(t=>t.Mahs == Mahs).ToList();
+            }           
+            ViewData["ThongTinHoSo"] = datact;           
             //
 
             var model = _db.Supports;
