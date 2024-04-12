@@ -95,13 +95,13 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn giá thẩm định*</label>
-                            <input type="text" id="nguyengiathamdinh_create" name="nguyengiathamdinh_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="nguyengiathamdinh_create" name="nguyengiathamdinh_create" class="form-control money-decimal-mask" style="font-weight: bold" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Giá trị tài sản thẩm định*</label>
-                            <input type="text" id="giatritstd_create" name="giatritstd_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giatritstd_create" name="giatritstd_create" class="form-control money-decimal-mask" style="font-weight: bold" />
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -416,8 +416,8 @@
                                     Sl: $('#sl_create').val(),
                                     // Ngiadn: $('#nguyengiadenghi_create').val(),
                                     // Giadn: $('#giadenghi_create').val(),
-                                    Ngiatd: $('#nguyengiathamdinh_create').val(),
-                                    Giatd: $('#giatritstd_create').val(),
+                                    Ngiatd: $('#nguyengiathamdinh_create').val().replace(/\./g, "").replace(/,/g, "."),
+                                    Giatd: $('#giatritstd_create').val().replace(/\./g, "").replace(/,/g, "."),
                                     Ghichu: $('#ghichu_create').val(),
                                 },
                                 dataType: 'JSON',
@@ -455,7 +455,9 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    $(document).ready(function () {
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -487,8 +489,8 @@
                         } else {
                             // var ngiadn = $('#nguyengiadenghi_edit').val().replace(',', '');
                             // var giadn = $('#giadenghi_edit').val().replace(',', '');
-                            var ngiatd = $('#nguyengiathamdinh_edit').val().replace(',', '');
-                            var giatd = $('#giatritstd_edit').val().replace(',', '');
+                            var ngiatd = $('#nguyengiathamdinh_edit').val().replace(/\./g, "").replace(/,/g, ".");
+                            var giatd = $('#giatritstd_edit').val().replace(/\./g, "").replace(/,/g, ".");
                             $.ajax({
                                 url: '/ThamDinhGiaCt/Update',
                                 type: 'POST',

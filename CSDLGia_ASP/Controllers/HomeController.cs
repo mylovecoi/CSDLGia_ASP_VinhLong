@@ -1,10 +1,15 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Services;
+using CSDLGia_ASP.ViewModels.Manages.DashBoard;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -36,6 +41,18 @@ namespace CSDLGia_ASP.Controllers
             {
                 ViewBag.bSession = true;
             }
+
+            //Lấy data default cho bảng giá đất            
+            string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t=>t.Thoidiem)
+                                                                                .FirstOrDefault()?.Mahs;
+            var datact = new List<GiaDatDiaBanCt>();
+            if(Mahs != null)
+            {
+                datact = _db.GiaDatDiaBanCt.Where(t=>t.Mahs == Mahs).ToList();
+            }           
+            ViewData["ThongTinHoSo"] = datact;           
+            //
+
             var model = _db.Supports;
             ViewData["Title"] = "Trang chủ";
             ViewData["MenuLv1"] = "menu_home";
