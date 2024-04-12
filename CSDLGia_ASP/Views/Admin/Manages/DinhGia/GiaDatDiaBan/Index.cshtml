@@ -280,7 +280,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Nội dung quyết định</label>
-                            <select name="soqd" class="form-control">
+                            <select name="soqd" class="form-control select2basic">
                                 @foreach (var qd in soqd)
                                 {
                                     <!option value="@qd.Soqd">@qd.Mota</!option>
@@ -345,7 +345,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
+                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
                                     @foreach (var item in dsdonvith)
                                     {
                                         <!option value="@item.MaDv">@item.TenDv</!option>

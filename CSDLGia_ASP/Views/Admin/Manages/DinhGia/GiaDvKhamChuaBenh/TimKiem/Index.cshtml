@@ -18,6 +18,7 @@
     <script>
         $(document).ready(function() {
             TableManaged.init();
+            $('.select2multi').select2();
         });
         $(function() {
             $('#Nam, #Mota').change(function() {
@@ -72,7 +73,7 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label><b>Tên Sản phẩm dịch vụ</b></label>
-                    <select class="form-control" id="tsp" name="tsp">
+                    <select class="form-control select2basic" id="tsp" name="tsp">
                         <option value="All">--Tất cả các phân loại--</option>
                         @foreach (var tn in Tenspdv)
                         {

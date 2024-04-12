@@ -23,7 +23,7 @@
                         <div hidden class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị báo cáo</label>
-                                <select id="MadvBc" name="MadvBc" class="form-control">
+                                <select id="MadvBc" name="MadvBc" class="form-control select2basic">
                                     @foreach (var dv in dsdonvi)
                                     {
                                         <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
@@ -34,7 +34,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm bất động sản</label>
-                                <select id="Manhom" name="Manhom" class="form-control">
+                                <select id="Manhom" name="Manhom" class="form-control select2basic">
                                     <option value="all">--Chọn tất cả--</option>
                                     @foreach (var nhom in nhomtn)
                                     {

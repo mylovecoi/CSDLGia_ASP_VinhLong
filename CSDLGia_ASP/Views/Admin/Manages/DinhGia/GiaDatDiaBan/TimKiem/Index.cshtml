@@ -24,6 +24,8 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
+
         });
 
         function exportToExcel(tableId, filename) {
@@ -67,7 +69,7 @@
             <div class="col-xl-12">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="madv" name="madv">
+                        <select class="form-control select2basic" id="madv" name="madv">
                         <option value="all">--Tất cả các đơn vị--</option>
                         @foreach (var db in dsdiaban)
                         {

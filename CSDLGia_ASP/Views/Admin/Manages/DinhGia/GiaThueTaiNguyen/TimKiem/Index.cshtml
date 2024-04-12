@@ -8,13 +8,16 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 @section custom_script{
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
-    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
-
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            TableManaged2.init();
+            $('.select2multi').select2();
+        })
         $(document).ready(function () {
             TableManaged4.init();
         });
@@ -35,7 +38,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Đơn vị</label>
-                        <select class="form-control" id="madv" name="madv">
+                        <select class="form-control select2basic" id="madv" name="madv">
                             <option value="all">--Tất cả các đơn vị--</option>
                             @foreach (var db in dsdiaban)
                             {

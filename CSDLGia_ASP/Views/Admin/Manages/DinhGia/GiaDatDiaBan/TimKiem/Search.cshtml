@@ -31,6 +31,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
         });
         function GetXaPhuong() {
             $.ajax({
@@ -111,7 +112,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Quận/Huyện</label>
-                        <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
+                        <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
                             <option value="all">---Chọn địa bàn---</option>
                             @foreach (var item in DsDiaBan)
                             {
@@ -123,7 +124,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Xã/Phường</label>
-                        <select class="form-control" asp-for="@MaXa" id="MaXa" name="MaXa">
+                        <select class="form-control select2basic" asp-for="@MaXa" id="MaXa" name="MaXa">
                             <option value="all">---Chọn Xã/Phường</option>
                             @foreach (var item in DsXaPhuong)
                             {
@@ -139,7 +140,7 @@
                 <div class="col-xl-6">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Loại đất</label>
-                        <select class="form-control" id="Maloaidat_Search" name="Maloaidat_Search">
+                        <select class="form-control select2basic" id="Maloaidat_Search" name="Maloaidat_Search">
                             <option value="all">--Tất cả--</option>
                             @foreach (var item in DanhSachLoaiDat)
                             {
@@ -163,7 +164,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control" id="Mahs_Search" name="Mahs_Search">
+                        <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
                             <option value="all">--Tất cả---</option>
                             @foreach (var item in DanhSachHoSo)
                             {
