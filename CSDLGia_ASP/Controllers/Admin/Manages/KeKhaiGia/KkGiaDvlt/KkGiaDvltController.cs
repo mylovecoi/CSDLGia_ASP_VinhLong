@@ -60,6 +60,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             }
                         }
 
+                        //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                        //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                        //{
+                        //    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        //}
+
                         if (string.IsNullOrEmpty(Trangthai))
                         {
                             Trangthai = "all";
@@ -74,7 +80,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
                         if (string.IsNullOrEmpty(Macskd))
                         {
-                            Macskd = model_cskd.Select(t => t.Macskd).First();
+                            //Macskd = model_cskd.Select(t => t.Macskd).First();
+                            Macskd = model_cskd.FirstOrDefault()?.Macskd ?? "";
                         }
 
                         var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();

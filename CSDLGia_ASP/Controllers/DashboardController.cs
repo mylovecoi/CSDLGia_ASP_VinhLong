@@ -1,0 +1,96 @@
+﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CSDLGia_ASP.Controllers
+{
+    public class DashboardController : Controller
+    {
+        private readonly CSDLGiaDBContext _db;
+
+        public DashboardController(CSDLGiaDBContext db)
+        {
+            _db = db;
+        }
+
+        [HttpPost("Dashboard/GetBangGiaDat")]
+        public IActionResult GetBangGiaDat()
+        {
+            string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
+                                                                               .FirstOrDefault()?.Mahs;
+            var datact = new List<GiaDatDiaBanCt>();
+            if (Mahs != null)
+            {
+                datact = _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs).ToList();
+            }
+            string result = "<div class='tab-content' id='data_load'>";
+            result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
+            result += "<thead>";
+            result += "<tr class='text-center text-uppercase'>";
+            result += "<th>Loại đất</th>";
+            result += "<th>Tên đường phố</th>";
+            result += "<th>Loại đường</th>";
+            result += "<th>Điểm đầu/Điểm cuối</th>";
+            result += "<th>Hệ số</th>";
+            result += "<th>VT1</th>";
+            result += "<th>VT2</th>";
+            result += "<th>VT3</th>";
+            result += "<th>VT4</th>";
+            result += "<th>VT5</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+            foreach (var item in datact.OrderBy(t => t.Sapxep))
+            {
+                result += "<tr>";
+                result += "<td>" + item.Loaidat + "</td>";
+                result += "<td>" + item.Mota + "</td>";
+                result += "<td>" + item.Loaiduong + "</td>";
+                result += "<td>" + item.Diemdau + "<br />" +  item.Diemcuoi + "</td>";
+                result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.Hesok) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt1) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt2) +"</td>";
+                result += "<td style='text-align:right'>"+ Helpers.ConvertDbToStr(item.Giavt3) +"</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
+                result += "<td style='text-align:right'>" + @Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
+                result += "</tr>";
+            }
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+
+        [HttpPost("Dashboard/GetDichVuLuuTru")]
+        public IActionResult GetDichVuLuuTru()
+        {
+            string result = "<div class='tab-content' id='data_load'>";
+            result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
+            result += "<thead>";
+            result += "<tr class='text-center text-uppercase'>";
+            result += "<th>Tên đơn vị</th>";
+            result += "<th>Số QĐ</th>";
+            result += "<th>Thời điểm</th>";
+            result += "<th>Số QĐ liển kề</th>";
+            result += "<th>Thời điểm LK</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+    }
+}

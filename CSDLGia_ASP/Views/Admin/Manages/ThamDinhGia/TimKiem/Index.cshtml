@@ -17,6 +17,7 @@
     <script>
         $(document).ready(function () {
             TableManaged4.init();
+            MoneyDecimalMask();
         });
     </script>
 }
@@ -99,13 +100,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Đơn giá thẩm định từ</label>
-                        <input type="number" id="giatd_tu" name="giatd_tu" class="form-control money" />
+                        <input type="text" id="giatd_tu" name="giatd_tu" class="form-control money-decimal-mask" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Đơn giá thẩm định đến</label>
-                        <input type="number" id="giatd_den" name="giatd_den" class="form-control money" />
+                        <input type="text" id="giatd_den" name="giatd_den" class="form-control money-decimal-mask" />
                     </div>
                 </div>
             </div>

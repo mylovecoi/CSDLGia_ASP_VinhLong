@@ -179,9 +179,9 @@
                                     }                                    
                                 }
                                 @{
-                                    ViewData["StringValue"] = item.Mahs;
+                                    ViewData["maHoSoTruyen"] = item.Mahs;
                                 }
-                                @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["StringValue"])
+                                @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["maHoSoTruyen"])
                             </td>
                         </tr>
                     }

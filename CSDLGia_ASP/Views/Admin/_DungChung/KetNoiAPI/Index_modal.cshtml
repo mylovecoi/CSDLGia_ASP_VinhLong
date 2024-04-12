@@ -1,51 +1,74 @@
 ﻿<!--Create Modal-->
-@using Microsoft.AspNetCore.Http;
+@using CSDLGia_ASP.Models.Systems.API
+@using Newtonsoft.Json;
 @{
+    string maChucNang = (string)ViewData["maKetNoiAPI"];
     var linkAPIXacthuc = HttpContextAccessor.HttpContext.Session.GetString("LinkAPIXacthuc");
+    string linkAPIKetNoi = HttpContextAccessor.HttpContext.Session.GetString("LinkAPIKetNoi");
+    string linkKetNoi = "";
+
+    // Chuyển đổi chuỗi JSON thành một Dictionary
+    Dictionary<string, KetNoiAPI_DanhSach> dictionary = JsonConvert.DeserializeObject<Dictionary<string, KetNoiAPI_DanhSach>>(linkAPIKetNoi);
+
+    // Lấy giá trị với khóa cụ thể
+    if (dictionary.ContainsKey(maChucNang))
+    {
+        KetNoiAPI_DanhSach value = dictionary[maChucNang];
+        linkKetNoi = value.LinkTruyenPost;
+    }
+    var tokenLGSP = HttpContextAccessor.HttpContext.Session.GetString("TokenLGSP");
 }
 
-<div class="modal fade" id="TruyenHoSo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Thông tin kết nối API
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Link API token</label>
-                            <input type="text" name="LinkAPIXacthuc" value="@linkAPIXacthuc" class="form-control" />
+<form asp-controller="API" asp-action="TruyenDuLieuCSDLQG" method="post" enctype="multipart/form-data" id="frm_truyendulieu">
+    <input type="hidden" name="MaKetNoiAPI" value="@maChucNang" />
+    <input type="hidden" name="Mahs" />
+    <div class="modal fade" id="TruyenHoSo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin kết nối API
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Link API token</label>
+                                <input type="text" name="LinkAPIXacthuc" value="@linkAPIXacthuc" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã AccessToken</label>
+                                <textarea name="TokenLGSP" rows="3" class="form-control" required>@tokenLGSP</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Link API truyền dữ liệu</label>
+                                <input type="text" name="LinkAPIKetNoi" value="@linkKetNoi" class="form-control" required />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Mã AccessToken</label>
-                            <textarea id="diemdau_create" name="diemdau_create" class="form-control" rows="4" ></textarea>
-                        </div>
-                    </div>                    
-                </div>                
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Link API truyền dữ liệu</label>
-                            <input type="text" id="mota_create" name="mota_create" class="form-control" />
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Truyền dữ liệu</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetStore()">Thêm mới</button>
             </div>
         </div>
     </div>
-</div>
-
+</form>
+<script>
+    function setTruyenDuLieu(maHoSo) {
+        $('#frm_truyendulieu').find("[name='Mahs']").val(maHoSo);
+    }
+</script>
