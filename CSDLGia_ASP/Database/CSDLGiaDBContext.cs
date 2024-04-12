@@ -254,6 +254,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<ThamDinhGiaCt> ThamDinhGiaCt { get; set; }
         public DbSet<ThamDinhGiaDv> ThamDinhGiaDv { get; set; }
         public DbSet<ThamDinhGiaDmHh> ThamDinhGiaDmHh { get; set; }
+        public DbSet<ThamDinhGiaDvLichSu> ThamDinhGiaDvLichSu { get; set; }
 
         //VBQLNN
         public DbSet<VbQlNn> VbQlNn { get; set; }
