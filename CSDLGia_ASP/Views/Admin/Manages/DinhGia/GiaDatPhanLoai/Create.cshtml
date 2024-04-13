@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Địa bàn áp dụng</label><br />
+                        <label>Địa bàn áp dụng:<span class="text-danger">*</span></label><br />
                         <select class="form-control select2basic" id="Madiaban" asp-for="Madiaban" onchange="GetXaPhuong()">
                             @foreach (var item in dsdiaban)
                             {
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Xã phường</label><br />
+                        <label>Xã phường: <span class="text-danger">*</span></label><br />
                         <select class="form-control select2basic" asp-for="Maxp" id="Maxp">
                             <option value="all">--Chọn xã phường--</option>
                             @foreach (var item in dsxaphuong)
@@ -87,13 +87,13 @@
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số quyết định<span class="text-danger">*</span></label>
+                        <label>Số quyết định:<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Thời điểm<span class="text-danger">*</span></label>
+                        <label>Thời điểm:<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
                     </div>
                 </div>
@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Thông tin hồ sơ</label>
+                        <label>Thông tin hồ sơ:<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Thongtin" />
                     </div>
                 </div>

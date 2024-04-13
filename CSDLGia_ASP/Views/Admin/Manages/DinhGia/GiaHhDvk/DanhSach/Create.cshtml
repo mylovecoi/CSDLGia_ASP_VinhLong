@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Theo thông tư quyết định <span class="text-danger">*</span></label>
+                        <label>Theo thông tư quyết định: <span class="text-danger">*</span></label>
                         <select asp-for="Matt" class="form-control" disabled="disabled">
                             @foreach (var item in nhomhhdvk)
                             {
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Địa bàn <span class="text-danger">*</span></label>
+                        <label>Địa bàn: <span class="text-danger">*</span></label>
                         <select asp-for="Madiaban" class="form-control select2basic">
                             @foreach (var item in dsdiaban)
                             {
@@ -76,25 +76,25 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Số văn bản*</label>
+                        <label>Số văn bản:<span class="text-danger">*</span></label>
                         <input type="text" asp-for="Soqd" class="form-control" required />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Ngày áp dụng<span class="text-danger">*</span></label>
+                        <label>Ngày áp dụng:<span class="text-danger">*</span></label>
                         <input type="date" asp-for="Thoidiem" class="form-control" required />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Số văn bản liền kề</label>
+                        <label>Số văn bản liền kề:<span class="text-danger">*</span></label>
                         <input type="text" asp-for="Soqdlk" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Ngày văn bản liền kề</label>
+                        <label>Ngày văn bản liền kề:<span class="text-danger">*</span></label>
                         <input type="date" asp-for="Thoidiemlk" class="form-control">
                     </div>
                 </div>
