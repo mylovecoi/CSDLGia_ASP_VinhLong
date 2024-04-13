@@ -81,8 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
                                      Noidung = hoso.Noidung,
-                                     Thoidiem = hoso.Thoidiem,
-                                     
+                                     Thoidiem = hoso.Thoidiem,                                     
                                  });
 
                     ViewData["Title"] = "Báo cáo giá đất địa bàn";

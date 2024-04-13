@@ -1,7 +1,6 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];    
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var ADMIN = (IEnumerable<DsDiaBan>)ViewData["ADMIN"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
@@ -224,19 +223,7 @@
                                 }
                             </select>
                         </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="form-group" style="width:100%">
-                            <label>Xã/Phường</label>
-                            <select class="form-control select2basic" id="MaXaPhuong" name="MaXaPhuong" style="width:100%">
-                                <option value="">---Chọn Xã/Phường</option>
-                                @foreach (var item in DsXaPhuong)
-                                {
-                                    <option value="@item.Maxp">@item.Tenxp</option>
-                                }
-                            </select>
-                        </div>
-                    </div>      
+                    </div>                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>

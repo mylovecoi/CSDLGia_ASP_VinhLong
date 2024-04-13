@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems.API;
 using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
+using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia;
 using CSDLGia_ASP.ViewModels.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Http;
@@ -1019,22 +1020,115 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 }
 
                 //Tạo hồ sơ truyền dữ liệu
+                string jsonKetQua = "";
                 switch (request.MaKetNoiAPI)
                 {
                     case "giahhdvk":
                         {
+                            var hoSo = _db.GiaHhDvkTh.FirstOrDefault(x => x.Mahs == request.Mahs);
+                            var hoSoChiTiet = from chitiet in _db.GiaHhDvkThCt.Where(x => x.Mahs == request.Mahs)
+                                              join danhmuc in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on chitiet.Mahhdv equals danhmuc.Mahhdv
+                                              select new GiaHhDvkThCt
+                                              {
+                                                  Mahhdv = danhmuc.Mahhdv,
+                                                  Tenhhdv = danhmuc.Tenhhdv,
+                                                  Manhom = danhmuc.Manhom,
+                                                  Dvt = danhmuc.Dvt,
+                                                  Dacdiemkt = danhmuc.Dacdiemkt,
+                                                  Nguontt = chitiet.Nguontt,
+                                                  Loaigia = chitiet.Loaigia,
+                                                  Gia = chitiet.Gia,
+                                                  Gialk = chitiet.Gialk,
+                                                  Ghichu = chitiet.Ghichu,
+                                              };
+                            var giaHHDVK_DSHH = new List<VMGiaHHDVK_DSHH>();
+                            foreach (var item in hoSoChiTiet)
+                            {
+                                giaHHDVK_DSHH.Add(new VMGiaHHDVK_DSHH
+                                {
+                                    LOAI_GIA = 0,//Viết hàm lấy loại giá
+                                    MA_HHDV = item.Mahhdv,
+                                    DON_VI_TINH = item.Dvt,
+                                    GIA_KY_NAY = item.Gia,
+                                    NGUON_THONG_TIN = 0,//Viết hàm lấy nguồn thông tin
+                                    GHI_CHU = item.Ghichu,
+                                });
+                            }
+                            var giaHHDVK = new List<VMGiaHHDVK>();
+                            giaHHDVK.Add(new VMGiaHHDVK
+                            {
+                                DIA_BAN = request.DIA_BAN,
+                                NGUON_SO_LIEU = request.NGUON_SO_LIEU,
+                                DINH_KY = 24,
+                                THOI_GIAN_BC_1 = Double.Parse(hoSo.Thang),
+                                THOI_GIAN_BC_2 = Double.Parse(hoSo.Thang),
+                                THOI_GIAN_BC_NAM = Double.Parse(hoSo.Nam),
+                                FILE_DINH_KEM_WORD = hoSo.ipf_word_base64,
+                                FILE_DINH_KEM_PDF = hoSo.ipf_pdf_base64,
+                                NGUOI_TAO = request.NGUOI_TAO,
+                                NGUOI_DUYET = request.NGUOI_DUYET,
+                                DS_HHDV_TT = giaHHDVK_DSHH
+                            });
 
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaHHDVK) + @"}";
                             break;
                         }
                     case "giahhdvkdm":
                         {
-                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x=>x.Matt == request.Mahs).OrderBy(x=>x.Mahhdv);
-                            return Ok(model_giahhdvkdm);
+                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs).OrderBy(x => x.Mahhdv);
+                            var giaHHDVKDM = new List<VMGiaHHDVKDM>();
+                            foreach (var item in model_giahhdvkdm)
+                            {
+                                giaHHDVKDM.Add(new VMGiaHHDVKDM
+                                {
+                                    DIA_BAN = request.DIA_BAN,
+                                    NHOM_HHDV = item.Manhom,
+                                    MA_HHDV = item.Mahhdv,
+                                    MA_HHDV_TINH_THANH = item.Mahhdv,
+                                    TEN_HHDV_TINH_THANH = item.Tenhhdv,
+                                    DAC_DIEM_KY_THUAT = item.Dacdiemkt,
+                                    DON_VI_TINH = item.Dvt,
+                                    NGUOI_TAO = request.NGUOI_TAO,
+                                });
+                            }
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaHHDVKDM) + @"}";
                             break;
+
                         }
                 }
 
-                return Ok(maBearer);
+                if (!request.THAO_TAC)
+                {
+                    //Xem dữ liệu
+                    return Ok(jsonKetQua);
+                }
+
+                //Truyền dữ liệu
+                // Khởi tạo HttpClient
+                var client = new HttpClient();
+                // Đặt các header cần thiết
+                client.DefaultRequestHeaders.Add("lgspaccesstoken", request.TokenLGSP);
+                client.DefaultRequestHeaders.Add("Authorization", maBearer);
+                var httpTruyen = new HttpRequestMessage(HttpMethod.Post, request.LinkAPIKetNoi);
+                // Dữ liệu gửi đi
+                var requestTruyen = new StringContent(jsonKetQua, Encoding.UTF8, "application/json");
+                // Thêm Content-Type vào header của nội dung
+                requestTruyen.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpTruyen.Content = requestData;
+                var responseTruyen = await client.SendAsync(httpTruyen);
+
+                // Đọc phản hồi
+                string responseBody = await responseTruyen.Content.ReadAsStringAsync();
+                if (responseTruyen.IsSuccessStatusCode)
+                {
+                    ViewData["Messages"] = responseBody;
+                    return View("Views/Admin/Error/Success.cshtml");
+                }
+                else
+                {
+                    return Ok("Không thể truyền dữ liệu lên CSDL quốc giá. Mã lỗi:" + responseTruyen.StatusCode);
+                }
+
             }
             else
             {

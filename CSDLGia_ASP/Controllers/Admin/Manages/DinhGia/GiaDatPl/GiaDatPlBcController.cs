@@ -114,6 +114,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     var model = (from giact in _db.GiaDatPhanLoaiCt
                                  join gia in _db.GiaDatPhanLoai on giact.Mahs equals gia.Mahs
                                  join donvi in _db.DsDonVi on gia.Madv equals donvi.MaDv
+                                 join diaban in _db.DsDiaBan on gia.Madiaban equals diaban.MaDiaBan
                                  select new GiaDatPhanLoaiCt
                                  {
                                      Id = giact.Id,
@@ -124,7 +125,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
                                      Khuvuc = giact.Khuvuc,
-                                     Trangthai = gia.Trangthai
+                                     Trangthai = gia.Trangthai,
+                                     MaDiaBan = giact.MaDiaBan,
+                                     MaDiaBanCapHuyen= _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == giact.MaDiaBan).MaDiaBanCq,
                                  });
 
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
@@ -141,6 +144,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaDatPhanLoai.Where(t => list_mahs.Contains(t.Mahs));
+
+                    ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
 
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;

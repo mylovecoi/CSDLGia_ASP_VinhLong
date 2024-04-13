@@ -4,6 +4,8 @@
     // int record_id = 1;
     var mahs = ViewData["Mahs"];
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
+    var dsxaphuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
+    int i = 1;
 }
 
 <div class="mb-3 font-weight-bold font-size-lg">
@@ -16,7 +18,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="SetChiTiet()"
+            <button type="button" data-target="#Create_Modal" data-toggle="modal" onclick="ClearFormCreate()"
                     class="btn btn-primary font-weight-bolder" title="Create">
                 <i class="la la-plus"></i>Thêm mới
             </button>
@@ -28,7 +30,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th>#</th>
-                    <th>STT</th>
+                    <th>Xã/phường</th>
                     <th>Tên đường, giới hạn, khu vực</th>
                     <th>Giá đất cụ thể</th>
                     <th>Thao tác</th>
@@ -43,10 +45,17 @@
                         {
                             string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                             <tr style="text-align:center">
-                                <td style="text-align:center">@item.STTSapXep</td>
-                                <td style="text-align:center">@item.STTHienThi</td>
-                                <td>@item.Khuvuc</td>
-                                <td style="text-align:center; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                                <td style="text-align:center">
+                                    @(i++)
+                                </td>
+                                <td style="text-align:left">
+                                    @if (!string.IsNullOrEmpty(item.MaDiaBan))
+                                    {
+                                        @dsxaphuong.FirstOrDefault(x => x.MaDiaBan == item.MaDiaBan).TenDiaBan
+                                    }
+                                </td>
+                                <td style="text-align:left">@item.Khuvuc</td>
+                                <td style="text-align:right; font-weight: bold">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                             onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
