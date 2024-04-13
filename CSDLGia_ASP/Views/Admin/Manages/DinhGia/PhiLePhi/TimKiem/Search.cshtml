@@ -72,7 +72,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá rừng
+                    Thông tin hồ sơ giá phí lệ phí
                 </span>
             </h3>
         </div>
@@ -89,7 +89,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Đơn vị</label>
-                        <select class="form-control" id="Madv_Search" name="Madv_Search">
+                        <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
                             <option value="all">--Tất cả--</option>
                             @foreach (var item in dscqcq)
                             {
@@ -101,7 +101,7 @@
                 <div class="col-xl-8">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Phân loại hồ sơ:</label>
-                        <select class="form-control" id="Manhom_Search" name="Manhom_Search">
+                        <select class="form-control select2basic" id="Manhom_Search" name="Manhom_Search">
                             <option value="all">--Tất cả --</option>
                             @foreach (var tn in DanhMucNhom)
                             {
@@ -125,7 +125,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control" id="Mahs_Search" name="Mahs_Search">
+                        <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
                             <option value="all">--Tất cả---</option>
                             @foreach (var item in DanhSachHoSo)
                             {
