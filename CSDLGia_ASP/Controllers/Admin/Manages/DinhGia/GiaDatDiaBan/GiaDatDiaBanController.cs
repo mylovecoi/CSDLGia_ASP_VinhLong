@@ -229,8 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
-                        SoQDTT = request.SoQDTT,
-                        MaXa = request.MaXa,
+                        SoQDTT = request.SoQDTT,                        
                         Noidung = request.Noidung,
                         GhiChu = request.GhiChu,                       
                     };

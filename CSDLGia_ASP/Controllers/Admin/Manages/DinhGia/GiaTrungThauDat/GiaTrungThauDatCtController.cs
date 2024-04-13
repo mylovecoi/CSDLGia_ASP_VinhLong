@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Temp.TempSystems;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -12,21 +13,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
     public class GiaTrungThauDatCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _IDsDiaBan;
 
-        public GiaTrungThauDatCtController(CSDLGiaDBContext db)
+        public GiaTrungThauDatCtController(CSDLGiaDBContext db, IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
         [Route("GiaTrungThauDatCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv,string MaDiaBan, string MaXaPhuong, string Mahs, string Solo, string Sothua, string Tobando, string Mota,
-            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia/*, double Giasddat*/)
+        public JsonResult Store(string MaDv,string MaDiaBan, string Mahs, string Solo, string Sothua, string Tobando, string Mota,
+            double Dientich, string Dvt, double Giakhoidiem, double Giadaugia)
         {
             var model = new GiaDauGiaDatCt
             {
-                MaDiaBan = MaDiaBan,
-                Maxp = MaXaPhuong,
+                MaDiaBan = MaDiaBan,               
                 Mahs = Mahs,
                 Solo = Solo,
                 Sothua = Sothua,
@@ -43,23 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 TrangThai = "CXD",
             };
             _db.GiaDauGiaDatCt.Add(model);
-            _db.SaveChanges();
-
-            /*if (Dvt != null)
-            {
-                var dvt = _db.DmDvt.Where(t => t.Dvt == Dvt).ToList();
-                if (dvt.Count == 0)
-                {
-                    var new_dvt = new DmDvt
-                    {
-                        Dvt = Dvt,
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-                    _db.DmDvt.AddRange(new_dvt);
-                    _db.SaveChanges();
-                }
-            }*/
+            _db.SaveChanges();            
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -67,11 +53,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
         [Route("GiaTrungThauDatCt/Edit")]
         [HttpPost]
-        public JsonResult Edit(int Id)
+        public JsonResult Edit(int Id,string MaDiaBanGiaTrungThau)
         {
             var DmDvt = _db.DmDvt.ToList();
             var model = _db.GiaDauGiaDatCt.FirstOrDefault(p => p.Id == Id);
-            var diaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.MaDiaBan);
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaTrungThau).Where(x => x.Level == "X");
+
+
+            var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaTrungThau).TenDiaBan;
             if (model != null)
             {
                 string result = "<div class='modal-body' id='edit_thongtin'>";
@@ -82,22 +71,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Địa bàn</label>";
-                result += "<label class='form-control' style='color:blue'>" + diaban.TenDiaBan + "</label>";
+                result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group' style='width:100%'>";
                 result += "<label>Xã/phường</label>";
                 result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";
-                result += "<option value='all'>--Chọn xã phường--</option>";
-                var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == model.MaDiaBan);
-                if (!DsXaPhuong.Any())
-                {
-                    DsXaPhuong = _db.DsXaPhuong;
-                }
+                result += "<option value='all'>--Chọn xã phường--</option>";               
+               
                 foreach (var item in DsXaPhuong)
                 {
-                    result += "<option value='" + item.Maxp + "'" + (model.Maxp == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                    result += "<option value='" + item.MaDiaBan + "'" + (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -199,7 +184,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             model.Giadaugia = Giadaugia;
             model.Giasddat = Giadaugia / Dientich;
             model.Updated_at = DateTime.Now;
-            model.Maxp=MaXaPhuong;
+            model.MaDiaBan =MaXaPhuong;
             _db.GiaDauGiaDatCt.Update(model);
             _db.SaveChanges();
 

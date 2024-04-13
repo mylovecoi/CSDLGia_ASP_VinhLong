@@ -25,18 +25,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input hidden asp-for="Mahs">
+                @* <input hidden asp-for="Mahs"> *@
                 <div class="row">
-                    @* <div class="col-xl-6">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Địa bàn</label>
                             <label class="form-control" style="color:blue">@TenDiaBan</label>
                         </div>
-                    </div> *@
+                    </div>
                     <div class="col-xl-6">
                         <div class="form-group" style="width:100%">
                             <label>Xã/phường</label>
-                            <select asp-for="MaXa" id="MaDiaBan_create" name="MaDiaBan_create" class="form-control select2basic" style="width:100%">                               
+                            <select  id="MaDiaBan_create" name="MaDiaBan_create" class="form-control select2basic" style="width:100%">                               
                                 @foreach (var item in DsXaPhuong)
                                 {
                                     <option value="@item.MaDiaBan">@item.TenDiaBan</option>
@@ -448,7 +448,8 @@
             url: '/GiaDatDiaBanCt/Edit',
             type: 'POST',
             data: {
-                Id: id_edit
+                Id: id_edit,
+                MaDiaBanGiaDatDiaBan: $('#Madiaban').val(),
             },
             dataType: 'JSON',
             success: function (data) {

@@ -1,6 +1,5 @@
 ﻿@{
-    int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    int record_id = 1;    
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
     
 
@@ -14,7 +13,7 @@
     var Phanloai = ViewData["Phanloai"];
     
     var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBanXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXaPhuong"];
     var MaDiaBan = ViewData["MaDiaBan"];
     var MaXa = ViewData["MaXa"];
 
@@ -61,28 +60,6 @@
             </div>
             <div class="row">
                 <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold; color:blue">Đơn vị</label>
-                        <select class="form-control select2basic" id="maDv" name="maDv">
-                            <option value="all">--Tất cả các đơn vị--</option>
-                            @foreach (var db in dsdiaban)
-                            {
-                                <optgroup label="@db.TenDiaBan">
-                                    @{
-                                        var donvi = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                    }
-                                    @foreach (var item in donvi)
-                                    {
-                                        <!option value="@item.MaDv" @((string)ViewData["maDv"] == item.MaDv ? "selected" : "") >@item.TenDv</!option>
-                                    }
-                                </optgroup>
-                            }
-                        </select>
-                        <br />
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
                         <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
@@ -96,12 +73,12 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Xã/Phường</label>
+                        <label>Xã/phường</label>
                         <select class="form-control select2basic" asp-for="@MaXa" id="MaXa" name="MaXa">
-                            <option value="all">---Chọn Xã/Phường</option>
-                            @foreach (var item in DsXaPhuong)
+                            <option value="all">---Chọn địa bàn---</option>
+                            @foreach (var item in DsDiaBanXaPhuong)
                             {
-                                <option value="@item.Maxp">@item.Tenxp</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
@@ -113,19 +90,7 @@
                         <label>Tên dự án</label>
                         <input type="text" class="form-control" asp-for="@ten" name="ten" id="ten" />
                     </div>
-                </div>
-                @* <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Địa bàn</label>
-                        <select class="form-control" asp-for="@MaDiaBan" id="MaDiaBan">
-                            <option value="all"> --Tất cả ---</option>
-                            @foreach (var item in dsdiaban)
-                            {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                            }
-                        </select>
-                    </div>
-                </div> *@
+                </div>                
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Phân loại</label>
@@ -243,7 +208,7 @@
             url: '/Ajax/GetXaPhuong',
             type: 'POST',
             data: {
-                MaDiaBan: $('#MaDiaBan').val(),
+                MaDiaBanHuyen: $('#MaDiaBan').val(),
                 KeySelect: 'MaXa'
             },
             dataType: 'JSON',
@@ -267,8 +232,7 @@
             var toDateObj = new Date(toDate);
 
             if (fromDateObj <= toDateObj) {
-                var current_path_url = '/GiaTrungThauDat/Search?';
-                var madv = '&madv=' + $('#maDv').val();
+                var current_path_url = '/GiaTrungThauDat/Search?';                
                 var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
                 var MaXa = '&MaXa=' + $('#MaXa').val();
                 
@@ -280,7 +244,7 @@
                 var Giakhoidiem_den = '&Giakhoidiem_den=' + $('#Giakhoidiem_den').val();
                 var Giadaugia_den = '&Giadaugia_den=' + $('#Giadaugia_den').val();
                 var Giadaugia_tu = '&Giadaugia_tu=' + $('#Giadaugia_tu').val();
-                var url = current_path_url + madv + MaDiaBan + MaXa + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
+                var url = current_path_url + MaDiaBan + MaXa + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
                 window.location.href = url;
             } else {
                 toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");

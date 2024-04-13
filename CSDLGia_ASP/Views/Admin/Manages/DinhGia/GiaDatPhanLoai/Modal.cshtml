@@ -1,8 +1,8 @@
 ﻿@{
     var dmloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dmloaidat"];
     var mahs = ViewData["Mahs"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsxaphuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
 
 }
 
@@ -23,23 +23,18 @@
                 <input type="hidden" value="@mahs" id="mahs_create" />
                 <div class="row">
                     <div class="col-xl-6">
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label>Địa bàn áp dụng</label><br />
-                            <select class="form-control select2basic" id="MaDiaBanChiTiet" style="width:100%" onchange="GetXaPhuongChiTiet()">
-                                @foreach (var item in dsdiaban)
-                                {
-                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                                }
-                            </select>
+                            <label style="color:blue" class="form-control"> @ViewData["TenDiaBan"]</label>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group ">
                             <label>Xã phường</label><br />
-                            <select class="form-control select2basic" id="MaXaPhuongChiTiet" style="width:100%">
+                            <select class="form-control select2basic" id="MaDiaBanChiTiet" name="MaDiaBanChiTiet" style="width:100%">
                                 @foreach (var item in dsxaphuong)
                                 {
-                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                 }
                             </select>
                         </div>
@@ -113,36 +108,30 @@
 </div>
 
 <script>
-    function SetChiTiet() {
-        var madiaban = $('#Madiaban').val();
-        var maxa = $('#Maxp').val();
-        $('#MaDiaBanChiTiet').val(madiaban);
-        if (maxa !="all") {
-            $('#MaXaPhuongChiTiet').val(maxa);
-        }
+    function ClearFormCreate() {
         $('#tenduong_create').val();
         $('#giact_create').val();
 
     }
-    function GetXaPhuongChiTiet() {
-        $.ajax({
-            url: '/Ajax/GetXaPhuongNoAll',
-            type: 'POST',
-            data: {
-                MaDiaBan: $('#MaDiaBanChiTiet').val(),
-                KeySelect: 'MaXaPhuongChiTiet'
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success('Success');
-                    $('#MaXaPhuongChiTiet').html(data.message);
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
-    }
+    // function GetXaPhuongChiTiet() {
+    //     $.ajax({
+    //         url: '/Ajax/GetXaPhuongNoAll',
+    //         type: 'POST',
+    //         data: {
+    //             MaDiaBan: $('#MaDiaBanChiTiet').val(),
+    //             KeySelect: 'MaXaPhuongChiTiet'
+    //         },
+    //         dataType: 'JSON',
+    //         success: function (data) {
+    //             if (data.status == 'success') {
+    //                 toastr.success('Success');
+    //                 $('#MaXaPhuongChiTiet').html(data.message);
+    //             } else {
+    //                 toastr.error(data.message, "Lỗi!");
+    //             }
+    //         }
+    //     })
+    // }
     function SetStore() {
         var giacuthe = $('#giact_create').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
@@ -153,8 +142,7 @@
                 Khuvuc: $('#tenduong_create').val(),
                 Giacuthe: giacuthe,
                 MaDv: $('#Madv').val(),
-                MaDiaBan: $('#MaDiaBanChiTiet').val(),
-                MaXaPhuong: $('#MaXaPhuongChiTiet').val(),
+                MaDiaBan: $('#MaDiaBanChiTiet').val(), 
             },
             dataType: 'JSON',
             success: function (data) {
@@ -177,7 +165,8 @@
             url: '/GiaDatCuTheCt/Edit',
             type: 'POST',
             data: {
-                Id: id_edit
+                Id: id_edit,
+                MaDiaBangiadat: $('#Madiaban').val(),
             },
             dataType: 'JSON',
             success: function (data) {
@@ -205,8 +194,7 @@
                 Khuvuc: $('#tenduong_edit').val(),
                 Giacuthe: giacuthe,
                 Id: $('#id_edit').val(),
-                MaDiaBan: $('#MaDiaBanChiTiet_edit').val(),
-                MaXaPhuong: $('#MaXaPhuongChiTiet_edit').val(),
+                MaDiaBan: $('#MaDiaBanChiTiet_edit').val(),                
             },
             dataType: 'JSON',
             success: function (data) {

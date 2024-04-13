@@ -14,16 +14,19 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 {
     public class GiaDatPlExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _IDsDiaBan;
 
-        public GiaDatPlExcelController(CSDLGiaDBContext db)
+        public GiaDatPlExcelController(CSDLGiaDBContext db,IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
 
@@ -31,15 +34,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             var model = new CSDLGia_ASP.ViewModels.VMImportExcel
             {
-                LineStart = 2,
+                LineStart = 3,
                 LineStop = 1000,
                 Sheet = 1,
                 MaDv = MadvExcel,
                 Phanloai = PhanloaiExcel,
             };
-            var DsDiaBan = _db.DsDiaBan;            
-            ViewData["DsDiaBan"] = DsDiaBan;
-            ViewData["DsXaPhuong"] = _db.DsXaPhuong.Where(x => x.Madiaban == DsDiaBan.FirstOrDefault().MaDiaBan);
+            ViewData["DsDiaBanHuyen"] = _db.DsDiaBan;
+            ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
             ViewData["MenuLv1"] = "menu_giadat";
             ViewData["MenuLv2"] = "menu_dgdct";
             ViewData["MenuLv3"] = "menu_dgdct_tt";
@@ -48,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        public async Task<IActionResult> Import(CSDLGia_ASP.ViewModels.VMImportExcel requests,string MaDiaBanGiaDatPhanLoai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -80,13 +82,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 StringBuilder strStyle = new StringBuilder();
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
-                                var MaXaPhuong = requests.Maxp == "all" ? (worksheet.Cells[row, 4].Value != null ?
-                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "") :requests.Maxp;
+                                var MaDiaBan = requests.MadiabanBc == "all" ? (worksheet.Cells[row, 4].Value != null ?
+                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "") :requests.MadiabanBc;
 
                                 list_add.Add(new GiaDatPhanLoaiCt
                                 {
-                                    MaDiaBan=requests.MadiabanBc,
-                                    MaXaPhuong=MaXaPhuong,
+                                    MaDiaBan=MaDiaBan,                                    
                                     Mahs = Mahs,
                                     Madv = requests.MaDv,
                                     Trangthai = "CXD",
@@ -115,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 var model = new CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat
                 {
-                    Madiaban= requests.MadiabanBc,
+                    Madiaban= MaDiaBanGiaDatPhanLoai,
                     Maxp=requests.Maxp,
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
@@ -125,10 +126,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 var modelct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
                 model.GiaDatPhanLoaiCt = modelct.ToList();
-
+                var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatPhanLoai);
+                ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaDatPhanLoai).TenDiaBan;
                 ViewData["Mahs"] = model.Mahs;
-                ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");               
                 ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();                
                 ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                 ViewData["MenuLv1"] = "menu_giadat";
