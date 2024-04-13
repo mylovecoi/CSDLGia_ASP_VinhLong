@@ -1,6 +1,6 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBanHuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
+    var DsDiaBanXa = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXa"];
 }
 @model CSDLGia_ASP.ViewModels.VMImportExcel
 
@@ -8,21 +8,25 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-@section custom_script {    
-    <script>        
-        function GetXaPhuong() {
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        function GetXaPhuong() {            
             $.ajax({
                 url: '/Ajax/GetXaPhuong',
                 type: 'POST',
                 data: {
-                    MaDiaBan: $('#Madiaban').val(),
-                    KeySelect: 'Maxp'
+                    MaDiaBanHuyen: $('#MaDiaBanHuyen').val(),
+                    KeySelect: 'MadiabanBc'
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.status == 'success') {
                         toastr.success('Success');
-                        $('#Maxp').html(data.message);
+                        $('#MadiabanBc').html(data.message);
                     } else {
                         toastr.error(data.message, "Lỗi!");
                     }
@@ -59,13 +63,13 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file dữ liệu:</label>
             </div>
             <div class="row">
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Địa bàn áp dụng</label><br />
-                        <select class="form-control" id="MadiabanBc" name="MadiabanBc" onchange="GetXaPhuong()">
-                            @foreach (var item in dsdiaban)
+                        <label>Địa bàn</label>
+                        <select class="form-control select2basic" id="MaDiaBanHuyen" name="MaDiaBanGiaDatPhanLoai" onchange="GetXaPhuong()">
+                            @foreach (var item in DsDiaBanHuyen)
                             {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                <option value="@item.MaDiaBan">&emsp;@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
@@ -73,11 +77,11 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Xã phường</label><br />
-                        <select class="form-control" name="Maxp" id="Maxp">
-                            <option value="all">--Chọn xã phường--</option>
-                            @foreach (var item in dsxaphuong)
+                        <select class="form-control select2basic" id="MadiabanBc" name="MadiabanBc">
+                            <option value="all">--Chọn xã/phường--</option>
+                            @foreach (var item in DsDiaBanXa)
                             {
-                                <option value="@item.Maxp">@item.Tenxp</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>

@@ -35,5 +35,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string TenDuAn { get; set; }
         public string MaDiaBan { get; set; }
         public string Maxp { get; set; }
+        [NotMapped]
+        public string MaDiaBanCapHuyen { get; set; }
     }
 }

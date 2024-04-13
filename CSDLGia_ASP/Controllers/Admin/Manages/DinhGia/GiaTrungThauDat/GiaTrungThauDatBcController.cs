@@ -115,29 +115,33 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     var model = from dgct in _db.GiaDauGiaDatCt
                                      join dg in _db.GiaDauGiaDat on dgct.Mahs equals dg.Mahs
-                                     select new GiaDauGiaDat
+                                     join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
+                                     select new GiaDauGiaDatCt
                                      {
                                          Id = dgct.Id,
                                          Mahs = dgct.Mahs,
-                                         Madv = dgct.MaDv,
-                                         Tenduan = dg.Tenduan,
+                                         MaDv = dgct.MaDv,
+                                         TenDuAn = dg.Tenduan,
                                          Giakhoidiem = dgct.Giakhoidiem,
                                          Giadaugia = dgct.Giadaugia,
-                                         Thoidiem = dg.Thoidiem,
-                                         Trangthai = dg.Trangthai,
-
+                                         ThoiDiem = dg.Thoidiem,
+                                         TrangThai = dg.Trangthai,
+                                         MaDiaBan=dgct.MaDiaBan,
+                                         MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dgct.MaDiaBan).MaDiaBanCq,                                         
                                      };
 
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && t.TrangThai == "HT");
 
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
 
-                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    List<string> list_madv = model.Select(t => t.MaDv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaDauGiaDat.Where(t => list_mahs.Contains(t.Mahs));
-
+                    ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["ngaytu"] = ngaytu;

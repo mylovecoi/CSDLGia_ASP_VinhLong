@@ -1,8 +1,8 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.DinhGia.VMDinhGiaDat;
 @{
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    // var dsxaphuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -56,6 +56,7 @@
             <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
             <input hidden asp-for="Phanloai" />
+            <input hidden asp-for="Madiaban" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ @Model.Phanloai:</label>
             </div>
@@ -64,26 +65,9 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Địa bàn áp dụng</label><br />
-                        <select class="form-control select2basic" id="Madiaban" asp-for="Madiaban" onchange="GetXaPhuong()">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                            }
-                        </select>
+                        <label style="color:blue" class="form-control"> @ViewData["TenDiaBan"]</label>
                     </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Xã phường</label><br />
-                        <select class="form-control select2basic" asp-for="Maxp" id="Maxp">
-                            <option value="all">--Chọn xã phường--</option>
-                            @foreach (var item in dsxaphuong)
-                            {
-                                <option value="@item.Maxp">@item.Tenxp</option>
-                            }
-                        </select>
-                    </div>
-                </div>
+                </div>               
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định<span class="text-danger">*</span></label>

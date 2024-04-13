@@ -1,8 +1,9 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+   
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
-    var dsxaphuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsDiaBanXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXaPhuong"];
     var phanloaihoso = ViewData["phanloaihoso"];
     var MaDiaBan = ViewData["MaDiaBan"];
     var MaXaPhuong = ViewData["MaXaPhuong"];
@@ -27,7 +28,7 @@
                 url: '/Ajax/GetXaPhuong',
                 type: 'POST',
                 data: {
-                    MaDiaBan: $('#MaDiaBan').val(),
+                    MaDiaBanHuyen: $('#MaDiaBan').val(),
                     KeySelect: 'MaXaPhuong'
                 },
                 dataType: 'JSON',
@@ -117,8 +118,8 @@
                         <div class="form-group">
                             <label>Địa bàn áp dụng</label><br />
                             <select class="form-control select2basic" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
-                                <option>--Chọn địa bàn--</option>
-                                @foreach (var item in dsdiaban)
+                                <option value="all">--Chọn địa bàn--</option>
+                                @foreach (var item in DsDiaBan)
                                 {
                                     <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                 }
@@ -130,9 +131,9 @@
                             <label>Xã phường</label><br />
                             <select class="form-control select2basic" asp-for="@MaXaPhuong" id="MaXaPhuong">
                                 <option value="all">--Chọn xã phường--</option>
-                                @foreach (var item in dsxaphuong)
+                                @foreach (var item in DsDiaBanXaPhuong)
                                 {
-                                    <option value="@item.Maxp">@item.Tenxp</option>
+                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                 }
                             </select>
                         </div>
@@ -201,7 +202,7 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: left">@item.Tendv</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: right">@item.Giacuthe</td>
+                        <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                         <td style="text-align: center">
                             <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">

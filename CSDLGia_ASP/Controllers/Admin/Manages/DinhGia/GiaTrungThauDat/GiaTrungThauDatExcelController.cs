@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -17,10 +18,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
     public class GiaTrungThauDatExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _IDsDiaBan;
 
-        public GiaTrungThauDatExcelController(CSDLGiaDBContext db)
+        public GiaTrungThauDatExcelController(CSDLGiaDBContext db, IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
 
@@ -32,13 +35,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        LineStart = 2,
+                        LineStart = 3,
                         LineStop = 1000,
                         Sheet = 1,
                         MaDv = Madv,
                     };
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsXaPhuong"] = _db.DsXaPhuong;
+                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan;
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
                     ViewData["MenuLv3"] = "menu_dg_xaydungmoi_tt";
@@ -81,8 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                         string MaXaPhuong = requests.Maxp == "all" ? (worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 11].Value.ToString().Trim() : "") : requests.Maxp;
                         list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt
                         {
-                            MaDiaBan=requests.MadiabanBc,
-                            Maxp= MaXaPhuong,
+                            MaDiaBan= MaXaPhuong,                           
                             Mahs = Mahs,
                             MaDv = requests.MaDv,
                             TrangThai = "CXD",
@@ -130,17 +132,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             var modelct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
             model.GiaDauGiaDatCt = modelct.ToList();
 
-            
-            var XaPhuong = _db.DsXaPhuong.FirstOrDefault(x => x.Maxp == requests.Maxp);
-            var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == requests.MadiabanBc);
+
+            var diaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == requests.MadiabanBc);
+
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(requests.MadiabanBc);
+
             ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == requests.MadiabanBc).TenDiaBan;
-            ViewData["TenXaPhuong"] = XaPhuong != null ? XaPhuong.Tenxp : "Tất cả";
+            ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
 
             ViewData["DmDvt"] = _db.DmDvt.ToList();
-            ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == requests.MaDv).TenDv;
-            ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
-            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == requests.MaDv).TenDv;            
+            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");           
             ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu quyền sd đất";
             ViewData["MenuLv1"] = "menu_giadat";
             ViewData["MenuLv2"] = "menu_dgd";

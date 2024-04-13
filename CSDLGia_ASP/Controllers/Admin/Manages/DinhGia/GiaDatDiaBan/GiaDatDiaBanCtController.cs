@@ -89,12 +89,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Edit")]
         [HttpPost]
-        public JsonResult Edit(int Id)
+        public JsonResult Edit(int Id,string MaDiaBanGiaDatDiaBan)
         {
-            var model = _db.GiaDatDiaBanCt.FirstOrDefault(p => p.Id == Id);
-            var hosogiadatdiaban = _db.GiaDatDiaBan.FirstOrDefault(x=>x.Mahs == model.Mahs);            
+            var model = _db.GiaDatDiaBanCt.FirstOrDefault(p => p.Id == Id);                        
 
-            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(hosogiadatdiaban.Madiaban).Where(x=>x.Level=="X");
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatDiaBan).Where(x=>x.Level=="X");
+            
+
+            var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaDatDiaBan).TenDiaBan;
 
             if (model != null)
             {
@@ -102,13 +104,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row'>";
-
-                //result += "<div class='col-xl-6'>";
-                //result += "<div class='form-group fv-plugins-icon-container'>";
-                //result += "<label>Địa bàn</label>";
-                //result += "<label class='form-control' style='color:blue'>" + diaban.TenDiaBan + "</label>";
-                //result += "</div>";
-                //result += "</div>";
+                result += "<div class='col-xl-6'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Địa bàn</label>";
+                result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
+                result += "</div>";
+                result += "</div>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group' style='width:100%'>";
                 result += "<label>Xã/phường</label>";
@@ -239,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
         {
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             
-            model.Maxp= MaXaPhuong;
+            model.Madiaban= MaXaPhuong;
             model.Maloaidat = Maloaidat;
             model.HienThi = Hienthi;
             model.Sapxep = SapXep;
