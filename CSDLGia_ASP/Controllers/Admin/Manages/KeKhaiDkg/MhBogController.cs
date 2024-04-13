@@ -28,7 +28,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
 
                     ViewData["Title"] = "Thông tin mặt hàng bình ổn giá";
                     ViewData["MenuLv1"] = "menu_bog";
-                    ViewData["MenuLv2"] = "menu_ttdnbog";
+                    ViewData["MenuLv2"] = "menu_phanloai";
                     return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/MatHang/Index.cshtml", model);
                 }
                 else
