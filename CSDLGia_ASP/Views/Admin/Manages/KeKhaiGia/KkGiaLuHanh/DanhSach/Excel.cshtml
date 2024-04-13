@@ -1,0 +1,131 @@
+﻿@model CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaXmTxdCt
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script{
+    @*<script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged4.init();
+        });
+    </script>*@
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Nhận dữ liệu từ file Excel
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="KkGiaXmTxdExcel" asp-action="Import" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Tên hàng hóa dịch vụ</label>
+                        <select asp-for="Tendvcu" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Quy cách chất lượng</label>
+                        <select asp-for="Qccl" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Đơn vị tính</label>
+                        <select asp-for="Dvt" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Mức giá liền kề</label>
+                        <select asp-for="Gialk" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Mức giá kê khai*</label>
+                        <select asp-for="Giakk" class="form-control">
+                            @foreach (var item in Helpers.GetListColExcel())
+                            {
+                                <option value="@item.Value">@item.Key</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận từ dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStart" step="1" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Nhận đến dòng*</label>
+                        <input type="number" class="form-control" asp-for="LineStop" step="1" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>Sheet*</label>
+                        <input type="number" class="form-control" asp-for="Sheet" step="1" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label>File dữ liệu:</label><br />
+                        <input type="file" accept=".xls,.xlsx" asp-for="FormFile" />
+                        <span asp-validation-for="FormFile" class="form-text text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <a asp-controller="KeKhaiGiaXmTxd" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+                <i class="la la-reply"></i>Quay lại
+            </a>&ensp;
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
