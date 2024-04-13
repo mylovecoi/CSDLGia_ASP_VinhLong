@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-xl-4">
                         <div class="form-group">
-                            <label>Địa bàn</label>
+                        <label>Địa bàn:<span class="text-danger">*</span></label>
                             <select class="form-control" asp-for="Madiaban">
                                 @foreach (var item in dsdiaban)
                             {
@@ -52,7 +52,7 @@
                 
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
+                        <label>Số QĐ kết quả lựa trọn nhà thầu:<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqd" />
                     </div>
                 </div>
@@ -60,13 +60,13 @@
             <div class="row">
                 <div class="col-xl-4">
                     <div class="form-group">
-                        <label>Ngày quyết định</label>
+                        <label>Ngày quyết định:<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" asp-for="Ngayqd" />
                     </div>
                 </div>
                 <div class="col-xl-8">
                     <div class="form-group">
-                        <label>Thông tin quyết định</label>
+                        <label>Thông tin quyết định:<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Thongtinqd" />
                     </div>
                 </div>
@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Tên nhà thầu</label>
+                        <label>Tên nhà thầu:<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Tennhathau" />
                     </div>
                 </div>

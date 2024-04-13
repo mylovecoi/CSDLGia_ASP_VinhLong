@@ -524,7 +524,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Gia = hosoct.Gia,
                                  });
 
-                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen /*&& t.Trangthai == "HT"*/ && t.Gia >= DonGiaTu);
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT" && t.Gia >= DonGiaTu);
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (DonGiaDen > 0) { model = model.Where(t => t.Gia <= DonGiaDen); }
                     if (!string.IsNullOrEmpty(Tenvlxd))
@@ -544,7 +544,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     ViewData["DonGiaDen"] = DonGiaDen;
                     ViewData["Tenvlxd"] = Tenvlxd;
                     ViewData["Tieuchuan"] = Tieuchuan;
-                    ViewData["DanhSachHoSo"] = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen /*&& t.Trangthai == "HT"*/);
+                    ViewData["DanhSachHoSo"] = _db.GiaVatLieuXayDung.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
