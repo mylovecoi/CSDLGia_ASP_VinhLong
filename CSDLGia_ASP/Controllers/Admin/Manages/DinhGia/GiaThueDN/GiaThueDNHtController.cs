@@ -33,9 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Index"))
                 {
-
                     List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB" };
-
                     var model = _db.GiaThueMatDatMatNuoc.Where(t => list_trangthai.Contains(t.Trangthai));
                     if (Nam != 0)
                     {
@@ -142,6 +140,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     model.Trangthai = "BTL";
                     model.Lydo = Lydo;
+                    model.Updated_at = DateTime.Now;
 
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -277,7 +276,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DanhMuc"] = _db.GiaThueMatDatMatNuocNhom;
                     ViewData["Title"] = "Tổng hợp";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/HoanThanh/Tonghop.cshtml", model);
-
                 }
                 else
                 {
@@ -290,7 +288,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
     }
 }

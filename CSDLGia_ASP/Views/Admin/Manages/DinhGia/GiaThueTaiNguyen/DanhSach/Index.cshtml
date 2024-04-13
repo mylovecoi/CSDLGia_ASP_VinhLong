@@ -179,9 +179,7 @@
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
-
                                 </a>
-                                @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["StringValue"])
                             </td>
                         </tr>
                     }
@@ -191,5 +189,4 @@
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhSach/Modal.cshtml")
-@await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_modal.cshtml")
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/ThongTinGiayTo/Show.cshtml")
