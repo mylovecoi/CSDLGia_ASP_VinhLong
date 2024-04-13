@@ -43,12 +43,12 @@ namespace CSDLGia_ASP.Controllers
             }
 
             //Lấy data default cho bảng giá đất            
-            string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t=>t.Thoidiem)
-                                                                                .FirstOrDefault()?.Mahs;
-            var datact = new List<GiaDatDiaBanCt>();
-            if(Mahs != null)
+            var data = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
+                                                                                .FirstOrDefault();
+            
+            if(data.Mahs != null)
             {
-                datact = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == Mahs)
+                var datact = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == data.Mahs)
                           join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
                           select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                           {
@@ -67,9 +67,10 @@ namespace CSDLGia_ASP.Controllers
                               Giavt5 = dat.Giavt5,
                               Loaidat = dm.Loaidat,
                               Sapxep = dat.Sapxep
-                          }).ToList();
+                          });
+                data.GiaDatDiaBanCt = datact.ToList();
             }           
-            ViewData["ThongTinHoSo"] = datact;           
+            ViewData["ThongTinHoSo"] = data;           
             //
 
             var model = _db.Supports;

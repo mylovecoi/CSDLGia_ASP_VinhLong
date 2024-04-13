@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,18 @@ namespace CSDLGia_ASP.Controllers
         [HttpPost("Dashboard/GetBangGiaDat")]
         public IActionResult GetBangGiaDat()
         {
-            string Mahs = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
-                                                                               .FirstOrDefault()?.Mahs;
-
-            string result = "<div class='tab-content' id='data_load'>";
+            var HoSo = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
+                                                                               .FirstOrDefault();
+            string Mahs = HoSo?.Mahs;
+            string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
+            result += "<div class='card-header border-0 py-5'>";
+            result += "<h3 class='card-title align-items-start flex-column'>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Bảng giá đất địa bàn năm " + (HoSo?.Thoidiem.Year.ToString() ?? "") + "</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'> Số QĐ: " + (HoSo?.Soqd ?? "") + "- Thời điểm: " + Helpers.ConvertDateToStr(HoSo?.Thoidiem ?? DateTime.MinValue)  +"</span>";
+            result += "</h3>";
+            result += "</div>";
+            result += "<div class='card-body pt-0 pb-3'>";
+            result += "<div class='tab-content'>";
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
@@ -82,6 +91,8 @@ namespace CSDLGia_ASP.Controllers
             result += "</tbody>";
             result += "</table>";
             result += "</div>";
+            result += "</div>";
+            result += "</div>";
 
             var data = new { status = "success", message = result };
             return Json(data);
@@ -91,7 +102,15 @@ namespace CSDLGia_ASP.Controllers
         [HttpPost("Dashboard/GetDichVuLuuTru")]
         public IActionResult GetDichVuLuuTru()
         {
-            string result = "<div class='tab-content' id='data_load'>";
+            string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
+            result += "<div class='card-header border-0 py-5'>";
+            result += "<h3 class='card-title align-items-start flex-column'>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ kê khai giá dịch vụ lưu trú</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
+            result += "</h3>";
+            result += "</div>";
+            result += "<div class='card-body pt-0 pb-3'>";
+            result += "<div class='tab-content'>";
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
@@ -106,6 +125,110 @@ namespace CSDLGia_ASP.Controllers
 
             result += "</tbody>";
             result += "</table>";
+            result += "</div>";
+            result += "</div>";
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        [HttpPost("Dashboard/GetXangDau")]
+        public IActionResult GetXangDau()
+        {
+            string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
+            result += "<div class='card-header border-0 py-5'>";
+            result += "<h3 class='card-title align-items-start flex-column'>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ đăng ký giá dịch vụ xăng dầu</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
+            result += "</h3>";
+            result += "</div>";
+            result += "<div class='card-body pt-0 pb-3'>";
+            result += "<div class='tab-content'>";
+            result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
+            result += "<thead>";
+            result += "<tr class='text-center text-uppercase'>";
+            result += "<th>Tên đơn vị</th>";
+            result += "<th>Số QĐ</th>";
+            result += "<th>Thời điểm</th>";
+            result += "<th>Số QĐ liển kề</th>";
+            result += "<th>Thời điểm LK</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+            result += "</div>";
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        [HttpPost("Dashboard/GetDichVuLuHanh")]
+        public IActionResult GetDichVuLuHanh()
+        {
+            string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
+            result += "<div class='card-header border-0 py-5'>";
+            result += "<h3 class='card-title align-items-start flex-column'>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ kê khai giá dịch vụ lữ hành</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
+            result += "</h3>";
+            result += "</div>";
+            result += "<div class='card-body pt-0 pb-3'>";
+            result += "<div class='tab-content'>";
+            result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
+            result += "<thead>";
+            result += "<tr class='text-center text-uppercase'>";
+            result += "<th>Tên đơn vị</th>";
+            result += "<th>Số QĐ</th>";
+            result += "<th>Thời điểm</th>";
+            result += "<th>Số QĐ liển kề</th>";
+            result += "<th>Thời điểm LK</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+            result += "</div>";
+            result += "</div>";
+
+            var data = new { status = "success", message = result };
+            return Json(data);
+        }
+
+        [HttpPost("Dashboard/GetHHDVthietyeu")]
+        public IActionResult GetHHDVthietyeu()
+        {
+            string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
+            result += "<div class='card-header border-0 py-5'>";
+            result += "<h3 class='card-title align-items-start flex-column'>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin giá HHDV thiết yếu</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
+            result += "</h3>";
+            result += "</div>";
+            result += "<div class='card-body pt-0 pb-3'>";
+            result += "<div class='tab-content'>";
+            result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
+            result += "<thead>";
+            result += "<tr class='text-center text-uppercase'>";
+            result += "<th>Tên đơn vị</th>";
+            result += "<th>Số QĐ</th>";
+            result += "<th>Thời điểm</th>";
+            result += "<th>Số QĐ liển kề</th>";
+            result += "<th>Thời điểm LK</th>";
+            result += "</tr>";
+            result += "</thead>";
+            result += "<tbody>";
+
+            result += "</tbody>";
+            result += "</table>";
+            result += "</div>";
+            result += "</div>";
             result += "</div>";
 
             var data = new { status = "success", message = result };
