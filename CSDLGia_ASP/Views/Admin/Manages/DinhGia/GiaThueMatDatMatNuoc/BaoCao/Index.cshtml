@@ -15,6 +15,15 @@
 
 }
 
+<script>
+    $(document).ready(function () {
+        TableManaged.init();
+        TableManaged2.init();
+        $('.select2multi').select2();
+    });
+
+</script>
+
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
@@ -140,7 +149,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Thông tin hồ sơ: </label><br />
-                                <select class="form-control" id="MaHsTongHop" name="MaHsTongHop" width="100%">
+                                <select class="form-control select2basic" id="MaHsTongHop" name="MaHsTongHop" width="100%">
                                     <option value="all">--Tất cả---</option>
                                     @foreach (var item in DanhSachHoSo)
                                     {
@@ -152,7 +161,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên nhóm</label><br />
-                                <select class="form-control" id="MaNhom" name="MaNhom" width="100%">
+                                <select class="form-control select2basic" id="MaNhom" name="MaNhom" width="100%">
                                     <option value="all">--Tất cả---</option>
                                     @foreach (var item in DanhSachNhom)
                                     {

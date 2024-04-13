@@ -51,7 +51,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
@@ -67,7 +67,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
+                    <select class="form-control select2basic" id="Madv" name="Madv">
                         @foreach (var db in dsdiaban)
                         {
                             <optgroup label="@db.TenDiaBan">
@@ -91,7 +91,7 @@
                     <th>Cơ quan chuyển hồ sơ</th>
                     <th>Địa bàn</th>
                     <th>Số quyết định</th>
-                    <th>Thời điểmxác đinh</th>
+                    <th>Thời điểm xác đinh</th>
                     <th>Mô tả</th>
                     <th>Trạng thái</th>
                     <th width="20%">Thao tác</th>
