@@ -17,41 +17,55 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             _db = db;
         }
 
-       
         public string GetData(string Mahs)
         {
-            var model = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs).ToList();
-            int record = 1;
             string result = "<div class='card-body' id='frm_data'>";
-            result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
-            result += "<thead>";
-            result += "<tr class='text-center'>";
-            result += "<th width='5%'>STT</th>";
-            result += "<th>STT hiển thị</th>";
-            result += "<th>Tên phí, lệ phí</th>";
-            result += "<th>Phần trăm</th>";
-            result += "<th>Mức thu</th>";
-            result += "<th width='18%'>Thao tác</th>";
-            result += "</tr>";          
-            result += "</thead><tbody>";
-
-            foreach (var item in model)
+            var model = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs).ToList();
+            var model_nhom = _db.GiaPhiLePhiNhom;
+            foreach (var nhom in model_nhom)
             {
-                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
-                result += "<tr>";
-                result += "<td style='text-align:center;" + HtmlStyle + "'>" + (record++) + "</td>";
-                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTHienthi + "</td>";
-                result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.Ptcp + "</td>";
-                result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Phantram) + "</td>";
-                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Mucthutu) + "</td>";
-                result += "<td>";
-                result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
-                result += " data-target='#Edit_Modal' data-toggle='modal' onclick='GetEdit(`" + item.Id + "`)'>";
-                result += "<i class='icon-lg la la-edit text-primary'></i>";
-                result += "</button>";
-               result += "</td></tr>";
+                var data_chitiet = model.Where(t => t.Phanloai == nhom.Manhom);
+                if (data_chitiet.Any())
+                {
+                    result += "<div class='mb-3 font-weight-bold font-size-lg'>";
+                    result += "<label style='text-decoration-line: underline; font-weight: bold'>" + nhom.Tennhom + "</label>";
+                    result += "</div>";
+                    result += "<table class='table table-striped table-bordered table-hover class-nosort'>";
+                    result += "<thead>";
+                    result += "<tr class='text-center'>";
+                    result += "<th width='5%'>STT</th>";
+                    result += "<th width='10%'>Nhãn hiệu</th>";
+                    result += "<th width='10%'>Nước sản xuất/ lắp ráp</th>";
+                    result += "<th>Kiểu loại</th>";
+                    result += "<th width='10%'>Thể tích</th>";
+                    result += "<th width='10%'>Số người/ Tải trọng</th>";
+                    result += "<th width='10%'>Giá tính LPTB</th>";
+                    result += "<th width='10%'>Thao tác</th>";
+                    result += "</tr>";
+                    result += "</thead><tbody>";
+
+                    foreach (var item in model)
+                    {
+                        string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                        result += "<tr>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTHienthi + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.NhanHieu + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.NuocSxLr + "</td>";
+                        result += "<td style='text-align:left;" + HtmlStyle + "'>" + item.Ptcp + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.TheTich + "</td>";
+                        result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.SoNguoiTaiTrong + "</td>";
+                        result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Mucthutu) + "</td>";
+                        result += "<td>";
+                        result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
+                        result += " data-target='#Edit_Modal' data-toggle='modal' onclick='GetEdit(`" + item.Id + "`)'>";
+                        result += "<i class='icon-lg la la-edit text-primary'></i>";
+                        result += "</button>";
+                        result += "</td></tr>";
+                    }
+                    result += "</tbody>";
+                }
             }
-            result += "</tbody>";
+            result += "</div>";
             return result;
         }
 
@@ -66,10 +80,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<input hidden id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
-                result += "<div class='row'>";
+                result += "<div class='row'>";              
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                result += "<label>Kiểu loại:</label>";
+                result += "<label class='form-control'>" + @model.Ptcp + "</label>";
+                result += "</div>";
+                result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Kiểu in hiển thị: </label>";
                 result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
                 result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
                 result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
@@ -78,22 +98,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Tên phí lệ phí</b></label>";
-                result += "<input type='text' id='Ptcp_edit' name='Ptcp_edit' value='" + @model.Ptcp + "' class='form-control' />";
+                result += "<label>Giá tính LPTB:</label>";
+                result += "<input type='text' id='Mucthutu_edit' name='Mucthutu_edit' value='" + @model.Mucthutu + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-4'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Phần trăm</b></label>";
-                result += "<input type='text' id='Phantram_edit' name='Phantram_edit' value='" + @model.Phantram + "' class='form-control text-right' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-8'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>Mức thu từ</b></label>";
-                result += "<input type='number' id='Mucthutu_edit' name='Mucthutu_edit' value='" + @model.Mucthutu + "' class='form-control money text-right' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";            
                 result += "</div>";
                 result += "</div>";
 
@@ -108,16 +116,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         }
         [Route("DinhGiaLePhiCt/Update")]
         [HttpPost]
-        public JsonResult Update(string Ptcp, double Phantram, double Mucthutu, string[] Style, int Id)
+        public JsonResult Update(double Mucthutu, string[] Style, int Id)
         {
             var model = _db.GiaPhiLePhiCt.FirstOrDefault(t => t.Id == Id);
             if (model != null)
             {
                 string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
-                model.Ptcp = Ptcp;
-                model.Phantram = Phantram;
                 model.Mucthutu = Mucthutu;
-                model.Style = str_style;                        
+                model.Style = str_style;
                 model.Updated_at = DateTime.Now;
                 _db.GiaPhiLePhiCt.Update(model);
                 _db.SaveChanges();

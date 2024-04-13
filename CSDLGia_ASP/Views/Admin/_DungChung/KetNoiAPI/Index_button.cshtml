@@ -14,7 +14,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
         <ul class="navi flex-column navi-hover py-2">
-            <li class="navi-item">
+            @* <li class="navi-item">
                 <a asp-controller="API" asp-action="ThietLapHoso" asp-route-Maso="@(ViewData["maKetNoiAPI"]?? "")" class="navi-link">
                     <span class="navi-icon"><i class="la la-file-text-o"></i></span>
                     <span class="navi-text">Thiết lập hồ sơ</span>
@@ -25,7 +25,7 @@
                     <span class="navi-icon"><i class="la la-file-text-o"></i></span>
                     <span class="navi-text">Xem thông tin hồ sơ</span>
                 </a>
-            </li>
+            </li> *@
             <li class="navi-item">
                 <a type="button" data-target="#TruyenHoSo_Modal" data-toggle="modal" onclick="setTruyenDuLieu('@maHoSo')" class="navi-link border-0 btn-clean" title="Thêm mới">
                     <i class="la la-file-text-o"></i>Truyền dữ liệu

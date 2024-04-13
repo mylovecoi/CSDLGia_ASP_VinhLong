@@ -21,6 +21,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
         });
         $(function () {
             $('#Madv, #Nam').change(function () {
@@ -65,7 +66,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control " id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
@@ -188,7 +189,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nhóm Danh mục giá khám bệnh, chữa bệnh*</b></label>
-                                <select id="Manhom" name="Manhom" class="form-control">
+                                <select id="Manhom" name="Manhom" class="form-control select2basic">
                                     <option value="all">--Chọn tất cả các nhóm--</option>
                                     @foreach (var item in dsnhom)
                                     {

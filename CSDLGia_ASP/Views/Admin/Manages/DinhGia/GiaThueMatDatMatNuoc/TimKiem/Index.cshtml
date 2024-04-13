@@ -14,8 +14,11 @@
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
+
         $(document).ready(function () {
             TableManaged.init();
+            TableManaged2.init();
+            $('.select2multi').select2();
         });
 
         $(function () {
@@ -49,7 +52,7 @@
             <div class="col-xl-12">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select style ="width: 100%;" class="form-control select2basic" id="madv" name="madv">
+                    <select style="width: 100%;" class="form-control select2basic" id="madv" name="madv">
                         <option value="All">--Tất cả các đơn vị--</option>
                         @foreach (var db in dsdiaban)
                         {

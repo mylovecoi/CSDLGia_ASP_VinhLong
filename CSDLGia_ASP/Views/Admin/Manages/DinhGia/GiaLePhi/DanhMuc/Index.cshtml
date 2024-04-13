@@ -80,7 +80,7 @@
 
 <!--create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="card-label">
@@ -254,6 +254,7 @@
             type: 'POST',
             data: {
                 Tennhom: $('#TenNhom_Edit').val(),
+                Manhom: $('#MaNhom_Edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

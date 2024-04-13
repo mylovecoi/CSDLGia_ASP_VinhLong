@@ -91,6 +91,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                 StringBuilder strStyle = new StringBuilder();
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+                                string PhanLoai = requests.MaNhom;
+                                if(requests.MaNhom == "all")
+                                {
+                                    PhanLoai = worksheet.Cells[row, 8].Value != null ?
+                                                worksheet.Cells[row, 8].Value.ToString().Trim() : "";
+                                }
 
                                 list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt
                                 {
@@ -99,15 +105,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                     Trangthai = "CXD",
                                     STTSapxep = line,
                                     STTHienthi = worksheet.Cells[row, 1].Value != null ?
-                                                worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                    Ptcp = worksheet.Cells[row, 2].Value != null ?
-                                                worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                    Phantram = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
-                                                worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
-                                    Mucthutu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                                                worksheet.Cells[row, 1].Value.ToString().Trim() : "",   
+                                    NhanHieu = worksheet.Cells[row, 2].Value != null ?
+                                                worksheet.Cells[row, 2].Value.ToString().Trim() : "",  
+                                    NuocSxLr = worksheet.Cells[row, 3].Value != null ?
+                                                worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+                                    Ptcp = worksheet.Cells[row, 4].Value != null ?
+                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+                                    TheTich = worksheet.Cells[row, 5].Value != null ?
+                                                worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                    SoNguoiTaiTrong = worksheet.Cells[row, 6].Value != null ?
+                                                worksheet.Cells[row, 6].Value.ToString().Trim() : "",                                    
+                                    Mucthutu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
                                     Style = strStyle.ToString(),
-                                    Phanloai = requests.MaNhom,
+                                    Phanloai = PhanLoai,
                                 });
                                 line++;
                             }

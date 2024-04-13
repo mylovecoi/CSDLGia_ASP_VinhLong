@@ -1,16 +1,16 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+
+    int Nam = ViewData["Nam"] as int? ?? 0;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -21,11 +21,10 @@
         });
 
         $(function () {
-            $('#Madv, #Nam').change(function () {
+            $('#Nam').change(function () {
                 var current_path_url = '/GiaLePhi?';
-                var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
-                var url = current_path_url + madv + nam;
+                var url = current_path_url + nam;
                 window.location.href = url;
             })
         });
@@ -38,11 +37,10 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                   Quản lý hoàn thành hồ sơ giá lệ phí trước bạ
+                    Quản lý hoàn thành hồ sơ giá lệ phí trước bạ
                 </span>
             </h3>
         </div>
-
         <div>
             <button type="button" data-target="#Tonghop_Modal" data-toggle="modal" class="btn btn-warning font-weight-bolder" title="Tổng hợp">
                 <i class="la la-plus"></i>Tổng hợp hồ sơ
@@ -56,33 +54,14 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
+                                <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
                             }
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xl-3">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
-                        {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
-                                }
-                                @foreach (var item in dv)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
                         }
                     </select>
                 </div>
@@ -91,184 +70,129 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th width="4%">STT</th>
-                    <th>Cơ quan chuyển hồ sơ</th>
-                    <th>Thời điểm<br />xác đinh</th>
+                    <th width="2%">STT</th>
+                    <th width="10%">Cơ quan chuyển hồ sơ</th>
+                    <th width="10">Số QĐ</th>
+                    <th width="10">Thời điểm</th>
                     <th>Mô tả</th>
-                    <th>Trạng thái</th>
+                    <th width="10%">Trạng thái</th>
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                @if (Model != null)
+
+                @foreach (var item in Model)
                 {
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">
-                                @if (dsdonvi != null)
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.TenDonVi</td>
+                        <td style="text-align: center">@item.Soqd</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                        <td style="text-align:left">@item.Mota</td>
+                        <td style="text-align: center">
+                            @if (item.Trangthai == "CD")
+                            {
+                                <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                            }
+                            else if (item.Trangthai == "DD")
+                            {
+                                <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                            }
+                            else if (item.Trangthai == "BTL")
+                            {
+                                <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
+                                <p>Lý do:&nbsp;@item.Lydo</p>
+                            }
+                            else
+                            {
+                                <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+                            <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <i class="icon-lg la la-file-alt text-dark"></i>
+                            </button>
+                            @if (item.Trangthai == "CD")
+                            {
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
                                 {
-                                    @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai_h == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_h)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else if (item.Trangthai_t == "CCB")
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv_t)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @foreach (var ten in dsdonvi)
-                                            {
-                                                @if (ten.MaDv == item.Madv)
-                                                {
-                                                    <span>@ten.TenDv</span>
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var ten in dsdonvi)
-                                        {
-                                            @if (ten.MaDv == item.Madv)
-                                            {
-                                                <span>@ten.TenDv </span>
-                                            }
-                                        }
-                                    }
+                                    <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                                            onclick="TraLai('@item.Id')">
+                                        <i class="icon-lg la la-reply text-danger "></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Duyệt" data-toggle="modal" data-target="#Duyet_Modal" onclick="SetDuyet('@item.Mahs', '@item.Soqd')">
+                                        <i class="icon-lg la la-check text-primary"></i>
+                                    </button>
                                 }
-                            </td>
-                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                            <td class="text-left danger">@item.Mota</td>
-                            <td style="text-align: center">
-                                @if (item.Trangthai_ad == "CB")
+                            }
+                            @if (item.Trangthai == "DD")
+                            {
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
-                                    <br />
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy duyệt" data-toggle="modal" data-target="#HuyDuyet_Modal"
+                                            onclick="SetHuyDuyet('@item.Mahs','@item.Soqd')">
+                                        <i class="icon-lg la la-times text-danger "></i>
+                                    </button>
                                 }
-                                else if (item.Trangthai_ad == "HCB")
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ công bố</span>
-                                    <br />
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
+                                            onclick="CongBo('@item.Mahs','@item.Soqd')">
+                                        <i class="icon-lg la la-send text-primary "></i>
+                                    </button>
                                 }
-                                else if (item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
+                            }
+                            @if (item.Trangthai == "CB")
+                            {
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-danger">Huỷ hoàn thành</span>
-                                    <br />
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
+                                            onclick="HuyCongBo('@item.Mahs', '@item.Soqd')">
+                                        <i class="icon-lg la la-times text-danger "></i>
+                                    </button>
                                 }
-                                else if (item.Trangthai_ad == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                    <br />
-                                }
-                                else
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                    <br />
-                                }
-                            </td>
-                            <td>
-                                <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem Chi tiết"
-                                   target="_blank">
-                                    <i class="icon-lg la la-eye text-success"></i>
+                            }
+
+                            <div class="dropdown dropdown-inline">
+                                <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
+                                    <i class="icon-lg la la-cog "></i>
                                 </a>
-                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
-                                    <i class="icon-lg la la-file-alt text-dark"></i>
-                                </button>
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lp.gialp.htg", "Approve"))
-                                {
-                                    @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai_ad == "CB")
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                                    onclick="HuyCongBo('@item.Mahs')">
-                                                <i class="icon-lg la la-times text-danger "></i>
-                                            </button>
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                    <ul class="nav nav-hoverable flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">
+                                                <i class="nav-icon la la-forward"></i>
+                                                <span class="nav-text">Thiết lập thông điệp</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">
+                                                <i class="nav-icon la la-forward"></i>
+                                                <span class="nav-text">Cấu hình công khai dữ liệu </span>
+                                            </a>
+                                        </li>
 
-                                        }
-                                        else
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                                    onclick="CongBo('@item.Mahs')">
-                                                <i class="icon-lg la la-send text-primary "></i>
-                                            </button>
-
-                                            <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                    onclick="TraLai('@item.Id','@item.Macqcq')">
-                                                <i class="icon-lg la la-reply text-danger "></i>
-                                            </button>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @if (item.Trangthai_ad == null || item.Trangthai_t == "BTL" || item.Trangthai_h == "BTL")
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal"
-                                                    data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                                <i class="icon-lg la la-check text-primary"></i>
-                                            </button>
-                                            <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                    onclick="TraLai( '@item.Id','@item.Macqcq')">
-                                                <i class="icon-lg la la-reply text-danger "></i>
-                                            </button>
-                                        }
-                                    }
-                                }
-
-                                <div class="dropdown dropdown-inline">
-                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false" title="Truyền lên CSDLGQG">
-                                        <i class="icon-lg la la-cog "></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
-                                        <ul class="nav nav-hoverable flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <i class="nav-icon la la-forward"></i>
-                                                    <span class="nav-text">Thiết lập thông điệp</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <i class="nav-icon la la-forward"></i>
-                                                    <span class="nav-text">Cấu hình công khai dữ liệu </span>
-                                                </a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <i class="nav-icon la la-forward"></i>
-                                                    <span class="nav-text">Xem trước thông điệp</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <i class="nav-icon la la-forward"></i>
-                                                    <span class="nav-text">Truyền dữ liệu</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">
+                                                <i class="nav-icon la la-forward"></i>
+                                                <span class="nav-text">Xem trước thông điệp</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">
+                                                <i class="nav-icon la la-forward"></i>
+                                                <span class="nav-text">Truyền dữ liệu</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </td>
-                        </tr>
-                    }
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

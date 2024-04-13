@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Link API token</label>
+                                <label>Link API token<span class="text-danger">*</span></label>
                                 <input type="text" name="LinkAPIXacthuc" value="@linkAPIXacthuc" class="form-control" required />
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Mã AccessToken</label>
+                                <label>Mã AccessToken<span class="text-danger">*</span></label>
                                 <textarea name="TokenLGSP" rows="3" class="form-control" required>@tokenLGSP</textarea>
                             </div>
                         </div>
@@ -53,15 +53,56 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Link API truyền dữ liệu</label>
+                                <label>Link API truyền dữ liệu<span class="text-danger">*</span></label>
                                 <input type="text" name="LinkAPIKetNoi" value="@linkKetNoi" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã địa bàn hành chính<span class="text-danger">*</span></label>
+                                <input type="text" name="DIA_BAN" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Mã đơn vị thu thập<span class="text-danger">*</span></label>
+                                <input type="text" name="NGUON_SO_LIEU" value="" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Người tạo (Tài khoản CSDL quốc gia)<span class="text-danger">*</span></label>
+                                <input type="text" name="NGUOI_TAO" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Người duyệt (Tài khoản CSDL quốc gia)<span class="text-danger">*</span></label>
+                                <input type="text" name="NGUOI_DUYET" value="" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Chức năng</label>
+                                <select name="THAO_TAC" class="form-control">
+                                    <option value="true">Truyền dữ liệu</option>
+                                    <option value="false">Xem dữ liệu</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Truyền dữ liệu</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
                 </div>
             </div>
         </div>

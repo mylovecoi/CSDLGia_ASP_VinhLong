@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -19,25 +19,25 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Danh mục đơn vị thẩm định giá
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Danh mục đơn vị thẩm định giá
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder mr-2" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
                 </button>
-               
-                <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success">
+
+                <button type="button" data-target="#Excel_Modal" data-toggle="modal" class="btn btn-light-success mr-2">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </button>
                 <a class="btn btn-success font-weight-bolder" asp-controller="ThamDinhGiaDv" asp-action="Print">
-                    <i class="la la-file-excel-o"></i>Xuất dữ liệu
+                    <i class="la la-printf"></i>In dữ liệu
                 </a>
             }
 
@@ -49,10 +49,10 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">STT</th>
-            @*         <th>Mã GCN</th> *@
+                    <th>Mã GCN</th>
                     <th>Tên đơn vị</th>
-                    <th>Trạng thái</th>
-                 @*    <th>Người đại diện</th>
+                    <th>Theo dõi</th>
+                    @*    <th>Người đại diện</th>
                     <th>Số thẻ</th>
                     <th>Chức danh đk hành nghề</th> *@
                     <th width="15%">Thao tác</th>
@@ -63,11 +63,11 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
-                        @* <td style="text-align: center">@item.Maso</td> *@
+                        <td style="text-align: center">@item.Maso</td>
                         <td class="success">@item.Tendv</td>
-                      @*   <td>@item.Nguoidaidien</td>
-                        <td>@item.Sothe</td>
-                        <td>@item.Chucvu</td> *@
+                        @*   <td>@item.Nguoidaidien</td>
+                    <td>@item.Sothe</td>
+                    <td>@item.Chucvu</td> *@
 
                         <td style="text-align: center">
                             @if (item.Theodoi == "TD")
@@ -78,22 +78,26 @@
                             {
                                 <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Ngưng theo dõi</span>
                             }
-                           
+
                         </td>
 
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                        data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
+
+                                <a asp-controller="ThamDinhGiaDv" asp-action="LichSuDonvi" asp-route-IdDV="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Lịch sử theo dõi">
+                                    <i class="icon-lg la la-clipboard-check text-primary"></i>
+                                </a>
                             }
 
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.Tendv')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.Tendv')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }

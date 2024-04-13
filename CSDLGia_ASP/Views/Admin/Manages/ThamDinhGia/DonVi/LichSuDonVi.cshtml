@@ -1,0 +1,202 @@
+﻿@{
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDvLichSu>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Lịch sử theo dõi của đơn vị: @ViewData["TenDV"]
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" onclick="Create(-1)" data-toggle="modal" class="btn btn-primary font-weight-bolder mr-2" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Số quyết định</th>
+                    <th>Ngày quyết định</th>
+                    <th>Theo dõi</th>
+                    <th width="15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td>@item.SoQD</td>
+                        <td>@Helpers.ConvertDateToStr(item.NgayQD)</td>
+
+                        <td style="text-align: center">
+                            @if (item.Theodoi == "TD")
+                            {
+                                <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Theo dõi</span>
+                            }
+                            @if (item.Theodoi == "KTD")
+                            {
+                                <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Ngưng theo dõi</span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Edit"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                                        data-target="#Create_Modal" onclick="editId('@item.SoQD', '@item.NgayQD',@item.Id)">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                            }
+
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Delete"))
+                            {
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
+                                        data-target="#Delete_Modal" onclick="getId(@item.Id)">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            }
+
+                            <a href="~/UpLoad/File/ThongTinGiayTo/@item.FileQD" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                <i class="icon-lg la la-cloud-download text-warning"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form asp-controller="ThamDinhGiaDv" asp-action="LuuLichSuDonvi" method="post" enctype="multipart/form-data" id="frm_chitiet">
+        <input type="hidden" name="Id" />
+        <input type="hidden" name="IdDV" value="@ViewData["IdDV"]" />
+        <input type="hidden" name="Maso" value="@ViewData["Maso"]" />
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin lịch sử đơn vị thẩm định giá
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định<span class="text-danger">*</span></label>
+                                <input type="text" name="SoQD" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Ngày quyết định<span class="text-danger">*</span></label>
+                                <input type="date" name="NgayQD" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Theo dõi</label>
+                                <select name="Theodoi" class="form-control">
+                                    <option value="TD" selected>Theo dõi</option>
+                                    <option value="KTD">Ngừng theo dõi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>File đính kèm</label>
+                                <input type="file" name="FileQDUpLoad" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa thông tin lịch sử đơn vị thẩm định giá ???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="ThamDinhGiaDv" asp-action="DeleteLichSu" id="frm_delete">
+                <div class="modal-body">                    
+                    <input hidden id="Id" name="Id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Create(Id) {
+        var form = $('#frm_chitiet').find("[name='Id']").val(Id);
+    }
+
+    function editId(SoQD, NgayQD, Id){
+        var form = $('#frm_chitiet');
+        form.find("[name='SoQD']").val(SoQD);
+        form.find("[name='NgayQD']").val(NgayQD);
+        form.find("[name='Id']").val(Id);
+    }
+
+    function getId(Id) {
+        var form = $('#frm_delete').find("[name='Id']").val(Id);
+    }
+</script>

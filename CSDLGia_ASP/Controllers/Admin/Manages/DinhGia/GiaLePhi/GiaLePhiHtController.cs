@@ -20,412 +20,49 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         }
         [Route("GiaLePhi")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "H");
+                    List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB" };
 
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    var model = _db.GiaPhiLePhi.Where(t => list_trangthai.Contains(t.Trangthai));
+
+                    if (Nam != 0)
                     {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                    }
-                    else
-                    {
-                        if (string.IsNullOrEmpty(Madv))
-                        {
-                            Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                        }
+                        model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
 
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
-                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dv.Id,
-                                        MaDiaBan = dv.MaDiaBan,
-                                        MaDv = dv.MaDv,
-                                        ChucNang = dv.ChucNang,
-                                        Level = db.Level,
-                                    }).First();
 
-                    if (getdonvi.Level == "ADMIN")
-                    {
-                        var model = _db.GiaPhiLePhi.Where(t => t.Macqcq == Madv || t.Macqcq_t == Madv || t.Macqcq_h == Madv).ToList();
-                        if (string.IsNullOrEmpty(Nam))
-                        {
-                            model = model.ToList();
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
-                        }
-                        var model_join = from dg in model
-                                         select new GiaPhiLePhi
-                                         {
-                                             Id = dg.Id,
-                                             Macqcq = Madv,
-                                             Madv = dg.Madv,
-                                             Madv_t = dg.Madv_t,
-                                             Madv_h = dg.Madv_h,
-                                             Mahs = dg.Mahs,
-                                             Thoidiem = dg.Thoidiem,
-                                             Soqd = dg.Soqd,
-                                             Madiaban = getdonvi.MaDiaBan,
-                                             Trangthai_ad = dg.Trangthai_ad,
-                                             Trangthai_t = dg.Trangthai_t,
-                                             Trangthai_h = dg.Trangthai_h,
-                                             Thongtin = dg.Thongtin,
-                                             Mota = dg.Mota,
-                                             Level = getdonvi.Level,
-                                         };
+                    var model_join = from dg in model
+                                     join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
+                                     select new GiaPhiLePhi
+                                     {
+                                         Id = dg.Id,
+                                         Madv = dg.Madv,
+                                         Mahs = dg.Mahs,
+                                         Thoidiem = dg.Thoidiem,
+                                         Soqd = dg.Soqd,
+                                         Thongtin = dg.Thongtin,
+                                         Mota = dg.Mota,
+                                         TenDonVi = donvi.TenDv,
+                                         Trangthai = dg.Trangthai
+                                     };
 
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                        }
-                        DateTime currentDate = DateTime.Today;
-                        DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
-                        DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
-                        ViewData["FromDate"] = firstDayOfYear.ToString("yyyy-MM-dd");
-                        ViewData["ToDate"] = lastDayOfYear.ToString("yyyy-MM-dd");
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá lệ phí trước bạ";
-                        ViewData["MenuLv1"] = "menu_giakhac";
-                        ViewData["MenuLv2"] = "menu_dglp";
-                        ViewData["MenuLv3"] = "menu_dglp_xd";
-                        return View("Views/Admin/Manages/DinhGia/GialePhi/HoanThanh/Index.cshtml", model_join);
-                    }
-                    else
-                    {
-                        var model = _db.GiaPhiLePhi.Where(t => t.Madv_t == Madv).ToList();
-                        if (string.IsNullOrEmpty(Nam))
-                        {
-                            model = model.ToList();
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem_t.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
-                        }
-                        var model_join = from dg in model
-                                         select new GiaPhiLePhi
-                                         {
-                                             Id = dg.Id,
-                                             Madv = dg.Madv,
-                                             Macqcq = Madv,
-                                             Macqcq_t = dg.Macqcq_t,
-                                             Macqcq_h = dg.Macqcq_h,
-                                             Mahs = dg.Mahs,
-                                             Thoidiem = dg.Thoidiem_t,
-                                             Soqd = dg.Soqd,
-                                             Madiaban = getdonvi.MaDiaBan,
-                                             Trangthai_ad = dg.Trangthai_ad,
-                                             Trangthai_t = dg.Trangthai_t,
-                                             Trangthai_h = dg.Trangthai_h,
-                                             Thongtin = dg.Thongtin,
-                                             Mota = dg.Mota,
-                                             Level = getdonvi.Level,
-                                         };
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                        }
+                    DateTime currentDate = DateTime.Today;
+                    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+                    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+                    ViewData["FromDate"] = firstDayOfYear.ToString("yyyy-MM-dd");
+                    ViewData["ToDate"] = lastDayOfYear.ToString("yyyy-MM-dd");
+                    ViewData["Nam"] = Nam;
+                    ViewData["Title"] = "Hoàn thành định giá lệ phí trước bạ";
+                    ViewData["MenuLv1"] = "menu_giakhac";
+                    ViewData["MenuLv2"] = "menu_dglp";
+                    ViewData["MenuLv3"] = "menu_dglp_xd";
+                    return View("Views/Admin/Manages/DinhGia/GialePhi/HoanThanh/Index.cshtml", model_join);
 
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                        ViewData["Title"] = "Hoàn thành định giá lệ phí trước bạ";
-                        ViewData["MenuLv1"] = "menu_giakhac";
-                        ViewData["MenuLv2"] = "menu_dglp";
-                        ViewData["MenuLv3"] = "menu_dglp_xd";
-                        return View("Views/Admin/Manages/DinhGia/GialePhi/HoanThanh/Index.cshtml", model_join);
-                    }
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult HoanThanh(string mahs_complete, string Macqcq)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaPhiLePhi.FirstOrDefault(p => p.Mahs == mahs_complete);
-
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dvcq.Id,
-                                        MaDiaBan = dvcq.MaDiaBan,
-                                        MaDv = dvcq.MaDv,
-                                        TenDv = dvcq.TenDv,
-                                        Level = db.Level,
-                                    };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == Macqcq);
-                    model.Macqcq = Macqcq;
-                    model.Trangthai = "HT";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = Macqcq;
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CCB";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = Macqcq;
-                        model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CCB";
-                    }
-                    else
-                    {
-                        model.Madv_h = Macqcq;
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CCB";
-                    }
-                    _db.GiaPhiLePhi.Update(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaLePhi", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult ChuyenHoanThanh(string mahs_complete, string Macqcq, string madv_hientai)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaPhiLePhi.FirstOrDefault(p => p.Mahs == mahs_complete);
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dvcq.Id,
-                                        MaDiaBan = dvcq.MaDiaBan,
-                                        MaDv = dvcq.MaDv,
-                                        TenDv = dvcq.TenDv,
-                                        Level = db.Level,
-                                    };
-                    var dvchuyen = dvcq_join.FirstOrDefault(t => t.MaDv == madv_hientai);
-
-
-                    model.Trangthai_ad = "CCB";
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Madv_ad = madv_hientai;
-                    if (dvchuyen != null && dvchuyen.Level == "T")
-                    {
-                        model.Macqcq_t = Macqcq;
-                        model.Trangthai_t = "CCB";
-                    }
-                    if (dvchuyen != null && dvchuyen.Level == "H")
-                    {
-                        model.Macqcq_h = Macqcq;
-                        model.Trangthai_h = "CCB";
-                    }
-                    _db.GiaPhiLePhi.Update(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaLePhiHt", new { Madv = madv_hientai, Nam = model.Thoidiem.Year });
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Id == id_tralai);
-
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
-                    {
-
-                        model.Macqcq = null;
-                        model.Trangthai = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Trangthai_h = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Trangthai_t = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Trangthai_ad = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-                    if (madv_tralai == model.Madv_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Madv_h = null;
-                        model.Thoidiem_h = DateTime.MinValue;
-                        model.Trangthai_h = null;
-                    }
-                    if (madv_tralai == model.Madv_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Madv_t = null;
-                        model.Thoidiem_t = DateTime.MinValue;
-                        model.Trangthai_t = null;
-                    }
-                    if (madv_tralai == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Madv_ad = null;
-                        model.Thoidiem_ad = DateTime.MinValue;
-                        model.Trangthai_ad = null;
-                    }
-
-                    _db.GiaPhiLePhi.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaLePhiHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult CongBo(string mahs_cb)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == mahs_cb);
-
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai_ad = "CB";
-                    model.Congbo = "DACONGBO";
-                    if (model.Macqcq_h == model.Madv_ad)
-                    {
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CB";
-                    }
-                    if (model.Macqcq_t == model.Madv_ad)
-                    {
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CB";
-                    }
-
-                    _db.GiaPhiLePhi.Update(model);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaLePhiHt");
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        public IActionResult HuyCongBo(string mahs_hcb)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Approve"))
-                {
-                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == mahs_hcb);
-
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai_ad = "HCB";
-                    model.Congbo = "CHUACONGBO";
-                    if (model.Macqcq_h == model.Madv_ad)
-                    {
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "HCB";
-                    }
-                    if (model.Macqcq_t == model.Madv_ad)
-                    {
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "HCB";
-                    }
-
-                    _db.GiaPhiLePhi.Update(model);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index", "GiaLePhiHt");
                 }
                 else
                 {
@@ -440,27 +77,157 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         }
 
         [HttpPost]
-        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden, string MaHsTongHop, string chucdanhky, string hotennguoiky)
+        public IActionResult TraLai(int id_tralai, string Lydo)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
+                {
+                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Id == id_tralai);
+                    model.Trangthai = "BTL";
+                    model.Updated_at = DateTime.Now;
+                    model.Lydo = Lydo;
+
+                    _db.GiaPhiLePhi.Update(model);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Duyet(string mahs_duyet)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
+                {
+                    var model = _db.GiaPhiLePhi.FirstOrDefault(p => p.Mahs == mahs_duyet);
+
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "DD";
+
+                    _db.GiaPhiLePhi.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult HuyDuyet(string mahs_huyduyet)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
+                {
+                    var model = _db.GiaPhiLePhi.FirstOrDefault(p => p.Mahs == mahs_huyduyet);
+
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "CD";
+
+                    _db.GiaPhiLePhi.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CongBo(string mahs_cb)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
+                {
+                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == mahs_cb);
+
+                    model.Trangthai = "CB";
+                    model.Updated_at = DateTime.Now;
+
+                    _db.GiaPhiLePhi.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult HuyCongBo(string mahs_hcb)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
+                {
+                    var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == mahs_hcb);
+
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "DD";
+
+                    _db.GiaPhiLePhi.Update(model);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult TongHop(DateTime ngaytu, DateTime ngayden, string chucdanhky, string hotennguoiky)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
                 {
-                    var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-                    var modeljoin = (from hs in model
-                                     join nhom in _db.GiaPhiLePhiNhom on hs.Manhom equals nhom.Manhom
-                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi { 
-                                        Madv = hs.Madv,
-                                        Mahs = hs.Mahs,
-                                        Soqd = hs.Soqd,
-                                        Mota = hs.Mota,
-                                        Phanloai = nhom.Tennhom
-                                     
-                                     });
-                    if(MaHsTongHop != "all")
-                    {
-                        model = model.Where(t => t.Mahs == MaHsTongHop);
-                    }
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
+                  
                     List<string> list_hoso = model.Select(t => t.Mahs).ToList();
                     List<string> list_donvi = model.Select(t => t.Madv).ToList();
                     var model_ct = _db.GiaPhiLePhiCt.Where(t => list_hoso.Contains(t.Mahs));
@@ -471,7 +238,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     ViewData["Title"] = "Tổng hợp";
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
-                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Tonghop.cshtml", modeljoin);
+                    return View("Views/Admin/Manages/DinhGia/GiaLePhi/HoanThanh/Tonghop.cshtml", model);
 
                 }
                 else
