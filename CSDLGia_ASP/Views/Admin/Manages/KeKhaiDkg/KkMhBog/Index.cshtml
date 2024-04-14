@@ -64,7 +64,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
@@ -91,7 +91,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Mặt hàng</label>
-                    <select class="form-control" id="Manghe" name="Manghe">
+                    <select class="form-control select2basic" id="Manghe" name="Manghe">
                         <option value="all">--Tất cả--</option>
                         @foreach (var item in dmnghekd)
                         {
