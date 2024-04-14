@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -15,15 +16,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
     public class GiaDatDiaBanCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _IDsDiaBan;
 
-        public GiaDatDiaBanCtController(CSDLGiaDBContext db)
+        public GiaDatDiaBanCtController(CSDLGiaDBContext db, IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
         [Route("GiaDatDiaBanCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv, string MaDiaBan, string MaXaPhuong, string Mahs, string Maloaidat, string Mota, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok,
+        public JsonResult Store(string MaDv, string MaDiaBan, string Mahs, string Maloaidat, string Mota, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok,
             Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
         {
             // Tạo 1 bản nghi mới trang thái CXD nếu thêm chi tiết xong quay lại
@@ -49,8 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
                 MaDv = MaDv,
-                Madiaban = MaDiaBan,
-                Maxp = MaXaPhuong,
+                Madiaban = MaDiaBan,               
             };
             _db.GiaDatDiaBanCt.Add(model);
             _db.SaveChanges();
@@ -87,10 +89,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
 
         [Route("GiaDatDiaBanCt/Edit")]
         [HttpPost]
-        public JsonResult Edit(int Id)
+        public JsonResult Edit(int Id,string MaDiaBanGiaDatDiaBan)
         {
-            var model = _db.GiaDatDiaBanCt.FirstOrDefault(p => p.Id == Id);
-            var diaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban);
+            var model = _db.GiaDatDiaBanCt.FirstOrDefault(p => p.Id == Id);                        
+
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatDiaBan).Where(x=>x.Level=="X");
+            
+
+            var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaDatDiaBan).TenDiaBan;
 
             if (model != null)
             {
@@ -98,26 +104,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row'>";
-
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Địa bàn</label>";
-                result += "<label class='form-control' style='color:blue'>" + diaban.TenDiaBan + "</label>";
+                result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group' style='width:100%'>";
                 result += "<label>Xã/phường</label>";
-                result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";
-                result += "<option value='all'>--Chọn xã phường--</option>";
-                var DsXaPhuong = _db.DsXaPhuong.Where(x => x.Madiaban == model.Madiaban);
-                if (!DsXaPhuong.Any())
-                {
-                    DsXaPhuong = _db.DsXaPhuong;
-                }
+                result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";                                
                 foreach (var item in DsXaPhuong)
                 {
-                    result += "<option value='" + item.Maxp + "'"+(model.Maxp == item.Maxp ? "selected":"")+">" + item.Tenxp + "</option>";
+                    result += "<option value='" + item.MaDiaBan + "'"+(model.Madiaban == item.MaDiaBan ? "selected":"")+">" + item.TenDiaBan + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -241,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
         {
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             
-            model.Maxp= MaXaPhuong;
+            model.Madiaban= MaXaPhuong;
             model.Maloaidat = Maloaidat;
             model.HienThi = Hienthi;
             model.Sapxep = SapXep;

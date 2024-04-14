@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Địa bàn áp dụng</label>
+                        <label>Địa bàn áp dụng: <span class="text-danger">*</span></label>
                         <select class="form-control" id="MaDiaBan" name="MaDiaBan">
                             @foreach (var item in dsdiaban)
                             {
@@ -53,14 +53,14 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Số quyết định</label>
+                        <label>Số quyết định: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="Soqd" id="Soqd" required />
                     </div>
                 </div>
 
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Thời điểm*</label>
+                        <label>Thời điểm: <span class="text-danger">*</span></label>
                         <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" required />
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung</label>
+                        <label>Nội dung:<span class="text-danger">*</span></label>
                         <textarea class="form-control" rows="2" cols="50" asp-for="Ttqd"></textarea>
                     </div>
                 </div>

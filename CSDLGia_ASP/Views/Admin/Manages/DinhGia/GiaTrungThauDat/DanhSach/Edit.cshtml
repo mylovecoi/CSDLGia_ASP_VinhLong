@@ -23,26 +23,8 @@
     <script>
         $(document).ready(function () {
             TableManaged4.init();
-        });
-        function GetTowns() {
-            $.ajax({
-                url: '/Ajax/GetTowns',
-                type: 'POST',
-                data: {
-                    MaHuyen: $('#MaHuyen').val(),
-                    KeySelect: 'MaXa'
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == 'success') {
-                        toastr.success('Success');
-                        $('#MaXa').html(data.message);
-                    } else {
-                        toastr.error(data.message, "Lỗi!");
-                    }
-                }
-            })
-        }
+            MoneyDecimalMask();
+        });       
     </script>
 }
 <div class="card card-custom">
@@ -56,98 +38,15 @@
     <!--begin::Form-->
     <form asp-controller="GiaTrungThauDat" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_r_store">
         <div class="card-body">
-            @*    <input id="Madv" name="Madv" value="@ViewData["Madv"]" />*@
+            <input hidden asp-for="Madv" />
             <input hidden asp-for="Mahs" />
-            @* <input id="Madiaban" name="Madiaban" value="@ViewData["Madb"]" />*@
+            <input hidden asp-for="Madiaban" />
             <div class="mb-3 font-weight-bold font-size-lg">
-                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+                <label style="color: blue; text-decoration-line: underline; font-weight: bold">Sửa thông tin hồ sơ</label>
             </div>
-
-            <div class="row">
-                @* <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Địa bàn</label>
-                        <select class="form-control" id="Madv" name="Madv" disabled>
-                            @foreach (var item in DsDonVi)
-                            {
-                                <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "") >@item.TenDv</!option>
-                            }
-                        </select>
-                    </div>
-                </div>      *@
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Địa bàn:</label>
-                        <label class="form-control" style="color:blue; font-weight:bold;">@TenDiaBan</label>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label>Xã/Phường</label>
-                        <label class="form-control" style="color:blue; font-weight:bold;">@TenXaPhuong</label>
-                    </div>
-                </div>
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Tên dự án<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Tenduan" />
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Thời điểm<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số quyết định phương án đấu giá<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Soqdpagia" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số quyết định đấu giá<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Soqddaugia" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số quyết định phê duyệt giá khởi điểm<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Soqdgiakhoidiem" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Số quyết định công nhận kết quả trúng đấu giá<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Soqdkqdaugia" />
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Phân loại<span class="text-danger">*</span></label>
-                        <select class="form-control" asp-for="Phanloai">
-                            @foreach (var item in Helpers.PlDauGiaDat())
-                            {
-                                <!option value="@item" @(item == Model.Phanloai ? "selected" : "")>@item</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
-                    </div>
-                </div>
-            </div>
-            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauDat/ThongTinGiayTo/Index.cshtml")
+           
         </div>
 
 

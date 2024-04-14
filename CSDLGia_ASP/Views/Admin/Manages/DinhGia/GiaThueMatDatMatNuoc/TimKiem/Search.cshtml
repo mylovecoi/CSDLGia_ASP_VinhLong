@@ -24,10 +24,13 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
+     
         $(document).ready(function () {
             TableManaged.init();
             MoneyDecimalMask();
+            $('.select2multi').select2();
         });
 
         function ClickSearch() {
@@ -89,7 +92,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Đơn vị</label>
-                        <select class="form-control" id="Madv_Search" name="Madv_Search">
+                        <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
                             <option value="all">--Tất cả--</option>
                             @foreach (var item in dscqcq)
                             {
@@ -101,7 +104,7 @@
                 <div class="col-xl-8">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Phân loại hồ sơ:</label>
-                        <select class="form-control" id="Manhom_Search" name="Manhom_Search">
+                        <select class="form-control select2basic" id="Manhom_Search" name="Manhom_Search">
                             <option value="all">--Tất cả --</option>
                             @foreach (var tn in DanhMucNhom)
                             {
@@ -125,7 +128,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control" id="Mahs_Search" name="Mahs_Search">
+                        <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
                             <option value="all">--Tất cả---</option>
                             @foreach (var item in DanhSachHoSo)
                             {

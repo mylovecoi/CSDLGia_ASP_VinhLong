@@ -22,5 +22,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string SttHienthi { get; set; }
         public string Style { get; set; }
 
+        public string NhanHieu { get; set; }
+        public string NuocSxLr { get; set; }
+        public string TheTich { get; set; }
+        public string SoNguoiTaiTrong { get; set; }
+
     }
 }

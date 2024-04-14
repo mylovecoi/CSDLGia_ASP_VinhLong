@@ -70,7 +70,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam_Search" name="Nam_Search">
+                    <select class="form-control select2basic" id="Nam_Search" name="Nam_Search">
                         <option value="0">--Tất cả--</option>
                         @{
                             int nam_start = DateTime.Now.Year - 5;
@@ -119,7 +119,6 @@
                             <td style="text-align: left">
                                 @if (!string.IsNullOrEmpty(item.Madv))
                                     @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
-
                             </td>
                             <td style="text-align:center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -140,8 +139,8 @@
                                     }
                                     else if (item.Trangthai == "BTL")
                                     {
-                                        <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
-                                        <p>Lý do:&nbsp;@item.Lydo</p>
+                                        <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span><br />
+                                        <span>Lý do:&nbsp;@item.Lydo</span>
                                     }
                                     else
                                     {
@@ -161,17 +160,19 @@
 
                                 @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Edit"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
                                     {
                                         <a asp-controller="GiaThueDN" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
-
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-mail-forward text-primary"></i>
-                                    </button>
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.tmdmn.ttg", "Delete"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Approve"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                            <i class="icon-lg la la-mail-forward text-primary"></i>
+                                        </button>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Delete"))
                                     {
 
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
@@ -303,7 +304,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
             </form>
         </div>

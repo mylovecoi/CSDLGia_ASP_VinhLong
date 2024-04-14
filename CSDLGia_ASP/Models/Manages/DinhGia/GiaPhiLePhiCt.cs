@@ -33,6 +33,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string MoTa { get; set; }
         [NotMapped]
         public string TenDv { get; set; }
+
+        public string NhanHieu { get; set; }
+        public string NuocSxLr { get; set; }
+        public string TheTich { get; set; }
+        public string SoNguoiTaiTrong { get; set; }
+        public double DonGia { get; set; }
         
 
 

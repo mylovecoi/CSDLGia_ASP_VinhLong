@@ -68,7 +68,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Tháng</label>
-                    <select class="form-control" id="Thang" name="Thang">
+                    <select class="form-control select2basic" id="Thang" name="Thang">
                         <option value="all">--Tất cả--</option>
                         @for (var i = 1; i <= 12; i++)
                         {
@@ -80,7 +80,7 @@
             <div class="col-xl-3">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
+                    <select class="form-control select2basic" id="Nam" name="Nam">
                         <option value="all">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;

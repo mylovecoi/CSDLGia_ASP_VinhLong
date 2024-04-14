@@ -1,13 +1,12 @@
 ﻿@{
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    // var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     // var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
     // var Xas = (IEnumerable<Towns>)ViewData["Xas"];
-    var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
-    var TenDiaBan = ViewData["TenDiaBan"];
-    var TenXa = ViewData["TenXa"];
+    // var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DsXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsXaPhuong"];
+       
 }
 
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
@@ -27,27 +26,7 @@
         $(document).ready(function () {
             TableManaged4.init();
             MoneyDecimalMask();
-        });
-
-        // function GetTowns() {
-        //     $.ajax({
-        //         url: '/Ajax/GetTownsNoAll',
-        //         type: 'POST',
-        //         data: {
-        //             MaHuyen: $('#MaHuyen').val(),
-        //             KeySelect: 'MaXa'
-        //         },
-        //         dataType: 'JSON',
-        //         success: function (data) {
-        //             if (data.status == 'success') {
-        //                 toastr.success('Success');
-        //                 $('#MaXa').html(data.message);
-        //             } else {
-        //                 toastr.error(data.message, "Lỗi!");
-        //             }
-        //         }
-        //     })
-        // }
+        });        
     </script>
 }
 <div class="card card-custom">
@@ -65,64 +44,8 @@
             <input hidden asp-for="Mahs" />
             <input hidden asp-for="SoQDTT" />
             <input hidden asp-for="Soqd" />
-            <input hidden asp-for="Madiaban" />
-            <input hidden asp-for="MaXa" />
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Theo thông tư quyết định</label>
-                        <input type="text" class="form-control" asp-for="NoiDungQDTT" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @* <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Địa bàn</label>
-                        <select class="form-control select2basic" id="Madiaban" name="Madiaban">
-                            @foreach (var item in dsdiaban)
-                            {
-                                <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
-                            }
-                        </select>
-                    </div>
-                </div> *@
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Địa bàn: </label>
-                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenDiaBan </label>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label >Xã/Phường: </label>
-                        <label class="form-control" style="color:blue;font-weight:bold;"> @TenXa </label>
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Ngày áp dụng<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Nội dung chi tiết<span class="text-danger">*</span></label>
-                        <textarea type="text" class="form-control" asp-for="Noidung" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea type="text" class="form-control" asp-for="GhiChu" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
+            <input hidden asp-for="Madiaban" />           
+            
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/ThongTinGiayTo/Index.cshtml")
             @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatDiaBan/Detail.cshtml")
             <div class="card-footer" style="text-align:center">

@@ -29,13 +29,13 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối thiểu</b></label>
-                            <input type="text" id="giattdb_create" name="giattdb_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giattdb_create" name="giattdb_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối đa</b></label>
-                            <input type="text" id="giatddb_create" name="giatddb_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giatddb_create" name="giatddb_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                 </div>
@@ -48,13 +48,13 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối thiểu</b></label>
-                            <input type="text" id="giatttd_create" name="giatttd_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giatttd_create" name="giatttd_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối đa</b></label>
-                            <input type="text" id="giatdtd_create" name="giatdtd_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giatdtd_create" name="giatdtd_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                 </div>
@@ -67,13 +67,13 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối thiểu</b></label>
-                            <input type="text" id="giattmn_create" name="giattmn_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giattmn_create" name="giattmn_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Giá tối đa</b></label>
-                            <input type="text" id="giatdmn_create" name="giatdmn_create" class="form-control money text-right" style="font-weight: bold" />
+                            <input type="text" id="giatdmn_create" name="giatdmn_create" class="form-control money-decimal-mask" />
                         </div>
                     </div>
                 </div>
@@ -142,12 +142,12 @@
             data: {
                 Mahs: $('#mahs_create').val(),
                 Vungkt: $('#vungkt_create').val(),
-                Giattdb: $('#giattdb_create').val(),
-                Giatddb: $('#giatddb_create').val(),
-                Giatttd: $('#giatttd_create').val(),
-                Giatdtd: $('#giatdtd_create').val(),
-                Giattmn: $('#giattmn_create').val(),
-                Giatdmn: $('#giatdmn_create').val(),
+                Giattdb: $('#giattdb_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatddb: $('#giatddb_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatttd: $('#giatttd_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatdtd: $('#giatdtd_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giattmn: $('#giattmn_create').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatdmn: $('#giatdmn_create').val().replace(/\./g, "").replace(/,/g, "."),
                 MaDv: $('#Madv').val(),
             },
             dataType: 'JSON',
@@ -178,7 +178,10 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    // MoneyMask();
+                    $(document).ready(function () {                        
+                        MoneyDecimalMask();
+                    });
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -194,12 +197,12 @@
                 Id: $('#id_edit').val(),
                 // Mahs: $('#mahs_edit').val(),
                 Vungkt: $('#vungkt_edit').val(),
-                Giattdb: $('#giattdb_edit').val(),
-                Giatddb: $('#giatddb_edit').val(),
-                Giatttd: $('#giatttd_edit').val(),
-                Giatdtd: $('#giatdtd_edit').val(),
-                Giattmn: $('#giattmn_edit').val(),
-                Giatdmn: $('#giatdmn_edit').val(),
+                Giattdb: $('#giattdb_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatddb: $('#giatddb_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatttd: $('#giatttd_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatdtd: $('#giatdtd_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giattmn: $('#giattmn_edit').val().replace(/\./g, "").replace(/,/g, "."),
+                Giatdmn: $('#giatdmn_edit').val().replace(/\./g, "").replace(/,/g, "."),
             },
             dataType: 'JSON',
             success: function (data) {

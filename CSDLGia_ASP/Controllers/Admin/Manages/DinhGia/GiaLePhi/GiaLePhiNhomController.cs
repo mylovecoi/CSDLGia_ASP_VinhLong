@@ -85,18 +85,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 if (model != null)
                 {
                     string result = "<div class='modal-body' id='edit_thongtin'>";
-                    result += "<div class='row'>";
+                    result += "<div class='row'>";                   
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Mã hồ sơ:</label>";
-                    result += "<label type='text' class='form-control'>" + model.Manhom + "</label>";
+                    result += "<label>Mã nhóm hồ sơ:</label>";
+                    result += "<input type='text' id='MaNhom_Edit' name='MaNhom_Edit' class='form-control required' value='" + model.Manhom + "'/>";
                     result += "</div>";
                     result += "</div>";
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
                     result += "<label>Phân loại hồ sơ:</label>";
                     result += "<input type='text' id='TenNhom_Edit' name='TenNhom_Edit' class='form-control required' value='" + model.Tennhom + "'/>";
-                    result += "</div>";
                     result += "</div>";
                     result += "</div>";
                     result += "<input hidden id='id_edit' name='id_edit' value='" + model.Id + "'";
@@ -119,13 +118,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         }
 
         [HttpPost("DanhMucLePhiNhom/Update")]
-        public JsonResult Update(int Id, string Tennhom)
+        public JsonResult Update(int Id, string Tennhom, string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 var model = _db.GiaPhiLePhiNhom.FirstOrDefault(t => t.Id == Id);
                 if (model != null)
                 {
+                    var chitiet = _db.GiaPhiLePhiDm.Where(t => t.Manhom == model.Manhom);
+                    if (chitiet.Any())
+                    {
+                        foreach(var item in chitiet) { item.Manhom = Manhom; }
+                        _db.GiaPhiLePhiDm.UpdateRange(chitiet);
+                    }
+                    model.Manhom = Manhom;
                     model.Tennhom = Tennhom;
                     _db.GiaPhiLePhiNhom.Update(model);
                     _db.SaveChanges();
@@ -155,6 +161,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 var model = _db.GiaPhiLePhiNhom.FirstOrDefault(t => t.Id == Id);
                 if (model != null)
                 {
+                    var chitiet = _db.GiaPhiLePhiDm.Where(t => t.Manhom == model.Manhom);
+                    if (chitiet.Any())
+                    {
+                        _db.GiaPhiLePhiDm.RemoveRange(chitiet);
+                    }
                     _db.GiaPhiLePhiNhom.Remove(model);
                     _db.SaveChanges();
 

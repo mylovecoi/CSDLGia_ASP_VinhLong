@@ -15,19 +15,21 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 {
     public class GiarungController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
 
-        public GiarungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public GiarungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("GiaRung")]
@@ -38,76 +40,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                 {
-                    var dsdonvi = (from db in _db.DsDiaBan
-                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                                   select new VMDsDonVi
-                                   {
-                                       Id = dv.Id,
-                                       TenDiaBan = db.TenDiaBan,
-                                       MaDiaBan = db.MaDiaBan,
-                                       MaDv = dv.MaDv,
-                                       TenDv = dv.TenDv
-                                   }).ToList();
 
-                    if (dsdonvi.Count > 0)
+                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung> model = _db.GiaRung.Where(t=>list_madv.Contains(t.Madv));
+
+                    if (Madv != "all")
                     {
-
-                        Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                        {
-                            Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        }
-
-                        IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung> model = _db.GiaRung;
-
-                        if (Madv != "all")
-                        {
-                            model = model.Where(t => t.Madv == Madv);
-                        }
-
-                        if (Nam != 0)
-                        {
-                            model = model.Where(t => t.Thoidiem.Year == Nam);
-                        }
-
-
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
-                        }
-                        var dsDonViTH = (from donvi in _db.DsDonVi
-                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
-                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
-                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
-                                         {
-                                             MaDiaBan = donvi.MaDiaBan,
-                                             MaDv = donvi.MaDv,
-                                             TenDv = donvi.TenDv,
-                                         });
-                        ViewData["DsDonViTh"] = dsDonViTH;
-                        ViewData["Nam"] = Nam;
-                        ViewData["Donvi"] = Madv;
-                        ViewData["Loairung"] = _db.GiaRungDm.ToList();
-                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
-                        ViewData["Title"] = " Quản lý thông tin hồ sơ giá rừng";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgr";
-                        ViewData["MenuLv3"] = "menu_dgr_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaRung/Index.cshtml", model);
+                        model = model.Where(t => t.Madv == Madv);
                     }
-                    else
+
+                    if (Nam != 0)
                     {
-                        ViewData["Title"] = "Thông tin hồ sơ giá rừng";
-                        ViewData["Messages"] = "Thông tin hồ sơ giá rừng.";
-                        ViewData["MenuLv1"] = "menu_dg";
-                        ViewData["MenuLv2"] = "menu_dgr";
-                        ViewData["MenuLv3"] = "menu_dgr_tt";
-                        return View("Views/Admin/Error/ThongBaoLoi.cshtml");
+                        model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
+
+
+                    ViewData["DsDonvi"] = model_donvi;
+
+                    ViewData["Nam"] = Nam;
+                    ViewData["Donvi"] = Madv;
+                    ViewData["Loairung"] = _db.GiaRungDm.ToList();
+                    ViewData["Title"] = " Quản lý thông tin hồ sơ giá rừng";
+                    ViewData["MenuLv1"] = "menu_dg";
+                    ViewData["MenuLv2"] = "menu_dgr";
+                    ViewData["MenuLv3"] = "menu_dgr_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaRung/Index.cshtml", model);
+
 
                 }
                 else
@@ -541,6 +503,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
+        public IActionResult HoanThanh(string mahs_complete, string trangthai_complete)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Approve"))
+                {
+                    var model = _db.GiaRung.FirstOrDefault(p => p.Mahs == mahs_complete);
+
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = trangthai_complete;
+
+                    _db.GiaRung.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Giarung", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
 
         [Route("GiaRung/Printf")]
         [HttpGet]
@@ -650,14 +640,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      Mahs = hoso.Mahs
                                  });
 
-                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Trangthai == "HT");
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
 
                     if (DonGiaTu > 0)
                     {
                         model = model.Where(t => t.GiaRung1 >= DonGiaTu || t.GiaRung3 >= DonGiaTu || t.GiaRung5 >= DonGiaTu || t.GiaChoThue1 >= DonGiaTu
-                                            || t.GiaBoiThuong1 >= DonGiaTu || t.GiaBoiThuong3 >= DonGiaTu || t.GiaBoiThuong5 >= DonGiaTu );
+                                            || t.GiaBoiThuong1 >= DonGiaTu || t.GiaBoiThuong3 >= DonGiaTu || t.GiaBoiThuong5 >= DonGiaTu);
                     }
                     if (DonGiaDen > 0)
                     {
@@ -711,7 +702,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                 {
 
                     var model = (from hosoct in _db.GiaRungCt
@@ -744,13 +735,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
-                    //Lấy đơn giá Rùng 1 nhưng vì nhận vào là str nên convert
                     model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Trangthai == "HT");
                     if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
                     if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
                     if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.GiaRung1 >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.GiaRung1 <= DonGiaDen_Search); }
+                    if (DonGiaTu_Search > 0)
+                    {
+                        model = model.Where(t => t.GiaRung1 >= DonGiaTu_Search || t.GiaRung3 >= DonGiaTu_Search || t.GiaRung5 >= DonGiaTu_Search 
+                                            || t.GiaChoThue1 >= DonGiaTu_Search || t.GiaBoiThuong1 >= DonGiaTu_Search || t.GiaBoiThuong3 >= DonGiaTu_Search 
+                                            || t.GiaBoiThuong5 >= DonGiaTu_Search);
+                    }
+                    if (DonGiaDen_Search > 0)
+                    {
+                        model = model.Where(t => t.GiaRung2 <= DonGiaDen_Search || t.GiaRung4 <= DonGiaDen_Search || t.GiaRung6 <= DonGiaDen_Search 
+                                            || t.GiaChoThue2 <= DonGiaDen_Search || t.GiaBoiThuong2 <= DonGiaDen_Search || t.GiaBoiThuong4 <= DonGiaDen_Search 
+                                            || t.GiaBoiThuong6 <= DonGiaDen_Search);
+                    }
+
                     if (!string.IsNullOrEmpty(MoTa_Search))
                     {
                         model = model.Where(t => t.MoTa.ToLower().Contains(MoTa_Search.ToLower()));

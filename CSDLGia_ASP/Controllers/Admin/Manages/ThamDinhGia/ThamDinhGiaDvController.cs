@@ -13,16 +13,20 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Hosting;
+using static System.Net.WebRequestMethods;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
 {
     public class ThamDinhGiaDvController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _env;
 
-        public ThamDinhGiaDvController(CSDLGiaDBContext db)
+        public ThamDinhGiaDvController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
         {
             _db = db;
+            _env = hostingEnv;
         }
 
         [Route("ThamDinhGia/Donvi")]
@@ -62,7 +66,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 {
                     var request = new ThamDinhGiaDv
                     {
-                        Theodoi  = Theodoi,
+                        Theodoi = Theodoi,
                         Maso = DateTime.Now.ToString("yyMMddssmmHH"),
                         Tendv = Tendv,
                         Diachi = Diachi,
@@ -70,8 +74,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         Chucvu = Chucvu,
                         Sothe = Sothe,
                         Ngaycap = Ngaycap,
-                        Soqddungtd = Soqddungtd,
-                        Ngaydungtd = Ngaydungtd,
+                        //Soqddungtd = Soqddungtd,
+                        //Ngaydungtd = Ngaydungtd,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -142,18 +146,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "<input type='date' id='ngaycap_edit' name='ngaycap_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaycap) + "'/>";
                         result += "</div>";
                         result += "</div>";
-                        result += "<div class='col-xl-6'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Số quyết định dừng theo dõi</label>";
-                        result += "<input type='text' id='soqddungtd_edit' name='soqddungtd_edit' class='form-control' value='" + model.Soqddungtd + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-                        result += "<div class='col-xl-6'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Ngày dừng theo dõi</label>";
-                        result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
-                        result += "</div>";
-                        result += "</div>";
+
+                        //result += "<div class='col-xl-6'>";
+                        //result += "<div class='form-group fv-plugins-icon-container'>";
+                        //result += "<label>Số quyết định dừng theo dõi</label>";
+                        //result += "<input type='text' id='soqddungtd_edit' name='soqddungtd_edit' class='form-control' value='" + model.Soqddungtd + "'/>";
+                        //result += "</div>";
+                        //result += "</div>";
+                        //result += "<div class='col-xl-6'>";
+                        //result += "<div class='form-group fv-plugins-icon-container'>";
+                        //result += "<label>Ngày dừng theo dõi</label>";
+                        //result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
+                        //result += "</div>";
+                        //result += "</div>";
 
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -206,8 +211,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     model.Sothe = Sothe;
                     model.Ngaycap = Ngaycap;
                     model.Theodoi = Theodoi;
-                    model.Soqddungtd = Soqddungtd;
-                    model.Ngaydungtd = Ngaydungtd;
+                    // model.Soqddungtd = Soqddungtd;
+                    // model.Ngaydungtd = Ngaydungtd;
                     model.Updated_at = DateTime.Now;
                     _db.ThamDinhGiaDv.Update(model);
                     _db.SaveChanges();
@@ -274,7 +279,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                             requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
                             Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
                             var list_add = new List<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv>();
-                          
+
                             for (int row = requests.LineStart; row <= requests.LineStop; row++)
                             {
                                 ExcelStyle style = worksheet.Cells[row, 2].Style;
@@ -290,7 +295,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                 {
 
                                     Maso = worksheet.Cells[row, 2].Value != null ?
-                                                 worksheet.Cells[row,2].Value.ToString().Trim() : "",
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                     Tendv = worksheet.Cells[row, 3].Value != null ?
                                                  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                     Nguoidaidien = worksheet.Cells[row, 4].Value != null ?
@@ -301,9 +306,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                                  worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                                     Created_at = DateTime.Now,
                                     Updated_at = DateTime.Now,
-                                  
+
                                 });
-                               
+
                             }
                             _db.ThamDinhGiaDv.AddRange(list_add);
                             _db.SaveChanges();
@@ -328,11 +333,146 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.dv", "Index"))
                 {
-                    var model = _db.ThamDinhGiaDv.Where(t => t.Theodoi == "TD");
+                    var model = _db.ThamDinhGiaDv;
                     ViewData["Title"] = "Thông tin đơn vị thẩm định giá";
                     ViewData["MenuLv1"] = "menu_tdg";
                     ViewData["MenuLv2"] = "menu_dm_dv";
                     return View("Views/Admin/Manages/ThamDinhGia/DonVi/Print.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("ThamDinhGia/LichSuDonvi")]
+        [HttpGet]
+        public IActionResult LichSuDonvi(int IdDV)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.dv", "Index"))
+                {
+                    var model = _db.ThamDinhGiaDvLichSu.Where(x => x.IdDV == IdDV).OrderBy(x => x.NgayQD).ToList();
+                    var donVi = _db.ThamDinhGiaDv.FirstOrDefault(x => x.Id == IdDV);
+                    ViewData["Tendv"] = donVi.Tendv;
+                    ViewData["Maso"] = donVi.Maso;
+                    ViewData["IdDV"] = IdDV;
+                    ViewData["Title"] = "Thông tin lịch sử theo dõi đơn vị thẩm định giá";
+                    ViewData["MenuLv1"] = "menu_tdg";
+                    ViewData["MenuLv2"] = "menu_dm_dv";
+                    return View("Views/Admin/Manages/ThamDinhGia/DonVi/LichSuDonVi.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> LuuLichSuDonvi(ThamDinhGiaDvLichSu requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.dv", "Create"))
+                {
+                    var model = _db.ThamDinhGiaDvLichSu.FirstOrDefault(x => x.Id == requests.Id);
+
+                    //Xử lý file hướng dẫn sử dụng
+                    if (requests.FileQDUpLoad != null && requests.FileQDUpLoad.Length > 0)
+                    {
+                        string wwwRootPath = _env.WebRootPath;
+                        string name = requests.Maso + "_" + Regex.Replace(requests.SoQD.Normalize(NormalizationForm.FormD), @"[^\p{L}\p{N}]", "") + "_" + requests.FileQDUpLoad.FileName;
+                        string path = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo", name);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            requests.FileQD = name;
+                            await requests.FileQDUpLoad.CopyToAsync(FileStream);
+                            FileStream.Close();
+                        }
+                    }
+                    else
+                    {
+                        //Giữ thông tin file cũ
+                        if (model != null)
+                        {
+                            requests.FileQD = model.FileQD;
+                        }
+                    }
+
+                    if (model == null)
+                    {
+                        var thamDinhGiaDvLichSu = new ThamDinhGiaDvLichSu
+                        {
+                            IdDV = requests.IdDV,
+                            Maso = requests.Maso,
+                            SoQD = requests.SoQD,
+                            Theodoi = requests.Theodoi,
+                            NgayQD = requests.NgayQD,
+                            FileQD = requests.FileQD,
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        };
+                        _db.ThamDinhGiaDvLichSu.Add(thamDinhGiaDvLichSu);
+                    }
+                    else
+                    {
+                        model.IdDV = requests.IdDV;
+                        model.Maso = requests.Maso;
+                        model.SoQD = requests.SoQD;
+                        model.NgayQD = requests.NgayQD;
+                        model.Theodoi = requests.Theodoi;
+                        model.FileQD = requests.FileQD;
+                        _db.ThamDinhGiaDvLichSu.Update(model);
+                    }
+                    //Cập nhật trang thái của đơn vị
+                    var donVi = _db.ThamDinhGiaDv.FirstOrDefault(x => x.Id == requests.IdDV);
+                    if (donVi != null)
+                    {
+                        donVi.Theodoi = requests.Theodoi;
+                        _db.ThamDinhGiaDv.Update(donVi);
+                    }
+                    _db.SaveChanges();
+                    return RedirectToAction("LichSuDonvi", "ThamDinhGiaDv", new { IdDV = requests.IdDV });
+
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteLichSu(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.dv", "Index"))
+                {
+                    var model = _db.ThamDinhGiaDvLichSu.FirstOrDefault(x => x.Id == Id);
+                    _db.ThamDinhGiaDvLichSu.Remove(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("LichSuDonvi", "ThamDinhGiaDv", new { IdDV = model.IdDV });
                 }
                 else
                 {

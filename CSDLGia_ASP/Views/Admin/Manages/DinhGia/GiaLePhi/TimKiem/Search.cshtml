@@ -8,11 +8,8 @@
 
 
     string FromDate = ((DateTime)ViewData["beginTime"]).ToString("yyyy-MM-dd");
-    string ToDate = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");
-    double beginPrice = ViewData["beginPrice"] as double? ?? 0;
-    double endPrice = ViewData["endPrice"] as double? ?? 0;
-    double TyLeTu = ViewData["TyLeTu"] as double? ?? 0;
-    double TyLeDen = ViewData["TyLeDen"] as double? ?? 0;
+    string ToDate = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");  
+ 
 
     int record_id = 1;
 }
@@ -32,6 +29,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            MoneyDecimalMask();
         });
 
         function ClickSearch() {
@@ -50,13 +48,12 @@
                     var beginTime = '&beginTime=' + $('#beginTime_Search').val();
                     var endTime = '&endTime=' + $('#endTime_Search').val();
                     var mahs = '&mahs=' + $('#mahs_Search').val();
-                    var beginPrice = '&beginPrice=' + $('#beginPrice_Search').val().replace(",", ".");
-                    var endPrice = '&endPrice=' + $('#endPrice_Search').val().replace(",", ".");
+                    var beginPrice = '&beginPrice=' + $('#beginPrice_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var endPrice = '&endPrice=' + $('#endPrice_Search').val().replace(/\./g, "").replace(/,/g, ".");
                     var Ptcp = '&Ptcp=' + $('#Ptcp_Search').val();
-                    var tyletu = '&TyLeTu=' + $('#TyLeTu_Search').val().replace(",", ".");
-                    var tyleden = '&TyLeDen=' + $('#TyLeDen_Search').val().replace(",", ".");
+                  
 
-                    var url = current_path_url + Madv + tsp + beginTime + endTime + mahs + beginPrice + endPrice + Ptcp + tyletu + tyleden;
+                    var url = current_path_url + Madv + tsp + beginTime + endTime + mahs + beginPrice + endPrice + Ptcp ;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -95,7 +92,7 @@
                 <div class="col-xl-4">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Đơn vị</label>
-                        <select class="form-control" id="Madv_Search" name="Madv_Search">
+                        <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
                             <option value="all">--Tất cả--</option>
                             @foreach (var item in dscqcq)
                             {
@@ -107,7 +104,7 @@
                 <div class="col-xl-8">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold;">Nhóm phí</label>
-                        <select class="form-control" id="tsp_Search" name="tsp_Search">
+                        <select class="form-control select2basic" id="tsp_Search" name="tsp_Search">
                             <option value="all">--Tất cả --</option>
                             @foreach (var tn in DanhMucNhom)
                             {
@@ -131,7 +128,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control" id="mahs_Search" name="mahs_Search">
+                        <select class="form-control select2basic" id="mahs_Search" name="mahs_Search">
                             <option value="all">--Tất cả---</option>
                             @foreach (var item in DanhSachHoSo)
                             {
@@ -141,33 +138,21 @@
                             }
                         </select>
                     </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Phần trăm nhập từ</label>
-                        <input type="number" class="form-control" name="TyLeTu_Search" id="TyLeTu_Search" value="@TyLeTu" />
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Phần trăm nhập đến</label>
-                        <input type="number" class="form-control" name="TyLeDen_Search" id="TyLeDen_Search" value="@TyLeDen" />
-                    </div>
-                </div>
+                </div>        
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn gia nhập từ</label>
-                        <input type="number" class="form-control" name="beginPrice_Search" id="beginPrice_Search" value="@beginPrice" />
+                        <input type="text" class="form-control money-decimal-mask" name="beginPrice_Search" id="beginPrice_Search" value="@ViewData["beginPrice"]" />
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Đơn gia nhập đến</label>
-                        <input type="number" class="form-control" name="endPrice_Search" id="endPrice_Search" value="@endPrice" />
+                        <input type="text" class="form-control money-decimal-mask" name="endPrice_Search" id="endPrice_Search" value="@ViewData["endPrice"]" />
                     </div>
                 </div>
                 <div class="col-xl-6">
-                    <label style="font-weight:bold;">Tên phí, lệ phí</label>
+                    <label style="font-weight:bold;">Kiểu loại</label>
                     <input id="Ptcp_Search" name="Ptcp_Search" class="form-control" value="@ViewData["Ptcp"]" />
                 </div>
             </div>
@@ -189,10 +174,12 @@
                     <th style="text-align:center" width="5%">Đơn vị nhập</th>
                     <th style="text-align:center" width="5%">Số QĐ</th>
                     <th style="text-align:center" width="5%">Thời điểm</th>
-                    <th style="text-align:center" width="20%">Mô tả</th>
-                    <th style="text-align:center">Tên phí, lệ phí</th>
-                    <th style="text-align:center" width="5%">Phần trăm</th>
-                    <th style="text-align:center" width="5%">Mức thu</th>
+                    <th style="text-align:center" width="5%">Nhãn hiệu</th>
+                    <th style="text-align:center" width="5%">Nước sản xuất, lắp ráp</th>
+                    <th style="text-align:center">Kiểu loại</th>
+                    <th style="text-align:center" width="5%">Thể tích</th>
+                    <th style="text-align:center" width="5%">Số người/ Tải trọng</th>
+                    <th style="text-align:center" width="5%">Giá tính LPTB</th>
                     <th style="text-align:center" width="5%">Thao tác</th>
                 </tr>
             </thead>
@@ -202,13 +189,13 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.TenDv</td>
-                        <td style="text-align: center">
-                            @item.SoQD
-                        </td>
+                        <td style="text-align: center"> @item.SoQD </td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.ThoiDiem)</td>
-                        <td style="text-align: left">@item.MoTa</td>
+                        <td style="text-align: center">@item.NhanHieu</td>
+                        <td style="text-align: center">@item.NuocSxLr</td>
                         <td style="text-align: left">@item.Ptcp</td>
-                        <td style="text-align: center">@Helpers.ConvertDbToStr(item.Phantram)</td>
+                        <td style="text-align: center">@item.TheTich</td>
+                        <td style="text-align: center">@item.SoNguoiTaiTrong</td>
                         <td style="text-align: right">@Helpers.ConvertDbToStr(item.Mucthutu)</td>
                         <td>
                             <a asp-controller="GiaLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"

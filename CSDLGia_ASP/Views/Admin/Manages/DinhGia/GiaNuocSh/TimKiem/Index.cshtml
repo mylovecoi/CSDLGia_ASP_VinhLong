@@ -18,6 +18,7 @@
         $(document).ready(function () {
             TableManaged.init();
         });
+        $('.select2multi').select2();
     </script>
 }
 
@@ -59,8 +60,8 @@
             </div>
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
-                    <label><b>Đối tượng sử dụng*</b></label>
-                    <select class="form-control" id="Madoituong" name="Madoituong">
+                    <label><b>Đối tượng sử dụng</b></label>
+                    <select class="form-control select2basic" id="Madoituong" name="Madoituong">
                         <option value="All">--Tất cả các phân loại--</option>
                         @foreach (var dt in doituong)
                         {

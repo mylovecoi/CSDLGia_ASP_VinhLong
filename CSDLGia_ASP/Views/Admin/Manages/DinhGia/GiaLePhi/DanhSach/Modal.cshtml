@@ -25,17 +25,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()" id="btn_edithsct_update">Cập nhật</button>
-                <div id="edithsct_loading_update" style="display:none">
-                    <span class="mr-2 text-muted">Loading...</span>
-                    <span class="spinner spinner-primary mr-10"></span>
-                </div>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+               
             </div>
         </div>
     </div>
 </div>
 
-<script> 
+<script>
     function GetEdit(id_edit) {
         $.ajax({
             url: '/DinhGiaLePhiCt/Edit',
@@ -49,6 +46,7 @@
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -56,35 +54,30 @@
         })
     }
     function Update() {
-        var phantram = $('#Phantram_edit').val().replace(/\,/g, '.');
-        var mucthutu = $('#Mucthutu_edit').val().replace(/\,/g, '.');
-        document.getElementById("btn_edithsct_update").style.display = "none";
-        document.getElementById("edithsct_loading_update").style.display = "block";
+        var mucthutu = $('#Mucthutu_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        loadingOverlay.style.display = 'block';
         $.ajax({
             url: '/DinhGiaLePhiCt/Update',
             type: 'POST',
             data: {
-                Style: $('#Style_edit').val(),
-                Ptcp: $('#Ptcp_edit').val(),
-                Phantram: phantram,
-                Mucthutu: mucthutu,               
+                Style: $('#style_edit').val(),
+                Mucthutu: mucthutu,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    document.getElementById("btn_edithsct_update").style.display = "block";
-                    document.getElementById("edithsct_loading_update").style.display = "none";
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");                 
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {
-                        TableManaged4.init();
+                        TableManagedClass.init();
                     });
                     $('#Edit_Modal').modal("hide");
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                loadingOverlay.style.display = 'none';
             }
         })
-    }  
+    }
 </script>

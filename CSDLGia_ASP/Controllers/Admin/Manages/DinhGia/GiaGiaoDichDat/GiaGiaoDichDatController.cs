@@ -599,13 +599,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá giao dịch đất thực tế trên thị trường (đồng):</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + Helpers.ConvertDbToStr(model.Gia) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị tính</label>";
-                result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control'>";
+                result += "<select id='donvitinh_edit' name='donvitinh_edit' class='form-control select2basic' style='width:100%'>";
                 foreach (var item in danhmucdonvitinh)
                 {
                     result += "<option value ='" + item.Dvt + "'" + ((string)model.Dvt == item.Dvt ? "selected" : "") + " >" + item.Dvt + "</ option >";

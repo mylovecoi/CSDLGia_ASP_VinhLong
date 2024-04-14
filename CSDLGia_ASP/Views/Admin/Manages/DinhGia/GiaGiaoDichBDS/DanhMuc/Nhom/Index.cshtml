@@ -12,9 +12,11 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
         $(document).ready(function () {
             TableManaged.init();
+            $('.select2multi').select2();
         });
     </script>
 }
@@ -64,6 +66,12 @@
                             }
                         </td>
                         <td>
+                            @if (item.Theodoi == "TD")
+                            {
+                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaGiaoDichBDSDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                            }
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
@@ -80,12 +88,7 @@
                                 </button>
                             }
 
-                            @if (item.Theodoi == "TD")
-                            {
-                                <a class="btn btn-sm btn-clean btn-icon" asp-controller="GiaGiaoDichBDSDm" asp-action="Index" asp-route-Manhom="@item.Manhom" title="Xem chi tiết">
-                                    <i class="icon-lg la la-eye text-success"></i>
-                                </a>
-                            }
+                            
                         </td>
                     </tr>
                 }

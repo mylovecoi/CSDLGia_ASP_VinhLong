@@ -40,6 +40,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     ViewData["ngaytu"] = firstDayCurrentYear.ToString("yyyy-MM-dd");
                     ViewData["ngayden"] = lastDayCurrentYear.ToString("yyyy-MM-dd");
 
@@ -48,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
                     ViewData["MenuLv3"] = "menu_giadatdiaban_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && list_trangthai.Contains(t.Trangthai));
                     return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/BaoCao/Index.cshtml");
                 }
                 else
@@ -71,16 +72,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.baocao", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaDatDiaBan.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = (from hoso in _db.GiaDatDiaBan.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
                                  {
                                      TenDonVi = hoso.TenDonVi,
                                      Mahs = hoso.Mahs,
                                      Soqd = hoso.Soqd,
-                                     NoiDungQDTT = hoso.NoiDungQDTT,
-                                     Thoidiem = hoso.Thoidiem,
+                                     Noidung = hoso.Noidung,
+                                     Thoidiem = hoso.Thoidiem,                                     
                                  });
 
                     ViewData["Title"] = "Báo cáo giá đất địa bàn";
@@ -137,13 +138,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Giavt4 = dgct.Giavt4,
                                     Giavt5 = dgct.Giavt5,
                                     Trangthai = dg.Trangthai,
-                                    Madiaban = dg.Madiaban,
+                                    Madiaban = dgct.Madiaban,
                                     TenDiaBan = diaban.TenDiaBan,
-                                    Maloaidat = dgct.Maloaidat
+                                    Maloaidat = dgct.Maloaidat,
+                                    MaDiaBanCapHuyen= _db.DsDiaBan.FirstOrDefault(x=>x.MaDiaBan== dgct.Madiaban).MaDiaBanCq,
 
                                 };
-
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
 
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
                     if (MaloaidatTongHop != "all") { model = model.Where(t => t.Maloaidat == MaloaidatTongHop); }
@@ -153,6 +155,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaDatDiaBan.Where(t => list_mahs.Contains(t.Mahs));
+                    ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x=>string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+                    ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
                     ViewData["DonVis"] = model_donvi;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;

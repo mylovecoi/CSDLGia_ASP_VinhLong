@@ -1,7 +1,7 @@
 ﻿@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
 @{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
+    var DsDiaBanHuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
+    var DsDiaBanXa = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXa"];
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
 }
 @section custom_style {
@@ -14,19 +14,19 @@
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        function GetXaPhuong() {
+        function GetXaPhuong() {            
             $.ajax({
                 url: '/Ajax/GetXaPhuong',
                 type: 'POST',
                 data: {
-                    MaDiaBan: $('#MaDiaBan').val(),
-                    KeySelect: 'Maxp'
+                    MaDiaBanHuyen: $('#MaDiaBanHuyen').val(),
+                    KeySelect: 'Madiaban'
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.status == 'success') {
                         toastr.success('Success');
-                        $('#Maxp').html(data.message);
+                        $('#Madiaban').html(data.message);
                     } else {
                         toastr.error(data.message, "Lỗi!");
                     }
@@ -77,22 +77,22 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
-                        <select class="form-control select2basic" id="Madiaban" name="Madiaban" onchange="GetXaPhuong()>
-                            @foreach (var item in dsdiaban)
+                        <select class="form-control select2basic" id="MaDiaBanHuyen" name="MaDiaBanHuyen" onchange="GetXaPhuong()">
+                            @foreach (var item in DsDiaBanHuyen)
                             {
-                            <!option value="@item.MaDiaBan" @(item.MaDiaBan == (string)ViewData["MaDiaBan"] ? "selected" : "")>&emsp;@item.TenDiaBan</!option>
+                            <option value="@item.MaDiaBan">&emsp;@item.TenDiaBan</option>
                             }
                         </select>
                     </div>
                 </div>
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     <div class="form-group">
                         <label>Xã phường</label><br />
-                        <select class="form-control select2basic" id="Maxp">
-                            <option value="all">--Chọn xã phường--</option>
-                                            @foreach (var item in dsXaPhuong)
+                        <select class="form-control select2basic" id="Madiaban" name="Madiaban">
+                            <option value="all">--Chọn xã/phường--</option>
+                                            @foreach (var item in DsDiaBanXa)
                                             {
-                                <option value="@item.Maxp">@item.Tenxp</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                             }
                         </select>
                     </div>
@@ -154,6 +154,7 @@
                 <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
                 <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Nhận dữ liệu</button>
             </div>
+        </div>
     </form>
     <!--end::Form-->
 </div>

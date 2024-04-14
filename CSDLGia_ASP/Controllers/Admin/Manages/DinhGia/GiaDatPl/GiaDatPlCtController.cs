@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -11,20 +12,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
     public class GiaDatPlCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDiaBanService _IDsDiaBan;
 
-        public GiaDatPlCtController(CSDLGiaDBContext db)
+        public GiaDatPlCtController(CSDLGiaDBContext db, IDsDiaBanService IDsDiaBan)
         {
             _db = db;
+            _IDsDiaBan = IDsDiaBan;
         }
 
         [Route("GiaDatCuTheCt/Store")]
         [HttpPost]
-        public JsonResult Store(string MaDv, string MaDiaBan, string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Store(string MaDv, string MaDiaBan, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = new GiaDatPhanLoaiCt
             {
-                MaDiaBan = MaDiaBan,
-                MaXaPhuong = MaXaPhuong,
+                MaDiaBan = MaDiaBan,                
                 Mahs = Mahs,
                 Khuvuc = Khuvuc,
                 Maloaidat = Maloaidat,
@@ -51,11 +53,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Edit")]
         [HttpPost]
-        public JsonResult Edit(int Id)
+        public JsonResult Edit(int Id,string MaDiaBangiadat)
         {
-            var dsdiaban = _db.DsDiaBan;
-            var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);
-            var dsxaphuong = _db.DsXaPhuong;            
+           
+            var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);            
+            
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBangiadat).Where(x=>x.Level=="X");
+           
+            var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBangiadat).TenDiaBan;
 
             if (model != null)
             {
@@ -65,24 +70,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 result += "<div class='row'>";
 
-                result += "<div class='col-xl-4'>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group'>";
                 result += "<label>Địa bàn áp dụng</label><br />";
-                result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' onchange='GetXaPhuongChiTiet()'>";
-                foreach (var item in dsdiaban)
-                {
-                    result += "<option value='" + item.MaDiaBan + "'"+ (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
-                }
-                result += "</select>";
+                result += "<label style='color:blue' class='form-control'>"+ tendiaban +"</label>";
                 result += "</div>";
                 result += "</div>";
-                result += "<div class='col-xl-4'>";
+                result += "<div class='col-xl-6'>";
                 result += "<div class='form-group'>";
                 result += "<label>Xã phường</label><br />";
-                result += "<select class='form-control select2basic' id='MaXaPhuongChiTiet_edit'>";
-                foreach (var item in dsxaphuong)
+                result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' style='width:100%'>";
+                foreach (var item in DsXaPhuong)
                 {
-                    result += "<option value='" + item.Maxp + "'"+ (model.MaXaPhuong == item.Maxp ? "selected" : "") + ">" + item.Tenxp + "</option>";
+                    result += "<option value='" + item.MaDiaBan + "'" + (model.MaDiaBan == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</option>";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -119,11 +119,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuTheCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id,string MaDiaBan,string MaXaPhuong, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
+        public JsonResult Update(int Id, string MaDiaBan, string Mahs, string Maloaidat, int Vitri, double Banggiadat, double Giacuthe, double Hesodc, string Khuvuc, string Diagioitu, string Diagioiden)
         {
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(t => t.Id == Id);
-            model.MaDiaBan = MaDiaBan;
-            model.MaXaPhuong = MaXaPhuong;
+            model.MaDiaBan = MaDiaBan;            
             model.Khuvuc = Khuvuc;
             model.Maloaidat = Maloaidat;
             model.Vitri = Vitri;
@@ -156,13 +155,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         {
             var model = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs).ToList();
             var dmloaidat = _db.DmLoaiDat.ToList();
+            var dsdiaban = _db.DsDiaBan;
+            int i = 1;
 
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th>#</th>";
-            result += "<th>STT</th>";
+            result += "<th>Xã/phường</th>";
             result += "<th>Tên đường, giới hạn, khu vực</th>";
             result += "<th>Giá đất cụ thể</th>";
             result += "<th>Thao tác</th>";
@@ -171,11 +172,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             result += "<tbody>";
             foreach (var item in model.OrderBy(t => t.STTSapXep))
             {
+                var tendiaban = string.IsNullOrEmpty(item.MaDiaBan) ? "" : dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.MaDiaBan).TenDiaBan;
                 result += "<tr style='text-align:center'>";
-                result += "<td style='text-align:center'>" + item.STTSapXep + "</td>";
-                result += "<td style='text-align:center'>" + item.STTHienThi + "</td>";
-                result += "<td>" + item.Khuvuc + "</td>";
-                result += "<td style='text-align:center; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
+                result += "<td style='text-align:center'>" + (i++) + "</td>";
+                result += "<td style='text-align:left'>" + tendiaban + "</td>";
+                result += "<td style='text-align:left'>" + item.Khuvuc + "</td>";
+                result += "<td style='text-align:right; font-weight: bold'>" + Helpers.ConvertDbToStr(item.Giacuthe) + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

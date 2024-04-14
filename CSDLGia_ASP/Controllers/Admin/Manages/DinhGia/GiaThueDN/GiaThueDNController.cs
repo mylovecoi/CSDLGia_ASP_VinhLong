@@ -439,9 +439,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
                     model.GiaThueMatDatMatNuocCt = modelct.ToList();
-                    ViewData["DsNhom"] = _db.GiaThueMatDatMatNuocNhom;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+                    ViewData["DsNhom"] = _db.GiaThueMatDatMatNuocNhom;                
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model);
                 }
