@@ -17,11 +17,15 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiGia
         public string Dodaitgian { get; set; }
         public double Gialk { get; set; }
         public double Giakk { get; set; }
+        public string Dvt { get; set; }
         public string Ghichu { get; set; }
         public string Thuevat { get; set; }
         public string Trangthai { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        public int STTSapxep { get; set; }
+        public string STTHienthi { get; set; }
+        public string Style { get; set; }
         [NotMapped]
         public int LineStart { get; set; }
         [NotMapped]

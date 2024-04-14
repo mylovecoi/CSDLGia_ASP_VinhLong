@@ -95,41 +95,28 @@
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
-            <th width="2%">STT</th>
-            <th>Tên hàng hóa, dịch vụ</th>
-            <th>Quy cách, <br>chất lượng</th>
-            <th>Đơn vị<br>tính</th>
-            <th width="10%">Mức giá <br>kê khai hiện<br>hành</th>
-            <th width="10%">Mức giá <br>kê khai mới</th>
-            <th>Mức tăng giảm</th>
-            <th>Tỷ lệ % tăng giảm</th>
-            <th>Ghi chú</th>
+            <th width="2%">#</th>
+            <th width="2%">Stt</th>
+            <th>Tên dịch vụ cung ứng</th>
+            <th>Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
+            <th>Thời gian thực hiện<br />mức giá(Từ ngày)</th>
+            <th>Mức giá<br />kê khai</th>
+            <th>Hình thức kinh doanh</th>
         </tr>
     </thead>
     <tbody>
-            @if (Model.KkGiaXmTxdCt.Count() > 0)
+            @if (Model.KkGiaLuHanhCt.Count() > 0)
             {
-                @foreach (var item in Model.KkGiaXmTxdCt)
+                @foreach (var item in Model.KkGiaLuHanhCt)
                 {
                 <tr>
-                    <td style="text-align: center">@(record_id++)</td>
+                    <td style="text-align:center">@item.STTSapxep</td>
+                    <td style="text-align:center">@item.STTHienthi</td>
                     <td>@item.Tendvcu</td>
+                    <td style="text-align:center">@item.Dodaitgian</td>
+                    <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoigian)</td>
+                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giakk)</td>
                     <td>@item.Qccl</td>
-                    <td style="text-align: center">@item.Dvt</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gialk)</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giakk)</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giakk - item.Gialk)</td>
-                    @if (item.Gialk == 0)
-                    {
-                    <td style="text-align: right">100</td>
-                    }
-                    else
-                    {
-                    <td style="text-align: right">
-                         @Helpers.ConvertDbToStr((item.Giakk-item.Gialk) / item.Gialk * 100) %
-                    </td>
-                    }
-                    <td>@item.Ghichu</td>
                 </tr>
                 }
             }

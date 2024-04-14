@@ -161,6 +161,9 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
                                 @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Edit")
@@ -302,6 +305,30 @@
     </div>
 </div>
 
+<!-- Giấy tờ Modal-->
+<div class="modal fade" id="GiayTo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="giayto_data">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
@@ -325,5 +352,25 @@
                 document.getElementById("frm_chuyen").submit();
             }
         }
+    }
+
+    function GetFile(mahs) {
+        $.ajax({
+            url: '/ThongTinGiayTo/GetList',
+            type: 'POST',
+            data: {
+                Mahs: mahs
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#giayto_data').replaceWith(data.message);
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    $('#GiayTo_Modal').modal("show");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
     }
 </script>

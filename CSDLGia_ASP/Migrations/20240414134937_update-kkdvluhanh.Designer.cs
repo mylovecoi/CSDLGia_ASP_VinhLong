@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240414134937_update-kkdvluhanh")]
+    partial class updatekkdvluhanh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -13047,9 +13049,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Dodaitgian")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Dvt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Ghichu")
                         .HasColumnType("nvarchar(max)");
 
@@ -13066,15 +13065,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Qccl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tendvcu")

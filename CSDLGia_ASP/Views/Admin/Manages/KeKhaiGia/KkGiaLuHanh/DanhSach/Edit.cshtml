@@ -20,17 +20,17 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Thông tin kê khai hồ sơ giá<small>&nbsp;xi măng thép xây dựng chỉnh sửa</small><br />
+                Thông tin kê khai hồ sơ giá<small>&nbsp;dịch vụ lữ hành chỉnh sửa</small><br />
                 <small style="color: blue;">Mã số thuế: @ViewData["Madv"]</small>
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="KeKhaiGiaXmTxd" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_xmtxd_update">
+    <form asp-controller="ThongTinKkGiaLuHanh" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_luhanh_update">
         <div class="card-body">
             <input hidden asp-for="Madv" />
-            <input hidden asp-for="Mahs" />
             <input hidden asp-for="Manghe" />
+            <input hidden asp-for="Mahs" />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
@@ -51,7 +51,6 @@
                     <div class="form-group">
                         <label>Số công văn*</label>
                         <input type="text" class="form-control" asp-for="Socv" />
-                        <span id="SocvError" name="SocvError" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -85,22 +84,23 @@
                     </div>
                 </div>
             </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/ThongTinGiayTo/Index.cshtml")
 
-            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Detail.cshtml")
+            @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Detail.cshtml")
 
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="KeKhaiGiaXmTxd" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
+            <a asp-controller="ThongTinKkGiaLuHanh" asp-action="Index" asp-route-Madv="@ViewData["Madv"]" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValidateXmTxd()"><i class="la la-check"></i>Cập nhật</button>
+            <button type="button" class="btn btn-primary mr-2" onclick="ValidateDvlh()"><i class="la la-check"></i>Cập nhật</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
 <script>
-    function ValidateXmTxd() {
+    function ValidateDvlh() {
         if ($('#Socv').val().trim() == '') {
             toastr.error("Số công văn không được để trống!", "Lỗi!!!")
         } else {
@@ -108,7 +108,7 @@
                 toastr.error("Ngày thực hiện mức giá kê khai không được để trống!", "Lỗi!!!")
             } else {
                 toastr.success("Cập nhật hồ sơ kê khai giá!", "Thành công!!!")
-                document.getElementById("frm_xmtxd_update").submit();
+                document.getElementById("frm_luhanh_update").submit();
             }
         }
     }

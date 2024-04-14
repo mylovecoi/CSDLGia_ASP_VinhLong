@@ -1,7 +1,4 @@
 ﻿@model CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia
-@{
-    int record_id = 1;
-}
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -24,30 +21,30 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="2%">#</th>
+                    <th width="2%">Stt</th>
                     <th>Tên dịch vụ cung ứng</th>
-                    <th>Quy cách chất lượng</th>
-                    <th>Đơn vị<br />tính</th>
-                    <th>Mức giá<br />liền kề</th>
+                    <th>Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
+                    <th>Thời gian thực hiện<br />mức giá(Từ ngày)</th>
                     <th>Mức giá<br />kê khai</th>
-                    <th>Ghi chú</th>
+                    <th>Hình thức kinh doanh</th>
                     <th width="9%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model != null)
                 {
-                    @if (Model.KkGiaXmTxdCt != null)
+                    @if (Model.KkGiaLuHanhCt != null)
                     {
-                        @foreach (var item in Model.KkGiaXmTxdCt)
+                        @foreach (var item in Model.KkGiaLuHanhCt)
                         {
                             <tr>
-                                <td style="text-align:center">@(record_id++)</td>
+                                <td style="text-align:center">@item.STTSapxep</td>
+                                <td style="text-align:center">@item.STTHienthi</td>
                                 <td class="active">@item.Tendvcu</td>
-                                <td>@item.Qccl</td>
-                                <td style="text-align:center">@item.Dvt</td>
-                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gialk)</td>
+                                <td style="text-align:center">@item.Dodaitgian</td>
+                                <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoigian)</td>
                                 <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giakk)</td>
-                                <td>@item.Ghichu</td>
+                                <td>@item.Qccl</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                 onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
@@ -67,4 +64,4 @@
         <!--end: Datatable-->
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Modal.cshtml")
