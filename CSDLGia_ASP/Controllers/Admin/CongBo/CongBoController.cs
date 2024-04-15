@@ -514,53 +514,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewBag.bSession = string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ? false : true;
             return View("Views/Admin/Systems/CongBo/TPCNTE6T.cshtml", model);
         }
-
-        [Route("CongBo/PhiLePhi")]
-        public IActionResult PhiLePhi(string Nam, string Madv)
-        {
-            var dsdonvi = (from db in _db.DsDiaBan
-                           join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                           select new VMDsDonVi
-                           {
-                               Id = dv.Id,
-                               TenDiaBan = db.TenDiaBan,
-                               MaDiaBan = dv.MaDiaBan,
-                               TenDv = dv.TenDv,
-                               MaDv = dv.MaDv,
-                           }).ToList();
-
-            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-
-
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi> model = _db.PhiLePhi;
-
-            if (Madv != "all")
-            {
-                model = model.Where(t => t.Madv == Madv);
-            }
-
-            if (string.IsNullOrEmpty(Nam))
-            {
-                Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-            }
-            else
-            {
-                if (Nam != "all")
-                {
-                    model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                }
-            }
-
-
-            ViewData["DsDonVi"] = dsdonvi;
-            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-            ViewData["Nam"] = Nam;
-            ViewData["Madv"] = Madv;
-            ViewBag.bSession = string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ? false : true;
-            return View("Views/Admin/Systems/CongBo/PhiLePhi.cshtml", model);
-
-        }
+ 
     }
 }
 

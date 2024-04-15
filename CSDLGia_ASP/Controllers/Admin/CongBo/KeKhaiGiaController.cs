@@ -1,6 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,93 +19,76 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             _db = db;
         }
 
-        [Route("CongBo/GiaDiVuLuuTru")]
-        [HttpGet]
-        public IActionResult DichVuLuuTru(string Madv, int Nam)
+        [Route("CongBo/DichVuLuuTru")]
+        public IActionResult DichVuLuuTru(string Madv, string Nam, string Macskd, string Trangthai)
         {
-            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia> model = _db.KkGia.Where(t => t.Trangthai == "DACONGBO" && t.Manghe == "DVLT");
+            var Manghe = "DVLT";
+            var dsdonvi = (from cs in _db.KkGiaDvLtCskd
+                           join com in _db.Company on cs.Madv equals com.Madv
+                           join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == Manghe) on com.Mahs equals lvkd.Mahs
+                           select new VMCompany
+                           {
+                               Id = com.Id,
+                               Manghe = lvkd.Manghe,
+                               Madv = com.Madv,
+                               Madiaban = com.Madiaban,
+                               Mahs = com.Mahs,
+                               Tendn = com.Tendn,
+                               Trangthai = com.Trangthai
+                           }).ToList();
 
-            if (Madv != "all")
+            if (string.IsNullOrEmpty(Madv))
             {
-                model = model.Where(t => t.Madv == Madv);
+                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.Madv).First();
             }
 
 
-            if (Nam != 0)
+            if (string.IsNullOrEmpty(Nam))
             {
-                model = model.Where(t => t.Ngaynhap.Year == Nam).ToList();
+                Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
             }
 
-            ViewData["DsDonVi"] = _db.DsDonVi;
-            ViewData["DsDiaBan"] = _db.DsDiaBan;
+            var model_cskd = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);
+
+            if (string.IsNullOrEmpty(Macskd))
+            {
+                Macskd = model_cskd.Select(t => t.Macskd).First();
+            }
+
+            var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+            var cskd = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv).ToList();
+            // var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd).ToList();
+            var dsDonViCQ = _db.DsDonVi;
+            var qModel = _db.KkGia.AsQueryable(); // Không cần ép kiểu, chỉ cần sử dụng truy vấn EntityQueryable
+            qModel = qModel.Where(x => x.Congbo == "DACONGBO");
+            qModel = qModel.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd);
+
+            var model = qModel.ToList();
+            foreach (var item in model)
+            {
+                item.Tencqcq = "";
+                var cqcq = dsDonViCQ.FirstOrDefault(x => x.MaDv == item.Macqcq);
+                if (cqcq != null)
+                    item.Tencqcq = cqcq.TenDv;
+            }
+
+            ViewData["DsDonVi"] = dsdonvi;
+            var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
+            ViewData["check_tt"] = check_tt;
+            ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+            ViewData["Cqcq"] = dsDonViCQ;
+            ViewData["Trangthai"] = Trangthai;
+            ViewData["Cskd"] = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);
             ViewData["Madv"] = Madv;
+            ViewData["Macskd"] = Macskd;
+            ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
             ViewData["Nam"] = Nam;
-            ViewData["Title"] = "Công bố giá dịch vụ lưu trú ";
-            ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dgcb";
-            ViewData["MenuLv3"] = "menu_giathuedncb";
-            ViewBag.bSession = false;
-            return View("Views/Admin/CongBo/DinhGia/GiaDichVuLuuTru.cshtml", model);
+            ViewData["Manghe"] = Manghe;
+            ViewData["Title"] = "Danh sách hồ sơ dịch vụ lưu trú";
+            ViewBag.bSession = string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ? false : true;
+            return View("Views/Admin/Systems/CongBo/DVLT.cshtml", model);
         }
 
-        [Route("CongBo/DichVuLuuTru/Show")]
-        [HttpGet]
-        public IActionResult DichVuLuuTruShow(string Mahs)
-        {
-            var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
-            var hoso_kk = new VMKkGiaShow
-            {
-                Id = model.Id,
-                Mahs = model.Mahs,
-                Madv = model.Madv,
-                Macskd = model.Macskd,
-                Socv = model.Socv,
-                Ngaynhap = model.Ngaynhap,
-                Ngayhieuluc = model.Ngayhieuluc,
-                Ttnguoinop = model.Ttnguoinop,
-                Dtll = model.Dtll,
-                Sohsnhan = model.Sohsnhan,
-                Ngaychuyen = model.Ngaychuyen,
-                Ngaynhan = model.Ngaynhan,
-                Ptnguyennhan = model.Ptnguyennhan,
-                Chinhsachkm = model.Chinhsachkm,
-            };
-
-            var modeldn = _db.Company.FirstOrDefault(t => t.Madv == model.Madv);
-            if (modeldn != null)
-            {
-                hoso_kk.Tendn = modeldn.Tendn;
-                hoso_kk.Diadanh = modeldn.Diadanh;
-                hoso_kk.Diachi = modeldn.Diachi;
-            }
-
-            var modelcskd = _db.KkGiaDvLtCskd.FirstOrDefault(t => t.Macskd == model.Macskd);
-            if (modelcskd != null)
-            {
-                hoso_kk.Tencskd = modelcskd.Tencskd;
-                hoso_kk.Diachikd = modelcskd.Diachikd;
-                hoso_kk.Loaihang = modelcskd.Loaihang;
-            }
-
-            var modeldv = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
-            if (modeldv != null)
-            {
-                hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
-            }
-
-            var modelct = _db.KkGiaDvLtCt.Where(t => t.Mahs == model.Mahs);
-            if (modelct != null)
-            {
-                hoso_kk.KkGiaDvLtCt = modelct.ToList();
-            }
-
-            ViewData["Title"] = "Kê khai giá dịch vụ lưu trú";
-            ViewData["MenuLv1"] = "menu_kknygia";
-            ViewData["MenuLv2"] = "menu_kkgdvlt";
-            ViewData["MenuLv3"] = "menu_giakkdvlt";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaDvLt/Show.cshtml", hoso_kk);
-        }
     }
 }
