@@ -491,7 +491,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.timkiem", "Edit"))
                 {
                     var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
                     var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
@@ -528,7 +528,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.timkiem", "Index"))
                 {
                     var model = _db.GiaSpDvCuThe.FirstOrDefault(t => t.Mahs == Mahs);
 

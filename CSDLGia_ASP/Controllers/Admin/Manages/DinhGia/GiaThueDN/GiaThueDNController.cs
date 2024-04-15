@@ -57,7 +57,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
                     }
 
-
                     ViewData["Nam"] = Nam;
                     ViewData["Madv"] = Madv;
                     ViewData["NhomTn"] = _db.GiaThueMatDatMatNuocNhom.ToList();

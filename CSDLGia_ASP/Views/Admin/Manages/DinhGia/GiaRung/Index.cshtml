@@ -86,7 +86,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-6">
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Đơn vị</label>
                 <select class="form-control select2basic" id="Donvi" name="Donvi">
@@ -106,7 +106,7 @@
                 <th width="10%">Đơn vị</th>
                 <th width="10%">Số QĐ</th>
                 <th width="10%">Thời điểm xác định</th>
-                <th>Mô tả</th>
+                <th style="text-align:center">Mô tả</th>
                 <th width="10%">Trạng thái</th>
                 <th width="20%">Thao tác</th>
             </tr>
@@ -124,7 +124,7 @@
                         </td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td style="text-align: center">@item.Thongtin</td>
+                        <td style="text-align: left">@item.Thongtin</td>
                         <td style="text-align: center">
                             <span style="width: 112px;">
                                 @if (item.Trangthai == "CC")
@@ -158,7 +158,7 @@
                             <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                 <i class="icon-lg la la-file-alt text-dark"></i>
                             </button>
-                            @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
+                            @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                             {
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Edit"))
                                 {
@@ -169,7 +169,7 @@
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Approve"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary"></i>
+                                        <i class="icon-lg la la-mail-forward text-primary"></i>
                                     </button>
                                 }
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Delete"))

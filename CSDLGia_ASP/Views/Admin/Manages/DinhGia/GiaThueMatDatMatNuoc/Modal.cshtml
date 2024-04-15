@@ -21,7 +21,6 @@
 </div>
 
 <script>
-
     function SetEdit(id_edit) {
         $.ajax({
             url: '/GiaThueMatDatMatNuocCt/Edit',
@@ -46,6 +45,7 @@
     }
 
     function SetUpdate() {
+        showLoadingOverlay();
         var dongia = $('#dongia1_edit').val().replace(/\./g, "").replace(/,/g, ".");
         var tyle1 = $('#tyle1_edit').val().replace(/\./g, "").replace(/,/g, ".");
         var tyle2 = $('#tyle2_edit').val().replace(/\./g, "").replace(/,/g, ".");
@@ -75,6 +75,7 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
             }
         })
     }

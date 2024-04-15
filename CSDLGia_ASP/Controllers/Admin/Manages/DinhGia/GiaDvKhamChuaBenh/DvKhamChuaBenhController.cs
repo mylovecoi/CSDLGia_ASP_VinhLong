@@ -650,7 +650,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dg.kcb.ttg", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.timkiem", "Index"))
                 {
                     var model = (from hosoct in _db.GiaDvKcbCt
                                  join hoso in _db.GiaDvKcb on hosoct.Mahs equals hoso.Mahs
