@@ -16,27 +16,27 @@
     <div class="col-xl-4">
         <div class="form-group">
             <label>Số quyết định: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" asp-for="Soqd" required/>
+            <input type="text" class="form-control" asp-for="Soqd" required />
         </div>
     </div>
     <div class="col-xl-4">
         <div class="form-group">
             <label>Ngày áp dụng: <span class="text-danger">*</span></label>
-            <input type="date" class="form-control" asp-for="Thoidiem" required/>
+            <input type="date" class="form-control" asp-for="Thoidiem" required />
         </div>
     </div>
 
     @* <div class="col-xl-4">
-        <div class="form-group">
-            <label>Địa bàn</label>
-            <select class="form-control select2basic" asp-for="Madiaban">
-                @foreach (var item in dsdiaban)
-                {
-                    <!option value="@item.MaDiaBan">@item.TenDiaBan</!option>
+    <div class="form-group">
+    <label>Địa bàn</label>
+    <select class="form-control select2basic" asp-for="Madiaban">
+    @foreach (var item in dsdiaban)
+    {
+    <!option value="@item.MaDiaBan">@item.TenDiaBan</!option>
 
-                }
-            </select>
-        </div>
+    }
+    </select>
+    </div>
     </div> *@
 </div>
 @* <div class="row">
@@ -153,7 +153,7 @@
     </div>
 </div>
 
-<script> 
+<script>
     function SetEdit(id_edit) {
         $.ajax({
             url: '/GiaNuocShCtNew/Edit',
@@ -166,9 +166,7 @@
                 if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
-                    $(document).ready(function () {
-                        MoneyDecimalMask();
-                    });
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -177,13 +175,14 @@
     }
 
     function SetUpdate() {
+        var dongia1 = $('#dongia1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var dongia2 = $('#dongia2_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaNuocShCtNew/Update',
             type: 'POST',
             data: {
-
-                DonGia1: $('#dongia1_edit').val(),
-                DonGia2: $('#dongia2_edit').val(),
+                DonGia1: dongia1,
+                DonGia2: dongia2,
                 TyTrongTieuThu: $('#tytrongtieuthu_edit').val(),
                 SanLuong: $('#sanluong_edit').val(),
                 Style: $('#style_edit').val(),
