@@ -136,6 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     var model = _db.GiaThueMuaNhaXh.FirstOrDefault(t => t.Id == id_tralai);
                     model.Trangthai = "BTL";
                     model.Lydo = Lydo;
+                    model.Updated_at = DateTime.Now;
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
 

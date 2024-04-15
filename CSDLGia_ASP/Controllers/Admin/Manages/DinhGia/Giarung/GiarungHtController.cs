@@ -220,6 +220,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
         [HttpPost]
         public IActionResult HuyCongBo(string mahs_hcb)
         {
