@@ -2,7 +2,9 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<VMDsDonVi>)ViewData["DsDonViTH"];
-    }
+    int sohsnhan = Convert.ToInt32(ViewData["Sohsnhan"]) + 1;
+}
+
 <!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -55,7 +57,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Số hồ sơ nhận*</label>
-                                <input type="text" id="Sohsnhan" name="Sohsnhan" style="text-align: center" class="form-control" />
+                                <input type="number" id="Sohsnhan" name="Sohsnhan" value="@sohsnhan" style="text-align: center" class="form-control" />
                             </div>
                         </div>
                         <div class="col-xl-12">
@@ -187,7 +189,7 @@
         document.getElementById("mahs_cb").value = mahs_cb;
         document.getElementById("trangthai_cb").value = trangthai_cb;
     }
-    
+
     function HuyCongBo(mahs_hcb, trangthai_hcb) {
         document.getElementById("mahs_hcb").value = mahs_hcb;
         document.getElementById("trangthai_hcb").value = trangthai_hcb;

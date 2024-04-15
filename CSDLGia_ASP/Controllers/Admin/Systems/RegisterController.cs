@@ -246,7 +246,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     var BOG = Manghanh.Any(m => m.Contains("BOG")) ? 1 : 0;
                     var KKNYGIA = Manghanh.Any(m => m.Contains("KKNYGIA")) ? 1 : 0;
-                    var XangDau = Manghe.Any(m => m.Contains("XD")) ? 1 : 0;
+                    var XangDau = Manghe.Any(m => m.Contains("XANGDAU")) ? 1 : 0;
                     var XmThepXd = Manghe.Any(m => m.Contains("XMTXD")) ? 1 : 0;
                     var SachGk = Manghe.Any(m => m.Contains("SACH")) ? 1 : 0;
                     var Etanol = Manghe.Any(m => m.Contains("ETANOL")) ? 1 : 0;
@@ -261,7 +261,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
                     var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
                     var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
-                    var Dvlt = Manghe.Any(m => m.Contains("DVLT")) ? 1 : 0;
+                    var Dvlt = Manghe.Any(m => m.Contains("LUUTRU")) ? 1 : 0;
                     var VlXd= Manghe.Any(m => m.Contains("VLXD")) ? 1 : 0;
                     var KhamChuaBenh = Manghe.Any(m => m.Contains("KCBTN")) ? 1 : 0;
                     var DvThuongMai = Manghe.Any(m => m.Contains("DVHDTMCK")) ? 1 : 0;

@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                 if (Helpers.CheckPermission(HttpContext.Session, " csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    var Manghe = "DVLT";
+                    var Manghe = "LUUTRU";
                     var dsdonvi = (from com in _db.Company
                                    join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == Manghe) on com.Mahs equals lvkd.Mahs
                                    select new VMCompany
@@ -566,7 +566,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index"))
                 {
                     var model = (from kkct in _db.KkGiaDvLtCt
-                                 join kk in _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                 join kk in _db.KkGia.Where(t => t.Manghe == "LUUTRU" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                  join com in _db.Company on kkct.Madv equals com.Madv
                                  join cskd in _db.KkGiaDvLtCskd on kkct.Macskd equals cskd.Macskd
                                  select new VMKkGiaCt
@@ -632,7 +632,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakk", "Index"))
                 {
                     var model = (from kkct in _db.KkGiaDvLtCt
-                                 join kk in _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                                 join kk in _db.KkGia.Where(t => t.Manghe == "LUUTRU" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                  join com in _db.Company on kkct.Madv equals com.Madv
                                  join cskd in _db.KkGiaDvLtCskd on kkct.Macskd equals cskd.Macskd
                                  select new VMKkGiaCt
