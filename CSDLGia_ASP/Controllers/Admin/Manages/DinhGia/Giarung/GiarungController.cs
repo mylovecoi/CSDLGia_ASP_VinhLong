@@ -40,14 +40,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                 {
-
                     Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
                     IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaRung> model = _db.GiaRung.Where(t=>list_madv.Contains(t.Madv));
-
                     if (Madv != "all")
                     {
                         model = model.Where(t => t.Madv == Madv);
@@ -58,11 +55,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
 
-
-                    ViewData["DsDonvi"] = model_donvi;
-
                     ViewData["Nam"] = Nam;
                     ViewData["Donvi"] = Madv;
+                    ViewData["DsDonvi"] = model_donvi;
                     ViewData["Loairung"] = _db.GiaRungDm.ToList();
                     ViewData["Title"] = " Quản lý thông tin hồ sơ giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -219,39 +214,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Create"))
-                {
-                    //// 2024.03.15 Gộp Update và phần nhận cho Excel
-                    //if (_db.GiaThueMatDatMatNuoc.Where(x => x.Mahs == request.Mahs).Any())
-                    //{
-                    //    //Xử lý hồ sơ
-                    //    var modelExcel = _db.GiaRung.FirstOrDefault(t => t.Mahs == request.Mahs);
-                    //    modelExcel.Madiaban = request.Madiaban;
-                    //    modelExcel.Soqd = request.Soqd;
-                    //    modelExcel.Thoidiem = request.Thoidiem;
-                    //    modelExcel.Thongtin = request.Thongtin;
-                    //    modelExcel.Ghichu = request.Ghichu;
-                    //    modelExcel.CodeExcel = request.CodeExcel;
-                    //    modelExcel.Updated_at = DateTime.Now;
-                    //    _db.GiaRung.Update(modelExcel);
-
-                    //    // Xử lý phần lịch sử hồ sơ 
-                    //    var lichSu = new TrangThaiHoSo
-                    //    {
-                    //        MaHoSo = request.Mahs,
-                    //        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                    //        ThongTin = "Thay đổi thông tin hồ sơ",
-                    //        ThoiGian = DateTime.Now,
-                    //        TrangThai = "CHT",
-                    //    };
-                    //    _db.TrangThaiHoSo.Add(lichSu);
-                    //    _db.SaveChanges();
-
-                    //    ViewData["MenuLv1"] = "menu_dg";
-                    //    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    //    ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                    //    return RedirectToAction("Index", "GiaRung", new { request.Madv });
-                    //}
-
+                {   
                     var model = new GiaRung
                     {
                         Mahs = request.Mahs,
@@ -264,7 +227,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         Ghichu = request.Ghichu,
                         PhanLoaiHoSo = request.PhanLoaiHoSo,
                         CodeExcel = request.CodeExcel,
-                        Trangthai = "CHT",
+                        Trangthai = "CC",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -287,7 +250,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     _db.SaveChanges();
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
-
 
                     var modelct = _db.GiaRungCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct.Any())
