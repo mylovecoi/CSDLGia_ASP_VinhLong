@@ -1,4 +1,7 @@
-﻿<!--Create Modal-->
+﻿@{
+    int SapXep = Int32.Parse(ViewData["SapXep"].ToString()) + 1;
+}
+<!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -12,16 +15,26 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-2">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>STT sắp xếp</b></label>
-                            <input type="number" id="sttsx_create" name="sttsx_create" value="1" class="form-control" />
+                            <label style="font-weight:bold;color:blue">Sắp xếp: </label>
+                            <input type="number" id="sttsx_create" name="sttsx_create" class="form-control" step="1" value="@SapXep" />
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-2">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>STT hiển thị</b></label>
+                            <label style="font-weight:bold;color:blue">STT hiển thị:</label>
                             <input type="text" id="sttht_create" name="sttht_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                            <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
+                                <option value="Chữ in hoa">Chữ in hoa</option>
+                                <option value="Chữ in đậm">Chữ in đậm</option>
+                                <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -124,6 +137,7 @@
                     Madv: $('#Madv').val(),
                     Sttsapxep: $('#sttsx_create').val(),
                     Stthienthi: $('#sttht_create').val(),
+                    Style: $('#style_create').val(),
                     Tendvcu: $('#tendvcu_create').val(),
                     Dodaitgian: $('#dodaitgian_create').val(),
                     Thoigian: $('#thoigian_create').val(),
@@ -159,6 +173,7 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2multi').select2();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -176,6 +191,7 @@
                 data: {
                     Sttsapxep: $('#sttsx_edit').val(),
                     Stthienthi: $('#sttht_edit').val(),
+                    Style: $('#style_edit').val(),
                     Tendvcu: $('#tendvcu_edit').val(),
                     Dodaitgian: $('#dodaitgian_edit').val(),
                     Thoigian: $('#thoigian_edit').val(),

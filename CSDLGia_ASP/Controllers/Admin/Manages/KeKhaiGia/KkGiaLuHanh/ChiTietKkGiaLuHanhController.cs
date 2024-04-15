@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
@@ -18,15 +19,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
         [Route("KkGiaLuHanhCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Mahs, string Madv, string Stthienthi, int Sttsapxep, string Tendvcu, string Qccl,
+        public JsonResult Store(string Mahs, string Madv, string Stthienthi, string[] Style, int Sttsapxep, string Tendvcu, string Qccl,
             string Dodaitgian, double Giakk, DateTime Thoigian)
         {
+            string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
             var model = new KkGiaLuHanhCt
             {
                 Mahs = Mahs,
                 Madv = Madv,
                 STTHienthi = Stthienthi,
                 STTSapxep = Sttsapxep,
+                Style = str_style,
                 Tendvcu = Tendvcu,
                 Dodaitgian = Dodaitgian,
                 Thoigian = Thoigian,
@@ -51,21 +54,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
             if (model != null)
             {
+                List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
+
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row'>";
 
-                result += "<div class='col-xl-6'>";
+                result += "<div class='col-xl-2'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>STT sắp xếp*</b></label>";
+                result += "<label style='font-weight:bold;color:blue'>Sắp xếp: </label>";
                 result += "<input type='number' id='sttsx_edit' name='sttsx_edit' value='" + model.STTSapxep + "' class='form-control'/>";
                 result += "</div>";
                 result += "</div>";
 
-                result += "<div class='col-xl-6'>";
+                result += "<div class='col-xl-2'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label><b>STT hiển thị*</b></label>";
+                result += "<label style='font-weight:bold;color:blue'>STT Hiển thị: </label>";
                 result += "<input type='text' id='sttht_edit' name='sttht_edit' value='" + model.STTHienthi + "' class='form-control'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-8'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                result += "<option value='Chữ in hoa'" + (list_style.Contains("Chữ in hoa") ? "selected" : "") + ">Chữ in hoa</option >";
+                result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
+                result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
+                result += "</select>";
                 result += "</div>";
                 result += "</div>";
 
@@ -121,12 +137,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
         [Route("KkGiaLuHanhCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Stthienthi, int Sttsapxep, string Tendvcu, string Qccl,
+        public JsonResult Update(int Id, string Stthienthi, int Sttsapxep, string[] Style, string Tendvcu, string Qccl,
             string Dodaitgian, double Giakk, DateTime Thoigian)
         {
             var model = _db.KkGiaLuHanhCt.FirstOrDefault(t => t.Id == Id);
+            string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
             model.STTSapxep = Sttsapxep;
             model.STTHienthi = Stthienthi;
+            model.Style = str_style;
             model.Tendvcu = Tendvcu;
             model.Qccl = Qccl;
             model.Thoigian = Thoigian;
@@ -174,14 +192,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
             foreach (var item in model.OrderBy(t => t.STTSapxep))
             {
+                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                 result += "<tr>";
-                result += "<td style='text-align:center'>" + item.STTSapxep + "</td>";
-                result += "<td style='text-align:center'>" + item.STTHienthi + "</td>";
-                result += "<td class='active'>" + item.Tendvcu + "</td>";
-                result += "<td>" + item.Dodaitgian + "</td>";
-                result += "<td style='text-align:center'>" + Helpers.ConvertDateToStr(item.Thoigian) + "</td>";
-                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giakk) + "</td>";
-                result += "<td>" + item.Qccl + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTSapxep + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + item.STTHienthi + "</td>";
+                result += "<td class='active' style='" + HtmlStyle + "'>" + item.Tendvcu + "</td>";
+                result += "<td style='" + HtmlStyle + "'>" + item.Dodaitgian + "</td>";
+                result += "<td style='text-align:center;" + HtmlStyle + "'>" + Helpers.ConvertDateToStr(item.Thoigian) + "</td>";
+                result += "<td style='text-align:right;" + HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Giakk) + "</td>";
+                result += "<td style='" + HtmlStyle + "'>" + item.Qccl + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";

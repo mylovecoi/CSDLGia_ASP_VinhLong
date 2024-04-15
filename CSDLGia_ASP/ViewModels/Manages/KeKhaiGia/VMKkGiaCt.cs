@@ -19,5 +19,10 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Tendn { get; set; }
         public string Tenks { get; set; }
         public DateTime Ngayhieuluc { get; set; }
+        public DateTime Thoigian { get; set; }
+        public string Dodaitgian { get; set; }
+        public int STTSapxep { get; set; }
+        public string STTHienthi { get; set; }
+        public string Style { get; set; }
     }
 }
