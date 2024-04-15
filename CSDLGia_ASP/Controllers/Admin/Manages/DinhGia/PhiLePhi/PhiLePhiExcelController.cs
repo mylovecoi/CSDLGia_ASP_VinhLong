@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.philephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Create"))
                 {
                     var model_ct_cxd = _db.PhiLePhiCt.Where(t => t.TrangThai == "CXD" && t.Madv == Madv);
                     if (model_ct_cxd.Any())

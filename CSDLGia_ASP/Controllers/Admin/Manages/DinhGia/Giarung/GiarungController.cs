@@ -531,70 +531,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         }
 
 
-
-        [Route("GiaRung/Printf")]
-        [HttpGet]
-        public IActionResult Printf(string Nam, string Madv)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
-                {
-
-                    // Lấy bản ghi có năm và mã đơn vị trùng với năm và mã đơn vị truyền vào ( Năm và Mã đơn vị tuyền từ Index sang )
-
-
-                    var model = _db.GiaRung.Where(t => t.Trangthai == "HT").ToList();
-
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                    {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
-                    }
-                    model = model.Where(t => t.Madv == Madv).ToList();
-
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        model = model.ToList();
-                    }
-                    else
-                    {
-                        if (Nam != "all")
-                        {
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                        }
-                        else
-                        {
-                            model = model.ToList();
-                        }
-                    }
-
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgr";
-                    ViewData["MenuLv3"] = "menu_dgr_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaRung/Print.cshtml", model);
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
         [Route("GiaRung/Search")]
         [HttpGet]
         public IActionResult Search(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string MoTa)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.timkiem", "Index"))
                 {
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
@@ -702,7 +645,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.timkiem", "Index"))
                 {
 
                     var model = (from hosoct in _db.GiaRungCt
