@@ -116,7 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
+                        ViewData["MenuLv2"] = "menu_xetduyet";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -177,7 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
+                        ViewData["MenuLv2"] = "menu_xetduyet";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -240,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDkg
                         ViewData["Nam"] = Nam;
                         ViewData["Title"] = "Thông tin hồ sơ kê khai bình ổn giá";
                         ViewData["MenuLv1"] = "menu_bog";
-                        ViewData["MenuLv2"] = "menu_ttdntdxdbog";
+                        ViewData["MenuLv2"] = "menu_xetduyet";
                         return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/XetDuyet/Index.cshtml", model_join);
                     }
                 }

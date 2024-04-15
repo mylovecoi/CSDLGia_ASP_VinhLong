@@ -3,22 +3,22 @@
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaCt>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#Nam, #Mota').change(function() {
+        $(function () {
+            $('#Nam, #Mota').change(function () {
                 var current_path_url = '/KeKhaiGiaDaXayDung/Search?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var mota = '&Mota=' + $('#Mota').val();
@@ -40,37 +40,37 @@
 </div>
 <hr />
 <div class="card-body">
-        <div class="row">
-            <div class="col-xl-3">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Năm</label>
-                    <select class="form-control" id="Nam" name="Nam">
-                        @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
-                            {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
-                            }
+    <div class="row">
+        <div class="col-xl-3">
+            <div class="form-group fv-plugins-icon-container">
+                <label style="font-weight:bold; color:blue">Năm</label>
+                <select class="form-control select2basic" id="Nam" name="Nam">
+                    @{
+                        var nam_start = DateTime.Now.Year - 5;
+                        var nam_stop = DateTime.Now.Year + 1;
+                        for (var i = nam_start; i <= nam_stop; i++)
+                        {
+                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>Năm @i</!option>
                         }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Mô tả</label>
-                    <input class="form-control" type="text" id="Mota" name="Mota" value="@(!string.IsNullOrEmpty((string)ViewData["Mota"]) ? ViewData["Mota"] : "")"/>
-                </div>
+                    }
+                </select>
             </div>
         </div>
-    
+        <div class="col-xl-6">
+            <div class="form-group fv-plugins-icon-container">
+                <label style="font-weight:bold; color:blue">Mô tả</label>
+                <input class="form-control" type="text" id="Mota" name="Mota" value="@(!string.IsNullOrEmpty((string)ViewData["Mota"]) ? ViewData["Mota"] : "")" />
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-xl-9">
         </div>
         <div class="col-xl-3 ">
             <div class="card-toolbar text-right">
-                <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaThan" asp-action="Printf" 
-                asp-route-Nam="@ViewData["Nam"]" asp-route-Mota="@ViewData["Mota"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaThan" asp-action="Printf"
+                   asp-route-Nam="@ViewData["Nam"]" asp-route-Mota="@ViewData["Mota"]">
                     <i class="la la-print"></i>In trang
                 </a>
             </div>

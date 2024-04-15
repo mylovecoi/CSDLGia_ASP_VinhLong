@@ -8,6 +8,5 @@
         public double GIA_KY_NAY { get; set; }
         public int NGUON_THONG_TIN { get; set; }
         public string GHI_CHU { get; set; }
-
     }
 }

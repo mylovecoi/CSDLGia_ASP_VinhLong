@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
                 ViewData["MenuLv1"] = "menu_bog";
-                ViewData["MenuLv2"] = "menu_phanloai";
+                ViewData["MenuLv2"] = "menu_ttdnbog";
                 return View("Views/Admin/Systems/TtDnTd/Index.cshtml", com_join);
             }
             else
