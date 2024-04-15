@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://keenthemes.com/metronic" />
     <!--begin::Fonts-->
-@*     <link rel="preconnect" href="https://fonts.googleapis.com">
+    @*     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,600,700" />
     @* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" /> *@
@@ -35,7 +35,7 @@
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
     @RenderSection("custom_style", required: false)
-    <style>     
+    <style>
         #loadingOverlay {
             display: none; /* Mặc định ẩn đi */
             position: fixed;
@@ -45,12 +45,11 @@
             height: 100%;
             background-color: rgba(255, 255, 255, 0); /* Màu nền với độ trong suốt */
             z-index: 9999; /* Đảm bảo hiển thị trên cùng */
-            pointer-events: none; /* Không tương tác với sự kiện */
         }
 
-        .spinner{
-            top:50%;
-            left:50%
+        .spinner {
+            top: 50%;
+            left: 50%
         }
 
         .overlay-active {
@@ -71,6 +70,7 @@
         </button>
     </div>
     <!--end::Loading-->
+
     <!--begin::Main-->
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
@@ -538,7 +538,7 @@
             </span>
         </div>
 
-       
+
 
         <!--end::Scrolltop-->
         <!--end::Demo Panel-->
@@ -568,12 +568,11 @@
         <!--end::Page Vendors-->
         <!--begin::Page Scripts(used by this page)-->
         <script src="~/Admin/assets/js/pages/widgets.js"></script>
-        <!--end::Page Scripts-->      
+        <!--end::Page Scripts-->
         <script>
             $(document).ready(function () {
                 setMenuClasses();
-                showLoadingOverlay();
-            });  
+            });
 
             function setMenuClasses() {
                 var menu1 = document.getElementById("MenuLv1").value;
@@ -596,11 +595,8 @@
                 } else if (menu1 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-active";
                 }
-            }         
-
-            window.onload = function () {
-                hideLoadingOverlay(); // Ẩn khối loading khi trang web đã tải xong
-            };
+            }
+          
             function showLoadingOverlay() {
                 $('#loadingOverlay').css('display', 'block'); // Hiển thị LoadingOverlay
                 $('#kt_body').addClass('overlay-active'); // Thêm class để ngăn chặn tương tác
@@ -609,7 +605,7 @@
                 $('#loadingOverlay').css('display', 'none') // Ẩn LoadingOverlay khi xong quá trình xử lý
                 $('#kt_body').removeClass('overlay-active'); // Loại bỏ class để cho phép tương tác lại
             }
-            function MoneyDecimalMask() {              
+            function MoneyDecimalMask() {
                 $('.money-decimal-mask').inputmask({
                     alias: 'numeric',
                     groupSeparator: '.',
@@ -625,8 +621,8 @@
                         return processedValue;
                     }
                 });
-            }              
-            
+            }
+
             function display_ct6() {
                 var x = new Date()
                 var month = x.getMonth() + 1;
@@ -656,6 +652,8 @@
         @RenderSection("custom_script", required: false)
         @await RenderSectionAsync("Scripts", required: false)
     </div>
+
+ 
 </body>
 
 <!--end::Body-->
