@@ -445,62 +445,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
             }
         }
 
-        [Route("GiaThueMuaNhaXh/Printf")]
-        [HttpGet]
-        public IActionResult Printf(string Nam, string Madv)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
-                {
-
-                    // Lấy bản ghi có năm và mã đơn vị trùng với năm và mã đơn vị truyền vào ( Năm và Mã đơn vị tuyền từ Index sang )
-
-
-                    var model = _db.GiaThueMuaNhaXh.Where(t => t.Trangthai == "HT").ToList();
-
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                    {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
-                    }
-                    model = model.Where(t => t.Madv == Madv).ToList();
-
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        model = model.ToList();
-                    }
-                    else
-                    {
-                        if (Nam != "all")
-                        {
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                        }
-                        else
-                        {
-                            model = model.ToList();
-                        }
-                    }
-
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmnxh";
-                    ViewData["MenuLv3"] = "menu_dgtmnxh_tt";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMuaNhaXh/Print.cshtml", model);
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
+    
         [Route("GiaThueMuaNhaXh/Complete")]
         [HttpPost]
         public IActionResult Complete(string mahs_complete, string macqcq_chuyen)
@@ -579,7 +524,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.timkiem", "Index"))
                 {
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
@@ -658,7 +603,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin.timkiem", "Edit"))
                 {
 
                     var model = (from hosoct in _db.GiaThueMuaNhaXhCt
