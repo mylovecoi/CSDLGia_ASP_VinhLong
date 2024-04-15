@@ -249,7 +249,7 @@
 
 <script>
     function GetBangGiaDat() {
-        loadingOverlay.style.display = 'block';
+        showLoadingOverlay();
         $.ajax({
             url: '/Dashboard/GetBangGiaDat',
             type: 'POST',
@@ -264,12 +264,12 @@
                         TableManaged.init();
                     });
                 }
-                loadingOverlay.style.display = 'none';
+                hideLoadingOverlay();
             }
         })
     }
     function GetDichVuLuuTru() {
-        loadingOverlay.style.display = 'block';
+        showLoadingOverlay();
         $.ajax({
             url: '/Dashboard/GetDichVuLuuTru',
             type: 'POST',
@@ -284,12 +284,12 @@
                         TableManaged.init();
                     });
                 }
-                loadingOverlay.style.display = 'none';
+                hideLoadingOverlay();
             }
         })
     }
     function GetXangDau() {
-        loadingOverlay.style.display = 'block';
+        showLoadingOverlay();
         $.ajax({
             url: '/Dashboard/GetXangDau',
             type: 'POST',
@@ -304,12 +304,12 @@
                         TableManaged.init();
                     });
                 }
-                loadingOverlay.style.display = 'none';
+                hideLoadingOverlay();
             }
         })
     }
     function GetDichVuLuHanh() {
-        loadingOverlay.style.display = 'block';
+        showLoadingOverlay();
         $.ajax({
             url: '/Dashboard/GetDichVuLuHanh',
             type: 'POST',
@@ -324,13 +324,13 @@
                         TableManaged.init();
                     });
                 }
-                loadingOverlay.style.display = 'none';
+                hideLoadingOverlay();
             }
         })
     }
 
     function GetHHDVthietyeu() {
-        loadingOverlay.style.display = 'block';
+        showLoadingOverlay();
         $.ajax({
             url: '/Dashboard/GetHHDVthietyeu',
             type: 'POST',

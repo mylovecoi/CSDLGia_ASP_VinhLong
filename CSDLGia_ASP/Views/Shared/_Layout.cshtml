@@ -35,27 +35,28 @@
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
     @RenderSection("custom_style", required: false)
-    <style>
-        /*  .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item .menu-submenu .menu-item > .menu-link .menu-text {
-
-                    font-size: 14px !important;
-
-                }*/
-      /*   .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
-            color: #a2a3b7;
-            font-size: 14px;
-        } */
-
+    <style>     
         #loadingOverlay {
             display: none; /* Mặc định ẩn đi */
             position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 20px;
-            /* background-color: rgba(255, 255, 255, 0.8); /* Màu nền với độ trong suốt */ */
-            border-radius: 10px; /* Điều chỉnh bo tròn theo nhu cầu */
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0); /* Màu nền với độ trong suốt */
             z-index: 9999; /* Đảm bảo hiển thị trên cùng */
+            pointer-events: none; /* Không tương tác với sự kiện */
+        }
+
+        .spinner{
+            top:50%;
+            left:50%
+        }
+
+        .overlay-active {
+            pointer-events: none; /* Ngăn chặn tất cả các sự kiện chuột */
+            overflow: hidden; /* Ngăn chặn cuộn trang */
+            position: fixed;
         }
     </style>
 
@@ -63,9 +64,15 @@
 <!--end::Head-->
 <!--begin::Body-->
 <body onload="display_ct6()" id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <!--begin::Loading-->
+    <div id="loadingOverlay">
+        <button type="button" class="btn btn-primary spinner spinner-white spinner-left mr-20">
+            Loading...
+        </button>
+    </div>
+    <!--end::Loading-->
     <!--begin::Main-->
     <!--begin::Header Mobile-->
-
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <!--begin::Logo-->
         <a asp-controller="Home" asp-action="Index">
@@ -531,13 +538,7 @@
             </span>
         </div>
 
-        <!--begin::Loading-->
-        <div id="loadingOverlay">
-            <button type="button" class="btn btn-primary spinner spinner-white spinner-left mr-20">
-                Loading...
-            </button>
-        </div>
-        <!--end::Loading-->
+       
 
         <!--end::Scrolltop-->
         <!--end::Demo Panel-->
@@ -570,10 +571,16 @@
         <!--end::Page Scripts-->      
         <script>
             $(document).ready(function () {
+                setMenuClasses();
+                showLoadingOverlay();
+            });  
+
+            function setMenuClasses() {
                 var menu1 = document.getElementById("MenuLv1").value;
                 var menu2 = document.getElementById("MenuLv2").value;
                 var menu3 = document.getElementById("MenuLv3").value;
                 var menu4 = document.getElementById("MenuLv4").value;
+
                 if (menu4 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-open menu-item-here";
                     document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
@@ -589,11 +596,19 @@
                 } else if (menu1 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-active";
                 }
-                var menuminimize = document.getElementById("MenuMinimize").value;
-                if (menuminimize == 'True') {
-                    document.getElementById('kt_body').className += " aside-minimize";
-                }
-            });         
+            }         
+
+            window.onload = function () {
+                hideLoadingOverlay(); // Ẩn khối loading khi trang web đã tải xong
+            };
+            function showLoadingOverlay() {
+                $('#loadingOverlay').css('display', 'block'); // Hiển thị LoadingOverlay
+                $('#kt_body').addClass('overlay-active'); // Thêm class để ngăn chặn tương tác
+            }
+            function hideLoadingOverlay() {
+                $('#loadingOverlay').css('display', 'none') // Ẩn LoadingOverlay khi xong quá trình xử lý
+                $('#kt_body').removeClass('overlay-active'); // Loại bỏ class để cho phép tương tác lại
+            }
             function MoneyDecimalMask() {              
                 $('.money-decimal-mask').inputmask({
                     alias: 'numeric',
@@ -610,7 +625,8 @@
                         return processedValue;
                     }
                 });
-            }       
+            }              
+            
             function display_ct6() {
                 var x = new Date()
                 var month = x.getMonth() + 1;
