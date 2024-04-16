@@ -39,8 +39,7 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="DsDonVi" asp-action="Create"
-                   asp-route-MaDiaBan="@ViewData["MaDiaBan"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="DsDonVi" asp-action="Create">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }

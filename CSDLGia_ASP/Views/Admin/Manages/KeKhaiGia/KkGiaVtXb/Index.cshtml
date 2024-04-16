@@ -7,12 +7,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -37,7 +37,7 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
-     
+
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin kê khai giá<small>&nbsp;cước vận tải hành khách bằng xe buýt theo tuyến cố định</small><br />
@@ -45,12 +45,12 @@
             </h3>
         </div>
         <div class="card-toolbar">
-          
+
             <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaVtXb" asp-action="Create"
                asp-route-Madv="@ViewData["Madv"]" asp-route-Manghe="@ViewData["Manghe"]">
                 <i class="la la-plus"></i>Thêm mới
             </a>
-          
+
         </div>
     </div>
     <hr />
@@ -75,17 +75,9 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic " id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
                         }
                     </select>
                 </div>
@@ -186,7 +178,7 @@
                             </td>
                             <td>
                                 <a asp-controller="KkGiaVtXb" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
                                 @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
@@ -256,17 +248,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                    @foreach (var item in dscqcq)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var cqcq = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in cqcq)
-                                            {
-                                                <option value="@item.MaDv">@item.TenDv</option>
-                                            }
-                                        </optgroup>
+                                        <option value="@item.MaDv">@item.TenDv</option>
                                     }
                                 </select>
                             </div>
