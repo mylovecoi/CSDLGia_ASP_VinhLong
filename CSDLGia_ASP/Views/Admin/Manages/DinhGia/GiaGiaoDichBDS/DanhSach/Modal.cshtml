@@ -1,8 +1,10 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
-    var nhomtn = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["NhomTn"];
+    var DanhMucNhom = ViewData["DanhMucNhom"]
+               as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSNhom>
+               ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSNhom>();
+    var dsdonvi = ViewData["DsDonVi"] 
+                   as IEnumerable<DsDonVi>
+                   ?? Enumerable.Empty<DsDonVi>();
 }
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,7 +38,7 @@
                                 <label>Phân loại nhóm bất động sản</label>
                                 <select id="Manhom" name="Manhom" class="form-control select2basic">
                                     <option value="all">--Chọn tất cả--</option>
-                                    @foreach (var nhom in nhomtn)
+                                    @foreach (var nhom in DanhMucNhom)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
                                     }
@@ -58,7 +60,7 @@
 <!--Chuyển Modal-->
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaGiaoDichBDS" asp-action="Complete">
+        <form asp-controller="GiaGiaoDichBDS" asp-action="Complete" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -71,13 +73,18 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvith)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.xetduyet", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaodichbds.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>

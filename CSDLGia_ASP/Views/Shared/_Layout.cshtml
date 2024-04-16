@@ -605,6 +605,15 @@
                 $('#loadingOverlay').css('display', 'none') // Ẩn LoadingOverlay khi xong quá trình xử lý
                 $('#kt_body').removeClass('overlay-active'); // Loại bỏ class để cho phép tương tác lại
             }
+            // // Gọi hàm showLoadingOverlay khi trang bắt đầu tải
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     showLoadingOverlay();
+            // });
+
+            // // Gọi hàm hideLoadingOverlay khi trang đã tải xong
+            // window.onload = function () {
+            //     hideLoadingOverlay();
+            // };
             function MoneyDecimalMask() {
                 $('.money-decimal-mask').inputmask({
                     alias: 'numeric',
@@ -622,7 +631,6 @@
                     }
                 });
             }
-
             function display_ct6() {
                 var x = new Date()
                 var month = x.getMonth() + 1;

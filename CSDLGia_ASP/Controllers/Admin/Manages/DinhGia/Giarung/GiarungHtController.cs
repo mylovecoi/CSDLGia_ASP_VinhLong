@@ -132,7 +132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
-
+        [HttpPost]
         public IActionResult TraLai(int id_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -176,12 +176,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
+        [HttpPost]
         public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Public"))
                 {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == mahs_cb);
 
@@ -221,11 +221,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
+        [HttpPost]
         public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Public"))
                 {
                     var model = _db.GiaRung.FirstOrDefault(t => t.Mahs == mahs_hcb);
 

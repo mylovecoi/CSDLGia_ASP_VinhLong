@@ -1,7 +1,4 @@
-﻿@{
-    int record_id = 1;
-}
-@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaCt>
+﻿@model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaCt>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -18,14 +15,27 @@
         });
 
         $(function () {
-            $('#Nam, #Mota').change(function () {
-                var current_path_url = '/KeKhaiGiaXmTxd/Search?';
+            $('#Nam, #Tendvcu, #Qccl, #GiakkTu, #GiakkDen').change(function () {
+                var current_path_url = '/KeKhaiGiaLuHanh/Search?';
                 var nam = '&Nam=' + $('#Nam').val();
-                var mota = '&Mota=' + $('#Mota').val();
-                var url = current_path_url + nam + mota;
+                var tendvcu = '&Tendvcu=' + $('#Tendvcu').val();
+                var qccl = '&Qccl=' + $('#Qccl').val();
+                var giakktu = '&GiakkTu=' + $('#GiakkTu').val();
+                var giakkden = '&GiakkDen=' + $('#GiakkDen').val();
+                var url = current_path_url + nam + tendvcu + qccl + giakktu + giakkden;
                 window.location.href = url;
             })
         });
+
+        // $(function () {
+        //     $('#Nam, #Tendvcu').change(function () {
+        //         var current_path_url = '/KeKhaiGiaLuHanh/Search?';
+        //         var nam = '&Nam=' + $('#Nam').val();
+        //         var tendvcu = '&Tendvcu=' + $('#Tendvcu').val();
+        //         var url = current_path_url + nam + tendvcu;
+        //         window.location.href = url;
+        //     })
+        // });
     </script>
 }
 
@@ -33,7 +43,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Tìm kiếm thông tin kê khai giá<small>&nbsp;xi măng, thép xây dựng</small>
+                Tìm kiếm thông tin kê khai giá<small>&nbsp;dịch vụ lữ hành</small>
             </h3>
         </div>
     </div>
@@ -56,10 +66,28 @@
                 </select>
             </div>
         </div>
+        <div class="col-xl-9">
+            <div class="form-group fv-plugins-icon-container">
+                <label style="font-weight:bold; color:blue">Tên dịch vụ cung ứng</label>
+                <input class="form-control" type="text" id="Tendvcu" name="Tendvcu" value="@(!string.IsNullOrEmpty((string)ViewData["Tendvcu"]) ? ViewData["Tendvcu"] : "")" />
+            </div>
+        </div>
         <div class="col-xl-6">
             <div class="form-group fv-plugins-icon-container">
-                <label style="font-weight:bold; color:blue">Mô tả</label>
-                <input class="form-control" type="text" id="Mota" name="Mota" value="@(!string.IsNullOrEmpty((string)ViewData["Mota"]) ? ViewData["Mota"] : "")" />
+                <label style="font-weight:bold; color:blue">Hình thức kinh doanh</label>
+                <input class="form-control" type="text" id="Qccl" name="Qccl" value="@(!string.IsNullOrEmpty((string)ViewData["Qccl"]) ? ViewData["Qccl"] : "")" />
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="form-group">
+                <label style="font-weight:bold;">Mức giá kê khai từ</label>
+                <input type="text" class="form-control money-decimal-mask" name="GiakkTu" id="GiakkTu" value="@ViewData["GiakkTu"]" />
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="form-group">
+                <label style="font-weight:bold;">Mức giá kê khai đến</label>
+                <input type="text" class="form-control money-decimal-mask" name="GiakkDen" id="GiakkDen" value="@ViewData["GiakkDen"]" />
             </div>
         </div>
     </div>
@@ -69,8 +97,9 @@
         </div>
         <div class="col-xl-3 ">
             <div class="card-toolbar text-right">
-                <a class="btn btn-primary font-weight-bolder" asp-controller="KkGiaXmTxd" asp-action="Printf"
-                   asp-route-Nam="@ViewData["Nam"]" asp-route-Mota="@ViewData["Mota"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="ThongTinKkGiaLuHanh" asp-action="Printf"
+                   asp-route-Nam="@ViewData["Nam"]" asp-route-Tendvcu="@ViewData["Tendvcu"]" asp-route-Qccl="@ViewData["Qccl"]"
+                   asp-route-GiakkTu="@ViewData["GiakkTu"]" asp-route-GiakkDen="@ViewData["GiakkDen"]">
                     <i class="la la-print"></i>In trang
                 </a>
             </div>
@@ -79,33 +108,33 @@
     <table class="table table-striped table-bordered table-hover" id="sample_3">
         <thead>
             <tr style="text-align:center">
-                <th width="4%">#</th>
+                <th width="2%">#</th>
+                <th width="2%">Stt</th>
                 <th>Doanh nghiệp</th>
-                <th>Ngày thực hiện<br />mức giá</th>
-                <th>Mô tả</th>
-                <th>Quy cách chất lượng</th>
-                <th>Đơn vị tính</th>
+                <th>Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
+                <th>Thời gian thực hiện<br />mức giá</th>
+                <th>Tên dịch vụ cung ứng</th>
+                <th>Hình thức kinh doanh</th>
                 <th>Mức giá kê khai</th>
-                <th>Ghi chú</th>
             </tr>
         </thead>
         <tbody>
             @if (Model != null)
             {
-                @foreach (var item in Model)
+                @foreach (var item in Model.OrderBy(t => t.STTSapxep))
                 {
                     <tr>
-                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align: center">@item.STTSapxep</td>
+                        <td style="text-align: center">@item.STTHienthi</td>
                         <td class="active">
                             <b>Tên DN: </b>@item.Tendn<br />
                             <b>Mã số thuế: </b>@item.Madv
                         </td>
-                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                        <td style="text-align: center">@item.Dodaitgian</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoigian)</td>
                         <td style="text-align: left">@item.Tendvcu</td>
                         <td style="text-align: left">@item.Qccl</td>
-                        <td style="text-align: left">@item.Dvt</td>
                         <td style="text-align: right; font-weight:bold;">@Helpers.ConvertDbToStr(item.Giakk)</td>
-                        <td style="text-align: left">@item.Ghichu</td>
                     </tr>
                 }
             }

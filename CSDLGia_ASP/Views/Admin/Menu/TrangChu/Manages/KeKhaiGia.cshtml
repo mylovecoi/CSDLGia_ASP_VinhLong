@@ -856,7 +856,7 @@
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd.giakk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.giakk", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_ttluhanh">
                         <a asp-controller="ThongTinKkGiaLuHanh" asp-action="Index" class="menu-link">
@@ -868,10 +868,10 @@
                     </li>
                 }
 
-                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd.giakkxd", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.xetduyet", "Index"))
                 {
-                    <li class="menu-item" aria-haspopup="true" id="menu_giakkvlxdxd">
-                        <a asp-controller="KkGiaVlXdXd" asp-action="Index" class="menu-link">
+                    <li class="menu-item" aria-haspopup="true" id="menu_xdluhanh">
+                        <a asp-controller="XetDuyetKkGiaLuHanh" asp-action="Index" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
@@ -880,10 +880,10 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd.giakk", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.timkiem", "Index"))
                 {
-                    <li class="menu-item" aria-haspopup="true" id="menu_giakkvlxdtk">
-                        <a asp-controller="KkGiaVlXd" asp-action="Search" class="menu-link">
+                    <li class="menu-item" aria-haspopup="true" id="menu_tkluhanh">
+                        <a asp-controller="ThongTinKkGiaLuHanh" asp-action="Search" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
@@ -892,17 +892,17 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.vlxd.giakk", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.baocao", "Index"))
                 {
-                    <li class="menu-item" aria-haspopup="true" id="menu_giakkvlxdbc">
-                        <a asp-controller="KkGiaVlXdBc" asp-action="Index" class="menu-link">
+                    <li class="menu-item" aria-haspopup="true" id="menu_bcluhanh">
+                        <a asp-controller="BaoCaoKkGiaLuHanh" asp-action="Index" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
                             <span class="menu-text text-truncate">Báo cáo thống kê</span>
                         </a>
                     </li>
-                } *@
+                }
 
             </ul>
         </div>
