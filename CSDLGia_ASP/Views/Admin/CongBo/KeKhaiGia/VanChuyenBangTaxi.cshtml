@@ -1,0 +1,126 @@
+﻿@{
+    int record_id = 1;
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
+    int Nam = Int32.Parse(ViewData["Nam"].ToString());
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+        $(function () {
+            $('#Madv, #Nam').change(function () {
+                var current_path_url = '/CongBo/VanChuyenBangTaxi?';
+                var madv = '&Madv=' + $('#Madv').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var url = current_path_url + madv + nam;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá vận tải hành khách bằng xe taxi
+                </span>
+            </h3>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control" id="Nam" name="Nam">
+                        <option value="0">--Tất cả--</option>
+                        @{
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
+                        {
+                            <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="4%">STT</th>
+                    <th>Ngày kê khai</th>
+                    <th>Ngày thực hiện<br />mức giá kê khai</th>
+                    <th>Số công văn</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(record_id++)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaynhap)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                            <td class="text-center active">@item.Socv</td>
+                            <td style="text-align: center">
+                                @if (item.Trangthai_ad == "CB")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
+                                    <br />
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="KeKhaiGia" asp-action="DichVuLuHanhShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/ThongTinGiayTo/Show.cshtml")

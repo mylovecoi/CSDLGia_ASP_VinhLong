@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     SoQDTT = request.SoQDTT,
                     Madiaban = MaDiaBanHuyen,
                     Thoidiem = request.Thoidiem,
-                    Trangthai = "CHT",
+                    Trangthai = "CC",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,

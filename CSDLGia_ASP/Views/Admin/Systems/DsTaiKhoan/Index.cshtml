@@ -14,6 +14,8 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
     <script>
         $(document).ready(function () {
             TableManaged.init();
@@ -55,7 +57,7 @@
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
-                        <select class="form-control" id="MaDv" name="MaDv">
+                        <select class="form-control select2basic" id="MaDv" name="MaDv">
                             @foreach (var db in dsdiaban)
                             {
                                 <optgroup label="@db.TenDiaBan">

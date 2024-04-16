@@ -70,8 +70,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                  
+                    var model = (from hoso in _db.GiaDatPhanLoai.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai
                                  {
@@ -129,8 +130,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      MaDiaBan = giact.MaDiaBan,
                                      MaDiaBanCapHuyen= _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == giact.MaDiaBan).MaDiaBanCq,
                                  });
-
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
 
                     if (mahsth != "all") { model = model.Where(t => t.Mahs == mahsth);}
 
