@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,87 +21,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         }
         [Route("GiaTrungThauDatHt")]
         [HttpGet]
-        public IActionResult Index(string Madv, string Nam)
+        public IActionResult Index(int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Index"))
                 {
-                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-                    var dsdiaban = _db.DsDiaBan;
-
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB" };
+                    var model = _db.GiaDauGiaDat.Where(t => list_trangthai.Contains(t.Trangthai));
+                    if (Nam != 0)
                     {
-                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                    }
-                    else
-                    {
-                        if (string.IsNullOrEmpty(Madv))
-                        {
-                            Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                        }
-                    }
-
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
-                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dv.Id,
-                                        MaDiaBan = dv.MaDiaBan,
-                                        MaDv = dv.MaDv,
-                                        ChucNang = dv.ChucNang,
-                                        Level = db.Level,
-                                    }).First();
-
-
-                    var model = _db.GiaDauGiaDat.Where(t => t.Madv_ad == Madv).ToList();
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        model = model.ToList();
-                    }
-                    else
-                    {
-                        if (Nam != "all")
-                        {
-                            model = model.Where(t => t.Thoidiem_ad.Year == int.Parse(Nam)).ToList();
-                        }
-                        else
-                        {
-                            model = model.ToList();
-                        }
+                        model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
                     var model_join = from dg in model
-                                     select new GiaDauGiaDat
+                                     join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
+                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat
                                      {
                                          Id = dg.Id,
-                                         Macqcq = Madv,
                                          Madv = dg.Madv,
-                                         Madv_t = dg.Madv_t,
-                                         Madv_h = dg.Madv_h,
-                                         Mahs = dg.Mahs,
                                          Tenduan = dg.Tenduan,
-                                         Thoidiem = dg.Thoidiem_ad,
-                                         Madiaban = getdonvi.MaDiaBan,
-                                         Trangthai_ad = dg.Trangthai_ad,
-                                         Trangthai_t = dg.Trangthai_t,
-                                         Trangthai_h = dg.Trangthai_h,
-                                         Thongtin = dg.Thongtin,
-                                         Level = getdonvi.Level,
-                                         
-                                     };
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    {
-                        ViewData["DsDonVi"] = dsdonvi;
-                    }
-                    else
-                    {
-                        ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                    }
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["Madv"] = Madv;
-                    ViewData["Nam"] = Nam;
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                                         Mahs = dg.Mahs,
+                                         Thoidiem = dg.Thoidiem,
+                                         Soqddaugia = dg.Soqddaugia,
+                                         TenDonVi = donvi.TenDv,
+                                         Trangthai = dg.Trangthai
+                                     };                                      
+                    ViewData["Nam"] = Nam;                   
                     ViewData["Title"] = "Hoàn thành định giá trung thầu quyền sd đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgd";
@@ -119,23 +65,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             }
         }
 
-        public IActionResult HoanThanh(string mahs_complete, string Macqcq)
+        [HttpPost]
+        public IActionResult Duyet(string mahs_duyet)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Approve"))
                 {
-                    var model = _db.GiaDauGiaDat.FirstOrDefault(p => p.Mahs == mahs_complete);
 
-                    model.Macqcq = Macqcq;
-                    model.Trangthai = "HT";
-                    model.Madv_ad = Macqcq;
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai_ad = "CCB";
+                    var model = _db.GiaDauGiaDat.FirstOrDefault(p => p.Mahs == mahs_duyet);
+
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "DD";
 
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaTrungThauDat", new { Madb = model.Madiaban, Nam = model.Thoidiem.Year });
+
+                    return RedirectToAction("Index", "GiaTrungThauDatHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -148,8 +94,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+        [HttpPost]
+        public IActionResult HuyDuyet(string mahs_huyduyet)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Approve"))
+                {
+                    var model = _db.GiaDauGiaDat.FirstOrDefault(p => p.Mahs == mahs_huyduyet);
 
-        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "CD";
+
+                    _db.GiaDauGiaDat.Update(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaTrungThauDatHt", new { Nam = model.Thoidiem.Year });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+        [HttpPost]
+        public IActionResult TraLai(int id_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -157,25 +130,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Id == id_tralai);
 
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-
-                    model.Macqcq = null;
                     model.Trangthai = "BTL";
                     model.Lydo = Lydo;
-
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-
-                    model.Macqcq_ad = null;
-                    model.Madv_ad = null;
-                    model.Thoidiem_ad = DateTime.MinValue;
-                    model.Trangthai_ad = null;
-
-
+                    model.Updated_at = DateTime.Now;
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaTrungThauDatHt", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = model.Mahs,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "BTL",
+
+                    };
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
+                    return RedirectToAction("Index", "GiaTrungThauDatHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -188,32 +164,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
+        [HttpPost]
         public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Public"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == mahs_cb);
 
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai_ad = "CB";
-                    model.Congbo = "DACONGBO";
-                    if (model.Macqcq_h == model.Madv_ad)
-                    {
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CB";
-                    }
-                    if (model.Macqcq_t == model.Madv_ad)
-                    {
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CB";
-                    }
+                    model.Updated_at = DateTime.Now;
+                    model.Trangthai = "CB";
+
 
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
-                    return RedirectToAction("Index", "GiaTrungThauDatHt");
+
+                    // Xử lý phần lịch sử hồ sơ 
+
+                    var lichSuHoSo = new TrangThaiHoSo
+                    {
+                        MaHoSo = mahs_cb,
+                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                        ThoiGian = DateTime.Now,
+                        TrangThai = "CB",
+
+                    };
+
+                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    _db.SaveChanges();
+                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+                    return RedirectToAction("Index", "GiaTrungThauDatHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -226,32 +207,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
+        [HttpPost]
         public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.trungthaudat.xetduyet", "Public"))
                 {
                     var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == mahs_hcb);
 
-                    model.Thoidiem_ad = DateTime.Now;
-                    model.Trangthai_ad = "HCB";
-                    model.Congbo = "CHUACONGBO";
-                    if (model.Macqcq_h == model.Madv_ad)
-                    {
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "HCB";
-                    }
-                    if (model.Macqcq_t == model.Madv_ad)
-                    {
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "HCB";
-                    }
+                    model.Trangthai = "DD";
+                    model.Updated_at = DateTime.Now;
 
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
-
                     return RedirectToAction("Index", "GiaTrungThauDatHt");
                 }
                 else
@@ -265,6 +234,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
 
       
     }

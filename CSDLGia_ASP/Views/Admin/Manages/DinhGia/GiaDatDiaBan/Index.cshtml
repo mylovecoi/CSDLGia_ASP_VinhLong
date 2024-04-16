@@ -1,17 +1,9 @@
 ﻿@{
-    int record_id = 1;
-    var dsdiabanhuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
+    int record_id = 1;    
     var soqd = (IEnumerable<GiaDatDiaBanTt>)ViewData["Soqd"];
     var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
-    int Nam = Int32.Parse(ViewData["Nam"].ToString());
-    // var MaDiaBan = ViewData["MaDiaBan"];
-    //test
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
-    // var Huyens = (IEnumerable<Districts>)ViewData["Huyens"];
-    // var Xas = (IEnumerable<Towns>)ViewData["Xas"];
+    int Nam = Int32.Parse(ViewData["Nam"].ToString());    
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];   
     var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var DsXaPhuong = (IEnumerable<DsXaPhuong>)ViewData["DsXaPhuong"];
 }
@@ -106,9 +98,10 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
+                    <th>Đơn vị</th>
+                    <th>Địa bàn</th>
                     <th>Thông tư, quyết định</th>
-                    <th>Thời điểm</th>                    
-                    <th>Địa bàn áp dụng</th>
+                    <th>Thời điểm</th>    
                     <th>Mô tả</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -121,12 +114,10 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center" width="10%">@item.Soqd</td>
-                            <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>                            
-                            <td style="text-align: left">
-                                @if (!string.IsNullOrEmpty(item.Madiaban))
-                                    @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
-                            </td>
+                            <td style="text-align: left">@(string.IsNullOrEmpty(item.Madv)?"":dsdonvi.FirstOrDefault(x=>x.MaDv==item.Madv).TenDv)</td>
+                            <td style="text-align: left">@(string.IsNullOrEmpty(item.Madiaban)?"":DsDiaBan.FirstOrDefault(x=>x.MaDiaBan==item.Madiaban).TenDiaBan)</td>
+                            <td style="text-align: center">@item.Soqd</td>
+                            <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td> 
                             <td style="text-align: left">@item.Noidung</td>
                             <td style="text-align: center">
                                 <span style="width: 112px;">
@@ -240,7 +231,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Nội dung quyết định</label>
-                            <select name="soqd" class="form-control select2basic">
+                            <select name="soqd" class="form-control select2basic" style="width:100%">
                                 @foreach (var qd in soqd)
                                 {
                                     <!option value="@qd.Soqd">@qd.Mota</!option>

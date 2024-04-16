@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model = _db.GiaDatDiaBan.Where(t => list_trangthai.Contains(t.Trangthai));
                     if (Nam != 0)
                     {
-                        model = _db.GiaDatDiaBan.Where(t => t.Thoidiem.Year == Nam);
+                        model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
                     var model_join = from dg in model
                                      join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
@@ -121,63 +121,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
+
+
+        [HttpPost]
+        public IActionResult TraLai(int id_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.xetduyet", "Approve"))
                 {
                     var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Id == id_tralai);
 
-                    //Gán trạng thái của đơn vị chuyển hồ sơ
-                    if (madv_tralai == model.Macqcq)
-                    {
-
-                        model.Macqcq = null;
-                        model.Trangthai = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Trangthai_h = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Trangthai_t = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    if (madv_tralai == model.Macqcq_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Trangthai_ad = "BTL";
-                        model.Lydo = Lydo;
-                    }
-                    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-                    if (madv_tralai == model.Madv_h)
-                    {
-                        model.Macqcq_h = null;
-                        model.Madv_h = null;
-                        model.Thoidiem_h = DateTime.MinValue;
-                        model.Trangthai_h = null;
-                    }
-                    if (madv_tralai == model.Madv_t)
-                    {
-                        model.Macqcq_t = null;
-                        model.Madv_t = null;
-                        model.Thoidiem_t = DateTime.MinValue;
-                        model.Trangthai_t = null;
-                    }
-                    if (madv_tralai == model.Madv_ad)
-                    {
-                        model.Macqcq_ad = null;
-                        model.Madv_ad = null;
-                        model.Thoidiem_ad = DateTime.MinValue;
-                        model.Trangthai_ad = null;
-                    }                   
+                    model.Trangthai = "BTL";
+                    model.Lydo = Lydo;
+                    model.Updated_at = DateTime.Now;                   
 
                     _db.GiaDatDiaBan.Update(model);
                     _db.SaveChanges();
@@ -209,88 +166,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }
-        //public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-        //        {
-        //            var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Id == id_tralai);
-
-        //            //Gán trạng thái của đơn vị chuyển hồ sơ
-        //            if (madv_tralai == model.Macqcq)
-        //            {
-        //                model.Macqcq = null;
-        //                model.Trangthai = "HHT";
-        //                model.Lydo = Lydo;
-        //            }
-
-        //            if (madv_tralai == model.Macqcq_h)
-        //            {
-        //                model.Macqcq_h = null;
-        //                model.Trangthai_h = "HHT";
-        //                model.Lydo = Lydo;
-        //            }
-
-        //            if (madv_tralai == model.Macqcq_t)
-        //            {
-        //                model.Macqcq_t = null;
-        //                model.Trangthai_t = "HHT";
-        //                model.Lydo = Lydo;
-        //            }
-
-        //            if (madv_tralai == model.Macqcq_ad)
-        //            {
-        //                model.Macqcq_ad = null;
-        //                model.Trangthai_ad = "HHT";
-        //                model.Lydo = Lydo;
-        //            }
-
-
-        //            //Gán trạng thái của đơn vị tiếp nhận hồ sơ
-
-
-        //            if (madv_tralai == model.Madv_h)
-        //            {
-        //                model.Macqcq_h = null;
-        //                model.Madv_h = null;
-        //                model.Thoidiem_h = DateTime.MinValue;
-        //                model.Trangthai_h = null;
-        //            }
-
-        //            if (madv_tralai == model.Madv_t)
-        //            {
-        //                model.Macqcq_t = null;
-        //                model.Madv_t = null;
-        //                model.Thoidiem_t = DateTime.MinValue;
-        //                model.Trangthai_t = null;
-        //            }
-
-        //            if (madv_tralai == model.Madv_ad)
-        //            {
-        //                model.Macqcq_ad = null;
-        //                model.Madv_ad = null;
-        //                model.Thoidiem_ad = DateTime.MinValue;
-        //                model.Trangthai_ad = null;
-        //            }
-
-        //            _db.GiaDatDiaBan.Update(model);
-        //            _db.SaveChanges();
-
-        //            return RedirectToAction("Index", "GiaDatDiaBanXd", new { Madv = madv_tralai, Nam = model.Thoidiem.Year });
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
+        }        
         public IActionResult CongBo(string mahs_cb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -332,34 +208,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }
-        //public IActionResult CongBo(string mahs_cb)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-        //        {
-        //            var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_cb);
-
-        //            model.Trangthai_ad = "CB";
-        //            model.Congbo = "DACONGBO";
-
-        //            _db.GiaDatDiaBan.Update(model);
-        //            _db.SaveChanges();
-
-        //            return RedirectToAction("Index", "GiaDatDiaBanXd");
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
+        }        
         public IActionResult HuyCongBo(string mahs_hcb)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -386,111 +235,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-        //public IActionResult HuyCongBo(string mahs_hcb)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
-        //        {
-        //            var model = _db.GiaDatDiaBan.FirstOrDefault(t => t.Mahs == mahs_hcb);
-
-        //            model.Trangthai_ad = "HCB";
-        //            model.Congbo = "CHUACONGBO";
-
-        //            _db.GiaDatDiaBan.Update(model);
-        //            _db.SaveChanges();
-
-        //            return RedirectToAction("Index", "GiaDatDiaBanXd");
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
-
-        //private static string GetMadvChuyen(string macqcq, CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan hoso)
-        //{
-        //    string madv = "";
-        //    if (macqcq == hoso.Macqcq)
-        //    {
-        //        madv = hoso.Madv;
-        //        goto ketthuc;
-        //    }
-        //    if (macqcq == hoso.Macqcq_h)
-        //    {
-        //        madv = hoso.Madv_h;
-        //        goto ketthuc;
-        //    }
-        //    if (macqcq == hoso.Macqcq_t)
-        //    {
-        //        madv = hoso.Madv_t;
-        //        goto ketthuc;
-        //    }
-        //    if (macqcq == hoso.Macqcq_ad)
-        //    {
-        //        madv = hoso.Madv_ad;
-        //        goto ketthuc;
-        //    }
-        //ketthuc:
-        //    return madv;
-        //}
-
-        //public IActionResult TongHop()
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Index"))
-        //        {
-
-        //            return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/XetDuyet/Tonghop.cshtml");
-
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
-
-
-        //[HttpPost("GiaDatDiaBanXd/GetListHoSo")]
-        //public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        var model = _db.GiaDatDiaBan.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
-        //        string result = "<select class='form-control' id='mahs' name='mahs'>";
-        //        result += "<option value='all'>--Tất cả---</option>";
-
-        //        if (model.Any())
-        //        {
-        //            foreach (var item in model)
-        //            {
-        //                result += "<option value='" + @item.Mahs + "'>Ký hiệu văn bản: " + @item.Soqd + " - Thời điểm: " + @Helpers.ConvertDateToStr(item.Thoidiem) + "</option>";
-        //            }
-        //        }
-        //        result += "</select>";
-        //        var data = new { status = "success", message = result };
-        //        return Json(data);
-        //    }
-        //    else
-        //    {
-        //        var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
-        //        return Json(data);
-        //    }
-        //}
-
-
     }
 }

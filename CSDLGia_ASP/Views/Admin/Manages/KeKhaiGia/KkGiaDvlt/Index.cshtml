@@ -257,17 +257,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                    @foreach (var item in dscqcq)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var cqcq = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in cqcq)
-                                            {
-                                                <option value="@item.MaDv">@item.TenDv</option>
-                                            }
-                                        </optgroup>
+                                        <option value="@item.MaDv">@item.TenDv</option>
                                     }
                                 </select>
                             </div>

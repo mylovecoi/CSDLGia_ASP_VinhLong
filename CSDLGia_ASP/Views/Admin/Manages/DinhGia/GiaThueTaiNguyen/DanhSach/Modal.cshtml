@@ -1,13 +1,13 @@
 ﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var nhomtn = (IEnumerable<GiaThueTaiNguyenNhom>)ViewData["NhomTn"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
+    var DanhMucNhom = ViewData["DanhMucNhom"]
+              as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenNhom>
+              ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenNhom>();
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 
 <!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <form asp-controller="GiaThueTaiNguyen" asp-action="Create" method="get">
             <div class="modal-content">
                 <div class="modal-header">
@@ -20,24 +20,14 @@
                 </div>
                 <hr />
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Đơn vị báo cáo</label>
-                                <select id="MadvBc" name="MadvBc" class="form-control">
-                                    @foreach (var dv in dsdonvi)
-                                    {
-                                        <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
+                    <div class="row">                        
+                        <input hidden id="MadvBc" name="MadvBc" value="@ViewData["Madv"]" />
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
-                                    <option value="khac">--Tất cả các loại tài nguyên--</option>
-                                    @foreach (var nhom in nhomtn)
+                                    <option value="all">--Tất cả--</option>
+                                    @foreach (var nhom in DanhMucNhom)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
                                     }
@@ -72,12 +62,17 @@
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvith)
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>

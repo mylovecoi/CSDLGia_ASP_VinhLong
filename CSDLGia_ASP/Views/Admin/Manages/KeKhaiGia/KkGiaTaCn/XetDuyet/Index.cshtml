@@ -6,23 +6,23 @@
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
 
-        $(function() {
-            $('#Madv, #Nam').change(function() {
+        $(function () {
+            $('#Madv, #Nam').change(function () {
                 var current_path_url = '/XetDuyetGiaTaCn?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
@@ -33,24 +33,24 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Thông tin xét duyệt kê khai giá<small>&nbsp;thức ăn chăn nuôi</small><br />
-                </h3>
-            </div>
-            <div class="card-toolbar">
-            </div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin xét duyệt kê khai giá<small>&nbsp;thức ăn chăn nuôi</small><br />
+            </h3>
         </div>
-        <hr />
-        <div class="card-body">
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold; color:blue">Năm</label>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control select2basic" id="Nam" name="Nam">
-                            @{
+                        @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
@@ -65,17 +65,9 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
-                                }
-                                @foreach (var item in dv)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -160,7 +152,7 @@
                             </td>
                             <td>
                                 <a asp-controller="KeKhaiGiaTaCn" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
-                           target="_blank">
+                                   target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
@@ -171,19 +163,19 @@
                                         @if (item.Trangthai_ad == "CB")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                onclick="HuyCongBo('@item.Mahs','HCB')">
+                                                    onclick="HuyCongBo('@item.Mahs','HCB')">
                                                 <i class="icon-lg la la-times text-danger "></i>
                                             </button>
                                         }
                                         else
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                onclick="CongBo('@item.Mahs','CB')">
+                                                    onclick="CongBo('@item.Mahs','CB')">
                                                 <i class="icon-lg la la-send text-primary "></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                 <i class="icon-lg la la-reply text-danger "></i>
                                             </button>
                                         }
@@ -193,7 +185,7 @@
                                         @if (item.Trangthai == "CD")
                                         {
                                             <button type="button" class="btn btn-sm btn-clean btn-icon" title="Nhận hồ sơ" data-toggle="modal" data-target="#XetDuyet_Modal"
-                                onclick="XetDuyet('@item.Id')">
+                                                    onclick="XetDuyet('@item.Id')">
                                                 <i class="icon-lg la la-share text-primary "></i>
                                             </button>
                                         }
@@ -203,7 +195,7 @@
                                             @if (item.Trangthai == "CD" || item.Trangthai == "DD" || item.Trangthai == "BTL")
                                             {
                                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                                        onclick="TraLai('@item.Id', '@item.Macqcq')">
                                                     <i class="icon-lg la la-reply text-danger "></i>
                                                 </button>
                                             }
@@ -211,7 +203,7 @@
                                             @if (item.Trangthai == "DD" || item.Trangthai == "BTL")
                                             {
                                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển công bố" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
+                                                        onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
                                                     <i class="icon-lg la la-check text-primary "></i>
                                                 </button>
                                             }

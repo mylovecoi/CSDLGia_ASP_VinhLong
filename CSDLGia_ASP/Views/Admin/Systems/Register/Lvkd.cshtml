@@ -85,13 +85,10 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label>Ngành</label>
                             <select class="form-control" id="manghanh_create" name="manghanh_create" onchange="UpdateNghesDropdown()">
-
                                 @foreach (var nganh in dmnganhkd)
-
                                 {
                                     <option value="@nganh.Manganh">@nganh.Tennganh</option>
                                 }
-
                             </select>
                         </div>
                     </div>
@@ -106,7 +103,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-12">
+                    @* <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Địa bàn kinh doanh</label>
                             <select class="form-control" id="madiaban_create" name="madiaban_create">
@@ -117,18 +114,22 @@
                                 }
                             </select>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị nhận hồ sơ</label>
                             <select class="form-control" id="madvhs_create" name="madvhs_create">
                                 <option value="">--Chọn đơn vị nhận hồ sơ--</option>
-                                @foreach (var db in dsdiaban)
+                                @* @foreach (var db in dsdiaban)
                                 {
                                     @foreach (var item in dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "NHAPLIEU").ToList())
                                     {
                                         <option value="@item.MaDv">@item.TenDv</option>
                                     }
+                                } *@
+                                @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
+                                {
+                                    <option value="@item.MaDv">@item.TenDv</option>
                                 }
                             </select>
                         </div>
@@ -217,9 +218,9 @@
                     // Xóa tất cả các option hiện tại trong menu Nghề
                     $('#manghe_create').empty();
                     // Thêm các option mới từ dữ liệu trả về
-                    var html='';
+                    var html = '';
                     $.each(data.nghes, function (index, nghe) {
-                        html += '<option value="'+ nghe.manghe+'">'+nghe.tennghe+'</option>';
+                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
                     });
                     $('#manghe_create').append(html);
                 } else {
@@ -249,20 +250,19 @@
             data: {
                 Manghanh: $('#manghanh_create').val(),
                 Manghe: $('#manghe_create').val(),
-                Madiaban: $('#madiaban_create').val(),
+                // Madiaban: $('#madiaban_create').val(),
+                Macqcq: $('#madvhs_create').val(),
                 Madv: $('#Madv').val(),
             },
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    //toastr.success(data.message);
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#lvkd_data').replaceWith(data.message);
                     $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Create_Lvkd_Modal').modal("hide");
-                    //location.reload();
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -294,9 +294,10 @@
             url: '/DoanhNghiep/DangKy/Lvkd/Update',
             type: 'POST',
             data: {
+                Manghanh: $('#manghanh_edit').val(),
                 Manghe: $('#manghe_edit').val(),
-                Madiaban: $('#madiaban_edit').val(),
-                //Macqcq: $('#madvhs_edit').val(),
+                // Madiaban: $('#madiaban_edit').val(),
+                Macqcq: $('#madvhs_edit').val(),
                 Madv: $('#Madv').val(),
                 Id: $('#id_edit').val()
             },

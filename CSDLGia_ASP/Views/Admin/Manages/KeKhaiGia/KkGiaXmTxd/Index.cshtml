@@ -7,12 +7,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -95,22 +95,11 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-
-                        @foreach (var db in dsdiaban)
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var company = dsdonvi.Where(t => t.Madiaban == db.MaDiaBan);
-                                }
-                                @foreach (var item in company)
-                                {
-                                    <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>&emsp;@item.Tendn</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>&emsp;@item.Tendn</!option>
                         }
-
                     </select>
-
                 </div>
             </div>
             <div class="col-xl-3">
@@ -264,17 +253,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Cơ quan tiếp nhận*</label>
                                 <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
+                                    @foreach (var item in dscqcq)
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var cqcq = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in cqcq)
-                                            {
-                                                <option value="@item.MaDv">@item.TenDv</option>
-                                            }
-                                        </optgroup>
+                                        <option value="@item.MaDv">@item.TenDv</option>
                                     }
                                 </select>
                             </div>
