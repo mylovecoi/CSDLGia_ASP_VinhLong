@@ -46,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     {
                         ViewData["STT"] = 1;
                     }
-                 
+
                     ViewData["Title"] = "Danh mục mặt đất, mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -83,7 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Manhom = MaNhom,
                         HienThi = HienThi,
                         SapXep = SapXep,
-                        Loaidat = Loaidat, 
+                        Loaidat = Loaidat,
                         Style = str_style,
                         NhapGia = Nhapgia,
                         Created_at = DateTime.Now,
@@ -189,8 +189,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label style='font-weight:bold;color:blue'>Nhập giá </label>";
                         result += "<select class='form-control' id='nhapgia_edit' name='nhapgia_edit' style='width:100%'>";
-                        result += "<option value='false'>Không nhập giá</option >";
-                        result += "<option value='true'>Nhập giá</option >";
+                        result += "<option value='false'" + (!model.NhapGia ? " selected" : "") + " >Không nhập giá</option >";
+                        result += "<option value='true' " + (model.NhapGia ? " selected" : "") + ">Nhập giá</option >";
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
@@ -223,7 +223,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         // Cập nhật thông tin mới
         [Route("GiaThueDNDMCT/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style, bool Nhapgia )
+        public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

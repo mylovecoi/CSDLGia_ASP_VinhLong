@@ -31,11 +31,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var dsdiaban = _db.DsDiaBan.ToList();
                     var dsdonvi = _db.DsDonVi.ToList();
-                    if (string.IsNullOrEmpty(MaDv))
-                    {
-                        MaDv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                    }
-                    var model = _db.Users.Where(t => t.Madv == MaDv).ToList();
+                    //if (string.IsNullOrEmpty(MaDv))
+                    //{
+                    //    MaDv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                    //}
+                    var model = _db.Users.Where(t=>!t.Sadmin);
 
 
                     /*var model_join = (from user in model
@@ -82,8 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
                 {
                     ViewData["ChucNang"] = _db.GroupPermissions.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == MaDv).ToList();
-                    ViewData["MaDv"] = MaDv;
+                    ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["Title"] = "Thêm mới thông tin tài khoản";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
@@ -105,7 +104,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan/Store")]
         [HttpPost]
-        public IActionResult Store(Users request, string nhaplieu, string tonghop, string quantri)
+        public IActionResult Store(Users request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

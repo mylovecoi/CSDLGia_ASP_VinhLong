@@ -265,12 +265,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var VlXdDatSanlap = Manghe.Any(m => m.Contains("DATSANLAP")) ? 1 : 0;
                     var VanTaiKhachBangOtoCoDinh = Manghe.Any(m => m.Contains("VTXK")) ? 1 : 0;
                     var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
+                    var VanTaiKhachBangXeBuyt = Manghe.Any(m => m.Contains("VTXB")) ? 1 : 0;
                     var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
                     var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
                     var Dvlt = Manghe.Any(m => m.Contains("LUUTRU")) ? 1 : 0;
                     var VlXd= Manghe.Any(m => m.Contains("VLXD")) ? 1 : 0;
                     var KhamChuaBenh = Manghe.Any(m => m.Contains("KCBTN")) ? 1 : 0;
                     var DvThuongMai = Manghe.Any(m => m.Contains("DVHDTMCK")) ? 1 : 0;
+                    var LuHanh = Manghe.Any(m => m.Contains("LUHANH")) ? 1 : 0;
 
                     var company = new Company
                     {
@@ -295,6 +297,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         VanTaiKhachBangTaXi = VanTaiKhachBangTaXi,
                         CaHue = CaHue,
                         SieuThi = SieuThi,
+                        LuHanh = LuHanh,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
                         Macqcq = request.Macqcq,
