@@ -35,6 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
                 {
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -45,7 +46,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";
                     ViewData["MenuLv3"] = "menu_dgkcb_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaDvKcb.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaDvKcb.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear 
+                                                                    && list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhSachNhom"] = _db.GiaDvKcbNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaDvKhamChuaBenh/BaoCao/Index.cshtml");
                 }
@@ -69,8 +71,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaDvKcb.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = (from hoso in _db.GiaDvKcb.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb
                                  {
@@ -111,7 +113,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.baocao", "Index"))
                 {
-
                     var model = (from hosoct in _db.GiaDvKcbCt
                                  join hoso in _db.GiaDvKcb on hosoct.Mahs equals hoso.Mahs
                                  join nhom in _db.GiaDvKcbNhom on hosoct.Manhom equals nhom.Manhom
@@ -131,12 +132,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                      Mahs = hoso.Mahs,
                                      Ghichu = hosoct.Ghichu,
                                      Sapxep = hosoct.Sapxep,
-                                     Hienthi = hosoct.Hienthi
+                                     Hienthi = hosoct.Hienthi,                                    
                                  });
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                     if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
-                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop);}
-       
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
+
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
 
@@ -171,7 +173,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                var model = _db.GiaDvKcb.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                var model = _db.GiaDvKcb.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                 string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
                 result += "<option value='all'>--Tất cả---</option>";
 

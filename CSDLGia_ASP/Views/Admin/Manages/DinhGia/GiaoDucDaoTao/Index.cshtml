@@ -43,7 +43,7 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Create"))
             {
-                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                @if (ViewData["Madv"].ToString() != "all")
                 {
                     <a class="btn btn-primary font-weight-bolder" asp-controller="GiaoDucDaoTao" asp-action="Create"
                        asp-route-Madv="@ViewData["Madv"]">
