@@ -465,6 +465,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
+        [HttpPost]
         public IActionResult HoanThanh(string mahs_complete, string trangthai_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -560,15 +561,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         model = model.Where(t => t.GiaRung2 <= DonGiaDen || t.GiaRung4 <= DonGiaDen || t.GiaRung6 <= DonGiaDen || t.GiaChoThue2 <= DonGiaDen
                                             || t.GiaBoiThuong2 <= DonGiaDen || t.GiaBoiThuong4 <= DonGiaDen || t.GiaBoiThuong6 <= DonGiaDen);
                     }
-
-
                     if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
                     if (!string.IsNullOrEmpty(MoTa))
                     {
                         model = model.Where(t => t.MoTa.ToLower().Contains(MoTa.ToLower()));
                     }
-
-
                     ViewData["Madv"] = Madv;
                     ViewData["Manhom"] = Manhom;
                     ViewData["NgayTu"] = NgayTu;
@@ -586,7 +583,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_tk";
                     return View("Views/Admin/Manages/DinhGia/GiaRung/TimKiem/Search.cshtml", model);
-
                 }
                 else
                 {

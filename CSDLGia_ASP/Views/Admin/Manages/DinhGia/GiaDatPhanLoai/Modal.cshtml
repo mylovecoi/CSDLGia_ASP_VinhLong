@@ -113,25 +113,7 @@
         $('#giact_create').val();
 
     }
-    // function GetXaPhuongChiTiet() {
-    //     $.ajax({
-    //         url: '/Ajax/GetXaPhuongNoAll',
-    //         type: 'POST',
-    //         data: {
-    //             MaDiaBan: $('#MaDiaBanChiTiet').val(),
-    //             KeySelect: 'MaXaPhuongChiTiet'
-    //         },
-    //         dataType: 'JSON',
-    //         success: function (data) {
-    //             if (data.status == 'success') {
-    //                 toastr.success('Success');
-    //                 $('#MaXaPhuongChiTiet').html(data.message);
-    //             } else {
-    //                 toastr.error(data.message, "Lỗi!");
-    //             }
-    //         }
-    //     })
-    // }
+    
     function SetStore() {
         var giacuthe = $('#giact_create').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({

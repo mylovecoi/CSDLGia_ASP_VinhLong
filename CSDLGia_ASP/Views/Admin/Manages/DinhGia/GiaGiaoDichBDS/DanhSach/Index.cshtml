@@ -1,9 +1,7 @@
 ﻿@{
     int record_id = 1;
     int Nam = ViewData["Nam"] as int? ?? 0;
-    var dsdonvi = ViewData["DsDonVi"]
-                  as IEnumerable<DsDonVi>
-                  ?? Enumerable.Empty<DsDonVi>();
+    var dsdonvi = ViewData["DsDonVi"]as IEnumerable<DsDonVi>?? Enumerable.Empty<DsDonVi>();
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS>
 
@@ -101,7 +99,7 @@
                     <th width="10%">Đơn vị</th>
                     <th width="10%">Số QĐ</th>
                     <th width="10%">Thời điểm xác định</th>
-                    <th style="text-align:center">Mô tả</th>
+                    <th style="text-align:left">Mô tả</th>
                     <th width="10%">Trạng thái</th>
                     <th width="20%">Thao tác</th>
                 </tr>

@@ -112,12 +112,8 @@
                                     <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                        target="_blank">
                                         <i class="icon-lg la la-eye text-success"></i>
-                                    </a>
-                                    
-                                    <a href="~/UpLoad/File/DinhGia/GiaDatDiaBan/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
-                                       onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                        <i class="icon-lg la la-cloud-download text-warning"></i>
-                                    </a>
+                                    </a>                                   
+
                                     @if (item.Trangthai == "CD")
                                     {
                                         @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
@@ -158,48 +154,6 @@
                                             </button>
                                         }
                                     }
-
-
-                                    
-                                  @*  @if (item.Level == "ADMIN")
-                                    {
-                                        @if (item.Trangthai == "CB")
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                                    onclick="HuyCongBo('@item.Mahs')">
-                                                <i class="icon-lg la la-times text-danger "></i>
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                                    onclick="CongBo('@item.Mahs')">
-                                                <i class="icon-lg la la-send text-primary "></i>
-                                            </button>
-
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
-                                                <i class="icon-lg la la-reply text-danger "></i>
-                                            </button>
-                                        }
-                                    }
-                                    else
-                                    {
-
-                                        @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
-                                        {
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                    onclick="TraLai('@item.Id', '@item.Macqcq')">
-                                                <i class="icon-lg la la-reply text-danger "></i>
-                                            </button>
-
-                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                                    onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
-                                                <i class="icon-lg la la-check text-primary "></i>
-                                            </button>
-
-                                        }
-                                    }*@
                                     <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                        target="_blank">
                                         <i class="icon-lg la la-redo-alt text-danger"></i>
