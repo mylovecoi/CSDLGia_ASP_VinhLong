@@ -49,6 +49,7 @@ else
             <th style="text-align: center">Mức giá<br />liền kề</th>
             <th style="text-align: center">Mức giá<br />kê khai</th>
             <th style="text-align: center">Tăng/giảm</th>
+            <th style="text-align: center">Tỉ lệ % tăng/giảm</th>
         </tr>
     </thead>
     <tbody>
@@ -56,7 +57,7 @@ else
         {
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
-                <td colspan="7">
+                <td colspan="8">
                     @item.Tendn -
                     <b>Mã số thuế: </b>@item.Madv -
                     <b>Mã hồ sơ: </b>@item.Mahs -
@@ -78,6 +79,7 @@ else
                     <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Gialk)</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Giakk)</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Giakk - ct.Gialk)</td>
+                    <td style="text-align: right">@(((ct.Giakk - ct.Gialk)/ct.Gialk)*100) %</td>
                 </tr>
             }
         }
