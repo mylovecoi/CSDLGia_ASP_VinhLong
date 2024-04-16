@@ -23,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/CongBo/DichVuLuHanh?';
+                var current_path_url = '/CongBo/DichVuLuuTru?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -39,7 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá nước sinh hoạt
+                    Thông tin hồ sơ giá dịch vụ lưu trú
                 </span>
             </h3>
         </div>
@@ -108,7 +108,7 @@
                                 }
                             </td>
                             <td>
-                                <a asp-controller="KeKhaiGia" asp-action="DichVuLuHanhShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="KeKhaiGia" asp-action="DichVuLuuTruShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -123,4 +123,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiGia/KkGiaDvlt/ThongTinGiayTo/Show.cshtml")
