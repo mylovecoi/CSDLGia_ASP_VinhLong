@@ -36,6 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.baocao", "Index"))
                 {
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -46,7 +47,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dggddt";
                     ViewData["MenuLv3"] = "menu_dggddt_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaDvGdDt.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaDvGdDt.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear 
+                                                                        && list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhSachNhom"] = _db.GiaDvGdDtNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/BaoCao/Index.cshtml");
                 }
@@ -70,8 +72,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.baocao", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = (from hoso in _db.GiaDvGdDt.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDt
                                  {
@@ -136,10 +138,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                      Giamiennui1 = hosoct.Giamiennui1,
                                      MaNhom = hosoct.MaNhom,
                                      Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs,                                     
+                                     Mahs = hoso.Mahs,
                                  });
-
-                    model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && t.Trangthai == "HT");
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                     if (MaNhom != "all") { model = model.Where(t => t.MaNhom == MaNhom); }
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
 
@@ -176,7 +178,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                var model = _db.GiaDvGdDt.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                 string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
                 result += "<option value='all'>--Tất cả---</option>";
 

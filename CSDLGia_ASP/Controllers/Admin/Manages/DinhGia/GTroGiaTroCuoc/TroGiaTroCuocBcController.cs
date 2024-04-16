@@ -35,7 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.baocao", "Index"))
                 {
-
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -46,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtgtc";
                     ViewData["MenuLv3"] = "menu_dgtgtc_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem.Year == DateTime.Now.Year && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem.Year == DateTime.Now.Year && list_trangthai.Contains(t.Trangthai));
                     return View("Views/Admin/Manages/DinhGia/GiaTroGiaTroCuoc/BaoCao/Index.cshtml");
                 }
                 else
@@ -69,8 +69,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.baocao", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = (from hoso in _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuoc
                                  {
@@ -110,7 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.trogiatrocuoc.baocao", "Index"))
                 {
-                   
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     var model = (from hosoct in _db.GiaTroGiaTroCuocCt
                                  join hoso in _db.GiaTroGiaTroCuoc on hosoct.Mahs equals hoso.Mahs
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                                      Mahs = hoso.Mahs,
                                      Dvt = hosoct.Dvt
                                  });
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
@@ -161,7 +161,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                var model = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
+                List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                var model = _db.GiaTroGiaTroCuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                 string result = "<select class='form-control' id='MaHsTongHop' name='MaHsTongHop'>";
                 result += "<option value='all'>--Tất cả---</option>";
 
