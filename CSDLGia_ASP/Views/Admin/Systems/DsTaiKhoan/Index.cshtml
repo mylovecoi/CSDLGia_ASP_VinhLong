@@ -43,7 +43,7 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
             {
                 <a class="btn btn-primary font-weight-bolder" asp-controller="DsTaiKhoan" asp-action="Create"
-                   asp-route-MaDv="@ViewData["MaDv"]">
+                 >
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -53,7 +53,7 @@
     <hr />
     <div class="card-body">
         <div class="mb-12">
-            <div class="row">
+         @*    <div class="row">
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
@@ -73,7 +73,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <table class="table table-striped table-bordered table-hover" id="sample_3">
                 <thead>
                     <tr style="text-align:center">
