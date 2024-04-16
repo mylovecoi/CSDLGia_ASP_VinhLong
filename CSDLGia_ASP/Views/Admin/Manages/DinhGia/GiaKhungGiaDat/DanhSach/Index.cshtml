@@ -46,14 +46,17 @@
         <div>
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="GiaKhungGiaDat" asp-action="Create"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-plus"></i>Thêm mới
-                </a>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GiaKhungGiaDatExcel" asp-action="Index"
-                   asp-route-Madv="@ViewData["Madv"]">
-                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
-                </a>
+                @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="GiaKhungGiaDat" asp-action="Create"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
+                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaKhungGiaDatExcel" asp-action="Index"
+                       asp-route-Madv="@ViewData["Madv"]">
+                        <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                    </a>
+                }
             }
 
         </div>
@@ -65,13 +68,13 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control select2basic" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
                             for (var i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                <!option value="@i" @(Convert.ToInt32(ViewData["Nam"]) == i ? "selected" : "")>@i</!option>
                             }
                         }
                     </select>
@@ -81,17 +84,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                }
-                                @foreach (var item in donvi)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -151,6 +147,7 @@
                             <td style="text-align: left" width="15%">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
 
                             </td>
                             <td width="12%" style="text-align:left;">

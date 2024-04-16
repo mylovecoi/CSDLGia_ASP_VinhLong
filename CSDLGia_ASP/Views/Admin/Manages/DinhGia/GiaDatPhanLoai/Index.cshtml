@@ -97,8 +97,7 @@
                     <th>Địa bàn áp dụng</th>
                     <th>Thời điểm xác định</th>
                     <th>Thông tin hồ sơ</th>
-                    <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận</th>
+                    <th>Trạng thái</th>                    
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -123,50 +122,68 @@
                             <td style="text-align: center">@item.Thongtin</td>
 
                             <td style="text-align: center">
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
-                                }
-                                @if (item.Trangthai == "CHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "HHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Bị trả lại</span>
-                                    <p>Lý do:&nbsp;@item.Lydo</p>
-                                }
-                            </td>
+                                <span style="width: 112px;">
+                                    @if (item.Trangthai == "CC")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-xl label-light-info label-inline">Chờ chuyển</span>
+                                    }
+                                    else if (item.Trangthai == "CD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "DD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "BTL")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
 
-                            <td style="text-align: center">
-                                @if (!string.IsNullOrEmpty(item.Macqcq))
-                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-                            </td>
+                                        <br />
+                                        <span>Lý do:&nbsp;@item.Lydo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
+                                    }
+                                </span>                               
+                            </td>                            
                             <td style="text-align: left;">
 
                                 <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-                                {
-                                    <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </a>
-
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Thongtin')">
-                                        <i class="icon-lg la la-trash text-danger"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xác nhận hoàn thành hồ sơ và chuyển lên cấp trên" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary "></i>
-                                    </button>
-                                }
                                 <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
+
+                                @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
+                                    {
+                                        <a asp-controller="GiaDatPl" asp-action="Modify" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Approve"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Chuyen_Modal" onclick="SetComplete('@item.Mahs')">
+                                            <i class="icon-lg la la-mail-forward text-primary"></i>
+                                        </button>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Delete"))
+                                    {
+
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Thongtin')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
+                                }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -289,42 +306,49 @@
     </div>
 </div>
 
-<!--Chuyển Modal-->
+
+
+
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaDatPl" asp-action="Complete">
-            <div class="modal-content">
+        <div class="modal-content">
+            <form asp-controller="GiaDatPl" asp-action="Complete">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ và gửi đi?
+                        Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <p style="color:blue">Hồ sơ sẽ được chuyển lên đơn vị chủ quản. Bạn cần liên hệ đơn vị chủ quản để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvith)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.xetduyet", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                    <input id="mahs_complete" name="mahs_complete" type="hidden" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
@@ -334,7 +358,7 @@
         document.getElementById("MoTaDelete").innerHTML = mota;
     }
 
-    function Chuyen(mahs) {
-        document.getElementById("mahs_chuyen").value = mahs;
+    function SetComplete(mahs) {
+        document.getElementById("mahs_complete").value = mahs;
     }
 </script>

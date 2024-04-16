@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
         [Route("GiaKhungGiaDat/DanhSach")]
         [HttpGet]
-        public IActionResult Index(string Nam, string Madv)
+        public IActionResult Index(int Nam, string Madv = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -49,30 +49,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                         }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(Madv))
-                            {
-                                Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                            }
-                        }
+                        //else
+                        //{
+                        //    if (string.IsNullOrEmpty(Madv))
+                        //    {
+                        //        Madv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
+                        //    }
+                        //}
 
                         var model = _db.GiaKhungGiaDat.Where(t => t.Madv == Madv).ToList();
 
-                        if (string.IsNullOrEmpty(Nam))
+
+                        if (Nam != 0)
                         {
-                            model = model.ToList();
-                        }
-                        else
+                            model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
+                        }                        
+
+                        if (Madv != "all")
                         {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam)).ToList();
-                            }
-                            else
-                            {
-                                model = model.ToList();
-                            }
+                            model = model.Where(t => t.Madv == Madv).ToList();
                         }
 
                         var model_join = (from kgd in model

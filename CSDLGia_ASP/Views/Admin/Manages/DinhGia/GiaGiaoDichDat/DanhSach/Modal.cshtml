@@ -1,6 +1,6 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var nhomtn = (IEnumerable<GiaGiaoDichDatNhom>)ViewData["NhomTn"];
 }
@@ -56,6 +56,50 @@
 
 
 <!--Chuyển Modal-->
+<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="GiaGiaoDichDat" asp-action="Chuyen">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ sẽ được chuyển lên đơn vị chủ quản. Bạn cần liên hệ đơn vị chủ quản để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", "Approve"))
+                                    {
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="mahs_complete" name="mahs_complete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="GiaGiaoDichDat" asp-action="Complete">
@@ -93,7 +137,7 @@
         </form>
     </div>
 </div>
-
+*@
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -127,7 +171,7 @@
         document.getElementById("MoTaDelete").innerHTML = mota;
     }
 
-    function Chuyen(mahs) {
-        document.getElementById("mahs_chuyen").value = mahs;
+    function SetComplete(mahs) {
+        document.getElementById("mahs_complete").value = mahs;
     }
 </script>

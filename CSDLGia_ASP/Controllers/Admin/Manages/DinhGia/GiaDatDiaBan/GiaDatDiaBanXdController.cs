@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var model = _db.GiaDatDiaBan.Where(t => list_trangthai.Contains(t.Trangthai));
                     if (Nam != 0)
                     {
-                        model = _db.GiaDatDiaBan.Where(t => t.Thoidiem.Year == Nam);
+                        model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
                     var model_join = from dg in model
                                      join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv

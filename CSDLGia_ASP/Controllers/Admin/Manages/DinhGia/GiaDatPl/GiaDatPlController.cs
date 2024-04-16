@@ -182,7 +182,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         Thoidiem = request.Thoidiem,
                         Thongtin = request.Thongtin,
                         Ghichu = request.Ghichu,
-                        Trangthai = "CHT",
+                        Trangthai = "CC",
                         Congbo = "CHUACONGBO",
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -471,7 +471,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuThe/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all", string madv = "All")
+        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -495,12 +495,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Khuvuc = giact.Khuvuc,
                                      MaDiaBan = gia.Madiaban,
                                      MaXaPhuong = giact.MaDiaBan,
+                                     Trangthai=gia.Trangthai,
                                  });
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso);
-                    if (madv != "All")
-                    {
-                        model = model.Where(t => t.Madv == madv);
-                    }
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                    
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
                     {
@@ -510,8 +508,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     if (MaDiaBan != "all")
                     {
                         model = model.Where(t => t.MaDiaBan == MaDiaBan);
-                        DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
-                        DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
+                        //DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
+                        //DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
+                        DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan).Where(x=>x.Level=="X").ToList();
                         if (MaXaPhuong != "all")
                         {
                             model = model.Where(x => x.MaXaPhuong == MaXaPhuong);
@@ -549,7 +548,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
         [Route("GiaDatCuThe/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all", string madv = "All")
+        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -575,12 +574,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      MaDiaBan = gia.Madiaban,
                                      MaXaPhuong=giact.MaDiaBan,
                                      MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == giact.MaDiaBan).MaDiaBanCq,
+                                     Trangthai=gia.Trangthai,
                                  });
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso);
-                    if (madv != "All")
-                    {
-                        model = model.Where(t => t.Madv == madv);
-                    }                   
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                                      
                     if (MaDiaBan != "all")
                     {
                         model = model.Where(x => x.MaDiaBan == MaDiaBan);
@@ -611,47 +608,51 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             }
         }
 
-        public IActionResult Complete(string mahs_chuyen, string macqcq_chuyen)
+        public IActionResult Complete(string mahs_complete, string trangthai_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
                 {
-                    var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Mahs == mahs_chuyen);
+                    //var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
-                    var dvcq_join = from dvcq in _db.DsDonVi
-                                    join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dvcq.Id,
-                                        MaDiaBan = dvcq.MaDiaBan,
-                                        MaDv = dvcq.MaDv,
-                                        TenDv = dvcq.TenDv,
-                                        Level = db.Level,
-                                    };
-                    var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
-                    model.Macqcq = macqcq_chuyen;
-                    model.Trangthai = "HT";
-                    if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    {
-                        model.Madv_t = macqcq_chuyen;
-                        model.Thoidiem_t = DateTime.Now;
-                        model.Trangthai_t = "CHT";
-                    }
-                    else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    {
-                        model.Madv_ad = macqcq_chuyen;
-                        model.Thoidiem_ad = DateTime.Now;
-                        model.Trangthai_ad = "CHT";
-                    }
-                    else
-                    {
-                        model.Madv_h = macqcq_chuyen;
-                        model.Thoidiem_h = DateTime.Now;
-                        model.Trangthai_h = "CHT";
-                    }
+                    //var dvcq_join = from dvcq in _db.DsDonVi
+                    //                join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
+                    //                select new VMDsDonVi
+                    //                {
+                    //                    Id = dvcq.Id,
+                    //                    MaDiaBan = dvcq.MaDiaBan,
+                    //                    MaDv = dvcq.MaDv,
+                    //                    TenDv = dvcq.TenDv,
+                    //                    Level = db.Level,
+                    //                };
+                    //var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
+                    //model.Macqcq = macqcq_chuyen;
+                    //model.Trangthai = "HT";
+                    //if (chk_dvcq != null && chk_dvcq.Level == "T")
+                    //{
+                    //    model.Madv_t = macqcq_chuyen;
+                    //    model.Thoidiem_t = DateTime.Now;
+                    //    model.Trangthai_t = "CHT";
+                    //}
+                    //else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
+                    //{
+                    //    model.Madv_ad = macqcq_chuyen;
+                    //    model.Thoidiem_ad = DateTime.Now;
+                    //    model.Trangthai_ad = "CHT";
+                    //}
+                    //else
+                    //{
+                    //    model.Madv_h = macqcq_chuyen;
+                    //    model.Thoidiem_h = DateTime.Now;
+                    //    model.Trangthai_h = "CHT";
+                    //}
+                    var model = _db.GiaDatPhanLoai.FirstOrDefault(p => p.Mahs == mahs_complete);
+                    model.Trangthai = trangthai_complete;
+                    model.Updated_at = DateTime.Now;
+
                     _db.GiaDatPhanLoai.Update(model);
-                    _db.SaveChanges();
+                    _db.SaveChanges();                  
 
                     return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
 

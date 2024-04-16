@@ -552,9 +552,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     var DsXaPhuong = new List<DsDiaBan>();
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(t => t.Madiaban == MaDiaBan);
-                        DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level=="X").ToList();
-                        DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
+                        model = model.Where(t => t.Madiaban == MaDiaBan);                       
+                        DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan).Where(x => x.Level == "X").ToList();
                         if (Maxp != "all")
                         {
                             model = model.Where(x => x.Maxp == Maxp);
@@ -573,8 +572,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     ViewData["Maloaidat"] = Maloaidat;
                     ViewData["DanhSachHoSo"] = _db.GiaDatDiaBan.Where(t => list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhSachLoaiDat"] = _db.DmLoaiDat;
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    
                     ViewData["Title"] = "Tìm kiếm thông tin bảng giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_giadatdiaban";
