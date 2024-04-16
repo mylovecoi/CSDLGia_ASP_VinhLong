@@ -37,14 +37,15 @@
                     {
                         @foreach (var item in Model.KkGiaLuHanhCt)
                         {
+                            string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
                             <tr>
-                                <td style="text-align:center">@item.STTSapxep</td>
-                                <td style="text-align:center">@item.STTHienthi</td>
-                                <td class="active">@item.Tendvcu</td>
-                                <td style="text-align:center">@item.Dodaitgian</td>
-                                <td style="text-align:center">@Helpers.ConvertDateToStr(item.Thoigian)</td>
-                                <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giakk)</td>
-                                <td>@item.Qccl</td>
+                                <td style="text-align:center; @HtmlStyle">@item.STTSapxep</td>
+                                <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
+                                <td class="active" style="@HtmlStyle">@item.Tendvcu</td>
+                                <td style="text-align:center; @HtmlStyle">@item.Dodaitgian</td>
+                                <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDateToStr(item.Thoigian)</td>
+                                <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Giakk)</td>
+                                <td style="@HtmlStyle">@item.Qccl</td>
                                 <td>
                                     <button type="button" data-target="#Edit_Modal" data-toggle="modal"
                                 onclick="SetEdit('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">

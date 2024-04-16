@@ -168,6 +168,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
                     model.KkGiaLuHanhCt = model_ct.ToList();
 
+                    int max_sttsapxep = model_ct.Any() ? model_ct.Max(t => t.STTSapxep) : 0;
+                    ViewData["SapXep"] = max_sttsapxep;
                     ViewData["Madv"] = Madv;
                     ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
                     ViewData["Manghe"] = Manghe;
@@ -447,14 +449,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
         [Route("KeKhaiGiaLuHanh/Search")]
         [HttpGet]
-        public IActionResult Search(string Nam, string Mota)
+        public IActionResult Search(string Nam, string Tendvcu, string Qccl, double GiakkTu, double GiakkDen)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.timkiem", "Index"))
                 {
-                    var model_join = from kkct in _db.KkGiaXmTxdCt
-                                     join kk in _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                    var model_join = from kkct in _db.KkGiaLuHanhCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "LUHANH" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                      join com in _db.Company on kk.Madv equals com.Madv
                                      select new VMKkGiaCt
                                      {
@@ -463,34 +465,57 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                          Madv = kkct.Madv,
                                          Tendvcu = kkct.Tendvcu,
                                          Qccl = kkct.Qccl,
-                                         Dvt = kkct.Dvt,
                                          Giakk = kkct.Giakk,
-                                         Ghichu = kkct.Ghichu,
+                                         STTHienthi = kkct.STTHienthi,
+                                         Thoigian = kkct.Thoigian,
+                                         Dodaitgian = kkct.Dodaitgian,
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
+                    GiakkTu = GiakkTu == 0 ? 0 : GiakkTu;
+                    GiakkDen = GiakkDen == 0 ? 0 : GiakkDen;
 
                     if (string.IsNullOrEmpty(Nam))
                     {
                         Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                     }
 
-                    if (!string.IsNullOrEmpty(Mota))
-                    {
-                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(Nam))
                     {
                         model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
                     }
 
+                    if (!string.IsNullOrEmpty(Tendvcu))
+                    {
+                        model_join = model_join.Where(t => t.Tendvcu.ToLower().Contains(Tendvcu.ToLower()));
+
+                    }
+
+                    if (!string.IsNullOrEmpty(Qccl))
+                    {
+                        model_join = model_join.Where(t => t.Tendvcu.ToLower().Contains(Tendvcu.ToLower()));
+                    }
+
+                    if (GiakkTu > 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakk >= GiakkTu);
+                    }
+
+                    if (GiakkDen > 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakk <= GiakkDen);
+                    }
+
                     ViewData["Nam"] = Nam;
-                    ViewData["Mota"] = Mota;
-                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá xi măng thép xây dựng";
+                    ViewData["Tendvcu"] = Tendvcu;
+                    ViewData["Qccl"] = Qccl;
+                    ViewData["GiakkTu"] = GiakkTu;
+                    ViewData["GiakkDen"] = GiakkDen;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá dịch vụ lữ hành";
                     ViewData["MenuLv1"] = "menu_kknygia";
-                    ViewData["MenuLv2"] = "menu_kkgxmtxd";
-                    ViewData["MenuLv3"] = "menu_giakktk";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/TimKiem/Index.cshtml", model_join);
+                    ViewData["MenuLv2"] = "menu_kkgluhanh";
+                    ViewData["MenuLv3"] = "menu_tkluhanh";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/TimKiem/Index.cshtml", model_join);
 
                 }
                 else
@@ -507,15 +532,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
 
         [Route("KeKhaiGiaLuHanh/Printf")]
         [HttpGet]
-        public IActionResult Printf(string Nam, string Mota)
+        public IActionResult Printf(string Nam, string Tendvcu, string Qccl, double GiakkTu, double GiakkDen)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.timkiem", "Index"))
                 {
 
-                    var model_join = from kkct in _db.KkGiaXmTxdCt
-                                     join kk in _db.KkGia.Where(t => t.Manghe == "XMTXD" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
+                    var model_join = from kkct in _db.KkGiaLuHanhCt
+                                     join kk in _db.KkGia.Where(t => t.Manghe == "LUHANH" && t.Trangthai == "DD") on kkct.Mahs equals kk.Mahs
                                      join com in _db.Company on kk.Madv equals com.Madv
                                      select new VMKkGiaCt
                                      {
@@ -524,35 +549,52 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                          Madv = kkct.Madv,
                                          Tendvcu = kkct.Tendvcu,
                                          Qccl = kkct.Qccl,
-                                         Dvt = kkct.Dvt,
                                          Giakk = kkct.Giakk,
-                                         Ghichu = kkct.Ghichu,
+                                         STTHienthi = kkct.STTHienthi,
+                                         Thoigian = kkct.Thoigian,
+                                         Dodaitgian = kkct.Dodaitgian,
                                          Tendn = com.Tendn,
                                          Ngayhieuluc = kk.Ngayhieuluc,
                                      };
+                    GiakkTu = GiakkTu == 0 ? 0 : GiakkTu;
+                    GiakkDen = GiakkDen == 0 ? 0 : GiakkDen;
 
-
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                    }
-
-                    if (!string.IsNullOrEmpty(Mota))
-                    {
-                        model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam) && t.Tendvcu.Contains(Mota));
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(Nam))
                     {
                         model_join = model_join.Where(t => t.Ngayhieuluc.Year == int.Parse(Nam));
                     }
 
+                    if (!string.IsNullOrEmpty(Tendvcu))
+                    {
+                        model_join = model_join.Where(t => t.Tendvcu.ToLower().Contains(Tendvcu.ToLower()));
+
+                    }
+
+                    if (!string.IsNullOrEmpty(Qccl))
+                    {
+                        model_join = model_join.Where(t => t.Tendvcu.ToLower().Contains(Tendvcu.ToLower()));
+                    }
+
+                    if (GiakkTu > 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakk >= GiakkTu);
+                    }
+
+                    if (GiakkDen > 0)
+                    {
+                        model_join = model_join.Where(t => t.Giakk <= GiakkDen);
+                    }
+
                     ViewData["Nam"] = Nam;
-                    ViewData["Mota"] = Mota;
-                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá xi măng thép xây dựng";
+                    ViewData["Tendvcu"] = Tendvcu;
+                    ViewData["Qccl"] = Qccl;
+                    ViewData["GiakkTu"] = GiakkTu;
+                    ViewData["GiakkDen"] = GiakkDen;
+                    ViewData["Title"] = "Tìm kiếm thông tin kê khai giá dịch vụ lữ hành";
                     ViewData["MenuLv1"] = "menu_kknygia";
-                    ViewData["MenuLv2"] = "menu_kkgxmtxd";
-                    ViewData["MenuLv3"] = "menu_giakktk";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/TimKiem/Printf.cshtml", model_join);
+                    ViewData["MenuLv2"] = "menu_kkgluhanh";
+                    ViewData["MenuLv3"] = "menu_tkluhanh";
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/TimKiem/Printf.cshtml", model_join);
 
                 }
                 else
@@ -571,7 +613,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgxmtxd.giakk", "Approve") ||
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.giakk", "Approve") ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var model = _db.KkGia.FirstOrDefault(p => p.Mahs == mahs_chuyen);
@@ -630,7 +672,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                     _db.NhatKySuDung.Add(history);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "KkGiaXmTxd", new { model.Madv, Nam = model.Ngaynhap.Year, Trangthai = "CD" });
+                    return RedirectToAction("Index", "ThongTinKkGiaLuHanh", new { model.Madv, Nam = model.Ngaynhap.Year, Trangthai = "CD" });
                 }
                 else
                 {

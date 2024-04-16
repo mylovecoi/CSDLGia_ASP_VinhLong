@@ -45,7 +45,7 @@
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
                 <h3 class="card-label">
-                    Báo cáo tổng hợp<small>&nbsp;kê khai giá xi măng thép xây dựng</small><br />
+                    Báo cáo <small>&nbsp;kê khai giá dịch vụ lữ hành</small><br />
                 </h3>
             </div>
         </div>
@@ -58,7 +58,7 @@
                             <li>
                                 <button data-target="#Report_Modal" data-toggle="modal" class="btn btn-link" style="text-align:left">
                                     <span style="font-size:16px; color:blue;  font-weight: bold">
-                                        Báo cáo tổng hợp giá kê khai giá xi măng thép xây dựng
+                                        Báo cáo kê khai giá dịch vụ lữ hành
                                     </span>
                                 </button>
                             </li>
@@ -76,7 +76,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
-                            Báo cáo tổng hợp kê khai giá xi măng thép xây dựng
+                            Báo cáo kê khai giá dịch vụ lữ hành
                         </h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -183,8 +183,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC1('BaoCaoKkGiaXmTxd/Bc1')">BC Tổng hợp</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBC2('BaoCaoKkGiaXmTxd/Bc2')">BC Chi tiết</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCTh('BaoCaoKkGiaLuHanh/BaoCaoTongHop')">BC Tổng hợp</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCCt('BaoCaoKkGiaLuHanh/BaoCaoChiTiet')">BC Chi tiết</button>
                 </div>
             </div>
         </form>
@@ -192,7 +192,7 @@
 </div>
 
 <script>
-    function ClickBC1(url) {
+    function ClickBCTh(url) {
         $('#frm_report').attr('action', url);
 
         if (document.querySelector('input[name="time"]:checked').value == "ngay") {
@@ -210,7 +210,7 @@
         }
     }
 
-    function ClickBC2(url) {
+    function ClickBCCt(url) {
         $('#frm_report').attr('action', url);
 
         if (document.querySelector('input[name="time"]:checked').value == "ngay") {

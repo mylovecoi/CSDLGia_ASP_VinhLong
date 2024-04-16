@@ -183,26 +183,7 @@
                                 <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                    target="_blank">
                                     <i class="icon-lg la la-redo-alt text-danger"></i>
-                                </a>
-                              @*  @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-                                {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Edit"))
-                                    {
-                                        <a asp-controller="GiaGiaoDichDat" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                            <i class="icon-lg la la-edit text-primary"></i>
-                                        </a>
-                                    }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nhaosinhvien.thongtin", "Delete"))
-                                    {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Soqd')">
-                                            <i class="icon-lg la la-trash text-danger"></i>
-                                        </button>
-                                    }
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary "></i>
-                                    </button>
-                                } *@
-                                
+                                </a>    
                         </tr>
                     }
                 }

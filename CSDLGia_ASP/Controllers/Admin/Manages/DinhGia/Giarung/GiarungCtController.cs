@@ -217,7 +217,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     result += "<table class='table table-striped table-bordered table-hover class-nosort'>";
                     result += "<thead>";
                     result += "<tr>";
-                    result += "<th rowspan='3' width='2%' style='text-align:center'>#</th>";
                     result += "<th rowspan='3' width='2%' style='text-align:center'>TT</th> ";
                     result += "<th rowspan='3' style='text-align:center'>Mô tả</th>";
                     result += "<th colspan='6' width='30%'style='text-align:center'>Giá rừng</th> ";
@@ -254,7 +253,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     foreach (var item in data_nhom.OrderBy(t => t.STTSapXep))
                     {
                         result += "<tr>";
-                        result += "<td style='text-align:center'>" + item.STTSapXep + "</td>";
                         result += "<td style='text-align:center'>" + item.STTHienThi + "</td>";
                         result += "<td style='text-align:left'>" + item.MoTa + "</td>";
                         result += "<td style='text-align:center'>" + Helpers.ConvertDbToStr(item.GiaRung1) + "</td>";

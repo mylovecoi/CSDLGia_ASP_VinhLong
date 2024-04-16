@@ -52,7 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt.giakkbc", "Index"))
                 {
-                    var model = (from kk in _db.KkGia.Where(t => t.Manghe == "DVLT" && (t.Ngaynhan >= tungay_bc && t.Ngaynhan <= denngay_bc))
+                    var model = (from kk in _db.KkGia.Where(t => t.Manghe == "LUUTRU" && (t.Ngaynhan >= tungay_bc && t.Ngaynhan <= denngay_bc))
                                  join cskd in _db.KkGiaDvLtCskd on kk.Macskd equals cskd.Macskd
                                  select new VMKkGia
                                  {
@@ -111,12 +111,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                     var model = _db.KkGiaDvLtCskd;
                     foreach (var tt in model)
                     {
-                        var modelkk = _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).ToList();
+                        var modelkk = _db.KkGia.Where(t => t.Manghe == "LUUTRU" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).ToList();
                         tt.Lankk = modelkk.Count;
                         if (modelkk.Count > 0)
                         {
-                            var modelkkgn = _db.KkGia.Where(t => t.Manghe == "DVLT" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).Max(t => t.Id);
-                            var modelgn = _db.KkGia.FirstOrDefault(t => t.Manghe == "DVLT" && t.Id == modelkkgn);
+                            var modelkkgn = _db.KkGia.Where(t => t.Manghe == "LUUTRU" && t.Macskd == tt.Macskd && t.Trangthai == "DD" && (t.Ngaynhan >= tungay && t.Ngaynhan <= denngay)).Max(t => t.Id);
+                            var modelgn = _db.KkGia.FirstOrDefault(t => t.Manghe == "LUUTRU" && t.Id == modelkkgn);
                             tt.Kklc = "Số CV" + modelgn.Socv + ", ngày hiệu lực: " + Helpers.ConvertDateToStr(modelgn.Ngayhieuluc);
                         }
                     }

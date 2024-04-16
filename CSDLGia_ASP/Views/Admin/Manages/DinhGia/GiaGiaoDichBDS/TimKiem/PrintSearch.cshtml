@@ -13,8 +13,7 @@
             <th style="text-align: center">Thời điểm</th>
             <th style="text-align: center">Phân loại bất động sản</th>
             <th style="text-align: center">Đơn vị tính</th>
-            <th style="text-align: center">Giá giao dịch</th>
-            <th style="text-align: center">Thao tác</th>
+            <th style="text-align: center">Giá giao dịch</th>           
         </tr>
     </thead>
     <tbody>
@@ -34,7 +33,7 @@
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                 <td style="text-align: left">@item.Ten</td>
                 <td style="text-align: center">@item.Dvt</td>
-                <td style="text-align: right" class="sotien">@item.Gia</td>                
+                <td style="text-align: right" class="sotien">@Helpers.ConvertDbToStr(item.Gia)</td>                
             </tr>
         }
     </tbody>

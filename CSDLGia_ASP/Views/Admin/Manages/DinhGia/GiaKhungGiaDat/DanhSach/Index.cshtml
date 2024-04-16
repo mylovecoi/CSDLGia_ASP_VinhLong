@@ -1,8 +1,8 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    // var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat>
 
@@ -97,12 +97,11 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
-                    <th>Địa bàn</th>
+                    <th>Đơn vị</th>                   
                     <th>Số quyết định</th>
                     <th>Mô tả</th>
                     <th>Thời điểm áp dụng</th>
-                    <th>Trạng thái</th>
-                    <th>Cơ quan tiếp nhận</th>
+                    <th>Trạng thái</th>                   
                     <th width="20%">Thao tác</th>
                 </tr>
             </thead>
@@ -113,48 +112,41 @@
                     {
                         <tr>
                             <td style="text-align: center" width="3%">@(record_id++)</td>
-                            <td style="text-align: center">@item.Tendiaban</td>
+                            <td style="text-align: center">@(string.IsNullOrEmpty(item.Madv)?"":dsdonvi.FirstOrDefault(x=>x.MaDv== item.Madv).TenDv)</td>                                                       
                             <td style="text-align: left">@item.Kyhieuvb</td>
                             <td style="text-align: left">@item.Tieude</td>
                             <td style="text-align: center" width="10%">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center" width="15%">
-                                @if (item.Trangthai == "CHT")
+                                @if (item.Trangthai == "CC")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
+                                    <span class="label font-weight-bold label-lg label-xl label-light-info label-inline">Chờ chuyển</span>
                                 }
-                                @if (item.Trangthai == "HHT")
+                                else if (item.Trangthai == "CD")
                                 {
-                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Bị trả lại</span>
+                                    <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                                }
+                                else if (item.Trangthai == "DD")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                                }
+                                else if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
                                     <p>Lý do:&nbsp;@item.Lydo</p>
                                 }
-                                @if (item.Trangthai == "HT")
+                                else
                                 {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
+                                    <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
                                 }
-                                @if (item.Trangthai == "CB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
-                                }
-                                @if (item.Trangthai == "HCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
-                                }
-                                @if (item.Trangthai == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
-                                }
-                            </td>
-                            <td style="text-align: left" width="15%">
-                                @if (!string.IsNullOrEmpty(item.Macqcq))
-                                    @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-
-                            </td>
+                            </td>                            
                             <td width="12%" style="text-align:left;">
                                 <a asp-controller="GiaKhungGiaDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết" target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
+                                @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Edit"))
                                     {
@@ -172,9 +164,7 @@
                                         <i class="icon-lg la la-check text-primary "></i>
                                     </button>
                                 }
-                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
-                                    <i class="icon-lg la la-file-alt text-dark"></i>
-                                </button>
+                                
                             </td>
                         </tr>
                     }
@@ -185,52 +175,51 @@
 </div>
 
 <!--Chuyển Modal-->
+<!--complete Modal-->
 <div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaKhungGiaDat" asp-action="Complete">
-            <div class="modal-content">
+        <div class="modal-content">
+            <form asp-controller="GiaKhungGiaDat" asp-action="Complete">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <p style="color:blue">Hồ sơ sẽ được chuyển lên đơn vị chủ quản. Bạn cần liên hệ đơn vị chủ quản để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var db in dsdiaban)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Approve"))
                                     {
-                                        <optgroup label="@db.TenDiaBan">
-                                            @{
-                                                var donvi = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                            }
-                                            @foreach (var item in donvi)
-                                            {
-                                                <!option value="@item.MaDv">@item.TenDv</!option>
-                                            }
-                                        </optgroup>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.giadatdb.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                    <input id="mahs_complete" name="mahs_complete" type="hidden" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -266,6 +255,6 @@
     }
 
     function Chuyen(mahs) {
-        document.getElementById("mahs_chuyen").value = mahs;
+        document.getElementById("mahs_complete").value = mahs;
     }
 </script>

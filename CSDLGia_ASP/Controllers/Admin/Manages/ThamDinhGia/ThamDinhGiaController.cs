@@ -570,7 +570,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.tk", "Index"))
                 {
 
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
@@ -608,7 +608,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetn.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.tk", "Index"))
                 {
                     var model = (from tdgct in _db.ThamDinhGiaCt
                                  join tdg in _db.ThamDinhGia on tdgct.Mahs equals tdg.Mahs

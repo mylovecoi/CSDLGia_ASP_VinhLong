@@ -106,9 +106,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["DsDonViTH"] = dsdonvi;
-                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "ETANOL")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá Etanol";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgetanol";
@@ -151,9 +151,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["DsDonViTH"] = dsdonvi;
-                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "ETANOL")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai etanol";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgetanol";
@@ -197,9 +197,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaEtanol
                         }
                         ViewData["DsDiaBan"] = dsdiaban;
                         ViewData["DsDonViTH"] = dsdonvi;
-                        ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "ETANOL")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá Etanol";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgetanol";

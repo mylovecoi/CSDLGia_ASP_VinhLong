@@ -366,7 +366,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", "Index"))
                 {
                     ngaynhap_den = ngaynhap_den == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : ngaynhap_den;
                     ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : ngaynhap_tu;
@@ -442,7 +442,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.giagiaodichdattrenthitruong.timkiem", "Index"))
                 {
                     ngaynhap_den = ngaynhap_den == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 12, 31) : ngaynhap_den;
                     ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? new DateTime(DateTime.Now.Year, 01, 01) : ngaynhap_tu;

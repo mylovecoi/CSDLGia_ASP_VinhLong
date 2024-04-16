@@ -1,8 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
     var record_id = 1;
-    var record_id_ct = 1;
-    var cts = (IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaXmTxdCt>)ViewData["ct"];
 }
 @model IEnumerable<CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGia>
 <br />
@@ -25,7 +23,7 @@
         <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày....tháng....năm....</i></td>
     </tr>
 </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO KÊ KHAI GIÁ XI MĂNG THÉP XÂY DỰNG</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BÁO CÁO KÊ KHAI GIÁ DỊCH VỤ LỮ HÀNH</p>
 @if ((string)ViewData["time"] == "ngay")
 {
     <p style="text-align: center; font-size: 16px;">Thời điểm: Từ ngày @Helpers.ConvertDateToStr((DateTime)ViewData["tungay"]) đến ngày @Helpers.ConvertDateToStr((DateTime)ViewData["denngay"])</p>
@@ -43,12 +41,11 @@ else
         <tr>
             <th width="2%" style="text-align: center">STT</th>
             <th style="text-align: center">Doanh nghiệp</th>
-            <th style="text-align: center">Quy cách chất lượng</th>
-            <th style="text-align: center">Mô tả</th>
-            <th style="text-align: center">Đơn vị<br />tính</th>
-            <th style="text-align: center">Mức giá<br />liền kề</th>
-            <th style="text-align: center">Mức giá<br />kê khai</th>
-            <th style="text-align: center">Tăng/giảm</th>
+            <th style="text-align: center">Số công văn</th>
+            <th style="text-align: center">Ngày<br />kê khai</th>
+            <th style="text-align: center">Ngày thực hiện<br />mức giá</th>
+            <th style="text-align: center">Ngày chuyển hồ sơ</th>
+            <th style="text-align: center">Xét duyệt</th>
         </tr>
     </thead>
     <tbody>
@@ -56,31 +53,25 @@ else
         {
             <tr>
                 <td style="text-align: center">@(record_id++)</td>
-                <td colspan="7">
-                    @item.Tendn -
-                    <b>Mã số thuế: </b>@item.Madv -
-                    <b>Mã hồ sơ: </b>@item.Mahs -
-                    Số công văn: @item.Socv -
-                    Ngày hiệu lức: @Helpers.ConvertDateToStr(item.Ngayhieuluc) -
-                    Ngày chuyển: @Helpers.ConvertDateToStr(item.Ngaychuyen)<br />
-                    Số hồ sơ nhận: @item.Sohsnhan -
+                <td>
+                    @item.Tendn<br />
+                    <b>Mã số thuế: </b>@item.Madv<br />
+                    <b>Mã hồ sơ: </b>@item.Mahs
+                </td>
+                <td style="text-align: center">@item.Socv</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaynhap)</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngaychuyen)</td>
+                <td style="text-align: center">
+                    Số hồ sơ nhận: @item.Sohsnhan<br />
                     Ngày nhận: @Helpers.ConvertDateToStr(item.Ngaynhan)
                 </td>
             </tr>
-            foreach (var ct in cts.Where(t => t.Mahs == item.Mahs))
-            {
-                <tr>
-                    <td></td>
-                    <td style="text-align: center">@(record_id_ct++)</td>
-                    <td style="text-align: left">@ct.Qccl</td>
-                    <td style="text-align: center">@ct.Tendvcu</td>
-                    <td style="text-align: center">@ct.Dvt</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Gialk)</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Giakk)</td>
-                    <td style="text-align: right">@Helpers.ConvertDbToStr(ct.Giakk - ct.Gialk)</td>
-                </tr>
-            }
         }
+        <tr>
+            <td></td>
+            <td colspan="6">Tổng cộng: @Model.Count() hồ sơ</td>
+        </tr>
     </tbody>
 </table>
 <table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">

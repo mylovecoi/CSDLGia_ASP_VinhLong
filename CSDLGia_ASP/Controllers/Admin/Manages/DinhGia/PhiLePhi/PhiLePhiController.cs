@@ -31,7 +31,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Index"))
                 {
                     var dsdonvi = (from db in _db.DsDiaBan
                                    join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
@@ -128,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Create"))
                 {
                     var model_ct_cxd = _db.PhiLePhiCt.Where(t => t.TrangThai == "CXD" && t.Madv == madv_create);
                     if (model_ct_cxd.Any())
@@ -213,7 +213,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Create"))
                 {
 
                     var modelct = _db.PhiLePhiCt.Where(t => t.Mahs == request.Mahs);
@@ -286,7 +286,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Edit"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -321,7 +321,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Edit"))
                 {
                     var modelct = _db.PhiLePhiCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct.Any())
@@ -385,7 +385,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Delete"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Id == id_delete);
 
@@ -435,7 +435,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Index"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
                     model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
@@ -471,7 +471,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Index"))
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
@@ -540,7 +540,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.timkiem", "Index"))
                 {
 
                     DateTime nowDate = DateTime.Now;
@@ -624,7 +624,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.timkiem", "Index"))
                 {
                     var model = (from hosoct in _db.PhiLePhiCt
                                  join hoso in _db.PhiLePhi on hosoct.Mahs equals hoso.Mahs
