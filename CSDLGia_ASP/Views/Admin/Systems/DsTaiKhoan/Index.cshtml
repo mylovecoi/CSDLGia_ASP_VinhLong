@@ -58,10 +58,10 @@
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
                         <select class="form-control select2basic" id="MaDv" name="MaDv">
-                                    @foreach (var dv in dsdv)
-                                    {
-                                        <!option value="@dv.MaDv" @((string)ViewData["MaDv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-                                    }
+                            @foreach (var dv in dsdonvi)
+                            {
+                                <!option value="@dv.MaDv" @((string)ViewData["MaDv"] == dv.MaDv ? "selected" : "")>&emsp;@dv.TenDv</!option>
+                            }
                         </select>
                     </div>
                 </div>

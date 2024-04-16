@@ -1,8 +1,10 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+
 
 
 namespace CSDLGia_ASP.Controllers.Admin.CongBo
@@ -18,11 +20,11 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
 
         [Route("CongBo/BinhOnGia")]
         [HttpGet]
-        public IActionResult DichVuLuHanh(string Madv, int Nam)
+        public IActionResult BinhOnGia(string Madv, int Nam)
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBog> model = _db.KkMhBog.Where(t => t.Congbo == "DACONGBO" && t.Manghe == "LUHANH");
+            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBog> model = _db.KkMhBog.Where(t => t.Congbo == "DACONGBO");
 
             if (Madv != "all")
             {
@@ -32,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
 
             if (Nam != 0)
             {
-                model = model.Where(t => t.Ngaynhap.Year == Nam).ToList();
+                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
             }
 
             var dsdonvi = (from com in _db.Company
@@ -57,7 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["MenuLv2"] = "menu_kknygiacb";
             ViewData["MenuLv3"] = "menu_luhanhcongbo";
             ViewBag.bSession = false;
-            return View("Views/Admin/CongBo/KeKhaiGia/DichVuLuHanh.cshtml", model);
+            return View("Views/Admin/CongBo/KeKhaiDkg/BinhOnGia.cshtml", model);
         }
 
         [Route("CongBo/BinhOnGia/Show")]
@@ -97,17 +99,15 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
             }
 
-            var modelct = _db.KkGiaLuHanhCt.Where(t => t.Mahs == model.Mahs);
+            var modelct = _db.KkMhBogCt.Where(t => t.Mahs == model.Mahs);
             if (modelct != null)
             {
-                hoso_kk.KkGiaLuHanhCt = modelct.ToList();
+                hoso_kk.KkMhBogCt = modelct.ToList();
             }
 
-            ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá dịch vụ lữ hành";
-            ViewData["MenuLv1"] = "menu_kknygia";
-            ViewData["MenuLv2"] = "menu_kkgluhanh";
-            ViewData["MenuLv3"] = "menu_ttluhanh";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            ViewData["Title"] = "Xem chi tiết hồ sơ mặt hàng bình ổn giá";
+
+            return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/Show.cshtml", hoso_kk);
         }
     }
 }
