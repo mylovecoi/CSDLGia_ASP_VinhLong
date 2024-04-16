@@ -110,6 +110,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "THAN")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá than";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgthan";
@@ -154,6 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "THAN")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá than";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgthan";
@@ -200,6 +202,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "THAN")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá than";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgthan";

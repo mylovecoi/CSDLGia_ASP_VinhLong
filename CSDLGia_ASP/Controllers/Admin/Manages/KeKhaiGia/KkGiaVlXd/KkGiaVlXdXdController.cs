@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                         Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
                     }
 
-                 
+
                     var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
                                     join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
                                     select new VMDsDonVi
@@ -71,7 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                                         Level = db.Level,
                                     }).First();
 
-                 
+
                     if (getdonvi.Level == "H")
                     {
                         var model = _db.KkGia.Where(t => t.Madv_h == Madv && t.Ngaychuyen_h.Year == int.Parse(Nam) && t.Manghe == "VLXD"
@@ -110,10 +110,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "VLXD")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá vật liệu xây dựng";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgthan";
-                       ViewData["MenuLv3"] = "menu_giakkvlxdxd";
+                        ViewData["MenuLv3"] = "menu_giakkvlxdxd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -154,17 +155,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "VLXD")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá vật liệu xây dựng";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgthan";
-                       ViewData["MenuLv3"] = "menu_giakkvlxdxd";
+                        ViewData["MenuLv3"] = "menu_giakkvlxdxd";
                         return View("Views/Admin/Manages/KeKhaiGia/KkGiaVlXd/XetDuyet/Index.cshtml", model_join);
                     }
                     else
                     {
                         var model = _db.KkGia.Where(t => t.Madv_ad == Madv && t.Ngaychuyen_ad.Year == int.Parse(Nam) && t.Manghe == "VLXD"
                                                          && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
-                        
+
                         var model_join = from kk in model
                                          join dn in _db.Company on kk.Madv equals dn.Madv
                                          join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "VLXD") on dn.Mahs equals dnct.Mahs
@@ -200,6 +202,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaVlXd
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "VLXD")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá vật liệu xây dựng";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgvlxd";

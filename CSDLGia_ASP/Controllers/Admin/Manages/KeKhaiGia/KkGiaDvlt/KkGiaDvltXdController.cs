@@ -73,12 +73,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
                     if (getdonvi.Level == "H")
                     {
-                        var model = _db.KkGia.Where(t => t.Madv_h == Madv && t.Ngaychuyen_h.Year == int.Parse(Nam) && t.Manghe == "DVLT"
+                        var model = _db.KkGia.Where(t => t.Madv_h == Madv && t.Ngaychuyen_h.Year == int.Parse(Nam) && t.Manghe == "LUUTRU"
                                                     && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DVLT") on dn.Mahs equals dnct.Mahs
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "LUUTRU") on dn.Mahs equals dnct.Mahs
                                          select new VMKkGia
                                          {
                                              Id = kk.Id,
@@ -109,7 +109,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "DVLT")?.Max(t => t.Sohsnhan) ?? "0";
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "LUUTRU")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá dịch vụ lưu trú";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgdvlt";
@@ -118,12 +118,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                     }
                     else if (getdonvi.Level == "T")
                     {
-                        var model = _db.KkGia.Where(t => t.Madv_t == Madv && t.Ngaychuyen_t.Year == int.Parse(Nam) && t.Manghe == "DVLT"
+                        var model = _db.KkGia.Where(t => t.Madv_t == Madv && t.Ngaychuyen_t.Year == int.Parse(Nam) && t.Manghe == "LUUTRU"
                                                         && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DVLT") on dn.Mahs equals dnct.Mahs
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "LUUTRU") on dn.Mahs equals dnct.Mahs
                                          select new VMKkGia
                                          {
                                              Id = kk.Id,
@@ -154,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "DVLT")?.Max(t => t.Sohsnhan) ?? "0";
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "LUUTRU")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá dịch vụ lưu trú";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgdvlt";
@@ -163,12 +163,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                     }
                     else
                     {
-                        var model = _db.KkGia.Where(t => t.Madv_ad == Madv && t.Ngaychuyen_ad.Year == int.Parse(Nam) && t.Manghe == "DVLT"
+                        var model = _db.KkGia.Where(t => t.Madv_ad == Madv && t.Ngaychuyen_ad.Year == int.Parse(Nam) && t.Manghe == "LUUTRU"
                                                          && (t.Trangthai != "CC" || t.Trangthai != "BTL")).ToList();
 
                         var model_join = from kk in model
                                          join dn in _db.Company on kk.Madv equals dn.Madv
-                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "DVLT") on dn.Mahs equals dnct.Mahs
+                                         join dnct in _db.CompanyLvCc.Where(t => t.Manghe == "LUUTRU") on dn.Mahs equals dnct.Mahs
                                          select new VMKkGia
                                          {
                                              Id = kk.Id,
@@ -200,7 +200,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                         ViewData["DsDonViTH"] = dsdonvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "DVLT")?.Max(t => t.Sohsnhan) ?? "0";
+                        ViewData["Sohsnhan"] = _db.KkGia.Where(t => t.Madv_h == Madv && t.Manghe == "LUUTRU")?.Max(t => t.Sohsnhan) ?? "0";
                         ViewData["Title"] = "Xét duyệt hồ sơ kê khai giá dịch vụ lưu trú";
                         ViewData["MenuLv1"] = "menu_kknygia";
                         ViewData["MenuLv2"] = "menu_kkgdvlt";
