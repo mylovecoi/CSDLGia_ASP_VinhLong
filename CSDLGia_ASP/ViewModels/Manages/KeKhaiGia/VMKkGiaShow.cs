@@ -29,6 +29,8 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Ptnguyennhan { get; set; }
         public string Chinhsachkm { get; set; }
         public string Loaihang { get; set; }
+        public string Chucvuky { get; set; }
+        public string Nguoiky { get; set; }
         public DateTime Ngaychuyen { get; set; }
         public DateTime Ngaynhan { get; set; }
         public List<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
