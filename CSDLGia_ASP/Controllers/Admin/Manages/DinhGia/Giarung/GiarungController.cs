@@ -465,6 +465,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             }
         }
 
+        [HttpPost]
         public IActionResult HoanThanh(string mahs_complete, string trangthai_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))

@@ -1,14 +1,7 @@
-﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var record_id = 1;
-}
-
-<!--Trả lại Modal-->
+﻿<!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="DvKhamchuaBenhHt" asp-action="TraLai" id="frm_tralai">
+        <form asp-controller="DvKhamChuaBenhHt" asp-action="TraLai" id="frm_tralai" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -17,6 +10,7 @@
 
                 </div>
                 <div class="modal-body">
+                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
@@ -24,9 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <input hidden id="id_tralai" name="id_tralai" />
-                    <input hidden id="madv_tralai" name="madv_tralai" />
                 </div>
 
                 <div class="modal-footer">
@@ -38,100 +30,62 @@
     </div>
 </div>
 
-<!--Tổng hợp Modal-->
-<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form asp-controller="DvKhamChuaBenhHt" asp-action="TongHop" method="get">
+<!--Duyet Modal-->
+<div class="modal fade" id="Duyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="DvKhamChuaBenhHt" asp-action="Duyet" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Tổng hợp hồ sơ giá 
+                        Đồng ý duyệt hồ sơ
                     </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
                 </div>
-                <hr />
-                <table class="table table-striped table-bordered table-hover" id="sample_3">
-                    <thead>
-                        <tr style="text-align:center">
-                            <th width="4%">STT</th>
-                            <th>Đơn vị báo cáo</th>
-                            <th>Thời điểm báo cáo</th>
-                            <th>Chọn hồ sơ để tổng hợp</th>
-                        </tr>
-                    </thead>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_duyet" name="soqd_duyet"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_duyet" name="mahs_duyet" />
+                </div>
 
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td style="text-align: center" width="3%">@(record_id++)</td>
-                                    <td style="text-align: center">
-
-                                        @if (dsdonvi != null)
-                                        {
-                                            @if (item.Level == "ADMIN")
-                                            {
-                                                @if (item.Trangthai_h == "CCB")
-                                                {
-                                                    @foreach (var ten in dsdonvi)
-                                                    {
-                                                        @if (ten.MaDv == item.Madv_h)
-                                                        {
-                                                            <span>@ten.TenDv</span>
-                                                        }
-                                                    }
-                                                }
-                                                else if (item.Trangthai_t == "CCB")
-                                                {
-                                                    @foreach (var ten in dsdonvi)
-                                                    {
-                                                        @if (ten.MaDv == item.Madv_t)
-                                                        {
-                                                            <span>@ten.TenDv</span>
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    @foreach (var ten in dsdonvi)
-                                                    {
-                                                        @if (ten.MaDv == item.Madv)
-                                                        {
-                                                            <span>@ten.TenDv</span>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                @foreach (var ten in dsdonvi)
-                                                {
-                                                    @if (ten.MaDv == item.Madv)
-                                                    {
-                                                        <span>@ten.TenDv </span>
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                    <td style="text-align: center">@item.Thoidiem</td>
-                                    <td style="text-align: center" width="30%">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Tổng hợp</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Hủy Duyet Modal-->
+<div class="modal fade" id="HuyDuyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="DvKhamChuaBenhHt" asp-action="HuyDuyet" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hủy duyệt hồ sơ
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_huyduyet" name="soqd_huyduyet"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_huyduyet" name="mahs_huyduyet" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
                 </div>
             </div>
         </form>
@@ -141,7 +95,7 @@
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="DvKhamchuaBenhHt" asp-action="CongBo">
+        <form asp-controller="DvKhamChuaBenhHt" asp-action="CongBo" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -153,6 +107,15 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_cb" name="mahs_cb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_cb" name="soqd_cb"></label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -166,7 +129,7 @@
 <!--Huy Cong Bo Modal-->
 <div class="modal fade" id="HuyCongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="DvKhamchuaBenhHt" asp-action="HuyCongBo">
+        <form asp-controller="DvKhamChuaBenhHt" asp-action="HuyCongBo" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -178,6 +141,14 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_hcb" name="mahs_hcb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_hcb" name="soqd_hcb"></label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -188,73 +159,25 @@
     </div>
 </div>
 
-<!-- Chuyển hoàn thành Modal-->
-<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form asp-controller="DvKhamchuaBenhHt" asp-action="ChuyenHoanThanh">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
-                                    {
-                                        @if (db.Level == "ADMIN")
-                                        {
-                                            <optgroup label="@db.TenDiaBan">
-                                                @{
-                                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                                }
-                                                @foreach (var item in company)
-                                                {
-                                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                                }
-                                            </optgroup>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <input hidden id="mahs_complete" name="mahs_complete" />
-                    <input hidden id="madv_hientai" name="madv_hientai" value="@ViewData["Madv"]" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
-    function SetComplete(mahs) {
-        document.getElementById("mahs_complete").value = mahs;
-         document.getElementById("madv_complete").value = madv;
+    function SetDuyet(mahs, soqd) {
+        document.getElementById("mahs_duyet").value = mahs;
+        document.getElementById("soqd_duyet").innerHTML = soqd;
     }
-
-    function TraLai(id, madv) {
+    function SetHuyDuyet(mahs, soqd) {
+        document.getElementById("mahs_huyduyet").value = mahs;
+        document.getElementById("soqd_huyduyet").innerHTML = soqd;
+    }
+    function TraLai(id) {
         document.getElementById("id_tralai").value = id;
-        document.getElementById("madv_tralai").value = madv;
     }
-    function CongBo(mahs_cb) {
-        document.getElementById("mahs_cb").value = mahs_cb;
+    function CongBo(mahs, soqd) {
+        document.getElementById("mahs_cb").value = mahs;
+        document.getElementById("soqd_cb").innerHTML = soqd;
     }
-
-    function HuyCongBo(mahs_hcb) {
-        document.getElementById("mahs_hcb").value = mahs_hcb;
+    function HuyCongBo(mahs, soqd) {
+        document.getElementById("mahs_hcb").value = mahs;
+        document.getElementById("soqd_hcb").innerHTML = soqd;
     }
 
     function ValidateXetDuyet() {

@@ -59,6 +59,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.DinhGia
 
         public List<DsDonVi> DsDonVi { get; set; }
         public List<DsDiaBan> DsDiaBan { get; set; }
+        public string TenDonvi { get; set; }
 
         [NotMapped]
         public List<GiaTroGiaTroCuocCt> GiaTroGiaTroCuocCt { get; set; }

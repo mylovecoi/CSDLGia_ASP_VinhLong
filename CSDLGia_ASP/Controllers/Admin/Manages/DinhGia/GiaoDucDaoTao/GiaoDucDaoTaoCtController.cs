@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                 result += "<div class='row'>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Tên dịch vụ </label>";
+                result += "<label>Tên sản phẩm, dịch vụ </label>";
                 result += "<label class='form-control'>" + model.Mota + "</label>";
                 result += "</div></div></div>";
                 result += "<div class='row'>";

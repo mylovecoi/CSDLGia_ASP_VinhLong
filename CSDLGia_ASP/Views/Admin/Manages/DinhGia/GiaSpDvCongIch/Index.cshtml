@@ -1,11 +1,10 @@
 ﻿@{
     int record_id = 1;
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
-    var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
-    var nhomtn = (IEnumerable<GiaSpDvCongIchNhom>)ViewData["NhomTn"];
-    int Nam = Int32.Parse(ViewData["Nam"].ToString());
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var DanhMucNhom = ViewData["DanhMucNhom"]
+               as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchNhom>
+               ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchNhom>();
+    int Nam = ViewData["Nam"] as int? ?? 0;
 
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch>
@@ -58,7 +57,6 @@
                         <i class="la la-file-excel-o"></i>Nhận dữ liệu
                     </a>
                 }
-
             }
         </div>
 
@@ -83,7 +81,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-6">
             <div class="form-group fv-plugins-icon-container">
                 <label style="font-weight:bold; color:blue">Đơn vị</label>
                 <select class="form-control select2basic" id="Madv" name="Madv">
@@ -99,11 +97,12 @@
     <table class="table table-striped table-bordered table-hover" id="sample_3">
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>
-                <th>Thời điểm áp dụng</th>
-                <th>Số quyết định</th>
-                <th>Trạng thái</th>
-                <th>Cơ quan tiếp nhận</th>
+                <th width="2%">#</th>
+                <th width="10%">Đơn vị</th>
+                <th width="10%">Số QĐ</th>
+                <th width="10%">Thời điểm xác định</th>
+                <th style="text-align:center">Mô tả</th>
+                <th width="10%">Trạng thái</th>
                 <th width="20%">Thao tác</th>
             </tr>
         </thead>
@@ -113,30 +112,39 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-
                         <td style="text-align: center">@(record_id++)</td>
-                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
-                        <td class="text-center active">@item.Soqd</td>
                         <td style="text-align: center">
-                            @if (item.Trangthai == "HT")
-                            {
-                                <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
-                            }
-                            @if (item.Trangthai == "CHT")
-                            {
-                                <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                            }
-                            @if (item.Trangthai == "HHT")
-                            {
-                                <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Bị trả lại</span>
-                                <p>Lý do:&nbsp;@item.Lydo</p>
-                            }
+                            @if (!string.IsNullOrEmpty(item.Madv))
+                                @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
                         </td>
+                        <td style="text-align: center">@item.Soqd</td>
+                        <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                        <td style="text-align: left">@item.Ghichu</td>
                         <td style="text-align: center">
-                            @if (!string.IsNullOrEmpty(item.Macqcq))
-                                @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-
+                            <span style="width: 112px;">
+                                @if (item.Trangthai == "CC")
+                                {
+                                    <span class="label font-weight-bold label-lg label-xl label-light-info label-inline">Chờ chuyển</span>
+                                }
+                                else if (item.Trangthai == "CD")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                                }
+                                else if (item.Trangthai == "DD")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                                }
+                                else if (item.Trangthai == "BTL")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
+                                    <br />
+                                    <span>Lý do:&nbsp;@item.Lydo</span>
+                                }
+                                else
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
+                                }
+                            </span>
                         </td>
                         <td>
                             <a asp-controller="GiaSpDvCongIch" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -146,8 +154,7 @@
                             <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                 <i class="icon-lg la la-file-alt text-dark"></i>
                             </button>
-                            @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
-
+                            @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                             {
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Edit"))
                                 {
@@ -155,17 +162,18 @@
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                 }
-
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Approve"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
+                                        <i class="icon-lg la la-mail-forward text-primary "></i>
+                                    </button>
+                                }
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Delete"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 }
-
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                    <i class="icon-lg la la-check text-primary "></i>
-                                </button>
 
                             }
                             <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
@@ -203,7 +211,7 @@
                                 <label>Phân loại nhóm hàng hóa dịch vụ</label>
                                 <select id="Manhom" name="Manhom" class="form-control">
                                     <option value="all">--Chọn tất cả các nhóm--</option>
-                                    @foreach (var nhom in nhomtn)
+                                    @foreach (var nhom in DanhMucNhom)
                                     {
                                         <option value="@nhom.Manhom">@nhom.Tennhom</option>
                                     }
@@ -225,7 +233,7 @@
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="GiaSpDvCongIch" asp-action="Delete">
+            <form asp-controller="GiaSpDvCongIch" asp-action="Delete" method="post">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý xóa thông tin???
@@ -249,7 +257,7 @@
 <!--Complete Modal-->
 <div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaSpDvCongIch" asp-action="Complete">
+        <form asp-controller="GiaSpDvCongIch" asp-action="Complete" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -262,13 +270,18 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
-                                    @foreach (var item in dsdonvith)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
                                     }
                                 </select>
                             </div>
@@ -291,12 +304,10 @@
     function SetDelete(id) {
         document.getElementById("id_delete").value = id;
     }
-    @*function SetComplete(id) {
-        document.getElementById("mahs_complete ").value = id;
-        }*@
-        function SetComplete(mahs) {
-            document.getElementById("mahs_chuyen").value = mahs;
-        }
+
+    function SetComplete(mahs) {
+        document.getElementById("mahs_chuyen").value = mahs;
+    }
 
 </script>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/ThongTinGiayTo/Show.cshtml")
