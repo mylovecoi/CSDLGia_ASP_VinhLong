@@ -1,19 +1,7 @@
-﻿@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    DateTime currentDate = DateTime.Today;
-    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
-    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
-    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
-    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
-}
-
-
-<!--Trả lại Modal-->
+﻿<!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="TroGiaTroCuocHt" asp-action="TraLai" id="frm_tralai">
+        <form asp-controller="TroGiaTroCuocHt" asp-action="TraLai" id="frm_tralai" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -22,6 +10,7 @@
 
                 </div>
                 <div class="modal-body">
+                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
@@ -29,9 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="color: blue">Hồ sơ bị sẽ chuyển lại cho cơ quan gửi lên để có thể chỉnh sửa hồ sơ!</p>
                     <input hidden id="id_tralai" name="id_tralai" />
-                    <input hidden id="madv_tralai" name="madv_tralai" />
                 </div>
 
                 <div class="modal-footer">
@@ -43,47 +30,72 @@
     </div>
 </div>
 
-<!--Tổng hợp Modal-->
-<div class="modal fade" id="Tonghop_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-label">
-                    Tổng hợp hồ sơ trợ giá trợ cước
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <form asp-controller="TroGiaTroCuocHt" asp-action="TongHop" method="post" target="_blank" id="frm_TongHop" name="frm_TongHop">
+<!--Duyet Modal-->
+<div class="modal fade" id="Duyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="TroGiaTroCuocHt" asp-action="Duyet" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý duyệt hồ sơ
+                    </h3>
+                </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Ngày từ </label>
-                                <input type="date" class="form-control" id="ngaytu" name="ngaytu" value="@FromDate" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Ngày đến: </label>
-                                <input type="date" class="form-control" id="ngayden" name="ngayden" value="@ToDate" />
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_duyet" name="soqd_duyet"></label>
                             </div>
                         </div>
                     </div>
+                    <input hidden id="mahs_duyet" name="mahs_duyet" />
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="CreateTongHop()">Tổng hợp</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
+
+<!--Hủy Duyet Modal-->
+<div class="modal fade" id="HuyDuyet_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="TroGiaTroCuocHt" asp-action="HuyDuyet" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Đồng ý hủy duyệt hồ sơ
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_huyduyet" name="soqd_huyduyet"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="mahs_huyduyet" name="mahs_huyduyet" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--Cong Bo Modal-->
 <div class="modal fade" id="CongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="TroGiaTroCuocHt" asp-action="CongBo">
+        <form asp-controller="TroGiaTroCuocHt" asp-action="CongBo" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -95,6 +107,15 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_cb" name="mahs_cb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_cb" name="soqd_cb"></label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -108,7 +129,7 @@
 <!--Huy Cong Bo Modal-->
 <div class="modal fade" id="HuyCongBo_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="TroGiaTroCuocHt" asp-action="HuyCongBo">
+        <form asp-controller="TroGiaTroCuocHt" asp-action="HuyCongBo" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -120,6 +141,14 @@
                 </div>
                 <div class="modal-body">
                     <input id="mahs_hcb" name="mahs_hcb" type="hidden" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Số quyết định</label>
+                                <label class="form-control" id="soqd_hcb" name="soqd_hcb"></label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -130,72 +159,25 @@
     </div>
 </div>
 
-<!-- Chuyển hoàn thành Modal-->
-<div class="modal fade" id="Complete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form asp-controller="TroGiaTroCuocHt" asp-action="ChuyenHoanThanh">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Cơ quan tiếp nhận<span class="require">*</span></label>
-                                <select class="form-control" id="Macqcq" name="Macqcq">
-                                    @foreach (var db in dsdiaban)
-                                    {
-                                        @if (db.Level == "ADMIN")
-                                        {
-                                            <optgroup label="@db.TenDiaBan">
-                                                @{
-                                                    var company = dscqcq.Where(t => t.MaDiaBan == db.MaDiaBan);
-                                                }
-                                                @foreach (var item in company)
-                                                {
-                                                    <!option value="@item.MaDv" @((string)ViewData["Donvi"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                                                }
-                                            </optgroup>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <input hidden id="mahs_complete" name="mahs_complete" />
-                    <input hidden id="madv_hientai" name="madv_hientai" value="@ViewData["Madv"]" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Hoàn thành</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
-    function SetComplete(mahs) {
-        document.getElementById("mahs_complete").value = mahs;
+    function SetDuyet(mahs, soqd) {
+        document.getElementById("mahs_duyet").value = mahs;
+        document.getElementById("soqd_duyet").innerHTML = soqd;
     }
-
-    function TraLai(id, madv) {
+    function SetHuyDuyet(mahs, soqd) {
+        document.getElementById("mahs_huyduyet").value = mahs;
+        document.getElementById("soqd_huyduyet").innerHTML = soqd;
+    }
+    function TraLai(id) {
         document.getElementById("id_tralai").value = id;
-        document.getElementById("madv_tralai").value = madv;
     }
-    function CongBo(mahs_cb) {
-        document.getElementById("mahs_cb").value = mahs_cb;
+    function CongBo(mahs, soqd) {
+        document.getElementById("mahs_cb").value = mahs;
+        document.getElementById("soqd_cb").innerHTML = soqd;
     }
-
-    function HuyCongBo(mahs_hcb) {
-        document.getElementById("mahs_hcb").value = mahs_hcb;
+    function HuyCongBo(mahs, soqd) {
+        document.getElementById("mahs_hcb").value = mahs;
+        document.getElementById("soqd_hcb").innerHTML = soqd;
     }
 
     function ValidateXetDuyet() {
@@ -206,25 +188,6 @@
                 toastr.error("Ngày duyệt hồ sơ không được để trống!", "Lỗi!!!")
             } else {
                 document.getElementById("frm_xetduyet").submit();
-            }
-        }
-    }
-
-    function CreateTongHop() {
-        var fromDate = document.getElementById("ngaytu").value;
-        var toDate = document.getElementById("ngayden").value;
-        if (fromDate === "" || toDate === "") {
-            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
-        } else {
-            var fromDateObj = new Date(fromDate);
-            var toDateObj = new Date(toDate);
-
-            if (fromDateObj <= toDateObj) {
-                var form = document.getElementById("frm_TongHop");
-                form.submit();
-                location.reload();
-            } else {
-                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
             }
         }
     }
