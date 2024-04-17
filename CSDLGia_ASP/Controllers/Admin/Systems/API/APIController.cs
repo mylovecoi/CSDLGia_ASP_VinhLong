@@ -1075,10 +1075,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                         }
                     case "giahhdvkdm":
                         {
-                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs).OrderBy(x => x.Mahhdv);
+                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs && x.Theodoi=="TD").OrderBy(x => x.Mahhdv);
+                            var dmDVT = _db.DmDvt;
                             var giaHHDVKDM = new List<VMGiaHHDVKDM>();
                             foreach (var item in model_giahhdvkdm)
                             {
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
                                 giaHHDVKDM.Add(new VMGiaHHDVKDM
                                 {
                                     DIA_BAN = request.DIA_BAN,
@@ -1087,7 +1089,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                     MA_HHDV_TINH_THANH = item.Mahhdv,
                                     TEN_HHDV_TINH_THANH = item.Tenhhdv,
                                     DAC_DIEM_KY_THUAT = item.Dacdiemkt,
-                                    DON_VI_TINH = item.Dvt,
+                                    DON_VI_TINH = dvt.Madvt,
                                     NGUOI_TAO = request.NGUOI_TAO,
                                 });
                             }

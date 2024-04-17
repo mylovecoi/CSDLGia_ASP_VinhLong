@@ -49,6 +49,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 {
                     HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
                     HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
+                    HttpContext.Session.SetString("MaDiaBanHanhChinh", heThong.MaDiaBanHanhChinh);
+                    HttpContext.Session.SetString("MaDonViThuThap", heThong.MaDonViThuThap);
                 }
                 //Lấy các thông tin về kết nối API
                 //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();
@@ -63,217 +65,205 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
 
                 //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
                 //
-                if (model != null)
+                if (model.Level != "DN")
                 {
-                    if (model.Level != "DN")
+                    if (model != null)
                     {
-                        if (model != null)
+                        string md5_password = "";
+                        using (MD5 md5Hash = MD5.Create())
                         {
-                            string md5_password = "";
-                            using (MD5 md5Hash = MD5.Create())
+                            string change = Helpers.GetMd5Hash(md5Hash, password);
+                            md5_password = change;
+                        }
+                        if (md5_password == model.Password)
+                        {
+                            if (model.Status == "Chờ xét duyệt")
                             {
-                                string change = Helpers.GetMd5Hash(md5Hash, password);
-                                md5_password = change;
+                                ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                                ViewData["username"] = username;
+                                ViewData["password"] = password;
+                                return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
-                            if (md5_password == model.Password)
+                            else
                             {
-                                if (model.Status == "Chờ xét duyệt")
+                                if (model.Status == "Vô hiệu")
                                 {
-                                    ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                                    ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
                                     ViewData["username"] = username;
                                     ViewData["password"] = password;
                                     return View("Views/Admin/Systems/Auth/Login.cshtml");
                                 }
                                 else
                                 {
-                                    if (model.Status == "Vô hiệu")
+
+                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+
+                                    if (model.Chucnang == "K")
                                     {
-                                        ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
-                                        ViewData["username"] = username;
-                                        ViewData["password"] = password;
-                                        return View("Views/Admin/Systems/Auth/Login.cshtml");
+                                        var permissions = _db.Permissions.Where(p => p.Username == username);
+                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
                                     else
                                     {
-
-                                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
-
-                                        if (model.Chucnang == "K")
-                                        {
-                                            var permissions = _db.Permissions.Where(p => p.Username == username);
-                                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                        }
-                                        else
-                                        {
-                                            var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
-                                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                        }
-                                        return RedirectToAction("Index", "Home");
+                                        var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
+                                    return RedirectToAction("Index", "Home");
                                 }
-                            }
-                            else
-                            {
-                                ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
-                                ViewData["username"] = username;
-                                ViewData["Title"] = "Đăng nhập";
-                                return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                            ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
+                            ViewData["username"] = username;
                             ViewData["Title"] = "Đăng nhập";
                             return View("Views/Admin/Systems/Auth/Login.cshtml");
                         }
                     }
                     else
                     {
-                        var model2 = _db.Users
-                                    .Where(u => u.Username == username)
-                                    .Join(
-                                        _db.Company,
-                                        user => user.Madv,
-                                        company => company.Madv,
-                                        (user, company) => new Users
-                                        {
-                                            Id = user.Id,
-                                            Username = user.Username,
-                                            Password = user.Password,
-                                            Name = user.Name,
-                                            Phone = user.Phone,
-                                            Email = user.Email,
-                                            Status = user.Status,
-                                            Maxa = user.Maxa,
-                                            Mahuyen = user.Mahuyen,
-                                            Town = user.Town,
-                                            District = user.District,
-                                            Level = user.Level,
-                                            Sadmin = user.Sadmin,
-                                            Permission = user.Permission,
-                                            Emailxt = user.Emailxt,
-                                            Question = user.Question,
-                                            Answer = user.Answer,
-                                            Ttnguoitao = user.Ttnguoitao,
-                                            Lydo = user.Lydo,
-                                            Madv = user.Madv,
-                                            Created_at = user.Created_at,
-                                            Updated_at = user.Updated_at,
-                                            Manhomtk = user.Manhomtk,
-                                            Chucnang = user.Chucnang,
-                                            Solandn = user.Solandn,
-                                            LinkAPI = user.LinkAPI,
-                                            Manghanh = user.Manghanh,
-                                            Manghe = user.Manghe,
-                                            BOG = company.BOG,
-                                            KKNYGIA = company.KKNYGIA,
-                                            //Vtxk = company.Vtxk,
-                                            //Vtxb = company.Vtxb,
-                                            //Vtxtx = company.Vtxtx,
-                                            //VlXdCatSan = company.VlXdCatSan,
-                                            //VlXdDatSanlap = company.VlXdDatSanlap,
-                                            //VlXdDaXayDung = company.VlXdDaXayDung,
-                                            //HocPhiDaoTaoLaiXe = company.HocPhiDaoTaoLaiXe,
-                                            //CaHue = company.CaHue,
-                                            //SieuThi = company.SieuThi,
-                                            Vtch = company.Vtch,
-                                            Xangdau = company.Xangdau,
-                                            Dien = company.Dien,
-                                            Khidau = company.Khidau,
-                                            Phan = company.Phan,
-                                            Thuocbvtv = company.Thuocbvtv,
-                                            Vacxingsgc = company.Vacxingsgc,
-                                            Muoi = company.Muoi,
-                                            Suate6t = company.Suate6t,
-                                            Duong = company.Duong,
-                                            Thocgao = company.Thocgao,
-                                            Thuocpcb = company.Thuocpcb,
-                                            Dvlt = company.Dvlt,
-                                            XmThepXd = company.XmThepXd,
-                                            SachGk = company.SachGk,
-                                            Etanol = company.Etanol,
-                                            ThucAnChanNuoi = company.ThucAnChanNuoi,
-                                            ThucPhamCn = company.ThucPhamCn,
-                                            Than = company.Than,
-                                            Giay = company.Giay,
-                                            VanTaiKhachBangOtoCoDinh = company.VanTaiKhachBangOtoCoDinh,
-                                            VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
-                                            VanTaiKhachBangTaXi = company.VanTaiKhachBangTaXi,
-                                            VlXd = company.VlXd,
-                                            LuHanh = company.LuHanh,
-                                            KhamChuaBenh = company.KhamChuaBenh,
-                                            DvThuongMai = company.DvThuongMai,
-                                        }
-                                    ).FirstOrDefault();
+                        ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                        ViewData["Title"] = "Đăng nhập";
+                        return View("Views/Admin/Systems/Auth/Login.cshtml");
+                    }
+                }
+                else
+                {
+                    var model2 = _db.Users
+                                .Where(u => u.Username == username)
+                                .Join(
+                                    _db.Company,
+                                    user => user.Madv,
+                                    company => company.Madv,
+                                    (user, company) => new Users
+                                    {
+                                        Id = user.Id,
+                                        Username = user.Username,
+                                        Password = user.Password,
+                                        Name = user.Name,
+                                        Phone = user.Phone,
+                                        Email = user.Email,
+                                        Status = user.Status,
+                                        Maxa = user.Maxa,
+                                        Mahuyen = user.Mahuyen,
+                                        Town = user.Town,
+                                        District = user.District,
+                                        Level = user.Level,
+                                        Sadmin = user.Sadmin,
+                                        Permission = user.Permission,
+                                        Emailxt = user.Emailxt,
+                                        Question = user.Question,
+                                        Answer = user.Answer,
+                                        Ttnguoitao = user.Ttnguoitao,
+                                        Lydo = user.Lydo,
+                                        Madv = user.Madv,
+                                        Created_at = user.Created_at,
+                                        Updated_at = user.Updated_at,
+                                        Manhomtk = user.Manhomtk,
+                                        Chucnang = user.Chucnang,
+                                        Solandn = user.Solandn,
+                                        LinkAPI = user.LinkAPI,
+                                        Manghanh = user.Manghanh,
+                                        Manghe = user.Manghe,
+                                        Vtxk = company.Vtxk,
+                                        Vtxb = company.Vtxb,
+                                        Vtxtx = company.Vtxtx,
+                                        Vtch = company.Vtch,
+                                        Xangdau = company.Xangdau,
+                                        Dien = company.Dien,
+                                        Khidau = company.Khidau,
+                                        Phan = company.Phan,
+                                        Thuocbvtv = company.Thuocbvtv,
+                                        Vacxingsgc = company.Vacxingsgc,
+                                        Muoi = company.Muoi,
+                                        Suate6t = company.Suate6t,
+                                        Duong = company.Duong,
+                                        Thocgao = company.Thocgao,
+                                        Thuocpcb = company.Thuocpcb,
+                                        Dvlt = company.Dvlt,
+                                        XmThepXd = company.XmThepXd,
+                                        SachGk = company.SachGk,
+                                        Etanol = company.Etanol,
+                                        ThucPhamCn = company.ThucPhamCn,
+                                        VlXdCatSan = company.VlXdCatSan,
+                                        HocPhiDaoTaoLaiXe = company.HocPhiDaoTaoLaiXe,
+                                        Than = company.Than,
+                                        Giay = company.Giay,
+                                        ThucAnChanNuoi = company.ThucAnChanNuoi,
+                                        VlXdDatSanlap = company.VlXdDatSanlap,
+                                        VlXdDaXayDung = company.VlXdDaXayDung,
+                                        VanTaiKhachBangOtoCoDinh = company.VanTaiKhachBangOtoCoDinh,
+                                        VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
+                                        CaHue = company.CaHue,
+                                        SieuThi = company.SieuThi,
+                                        BOG = company.BOG,
+                                        KKNYGIA = company.KKNYGIA,
+                                        VlXd = company.VlXd,
+                                        KhamChuaBenh = company.KhamChuaBenh,
+                                        DvThuongMai = company.DvThuongMai,
+                                    }
+                                ).FirstOrDefault();
 
-                        if (model2 != null)
+                    if (model2 != null)
+                    {
+                        string md5_password = "";
+                        using (MD5 md5Hash = MD5.Create())
                         {
-                            string md5_password = "";
-                            using (MD5 md5Hash = MD5.Create())
+                            string change = Helpers.GetMd5Hash(md5Hash, password);
+                            md5_password = change;
+                        }
+                        if (md5_password == model.Password)
+                        {
+                            if (model2.Status == "Chờ xét duyệt")
                             {
-                                string change = Helpers.GetMd5Hash(md5Hash, password);
-                                md5_password = change;
+                                ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                                ViewData["username"] = username;
+                                ViewData["password"] = password;
+                                return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
-                            if (md5_password == model.Password)
+                            else
                             {
-                                if (model2.Status == "Chờ xét duyệt")
+                                if (model.Status == "Vô hiệu")
                                 {
-                                    ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                                    ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
                                     ViewData["username"] = username;
                                     ViewData["password"] = password;
                                     return View("Views/Admin/Systems/Auth/Login.cshtml");
                                 }
                                 else
                                 {
-                                    if (model.Status == "Vô hiệu")
+
+                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model2));
+
+                                    if (model2.Chucnang == "K")
                                     {
-                                        ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
-                                        ViewData["username"] = username;
-                                        ViewData["password"] = password;
-                                        return View("Views/Admin/Systems/Auth/Login.cshtml");
+                                        var permissions = _db.Permissions.Where(p => p.Username == username);
+                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
                                     else
                                     {
-
-                                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model2));
-
-                                        if (model2.Chucnang == "K")
-                                        {
-                                            var permissions = _db.Permissions.Where(p => p.Username == username);
-                                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                        }
-                                        else
-                                        {
-                                            var permissions = _db.Permissions.Where(p => p.Username == model2.Chucnang);
-                                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                        }
-                                        return RedirectToAction("Index", "Home");
+                                        var permissions = _db.Permissions.Where(p => p.Username == model2.Chucnang);
+                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                     }
+                                    return RedirectToAction("Index", "Home");
                                 }
-                            }
-                            else
-                            {
-                                ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
-                                ViewData["username"] = username;
-                                ViewData["Title"] = "Đăng nhập";
-                                return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                            ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
+                            ViewData["username"] = username;
                             ViewData["Title"] = "Đăng nhập";
                             return View("Views/Admin/Systems/Auth/Login.cshtml");
                         }
                     }
+                    else
+                    {
+                        ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                        ViewData["Title"] = "Đăng nhập";
+                        return View("Views/Admin/Systems/Auth/Login.cshtml");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
-                    ViewData["Title"] = "Đăng nhập";
-                    return View("Views/Admin/Systems/Auth/Login.cshtml");
-                }
-                
 
 
             }

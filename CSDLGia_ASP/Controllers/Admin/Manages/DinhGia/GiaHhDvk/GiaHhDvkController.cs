@@ -187,7 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     };
 
                     //var danhmucdv = _db.GiaHhDvkDmDv.Where(t => t.Matt == MattBc && t.Madv == MadvBc).OrderBy(t => t.Mahhdv).ToList();
-                    var danhmuc = _db.GiaHhDvkDm.Where(t => t.Matt == MattBc).ToList();
+                    var danhmuc = _db.GiaHhDvkDm.Where(t => t.Matt == MattBc && t.Theodoi == "TD").ToList();
 
                     var chitiet = new List<GiaHhDvkCt>();
 
@@ -232,7 +232,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
 
                     var modelct_join = (from ct in chitiet
-                                        join dm in _db.GiaHhDvkDm.Where(x=>x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x=>x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -341,7 +341,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
 
                     var modelct_join = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -461,7 +461,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaHhDvkCt = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -694,7 +694,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             //var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == chiTiet.Mahs);
 
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Id == Id)
-                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt) on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,
@@ -802,7 +802,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
         {
             //var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt) on ct.Mahhdv equals dm.Mahhdv
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkCt
                          {
                              Id = ct.Id,
@@ -912,7 +912,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Thoidiemlk = DateTime.Now,
                     };
 
-                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == MattTh);
+                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == MattTh && x.Theodoi == "TD");
                     var chiTiet = new List<GiaHhDvkCt>();
                     foreach (var item in dmHangHoa)
                     {
@@ -940,7 +940,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
 
                     var modelct_join = (from ct in _db.GiaHhDvkCt.Where(x => x.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,

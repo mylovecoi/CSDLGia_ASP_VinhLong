@@ -160,7 +160,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             Nam = request.Nam.ToString()
                         };
                         var model_ct = (from ct in _db.GiaHhDvkCt.Where(t => t.Mahs == Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(t => t.Matt == request.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(t => t.Matt == request.Matt && t.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
