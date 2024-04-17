@@ -205,6 +205,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var model = _db.DsDonVi.FirstOrDefault(t => t.Id == request.Id);
                     //model.MaQhNs = request.MaQhNs;
+                    //model.MaDv = request.MaDv;
                     model.TenDv = request.TenDv;
                     model.DiaChi = request.DiaChi;
                     model.TtLienHe = request.TtLienHe;
