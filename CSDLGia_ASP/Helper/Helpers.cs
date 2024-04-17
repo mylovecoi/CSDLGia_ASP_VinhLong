@@ -217,10 +217,11 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.giasieuthi.baocao", Name = "ĐG - Giá siêu thị  - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong", Name = "Giá tài sản công" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", Name = "Giá tài sản công - Danh mục" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.thongtin", Name = "Giá tài sản công - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.xetduyet", Name = "Giá tài sản công - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.timkiem", Name = "Giá tài sản công - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.baocao", Name = "Giá tài sản công - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.dinhgia.taisancong.baocao", Name = "Giá tài sản công - Báo cáo" });
 
 
             roldelist.Add(new VMRoleList { Role = "", Name = "" });

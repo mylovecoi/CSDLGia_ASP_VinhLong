@@ -20,6 +20,18 @@
                     <input hidden id="Matt" name="Matt" value="@ViewData["Matt"]" />
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
+                            <label>Mã hàng hóa dịch vụ</label>
+                            <select class="form-control kt_select2_1_modal" id="manhom_create" name="dvt_create">
+                                @foreach (var item in dmnhomhh)
+                                {
+                                    <option value="@item.Manhom">@item.Tennhom</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
                             <label>Mã hàng hóa dịch vụ*</label>
                             <input type="text" id="mahhdv_create" name="mahhdv_create" class="form-control" />
                         </div>
@@ -39,7 +51,7 @@
                     <div class="col-xl-10">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị tính</label>
-                            <select class="form-control select2_modal" id="dvt_create" name="dvt_create">
+                            <select class="form-control kt_select2_1_modal" id="dvt_create" name="dvt_create">
                                 @foreach (var item in dvt)
                                 {
                                     <option value="@item.Madvt">@item.Dvt</option>
@@ -66,7 +78,7 @@
 </div>
 
 <!--Edit Modal-->
-<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade kt_select2_modal" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -106,6 +118,32 @@
             <form asp-controller="GiaHhDvkDm" asp-action="Delete">
                 <div class="modal-body">
                     <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_All_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Thông tin hàng hóa dịch vụ
+                    <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa tất cả thông tin hàng hóa dịch vụ???</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaHhDvkDm" asp-action="DeleteAll" id="frm_delete_all">
+                <div class="modal-body">
+                    <input hidden name="Matt" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -212,6 +250,9 @@
         }
     }
 
+    function setDeleteAll(Matt) {
+        $('#frm_delete_all').find("[name='Matt']").val(Matt);
+    }
 
     function getId(id) {
         document.getElementById("id_delete").value = id;
@@ -237,39 +278,37 @@
     }
 
     function Update() {
-        if ($('#manhom_edit').val().trim() == '') {
-            toastr.error("Nhóm hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+        if ($('#mahhdv_edit').val().trim() == '') {
+            toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
         } else {
-            if ($('#mahhdv_edit').val().trim() == '') {
-                toastr.error("Mã hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
+            if ($('#tenhhdv_edit').val().trim() == '') {
+                toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
             } else {
-                if ($('#tenhhdv_edit').val().trim() == '') {
-                    toastr.error("Tên hàng hóa dịch vụ không được để trống!!!", "Lỗi!");
-                } else {
-                    $.ajax({
-                        url: '/GiaHhDvkDmCt/Update',
-                        type: 'POST',
-                        data: {
-                            Manhom: $('#manhom_edit').val(),
-                            Mahhdv: $('#mahhdv_edit').val(),
-                            Tenhhdv: $('#tenhhdv_edit').val(),
-                            Dacdiemkt: $('#dacdiemkt_edit').val(),
-                            Dvt: $('#dvt_edit').val(),
-                            Matt: $('#matt_edit').val(),
-                            Id: $('#id_edit').val()
-                        },
-                        dataType: 'JSON',
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                toastr.success(data.message);
-                                location.reload();
-                            } else {
-                                toastr.error(data.message, "Lỗi!");
-                            }
+                $.ajax({
+                    url: '/GiaHhDvkDmCt/Update',
+                    type: 'POST',
+                    data: {
+                        Manhom: $('#manhom_edit').val(),
+                        Mahhdv: $('#mahhdv_edit').val(),
+                        Tenhhdv: $('#tenhhdv_edit').val(),
+                        Dacdiemkt: $('#dacdiemkt_edit').val(),
+                        Dvt: $('#dvt_edit').val(),
+                        Matt: $('#matt_edit').val(),
+                        Theodoi: $('#theodoi_edit').val(),
+                        Id: $('#id_edit').val()
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
                         }
-                    })
-                }
+                    }
+                })
             }
+
         }
     }
 

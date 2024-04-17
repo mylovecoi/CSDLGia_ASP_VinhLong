@@ -18,12 +18,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public TaiSanCongController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+
+        public TaiSanCongController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
         [Route("GiaTaiSanCong")]
         [HttpGet]
@@ -198,7 +201,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
                     _db.GiaTaiSanCong.Add(model);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     return RedirectToAction("Index", "TaiSanCong", new { Madv = request.Madv });
                 }
@@ -294,6 +298,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         model.Updated_at = DateTime.Now;
                         _db.GiaTaiSanCong.Update(model);
                         _db.SaveChanges();
+                        //Add Log
+                        _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
                     }
 
 
@@ -404,6 +410,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
                     _db.GiaTaiSanCong.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "TaiSanCong", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

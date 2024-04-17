@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
     public class GiaLePhiHtController : Controller
     {
-        private readonly CSDLGiaDBContext _db;
+        private readonly CSDLGiaDBContext _db; 
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaLePhiHtController(CSDLGiaDBContext db)
+        public GiaLePhiHtController(CSDLGiaDBContext db, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _trangThaiHoSoService = trangThaiHoSoService;
+
         }
         [Route("GiaLePhi")]
         [HttpGet]
@@ -91,6 +95,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
 
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
+
                     return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -119,6 +126,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
                     return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -147,6 +156,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -175,6 +186,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
                     return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -203,7 +216,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                     _db.GiaPhiLePhi.Update(model);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
                     return RedirectToAction("Index", "GiaLePhiHt", new { Nam = model.Thoidiem.Year });
                 }
                 else

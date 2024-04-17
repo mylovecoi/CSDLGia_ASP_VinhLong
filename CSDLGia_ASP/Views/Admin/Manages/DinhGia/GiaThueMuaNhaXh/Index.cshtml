@@ -146,7 +146,7 @@
                         <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                             <i class="icon-lg la la-file-alt text-dark"></i>
                         </button>
-                        @if (item.Trangthai == "CHT" || item.Trangthai == "BTL")
+                        @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                         {
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuemuanha.thongtin", "Edit"))
                             {
