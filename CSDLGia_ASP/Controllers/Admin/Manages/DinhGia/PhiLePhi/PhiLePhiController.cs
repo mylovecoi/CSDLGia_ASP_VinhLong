@@ -20,12 +20,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public PhiLePhiController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        public PhiLePhiController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("PhiLePhi/DanhSach")]
@@ -206,18 +208,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         Updated_at = DateTime.Now,
                     };
 
-                    _db.PhiLePhi.Add(mPhiLePhi);
-
-                    var TrangThaihoso = new TrangThaiHoSo
-                    {
-                        MaHoSo = mPhiLePhi.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "Thêm mới"
-                    };
-                    _db.TrangThaiHoSo.Add(TrangThaihoso);
-
+                    _db.PhiLePhi.Add(mPhiLePhi);      
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(mPhiLePhi.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+
 
                     return RedirectToAction("Index", "PhiLePhi", new { request.Madv });
                 }
@@ -304,19 +300,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                     model.Updated_at = DateTime.Now;
 
 
-                    var TrangThaihoso = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Username"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "Cập nhật"
-                    };
-                    _db.TrangThaiHoSo.Add(TrangThaihoso);
-
-                    _db.SaveChanges();
 
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
 
                     return RedirectToAction("Index", "PhiLePhi", new { request.Madv });
                 }
@@ -420,7 +410,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
         [Route("PhiLePhi/Complete")]
         [HttpPost]
-        public IActionResult Complete(string mahs_chuyen, string TrangThai_complete)
+        public IActionResult Complete(string mahs_chuyen, string trangthai_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -428,12 +418,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 {
                     var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == mahs_chuyen);
 
-                    model.Trangthai = TrangThai_complete;
+                    model.Trangthai = trangthai_complete;
                     model.Updated_at = DateTime.Now;
 
 
                     _db.PhiLePhi.Update(model);
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
 
                     return RedirectToAction("Index", "PhiLePhi", new { model.Madv });
 

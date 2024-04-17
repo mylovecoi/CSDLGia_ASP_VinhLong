@@ -31,7 +31,7 @@
                 <div class="mb-3 font-weight-bold font-size-lg">
                     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
                 </div>
-                <input hidden asp-for="Madv"]">
+                <input hidden asp-for="Madv">
                 <input hidden asp-for="Manhom" value="@ViewData["Manhom"]">
                 <input hidden asp-for="Mahs">
 
@@ -45,7 +45,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                         <label>Thời điểm:<span class="text-danger">*</span></label>
-                            <input type="date" id="Thoidiem" name="Thoidiem" class="form-control">
+                            <input type="date" asp-for="Thoidiem" class="form-control">
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -57,7 +57,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                         <label>Ngày báo cáo liền kề:<span class="text-danger">*</span></label>
-                            <input type="date" id="Thoidiemlk" name="Thoidiemlk" class="form-control">
+                            <input type="date" asp-for="Thoidiemlk" class="form-control">
                         </div>
                     </div>
                     <div class="col-xl-12">

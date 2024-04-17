@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
     public class GiaVatLieuXayDungXdController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
-        public GiaVatLieuXayDungXdController(CSDLGiaDBContext db)
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
+        public GiaVatLieuXayDungXdController(CSDLGiaDBContext db, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaVatLieuXayDung/XetDuyet")]
@@ -86,6 +88,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Đã duyệt");
+
                     return RedirectToAction("Index", "GiaVatLieuXayDungXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -114,6 +120,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
+
                     return RedirectToAction("Index", "GiaVatLieuXayDungXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -142,6 +151,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
 
                     return RedirectToAction("Index", "GiaVatLieuXayDungXd", new { Nam = model.Thoidiem.Year });
                 }
@@ -172,6 +183,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
 
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
+
                     return RedirectToAction("Index", "GiaVatLieuXayDungXd");
                 }
                 else
@@ -196,17 +210,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaVatLieuXayDung
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "DD";
-
-                    var trangthaihoso = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TrangThai = "Hủy công bố",
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now
-                    };
-                    _db.TrangThaiHoSo.Add(trangthaihoso);
+                    
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
 
                     return RedirectToAction("Index", "GiaVatLieuXayDungXd");
                 }

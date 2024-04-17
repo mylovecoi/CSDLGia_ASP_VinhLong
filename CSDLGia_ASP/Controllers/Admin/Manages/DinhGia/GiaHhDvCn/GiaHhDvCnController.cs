@@ -21,12 +21,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaHhDvCnController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        public GiaHhDvCnController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaHhDvCn")]
@@ -175,18 +177,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         modelExcel.Congbo = "CHUACONGBO";
                         modelExcel.Updated_at = DateTime.Now;
                         _db.GiaHhDvCn.Update(modelExcel);
-
-                        // Xử lý phần lịch sử hồ sơ 
-                        var lichSu = new TrangThaiHoSo
-                        {
-                            MaHoSo = request.Mahs,
-                            TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                            ThongTin = "Thay đổi thông tin hồ sơ",
-                            ThoiGian = DateTime.Now,
-                            TrangThai = "CHT",
-                        };
-                        _db.TrangThaiHoSo.Add(lichSu);
-                        _db.SaveChanges();
+                        //Add Log
+                        _trangThaiHoSoService.LogHoSo(modelExcel.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
                         return RedirectToAction("Index", "GiaHhDvCn", new { request.Madv });
                     }
@@ -228,6 +220,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model_ct2 = _db.GiaHhDvCnCt.Where(t => t.Trangthai == "CXD");
                     _db.GiaHhDvCnCt.RemoveRange(model_ct2);
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     return RedirectToAction("Index", "GiaHhDvCn", new { request.Madv });
                 }
@@ -323,10 +318,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCn.Update(model);
                     _db.SaveChanges();
-
-                    ViewData["MenuLv1"] = "menu_giakhac";
-                    ViewData["MenuLv2"] = "menu_hhdvcn";
-                    ViewData["MenuLv3"] = "menu_hhdvcn_tt";
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "GiaHhDvCn", new { Madv = model.Madv });
 
                 }
