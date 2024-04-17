@@ -52,7 +52,7 @@
     <hr />
     <div class="card-body">
         <div class="mb-12">
-         @*    <div class="row">
+         @*<div class="row">
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
@@ -165,7 +165,6 @@
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                 }
-
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Delete"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.Username', '@item.Name')">
