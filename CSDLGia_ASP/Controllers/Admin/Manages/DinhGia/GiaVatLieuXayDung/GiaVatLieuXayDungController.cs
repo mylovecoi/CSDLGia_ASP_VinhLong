@@ -20,12 +20,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaVatLieuXayDungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        public GiaVatLieuXayDungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, 
+                                            ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaVatLieuXayDung/DanhSach")]
@@ -93,6 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                     {
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
+                        Thoidiem = DateTime.Now
                     };
 
                     // lấy danh mục theo mã nhóm truyền sang
@@ -115,8 +119,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
                     _db.GiaVatLieuXayDungCt.AddRange(chitiet);
                     _db.SaveChanges();
-
                     model.GiaVatLieuXayDungCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
+                
 
                     ViewData["Title"] = "Bảng giá vật liệu xây dựng";
                     ViewData["MenuLv1"] = "menu_giakhac";
@@ -188,17 +192,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                         }
                     }
 
-                    var trangthaihoso = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TrangThai = "Thêm mới",
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now
-                    };
-                    _db.TrangThaiHoSo.Add(trangthaihoso);
-
                     _db.GiaVatLieuXayDungCt.UpdateRange(modelct);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     return RedirectToAction("Index", "GiaVatLieuXayDung", new { request.Madv });
                 }
@@ -291,6 +288,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
                     return RedirectToAction("Index", "GiaVatLieuXayDung", new { request.Madv });
                 }
@@ -378,17 +377,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = trangthai_complete;
-
-                    var trangthaihoso = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TrangThai = "Hoàn thành",
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now
-                    };
-                    _db.TrangThaiHoSo.Add(trangthaihoso);
+              
                     _db.GiaVatLieuXayDung.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
 
                     return RedirectToAction("Index", "GiaVatLieuXayDung", new { model.Madv });
 

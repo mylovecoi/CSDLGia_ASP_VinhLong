@@ -50,8 +50,8 @@
                 @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
                 {
                     <a class="btn btn-primary font-weight-bolder" asp-controller="GiaVatLieuXayDung" asp-action="Create"
-                       asp-route-Madv="@ViewData["Madv"]">
-                        <i class="la la-file-excel-o"></i>Thêm mới
+                       asp-route-MadvBc="@ViewData["Madv"]">
+                        <i class="la la-plus"></i>Thêm mới
                     </a>
                     <a class="btn btn-success font-weight-bolder" asp-controller="GiaVatLieuXayDungExcel" asp-action="Index"
                        asp-route-Madv="@ViewData["Madv"]">
