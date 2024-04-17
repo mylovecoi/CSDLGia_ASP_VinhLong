@@ -4,6 +4,7 @@ using CSDLGia_ASP.Models.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
@@ -26,6 +27,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Index"))
                 {
                     var dmnghekd = _db.DmNgheKd.Where(t => t.Manganh == Manganh).ToList();
+
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Manganh"] = Manganh;
                     ViewData["Title"] = "Danh mục nghề kinh doanh";
                     ViewData["MenuLv1"] = "menu_hethong";
@@ -47,12 +50,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DmNganhNghe/ChiTiet/Store")]
         [HttpPost]
-        public JsonResult Store(string Manganh, string Manghe, string Tennghe, string Theodoi)
+        public JsonResult Store(string Manganh, string Manghe, string[] Madv, string Tennghe, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Create"))
                 {
+                    string str_mdv = Madv.Count() > 0 ? string.Join(",", Madv.ToArray()) : "";
                     var check = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe);
                     if (check == null)
                     {
@@ -60,6 +64,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         {
                             Manganh = Manganh,
                             Manghe = Manghe,
+                            Madv = str_mdv,
                             Tennghe = Tennghe,
                             Theodoi = Theodoi,
                             Created_at = DateTime.Now,
@@ -100,22 +105,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Edit"))
                 {
                     var model = _db.DmNgheKd.FirstOrDefault(p => p.Id == Id);
+                    var dsdonvi = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     if (model != null)
                     {
+                        List<string> list_madv = !string.IsNullOrEmpty(model.Madv) ? new List<string>(model.Madv.Split(',')) : new List<string>();
                         string result = "<div class='modal-body' id='frm_edit'>";
                         result += "<div class='row'>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Mã nghề<span class='require'>*</span></label>";
                         result += "<input type='text' class='form-control' id='manghe_edit' name='manghe_edit' value='" + model.Manghe + "'/>";
                         result += "</div>";
                         result += "</div>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên nghề<span class='require'>*</span></label>";
                         result += "<input type='text' class='form-control' id='tennghe_edit' name='tennghe_edit' value='" + model.Tennghe + "'/>";
                         result += "</div>";
                         result += "</div>";
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Theo dõi</label>";
@@ -133,6 +143,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Đơn vị quản lý*</label>";
+                        result += "<select class='form-control select2multi' multiple='multiple' id='madv_edit' name='madv_edit' style='width:100%'>";
+                        foreach(var dv in dsdonvi)
+                        {
+                            result += "<option value='" + dv.MaDv + "' " + (list_madv.Contains(dv.MaDv) ? "selected" : "") + ">" + dv.TenDv + "</option>";
+                        }
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+
                         result += "</div>";
                         result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
@@ -161,7 +184,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DmNganhNghe/ChiTiet/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Manghe, string Tennghe, string Theodoi)
+        public IActionResult Update(int Id, string Manghe, string[] Madv, string Tennghe, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -175,7 +198,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             if (check == 0)
                             {
                                 var model = _db.DmNgheKd.FirstOrDefault(t => t.Id == Id);
+                                string str_madv = Madv.Count() > 0 ? string.Join(",", Madv.ToArray()) : "";
                                 model.Manghe = Manghe;
+                                model.Madv = str_madv;
                                 model.Tennghe = Tennghe;
                                 model.Theodoi = Theodoi;
                                 model.Updated_at = DateTime.Now;
@@ -216,7 +241,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return Json(data);
             }
         }
-
 
         [Route("DmNganhNghe/ChiTiet/Delete")]
         [HttpPost]

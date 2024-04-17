@@ -106,7 +106,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Nghề</label>
-                            <select class="form-control" id="manghe_create" name="manghe_create" style="width: 100%">
+                            <select class="form-control select2basic" id="manghe_create" name="manghe_create" style="width: 100%" onchange="AjaxGetDvNhanHs()">
                                 @foreach (var nganh in dmnganhkd)
                                 {
                                     <optgroup label="@nganh.Tennganh">
@@ -125,7 +125,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị nhận hồ sơ</label>
-                            <select class="form-control" id="madvhs_create" name="madvhs_create">
+                            <select class="form-control select2basic" id="madvhs_create" name="madvhs_create" style="width: 100%">
                                 <option value="">--Chọn đơn vị nhận hồ sơ--</option>
                                 @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                                 {
@@ -202,33 +202,29 @@
 </div>
 
 <script>
-
-    function UpdateNghesDropdown() {
-        var selectedNganh = $('#manghanh_create').val();
+    function AjaxGetDvNhanHs() {
+        var selectedNghe = $('#manghe_create').val();
 
         $.ajax({
-            url: "/Ajax/GetNghes",
+            url: "/Ajax/GetDvNhanHs",
             type: "GET",
             data: {
-                Manghanh: selectedNganh
+                Manghe: selectedNghe
             },
             success: function (data) {
                 if (data.status === 'success') {
-                    console.log(data.nghes);
-                    // Xóa tất cả các option hiện tại trong menu Nghề
-                    $('#manghe_create').empty();
-                    // Thêm các option mới từ dữ liệu trả về
+                    $('#madv_create').empty();
                     var html = '';
-                    $.each(data.nghes, function (index, nghe) {
-                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
+                    $.each(data.dsdonvi, function (index, dv) {
+                        html += '<option value="' + dv.madv + '">' + dv.tendv + '</option>';
                     });
-                    $('#manghe_create').append(html);
+                    $('#madv_create').append(html);
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
             },
             error: function () {
-                toastr.error("Không thể tải danh sách nghề.", "Lỗi!");
+                toastr.error("Không thể tải danh sách đơn vị.", "Lỗi!");
             }
         });
     }
@@ -342,5 +338,35 @@
                 }
             }
         })
+    }
+
+    function UpdateNghesDropdown() {
+        var selectedNganh = $('#manghanh_create').val();
+
+        $.ajax({
+            url: "/Ajax/GetNghes",
+            type: "GET",
+            data: {
+                Manghanh: selectedNganh
+            },
+            success: function (data) {
+                if (data.status === 'success') {
+                    console.log(data.nghes);
+                    // Xóa tất cả các option hiện tại trong menu Nghề
+                    $('#manghe_create').empty();
+                    // Thêm các option mới từ dữ liệu trả về
+                    var html = '';
+                    $.each(data.nghes, function (index, nghe) {
+                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
+                    });
+                    $('#manghe_create').append(html);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            },
+            error: function () {
+                toastr.error("Không thể tải danh sách nghề.", "Lỗi!");
+            }
+        });
     }
 </script>
