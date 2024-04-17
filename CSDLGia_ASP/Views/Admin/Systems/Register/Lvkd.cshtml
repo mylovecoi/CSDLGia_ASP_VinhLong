@@ -81,7 +81,7 @@
             </div>
             <div class="modal-body">
                 <div class="row text-left">
-                    <div class="col-xl-12">
+                    @* <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Ngành</label>
                             <select class="form-control" id="manghanh_create" name="manghanh_create" onchange="UpdateNghesDropdown()">
@@ -102,31 +102,31 @@
                                 }
                             </select>
                         </div>
-                    </div>
-                    @* <div class="col-xl-12">
+                    </div> *@
+                    <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Địa bàn kinh doanh</label>
-                            <select class="form-control" id="madiaban_create" name="madiaban_create">
-                                <option value="">--Chọn địa bàn kinh doanh--</option>
-                                @foreach (var item in dsdiaban)
+                            <label>Nghề</label>
+                            <select class="form-control" id="manghe_create" name="manghe_create" style="width: 100%">
+                                @foreach (var nganh in dmnganhkd)
                                 {
-                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                    <optgroup label="@nganh.Tennganh">
+                                        @{
+                                            var nghe = dmnghekd.Where(t => t.Manganh == nganh.Manganh);
+                                        }
+                                        @foreach (var item in nghe)
+                                        {
+                                            <!option value="@item.Manghe">&emsp;@item.Tennghe</!option>
+                                        }
+                                    </optgroup>
                                 }
                             </select>
                         </div>
-                    </div> *@
+                    </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Đơn vị nhận hồ sơ</label>
                             <select class="form-control" id="madvhs_create" name="madvhs_create">
                                 <option value="">--Chọn đơn vị nhận hồ sơ--</option>
-                                @* @foreach (var db in dsdiaban)
-                                {
-                                    @foreach (var item in dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "NHAPLIEU").ToList())
-                                    {
-                                        <option value="@item.MaDv">@item.TenDv</option>
-                                    }
-                                } *@
                                 @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                                 {
                                     <option value="@item.MaDv">@item.TenDv</option>
@@ -241,7 +241,6 @@
             $('#Create_Lvkd_Modal').modal("show");
         }
     }
-
 
     function SetStoreLvkd() {
         $.ajax({
