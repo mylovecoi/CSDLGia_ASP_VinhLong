@@ -1,9 +1,10 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<VMCompany>)ViewData["DsDonVi"];
     int Nam = Int32.Parse(ViewData["Nam"].ToString());
 }
+@model IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBog>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -22,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/CongBo/GiaLePhiTruocBa?';
+                var current_path_url = '/CongBo/BinhOnGia?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -38,7 +39,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Thông tin hồ sơ giá lệ phí trước bạ
+                    Thông tin hồ sơ giá mặt hàng bình ổn giá
                 </span>
             </h3>
         </div>
@@ -68,10 +69,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                    <option value="all">--Tất cả--</option>
+                        <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
-                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                            <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>@item.Tendn</!option>
                         }
                     </select>
                 </div>
@@ -81,9 +82,9 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">STT</th>
-                    <th width="10%">Số QĐ</th>
-                    <th>Mô tả</th>
-                    <th>Thời điểm xác định</th>
+                    <th>Ngày kê khai</th>
+                    <th>Ngày thực hiện<br />mức giá kê khai</th>
+                    <th>Số công văn</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
 
@@ -96,18 +97,18 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">@item.Soqd</td>
-                            <td></td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
+                            <td class="text-center active">@item.Socv</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "CB")
+                                @if (item.Trangthai_ad == "CB")
                                 {
                                     <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
                                     <br />
                                 }
                             </td>
                             <td>
-                                <a asp-controller="GiaKhac" asp-action="GiaLePhiTruocBaShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="KeKhaiDkg" asp-action="BinhOnGiaShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
@@ -115,7 +116,6 @@
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
                             </td>
-
                         </tr>
                     }
                 }
@@ -123,4 +123,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaLePhi/ThongTinGiayTo/Show.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDkg/KkMhBog/ThongTinGiayTo/Show.cshtml")

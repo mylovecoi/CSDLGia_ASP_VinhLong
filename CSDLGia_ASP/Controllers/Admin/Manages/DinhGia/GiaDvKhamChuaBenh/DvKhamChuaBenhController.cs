@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.khamchuabenh.thongtin", "Index"))
                 {
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
                     IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb> model = _db.GiaDvKcb;

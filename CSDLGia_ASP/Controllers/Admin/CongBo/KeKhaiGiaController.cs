@@ -106,9 +106,6 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             }
 
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá dịch vụ lữ hành";
-            ViewData["MenuLv1"] = "menu_kknygia";
-            ViewData["MenuLv2"] = "menu_kkgluhanh";
-            ViewData["MenuLv3"] = "menu_ttluhanh";
             return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
         }
 
@@ -199,7 +196,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaDvLtCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá dịch vụ lưu trú";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaDvlt/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/XiMangThepXayDung")]
@@ -289,7 +286,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaXmTxdCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá xi măng thép xây dựng";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaXmTxd/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/Than")]
@@ -379,7 +376,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaThanCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá than";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaThan/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/ThucAnChanNuoi")]
@@ -469,7 +466,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaTaCnCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá thức ăn chăn nuôi";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaTaCn/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/Giay")]
@@ -559,7 +556,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaGiayCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá giấy";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaGiay/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/SachGiaoKhoa")]
@@ -649,7 +646,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaSachCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá sách giáo khoa";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaSach/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/Etanol")]
@@ -739,7 +736,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaLuHanhCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá Etanol nhiên liệu không biến tính, khí tự nhiên hóa lỏng(LNG); khí thiên nhiên nén (CNG)";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaEtanol/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/ThucPhamChucNang")]
@@ -829,7 +826,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGsCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá thực phẩm chức năng cho trẻ em dưới 6 tuổi";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaTpcn/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/VanChuyenBangXeBuyt")]
@@ -919,7 +916,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaVtXbCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá cước vận tải hành khách bằng xe buýt theo tuyến cố định";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXb/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/VanChuyenBangOto")]
@@ -1009,7 +1006,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaVtXkCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá cước vận tải hành khách bằng ôtô tuyến cố định";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXk/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/VanChuyenBangTaxi")]
@@ -1099,7 +1096,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaVtXtxCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá cước vận tải hành khách bằng xe taxi";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVtXtx/Show.cshtml", hoso_kk);
         }
 
         [Route("CongBo/VatLieuXayDung")]
@@ -1189,7 +1186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkGiaVlXdCt = modelct.ToList();
             }
             ViewData["Title"] = "Xem chi tiết hồ sơ kê khai giá vật liệu xây dựng";
-            return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", hoso_kk);
+            return View("Views/Admin/Manages/KeKhaiGia/KkGiaVatLieuXayDung/Show.cshtml", hoso_kk);
         }
     }
 }

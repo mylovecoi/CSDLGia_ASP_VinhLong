@@ -192,7 +192,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         ViewData["tonghop"] = tonghop;
                         ViewData["quantri"] = quantri;*/
                         ViewData["ChucNang"] = _db.GroupPermissions.ToList();
-                        ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == request.Madv).ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi;
                         ViewData["MaDv"] = request.Madv;
                         ViewData["Title"] = "Thêm mới thông tin tài khoản";
                         ViewData["MenuLv1"] = "menu_hethong";
@@ -229,6 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     /*ViewData["nhaplieu"] = (model.Chucnang == "NHAPLIEU;" || model.Chucnang == "NHAPLIEU;TONGHOP;") ? "NHAPLIEU;" : "";
                     ViewData["tonghop"] = (model.Chucnang == "TONGHOP;" || model.Chucnang == "NHAPLIEU;TONGHOP;") ? "TONGHOP;" : "";
                     ViewData["quantri"] = (model.Chucnang == "QUANTRI;") ? "QUANTRI;" : "";*/
+                    ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["Title"] = "Chỉnh sửa thông tin tài khoản";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
@@ -265,7 +266,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         chucnang += !string.IsNullOrEmpty(nhaplieu) ? "NHAPLIEU;" : "";
                         chucnang += !string.IsNullOrEmpty(tonghop) ? "TONGHOP;" : "";
                         chucnang += !string.IsNullOrEmpty(quantri) ? "QUANTRI;" : "";*/
-
+                        model.Madv = request.Madv;
                         model.Name = request.Name;
                         model.Status = request.Status;
                         model.Chucnang = request.Chucnang;
@@ -292,7 +293,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         /*ViewData["nhaplieu"] = nhaplieu;
                         ViewData["tonghop"] = tonghop;
                         ViewData["quantri"] = quantri;*/
-                        ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == request.Madv).ToList();
+                        ViewData["DsDonVi"] = _db.DsDonVi;
                         ViewData["MaDv"] = request.Madv;
                         ViewData["Title"] = "Chỉnh sửa thông tin tài khoản";
                         ViewData["MenuLv1"] = "menu_hethong";
