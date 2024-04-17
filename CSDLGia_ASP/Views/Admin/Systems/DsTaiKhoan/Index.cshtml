@@ -77,6 +77,7 @@
                 <thead>
                     <tr style="text-align:center">
                         <th width="5%">#</th>
+                        <th>Phân loại</th>
                         <th>Tên tài khoản</th>
                         <th>Tài khoản truy cập</th>
                         @*  <th colspan="4">Chức năng</th> *@
@@ -95,6 +96,18 @@
                     {
                         <tr>
                             <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td style="text-align:center">
+                                <span style="width: 112px;">
+                                    @if (item.Level == "DN")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-primary label-inline">Doanh nghiệp</span>
+                                    }                                   
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-danger label-inline">Đơn vị quản lý</span>
+                                    }
+                                </span>
+                            </td>
                             <td>@item.Name</td>
                             <td class="active text-center">@item.Username</td>
                             @*<td style="text-align:center">
