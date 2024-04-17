@@ -40,19 +40,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                        Manghe = lvkd.Manghe,
                                        Madv = com.Madv,
                                        Madiaban = com.Madiaban,
+                                       Macqcq = lvkd.Macqcq,
                                        Mahs = com.Mahs,
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
-
                     if (dsdonvi.Count > 0)
                     {
-
-
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
                         {
                             Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                         }
                         else
                         {
@@ -730,6 +727,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
             if (modeldv != null)
             {
                 hoso.Tendvhienthi = modeldv.TenDvHienThi;
+                hoso.Chucvuky = modeldv.ChucVuKy;
+                hoso.Nguoiky = modeldv.NguoiKy;
             }
             return hoso;
         }
