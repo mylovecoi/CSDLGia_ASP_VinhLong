@@ -27,6 +27,11 @@
     <link href="~/Admin/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -36,9 +41,9 @@
         <!--begin::Error-->
         <div class="d-flex flex-row-fluid flex-column bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="background-image: url(../../../Admin/assets/media/error/bg1.jpg);">
             <!--begin::Content-->
-            <h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">Thành công</h1>
+            <h2 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">Thành công</h2>
             <p class="font-size-h3 text-muted font-weight-normal"><b>@ViewData["Messages"]</b></p>
-            <p class="font-size-h5 text-muted font-weight-normal"> Bấm vào <button onclick="goBack()">đây để quay lại</button> </p>
+            <p class="font-size-h5 text-muted font-weight-normal"> <button onclick="goBack()">Bấm vào đây để quay lại</button> </p>
             <!--end::Content-->
         </div>
         <!--end::Error-->
@@ -54,10 +59,5 @@
     <script src="~/Admin/assets/js/scripts.bundle.js"></script>
     <!--end::Global Theme Bundle-->
 </body>
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
 <!--end::Body-->
 </html>

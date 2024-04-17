@@ -5,6 +5,8 @@
     string maChucNang = (string)ViewData["maKetNoiAPI"];
     var linkAPIXacthuc = HttpContextAccessor.HttpContext.Session.GetString("LinkAPIXacthuc");
     string linkAPIKetNoi = HttpContextAccessor.HttpContext.Session.GetString("LinkAPIKetNoi");
+    string maDiaBanHanhChinh = HttpContextAccessor.HttpContext.Session.GetString("MaDiaBanHanhChinh");
+    string maDonViThuThap = HttpContextAccessor.HttpContext.Session.GetString("MaDonViThuThap");
     string linkKetNoi = "";
 
     // Chuyển đổi chuỗi JSON thành một Dictionary
@@ -63,13 +65,13 @@
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Mã địa bàn hành chính<span class="text-danger">*</span></label>
-                                <input type="text" name="DIA_BAN" value="" class="form-control" required />
+                                <input type="text" name="DIA_BAN" value="@maDiaBanHanhChinh" class="form-control" required />
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Mã đơn vị thu thập<span class="text-danger">*</span></label>
-                                <input type="text" name="NGUON_SO_LIEU" value="" class="form-control" required />
+                                <input type="text" name="NGUON_SO_LIEU" value="@maDonViThuThap" class="form-control" required />
                             </div>
                         </div>
                     </div>

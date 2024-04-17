@@ -3,12 +3,12 @@
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkDm>
 
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -26,29 +26,32 @@
     </script>
 }
 
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h3 class="card-label">
-                    @ViewData["Tentt"]<small> chi tiết</small><br />
-                </h3>
-            </div>
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Tentt"]<small> chi tiết</small><br />
+            </h3>
+        </div>
+        <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Create"))
             {
                 @if (ViewData["Matt"].ToString() != "")
                 {
-                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary">
+                    <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-light-primary mr-2">
                         <i class="la la-plus"></i>Thêm mới
                     </button>
-                    <span>&ensp;</span>
-                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaHhDvkDm" asp-action="NhanExcel"
+
+                    <a class="btn btn-success font-weight-bolder mr-2" asp-controller="GiaHhDvkDm" asp-action="NhanExcel"
                        asp-route-Matt="@ViewData["Matt"]">
                         <i class="la la-file-excel-o"></i>Nhận dữ liệu
                     </a>
-                    <span>&ensp;</span>                   
+
+                    <button type="button" data-target="#Delete_All_Modal" onclick="setDeleteAll('@ViewData["Matt"]')" data-toggle="modal" class="btn btn-light-primary mr-2">
+                        <i class="icon-lg la la-trash text-danger"></i>Xoá danh mục
+                    </button>
                 }
-               
+
             }
             <a asp-controller="GiaHhDvkNhom" asp-action="Index" class="btn btn-light-danger mr-2">
                 <i class="la la-reply"></i>Quay lại
@@ -65,11 +68,12 @@
                     <th>Tên hàng hóa dịch vụ</th>
                     <th>Đặc điểm kỹ thuật</th>
                     <th>Đơn vị tính</th>
+                    <th>Theo dõi</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.OrderBy(x => x.Mahhdv))
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
@@ -77,12 +81,22 @@
                         <td class="success" style="font-weight: bold">@item.Tenhhdv</td>
                         <td style="text-align: left">@item.Dacdiemkt</td>
                         <td style="text-align: center">@item.Dvt</td>
+                        <td style="text-align: center">
+                            @if (item.Theodoi == "TD")
+                            {
+                                <span class="label font-weight-bold label-lg label-primary label-inline">Có</span>
+                            }
+                            else
+                            {
+                                <span class="label font-weight-bold label-lg label-danger label-inline">Không</span>
+                            }
+                        </td>
                         <td>
 
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                data-target="#Edit_Modal" onclick="editId('@item.Id')">
+                                        data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                             }
@@ -90,7 +104,7 @@
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                data-target="#Delete_Modal" onclick="getId('@item.Id')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
