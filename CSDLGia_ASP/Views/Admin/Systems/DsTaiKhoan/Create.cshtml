@@ -40,21 +40,13 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Đơn vị</label>
-                        @if (Model.Level == "DN")
-                        {
-                            <input asp-for="Madv" class="form-control" />
-                        }
-                        else
-                        {
-                            <select asp-for="Madv" class="form-control">
-                                @foreach (var item in dsdonvi)
-                                {
-                                    <option value="@item.MaDv">@item.TenDv</option>
-                                }
-                            </select>
-                        }
+                        <select asp-for="Madv" class="form-control">
+                            @foreach (var item in dsdonvi)
+                            {
+                                <option value="@item.MaDv">@item.TenDv</option>
+                            }
+                        </select>
                     </div>
-
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">

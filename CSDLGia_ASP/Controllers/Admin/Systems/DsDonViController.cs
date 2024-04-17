@@ -107,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         {
                             MaDiaBan = request.MaDiaBan,
                             //MaQhNs = request.MaQhNs,
-                            MaDv = request.MaDv,
+                            MaDv = DateTime.Now.ToString("yyMMddssmmHH"),
                             TenDv = request.TenDv,
                             DiaChi = request.DiaChi,
                             TtLienHe = request.TtLienHe,

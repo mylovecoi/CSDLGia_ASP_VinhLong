@@ -18,13 +18,13 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên sản phẩm, dịch vụ*</label>
-                                <input type="text" name="Tenspdv" class="form-control" />
+                                <input type="text" name="Tenspdv" class="form-control money-decimal-mask" />
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn giá*</label>
-                                <input type="text" name="Dongia" class="form-control" />
+                                <input type="text" name="Dongia" class="form-control money-decimal-mask" />
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,7 @@
                 form.find("[name='Id']").val(data.id);               
                 form.find("[name='Tenspdv']").val(data.tenspdv);
                 form.find("[name='Dongia']").val(data.dongia);
+                MoneyDecimalMask();
             }
         })
     }

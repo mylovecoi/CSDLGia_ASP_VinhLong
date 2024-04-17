@@ -742,14 +742,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ trước</label>";
-                result += "<input type='number' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ này</label>";
-                result += "<input type='number' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control text-right' style='font-weight: bold'/>";
+                result += "<input type='number' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
