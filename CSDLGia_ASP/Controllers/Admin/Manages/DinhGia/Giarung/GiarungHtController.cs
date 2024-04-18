@@ -32,7 +32,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         [Route("GiaRung/XetDuyet")]
         [HttpGet]
 
-        public IActionResult Index(string Madv, int Nam)
+        public IActionResult Index( int Nam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {

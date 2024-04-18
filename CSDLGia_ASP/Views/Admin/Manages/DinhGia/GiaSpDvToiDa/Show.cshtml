@@ -14,7 +14,7 @@
 <p style="font-size: 16px;">
     Địa bàn áp dụng:
     @if (!string.IsNullOrEmpty(Model.Madiaban))
-        @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban).TenDiaBan
+        @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban)?.TenDiaBan ?? ""
 </p>
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
