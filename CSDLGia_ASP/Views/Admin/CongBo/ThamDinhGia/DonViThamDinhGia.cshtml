@@ -18,7 +18,7 @@
     <script>
         $(document).ready(function () {
             TableManaged.init();
-        });       
+        });
     </script>
 }
 
@@ -43,8 +43,9 @@
                     <th width="4%">#</th>
                     <th>Mã GCN</th>
                     <th>Tên đơn vị</th>
-                    <th>Địa chỉ</th>                   
-                    <th>Trạng thái</th> 
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,14 +59,19 @@
                             <td>@item.Tendv</td>
                             <td>@item.Diachi</td>
                             <td class="text-center">
-                            @if (item.Theodoi == "TD")
-                            {
-                                <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Theo dõi</span>
-                            }
-                            @if (item.Theodoi == "KTD")
-                            {
-                                <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Ngưng theo dõi</span>
-                            }                                
+                                @if (item.Theodoi == "TD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Theo dõi</span>
+                                }
+                                @if (item.Theodoi == "KTD")
+                                {
+                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Ngưng theo dõi</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="ThamDinhGiaDv" asp-action="LichSuDonvi_Xem" asp-route-IdDV="@item.Id" target="_blank" class="btn btn-sm btn-clean btn-icon" title="Lịch sử theo dõi">
+                                    <i class="icon-lg la la-clipboard-check text-primary"></i>
+                                </a>
                             </td>
                         </tr>
                     }
