@@ -665,9 +665,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 {
                     var model = (from ct in _db.GiaHhDvkCt
                                  join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
-                                 join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
-                                 join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
                                  join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
+                                 //join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv 
+                                 join dm in _db.GiaHhDvkDm on new { ct.Mahhdv, nhom.Matt } equals new { dm.Mahhdv, dm.Matt }
+                                 join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
                                  select new GiaHhDvkCt
                                  {
                                      Id = ct.Id,
@@ -685,8 +686,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Thoidiem = kk.Thoidiem,
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
+                                     Trangthai = kk.Trangthai
                                  });
-                    
+                    model = model.Where(t => t.Trangthai == "HT");
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);
@@ -797,14 +799,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ trước</label>";
-                result += "<input type='number' id='gialk_edit' name='gialk_edit' value='" + model.Gialk + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
+                result += "<input type='text' id='gialk_edit' name='gialk_edit' value='" + Helpers.ConvertDbToStr(model.Gialk) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá kỳ này</label>";
-                result += "<input type='number' id='gia_edit' name='gia_edit' value='" + model.Gia + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + Helpers.ConvertDbToStr(model.Gia) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 

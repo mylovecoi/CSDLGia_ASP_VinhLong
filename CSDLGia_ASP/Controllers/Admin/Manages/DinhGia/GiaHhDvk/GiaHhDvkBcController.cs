@@ -113,11 +113,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                 {
 
+                    //var model = (from ct in _db.GiaHhDvkCt
+                    //             join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
+                    //             join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
+                    //             join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
+                    //             join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
+                    //             select new GiaHhDvkCt
+                    //             {
+                    //                 Id = ct.Id,
+                    //                 Mahs = ct.Mahs,
+                    //                 Mahhdv = ct.Mahhdv,
+                    //                 Gialk = ct.Gialk,
+                    //                 Gia = ct.Gia,
+                    //                 Ghichu = ct.Ghichu,
+                    //                 Manhom = ct.Manhom,
+                    //                 Tenhhdv = dm.Tenhhdv,
+                    //                 Dacdiemkt = dm.Dacdiemkt,
+                    //                 Dvt = dm.Dvt,
+                    //                 Madv = kk.Madv,
+                    //                 Matt = kk.Matt,
+                    //                 Thoidiem = kk.Thoidiem,
+                    //                 Tendv = dv.TenDv,
+                    //                 Tentt = nhom.Tentt,
+                    //                 Trangthai = kk.Trangthai
+                    //             }) ;
                     var model = (from ct in _db.GiaHhDvkCt
                                  join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
-                                 join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
-                                 join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
                                  join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
+                                 //join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv 
+                                 join dm in _db.GiaHhDvkDm on new { ct.Mahhdv, nhom.Matt } equals new { dm.Mahhdv, dm.Matt }
+                                 join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
                                  select new GiaHhDvkCt
                                  {
                                      Id = ct.Id,
@@ -136,8 +161,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                      Tendv = dv.TenDv,
                                      Tentt = nhom.Tentt,
                                      Trangthai = kk.Trangthai
-                                 }) ;
-         
+                                 });
+
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.Trangthai == "HT");
 
                     if (Matt != "all") { model = model.Where(t => t.Matt == Matt); }

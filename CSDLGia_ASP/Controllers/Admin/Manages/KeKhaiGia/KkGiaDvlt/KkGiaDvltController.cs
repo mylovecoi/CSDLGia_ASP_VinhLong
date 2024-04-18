@@ -441,6 +441,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                     if (modeldv != null)
                     {
                         hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
+                        hoso_kk.Chucvuky = modeldv.ChucVuKy;
+                        hoso_kk.Nguoiky = modeldv.NguoiKy;
                     }
 
                     var modelct = _db.KkGiaDvLtCt.Where(t => t.Mahs == model.Mahs);
