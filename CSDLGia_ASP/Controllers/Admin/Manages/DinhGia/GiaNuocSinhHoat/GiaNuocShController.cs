@@ -699,14 +699,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             }
         }
 
-        [Route("GiaNuocSh/Print")]
-        [HttpPost]
-        public IActionResult PrintSearch(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                        double DonGiaTu_Search, double DonGiaDen_Search, string Doituongsd_Search)
+        [HttpGet("GiaNuocSh/PrintSearch")]
+        public IActionResult PrintSearch(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Doituongsd)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.timkiem", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.timkiem", "Index"))
                 {
                     var model = (from hosoct in _db.GiaNuocShCt
                                  join hoso in _db.GiaNuocSh on hosoct.Mahs equals hoso.Mahs
@@ -726,16 +724,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                      Mahs = hoso.Mahs,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.ThoiDiem >= NgayTu_Search && t.ThoiDiem <= NgayDen_Search && t.DonGia1 >= DonGiaTu_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.DonGia1 <= DonGiaDen_Search); }
-                    if (!string.IsNullOrEmpty(Doituongsd_Search))
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.DonGia1 >= DonGiaTu || t.DonGia2 >= DonGiaTu && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.DonGia1 <= DonGiaDen || t.DonGia2 <= DonGiaDen); }
+                    if (!string.IsNullOrEmpty(Doituongsd))
                     {
-                        model = model.Where(t => t.Doituongsd.ToLower().Contains(Doituongsd_Search.ToLower()));
+                        model = model.Where(t => t.Doituongsd.ToLower().Contains(Doituongsd.ToLower()));
                     }
-
-
-
+                    ViewData["Title"] = "Thông tin tìm kiếm";
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/TimKiem/Result.cshtml", model);
                 }
                 else

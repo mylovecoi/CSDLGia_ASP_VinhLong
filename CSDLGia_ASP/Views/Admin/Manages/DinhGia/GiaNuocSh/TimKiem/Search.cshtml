@@ -2,7 +2,7 @@
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
 
     string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
-    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");  
+    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
 
     var DanhSachHoSo = (IEnumerable<GiaNuocSh>)ViewData["DanhSachHoSo"];
 
@@ -55,8 +55,30 @@
         }
 
         function Print() {
-            var form = document.getElementById("frm_search");
-            form.submit();
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaNuocSh/PrintSearch?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var Doituongsd = '&Doituongsd=' + $('#Doituongsd_Search').val();
+
+                    var url = current_path_url + Madv + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + Doituongsd;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
         }
 
     </script>
@@ -80,67 +102,65 @@
     </div>
     <hr />
     <div class="card-body">
-        <form asp-controller="GiaNuocSh" asp-action="PrintSearch" method="post" target="_blank" id="frm_search">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label style="font-weight:bold;">Đơn vị</label>
-                        <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
-                            <option value="all">--Tất cả--</option>
-                            @foreach (var item in dscqcq)
-                            {
-                                <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDv</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Thời gian nhập từ</label>
-                        <input type="date" class="form-control" name="NgayTu_Search" id="NgayTu_Search" value="@NgayTu" onchange="GetList()" />
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Thời gian nhập đến</label>
-                        <input type="date" class="form-control" name="NgayDen_Search" id="NgayDen_Search" value="@NgayDen" onchange="GetList()" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Thông tin quyết định</label>
-                        <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
-                            <option value="all">--Tất cả---</option>
-                            @foreach (var item in DanhSachHoSo)
-                            {
-                                <!option value="@item.Mahs" @(ViewData["Mahs"].ToString() == item.Mahs ? "selected" : "")>
-                                Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)
-                                </!option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Đơn giá từ</label>
-                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
-                    </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="form-group">
-                        <label style="font-weight:bold;">Đơn giá đến</label>
-                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <label style="font-weight:bold;">Mục đích sử dụng</label>
-                    <input id="Doituongsd_Search" name="Doituongsd_Search" class="form-control" value="@ViewData["Doituongsd"]" />
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold;">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dscqcq)
+                        {
+                            <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                        }
+                    </select>
                 </div>
             </div>
-        </form>
+            <div class="col-xl-3">
+                <div class="form-group">
+                    <label style="font-weight:bold;">Thời gian nhập từ</label>
+                    <input type="date" class="form-control" name="NgayTu_Search" id="NgayTu_Search" value="@NgayTu" onchange="GetList()" />
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group">
+                    <label style="font-weight:bold;">Thời gian nhập đến</label>
+                    <input type="date" class="form-control" name="NgayDen_Search" id="NgayDen_Search" value="@NgayDen" onchange="GetList()" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label style="font-weight:bold;">Thông tin quyết định</label>
+                    <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
+                        <option value="all">--Tất cả---</option>
+                        @foreach (var item in DanhSachHoSo)
+                        {
+                            <!option value="@item.Mahs" @(ViewData["Mahs"].ToString() == item.Mahs ? "selected" : "")>
+                            Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)
+                            </!option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group">
+                    <label style="font-weight:bold;">Đơn giá từ</label>
+                    <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group">
+                    <label style="font-weight:bold;">Đơn giá đến</label>
+                    <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <label style="font-weight:bold;">Mục đích sử dụng</label>
+                <input id="Doituongsd_Search" name="Doituongsd_Search" class="form-control" value="@ViewData["Doituongsd"]" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-12" style="text-align:center">
-                    <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
+                <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
             </div>
         </div>
         <hr />
@@ -206,8 +226,8 @@
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status == 'success') {
-                            @* toastr.success("Thành công!"); *@
-                            $('#mahs_Search').replaceWith(data.message);
+    @* toastr.success("Thành công!"); *@
+                                $('#mahs_Search').replaceWith(data.message);
                         } else {
                             toastr.error(data.message, "Lỗi!!!");
                         }
