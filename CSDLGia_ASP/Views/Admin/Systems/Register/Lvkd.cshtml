@@ -82,26 +82,26 @@
             <div class="modal-body">
                 <div class="row text-left">
                     @* <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Ngành</label>
-                            <select class="form-control" id="manghanh_create" name="manghanh_create" onchange="UpdateNghesDropdown()">
-                                @foreach (var nganh in dmnganhkd)
-                                {
-                                    <option value="@nganh.Manganh">@nganh.Tennganh</option>
-                                }
-                            </select>
-                        </div>
+                    <div class="form-group fv-plugins-icon-container">
+                    <label>Ngành</label>
+                    <select class="form-control" id="manghanh_create" name="manghanh_create" onchange="UpdateNghesDropdown()">
+                    @foreach (var nganh in dmnganhkd)
+                    {
+                    <option value="@nganh.Manganh">@nganh.Tennganh</option>
+                    }
+                    </select>
+                    </div>
                     </div>
                     <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Nghề</label>
-                            <select class="form-control" id="manghe_create" name="manghe_create">
-                                @foreach (var nghe in dmnghekd)
-                                {
-                                    <option value="@nghe.Manghe">@nghe.Tennghe</option>
-                                }
-                            </select>
-                        </div>
+                    <div class="form-group fv-plugins-icon-container">
+                    <label>Nghề</label>
+                    <select class="form-control" id="manghe_create" name="manghe_create">
+                    @foreach (var nghe in dmnghekd)
+                    {
+                    <option value="@nghe.Manghe">@nghe.Tennghe</option>
+                    }
+                    </select>
+                    </div>
                     </div> *@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
@@ -203,22 +203,41 @@
 
 <script>
     function AjaxGetDvNhanHs() {
-        var selectedNghe = $('#manghe_create').val();
+        $.ajax({
+            url: '/Ajax/GetDvNhanHs',
+            type: 'POST',
+            data: {
+                Manghe: $('#manghe_create').val(),
+                KeySelect: 'madvhs_create'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#madvhs_create').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
 
+
+    @* function AjaxGetDvNhanHs() {
         $.ajax({
             url: "/Ajax/GetDvNhanHs",
             type: "GET",
             data: {
-                Manghe: selectedNghe
+                Manghe: $('#manghe_create').val()
             },
             success: function (data) {
-                if (data.status === 'success') {
-                    $('#madv_create').empty();
+                if (data.status == 'success') {
+                    $('#madvhs_create').empty();
                     var html = '';
                     $.each(data.dsdonvi, function (index, dv) {
                         html += '<option value="' + dv.madv + '">' + dv.tendv + '</option>';
                     });
-                    $('#madv_create').append(html);
+                    $('#madvhs_create').append(html);
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
@@ -227,7 +246,7 @@
                 toastr.error("Không thể tải danh sách đơn vị.", "Lỗi!");
             }
         });
-    }
+    } *@
 
     function add_lvkd() {
         if ($('#Madv').val() == '' || $('#Madv').val() == null) {
