@@ -8,6 +8,7 @@ using CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia;
 using CSDLGia_ASP.ViewModels.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -1026,6 +1027,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     case "giahhdvk":
                         {
                             var hoSo = _db.GiaHhDvkTh.FirstOrDefault(x => x.Mahs == request.Mahs);
+                            var dmDVT = _db.DmDvt;
                             var hoSoChiTiet = from chitiet in _db.GiaHhDvkThCt.Where(x => x.Mahs == request.Mahs)
                                               join danhmuc in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on chitiet.Mahhdv equals danhmuc.Mahhdv
                                               select new GiaHhDvkThCt
@@ -1042,15 +1044,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                                   Ghichu = chitiet.Ghichu,
                                               };
                             var giaHHDVK_DSHH = new List<VMGiaHHDVK_DSHH>();
+                            Dictionary<string, int> loaiGia = new Dictionary<string, int>();
+                            loaiGia["Giá bán buôn"] = 5;
+                            loaiGia["Giá bán lẻ"] = 10;
+
+                            Dictionary<string, int> nguonThongTin = new Dictionary<string, int>();
+                            loaiGia["Do trực tiếp điều tra, thu thập"] = 1;
+                            loaiGia["Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định"] = 2;
+                            loaiGia["Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp"] = 3;
+                            loaiGia["Hợp đồng mua tin"] = 4;
+                            loaiGia["Các nguồn thông tin khác"] = 5;
+
                             foreach (var item in hoSoChiTiet)
                             {
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
+                                int lOAI_GIA;
+                                int nGUON_THONG_TIN;
+                                TryGetKey(loaiGia, item.Loaigia, out lOAI_GIA);
+                                TryGetKey(nguonThongTin, item.Nguontt, out nGUON_THONG_TIN);
                                 giaHHDVK_DSHH.Add(new VMGiaHHDVK_DSHH
                                 {
-                                    LOAI_GIA = 0,//Viết hàm lấy loại giá
+                                    LOAI_GIA = lOAI_GIA == -1 ? 5 : lOAI_GIA,//Viết hàm lấy loại giá
                                     MA_HHDV = item.Mahhdv,
-                                    DON_VI_TINH = item.Dvt,
+                                    DON_VI_TINH = dvt.Madvt,
                                     GIA_KY_NAY = item.Gia,
-                                    NGUON_THONG_TIN = 0,//Viết hàm lấy nguồn thông tin
+                                    NGUON_THONG_TIN = nGUON_THONG_TIN == -1 ? 2 : nGUON_THONG_TIN,//Viết hàm lấy nguồn thông tin
                                     GHI_CHU = item.Ghichu,
                                 });
                             }
@@ -1060,9 +1078,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                 DIA_BAN = request.DIA_BAN,
                                 NGUON_SO_LIEU = request.NGUON_SO_LIEU,
                                 DINH_KY = 24,
-                                THOI_GIAN_BC_1 = Double.Parse(hoSo.Thang),
-                                THOI_GIAN_BC_2 = Double.Parse(hoSo.Thang),
-                                THOI_GIAN_BC_NAM = Double.Parse(hoSo.Nam),
+                                THOI_GIAN_BC_1 = Int16.Parse(hoSo.Thang),
+                                THOI_GIAN_BC_2 = Int16.Parse(hoSo.Thang),
+                                THOI_GIAN_BC_NAM = Int16.Parse(hoSo.Nam),
                                 FILE_DINH_KEM_WORD = hoSo.ipf_word_base64,
                                 FILE_DINH_KEM_PDF = hoSo.ipf_pdf_base64,
                                 NGUOI_TAO = request.NGUOI_TAO,
@@ -1075,7 +1093,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                         }
                     case "giahhdvkdm":
                         {
-                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs && x.Theodoi=="TD").OrderBy(x => x.Mahhdv);
+                            var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs && x.Theodoi == "TD").OrderBy(x => x.Mahhdv);
                             var dmDVT = _db.DmDvt;
                             var giaHHDVKDM = new List<VMGiaHHDVKDM>();
                             foreach (var item in model_giahhdvkdm)
@@ -1138,5 +1156,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Json(data);
             }
         }
+
+        public static bool TryGetKey(Dictionary<string, int> dictionary, string value, out int ketQua)
+        {
+            // Lặp qua từng cặp key-value trong từ điển
+            foreach (var pair in dictionary)
+            {
+                // Nếu value của cặp key-value đúng với giá trị tìm kiếm
+                if (pair.Key == value)
+                {
+                    // Trả về value và đánh dấu là thành công
+                    ketQua = pair.Value;
+                    return true;
+                }
+            }
+
+            // Không tìm thấy key tương ứng với giá trị
+            ketQua = -1;
+            return false;
+        }
     }
+    
 }

@@ -86,22 +86,14 @@
                     </select>
                 </div>
             </div>
-           
+
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban.OrderBy(t => t.Level))
+                        @foreach (var item in dsdonvi)
                         {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
-                                }
-                                @foreach (var item in dv)
-                                {
-                                    <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
-                                }
-                            </optgroup>
+                            <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -176,7 +168,7 @@
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
-                                    }                                    
+                                    }
                                 }
                                 @{
                                     ViewData["maHoSoTruyen"] = item.Mahs;
