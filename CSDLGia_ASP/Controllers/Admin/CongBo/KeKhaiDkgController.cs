@@ -1,4 +1,5 @@
 ﻿using CSDLGia_ASP.Database;
+using CSDLGia_ASP.ViewModels.Manages.KeKhaiDkg;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             }
 
             var dsdonvi = (from com in _db.Company
-                           join lvkd in _db.CompanyLvCc.Where(t => t.Manghe == "LUHANH") on com.Mahs equals lvkd.Mahs
+                           join lvkd in _db.CompanyLvCc.Where(t => t.Manganh == "BOG") on com.Mahs equals lvkd.Mahs
                            select new VMCompany
                            {
                                Id = com.Id,
@@ -66,23 +67,20 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         [HttpGet]
         public IActionResult BinhOnGiaShow(string Mahs)
         {
-            var model = _db.KkGia.FirstOrDefault(t => t.Mahs == Mahs);
-            var hoso_kk = new VMKkGiaShow
+            var model = _db.KkMhBog.FirstOrDefault(t => t.Mahs == Mahs);
+            var hoso_kk = new VMKkMhBogShow
             {
                 Id = model.Id,
                 Mahs = model.Mahs,
-                Madv = model.Madv,
-                Macskd = model.Macskd,
                 Socv = model.Socv,
-                Ngaynhap = model.Ngaynhap,
+                Thoidiem = model.Thoidiem,
                 Ngayhieuluc = model.Ngayhieuluc,
-                Ttnguoinop = model.Ttnguoinop,
                 Dtll = model.Dtll,
                 Sohsnhan = model.Sohsnhan,
                 Ngaychuyen = model.Ngaychuyen,
                 Ngaynhan = model.Ngaynhan,
                 Ptnguyennhan = model.Ptnguyennhan,
-                Chinhsachkm = model.Chinhsachkm,
+                Chinhsachkm = model.Chinhsachkm
             };
 
             var modeldn = _db.Company.FirstOrDefault(t => t.Madv == model.Madv);
@@ -105,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 hoso_kk.KkMhBogCt = modelct.ToList();
             }
 
-            ViewData["Title"] = "Xem chi tiết hồ sơ mặt hàng bình ổn giá";
+            ViewData["Title"] = "Giá kê khai mặt hàng bình ổn giá";
 
             return View("Views/Admin/Manages/KeKhaiDkg/KkMhBog/Show.cshtml", hoso_kk);
         }

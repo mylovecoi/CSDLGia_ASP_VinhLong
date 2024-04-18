@@ -620,14 +620,16 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         public IActionResult GiaHangHoaTaiSieuThiShow(string Mahs)
         {
             var model = _db.GiaHangHoaTaiSieuThi.FirstOrDefault(t => t.Mahs == Mahs);
-            model.GiaHangHoaTaiSieuThiCt = _db.GiaHangHoaTaiSieuThiCt.Where(t => t.Mahs == model.Mahs).ToList();
+
+            var model_ct = _db.GiaHangHoaTaiSieuThiCt.Where(t => t.Mahs == model.Mahs);
+
+            model.GiaHangHoaTaiSieuThiCt = model_ct.ToList();
+
+            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+            ViewData["Title"] = "Xem chi tiết hàng hóa tại siêu thị";
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["Title"] = "Xem chi tiết hàng hóa tại siêu thị";
-            ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_dgcb";
-            ViewData["MenuLv3"] = "menu_giahhstcb";
-            return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/DanhSach/Show.cshtml", model);
+            return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Show.cshtml", model);
         }
 
         [Route("CongBo/GiaSpDvCuThe")]
@@ -636,7 +638,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe> model = _db.GiaSpDvCuThe.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe> model = _db.GiaSpDvCuThe.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -680,7 +682,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia> model = _db.GiaSpDvKhungGia.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia> model = _db.GiaSpDvKhungGia.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -721,7 +723,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa> model = _db.GiaSpDvToiDa.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa> model = _db.GiaSpDvToiDa.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {

@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => t.Congbo == "DACONGBO"); 
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -199,9 +199,8 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         [HttpGet]
         public IActionResult GiaLePhiTruocBaShow(string Mahs)
         {
-         
+
             var model = _db.GiaPhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
-            string TenNhom = _db.GiaPhiLePhiNhom.FirstOrDefault(t => t.Manhom == model.Manhom)?.Tennhom ?? "";
             var model_new = new GiaPhiLePhi
             {
                 Soqd = model.Soqd,
@@ -209,13 +208,18 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 Thongtin = model.Thongtin,
                 Mota = model.Mota,
                 Ghichu = model.Ghichu,
-                Tennhom = TenNhom
             };
             var model_ct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
+
             model_new.GiaPhiLePhiCt = model_ct.ToList();
-            ViewData["Title"] = "Xem chi tiết giá lệ phí trước bạ";
-            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+
+            ViewData["DsNhom"] = _db.GiaPhiLePhiNhom;
+            ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";
+            ViewData["MenuLv1"] = "menu_giakhac";
+            ViewData["MenuLv2"] = "menu_dglp";
+            ViewData["MenuLv3"] = "menu_dglp_tt";
+
+
             return View("Views/Admin/Manages/DinhGia/GiaLePhi/DanhSach/Show.cshtml", model_new);
         }
 
@@ -256,9 +260,10 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             var model = _db.PhiLePhi.FirstOrDefault(t => t.Mahs == Mahs);
             model.PhiLePhiCt = _db.PhiLePhiCt.Where(t => t.Mahs == model.Mahs).ToList();
+
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["Title"] = "Xem chi tiết giá phí lệ phí";
+            ViewData["Title"] = "Bảng giá phí, lệ phí";
             ViewData["MenuLv1"] = "menu_giakhac";
             ViewData["MenuLv2"] = "menu_plp";
             ViewData["MenuLv3"] = "menu_plp_tt";
