@@ -69,6 +69,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                         Level = db.Level,
                                     }).First();
 
+                    //return Ok(getdonvi.Level);
+
                     if (getdonvi.Level == "H")
                     {
                         var model = _db.KkGia.Where(t => t.Madv_h == Madv && t.Ngaychuyen_h.Year == int.Parse(Nam) && t.Manghe == "LUHANH"

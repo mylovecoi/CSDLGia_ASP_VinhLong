@@ -45,6 +45,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                        Tendn = com.Tendn,
                                        Trangthai = com.Trangthai
                                    }).ToList();
+                    return Ok(dsdonvi);
                     if (dsdonvi.Count > 0)
                     {
                         if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)

@@ -61,6 +61,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control" id="Nam" name="Nam">
+                        <option value="0">--Tất cả--</option>
                         @{
                             var nam_start = DateTime.Now.Year - 5;
                             var nam_stop = DateTime.Now.Year + 1;
@@ -76,7 +77,7 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-
+                        <option value="all">--Tất cả--</option>
                         @foreach (var item in dsdonvi)
                         {
                             <!option value="@item.Madv" @((string)ViewData["Madv"] == item.Madv ? "selected" : "")>&emsp;@item.Tendn</!option>
