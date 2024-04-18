@@ -474,20 +474,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.timkiem", "Index"))
                 {
 
-                    DateTime nowDate = DateTime.Now;
-                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
-                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
-
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-                    NgayTu = NgayTu.HasValue ? NgayTu : firstDayCurrentYear;
-                    NgayDen = NgayDen.HasValue ? NgayDen : lastDayCurrentYear;
-                    Mahs = string.IsNullOrEmpty(Mahs) ? "all" : Mahs;
-                    DonGiaTu = DonGiaTu == 0 ? 0 : DonGiaTu;
-                    DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
-                    Tentaisan = string.IsNullOrEmpty(Tentaisan) ? "" : Tentaisan;
-
-
-
                     var model = (from hosoct in _db.GiaThueTaiSanCongCt
                                  join hoso in _db.GiaThueTaiSanCong on hosoct.Mahs equals hoso.Mahs
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
@@ -519,19 +505,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     {
                         model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan.ToLower()));
                     }
-
-                    ViewData["Madv"] = Madv;
-                    ViewData["NgayTu"] = NgayTu;
-                    ViewData["NgayDen"] = NgayDen;
-                    ViewData["Mahs"] = Mahs;
-                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
-                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
-                    ViewData["Tentaisan"] = Tentaisan;
-                    ViewData["DanhSachHoSo"] = _db.GiaThueTaiSanCong.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
-
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                    ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
-
 
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin giá thuê tài sản công";
 

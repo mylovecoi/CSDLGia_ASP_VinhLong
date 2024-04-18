@@ -618,9 +618,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
 
 
         [Route("DinhGiaGdDt/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string MaNhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                    double DonGiaTu_Search, double DonGiaDen_Search, string Mota_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string MaNhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Mota)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -646,15 +645,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
+
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.ThoiDiem >= NgayTu_Search && t.ThoiDiem <= NgayDen_Search && t.Giathanhthi1 >= DonGiaTu_Search 
-                                                    && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (MaNhom_Search != "all") { model = model.Where(t => t.MaNhom == MaNhom_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giathanhthi1 <= DonGiaDen_Search); }
-                    if (!string.IsNullOrEmpty(Mota_Search))
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.Giathanhthi1 >= DonGiaTu || t.Gianongthon1 >= DonGiaTu || t.Giamiennui1 >= DonGiaTu
+                                            && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (MaNhom != "all") { model = model.Where(t => t.MaNhom == MaNhom); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Giathanhthi1 <= DonGiaDen || t.Gianongthon1 <= DonGiaDen || t.Giamiennui1 <= DonGiaDen); }
+                    if (!string.IsNullOrEmpty(Mota))
                     {
-                        model = model.Where(t => t.Mota.ToLower().Contains(Mota_Search.ToLower()));
+                        model = model.Where(t => t.Mota.ToLower().Contains(Mota.ToLower()));
                     }
 
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/TimKiem/Result.cshtml", model);
