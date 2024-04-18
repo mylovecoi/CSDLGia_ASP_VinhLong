@@ -84,7 +84,7 @@
                             </td>
                             <td style="text-align:center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
-                                    @dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban).TenDiaBan
+                                    @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
                             </td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td>@item.Thongtinqd</td>
