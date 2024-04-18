@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Hosting;
+using OfficeOpenXml;
 using OfficeOpenXml.Packaging;
 using System;
 using System.Collections.Generic;
@@ -134,7 +135,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 {
 
                     var modelcthskk = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
-                    var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+                    var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt && x.Theodoi == "TD");
 
                     var model = new GiaHhDvkTh
                     {
@@ -154,7 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     //Trường mảng mahs có dữ liệu
 
                     //Lấy danh mục hàng hoá
-                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == Matt);
+                    var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == Matt && x.Theodoi == "TD");
                     var chiTiet = new List<GiaHhDvkThCt>();
                     foreach (var item in dmHangHoa)
                     {
@@ -175,8 +176,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.GiaHhDvkThCt.AddRange(chiTiet);
                     _db.SaveChanges();
                     //Đẩy dữ liệu qua view
-                    var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x=>x.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                    var modelct_join = (from ct in _db.GiaHhDvkThCt.Where(x => x.Mahs == model.Mahs)
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkThCt
                                         {
                                             Id = ct.Id,
@@ -270,7 +271,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                             Gialk = ct.Gialk,
                                             Loaigia = ct.Loaigia,
                                             Nguontt = ct.Nguontt,
-                                            Ghichu = ct.Ghichu,                                            
+                                            Ghichu = ct.Ghichu,
                                             Tenhhdv = dm.Tenhhdv,
                                             Dacdiemkt = dm.Dacdiemkt,
                                             Dvt = dm.Dvt,
@@ -286,7 +287,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác chỉnh sửa";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Edit.cshtml",model);
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Edit.cshtml", model);
 
                 }
                 else
@@ -309,6 +310,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Edit"))
                 {
+                    var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == request.Mahs);
                     if (ipf_excel != null && ipf_excel.Length > 0)
                     {
                         string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -321,15 +323,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             await ipf_excel.CopyToAsync(FileStream);
                         }
                         // Đọc dữ liệu từ IFormFile
-                       
+
                         using (var memoryStream = new MemoryStream())
                         {
                             ipf_excel.CopyTo(memoryStream);
                             // Chuyển đổi dữ liệu sang chuỗi base64
-                            request.ipf_excel_base64 = Convert.ToBase64String(memoryStream.ToArray());                            
+                            request.ipf_excel_base64 = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
                         request.ipf_excel = filename;
+                    }
+                    else
+                    {
+                        request.ipf_excel = model.ipf_excel;
+                        request.ipf_excel_base64 = model.ipf_excel_base64;
                     }
 
                     if (ipf_word != null && ipf_word.Length > 0)
@@ -344,7 +351,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             await ipf_word.CopyToAsync(FileStream);
                         }
                         // Đọc dữ liệu từ IFormFile
-                        
+
                         using (var memoryStream = new MemoryStream())
                         {
                             ipf_word.CopyTo(memoryStream);
@@ -353,6 +360,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         }
                         request.ipf_word = filename;
                     }
+                    else
+                    {
+                        request.ipf_word = model.ipf_word;
+                        request.ipf_word_base64 = model.ipf_word_base64;
+                    }
+
 
                     if (ipf_pdf != null && ipf_pdf.Length > 0)
                     {
@@ -366,7 +379,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                             await ipf_pdf.CopyToAsync(FileStream);
                         }
                         // Đọc dữ liệu từ IFormFile
-                        
+
                         using (var memoryStream = new MemoryStream())
                         {
                             ipf_pdf.CopyTo(memoryStream);
@@ -375,10 +388,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         }
                         request.ipf_pdf = filename;
                     }
+                    else
+                    {
+                        request.ipf_pdf = model.ipf_pdf;
+                        request.ipf_pdf_base64 = model.ipf_pdf_base64;
+                    }
 
-                    var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == request.Mahs);
+
                     model.Sobc = request.Sobc;
-                    model.Ngaybc = request.Ngaybc;                   
+                    model.Ngaybc = request.Ngaybc;
                     model.Ttbc = request.Ttbc;
                     model.Ghichu = request.Ghichu;
                     model.ipf_pdf = request.ipf_pdf;
@@ -605,24 +623,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var nhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
                     var model = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == Mahs);
                     model.GiaHhDvkThCt = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == model.Mahs)
-                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
-                                        select new GiaHhDvkThCt
-                                        {
-                                            Id = ct.Id,
-                                            Manhom = ct.Manhom,
-                                            Mahhdv = ct.Mahhdv,
-                                            Mahs = ct.Mahs,
-                                            Gia = ct.Gia,
-                                            Gialk = ct.Gialk,
-                                            Loaigia = ct.Loaigia,
-                                            Nguontt = ct.Nguontt,
-                                            Ghichu = ct.Ghichu,
-                                            Created_at = ct.Created_at,
-                                            Updated_at = ct.Updated_at,
-                                            Tenhhdv = dm.Tenhhdv,
-                                            Dacdiemkt = dm.Dacdiemkt,
-                                            Dvt = dm.Dvt,
-                                        }).ToList();
+                                          join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt) on ct.Mahhdv equals dm.Mahhdv
+                                          select new GiaHhDvkThCt
+                                          {
+                                              Id = ct.Id,
+                                              Manhom = ct.Manhom,
+                                              Mahhdv = ct.Mahhdv,
+                                              Mahs = ct.Mahs,
+                                              Gia = ct.Gia,
+                                              Gialk = ct.Gialk,
+                                              Loaigia = ct.Loaigia,
+                                              Nguontt = ct.Nguontt,
+                                              Ghichu = ct.Ghichu,
+                                              Created_at = ct.Created_at,
+                                              Updated_at = ct.Updated_at,
+                                              Tenhhdv = dm.Tenhhdv,
+                                              Dacdiemkt = dm.Dacdiemkt,
+                                              Dvt = dm.Dvt,
+                                          }).ToList();
 
                     ViewData["Nhomhh"] = nhomhh;
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
@@ -646,9 +664,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         public string GetDataCt(string Mahs)
         {
-            var hoSo = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == Mahs);
+            var hoSo = _db.GiaHhDvkTh.FirstOrDefault(t => t.Mahs == Mahs);
             var model = (from ct in _db.GiaHhDvkThCt.Where(t => t.Mahs == Mahs)
-                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv                         
+                         join dm in _db.GiaHhDvkDm.Where(x => x.Matt == hoSo.Matt) on ct.Mahhdv equals dm.Mahhdv
                          select new GiaHhDvkThCt
                          {
                              Id = ct.Id,
@@ -667,7 +685,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                          });
 
             int record = 1;
-            var dmDVT= _db.DmDvt;
+            //var dmDVT = _db.DmDvt;
             string result = "<div class='card-body' id='frm_data'>";
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
             result += "<thead>";
@@ -691,7 +709,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 result += "<td class='text-center'>" + item.Mahhdv + "</td>";
                 result += "<td class='text-left active'>" + item.Tenhhdv + "</td>";
                 result += "<td class='text-left'>" + item.Dacdiemkt + "</td>";
-                result += "<td class='text-center'>" + dmDVT.FirstOrDefault(x=>x.Madvt == item.Dvt)?.Dvt  + "</td>";
+                result += "<td class='text-center'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gialk) + "</td>";
                 result += "<td style='text-align:right; font-weight:bold'>" + Helpers.ConvertDbToStr(item.Gia) + "</td>";
                 result += "<td>";
@@ -708,6 +726,70 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
             return result;
 
+        }
+
+        [Route("GiaHhDvkTh/NhanExcel")]
+        [HttpPost]
+        public async Task<JsonResult> NhanExcel(CSDLGia_ASP.ViewModels.VMImportExcel request)
+        {
+            var hoSoChiTiet = _db.GiaHhDvkThCt.Where(t => t.Mahs == request.Mahs);
+
+            request.LineStart = request.LineStart == 0 ? 1 : request.LineStart;
+            int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
+            using (var stream = new MemoryStream())
+            {
+                await request.FormFile.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
+                    var rowcount = worksheet.Dimension.Rows;
+                    request.LineStop = request.LineStop > rowcount ? rowcount : request.LineStop;
+                    var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkCt>();
+                    foreach (var item in hoSoChiTiet)
+                    {
+                        double gialk = 0;
+                        double gia = 0;
+                        string ghichu = "";
+                        string loaigia = "";
+                        string nguontt = "";
+                        for (int row = request.LineStart; row <= request.LineStop; row++)
+                        {
+                            string mahhdvInLine = worksheet.Cells[row, 2].Value != null ?
+                                            worksheet.Cells[row, 2].Value.ToString().Trim() : "";
+                            if (item.Mahhdv == mahhdvInLine)
+                            {
+                                loaigia = worksheet.Cells[row, 6].Value != null ?
+                                            worksheet.Cells[row, 6].Value.ToString().Trim() : "";
+                                gialk = Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                            worksheet.Cells[row, 7].Value.ToString().Trim() : "");
+                                gia = Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
+                                            worksheet.Cells[row, 8].Value.ToString().Trim() : "");
+                                nguontt = worksheet.Cells[row, 11].Value != null ?
+                                            worksheet.Cells[row, 11].Value.ToString().Trim() : "";
+                                ghichu = worksheet.Cells[row, 12].Value != null ?
+                                            worksheet.Cells[row, 12].Value.ToString().Trim() : "";
+                                break;
+                            }
+                        }
+
+
+                        item.Loaigia = loaigia;
+                        item.Nguontt = nguontt;
+                        item.Gialk = gialk;
+                        item.Gia = gia;
+                        item.Ghichu = ghichu;
+
+                    }
+                    _db.GiaHhDvkThCt.UpdateRange(hoSoChiTiet);
+                    _db.SaveChanges();
+
+                }
+            }
+
+            string result = GetDataCt(request.Mahs);
+            var data = new { status = "success", message = result };
+            return Json(data);
         }
     }
 }
