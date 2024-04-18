@@ -3,7 +3,7 @@
     int record_id = 1;
 }
 
-@model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDvLichSu>
 
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
@@ -20,29 +20,34 @@
     </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
-  DANH SÁCH ĐƠN VỊ THẨM ĐỊNH ĐANG THEO DÕI
+    THÔNG TIN LỊCH SỬ HOẠT ĐỘNG CỦA ĐƠN VỊ THẨM ĐỊNH GIÁ
 </p>
 <p style="text-align: center; font-size: 16px; font-style:italic">
-    
+    Mã giấy chứng nhận: @ViewData["maGCN"]
+</p>
+<p style="text-align: center; font-size: 16px; font-style:italic">
+    Tên đơn vị thẩm định giá: @ViewData["tenDonVi"]
 </p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
-        <tr>
-
-            <th style="text-align: center; font-weight: bold" width="4%">STT</th>
-            <th style="text-align: center; font-weight: bold" width="16%">Tên đơn vị</th>
+        <tr class="text-center">
+            <th width="10%" style="text-align: center">STT</th>
+            <th style="text-align: center">Số quyết định</th>
+            <th style="text-align: center">Ngày quyết định</th>
+            <th style="text-align: center">Theo dõi</th>
         </tr>
 
     </thead>
     <tbody>
         @if (Model != null)
         {
-            @foreach (var item in Model)
+            @foreach (var item in Model.OrderBy(x => x.NgayQD))
             {
                 <tr>
                     <td style="text-align: center">@(record_id++)</td>
-                    <td style="text-align: left">@item.Tendv</td>
-      
+                    <td>@item.SoQD</td>
+                    <td>@Helpers.ConvertDateToStr(item.NgayQD)</td>
+                    <td style="text-align: center">@(item.Theodoi == "TD" ? "Theo dõi" : "Ngưng theo dõi")</td>
                 </tr>
             }
         }

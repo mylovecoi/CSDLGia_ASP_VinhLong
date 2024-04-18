@@ -35,6 +35,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.baocao", "Index"))
                 {
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -45,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhSachNhom"] = _db.GiaThueMatDatMatNuocNhom;
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/Index.cshtml");
                 }
