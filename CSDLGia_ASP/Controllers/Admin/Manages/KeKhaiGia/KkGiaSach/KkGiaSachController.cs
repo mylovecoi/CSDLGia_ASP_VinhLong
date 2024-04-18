@@ -64,19 +64,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                             Trangthai = "CC";
                         }
 
-                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe).ToList();
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                        {
+                            comct = comct.Where(t => t.Madv == Madv).ToList();
+                        }
+                        else
+                        {
+                            comct = comct.Where(t => t.Macqcq == Madv).ToList();
+                        }
 
                         if (comct.Count > 0)
                         {
                             var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Trangthai == Trangthai).ToList();
-                            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                            if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                             {
-                                ViewData["DsDonVi"] = dsdonvi;
+                                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi;
+                                }
+                                else
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                }
                             }
                             else
                             {
-                                ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi;
+                                }
+                                else
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi.Where(t => t.Macqcq == Madv);
+                                }
                             }
+
                             var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
                             ViewData["check_tt"] = check_tt;
                             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");

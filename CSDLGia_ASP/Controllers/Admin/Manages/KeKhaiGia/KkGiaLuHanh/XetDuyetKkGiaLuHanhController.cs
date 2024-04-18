@@ -68,9 +68,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
                                     }).First();
-                    return Ok (getdonvi.Level);   
-
-                    //return Ok(getdonvi.Level);
 
                     if (getdonvi.Level == "H")
                     {

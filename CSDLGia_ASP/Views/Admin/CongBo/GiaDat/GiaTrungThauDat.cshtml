@@ -23,7 +23,7 @@
 
         $(function () {
             $('#Madv, #Nam').change(function () {
-                var current_path_url = '/CongBo/GiaDatCuThe?';
+                var current_path_url = '/CongBo/GiaTrungThauDat?';
                 var madv = '&Madv=' + $('#Madv').val();
                 var nam = '&Nam=' + $('#Nam').val();
                 var url = current_path_url + madv + nam;
@@ -81,13 +81,12 @@
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
-                    <th width="4%">STT</th>
-                    <th width="10%">Số QĐ</th>
-                    <th>Mô tả</th>
-                    <th>Thời điểm xác định</th>
+                    <th>STT</th>
+                    <th>Số QĐ</th>
+                    <th>Thời điểm</th>
+                    <th>Thông tin hồ sơ</th>
                     <th>Trạng thái</th>
-                    <th>Thao tác</th>
-
+                    <th width="18%">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,14 +96,14 @@
                     {
                         <tr>
                             <td style="text-align: center">@(record_id++)</td>
-                            <td style="text-align: center">@item.Soqd</td>
-                            <td></td>
+                            <td>@item.Soqddaugia</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                            <td style="text-align: center">@item.Tenduan</td>
                             <td style="text-align: center">
                                 <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
                             </td>
                             <td>
-                                <a asp-controller="GiaDat" asp-action="GiaDatCuTheShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="GiaDat" asp-action="GiaTrungThauDatShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
