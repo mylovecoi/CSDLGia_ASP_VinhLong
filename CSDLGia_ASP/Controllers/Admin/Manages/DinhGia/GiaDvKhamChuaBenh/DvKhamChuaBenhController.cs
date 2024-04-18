@@ -263,7 +263,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         _db.GiaDvKcb.Update(modelExcel);
 
                         //Add Log
-                        _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+                        _trangThaiHoSoService.LogHoSo(modelExcel.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
                         return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                     }
