@@ -604,6 +604,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaThan
             if (modeldv != null)
             {
                 hoso.Tendvhienthi = modeldv.TenDvHienThi;
+                hoso.Chucvuky = modeldv.ChucVuKy;
+                hoso.Nguoiky = modeldv.NguoiKy;
             }
             return hoso;
         }
