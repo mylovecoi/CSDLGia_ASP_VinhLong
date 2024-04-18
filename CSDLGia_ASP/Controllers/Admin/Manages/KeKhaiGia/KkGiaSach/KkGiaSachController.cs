@@ -5,6 +5,7 @@ using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 
@@ -375,6 +376,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaSach
                     if (modeldv != null)
                     {
                         hoso_kk.Tendvhienthi = modeldv.TenDvHienThi;
+                        hoso_kk.Chucvuky = modeldv.ChucVuKy;
+                        hoso_kk.Nguoiky = modeldv.NguoiKy;
                     }
 
                     var modelct = _db.KkGiaSachCt.Where(t => t.Mahs == model.Mahs);

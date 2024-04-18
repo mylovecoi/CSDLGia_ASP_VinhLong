@@ -44,8 +44,9 @@
             - Lưu.
         </td>
         <td style="vertical-align: top;">
-            <b>THỦ TRƯỞNG ĐƠN VỊ</b><br>
-            <i>(Ký tên, đóng dấu)</i>
+            <p style="text-transform: uppercase; font-weight:bold">@Model.Chucvuky</p><br>
+            <i>(Ký tên, đóng dấu)</i><br /><br /><br /><br /><br /><br />
+            <p>@Model.Nguoiky</p>
         </td>
     </tr>
 </table>
@@ -119,16 +120,16 @@
                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gialk)</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giakk)</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giakk - item.Gialk)</td>
-                    @if (item.Gialk == 0)
-                    {
-                    <td style="text-align: right">100</td>
-                    }
-                    else
-                    {
-                    <td style="text-align: right">
-                         @Helpers.ConvertDbToStr((item.Giakk-item.Gialk) / item.Gialk * 100) %
-                    </td>
-                    }
+                        @if (item.Gialk == 0)
+                        {
+                        <td style="text-align: right">100</td>
+                        }
+                        else
+                        {
+                        <td style="text-align: right">
+                                @Helpers.ConvertDbToStr((item.Giakk - item.Gialk) / item.Gialk * 100) %
+                        </td>
+                        }
                     <td>@item.Ghichu</td>
                 </tr>
                 }
