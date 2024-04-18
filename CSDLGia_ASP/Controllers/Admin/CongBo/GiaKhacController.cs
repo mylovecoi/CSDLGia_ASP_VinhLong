@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan> model = _db.GiaMuaTaiSan.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan> model = _db.GiaMuaTaiSan.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn> model = _db.GiaHhDvCn.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn> model = _db.GiaHhDvCn.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -171,7 +171,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi> model = _db.GiaPhiLePhi.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi> model = _db.GiaPhiLePhi.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -225,7 +225,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi> model = _db.PhiLePhi.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi> model = _db.PhiLePhi.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -275,8 +275,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung> model = _db.GiaVatLieuXayDung.Where(t => t.Congbo == "DACONGBO");
-
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung> model = _db.GiaVatLieuXayDung.Where(t => t.Trangthai == "CB");
             if (Madv != "all")
             {
                 model = model.Where(t => t.Madv == Madv);
