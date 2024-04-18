@@ -38,6 +38,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Ghichu { get; set; }
         [NotMapped]
         public string Madiaban { get; set; }
+      
 
     }
 }
