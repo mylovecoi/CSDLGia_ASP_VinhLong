@@ -49,6 +49,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 {
                     HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
                     HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
+                    HttpContext.Session.SetString("MaDiaBanHanhChinh", heThong.MaDiaBanHanhChinh);
+                    HttpContext.Session.SetString("MaDonViThuThap", heThong.MaDonViThuThap);
                 }
                 //Lấy các thông tin về kết nối API
                 //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();
@@ -163,17 +165,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         LinkAPI = user.LinkAPI,
                                         Manghanh = user.Manghanh,
                                         Manghe = user.Manghe,
-                                        BOG = company.BOG,
-                                        KKNYGIA = company.KKNYGIA,
-                                        //Vtxk = company.Vtxk,
-                                        //Vtxb = company.Vtxb,
-                                        //Vtxtx = company.Vtxtx,
-                                        //VlXdCatSan = company.VlXdCatSan,
-                                        //VlXdDatSanlap = company.VlXdDatSanlap,
-                                        //VlXdDaXayDung = company.VlXdDaXayDung,
-                                        //HocPhiDaoTaoLaiXe = company.HocPhiDaoTaoLaiXe,
-                                        //CaHue = company.CaHue,
-                                        //SieuThi = company.SieuThi,
+                                        Vtxk = company.Vtxk,
+                                        Vtxb = company.Vtxb,
+                                        Vtxtx = company.Vtxtx,
                                         Vtch = company.Vtch,
                                         Xangdau = company.Xangdau,
                                         Dien = company.Dien,
@@ -190,21 +184,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         XmThepXd = company.XmThepXd,
                                         SachGk = company.SachGk,
                                         Etanol = company.Etanol,
-                                        ThucAnChanNuoi = company.ThucAnChanNuoi,
                                         ThucPhamCn = company.ThucPhamCn,
+                                        VlXdCatSan = company.VlXdCatSan,
+                                        HocPhiDaoTaoLaiXe = company.HocPhiDaoTaoLaiXe,
                                         Than = company.Than,
                                         Giay = company.Giay,
+                                        ThucAnChanNuoi = company.ThucAnChanNuoi,
+                                        VlXdDatSanlap = company.VlXdDatSanlap,
+                                        VlXdDaXayDung = company.VlXdDaXayDung,
                                         VanTaiKhachBangOtoCoDinh = company.VanTaiKhachBangOtoCoDinh,
                                         VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
-                                        VanTaiKhachBangTaXi = company.VanTaiKhachBangTaXi,
+                                        CaHue = company.CaHue,
+                                        SieuThi = company.SieuThi,
+                                        BOG = company.BOG,
+                                        KKNYGIA = company.KKNYGIA,
                                         VlXd = company.VlXd,
-                                        LuHanh = company.LuHanh,
                                         KhamChuaBenh = company.KhamChuaBenh,
                                         DvThuongMai = company.DvThuongMai,
                                     }
                                 ).FirstOrDefault();
-
-                    //return Ok(model2);
 
                     if (model2 != null)
                     {

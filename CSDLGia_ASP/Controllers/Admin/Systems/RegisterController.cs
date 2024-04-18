@@ -30,56 +30,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             _dsDonviService = dsDonviService;
         }
 
-        //[Route("DangKy/DanhSach_Cu")]
-        //[HttpGet]
-        //public IActionResult Index_Cu(string Madiaban)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
-        //        {
-        //            var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-
-        //            if (string.IsNullOrEmpty(Madiaban))
-        //            {
-        //                Madiaban = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
-        //            }
-        //            var users = _db.Users.Where(t => t.Level == "DN" && t.Status != "Kích hoạt").ToList();
-        //            var coms = _db.Company.Where(t => t.Madiaban == Madiaban).ToList();
-        //            var model_join = (from user in users
-        //                              join com in coms on user.Madv equals com.Madv
-        //                              select new VMUsers
-        //                              {
-        //                                  Id = user.Id,
-        //                                  Name = user.Name,
-        //                                  Username = user.Username,
-        //                                  Madv = user.Madv,
-        //                                  Status = user.Status,
-        //                                  Lydo = user.Lydo,
-        //                                  Created_at = user.Created_at,
-        //                                  Updated_at = user.Updated_at,
-        //                              });
-
-        //            ViewData["DsDiaBan"] = dsdiaban;
-        //            ViewData["Madiaban"] = Madiaban;
-        //            ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
-        //            ViewData["MenuLv1"] = "menu_hethong";
-        //            ViewData["MenuLv2"] = "menu_qtnguoidung";
-        //            ViewData["MenuLv3"] = "menu_dsdangky";
-        //            return View("Views/Admin/Systems/Register/Index.cshtml", model_join);
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
-
         [Route("DangKy/DanhSach")]
         [HttpGet]
         public IActionResult Index(string Madv)
@@ -88,21 +38,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
-                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    //var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    //List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                    IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
+                    //IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
 
-                    if (Madv != "all")
-                    {
-                        coms = coms.Where(t => t.Macqcq == Madv);
-                    }
+                    //if (Madv != "all")
+                    //{
+                    //    coms = coms.Where(t => t.Macqcq == Madv);
+                    //}
 
                     var users = _db.Users.Where(t => t.Level == "DN").ToList();
+                    var company = _db.Company.ToList();
                     var model_join = (from user in users
-                                      join com in coms on user.Madv equals com.Madv
+                                      join com in company on user.Madv equals com.Madv
                                       select new VMUsers
                                       {
                                           Id = user.Id,
@@ -117,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       });
                     
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                    ViewData["Madv"] = Madv;
+                    //ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";

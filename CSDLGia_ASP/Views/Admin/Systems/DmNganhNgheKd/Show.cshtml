@@ -1,22 +1,28 @@
 ﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.DmNgheKd>
-@section custom_style{
+@{
+    int record_id = 1;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+}
+
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-    @section custom_script{
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
         });
     </script>
 }
-    @{
-    int record_id = 1;
-}
+
 <div class="card card-custom wave wave-animate-slower">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
@@ -67,7 +73,7 @@
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Edit"))
                             {
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
-                                onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
+                                        onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
@@ -121,6 +127,17 @@
                             <select id="theodoi_create" name="theodoi_create" class="form-control">
                                 <option value="TD">Theo dõi</option>
                                 <option value="DTD">Dừng theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị quản lý*</label>
+                            <select class="form-control select2multi" multiple="multiple" style="width:100%" id="madv_create" name="madv_create">
+                                @foreach (var dv in dsdonvi)
+                                {
+                                    <option value="@dv.MaDv">@dv.TenDv</option>
+                                }
                             </select>
                         </div>
                     </div>
@@ -203,11 +220,12 @@
                     data: {
                         Manganh: $('#Manganh').val(),
                         Manghe: $('#manghe_create').val(),
+                        Madv: $('#madv_create').val(),
                         Tennghe: $('#tennghe_create').val(),
                         Theodoi: $('#theodoi_create').val(),
                     },
                     dataType: 'JSON',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status == 'success') {
                             toastr.success(data.message);
                             location.reload();
@@ -241,12 +259,13 @@
                     data: {
                         Manganh: $('#Manganh').val(),
                         Manghe: $('#manghe_edit').val(),
+                        Madv: $('#madv_edit').val(),
                         Tennghe: $('#tennghe_edit').val(),
                         Theodoi: $('#theodoi_edit').val(),
                         Id: $('#id_edit').val(),
                     },
                     dataType: 'JSON',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status == 'success') {
                             toastr.success("Cập nhật thành công!!!", "Thành công!");
                             location.reload();
@@ -277,9 +296,10 @@
                 Id: id,
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     $('#frm_edit').replaceWith(data.message);
+                    $('.select2multi').select2();
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                 } else {
                     toastr.error(data.message, "Lỗi!");

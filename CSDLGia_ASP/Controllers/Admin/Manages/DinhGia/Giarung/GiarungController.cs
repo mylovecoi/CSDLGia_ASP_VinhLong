@@ -24,12 +24,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiarungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        public GiarungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaRung")]
@@ -40,7 +42,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.thongtin", "Index"))
                 {
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
@@ -237,17 +239,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     // Xử lý phần lịch sử hồ sơ 
 
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = request.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThongTin = "Thay đổi thông tin hồ sơ",
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "CHT",
 
-                    };
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
-                    _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
@@ -367,6 +361,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     }
                     _db.SaveChanges();
 
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
                     return RedirectToAction("Index", "Giarung", new { Madv = request.Madv, Nam = request.Thoidiem.Year });
                 }
                 else
@@ -479,6 +476,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     _db.GiaRung.Update(model);
                     _db.SaveChanges();
+
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "Giarung", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

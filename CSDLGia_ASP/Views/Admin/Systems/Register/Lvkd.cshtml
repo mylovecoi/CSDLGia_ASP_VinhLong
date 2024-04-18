@@ -81,7 +81,7 @@
             </div>
             <div class="modal-body">
                 <div class="row text-left">
-                    <div class="col-xl-12">
+                    @* <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Ngành</label>
                             <select class="form-control" id="manghanh_create" name="manghanh_create" onchange="UpdateNghesDropdown()">
@@ -102,31 +102,31 @@
                                 }
                             </select>
                         </div>
-                    </div>
-                    @* <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label>Địa bàn kinh doanh</label>
-                            <select class="form-control" id="madiaban_create" name="madiaban_create">
-                                <option value="">--Chọn địa bàn kinh doanh--</option>
-                                @foreach (var item in dsdiaban)
-                                {
-                                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
-                                }
-                            </select>
-                        </div>
                     </div> *@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị nhận hồ sơ</label>
-                            <select class="form-control" id="madvhs_create" name="madvhs_create">
-                                <option value="">--Chọn đơn vị nhận hồ sơ--</option>
-                                @* @foreach (var db in dsdiaban)
+                            <label>Nghề</label>
+                            <select class="form-control select2basic" id="manghe_create" name="manghe_create" style="width: 100%" onchange="AjaxGetDvNhanHs()">
+                                @foreach (var nganh in dmnganhkd)
                                 {
-                                    @foreach (var item in dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "NHAPLIEU").ToList())
-                                    {
-                                        <option value="@item.MaDv">@item.TenDv</option>
-                                    }
-                                } *@
+                                    <optgroup label="@nganh.Tennganh">
+                                        @{
+                                            var nghe = dmnghekd.Where(t => t.Manganh == nganh.Manganh);
+                                        }
+                                        @foreach (var item in nghe)
+                                        {
+                                            <!option value="@item.Manghe">&emsp;@item.Tennghe</!option>
+                                        }
+                                    </optgroup>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Đơn vị nhận hồ sơ</label>
+                            <select class="form-control select2basic" id="madvhs_create" name="madvhs_create" style="width: 100%">
+                                <option value="">--Chọn đơn vị nhận hồ sơ--</option>
                                 @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                                 {
                                     <option value="@item.MaDv">@item.TenDv</option>
@@ -202,33 +202,29 @@
 </div>
 
 <script>
-
-    function UpdateNghesDropdown() {
-        var selectedNganh = $('#manghanh_create').val();
+    function AjaxGetDvNhanHs() {
+        var selectedNghe = $('#manghe_create').val();
 
         $.ajax({
-            url: "/Ajax/GetNghes",
+            url: "/Ajax/GetDvNhanHs",
             type: "GET",
             data: {
-                Manghanh: selectedNganh
+                Manghe: selectedNghe
             },
             success: function (data) {
                 if (data.status === 'success') {
-                    console.log(data.nghes);
-                    // Xóa tất cả các option hiện tại trong menu Nghề
-                    $('#manghe_create').empty();
-                    // Thêm các option mới từ dữ liệu trả về
+                    $('#madv_create').empty();
                     var html = '';
-                    $.each(data.nghes, function (index, nghe) {
-                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
+                    $.each(data.dsdonvi, function (index, dv) {
+                        html += '<option value="' + dv.madv + '">' + dv.tendv + '</option>';
                     });
-                    $('#manghe_create').append(html);
+                    $('#madv_create').append(html);
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
             },
             error: function () {
-                toastr.error("Không thể tải danh sách nghề.", "Lỗi!");
+                toastr.error("Không thể tải danh sách đơn vị.", "Lỗi!");
             }
         });
     }
@@ -241,7 +237,6 @@
             $('#Create_Lvkd_Modal').modal("show");
         }
     }
-
 
     function SetStoreLvkd() {
         $.ajax({
@@ -343,5 +338,35 @@
                 }
             }
         })
+    }
+
+    function UpdateNghesDropdown() {
+        var selectedNganh = $('#manghanh_create').val();
+
+        $.ajax({
+            url: "/Ajax/GetNghes",
+            type: "GET",
+            data: {
+                Manghanh: selectedNganh
+            },
+            success: function (data) {
+                if (data.status === 'success') {
+                    console.log(data.nghes);
+                    // Xóa tất cả các option hiện tại trong menu Nghề
+                    $('#manghe_create').empty();
+                    // Thêm các option mới từ dữ liệu trả về
+                    var html = '';
+                    $.each(data.nghes, function (index, nghe) {
+                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
+                    });
+                    $('#manghe_create').append(html);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            },
+            error: function () {
+                toastr.error("Không thể tải danh sách nghề.", "Lỗi!");
+            }
+        });
     }
 </script>

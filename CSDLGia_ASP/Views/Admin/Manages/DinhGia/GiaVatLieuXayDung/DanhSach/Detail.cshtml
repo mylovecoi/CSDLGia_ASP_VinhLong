@@ -86,7 +86,7 @@
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
                     $('.select2multi').select2();
-                    MoneyMask();
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -95,7 +95,8 @@
     }        
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        showLoadingOverlay();
+        var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaVatLieuXayDungCt/Update',
             type: 'POST',
@@ -107,6 +108,7 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
+                    hideLoadingOverlay();
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_data').replaceWith(data.message);
                     $(document).ready(function () {

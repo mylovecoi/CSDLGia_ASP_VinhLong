@@ -40,7 +40,7 @@
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight: bold; color: blue">Phân loại nhóm</label>
                         <select  class="form-control" asp-for="Manhom">
-                            <option value="all"> Chọn tất cả</option>
+                            <option value="all">--Tất cả--</option>
                             @foreach (var item in danhmuc)
                             {
                                 <option value="@item.Manhom">@item.Tennhom</option>

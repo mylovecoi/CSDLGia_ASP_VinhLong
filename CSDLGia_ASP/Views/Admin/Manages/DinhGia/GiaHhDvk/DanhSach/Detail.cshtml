@@ -89,7 +89,7 @@
                 if (data.status == 'success') {
                     toastr.success("Thành công!");
                     $('#edit_thongtin').replaceWith(data.message);
-                    MoneyMask();
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -98,8 +98,8 @@
     }
 
     function SetUpdate() {
-        var gialk = $('#gialk_edit').val().replace(/\./g, ',');
-        var gia = $('#gia_edit').val().replace(/\./g, ',');      
+        var gialk = $('#gialk_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaHhDvkCt/Update',
             type: 'POST',
