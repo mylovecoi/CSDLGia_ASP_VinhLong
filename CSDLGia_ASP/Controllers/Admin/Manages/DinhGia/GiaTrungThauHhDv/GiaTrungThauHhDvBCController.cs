@@ -36,6 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.baocao", "Index"))
                 {
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     DateTime nowDate = DateTime.Now;
                     DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
@@ -45,7 +46,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["Title"] = "Báo cáo giá trúng thầu hàng hóa được mua sắm theo quy định của pháp luật về đấu thầu";
                     ViewData["MenuLv1"] = "menu_mts";
                     ViewData["MenuLv2"] = "menu_giamts_bc";
-                    ViewData["DanhSachHoSo"] = _db.GiaMuaTaiSan.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && t.Trangthai == "HT");
+                    ViewData["DanhSachHoSo"] = _db.GiaMuaTaiSan.Where(t => t.Thoidiem >= firstDayCurrentYear && t.Thoidiem <= lastDayCurrentYear && list_trangthai.Contains(t.Trangthai));
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/BaoCao/Index.cshtml");
                 }
                 else
@@ -68,8 +69,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.baocao", "Index"))
                 {
-
-                    var model = (from hoso in _db.GiaMuaTaiSan.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    var model = (from hoso in _db.GiaMuaTaiSan.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan
                                  {
@@ -79,7 +80,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                                      Thoidiem = hoso.Thoidiem,
                                      Trangthai = hoso.Trangthai,
                                      Thongtinqd = hoso.Thongtinqd,
-                });
+                                 });
 
                     ViewData["Title"] = "Báo cáo giá trúng thầu hàng hóa được mua sắm theo quy định của pháp luật về đấu thầu";
                     ViewData["MenuLv1"] = "menu_mts";
@@ -116,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
-                     var model = (from chitiet in _db.GiaMuaTaiSanCt
+                    var model = (from chitiet in _db.GiaMuaTaiSanCt
                                  join hoso in _db.GiaMuaTaiSan on chitiet.Mahs equals hoso.Mahs
                                  join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new GiaMuaTaiSanCt
@@ -125,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                                      Dvt = chitiet.Dvt,
                                      Mahs = chitiet.Mahs,
                                      Madv = hoso.Madv,
-                                     Thoidiem = hoso.Thoidiem,                                    
+                                     Thoidiem = hoso.Thoidiem,
                                      Soqd = hoso.Soqd,
                                      DonGia = chitiet.DonGia,
                                      KhoiLuong = chitiet.KhoiLuong,
@@ -134,14 +135,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                                      Madiaban = hoso.Madiaban,
                                      Tennhathau = hoso.Tennhathau,
                                      TrangThai = hoso.Trangthai,
-                                    
-                                 });
 
-                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && t.TrangThai == "HT");
+                                 });
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.TrangThai));
 
                     //if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
-                   
+
 
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
 
