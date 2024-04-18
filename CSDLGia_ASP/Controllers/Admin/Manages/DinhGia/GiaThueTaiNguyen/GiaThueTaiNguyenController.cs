@@ -535,9 +535,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
         }
 
         [Route("GiaThueTaiNguyen/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search,
-                                    string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string Ten_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Ten)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -568,17 +567,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                      Mahs = hoso.Mahs
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Gia >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Gia <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (!string.IsNullOrEmpty(Ten_Search))
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.Gia >= DonGiaTu); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Gia <= DonGiaDen); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(Ten))
                     {
-                        model = model.Where(t => t.Ten.ToLower().Contains(Ten_Search.ToLower()));
+                        model = model.Where(t => t.Ten.ToLower().Contains(Ten.ToLower()));
                     }
-
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá thuế tài nguyên";
                     ;
