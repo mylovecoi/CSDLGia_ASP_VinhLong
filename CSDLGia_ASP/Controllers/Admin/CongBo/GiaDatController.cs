@@ -210,7 +210,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == Mahs);
             model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
             var donvi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
-            ViewData["Title"] = "Xem chi tiết giao dịch đất thực tế trên thị trường";
+            ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
             ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
             ViewData["TenDonVi"] = donvi.TenDv;
             ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;
@@ -252,7 +252,6 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         [HttpGet]
         public IActionResult GiaTrungThauDatShow(string Mahs)
         {
-
             var model = _db.GiaDauGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
             var model_new = new GiaDauGiaDat
             {
@@ -270,12 +269,35 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 Maxp = model.Maxp,
 
             };
-            var model_ct = _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs);
+            var model_ct = from gdCt in _db.GiaDauGiaDatCt.Where(t => t.Mahs == Mahs)
+                           join diaban in _db.DsDiaBan on gdCt.MaDiaBan equals diaban.MaDiaBan
+                           select new GiaDauGiaDatCt()
+                           {
+                               Loaidat = gdCt.Loaidat,
+                               Khuvuc = gdCt.Khuvuc,
+                               Mota = gdCt.Mota,
+                               Dientich = gdCt.Dientich,
+                               Giakhoidiem = gdCt.Giakhoidiem,
+                               Giadaugia = gdCt.Giadaugia,
+                               Giasddat = gdCt.Giasddat,
+                               Mahs = gdCt.Mahs,
+                               Solo = gdCt.Solo,
+                               Sothua = gdCt.Sothua,
+                               Tobanbo = gdCt.Tobanbo,
+                               Dvt = gdCt.Dvt,
+                               Sotobanbo = gdCt.Sotobanbo,
+                               TrangThai = gdCt.TrangThai,
+                               MaDv = gdCt.MaDv,
+                               MaDiaBan = gdCt.MaDiaBan,
+                               MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == gdCt.MaDiaBan).MaDiaBanCq,
+                           };
             model_new.GiaDauGiaDatCt = model_ct.ToList();
-            var donvi = _db.DsDonVi.First(t => t.MaDv == model.Madv);
-            ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == model.Madiaban).TenDiaBan; 
-            ViewData["TenDonVi"] = donvi.TenDv;
-            ViewData["XaPhuong"] = _db.DsXaPhuong.FirstOrDefault(x => x.Maxp == model.Maxp).Tenxp;
+            var donvi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
+            ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
+            ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+            ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+            ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
+            ViewData["TenDonVi"] = donvi != null ? donvi.TenDv : "";
             return View("Views/Admin/Manages/DinhGia/GiaTrungThauDat/DanhSach/Show.cshtml", model_new);
         }
 
