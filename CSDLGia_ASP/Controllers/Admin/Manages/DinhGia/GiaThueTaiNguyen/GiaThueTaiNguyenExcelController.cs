@@ -188,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     Thoidiemlk = request.Thoidiemlk,
                     Cqbh = request.Cqbh,
                     Ghichu = request.Ghichu,
-                    Trangthai = "CHT",
+                    Trangthai = "CC",
                     Congbo = "CHUACONGBO",
                     Ipf1 = request.Ipf1,
                     PhanLoaiHoSo = request.PhanLoaiHoSo,
