@@ -26,6 +26,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Index"))
                 {
                     var dmnganhkd = _db.DmNganhKd.ToList();
+
                     ViewData["Title"] = "Danh mục ngành kinh doanh";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtdanhmuc";

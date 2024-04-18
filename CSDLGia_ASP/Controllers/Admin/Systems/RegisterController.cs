@@ -38,21 +38,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
-                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
-                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    //var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    //List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                    IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
+                    //IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
 
-                    if (Madv != "all")
-                    {
-                        coms = coms.Where(t => t.Macqcq == Madv);
-                    }
+                    //if (Madv != "all")
+                    //{
+                    //    coms = coms.Where(t => t.Macqcq == Madv);
+                    //}
 
                     var users = _db.Users.Where(t => t.Level == "DN").ToList();
+                    var company = _db.Company.ToList();
                     var model_join = (from user in users
-                                      join com in coms on user.Madv equals com.Madv
+                                      join com in company on user.Madv equals com.Madv
                                       select new VMUsers
                                       {
                                           Id = user.Id,
@@ -67,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       });
                     
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                    ViewData["Madv"] = Madv;
+                    //ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
