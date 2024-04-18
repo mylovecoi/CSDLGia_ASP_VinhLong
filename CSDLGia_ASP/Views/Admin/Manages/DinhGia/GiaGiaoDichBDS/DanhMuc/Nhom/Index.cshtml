@@ -44,6 +44,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="4%">#</th>
+                    <th>Mã nhóm</th>
                     <th>Nhóm bất động sản</th>
                     <th width="20%">Theo dõi</th>
                     <th width="15%">Thao tác</th>
@@ -54,6 +55,7 @@
                 {
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
+                        <td class="active">@item.Manhom</td>
                         <td class="active">@item.Tennhom</td>
                         <td style="text-align: center">
                             @if (item.Theodoi == "TD")
