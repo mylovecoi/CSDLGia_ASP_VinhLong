@@ -57,14 +57,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Ngành - Nghề</label>";
-                result += "<select class='form-control' id='manghe_edit' name='manghe_edit'>";
+                result += "<select class='form-control select2basic' id='manghe_edit' name='manghe_edit' style='width: 100%' onchange='AjaxGetDvNhanHsEdit()'>";
                 foreach (var nganh in dmnganhkd)
                 {
                     result += "<optgroup label='" + nganh.Tennganh + "'>";
                     var dmnganhnghekd = dmnghekd.Where(t => t.Manganh == nganh.Manganh).ToList();
                     foreach (var nghe in dmnganhnghekd)
                     {
-                        result += "<option value='" + nghe.Manghe + "'" + ((string)model.Manghe == nghe.Manghe ? "selected" : "") + ">" + nghe.Tennghe + "</option>";
+                        result += "<option value='" + nghe.Manghe + "'" + ((string)model.Manghe == nghe.Manghe ? "selected" : "") + ">&emsp;" + nghe.Tennghe + "</option>";
                     }
                     result += "</optgroup>";
                 }
@@ -74,11 +74,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị nhận hồ sơ</label>";
-                result += "<select class='form-control' id='madvhs_edit' name='madvhs_edit'>";
-                result += "<option value= '' '" + ((string)model.Macqcq == "" ? "selected" : "") + "'>--Chọn đơn vị nhận hồ sơ--</option>";
+                result += "<select class='form-control select2basic' id='madvhs_edit' name='madvhs_edit' style='width: 100%'>";
+                result += "<option value= ''>--Chọn đơn vị nhận hồ sơ--</option>";
+                //result += "<option value= '' '" + ((string)model.Macqcq == "" ? "selected" : "") + "'>--Chọn đơn vị nhận hồ sơ--</option>";
                 foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                 {
-                    result += "<option value= '" + item.MaDv + "' " + ((string)model.Macqcq == item.MaDv ? "selected" : "") + ">" + item.TenDv + "</ option >";
+                    result += "<option value= '" + item.MaDv + "' " + ((string)model.Macqcq == item.MaDv ? "selected" : "") + ">&emsp;" + item.TenDv + "</ option >";
                 }
                 result += "</select>";
                 result += "</div>";

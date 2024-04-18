@@ -3,6 +3,7 @@ using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers
@@ -41,8 +42,8 @@ namespace CSDLGia_ASP.Controllers
                     //{
                     //    xaphuong = _db.DsDiaBan.Where(x=>x.Level=="X");
                     //}
-                    var xaphuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanHuyen).Where(x=>x.Level=="X");
-                    
+                    var xaphuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanHuyen).Where(x => x.Level == "X");
+
                     string result = "";
                     result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
                     result += "<option value='all'>---Chọn xã phường---</option>";
@@ -175,39 +176,46 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
-        [Route("Ajax/GetNghes")]
-        [HttpGet]
-        public IActionResult GetNghes(string Manghanh)
-        {
-            try
-            {
-                var nghes = _db.DmNgheKd.Where(nghe => nghe.Manganh == Manghanh).ToList();
-
-                return Json(new { status = "success", nghes });
-            }
-            catch (Exception ex)
-            {
-                // Xử lý các ngoại lệ và trả về thông báo lỗi
-                return Json(new { status = "error", message = ex.Message });
-            }
-        }
-
         [Route("Ajax/GetDvNhanHs")]
-        [HttpGet]
-        public IActionResult GetDvNhanHs(string Manghe)
+        [HttpPost]
+        public JsonResult GetDvNhanHs(string Manghe, string KeySelect)
         {
-            try
+            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            //{
+            if (string.IsNullOrEmpty(Manghe))
             {
-                var dmnghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe).Madv;
-                var dsdonvi = _db.DsDonVi.Where(dv => dv.ChucNang == "NHAPLIEU" && dv.MaDv == dmnghekd).ToList();
+                string result = "";
+                result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                result += "<option value=''>--Chọn đơn vị nhận hồ sơ test--</option>";
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var model = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe);
+                List<string> list_madv = !string.IsNullOrEmpty(model.Madv) ? new List<string>(model.Madv.Split(',')) : new List<string>();
+                
 
-                return Json(new { status = "success", dsdonvi });
+                var dsdonvi = _db.DsDonVi.Where(dv => list_madv.Contains(dv.MaDv)).ToList();
+
+                string result = "";
+                result = "<select class='form-control' id='" + KeySelect + "' name='" + KeySelect + "'> ";
+                result += "<option value=''>--Chọn đơn vị nhận hồ sơ--</option>";
+                foreach (var dv in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU"))
+                {
+                    result += "<option value='" + dv.MaDv + "'>&emsp;" + dv.TenDv + "</option>";
+                }
+                result += "</select>";
+                var data = new { status = "success", message = result };
+                return Json(data);
             }
-            catch (Exception ex)
-            {
-                // Xử lý các ngoại lệ và trả về thông báo lỗi
-                return Json(new { status = "error", message = ex.Message });
-            }
+            //}
+            //else
+            //{
+            //    var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+            //    return Json(data);
+            //}
         }
     }
 }
