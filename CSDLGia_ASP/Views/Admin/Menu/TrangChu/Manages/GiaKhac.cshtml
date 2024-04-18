@@ -155,7 +155,7 @@
 }
 
 <!--Giá phí, lệ phí (chưa làm danh sách chức năng)-->
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_plp">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -168,7 +168,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.danhmuc", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_plp_dm">
                         <a asp-controller="PhiLePhiNhom" asp-action="Index" class="menu-link">
@@ -180,7 +180,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_plp_tt">
                         <a asp-controller="PhiLePhi" asp-action="Index" class="menu-link">
@@ -192,7 +192,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_plp_xd">
                         <a asp-controller="PhiLePhiHT" asp-action="Index" class="menu-link">
@@ -204,7 +204,7 @@
                     </li>
                 }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.timkiem", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.timkiem", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_plp_tk">
                         <a asp-controller="PhiLePhi" asp-action="Search" class="menu-link">
@@ -215,7 +215,7 @@
                         </a>
                     </li>
                 }
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.baocao", "Index"))
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_plp_bc">
                         <a asp-controller="PhiLePhiBC" asp-action="Index" class="menu-link">
