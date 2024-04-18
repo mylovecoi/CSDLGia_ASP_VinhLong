@@ -13,6 +13,7 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public string Status { get; set; }
         public string Maxa { get; set; }
         public string Mahuyen { get; set; }
+        public string Macqcq { get; set; }
         public string Town { get; set; }
         public string District { get; set; }
         public string Level { get; set; }

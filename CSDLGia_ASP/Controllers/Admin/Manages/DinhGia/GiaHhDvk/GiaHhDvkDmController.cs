@@ -44,7 +44,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Dvt"] = _db.DmDvt;
                     ViewData["Title"] = "Thông tin chi tiết hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_hhdvk";
-                    ViewData["MenuLv2"] = "menu_hhdvk_dm";                    
+                    ViewData["MenuLv2"] = "menu_hhdvk_dm";
                     foreach (var item in model)
                     {
                         var foundItem = dmDvts.FirstOrDefault(x => x.Madvt == item.Dvt);
@@ -137,12 +137,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Edit"))
                 {
                     var model = _db.GiaHhDvkDm.FirstOrDefault(p => p.Id == Id);
-                    var dmnhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVK");
+                    var dmnhomhh = _db.DmNhomHh.Where(t => t.Phanloai == "GIAHHDVKHAC").ToList();
                     var dvt = _db.DmDvt;
 
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Mã nhóm HHDV</label>";
+                        result += "<select id='manhom_edit' name='manhom_edit' class='form-control kt_select2_1_modal'>";
+                        foreach (var item in dmnhomhh)
+                        {
+                            result += "<option value='" + item.Manhom + "' " + (model.Manhom == item.Manhom ? "selected" : "") + ">" + item.Tennhom + "</option>";
+                        }
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -163,21 +175,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-10'>";
+                        result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Đơn vị tính</label>";
-                        result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
+                        result += "<select id='dvt_edit' name='dvt_edit' class='form-control kt_select2_1_modal'>";
                         foreach (var item in dvt)
                         {
-                            result += "<option value='" + item.Madvt + "' " + ((string)model.Dvt == item.Madvt ? "selected" : "") + ">" + item.Dvt + "</option>";
+                            result += "<option value='" + item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + item.Dvt + "</option>";
                         }
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
-                        result += "<div class='col-xl-2'>";
+
+                        result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>&nbsp;&nbsp;&nbsp;</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_Edit' data-toggle='modal'><i class='la la-plus'></i></button>";
+                        result += "<label>Theo dõi</label>";
+                        result += "<select id='theodoi_edit' name='theodoi_edit' class='form-control kt_select2_1_modal'>";
+                        result += "<option value='TD' " + ((string)model.Theodoi == "TD" ? "selected" : "") + ">Theo dõi</option>";
+                        result += "<option value='KTD' " + ((string)model.Theodoi == "KTD" ? "selected" : "") + ">Không theo dõi</option>";
+                        result += "</select>";
                         result += "</div>";
                         result += "</div>";
 
@@ -209,7 +225,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
         [Route("GiaHhDvkDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Manhom, string Matt, string Mahhdv, string Tenhhdv, string Dacdiemkt, string Dvt)
+        public JsonResult Update(int Id, string Manhom, string Matt, string Mahhdv, string Tenhhdv, string Dacdiemkt, string Dvt, string Theodoi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -220,10 +236,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     {
                         var model = _db.GiaHhDvkDm.FirstOrDefault(t => t.Id == Id);
                         model.Manhom = Manhom;
-                        model.Mahhdv = Manhom + "." + Mahhdv;
+                        model.Mahhdv = Mahhdv;
                         model.Tenhhdv = Tenhhdv;
                         model.Dacdiemkt = Dacdiemkt;
                         model.Dvt = Dvt;
+                        model.Theodoi = Theodoi;
                         model.Updated_at = DateTime.Now;
                         _db.GiaHhDvkDm.Update(model);
                         _db.SaveChanges();
@@ -278,6 +295,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaHhDvkDm", new { Matt = model.Matt });
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("GiaHhDvkDmCt/DeleteAll")]
+        [HttpPost]
+        public IActionResult DeleteAll(string Matt)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.dm", "Delete"))
+                {
+                    var model = _db.GiaHhDvkDm.Where(p => p.Matt == Matt);
+                    _db.GiaHhDvkDm.RemoveRange(model);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "GiaHhDvkDm", new { Matt = Matt });
                 }
                 else
                 {
@@ -359,10 +402,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
 
+                                string maHHDV = worksheet.Cells[row, 2].Value != null ?
+                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "";
+                                if (string.IsNullOrEmpty(maHHDV))
+                                {
+                                    continue;
+                                }
+                                string[] a_maHHDV = maHHDV.Split('.');
                                 list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkDm
                                 {
-                                    Mahhdv = worksheet.Cells[row, 2].Value != null ?
-                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
+                                    Mahhdv = maHHDV,
                                     Tenhhdv = worksheet.Cells[row, 3].Value != null ?
                                                  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                     Dacdiemkt = worksheet.Cells[row, 4].Value != null ?
@@ -370,7 +419,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                     Dvt = worksheet.Cells[row, 5].Value != null ?
                                                  worksheet.Cells[row, 5].Value.ToString().Trim() : "",
                                     Matt = requests.MaNhom,
-                                    Manhom = requests.MaNhom
+                                    Theodoi = "TD",
+                                    Manhom = a_maHHDV[0]
                                 });
 
                             }

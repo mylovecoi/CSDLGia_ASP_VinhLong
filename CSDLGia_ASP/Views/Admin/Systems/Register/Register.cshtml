@@ -3,6 +3,7 @@
 }
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.ViewModels.Systems.VMRegisters
 <!DOCTYPE html>
@@ -73,7 +74,7 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Mã số thuế hoặc mã số đăng ký KD</label>
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Mã số thuế hoặc mã số đăng ký KD*</label>
                                         <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Madv" />
                                         <span asp-validation-for="Madv" class="text-danger"></span>
                                     </div>
@@ -108,20 +109,20 @@
                                         <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diadanh" />
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
+                                @* <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan quản lý xét duyệt đăng ký tài khoản</label>
-                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" asp-for="Madiaban">
-                                            @foreach (var item in dsdiaban)
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan xét duyệt đăng ký tài khoản</label>
+                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" asp-for="Macqcq">
+                                            @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU"))
                                             {
-                                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                                <option value="@item.MaDv">@item.TenDv</option>
                                             }
                                         </select>
                                     </div>
-                                </div>
+                                </div> *@
                                 <div class="col-xl-6 text-dark">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Giấy đăng ký kinh doanh</label>
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Giấy đăng ký kinh doanh</label><br />
                                         <input class="text-dark opacity-60 font-weight-bold" type="file" asp-for="Giayphepkdupload" accept=".doc, .pdf" />
                                     </div>
                                 </div>
@@ -188,7 +189,7 @@
             }, "font-family": "Nunito Sans"
         };
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             TableManaged.init();
             TableManaged2.init();
             TableManaged4.init();
@@ -229,6 +230,7 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 </body>
 <!--end::Body-->
 </html>

@@ -66,15 +66,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsDonVi/Create")]
         [HttpGet]
-        public IActionResult Create(string MaDiaBan)
+        public IActionResult Create()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Create"))
                 {
                     ViewData["DsDonvi"] = _db.DsDonVi;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == MaDiaBan).ToList();
-                    ViewData["MaDiaBan"] = MaDiaBan;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = "Thêm mới Danh sách đơn vị";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
@@ -107,7 +106,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         var model = new DsDonVi
                         {
                             MaDiaBan = request.MaDiaBan,
-                            MaQhNs = request.MaQhNs,
+                            //MaQhNs = request.MaQhNs,
                             MaDv = DateTime.Now.ToString("yyMMddssmmHH"),
                             TenDv = request.TenDv,
                             DiaChi = request.DiaChi,
@@ -205,7 +204,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dsdiaban", "Update"))
                 {
                     var model = _db.DsDonVi.FirstOrDefault(t => t.Id == request.Id);
-                    model.MaQhNs = request.MaQhNs;
+                    //model.MaQhNs = request.MaQhNs;
+                    //model.MaDv = request.MaDv;
                     model.TenDv = request.TenDv;
                     model.DiaChi = request.DiaChi;
                     model.TtLienHe = request.TtLienHe;

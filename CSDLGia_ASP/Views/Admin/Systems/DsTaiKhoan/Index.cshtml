@@ -42,8 +42,7 @@
         <div class="card-toolbar">
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Create"))
             {
-                <a class="btn btn-primary font-weight-bolder" asp-controller="DsTaiKhoan" asp-action="Create"
-                   asp-route-MaDv="@ViewData["MaDv"]">
+                <a class="btn btn-primary font-weight-bolder" asp-controller="DsTaiKhoan" asp-action="Create">
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
@@ -53,7 +52,7 @@
     <hr />
     <div class="card-body">
         <div class="mb-12">
-            <div class="row">
+         @*<div class="row">
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Đơn vị</label>
@@ -73,29 +72,42 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <table class="table table-striped table-bordered table-hover" id="sample_3">
                 <thead>
                     <tr style="text-align:center">
-                        <th rowspan="2" width="5%">#</th>
-                        <th rowspan="2">Tên tài khoản</th>
-                        <th rowspan="2">Tài khoản truy cập</th>
-                        <th colspan="4">Chức năng</th>
-                        <th rowspan="2">Trạng thái</th>
-                        <th rowspan="2">Thao tác</th>
+                        <th width="5%">#</th>
+                        <th>Phân loại</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tài khoản truy cập</th>
+                        @*  <th colspan="4">Chức năng</th> *@
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
-                    <tr style="text-align:center">
-                        <th>Nhập liệu</th>
-                        <th>Tổng hợp</th>
-                        <th>Quản trị</th>
-                        <th>Khác</th>
-                    </tr>
+                    @*   <tr style="text-align:center">
+                    <th>Nhập liệu</th>
+                    <th>Tổng hợp</th>
+                    <th>Quản trị</th>
+                    <th>Khác</th>
+                    </tr> *@
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td style="text-align:center" width="5%">@(record_id++)</td>
+                            <td style="text-align:center">
+                                <span style="width: 112px;">
+                                    @if (item.Level == "DN")
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-primary label-inline">Doanh nghiệp</span>
+                                    }                                   
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg  label-danger label-inline">Đơn vị quản lý</span>
+                                    }
+                                </span>
+                            </td>
                             <td>@item.Name</td>
                             <td class="active text-center">@item.Username</td>
                             @*<td style="text-align:center">
@@ -115,34 +127,34 @@
                         {
                         <i class="la la-check icon-2x text-info mr-5"></i>
                         }
-                        </td>*@
-                            @{
-                                var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
-                            }
-                            <td style="text-align:center">
-                                @if (tenchucnang == "NHAPLIEU")
-                                {
-                                    <i class="la la-check icon-2x text-info mr-5"></i>
-                                }
-                            </td>
-                            <td style="text-align:center">
-                                @if (tenchucnang == "TONGHOP")
-                                {
-                                    <i class="la la-check icon-2x text-info mr-5"></i>
-                                }
-                            </td>
-                            <td style="text-align:center">
-                                @if (tenchucnang == "QUANTRI")
-                                {
-                                    <i class="la la-check icon-2x text-info mr-5"></i>
-                                }
-                            </td>
-                            <td style="text-align:center">
-                                @if (string.IsNullOrEmpty(tenchucnang))
-                                {
-                                    <i class="la la-check icon-2x text-info mr-5"></i>
-                                }
-                            </td>
+                        </td>
+                        @{
+                        var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
+                        }
+                        <td style="text-align:center">
+                        @if (tenchucnang == "NHAPLIEU")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>
+                        <td style="text-align:center">
+                        @if (tenchucnang == "TONGHOP")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>
+                        <td style="text-align:center">
+                        @if (tenchucnang == "QUANTRI")
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td>
+                        <td style="text-align:center">
+                        @if (string.IsNullOrEmpty(tenchucnang))
+                        {
+                        <i class="la la-check icon-2x text-info mr-5"></i>
+                        }
+                        </td> *@
                             <td style="text-align:center">
                                 <span style="width: 112px;">
                                     @if (item.Status == "Kích hoạt")
@@ -166,7 +178,6 @@
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                 }
-
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Delete"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.Username', '@item.Name')">
@@ -175,9 +186,9 @@
                                 }
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
                                 {
+                                    var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
                                     @if (string.IsNullOrEmpty(tenchucnang))
                                     {
-
                                         <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
                                             <i class="icon-lg la la-user-cog text-dark"></i>
                                         </a>

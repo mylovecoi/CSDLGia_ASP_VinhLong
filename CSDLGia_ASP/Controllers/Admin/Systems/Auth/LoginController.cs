@@ -49,6 +49,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 {
                     HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
                     HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
+                    HttpContext.Session.SetString("MaDiaBanHanhChinh", heThong.MaDiaBanHanhChinh);
+                    HttpContext.Session.SetString("MaDonViThuThap", heThong.MaDonViThuThap);
                 }
                 //Lấy các thông tin về kết nối API
                 //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();

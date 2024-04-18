@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,83 +21,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
 
-        public RegisterController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public RegisterController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
         }
-
-        [Route("DangKy/DanhSach_Cu")]
-        [HttpGet]
-        public IActionResult Index_Cu(string Madiaban)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
-                {
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-
-                    if (string.IsNullOrEmpty(Madiaban))
-                    {
-                        Madiaban = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
-                    }
-                    var users = _db.Users.Where(t => t.Level == "DN" && t.Status != "Kích hoạt").ToList();
-                    var coms = _db.Company.Where(t => t.Madiaban == Madiaban).ToList();
-                    var model_join = (from user in users
-                                      join com in coms on user.Madv equals com.Madv
-                                      select new VMUsers
-                                      {
-                                          Id = user.Id,
-                                          Name = user.Name,
-                                          Username = user.Username,
-                                          Madv = user.Madv,
-                                          Status = user.Status,
-                                          Lydo = user.Lydo,
-                                          Created_at = user.Created_at,
-                                          Updated_at = user.Updated_at,
-                                      });
-
-                    ViewData["DsDiaBan"] = dsdiaban;
-                    ViewData["Madiaban"] = Madiaban;
-                    ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsdangky";
-                    return View("Views/Admin/Systems/Register/Index.cshtml", model_join);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
 
         [Route("DangKy/DanhSach")]
         [HttpGet]
-        public IActionResult Index(string Madiaban)
+        public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
-                    var dsdiaban = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-                    if (string.IsNullOrEmpty(Madiaban))
-                    {
-                        Madiaban = dsdiaban.OrderBy(t => t.Id).Select(t => t.MaDiaBan).First();
-                    }
+                    //var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    //List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    //IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
+
+                    //if (Madv != "all")
+                    //{
+                    //    coms = coms.Where(t => t.Macqcq == Madv);
+                    //}
 
                     var users = _db.Users.Where(t => t.Level == "DN").ToList();
-                    var coms = _db.Company.Where(t => t.Madiaban == Madiaban).ToList();
+                    var company = _db.Company.ToList();
                     var model_join = (from user in users
-                                      join com in coms on user.Madv equals com.Madv
+                                      join com in company on user.Madv equals com.Madv
                                       select new VMUsers
                                       {
                                           Id = user.Id,
@@ -107,10 +64,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                           Lydo = user.Lydo,
                                           Created_at = user.Created_at,
                                           Updated_at = user.Updated_at,
+                                          Macqcq = com.Macqcq,
                                       });
-
-                    ViewData["DsDiaBan"] = dsdiaban;
-                    ViewData["Madiaban"] = Madiaban;
+                    
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                    //ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
@@ -128,7 +86,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [Route("DangKy/DanhSach/ChiTiet")]
         [HttpGet]
@@ -259,12 +216,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var VlXdDatSanlap = Manghe.Any(m => m.Contains("DATSANLAP")) ? 1 : 0;
                     var VanTaiKhachBangOtoCoDinh = Manghe.Any(m => m.Contains("VTXK")) ? 1 : 0;
                     var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
+                    var VanTaiKhachBangXeBuyt = Manghe.Any(m => m.Contains("VTXB")) ? 1 : 0;
                     var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
                     var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
                     var Dvlt = Manghe.Any(m => m.Contains("LUUTRU")) ? 1 : 0;
                     var VlXd= Manghe.Any(m => m.Contains("VLXD")) ? 1 : 0;
                     var KhamChuaBenh = Manghe.Any(m => m.Contains("KCBTN")) ? 1 : 0;
                     var DvThuongMai = Manghe.Any(m => m.Contains("DVHDTMCK")) ? 1 : 0;
+                    var LuHanh = Manghe.Any(m => m.Contains("LUHANH")) ? 1 : 0;
 
                     var company = new Company
                     {
@@ -289,8 +248,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         VanTaiKhachBangTaXi = VanTaiKhachBangTaXi,
                         CaHue = CaHue,
                         SieuThi = SieuThi,
+                        LuHanh = LuHanh,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
+                        Macqcq = request.Macqcq,
                         Tendn = request.Tendn,
                         Diachi = request.Diachi,
                         Tel = request.Tel,
@@ -410,8 +371,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-
 
     }
 }

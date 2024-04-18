@@ -41,6 +41,7 @@ namespace CSDLGia_ASP
             
             services.AddScoped<IDsDiaBanService, DsDiaBanService>();
             services.AddScoped<IDsDonviService, DsDonviService>();
+            services.AddScoped<ITrangThaiHoSoService, TrangThaiHoSoService>();
 
             services.AddHttpContextAccessor();
             services.AddMvc().AddRazorPagesOptions(options =>

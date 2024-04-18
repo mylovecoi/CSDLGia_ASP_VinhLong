@@ -21,14 +21,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DoanhNghiep/DangKy/Lvkd/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Manghe, string Manghanh, string Madiaban)
+        public JsonResult Store(string Madv, string Manghe, string Manghanh, string Madiaban, string Macqcq)
         {
             var model = new CompanyLvCc
             {
                 Madv = Madv,
                 Manghe = Manghe,
-                Manganh = Manghanh,
-                Macqcq = Madiaban,
+                Manganh = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe)?.Manganh ?? "",
+                Macqcq = Macqcq,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
@@ -73,28 +73,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "</div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Địa bàn kinh doanh</label>";
-                result += "<select class='form-control' id='madiaban_edit' name='madiaban_edit'>";
-                result += "<option value= '' '" + ((string)model.Macqcq == "" ? "selected" : "") + "'>--Chọn địa bàn kinh doanh--</option>";
-                foreach (var item in dsdiaban)
-                {
-                    result += "<option value= '" + item.MaDiaBan + "'" + ((string)model.Macqcq == item.MaDiaBan ? "selected" : "") + ">" + item.TenDiaBan + "</ option >";
-                }
-                result += "</select>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Đơn vị nhận hồ sơ</label>";
                 result += "<select class='form-control' id='madvhs_edit' name='madvhs_edit'>";
-                result += "<option value= ''>--Chọn đơn vị nhận hồ sơ--</option>";
-                foreach (var db in dsdiaban)
+                result += "<option value= '' '" + ((string)model.Macqcq == "" ? "selected" : "") + "'>--Chọn đơn vị nhận hồ sơ--</option>";
+                foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                 {
-                    foreach (var item in dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang == "NHAPLIEU").ToList())
-                    {
-                        result += "<option value= '" + item.MaDv + "' >" + item.TenDv + "</ option >";
-                    }
-
+                    result += "<option value= '" + item.MaDv + "' " + ((string)model.Macqcq == item.MaDv ? "selected" : "") + ">" + item.TenDv + "</ option >";
                 }
                 result += "</select>";
                 result += "</div>";
@@ -114,12 +98,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DoanhNghiep/DangKy/Lvkd/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Madiaban, string Madv, string Manghe)
+        public JsonResult Update(int Id, string Madiaban, string Madv, string Manghe, string Macqcq, string Manganh)
         {
             var model = _db.CompanyLvCc.FirstOrDefault(t => t.Id == Id);
             model.Manghe = Manghe;
+            model.Manganh = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe)?.Manganh ?? "";
             model.Madv = Madv;
-            model.Macqcq = Madiaban;
+            model.Macqcq = Macqcq;
             model.Updated_at = DateTime.Now;
             _db.CompanyLvCc.Update(model);
             _db.SaveChanges();

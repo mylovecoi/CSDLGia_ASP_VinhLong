@@ -34,7 +34,7 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
-                    toastr.success("Success!");
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -43,7 +43,7 @@
     }
 
     function SetUpdate() {
-        var DonGia = $('#dongia_edit').val().replace(/\,/g, '.');
+        var DonGia = $('#dongia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/PhiLePhiCt/Update',
             type: 'POST',

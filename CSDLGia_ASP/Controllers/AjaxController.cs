@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers
@@ -16,9 +17,6 @@ namespace CSDLGia_ASP.Controllers
             _db = db;
             _IDsDiaBan = IDsDiaBan;
         }
-
-
-
 
         [Route("Ajax/GetXaPhuong")]
         [HttpPost]
@@ -63,6 +61,7 @@ namespace CSDLGia_ASP.Controllers
                 return Json(data);
             }
         }
+
         [Route("Ajax/GetXaPhuongNoAll")]
         [HttpPost]
         public JsonResult GetSeSelectXaPhuongNoAll(string MaDiaBan, string KeySelect)
@@ -103,11 +102,6 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
-
-
-
-
-
         [Route("Ajax/GetTowns")]
         [HttpPost]
         public JsonResult GetSeSelectTowns(string MaHuyen, string KeySelect)
@@ -145,7 +139,6 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
-
         [Route("Ajax/GetTownsNoAll")]
         [HttpPost]
         public JsonResult GetTownsNoAll(string MaHuyen, string KeySelect)
@@ -179,6 +172,41 @@ namespace CSDLGia_ASP.Controllers
             {
                 var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
                 return Json(data);
+            }
+        }
+
+        [Route("Ajax/GetNghes")]
+        [HttpGet]
+        public IActionResult GetNghes(string Manghanh)
+        {
+            try
+            {
+                var nghes = _db.DmNgheKd.Where(nghe => nghe.Manganh == Manghanh).ToList();
+
+                return Json(new { status = "success", nghes });
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các ngoại lệ và trả về thông báo lỗi
+                return Json(new { status = "error", message = ex.Message });
+            }
+        }
+
+        [Route("Ajax/GetDvNhanHs")]
+        [HttpGet]
+        public IActionResult GetDvNhanHs(string Manghe)
+        {
+            try
+            {
+                var dmnghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe).Madv;
+                var dsdonvi = _db.DsDonVi.Where(dv => dv.ChucNang == "NHAPLIEU" && dv.MaDv == dmnghekd).ToList();
+
+                return Json(new { status = "success", dsdonvi });
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các ngoại lệ và trả về thông báo lỗi
+                return Json(new { status = "error", message = ex.Message });
             }
         }
     }

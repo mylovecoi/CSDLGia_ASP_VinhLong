@@ -26,9 +26,6 @@
 }
 <div class="card card-custom">
     <div class="card-header ribbon ribbon-top ribbon-ver">
-        @*<div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
-        <i class="fa fa-star text-warning "></i>
-        </div>*@
         <div class="card-title">
             <h3 class="card-label">
                 Thông tin đơn vị<small>&nbsp;thêm mới</small>
@@ -38,16 +35,21 @@
     <!--begin::Form-->
     <form asp-controller="DsDonVi" asp-action="Store" method="post" enctype="multipart/form-data">
         <div class="card-body">
-            @* <input hidden asp-for="MaDiaBan" /> *@
             <input hidden asp-for="DiaBanApDung" />
             
             <div class="row">
-                <div class="col-xl-4">
+                @* <div class="col-xl-4">
                     <div class="form-group">
                         <label>Mã quan hệ ngân sách</label>
                         <input type="text" class="form-control" asp-for="MaQhNs" />
                     </div>
-                </div>
+                </div> *@
+                @* <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>Mã đơn vị</label>
+                        <input type="text" class="form-control" asp-for="MaDv" required />
+                    </div>
+                </div> *@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Tên đơn vị<span class="require">*</span></label>

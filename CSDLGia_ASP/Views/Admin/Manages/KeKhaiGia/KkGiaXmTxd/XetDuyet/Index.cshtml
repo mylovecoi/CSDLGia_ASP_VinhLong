@@ -65,18 +65,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var db in dsdiaban)
-                        {
-                            <optgroup label="@db.TenDiaBan">
-                                @{
-                                    var dv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan && t.ChucNang != "QUANTRI");
-                                }
-                                @foreach (var item in dv)
+                                @foreach (var item in dsdonvi)
                                 {
                                     <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")> &emsp;@item.TenDv</!option>
                                 }
-                            </optgroup>
-                        }
                     </select>
                 </div>
             </div>

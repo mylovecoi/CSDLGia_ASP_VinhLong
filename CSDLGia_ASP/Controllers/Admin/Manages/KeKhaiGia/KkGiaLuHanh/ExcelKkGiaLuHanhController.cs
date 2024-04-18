@@ -34,7 +34,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.giakk", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgluhanh.giakk", "Create") ||
+                    Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     var modelct_cxd = _db.KkGiaLuHanhCt.Where(t => t.Madv == Madv && t.Trangthai == "CXD");
                     if (modelct_cxd.Any())
