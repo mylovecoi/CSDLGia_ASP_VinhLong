@@ -32,16 +32,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     //}
                     var dsdonvi = _db.DsDonVi.ToList();
 
-                    //var dsDiaBanApDung = _db.Districts.ToList();
-                    //foreach (var item in dsdonvi)
-                    //{
-                    //    foreach(var db in dsDiaBanApDung)
-                    //    {
-                    //        if (!string.IsNullOrEmpty(item.DiaBanApDung))
-                    //            if (item.DiaBanApDung.Contains(db.Mahuyen))
-                    //                item.TenDiaBanApDung += db.Tenhuyen + ";";
-                    //    }
-                    //}
+                    var dsDiaBanApDung = _db.DsDiaBan.ToList();
+                    foreach (var item in dsdonvi)
+                    {
+                        foreach (var db in dsDiaBanApDung)
+                        {
+                            if (!string.IsNullOrEmpty(item.DiaBanApDung))
+                                if (item.DiaBanApDung.Contains(db.MaDiaBan))
+                                    item.TenDiaBanApDung += db.TenDiaBan + ";";
+                        }
+                    }
                     //ViewData["DsDonvi"] = _db.DsDonVi;
                     //ViewData["DsDiaBan"] = dsdiaban;
                     //ViewData["MaDiaBan"] = MaDiaBan;
@@ -78,7 +78,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
                     ViewData["MenuLv3"] = "menu_dsdonvi";
-                    ViewData["DsDiaBanApDung"] = _db.Districts.ToList();
+                    ViewData["DsDiaBanApDung"] = _db.DsDiaBan.Where(x => x.Level == "H" || x.Level == "ADMIN").ToList();
                     return View("Views/Admin/Systems/DsDonVi/Create.cshtml");
                 }
                 else
@@ -172,7 +172,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.DsDonVi.FirstOrDefault(t => t.Id == Id);
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == model.MaDiaBan).ToList();
-                    ViewData["DsDiaBanApDung"] = _db.Districts.ToList();
+                    ViewData["DsDiaBanApDung"] = _db.DsDiaBan.Where(x => x.Level == "H" || x.Level == "ADMIN").ToList();
                     ViewData["DsDonvi"] = _db.DsDonVi;
 
                     ViewData["MaDiaBan"] = model.MaDiaBan;

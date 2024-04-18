@@ -320,14 +320,24 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         public IActionResult GiaThueTaiSanCongShow(string Mahs)
         {
             var model = _db.GiaThueTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
-            var modelct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs);
-            model.GiaThueTaiSanCongCt = modelct.ToList();
+            var model_new = new VMDinhGiaThueTsc
+            {
+                Madiaban = model.Madiaban,
+                Soqd = model.Soqd,
+                Madv = model.Madv,
+                Macqcq = model.Macqcq,
+                Thoidiem = model.Thoidiem,
+                Thongtin = model.Thongtin,
+            };
 
-            ViewData["GiaThueTaiSanCongDm"] = _db.GiaThueTaiSanCongDm.ToList();
+            var model_ct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs);
+
+            model_new.GiaThueTaiSanCongCt = model_ct.ToList();
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["Title"] = "Chi tiết giá thuê tài sản công";
-            return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Show.cshtml", model);
+            ViewData["GiaThueTaiSanCongDm"] = _db.GiaThueTaiSanCongDm.ToList();
+            ViewData["Title"] = " Thông tin hồ sơ thuê tài sản công";
+            return View("Views/Admin/Manages/DinhGia/GiaThueTsc/Show.cshtml", model_new);
         }
 
         [Route("CongBo/GiaSpDvCi")]
