@@ -129,7 +129,7 @@
                                 <option value="">--Chọn đơn vị nhận hồ sơ--</option>
                                 @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
                                 {
-                                    <option value="@item.MaDv">@item.TenDv</option>
+                                    <option value="@item.MaDv">&emsp;@item.TenDv</option>
                                 }
                             </select>
                         </div>
@@ -222,32 +222,6 @@
         })
     }
 
-
-    @* function AjaxGetDvNhanHs() {
-        $.ajax({
-            url: "/Ajax/GetDvNhanHs",
-            type: "GET",
-            data: {
-                Manghe: $('#manghe_create').val()
-            },
-            success: function (data) {
-                if (data.status == 'success') {
-                    $('#madvhs_create').empty();
-                    var html = '';
-                    $.each(data.dsdonvi, function (index, dv) {
-                        html += '<option value="' + dv.madv + '">' + dv.tendv + '</option>';
-                    });
-                    $('#madvhs_create').append(html);
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            },
-            error: function () {
-                toastr.error("Không thể tải danh sách đơn vị.", "Lỗi!");
-            }
-        });
-    } *@
-
     function add_lvkd() {
         if ($('#Madv').val() == '' || $('#Madv').val() == null) {
             toastr.error('Mã số thuế không được bỏ trống.', 'Lỗi mã số thuế');
@@ -258,30 +232,34 @@
     }
 
     function SetStoreLvkd() {
-        $.ajax({
-            url: '/DoanhNghiep/DangKy/Lvkd/Store',
-            type: 'POST',
-            data: {
-                Manghanh: $('#manghanh_create').val(),
-                Manghe: $('#manghe_create').val(),
-                // Madiaban: $('#madiaban_create').val(),
-                Macqcq: $('#madvhs_create').val(),
-                Madv: $('#Madv').val(),
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#lvkd_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Create_Lvkd_Modal').modal("hide");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
+        if (document.getElementById("madvhs_create").value == '') {
+            toastr.error("Đơn vị nhận hồ sơ không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/DoanhNghiep/DangKy/Lvkd/Store',
+                type: 'POST',
+                data: {
+                    Manghanh: $('#manghanh_create').val(),
+                    Manghe: $('#manghe_create').val(),
+                    // Madiaban: $('#madiaban_create').val(),
+                    Macqcq: $('#madvhs_create').val(),
+                    Madv: $('#Madv').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                        $('#lvkd_data').replaceWith(data.message);
+                        $(document).ready(function () {
+                            TableManaged4.init();
+                        });
+                        $('#Create_Lvkd_Modal').modal("hide");
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     function SetEditLvkd(id_edit) {
@@ -296,6 +274,7 @@
                 if (data.status == 'success') {
                     toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2basic').select2();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -304,31 +283,35 @@
     }
 
     function SetUpdateLvkd() {
-        $.ajax({
-            url: '/DoanhNghiep/DangKy/Lvkd/Update',
-            type: 'POST',
-            data: {
-                Manghanh: $('#manghanh_edit').val(),
-                Manghe: $('#manghe_edit').val(),
-                // Madiaban: $('#madiaban_edit').val(),
-                Macqcq: $('#madvhs_edit').val(),
-                Madv: $('#Madv').val(),
-                Id: $('#id_edit').val()
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#lvkd_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Edit_Lvkd_Modal').modal("hide");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
+        if (document.getElementById("madvhs_edit").value == '') {
+            toastr.error("Đơn vị nhận hồ sơ không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/DoanhNghiep/DangKy/Lvkd/Update',
+                type: 'POST',
+                data: {
+                    Manghanh: $('#manghanh_edit').val(),
+                    Manghe: $('#manghe_edit').val(),
+                    // Madiaban: $('#madiaban_edit').val(),
+                    Macqcq: $('#madvhs_edit').val(),
+                    Madv: $('#Madv').val(),
+                    Id: $('#id_edit').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                        $('#lvkd_data').replaceWith(data.message);
+                        $(document).ready(function () {
+                            TableManaged4.init();
+                        });
+                        $('#Edit_Lvkd_Modal').modal("hide");
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     function GetDeleteLvkd(id, tennghe) {
@@ -359,33 +342,4 @@
         })
     }
 
-    function UpdateNghesDropdown() {
-        var selectedNganh = $('#manghanh_create').val();
-
-        $.ajax({
-            url: "/Ajax/GetNghes",
-            type: "GET",
-            data: {
-                Manghanh: selectedNganh
-            },
-            success: function (data) {
-                if (data.status === 'success') {
-                    console.log(data.nghes);
-                    // Xóa tất cả các option hiện tại trong menu Nghề
-                    $('#manghe_create').empty();
-                    // Thêm các option mới từ dữ liệu trả về
-                    var html = '';
-                    $.each(data.nghes, function (index, nghe) {
-                        html += '<option value="' + nghe.manghe + '">' + nghe.tennghe + '</option>';
-                    });
-                    $('#manghe_create').append(html);
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            },
-            error: function () {
-                toastr.error("Không thể tải danh sách nghề.", "Lỗi!");
-            }
-        });
-    }
 </script>

@@ -176,42 +176,6 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
-        [Route("Ajax/GetNghes")]
-        [HttpGet]
-        public IActionResult GetNghes(string Manghanh)
-        {
-            try
-            {
-                var nghes = _db.DmNgheKd.Where(nghe => nghe.Manganh == Manghanh).ToList();
-
-                return Json(new { status = "success", nghes });
-            }
-            catch (Exception ex)
-            {
-                // Xử lý các ngoại lệ và trả về thông báo lỗi
-                return Json(new { status = "error", message = ex.Message });
-            }
-        }
-
-        [Route("Ajax/GetDvNhanHs")]
-        [HttpGet]
-        public IActionResult GetDvNhanHs(string Manghe)
-        {
-            try
-            {
-                var Madv = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe).Madv;
-
-                var dsdonvi = _db.DsDonVi.Where(dv => dv.ChucNang == "NHAPLIEU" && dv.MaDv.Contains(Madv)).ToList();
-
-                return Json(new { status = "success", dsdonvi });
-            }
-            catch (Exception ex)
-            {
-                // Xử lý các ngoại lệ và trả về thông báo lỗi
-                return Json(new { status = "error", message = ex.Message });
-            }
-        }
-
         [Route("Ajax/GetDvNhanHs")]
         [HttpPost]
         public JsonResult GetDvNhanHs(string Manghe, string KeySelect)
