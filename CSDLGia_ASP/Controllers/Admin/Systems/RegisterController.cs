@@ -264,26 +264,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
+                    
                     var user_join = (from user in _db.Users.Where(t => t.Id == Id)
                                      join com in _db.Company on user.Madv equals com.Madv
-                                     join lvkd in _db.CompanyLvCc on com.Mahs equals lvkd.Mahs
-                                     join dmnghe in _db.DmNgheKd on lvkd.Manghe equals dmnghe.Manghe
                                      select new VMRegisters
                                      {
                                          Id = user.Id,
                                          Madv = user.Madv,
+                                         Username = user.Username,
+                                         Status = user.Status,
+                                         Lydo = user.Lydo,
+                                         Mahs = com.Mahs,
                                          Tendn = com.Tendn,
                                          Diachi = com.Diachi,
+                                         Diadanh = com.Diadanh,
                                          Tel = com.Tel,
                                          Fax = com.Fax,
                                          Email = com.Email,
-                                         Diadanh = com.Diadanh,
-                                         Username = user.Username,
-                                         Mahs = com.Mahs,
-                                         Tennghe = dmnghe.Tennghe,
-                                         Status = user.Status,
-                                         Lydo = user.Lydo,
                                      }).ToList();
+
+                    var model = _db.Users.FirstOrDefault(t => t.Id == Id);
+                    var model_com = _db.Company.FirstOrDefault(t => t.Madv == model.Madv);
+                    var model_lvkd = _db.CompanyLvCc.Where(t => t.Mahs == model_com.Mahs);
 
                     ViewData["Madiaban"] = Madiaban;
                     ViewData["Madv"] = Madv;
@@ -291,6 +293,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["Username"] = Username;
                     ViewData["Name"] = Name;
                     ViewData["Status"] = Status;
+                    ViewData["Lvkd"] = model_lvkd;
+                    ViewData["DmNgheKd"] = _db.DmNgheKd;
                     ViewData["Title"] = "Chi tiết doanh nghiệp đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";

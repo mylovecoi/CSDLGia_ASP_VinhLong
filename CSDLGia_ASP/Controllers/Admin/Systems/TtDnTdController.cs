@@ -110,13 +110,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                      Trangthai = dnct.Trangthai,
                                  }).Where(t => t.Madv == Madv).ToList();
 
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
-                    ViewData["DsDoanhNghiep"] = _db.Company;
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    {
+                        ViewData["DsDoanhNghiep"] = _db.Company;
+                    }
+                    else
+                    {
+                        ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
+                    }
                 }
                 else
                 {
-                    ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    {
+                        ViewData["DsDoanhNghiep"] = _db.Company;
+                    }
+                    else
+                    {
+                        ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Macqcq == Madv);
+                    }
                 }
 
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
