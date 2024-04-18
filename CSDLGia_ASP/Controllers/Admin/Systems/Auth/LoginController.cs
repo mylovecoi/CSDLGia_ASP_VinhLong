@@ -194,11 +194,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                         VlXdDaXayDung = company.VlXdDaXayDung,
                                         VanTaiKhachBangOtoCoDinh = company.VanTaiKhachBangOtoCoDinh,
                                         VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
+                                        VanTaiKhachBangTaXi = company.VanTaiKhachBangTaXi,
                                         CaHue = company.CaHue,
                                         SieuThi = company.SieuThi,
                                         BOG = company.BOG,
                                         KKNYGIA = company.KKNYGIA,
                                         VlXd = company.VlXd,
+                                        LuHanh = company.LuHanh,
                                         KhamChuaBenh = company.KhamChuaBenh,
                                         DvThuongMai = company.DvThuongMai,
                                     }

@@ -1,6 +1,7 @@
 ﻿@{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    // var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<VMDsDonVi>)ViewData["DsDonViTH"];    
     int sohsnhan = Convert.ToInt32(ViewData["Sohsnhan"]) + 1;
 }

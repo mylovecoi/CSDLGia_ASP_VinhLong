@@ -87,59 +87,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("DangKy/DanhSach/ChiTiet")]
-        [HttpGet]
-        public IActionResult Show(int Id, string Madiaban, string Madv, string Name, string Username, string Status)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
-                {
-                    var user_join = (from user in _db.Users.Where(t => t.Id == Id)
-                                     join com in _db.Company on user.Madv equals com.Madv
-                                     join lvkd in _db.CompanyLvCc on com.Mahs equals lvkd.Mahs
-                                     join dmnghe in _db.DmNgheKd on lvkd.Manghe equals dmnghe.Manghe
-                                     select new VMRegisters
-                                     {
-                                         Id = user.Id,
-                                         Madv = user.Madv,
-                                         Tendn = com.Tendn,
-                                         Diachi = com.Diachi,
-                                         Tel = com.Tel,
-                                         Fax = com.Fax,
-                                         Email = com.Email,
-                                         Diadanh = com.Diadanh,
-                                         Username = user.Username,
-                                         Mahs = com.Mahs,
-                                         Tennghe = dmnghe.Tennghe,
-                                         Status = user.Status,
-                                         Lydo = user.Lydo,
-                                     }).ToList();
-
-                    ViewData["Madiaban"] = Madiaban;
-                    ViewData["Madv"] = Madv;
-                    ViewData["Id"] = Id;
-                    ViewData["Username"] = Username;
-                    ViewData["Name"] = Name;
-                    ViewData["Status"] = Status;
-                    ViewData["Title"] = "Chi tiết doanh nghiệp đăng ký";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsdangky";
-                    return View("Views/Admin/Systems/Register/Show.cshtml", user_join);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
         [Route("DoanhNghiep/DangKy")]
         [HttpGet]
         public IActionResult Create()
@@ -306,6 +253,59 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["DmNgheKd"] = _db.DmNgheKd.ToList();
                 ViewData["Title"] = "Đăng ký";
                 return View("Views/Admin/Systems/Register/Register.cshtml", request);
+            }
+        }
+
+        [Route("DangKy/DanhSach/ChiTiet")]
+        [HttpGet]
+        public IActionResult Show(int Id, string Madiaban, string Madv, string Name, string Username, string Status)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
+                {
+                    var user_join = (from user in _db.Users.Where(t => t.Id == Id)
+                                     join com in _db.Company on user.Madv equals com.Madv
+                                     join lvkd in _db.CompanyLvCc on com.Mahs equals lvkd.Mahs
+                                     join dmnghe in _db.DmNgheKd on lvkd.Manghe equals dmnghe.Manghe
+                                     select new VMRegisters
+                                     {
+                                         Id = user.Id,
+                                         Madv = user.Madv,
+                                         Tendn = com.Tendn,
+                                         Diachi = com.Diachi,
+                                         Tel = com.Tel,
+                                         Fax = com.Fax,
+                                         Email = com.Email,
+                                         Diadanh = com.Diadanh,
+                                         Username = user.Username,
+                                         Mahs = com.Mahs,
+                                         Tennghe = dmnghe.Tennghe,
+                                         Status = user.Status,
+                                         Lydo = user.Lydo,
+                                     }).ToList();
+
+                    ViewData["Madiaban"] = Madiaban;
+                    ViewData["Madv"] = Madv;
+                    ViewData["Id"] = Id;
+                    ViewData["Username"] = Username;
+                    ViewData["Name"] = Name;
+                    ViewData["Status"] = Status;
+                    ViewData["Title"] = "Chi tiết doanh nghiệp đăng ký";
+                    ViewData["MenuLv1"] = "menu_hethong";
+                    ViewData["MenuLv2"] = "menu_qtnguoidung";
+                    ViewData["MenuLv3"] = "menu_dsdangky";
+                    return View("Views/Admin/Systems/Register/Show.cshtml", user_join);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
 

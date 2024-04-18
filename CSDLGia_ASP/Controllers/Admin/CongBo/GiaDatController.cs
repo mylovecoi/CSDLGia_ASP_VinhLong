@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai> model = _db.GiaDatPhanLoai.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai> model = _db.GiaDatPhanLoai.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -62,66 +62,44 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                 Thongtin = model.Thongtin,
                 Ghichu = model.Ghichu,
                 Phanloai = model.Phanloai,
-
+                Macqcq = model.Macqcq,
             };
 
-            var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
+            //var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
+            var model_ct = from gd in _db.GiaDatPhanLoaiCt.Where(x => x.Mahs == model_new.Mahs)
+                           select new GiaDatPhanLoaiCt()
+                           {
+                               Mahs = gd.Mahs,
+                               Maloaidat = gd.Maloaidat,
+                               Khuvuc = gd.Khuvuc,
+                               Vitri = gd.Vitri,
+                               Banggiadat = gd.Banggiadat,
+                               Diagioitu = gd.Diagioitu,
+                               Diagioiden = gd.Diagioiden,
+                               Giacuthe = gd.Giacuthe,
+                               Hesodc = gd.Hesodc,
+                               Sapxep = gd.Sapxep,
+                               Trangthai = gd.Trangthai,
+                               Madv = gd.Madv,
+                               MaDiaBan = gd.MaDiaBan,
+                               MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == gd.MaDiaBan).MaDiaBanCq,
+                           };
 
             model_new.GiaDatPhanLoaiCt = model_ct.ToList();
-
+            ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
+            ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+            ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+            ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
             ViewData["Madv"] = model.Madv;
             ViewData["Mahs"] = model.Mahs;
-            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
             ViewData["Title"] = "Xem chi tiết giá đất cụ thể";
+
             return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Show.cshtml", model_new);
         }
 
-        [Route("CongBo/GiaKhungGiaDat")]
-        [HttpGet]
-        public IActionResult KhungGiaDat(string Madv, int Nam)
-        {
-            Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat> model = _db.GiaKhungGiaDat.Where(t => t.Congbo == "DACONGBO");
-
-            if (Madv != "all")
-            {
-                model = model.Where(t => t.Madv == Madv);
-            }
-
-
-            if (Nam != 0)
-            {
-                model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
-            }
-
-            ViewData["DsDonVi"] = _db.DsDonVi;
-            ViewData["DsDiaBan"] = _db.DsDiaBan;
-            ViewData["Madv"] = Madv;
-            ViewData["Nam"] = Nam;
-            ViewData["Title"] = "Công bố khung giá đất";
-            ViewData["MenuLv1"] = "menu_cb";
-            ViewData["MenuLv2"] = "menu_giadatcb";
-            ViewData["MenuLv3"] = "menu_khunggiadat";
-            ViewBag.bSession = false;
-            return View("Views/Admin/CongBo/GiaDat/GiaKhungGiaDat.cshtml", model);
-        }
-
-        [Route("CongBo/KhungGiaDat/Show")]
-        [HttpGet]
-        public IActionResult KhungGiaDatShow(string Mahs)
-        {
-            var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Mahs == Mahs);
-            model.GiaKhungGiaDatCt = _db.GiaKhungGiaDatCt.Where(t => t.Mahs == model.Mahs).ToList();
-            var DonVi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
-
-            ViewData["Title"] = "Xem chi tiết khung giá đất";
-            ViewData["TenDonVi"] = DonVi.TenDv;
-            ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == DonVi.MaDiaBan).TenDiaBan;
-            return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/DanhSach/Show.cshtml", model);
-        }
+  
 
         [Route("CongBo/BangGiaDat")]
         [HttpGet]
@@ -129,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai> model = _db.GiaDatPhanLoai.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan> model = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -177,20 +155,20 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                                 Giavt4 = dat.Giavt4,
                                 Giavt5 = dat.Giavt5,
                                 Loaidat = dm.Loaidat,
-                                Sapxep = dat.Sapxep
+                                Sapxep = dat.Sapxep,
+                                Madiaban = dat.Madiaban,
+                                MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dat.Madiaban).MaDiaBanCq,
                             });
             model.GiaDatDiaBanCt = model_ct.ToList();
-            var huyen = _db.Districts.FirstOrDefault(x => x.Mahuyen == model.MaHuyen);
-            var xa = _db.Towns.FirstOrDefault(x => x.Maxa == model.MaXa && x.Mahuyen == model.MaHuyen);
-            ViewData["TenHuyen"] = huyen == null ? "" : huyen.Tenhuyen;
-            ViewData["TenXa"] = xa == null ? "" : xa.Tenxa;
-            ViewData["DsXaPhuong"] = _db.DsXaPhuong.ToList();
+
+            ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
+            ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
+            ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
+            ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
             ViewData["Dsloaidat"] = _db.DmLoaiDat.ToList();
-            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(t => t.Level == "H");
             ViewData["Madv"] = model.Madv;
-            ViewData["Title"] = "Xem chi tiết bảng giá đất";
+            ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
             return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Show.cshtml", model);
         }
 
@@ -200,7 +178,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai> model = _db.GiaDatPhanLoai.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat> model = _db.GiaGiaoDichDat.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
@@ -245,7 +223,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai> model = _db.GiaDatPhanLoai.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat> model = _db.GiaDauGiaDat.Where(t => t.Trangthai == "CB"); ;
 
             if (Madv != "all")
             {
