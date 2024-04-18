@@ -222,6 +222,26 @@
         })
     }
 
+    function AjaxGetDvNhanHsEdit() {
+        $.ajax({
+            url: '/Ajax/GetDvNhanHs',
+            type: 'POST',
+            data: {
+                Manghe: $('#manghe_edit').val(),
+                KeySelect: 'madvhs_edit'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#madvhs_create').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
     function add_lvkd() {
         if ($('#Madv').val() == '' || $('#Madv').val() == null) {
             toastr.error('Mã số thuế không được bỏ trống.', 'Lỗi mã số thuế');

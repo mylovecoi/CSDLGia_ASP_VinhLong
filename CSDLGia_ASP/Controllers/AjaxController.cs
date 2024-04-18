@@ -204,7 +204,7 @@ namespace CSDLGia_ASP.Controllers
                 result += "<option value=''>--Chọn đơn vị nhận hồ sơ--</option>";
                 foreach (var dv in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU"))
                 {
-                    result += "<option value='" + dv.MaDv + "'>" + dv.TenDv + "</option>";
+                    result += "<option value='" + dv.MaDv + "'>&emsp;" + dv.TenDv + "</option>";
                 }
                 result += "</select>";
                 var data = new { status = "success", message = result };
