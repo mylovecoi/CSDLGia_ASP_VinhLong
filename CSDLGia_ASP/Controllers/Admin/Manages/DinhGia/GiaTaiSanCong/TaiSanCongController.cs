@@ -512,14 +512,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         }
 
         [Route("GiaTaiSanCong/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                    double DonGiaTu_Search, double DonGiaDen_Search, string Tentaisan_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Tentaisan)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.timkiem", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.timkiem", "Index"))
                 {
+                    DateTime nowDate = DateTime.Now;
+                    DateTime firstDayCurrentYear = new DateTime(nowDate.Year, 1, 1);
+                    DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
+
+                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    NgayTu = NgayTu.HasValue ? NgayTu : firstDayCurrentYear;
+                    NgayDen = NgayDen.HasValue ? NgayDen : lastDayCurrentYear;
+                    Mahs = string.IsNullOrEmpty(Mahs) ? "all" : Mahs;
+                    DonGiaTu = DonGiaTu == 0 ? 0 : DonGiaTu;
+                    DonGiaDen = DonGiaDen == 0 ? 0 : DonGiaDen;
+                    Tentaisan = string.IsNullOrEmpty(Tentaisan) ? "" : Tentaisan;
 
                     var model = (from hosoct in _db.GiaTaiSanCongCt
                                  join hoso in _db.GiaTaiSanCong on hosoct.Mahs equals hoso.Mahs
@@ -540,16 +550,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
+
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Giathue >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giathue <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (!string.IsNullOrEmpty(Tentaisan_Search))
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (DonGiaTu > 0)
                     {
-                        model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan_Search.ToLower()));
+                        model = model.Where(t => t.Giathue >= DonGiaTu || t.Giaconlai >= DonGiaTu || t.Giapheduyet >= DonGiaTu || t.Giathue >= DonGiaTu);
                     }
+                    if (DonGiaDen > 0)
+                    {
+                        model = model.Where(t => t.Giathue <= DonGiaDen || t.Giaconlai <= DonGiaDen || t.Giapheduyet <= DonGiaDen || t.Giathue <= DonGiaDen);
+                    }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(Tentaisan))
+                    {
+                        model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan.ToLower()));
+                    }
+
+                    ViewData["Madv"] = Madv;
+                    ViewData["NgayTu"] = NgayTu;
+                    ViewData["NgayDen"] = NgayDen;
+                    ViewData["Mahs"] = Mahs;
+                    ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
+                    ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
+                    ViewData["Tentaisan"] = Tentaisan;
+                    ViewData["DanhSachHoSo"] = _db.GiaTaiSanCong.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                    ViewData["Cqcq"] = _db.DsDonVi;
 
                     ViewData["Title"] = " Thông tin hồ sơ giá tài sản công";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/TimKiem/Result.cshtml", model);
