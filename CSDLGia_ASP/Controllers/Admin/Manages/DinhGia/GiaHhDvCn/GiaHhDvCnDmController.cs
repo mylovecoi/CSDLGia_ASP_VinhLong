@@ -33,8 +33,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Index"))
                 {
-
                     var model = _db.GiaHhDvCnDm.Where(t => t.Manhom == Manhom).ToList();
+                    ViewData["STT"] = model.Any() ? (model.Max(t => t.Sapxep) + 1) : 1;
                     ViewData["Donvitinh"] = _db.DmDvt.ToList();
                     ViewData["Manhom"] = Manhom;
                     ViewData["Title"] = "Nhóm hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành";
@@ -249,7 +249,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", "Create"))
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {

@@ -43,7 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                                          Mahs = dg.Mahs,
                                          Thoidiem = dg.Thoidiem,
                                          Soqd = dg.Soqd,
-                                         Thongtin = dg.Thongtin,
+                                         Thongtinhs = dg.Thongtinhs,
                                          TenDonvi = donvi.TenDv,
                                          Trangthai = dg.Trangthai
                                      };

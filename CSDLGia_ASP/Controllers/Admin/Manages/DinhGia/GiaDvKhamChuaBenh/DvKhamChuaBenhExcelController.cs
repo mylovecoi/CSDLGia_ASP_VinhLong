@@ -190,7 +190,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                     Madiaban = request.Madiaban,
                     Thoidiem = request.Thoidiem,
                     Ipf1 = request.Ipf1,
-                    Trangthai = "CHT",
+                    Trangthai = "CC",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,

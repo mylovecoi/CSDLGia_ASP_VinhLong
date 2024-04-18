@@ -481,9 +481,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
         }
 
         [Route("GiaVatLieuXayDung/Print")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, double DonGiaTu_Search, double DonGiaDen_Search,
-                                   string Tenvlxd_Search, string Tieuchuan_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Tenvlxd, string Tieuchuan)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -499,25 +498,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDBDS
                                      Tendv = donvi.TenDv,
                                      Soqd = hoso.Soqd,
                                      Thoidiem = hoso.Thoidiem,
-                                     Gia = hosoct.Gia,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hosoct.Mahs,
                                      Mavlxd = hosoct.Mavlxd,
                                      Tenvlxd = hosoct.Tenvlxd,
                                      Tieuchuan = hosoct.Tieuchuan,
                                      Dvt = hosoct.Dvt,
-                                     Trangthai = hoso.Trangthai,
-                                     Mahs = hoso.Mahs
+                                     Gia = hosoct.Gia,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Gia >= DonGiaTu_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Gia <= DonGiaDen_Search); }
-                    if (!string.IsNullOrEmpty(Tenvlxd_Search))
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Gia >= DonGiaTu && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Gia <= DonGiaDen); }
+                    if (!string.IsNullOrEmpty(Tenvlxd))
                     {
-                        model = model.Where(t => t.Tenvlxd.ToLower().Contains(Tenvlxd_Search.ToLower()));
+                        model = model.Where(t => t.Tenvlxd.ToLower().Contains(Tenvlxd.ToLower()));
                     }
-                    if (!string.IsNullOrEmpty(Tieuchuan_Search))
+                    if (!string.IsNullOrEmpty(Tieuchuan))
                     {
-                        model = model.Where(t => t.Tieuchuan.ToLower().Contains(Tieuchuan_Search.ToLower()));
+                        model = model.Where(t => t.Tieuchuan.ToLower().Contains(Tieuchuan.ToLower()));
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá vật liệu xây dựng";

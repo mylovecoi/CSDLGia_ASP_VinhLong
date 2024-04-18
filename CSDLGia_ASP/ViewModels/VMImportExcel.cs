@@ -20,5 +20,6 @@ namespace CSDLGia_ASP.ViewModels
         public string Phanloai { get; set; }
         public string MaNghe { get; set; }
         public string Maxp { get; set; }
+        public string Mahs { get; set; }
     }
 }

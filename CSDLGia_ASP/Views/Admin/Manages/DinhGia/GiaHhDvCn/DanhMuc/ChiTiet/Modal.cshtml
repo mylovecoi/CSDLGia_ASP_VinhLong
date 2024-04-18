@@ -17,7 +17,6 @@
             </div>
             <div class="modal-body">
                 <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
-
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
@@ -25,17 +24,12 @@
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
                     <div class="col-xl-12">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
-                    </div>                               
-                </div>
-
-                <div class="row">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label class="form-control-label">Đơn vị tính</label>
+                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
+                        </div>
+                    </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>STT báo cáo</label>
@@ -45,11 +39,10 @@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
-                            <input type="text" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
+                            <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
@@ -145,7 +138,7 @@
     </div>
 </div>
 
-<script>    
+<script>
 
     function Store() {
         if ($('#tenspdv_create').val().trim() == '') {
@@ -160,7 +153,7 @@
                     HienThi: $('#hienthi_create').val(),
                     SapXep: $('#sapxep_create').val(),
                     Dvt: $('#dvt_create').val(),
-                    Hientrang: $('#hientrang_create').val(),                    
+                    Hientrang: $('#hientrang_create').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {
@@ -209,7 +202,7 @@
                 data: {
                     Mota: $('#mota_edit').val(),
                     Tenspdv: $('#tenspdv_edit').val(),
-                    Dvt: $('#dvt_edit').val(),                  
+                    Dvt: $('#dvt_edit').val(),
                     Hientrang: $('#hientrang_edit').val(),
                     HienThi: $('#hienthi_edit').val(),
                     SapXep: $('#sapxep_edit').val(),
@@ -246,5 +239,5 @@
                 }
             }
         })
-    }    
+    }
 </script>

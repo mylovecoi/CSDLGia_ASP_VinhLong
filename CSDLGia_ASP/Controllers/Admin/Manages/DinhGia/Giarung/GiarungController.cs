@@ -597,14 +597,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
         }
 
         [Route("GiaRung/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search,
-                                    string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string MoTa_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string MoTa)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.timkiem", "Index"))
                 {
+
 
                     var model = (from hosoct in _db.GiaRungCt
                                  join hoso in _db.GiaRung on hosoct.Mahs equals hoso.Mahs
@@ -636,27 +636,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
-                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (DonGiaTu_Search > 0)
-                    {
-                        model = model.Where(t => t.GiaRung1 >= DonGiaTu_Search || t.GiaRung3 >= DonGiaTu_Search || t.GiaRung5 >= DonGiaTu_Search 
-                                            || t.GiaChoThue1 >= DonGiaTu_Search || t.GiaBoiThuong1 >= DonGiaTu_Search || t.GiaBoiThuong3 >= DonGiaTu_Search 
-                                            || t.GiaBoiThuong5 >= DonGiaTu_Search);
-                    }
-                    if (DonGiaDen_Search > 0)
-                    {
-                        model = model.Where(t => t.GiaRung2 <= DonGiaDen_Search || t.GiaRung4 <= DonGiaDen_Search || t.GiaRung6 <= DonGiaDen_Search 
-                                            || t.GiaChoThue2 <= DonGiaDen_Search || t.GiaBoiThuong2 <= DonGiaDen_Search || t.GiaBoiThuong4 <= DonGiaDen_Search 
-                                            || t.GiaBoiThuong6 <= DonGiaDen_Search);
-                    }
 
-                    if (!string.IsNullOrEmpty(MoTa_Search))
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
+
+                    if (DonGiaTu > 0)
                     {
-                        model = model.Where(t => t.MoTa.ToLower().Contains(MoTa_Search.ToLower()));
+                        model = model.Where(t => t.GiaRung1 >= DonGiaTu || t.GiaRung3 >= DonGiaTu || t.GiaRung5 >= DonGiaTu || t.GiaChoThue1 >= DonGiaTu
+                                            || t.GiaBoiThuong1 >= DonGiaTu || t.GiaBoiThuong3 >= DonGiaTu || t.GiaBoiThuong5 >= DonGiaTu);
+                    }
+                    if (DonGiaDen > 0)
+                    {
+                        model = model.Where(t => t.GiaRung2 <= DonGiaDen || t.GiaRung4 <= DonGiaDen || t.GiaRung6 <= DonGiaDen || t.GiaChoThue2 <= DonGiaDen
+                                            || t.GiaBoiThuong2 <= DonGiaDen || t.GiaBoiThuong4 <= DonGiaDen || t.GiaBoiThuong6 <= DonGiaDen);
+                    }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(MoTa))
+                    {
+                        model = model.Where(t => t.MoTa.ToLower().Contains(MoTa.ToLower()));
                     }
 
                     ViewData["Title"] = " Tìm kiếm thông tin định giá rừng";

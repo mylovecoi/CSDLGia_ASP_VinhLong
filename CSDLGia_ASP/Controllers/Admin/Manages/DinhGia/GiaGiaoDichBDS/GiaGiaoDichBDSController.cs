@@ -403,6 +403,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     {
                         model = model.Where(t => t.Gia <= gia_den);
                     }
+
+
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
                     ViewData["ngaynhap_den"] = ngaynhap_den;
                     ViewData["gia_tu"] = Helpers.ConvertDbToStr(gia_tu);
@@ -470,6 +472,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     {
                         model = model.Where(t => t.Gia <= gia_den);
                     }
+
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
                     ViewData["ngaynhap_den"] = ngaynhap_den;
                     ViewData["gia_tu"] = gia_tu;
@@ -478,6 +481,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     ViewData["manhom"] = manhom;
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["NhomTn"] = _db.GiaGiaoDichBDSNhom.Where(t => t.Theodoi == "TD").ToList();
+
+
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá giao dịch bất động sản";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_giaodichbds";

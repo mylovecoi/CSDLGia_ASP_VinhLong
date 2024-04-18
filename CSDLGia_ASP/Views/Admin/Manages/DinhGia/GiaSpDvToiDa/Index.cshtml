@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdonvith = (IEnumerable<DsDonVi>)ViewData["DsDonViTh"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var nhomtn = (IEnumerable<GiaSpDvToiDaNhom>)ViewData["NhomTn"];
@@ -115,8 +115,6 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Madiaban))
                                     @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == item.Madiaban)?.TenDiaBan ?? "")
-
-
                             </td>
                             <td style="text-align: center">@item.Soqd</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -140,10 +138,6 @@
                             <td style="text-align: center">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
-
-
-
-
                             </td>
 
                             <td width="20%">
@@ -193,7 +187,7 @@
 </div>
 
 <!--Create Modal-->
-<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade kt_select2_modal" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form asp-controller="GiaSpDvToiDa" asp-action="Create" method="get">
             <div class="modal-content">
@@ -211,7 +205,7 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị báo cáo</label>
-                                <select id="MadvBc" name="MadvBc" class="form-control">
+                                <select id="MadvBc" name="MadvBc" class="form-control kt_select2_1_modal">
                                     @foreach (var dv in dsdonvi)
                                     {
                                         <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>

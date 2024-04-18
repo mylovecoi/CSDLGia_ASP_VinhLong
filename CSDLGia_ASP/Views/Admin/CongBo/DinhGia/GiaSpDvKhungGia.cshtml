@@ -101,11 +101,7 @@
                             <td>@item.Ghichu</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "CB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
-                                    <br />
-                                }
+                                <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
                             </td>
                             <td>
                                 <a asp-controller="DinhGia" asp-action="GiaSpDvKhungGiaShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
