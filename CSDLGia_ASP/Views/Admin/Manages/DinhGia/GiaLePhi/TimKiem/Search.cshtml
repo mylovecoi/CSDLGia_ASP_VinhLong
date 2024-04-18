@@ -62,8 +62,32 @@
         }
 
         function Print() {
-            var form = document.getElementById("frm_search");
-            form.submit();
+            var fromDate = document.getElementById("beginTime_Search").value;
+            var toDate = document.getElementById("endTime_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/PhiLePhi/PrintSearch?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var tsp = '&tsp=' + $('#tsp_Search').val();
+                    var beginTime = '&beginTime=' + $('#beginTime_Search').val();
+                    var endTime = '&endTime=' + $('#endTime_Search').val();
+                    var mahs = '&mahs=' + $('#mahs_Search').val();
+                    var beginPrice = '&beginPrice=' + $('#beginPrice_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var endPrice = '&endPrice=' + $('#endPrice_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var Ptcp = '&Ptcp=' + $('#Ptcp_Search').val();
+
+
+                    var url = current_path_url + Madv + tsp + beginTime + endTime + mahs + beginPrice + endPrice + Ptcp;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
         }
 
     </script>

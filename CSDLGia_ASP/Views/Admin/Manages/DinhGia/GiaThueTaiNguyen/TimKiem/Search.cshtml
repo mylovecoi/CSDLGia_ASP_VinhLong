@@ -65,8 +65,31 @@
         }
 
         function Print() {
-            var form = document.getElementById("frm_search");
-            form.submit();
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaThueTaiNguyen/PrintSearch?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var Manhom = '&Manhom=' + $('#Manhom_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var NoiDung = '&Ten=' + $('#Ten_Search').val();
+
+                    var url = current_path_url + Madv + Manhom + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + NoiDung;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
         }
 
     </script>
