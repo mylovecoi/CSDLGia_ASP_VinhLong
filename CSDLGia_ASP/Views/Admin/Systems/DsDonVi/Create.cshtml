@@ -1,7 +1,7 @@
 ﻿@using CSDLGia_ASP.Models.Systems
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdiabanapdung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
+    var dsdiabanapdung = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanApDung"];
     var DsDonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
 }
 
@@ -139,7 +139,7 @@
                         <select id="DiaBanApDung_mul" class="form-control select2basic" multiple="true">
                             @foreach (var item in dsdiabanapdung)
                             {
-                                <option value="@item.Mahuyen">@item.Tenhuyen</option>
+                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                             }
                         </select>
                     </div>

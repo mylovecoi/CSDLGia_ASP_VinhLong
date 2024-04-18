@@ -273,21 +273,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         model.Thoidiemlk = modellk.Thoidiem;
                         var modellkct = _db.GiaHhDvkCt.Where(t => t.Mahs == modellk.Mahs).ToList();
                         //Gán thông tin giá vào hồ sơ chi tiết
-                        foreach ( var t in chitiet) { 
-                            var lk = modellkct.FirstOrDefault(x=>x.Mahhdv == t.Mahhdv);
+                        foreach (var t in chitiet)
+                        {
+                            var lk = modellkct.FirstOrDefault(x => x.Mahhdv == t.Mahhdv);
                             if (lk != null)
                             {
-                                t.Gia=lk.Gia;
-                                t.Gialk=lk.Gia;
+                                t.Gia = lk.Gia;
+                                t.Gialk = lk.Gia;
                             }
-                        }                       
+                        }
                     }
                     //Lưu thông tin vào db
                     _db.GiaHhDvkCt.AddRange(chitiet);
                     _db.SaveChanges();
 
                     var modelct_join = (from ct in chitiet
-                                        join dm in _db.GiaHhDvkDm.Where(x=>x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
+                                        join dm in _db.GiaHhDvkDm.Where(x => x.Matt == model.Matt && x.Theodoi == "TD") on ct.Mahhdv equals dm.Mahhdv
                                         select new GiaHhDvkCt
                                         {
                                             Id = ct.Id,
@@ -308,10 +309,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     model.GiaHhDvkCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
 
-
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? "";
+                    if (string.IsNullOrEmpty(diaBanApDung))
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                    }
+                    else
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    }
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ thêm mới";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_tt";
@@ -337,7 +347,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
-                {                   
+                {
 
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                     {
@@ -416,7 +426,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                         }).ToList();
 
                     model.GiaHhDvkCt = modelct_join.ToList();
-                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t=>t.Mahs == model.Mahs).ToList();
+                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs).ToList();
 
                     ViewData["Nhomhhdvk"] = _db.GiaHhDvkNhom.ToList();
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
@@ -447,7 +457,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Edit"))
-                {                   
+                {
 
                     var model = _db.GiaHhDvk.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Soqd = request.Soqd;

@@ -1,7 +1,7 @@
 ﻿@using CSDLGia_ASP.Models.Systems
 @{
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdiabanapdung = (IEnumerable<Districts>)ViewData["DsDiaBanApDung"];
+    var dsdiabanapdung = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanApDung"];
     var DsDonvi = (IEnumerable<DsDonVi>)ViewData["DsDonvi"];
 }
 
@@ -144,11 +144,11 @@
                             {
                                 if (string.IsNullOrEmpty(Model.DiaBanApDung))
                                 {
-                                    <!option value="@item.Mahuyen">@item.Tenhuyen</!option>
+                                    <!option value="@item.MaDiaBan">@item.TenDiaBan</!option>
                                 }
                                 else
                                 {
-                                    <!option value="@item.Mahuyen" @(Model.DiaBanApDung.Contains(item.Mahuyen) ? "selected" : "") >@item.Tenhuyen</!option>
+                                    <!option value="@item.MaDiaBan" @(Model.DiaBanApDung.Contains(item.MaDiaBan) ? "selected" : "") >@item.TenDiaBan</!option>
                                 }                                
                             }
                         </select>
