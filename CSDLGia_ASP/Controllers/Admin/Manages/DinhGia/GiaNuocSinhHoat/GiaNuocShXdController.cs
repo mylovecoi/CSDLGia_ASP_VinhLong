@@ -51,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                                          Mahs = dg.Mahs,
                                          Thoidiem = dg.Thoidiem,
                                          Soqd = dg.Soqd,
-                                         Thongtin = dg.Thongtin,
+                                         Mota = dg.Mota,
                                          TenDonVi = donvi.TenDv,
                                          Trangthai = dg.Trangthai
                                      };
