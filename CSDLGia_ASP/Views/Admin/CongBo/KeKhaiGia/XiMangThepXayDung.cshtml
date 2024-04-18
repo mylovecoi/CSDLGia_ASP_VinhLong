@@ -101,11 +101,7 @@
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Ngayhieuluc)</td>
                             <td class="text-center active">@item.Socv</td>
                             <td style="text-align: center">
-                                @if (item.Trangthai_ad == "CB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline text-success">Công bố</span>
-                                    <br />
-                                }
+                                <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
                             </td>
                             <td>
                                 <a asp-controller="KeKhaiGia" asp-action="DichVuLuHanhShow" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"

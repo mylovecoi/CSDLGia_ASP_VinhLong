@@ -248,7 +248,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh> model = _db.GiaNuocSh.Where(t => t.Congbo == "DACONGBO");
+            IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh> model = _db.GiaNuocSh.Where(t => t.Trangthai == "CB");
 
             if (Madv != "all")
             {
