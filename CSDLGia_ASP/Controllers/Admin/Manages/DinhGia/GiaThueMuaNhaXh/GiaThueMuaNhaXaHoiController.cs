@@ -522,8 +522,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
         }
 
         [Route("GiaThueMuaNhaXh/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string PhanLoai_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string PhanLoai, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -547,15 +547,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs,
                                      Maso = hosoct.Maso,
-                                     Dvthue = hosoct.Dvthue,
+                                     Dvthue = hosoct.Dvthue
                                  });
-
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && t.Dongia >= DonGiaTu_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (PhanLoai_Search != "all") { model = model.Where(t => t.Phanloai == PhanLoai_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongia <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && t.Dongia >= DonGiaTu || t.Dongiathue >= DonGiaTu && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (PhanLoai != "all") { model = model.Where(t => t.Phanloai == PhanLoai); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen || t.Dongiathue <= DonGiaDen); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
 
                     ViewData["Dmtmnxh"] = _db.GiaThueMuaNhaXhDm;
                     ViewData["Title"] = "Tìm kiếm thông tin giá thuê mua nhà xã hội";

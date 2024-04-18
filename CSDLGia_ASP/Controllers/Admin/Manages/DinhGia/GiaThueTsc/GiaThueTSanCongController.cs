@@ -466,9 +466,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         }
 
         [Route("DinhGiaThueTsc/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                    double DonGiaTu_Search, double DonGiaDen_Search, string Tentaisan_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Tentaisan)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -493,22 +492,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                                      Dvt = hosoct.Dvt,
                                      Dongiathue = hosoct.Dongiathue,
                                      Sotienthuenam = hosoct.Sotienthuenam,
-
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Dongiathue >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongiathue <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (!string.IsNullOrEmpty(Tentaisan_Search))
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.Dongiathue >= DonGiaTu || t.Sotienthuenam >= DonGiaTu); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongiathue <= DonGiaDen || t.Sotienthuenam <= DonGiaDen); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(Tentaisan))
                     {
-                        model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan_Search.ToLower()));
+                        model = model.Where(t => t.Tentaisan.ToLower().Contains(Tentaisan.ToLower()));
                     }
-
-
 
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin giá thuê tài sản công";
 

@@ -544,12 +544,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["DonGiaTu"] = Helpers.ConvertDbToStr(DonGiaTu);
                     ViewData["DonGiaDen"] = Helpers.ConvertDbToStr(DonGiaDen);
                     ViewData["LoaiDat"] = LoaiDat;
-                    ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen &&
-                                                                                list_trangthai.Contains(t.Trangthai));
+                    ViewData["DanhSachHoSo"] = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen &&                                                                          list_trangthai.Contains(t.Trangthai));
                     ViewData["DanhMucNhom"] = _db.GiaThueMatDatMatNuocNhom;
-
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+
                     ViewData["Title"] = "Tìm kiếm thông tin định giá thuê mặt đất mặt nước";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
@@ -569,8 +568,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
         }
 
-        [HttpPost("GiaThueMatDatMatNuoc/Print")]
-        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string LoaiDat_Search)
+        [Route("GiaThueMatDatMatNuoc/Print")]
+        [HttpGet]
+        public IActionResult Print(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string LoaiDat)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -597,13 +597,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                      Mahs = hoso.Mahs
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.ThoiDiem >= NgayTu_Search && t.ThoiDiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai) && t.Dongia1 >= DonGiaTu_Search);
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Manhom_Search != "all") { model = model.Where(t => t.MaNhom == Manhom_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen_Search); }
-                    if (!string.IsNullOrEmpty(LoaiDat_Search))
+                    model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && list_trangthai.Contains(t.Trangthai) && t.Dongia1 >= DonGiaTu);
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (Manhom != "all") { model = model.Where(t => t.MaNhom == Manhom); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia1 <= DonGiaDen); }
+                    if (!string.IsNullOrEmpty(LoaiDat))
                     {
-                        model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat_Search.ToLower()));
+                        model = model.Where(t => t.LoaiDat.ToLower().Contains(LoaiDat.ToLower()));
                     }
 
                     ViewData["Title"] = " Tìm kiếm thông tin định giá thuê mặt đất mặt nước";

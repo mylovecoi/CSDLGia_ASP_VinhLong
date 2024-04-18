@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Title"] = "Công bố giá mặt hàng bình ổn giá";
             ViewData["MenuLv1"] = "menu_cb";
             ViewData["MenuLv2"] = "menu_kknygiacb";
-            ViewData["MenuLv3"] = "menu_luhanhcongbo";
+            ViewData["MenuLv3"] = "menu_bogcb";
             ViewBag.bSession = false;
             return View("Views/Admin/CongBo/KeKhaiDkg/BinhOnGia.cshtml", model);
         }

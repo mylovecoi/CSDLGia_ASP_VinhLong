@@ -46,60 +46,45 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe> model = _db.GiaSpDvCuThe;
 
-                        if (Madv != "all")
-                        {
-                            model = model.Where(t => t.Madv == Madv);
-                        }
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
 
-                        if (string.IsNullOrEmpty(Nam))
-                        {
-                            Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                        }
-                        else
-                        {
-                            if (Nam != "all")
-                            {
-                                model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
-                            }
-                        }
-
-                        if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                        {
-                            ViewData["DsDonVi"] = dsdonvi;
-                        }
-                        else
-                        {
-                            ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
-                        }
-                        var dsDonViTH = (from donvi in _db.DsDonVi
-                                         join tk in _db.Users on donvi.MaDv equals tk.Madv
-                                         join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
-                                         select new CSDLGia_ASP.Models.Systems.DsDonVi
-                                         {
-                                             MaDiaBan = donvi.MaDiaBan,
-                                             MaDv = donvi.MaDv,
-                                             TenDv = donvi.TenDv,
-                                         });
-                        ViewData["DsDonViTh"] = dsDonViTH;
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
-                        ViewData["DsCqcq"] = _db.DsDonVi.ToList();
-                        ViewData["NhomTn"] = _db.GiaSpDvCuTheNhom.ToList();
-                        ViewData["Nam"] = Nam;
-                        ViewData["Madv"] = Madv;
-                        ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ cụ thể";
-                        ViewData["MenuLv1"] = "menu_spdvcuthe";
-                        ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                        return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Index.cshtml", model);
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                        model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
                     }
                     else
                     {
-                        ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ cụ thể";
-                        ViewData["Messages"] = "Hệ thống chưa có định giá sản phẩm dịch vụ cụ thể.";
-                        ViewData["MenuLv1"] = "menu_spdvcuthe";
-                        ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                        return View("Views/Admin/Error/ThongBaoLoi.cshtml");
+                        if (Nam != "all")
+                        {
+                            model = model.Where(t => t.Thoidiem.Year == int.Parse(Nam));
+                        }
                     }
+
+                    var dsDonViTH = (from donvi in _db.DsDonVi
+                                     join tk in _db.Users on donvi.MaDv equals tk.Madv
+                                     join gr in _db.GroupPermissions.Where(x => x.ChucNang == "TONGHOP") on tk.Chucnang equals gr.KeyLink
+                                     select new CSDLGia_ASP.Models.Systems.DsDonVi
+                                     {
+                                         MaDiaBan = donvi.MaDiaBan,
+                                         MaDv = donvi.MaDv,
+                                         TenDv = donvi.TenDv,
+                                     });
+                    ViewData["DsDonViTh"] = dsDonViTH;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
+                    ViewData["DsCqcq"] = _db.DsDonVi.ToList();
+                    ViewData["NhomTn"] = _db.GiaSpDvCuTheNhom.ToList();
+                    ViewData["Nam"] = Nam;
+                    ViewData["Madv"] = Madv;
+                    ViewData["DsDonVi"] = model_donvi;
+                    ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ cụ thể";
+                    ViewData["MenuLv1"] = "menu_spdvcuthe";
+                    ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
+                    return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Index.cshtml", model);
+
 
                 }
                 else

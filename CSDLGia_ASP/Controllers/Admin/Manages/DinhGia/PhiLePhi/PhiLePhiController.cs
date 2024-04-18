@@ -529,9 +529,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         }
 
         [Route("PhiLePhi/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
-                                    double DonGiaTu_Search, double DonGiaDen_Search, string Tenspdv_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Tenspdv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -553,19 +552,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                      Dongia = hosoct.Dongia,
                                      GhiChu = hosoct.GhiChu,
                                      Manhom = hosoct.Manhom,
-                                     TrangThai = hoso.Trangthai,    
+                                     TrangThai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
                     List<string> list_TrangThai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_TrangThai.Contains(t.TrangThai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Dongia >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Dongia <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (!string.IsNullOrEmpty(Tenspdv_Search))
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_TrangThai.Contains(t.TrangThai));
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.Dongia >= DonGiaTu); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(Tenspdv))
                     {
-                        model = model.Where(t => t.Tenspdv.ToLower().Contains(Tenspdv_Search.ToLower()));
+                        model = model.Where(t => t.Tenspdv.ToLower().Contains(Tenspdv.ToLower()));
                     }
 
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá phí, lệ phí";
