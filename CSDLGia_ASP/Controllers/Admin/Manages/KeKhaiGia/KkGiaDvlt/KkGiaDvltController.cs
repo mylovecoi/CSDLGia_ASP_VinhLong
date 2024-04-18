@@ -60,12 +60,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             }
                         }
 
-                        //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-                        //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                        //{
-                        //    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        //}
-
                         if (string.IsNullOrEmpty(Trangthai))
                         {
                             Trangthai = "all";
@@ -84,7 +78,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             Macskd = model_cskd.FirstOrDefault()?.Macskd ?? "";
                         }
 
-                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe).ToList();
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                        {
+                            comct = comct.Where(t => t.Madv == Madv).ToList();
+                        }
+                        else
+                        {
+                            comct = comct.Where(t => t.Macqcq == Madv).ToList();
+                        }
 
                         if (comct.Count > 0)
                         {
@@ -92,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                             if (cskd.Count > 0)
                             {
                                 // var model = _db.KkGia.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd).ToList();
-                                 var dsDonViCQ = _db.DsDonVi;
+                                var dsDonViCQ = _db.DsDonVi;
                                 var qModel = _db.KkGia.AsQueryable(); // Không cần ép kiểu, chỉ cần sử dụng truy vấn EntityQueryable
 
                                 qModel = qModel.Where(t => t.Madv == Madv && t.Ngaynhap.Year == int.Parse(Nam) && t.Manghe == Manghe && t.Macskd == Macskd);
@@ -103,29 +106,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
                                 foreach (var item in model)
                                 {
                                     item.Tencqcq = "";
-                                    var cqcq = dsDonViCQ.FirstOrDefault(x=>x.MaDv == item.Macqcq);
+                                    var cqcq = dsDonViCQ.FirstOrDefault(x => x.MaDv == item.Macqcq);
                                     if (cqcq != null)
                                         item.Tencqcq = cqcq.TenDv;
                                 }
 
-                                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                                 {
-                                    ViewData["DsDonVi"] = dsdonvi;
+                                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                    {
+                                        ViewData["DsDonVi"] = dsdonvi;
+                                    }
+                                    else
+                                    {
+                                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                    }
                                 }
                                 else
                                 {
-                                    ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                    {
+                                        ViewData["DsDonVi"] = dsdonvi;
+                                    }
+                                    else
+                                    {
+                                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.Macqcq == Madv);
+                                    }
                                 }
+
                                 var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD").Count();
                                 ViewData["check_tt"] = check_tt;
                                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                                 ViewData["Cqcq"] = dsDonViCQ;
                                 ViewData["Trangthai"] = Trangthai;
-                                //ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                                 ViewData["Cskd"] = _db.KkGiaDvLtCskd.Where(t => t.Madv == Madv);
                                 ViewData["Madv"] = Madv;
                                 ViewData["Macskd"] = Macskd;
-                                ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                                ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv)?.Tendn ?? "";
                                 ViewData["Nam"] = Nam;
                                 ViewData["Manghe"] = Manghe;
                                 ViewData["Title"] = "Danh sách hồ sơ kê khai dịch vụ lưu trú";
@@ -197,7 +214,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
                     ViewData["Madv"] = Madv;
                     ViewData["Macskd"] = Macskd;
-                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv)?.Tendn ?? "";
                     ViewData["Tencskd"] = _db.KkGiaDvLtCskd.FirstOrDefault(t => t.Macskd == Macskd).Tencskd;
                     ViewData["Manghe"] = Manghe;
                     ViewData["Title"] = "Thêm mới Kê khai giá dịch vụ lưu trú";
@@ -305,8 +322,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaDvlt
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Macskd"] = model.Macskd;
-                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == model.Madv).Tendn;
-                    ViewData["Tencskd"] = _db.KkGiaDvLtCskd.FirstOrDefault(t => t.Macskd == model.Macskd).Tencskd;
+                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == model.Madv)?.Tendn ?? "";
+                    ViewData["Tencskd"] = _db.KkGiaDvLtCskd.FirstOrDefault(t => t.Macskd == model.Macskd)?.Tencskd ?? "";
                     ViewData["Manghe"] = model.Manghe;
                     ViewData["Title"] = "Chỉnh sửa Kê khai giá dịch vụ lưu trú";
                     ViewData["MenuLv1"] = "menu_kknygia";

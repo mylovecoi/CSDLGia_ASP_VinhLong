@@ -76,25 +76,49 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                             model = model.Where(t => t.Trangthai == Trangthai).ToList();
                         }
 
-                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe && t.Madv == Madv).ToList();
+                        var comct = _db.CompanyLvCc.Where(t => t.Manghe == Manghe).ToList();
+
+                        if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                        {
+                            comct = comct.Where(t => t.Madv == Madv).ToList();
+                        }
+                        else
+                        {
+                            comct = comct.Where(t => t.Macqcq == Madv).ToList();
+                        }
 
                         if (comct.Count > 0)
                         {
-                            if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                            if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                             {
-                                ViewData["DsDonVi"] = dsdonvi;
+                                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi;
+                                }
+                                else
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                }
                             }
                             else
                             {
-                                ViewData["DsDonVi"] = dsdonvi.Where(t => t.Madv == Madv);
+                                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi;
+                                }
+                                else
+                                {
+                                    ViewData["DsDonVi"] = dsdonvi.Where(t => t.Macqcq == Madv);
+                                }
                             }
+
                             var check_tt = _db.KkGia.Where(t => t.Manghe == Manghe && t.Trangthai != "DD" && t.Madv == Madv).Count();
                             ViewData["check_tt"] = check_tt;
                             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                             ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                             ViewData["Madv"] = Madv;
                             ViewData["Trangthai"] = Trangthai;
-                            ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                            ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv)?.Tendn ?? "";
                             ViewData["Nam"] = Nam;
                             ViewData["Manghe"] = Manghe;
                             ViewData["Title"] = "Danh sách hồ sơ kê khai giá dịch vụ lữ hành";
@@ -169,7 +193,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                     int max_sttsapxep = model_ct.Any() ? model_ct.Max(t => t.STTSapxep) : 0;
                     ViewData["SapXep"] = max_sttsapxep;
                     ViewData["Madv"] = Madv;
-                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv).Tendn;
+                    ViewData["Tendn"] = _db.Company.FirstOrDefault(t => t.Madv == Madv)?.Tendn ?? "";
                     ViewData["Manghe"] = Manghe;
                     ViewData["Title"] = "Thêm mới hồ sơ kê khai giá dịch vụ lữ hành";
                     ViewData["MenuLv1"] = "menu_kknygia";
