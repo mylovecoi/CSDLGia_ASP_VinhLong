@@ -88,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên đường, giới hạn, khu vực<span class='text-danger'>*</span></b></label>";
-                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + model.Khuvuc + "' class='form-control'/>";
+                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + model.Khuvuc + "' class='form-control' required/>";
                 result += "</div>";
                 result += "</div>";
 

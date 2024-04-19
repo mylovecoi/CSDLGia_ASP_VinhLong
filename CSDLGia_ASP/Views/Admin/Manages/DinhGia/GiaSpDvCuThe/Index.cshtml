@@ -155,6 +155,14 @@
                                     <br />
                                     <span>Lý do:&nbsp;@item.Lydo</span>
                                 }
+                                else if (item.Trangthai == "CHT")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-primary">Chưa hoàn thành</span>
+                                }
+                                else if (item.Trangthai == "HT")
+                                {
+                                    <span class="label font-weight-bold label-lg label-inline label-light-primary">Hoàn thành</span>
+                                }
                                 else
                                 {
                                     <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
@@ -181,7 +189,7 @@
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Approve"))
                                 {
                                     <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-mail-forward text-primary "></i>
+                                        <i class="icon-lg la la-check text-primary"></i>
                                     </button>
                                 }
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Delete"))
@@ -195,7 +203,6 @@
                             <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                target="_blank">
                                 <i class="icon-lg la la-redo-alt text-danger"></i>
-
                             </a>
                         </td>
                     </tr>
@@ -341,9 +348,6 @@
             <div class="modal-header">
                 <h3 class="card-label">
                     @ViewData["Title"]
-                    <span class="d-block text-muted pt-2 font-size-sm">
-                        Thông tin giấy tờ đính kèm hồ sơ giá lệ phí trước bạ
-                    </span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -378,7 +382,6 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#giayto_data').replaceWith(data.message);
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#GiayTo_Modal').modal("show");
                 } else {
                     toastr.error(data.message, "Lỗi!");

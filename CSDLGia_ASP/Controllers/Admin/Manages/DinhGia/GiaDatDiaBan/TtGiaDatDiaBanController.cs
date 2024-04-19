@@ -158,14 +158,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group'>";
-                        result += "<label>Ngày ban hành<span class='text-danger'>*</span></label>";
+                        result += "<label>Ngày ban hành</label>";
                         result += "<input type='date' id='ngayqd_banhanh_edit' name='ngayqd_banhanh_edit' class='form-control' value='" + model.Ngayqd_banhanh.ToString("yyyy-MM-dd") + "'/>";
                         result += "</div>";
                         result += "</div>";
 
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group'>";
-                        result += "<label>Ngày áp dụng<span class='text-danger'>*</span></label>";
+                        result += "<label>Ngày áp dụng</label>";
                         result += "<input type='date' id='ngayqd_apdung_edit' name='ngayqd_apdung_edit' class='form-control' value='" + model.Ngayqd_apdung.ToString("yyyy-MM-dd") + "'/>";
                         result += "</div>";
                         result += "</div>";

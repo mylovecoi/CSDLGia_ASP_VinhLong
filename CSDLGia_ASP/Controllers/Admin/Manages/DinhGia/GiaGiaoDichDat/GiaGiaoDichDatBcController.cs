@@ -147,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
-                    ViewData["Title"] = "Báo cáo giá đất địa bàn";
+                    ViewData["Title"] = "Báo cáo chi tiết giao dịch đất trên thị trường";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichDat/BaoCao/BcCT.cshtml", model);
                 }
                 else
