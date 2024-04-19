@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240419111054_Fix-KeKhaiDangKyGia2")]
+    partial class FixKeKhaiDangKyGia2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11496,9 +11498,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaCsKd")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mahs")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("MucGiaKeKhai")
                         .HasColumnType("float");
 
@@ -14688,9 +14687,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Vtxtx")
                         .HasColumnType("float");
 
-                    b.Property<string>("Website")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Xangdau")
                         .HasColumnType("float");
 
@@ -16191,9 +16187,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Vtxtx")
                         .HasColumnType("float");
-
-                    b.Property<string>("Website")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

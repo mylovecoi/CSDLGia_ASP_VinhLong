@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Models;
 using CSDLGia_ASP.Models.Manages.ChiSoGiaTd;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia;
 using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
 using CSDLGia_ASP.Models.Manages.ThamDinhGia;
@@ -76,6 +77,11 @@ namespace CSDLGia_ASP.Database
         public DbSet<KkDkgCtDf> KkDkgCtDf { get; set; }
         public DbSet<KkMhBog> KkMhBog { get; set; }
         public DbSet<KkMhBogCt> KkMhBogCt { get; set; }
+
+        //KeKhaiDangKyGia
+        public DbSet<KeKhaiDangKyGiaCSKD> KeKhaiDangKyGiaCSKD { get; set; }
+        public DbSet<KeKhaiDangKyGia> KeKhaiDangKyGia { get; set; }
+        public DbSet<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }
 
         //Định giá
         public DbSet<GiaBanNhaTaiDinhCu> GiaBanNhaTaiDinhCu { get; set; }
