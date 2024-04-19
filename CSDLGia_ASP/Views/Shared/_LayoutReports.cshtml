@@ -15,12 +15,12 @@
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
-   @*  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    @*  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script> *@
 
 
     <style type="text/css">
-       
+
         .checkbox {
             display: block;
             font-size: 16px;
@@ -44,16 +44,16 @@
             margin: auto;
         }
 
-        table tr td:first-child {
-            text-align: center;
-        }
+            table tr td:first-child {
+                text-align: center;
+            }
 
         td, th {
             padding: 5px;
         }
 
         p {
-            padding: 3px;            
+            padding: 3px;
         }
 
         @@media print {
@@ -137,7 +137,6 @@
                 color: #3699FF;
             }
 
-      
     </style>
     @RenderSection("custom_style", required: false)
     <script>
@@ -150,10 +149,10 @@
             fileDownload.download = $('#title').val() + '.doc';
             fileDownload.click();
             document.body.removeChild(fileDownload);
-        }    
-        
+        }
+
         async function exportTableToExcel() {
-            const table = document.getElementById('data_render');           
+            const table = document.getElementById('data_render');
 
             // Tạo worksheet từ bảng HTML
             const ws = XLSX.utils.table_to_sheet(table, { sheet: "Sheet1", raw: true });
@@ -171,12 +170,12 @@
 
             // Xuất file Excel
             XLSX.writeFile(wb, $('#title').val() + '.xlsx');
-           
+
         }
 
 
-       
-        
+
+
 
         //Get the button
         var mybutton = document.getElementById("myBtn");
