@@ -4,14 +4,16 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240419080943_Add-KeKhaiDangKyGia")]
+    partial class AddKeKhaiDangKyGia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11394,20 +11396,11 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("LyDo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaCqCq")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MaCsKd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaNghe")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("NgayChuyen")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("NgayDuyet")
                         .HasColumnType("datetime2");
@@ -11427,9 +11420,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Reports")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SoDtNguoiChuyen")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SoHsDuyet")
                         .HasColumnType("nvarchar(max)");
 
@@ -11437,9 +11427,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SoQdLk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThongTinNguoiChuyen")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrangThai")
@@ -11490,13 +11477,7 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("HinhThucKinhDoanh")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MaCsKd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("MucGiaKeKhai")
@@ -11504,15 +11485,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("MucGiaKeKhaiLk")
                         .HasColumnType("float");
-
-                    b.Property<string>("QuyCachChatLuong")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenDvCungUng")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThoiGianThucHien")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");

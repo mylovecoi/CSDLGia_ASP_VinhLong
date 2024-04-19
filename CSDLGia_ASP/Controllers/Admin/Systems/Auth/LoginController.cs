@@ -116,17 +116,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                     var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
                                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                                    var data_nghe = _db.DmNgheKd.ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+                                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
 
                                     // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
                                     data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+                                   
                                     HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
                                 }
                                 else
                                 {
                                     var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
                                     List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
-                                    var data_nghe = _db.DmNgheKd.Where(t => list_manghe.Contains(t.Manghe));
+                                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD" &&list_manghe.Contains(t.Manghe));
                                     HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
                                 }
                                 return RedirectToAction("Index", "Home");
