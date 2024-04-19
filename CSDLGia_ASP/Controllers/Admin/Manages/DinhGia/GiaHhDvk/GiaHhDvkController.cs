@@ -310,8 +310,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     model.GiaHhDvkCt = modelct_join.Where(t => t.Mahs == model.Mahs).ToList();
 
                     var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
-                    string diaBanApDung = donVi?.DiaBanApDung ?? "";
-                    if (string.IsNullOrEmpty(diaBanApDung))
+                    string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                    if (!string.IsNullOrEmpty(diaBanApDung))
                     {
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
                     }
@@ -547,6 +547,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     ViewData["Nhomhh"] = nhomhh;
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(x=>x.MaDv == model.Madv).ToList();
                     ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ chi tiết";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_tt";
