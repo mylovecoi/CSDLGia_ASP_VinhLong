@@ -611,9 +611,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             }
         }
 
-
-
-
         [HttpPost("PhiLePhiCt/Edit")]
         public JsonResult Edit(int Id)
         {

@@ -16,16 +16,20 @@ using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 {
     public class GiaHhDvkBcController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDonviService _dsDonviService;
 
-        public GiaHhDvkBcController(CSDLGiaDBContext db)
+        public GiaHhDvkBcController(CSDLGiaDBContext db, IDsDonviService dsDonviService)
         {
             _db = db;
+            _dsDonviService = dsDonviService;
         }
 
 
@@ -70,9 +74,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                 {
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
                     var model = (from hoso in _db.GiaHhDvk.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && t.Trangthai == "HT")
-                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 join donvi in _db.DsDonVi.Where(t=>list_madv.Contains(t.MaDv)) on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
                                  {
                                      TenDonVi = donvi.TenDv,
@@ -113,36 +119,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.bc", "Index"))
                 {
 
-                    //var model = (from ct in _db.GiaHhDvkCt
-                    //             join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
-                    //             join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv
-                    //             join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
-                    //             join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
-                    //             select new GiaHhDvkCt
-                    //             {
-                    //                 Id = ct.Id,
-                    //                 Mahs = ct.Mahs,
-                    //                 Mahhdv = ct.Mahhdv,
-                    //                 Gialk = ct.Gialk,
-                    //                 Gia = ct.Gia,
-                    //                 Ghichu = ct.Ghichu,
-                    //                 Manhom = ct.Manhom,
-                    //                 Tenhhdv = dm.Tenhhdv,
-                    //                 Dacdiemkt = dm.Dacdiemkt,
-                    //                 Dvt = dm.Dvt,
-                    //                 Madv = kk.Madv,
-                    //                 Matt = kk.Matt,
-                    //                 Thoidiem = kk.Thoidiem,
-                    //                 Tendv = dv.TenDv,
-                    //                 Tentt = nhom.Tentt,
-                    //                 Trangthai = kk.Trangthai
-                    //             }) ;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
                     var model = (from ct in _db.GiaHhDvkCt
                                  join kk in _db.GiaHhDvk on ct.Mahs equals kk.Mahs
                                  join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
                                  //join dm in _db.GiaHhDvkDm on ct.Mahhdv equals dm.Mahhdv 
                                  join dm in _db.GiaHhDvkDm on new { ct.Mahhdv, nhom.Matt } equals new { dm.Mahhdv, dm.Matt }
-                                 join dv in _db.DsDonVi on kk.Madv equals dv.MaDv
+                                 join dv in _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv)) on kk.Madv equals dv.MaDv
                                  select new GiaHhDvkCt
                                  {
                                      Id = ct.Id,
@@ -169,14 +154,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
 
-                    List<string> list_madv = model.Select(t => t.Madv).ToList();
+                    List<string> list_madv_hs = model.Select(t => t.Madv).ToList();
 
-                    var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
+                    var model_donvi_hs = _db.DsDonVi.Where(t => list_madv_hs.Contains(t.MaDv));
 
                     List<string> list_mahs = model.Select(t => t.Mahs).ToList();
                     var model_hoso = _db.GiaHhDvk.Where(t => list_mahs.Contains(t.Mahs));
 
-                    ViewData["DonVis"] = model_donvi;
+                    ViewData["DonVis"] = model_donvi_hs;
                     ViewData["ChiTietHs"] = model_hoso;
                     ViewData["NgayTu"] = ngaytu;
                     ViewData["NgayDen"] = ngayden;

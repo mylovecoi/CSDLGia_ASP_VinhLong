@@ -381,7 +381,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             }
         }
 
-
         [HttpPost]
         public async Task<IActionResult> LuuLichSuDonvi(ThamDinhGiaDvLichSu requests)
         {
@@ -461,7 +460,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             }
         }
 
-
         [HttpPost]
         public IActionResult DeleteLichSu(int Id)
         {
@@ -484,6 +482,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+        [Route("ThamDinhGia/Donvi/LichSuDonvi_Xem")]
+        [HttpGet]
+        public IActionResult LichSuDonvi_Xem(int IdDV)
+        {
+            var model = _db.ThamDinhGiaDvLichSu.Where(x => x.IdDV == IdDV).OrderBy(x => x.NgayQD).ToList();
+            var donVi = _db.ThamDinhGiaDv.FirstOrDefault(x => x.Id == IdDV);
+            ViewData["Title"] = "Thông tin lịch sử đơn vị thẩm định giá";
+            ViewData["maGCN"] = donVi.Maso;
+            ViewData["tenDonVi"] = donVi.Tendv;
+            return View("Views/Admin/Manages/ThamDinhGia/DonVi/XemLichSuDonVi.cshtml", model);
+
         }
     }
 }

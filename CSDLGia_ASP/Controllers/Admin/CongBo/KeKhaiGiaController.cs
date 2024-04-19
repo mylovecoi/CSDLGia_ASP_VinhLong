@@ -115,13 +115,12 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia> model = _db.KkGia.Where(t => t.Congbo == "DACONGBO" && t.Manghe == "DVLT");
+            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia> model = _db.KkGia.Where(t => t.Congbo == "DACONGBO" && t.Manghe == "LUUTRU");
 
             if (Madv != "all")
             {
                 model = model.Where(t => t.Madv == Madv);
             }
-
 
             if (Nam != 0)
             {

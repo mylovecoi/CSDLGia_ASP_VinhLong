@@ -3,6 +3,7 @@
     int record_ct = 1;
     var nhomhh = (IEnumerable<DmNhomHh>)ViewData["Nhomhh"];
     var dmdvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+    var donVi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk
 
@@ -24,7 +25,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top;">Số: @Model.Soqd</td>
-        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">, ngày..@Model.Thoidiem.Day..tháng..@Model.Thoidiem.Month..năm..@Model.Thoidiem.Year..</i></td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">@(donVi.FirstOrDefault(x=>x.MaDv == Model.Madv)?.DiaDanh ?? "....."), ngày..@Model.Thoidiem.Day..tháng..@Model.Thoidiem.Month..năm..@Model.Thoidiem.Year..</i></td>
     </tr>
 </table>
 <p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
@@ -113,7 +114,7 @@
         </td>
         <td width="55%" style="text-align: center">
             <span style="font-weight: bold">
-                THỦ TRƯỞNG ĐƠN VỊ
+                @(donVi.FirstOrDefault(x => x.MaDv == Model.Madv)?.ChucVuKy ?? "THỦ TRƯỞNG ĐƠN VỊ")
             </span><br />
             <span style="font-style: italic">(Ký tên, đóng dấu)</span><br />
         </td>
