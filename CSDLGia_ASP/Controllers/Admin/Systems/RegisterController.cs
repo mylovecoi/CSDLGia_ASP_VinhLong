@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                           Updated_at = user.Updated_at,
                                           Macqcq = com.Macqcq,
                                       });
-                    
+
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
@@ -146,7 +146,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     var company = new Company
                     {
-                        //LuHanh = LuHanh,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
                         Macqcq = request.Macqcq,
@@ -188,6 +187,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 }
                 else
                 {
+                    var model_join = (from lvkd in _db.CompanyLvCc.Where(t => t.Madv == request.Madv)
+                                      join dmnghe in _db.DmNgheKd on lvkd.Manghe equals dmnghe.Manghe
+                                      select new VMCompanyLvCc
+                                      {
+                                          Id = lvkd.Id,
+                                          Madv = lvkd.Madv,
+                                          Mahs = lvkd.Mahs,
+                                          Manghe = lvkd.Manghe,
+                                          Macqcq = lvkd.Macqcq,
+                                          Tennghe = dmnghe.Tennghe,
+                                      }).ToList();
+                    request.VMCompanyLvCc = model_join.ToList();
+
                     ModelState.AddModelError("Username", "Tài khoản truy cập này đã tồn tại");
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
@@ -217,7 +229,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
-                    
+
                     var user_join = (from user in _db.Users.Where(t => t.Id == Id)
                                      join com in _db.Company on user.Madv equals com.Madv
                                      select new VMRegisters
