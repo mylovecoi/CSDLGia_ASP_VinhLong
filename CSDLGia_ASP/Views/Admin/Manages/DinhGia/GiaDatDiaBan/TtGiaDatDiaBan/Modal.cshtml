@@ -25,14 +25,14 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label>Ngày ban hành<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="ngayqd_banhanh_create" name="ngayqd_banhanh_create" />
+                            <label>Ngày ban hành</label>
+                            <input type="date" class="form-control" value="@Helpers.ConvertDateToFormView(DateTime.Now)" id="ngayqd_banhanh_create" name="ngayqd_banhanh_create" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label>Ngày áp dụng<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="ngayqd_apdung_create" name="ngayqd_apdung_create" />
+                            <label>Ngày áp dụng</label>
+                            <input type="date" class="form-control" value="@Helpers.ConvertDateToFormView(DateTime.Now)" id="ngayqd_apdung_create" name="ngayqd_apdung_create" />
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -140,8 +140,8 @@
     //Thêm mới
 
     function Store() {
-        if ($('#soqd_create').val().trim() == '') {
-            toastr.error("Số quyết định không được để trống!!!", "Lỗi!");
+        if ($('#soqd_create').val().trim() == '' || $("#mota_create").val().trim()=='') {
+            toastr.error("Các trường đánh dấu sao không được để trống!!!", "Lỗi!");
         } else {
             var file = new FormData();
             file.append("Ipf1upload", $("#ipf1_create")[0].files[0]);

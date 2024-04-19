@@ -28,8 +28,7 @@
     <form asp-controller="TtDnTd" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_update">
         <div class="card-body">
             <div class="row">
-                <input asp-for="Madiaban" type="hidden" />
-                <input asp-for="Mahs" type="hidden" />
+                <input hidden asp-for="Mahs" />
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Tên doanh nghiệp*</label>
@@ -62,8 +61,20 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
+                        <label>Địa danh</label>
+                        <input type="text" class="form-control" asp-for="Diadanh" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" asp-for="Email" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Website</label>
+                        <input type="text" class="form-control" asp-for="Website" />
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -80,14 +91,24 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Địa danh</label>
-                        <input type="text" class="form-control" asp-for="Diadanh" />
+                        <label>Thông tin giấy tờ</label><br />
+                        <textarea type="text" class="form-control" asp-for="Tailieu"></textarea>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Giấy đăng ký kinh doanh</label><br />
+                        <label>
+                            Giấy đăng ký kinh doanh
+                            @if (!string.IsNullOrEmpty(Model.Giayphepkd))
+                            {
+                                <a href="~/UpLoad/File/@Model.Giayphepkd" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    Giấy đăng ký kinh doanh hiện tại
+                                </a>
+                            }
+                        </label><br />
                         <input type="file" asp-for="Giayphepkdupload" />
+
                     </div>
                 </div>
             </div>

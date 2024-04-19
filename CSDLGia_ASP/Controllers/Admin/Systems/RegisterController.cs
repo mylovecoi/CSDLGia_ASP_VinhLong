@@ -38,17 +38,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
                 {
-                    //Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-
-                    //var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
-                    //List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
-
-                    //IEnumerable<CSDLGia_ASP.Models.Systems.Company> coms = _db.Company.Where(t => list_madv.Contains(t.Macqcq));
-
-                    //if (Madv != "all")
-                    //{
-                    //    coms = coms.Where(t => t.Macqcq == Madv);
-                    //}
 
                     var users = _db.Users.Where(t => t.Level == "DN").ToList();
                     var company = _db.Company.ToList();
@@ -68,7 +57,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       });
                     
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                    //ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
@@ -91,6 +79,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Create()
         {
+            var modelct_cxd = _db.CompanyLvCc.Where(t => t.Trangthai == "CXD");
+            if (modelct_cxd.Any())
+            {
+                _db.CompanyLvCc.RemoveRange(modelct_cxd);
+                _db.SaveChanges();
+            }
+
             ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["DmNganhKd"] = _db.DmNganhKd.ToList();
@@ -145,57 +140,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         request.Giayphepkd = filename;
                     }
 
-                    var Manghe = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manghe).ToList();
-                    var Manghanh = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manganh).ToList();
-
-                    var BOG = Manghanh.Any(m => m.Contains("BOG")) ? 1 : 0;
-                    var KKNYGIA = Manghanh.Any(m => m.Contains("KKNYGIA")) ? 1 : 0;
-                    var XangDau = Manghe.Any(m => m.Contains("XANGDAU")) ? 1 : 0;
-                    var XmThepXd = Manghe.Any(m => m.Contains("XMTXD")) ? 1 : 0;
-                    var SachGk = Manghe.Any(m => m.Contains("SACH")) ? 1 : 0;
-                    var Etanol = Manghe.Any(m => m.Contains("ETANOL")) ? 1 : 0;
-                    var ThucPhamCn = Manghe.Any(m => m.Contains("TPCNTE6T")) ? 1 : 0;
-                    var VlXdCatSan = Manghe.Any(m => m.Contains("CATSAN")) ? 1 : 0;
-                    var HocPhiDaoTaoLaiXe = Manghe.Any(m => m.Contains("HOCPHILX")) ? 1 : 0;
-                    var Than = Manghe.Any(m => m.Contains("THAN")) ? 1 : 0;
-                    var Giay = Manghe.Any(m => m.Contains("GIAY")) ? 1 : 0;
-                    var ThucAnChanNuoi = Manghe.Any(m => m.Contains("TACN")) ? 1 : 0;
-                    var VlXdDatSanlap = Manghe.Any(m => m.Contains("DATSANLAP")) ? 1 : 0;
-                    var VanTaiKhachBangOtoCoDinh = Manghe.Any(m => m.Contains("VTXK")) ? 1 : 0;
-                    var VanTaiKhachBangTaXi = Manghe.Any(m => m.Contains("VTXTX")) ? 1 : 0;
-                    var VanTaiKhachBangXeBuyt = Manghe.Any(m => m.Contains("VTXB")) ? 1 : 0;
-                    var CaHue = Manghe.Any(m => m.Contains("CAHUE")) ? 1 : 0;
-                    var SieuThi = Manghe.Any(m => m.Contains("SIEUTHI")) ? 1 : 0;
-                    var Dvlt = Manghe.Any(m => m.Contains("LUUTRU")) ? 1 : 0;
-                    var VlXd= Manghe.Any(m => m.Contains("VLXD")) ? 1 : 0;
-                    var KhamChuaBenh = Manghe.Any(m => m.Contains("KCBTN")) ? 1 : 0;
-                    var DvThuongMai = Manghe.Any(m => m.Contains("DVHDTMCK")) ? 1 : 0;
-                    var LuHanh = Manghe.Any(m => m.Contains("LUHANH")) ? 1 : 0;
+                    //var Manghe = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manghe).ToList();
+                    //var Manghanh = _db.CompanyLvCc.Where(c => c.Madv == request.Madv).Select(c => c.Manganh).ToList();
+                    //var LuHanh = Manghe.Any(m => m.Contains("LUHANH")) ? 1 : 0;
 
                     var company = new Company
                     {
-                        DvThuongMai = DvThuongMai,
-                        KhamChuaBenh = KhamChuaBenh,
-                        VlXd = VlXd,
-                        BOG = BOG,
-                        KKNYGIA = KKNYGIA,
-                        Dvlt = Dvlt,
-                        Xangdau = XangDau,
-                        XmThepXd = XmThepXd,
-                        SachGk = SachGk,
-                        Etanol = Etanol,
-                        ThucPhamCn = ThucPhamCn,
-                        VlXdCatSan = VlXdCatSan,
-                        HocPhiDaoTaoLaiXe = HocPhiDaoTaoLaiXe,
-                        Than = Than,
-                        Giay = Giay,
-                        ThucAnChanNuoi = ThucAnChanNuoi,
-                        VlXdDatSanlap = VlXdDatSanlap,
-                        VanTaiKhachBangOtoCoDinh = VanTaiKhachBangOtoCoDinh,
-                        VanTaiKhachBangTaXi = VanTaiKhachBangTaXi,
-                        CaHue = CaHue,
-                        SieuThi = SieuThi,
-                        LuHanh = LuHanh,
+                        //LuHanh = LuHanh,
                         Madv = request.Madv,
                         Madiaban = request.Madiaban,
                         Macqcq = request.Macqcq,
@@ -204,9 +155,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Tel = request.Tel,
                         Fax = request.Fax,
                         Email = request.Email,
+                        Website = request.Website,
                         Diadanh = request.Diadanh,
                         Chucdanh = request.Chucdanh,
                         Nguoiky = request.Nguoiky,
+                        Tailieu = request.Tailieu,
                         Giayphepkd = request.Giayphepkd,
                         Trangthai = "Chưa kích hoạt",
                         Level = "DN",
@@ -278,6 +231,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                          Tendn = com.Tendn,
                                          Diachi = com.Diachi,
                                          Diadanh = com.Diadanh,
+                                         Giayphepkd = com.Giayphepkd,
                                          Tel = com.Tel,
                                          Fax = com.Fax,
                                          Email = com.Email,

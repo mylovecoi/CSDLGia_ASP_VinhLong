@@ -18,6 +18,7 @@ namespace CSDLGia_ASP.ViewModels.Systems
         public string Tel { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        public string Website { get; set; }
         public string Diadanh { get; set; }
         public string Chucdanh { get; set; }
         public string Nguoiky { get; set; }

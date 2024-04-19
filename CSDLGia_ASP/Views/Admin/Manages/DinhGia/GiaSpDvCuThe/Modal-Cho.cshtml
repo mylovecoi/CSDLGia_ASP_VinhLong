@@ -54,13 +54,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label>Thành phố</label>
-                                <input type="number" class="form-control" name="Mucgia1" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia1" />
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label>Thị xã</label>
-                                <input type="number" class="form-control" name="Mucgia2" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia2" />
                             </div>
                         </div>
                     </div>
@@ -69,13 +69,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label>Các huyện đồng bằng</label>
-                                <input type="number" class="form-control" name="Mucgia3" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia3" />
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label>Các huyện miền núi</label>
-                                <input type="number" class="form-control" name="Mucgia4" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia4" />
                             </div>
                         </div>
                     </div>
@@ -108,12 +108,17 @@
                 form.find("[name='Mucgia2']").val(data.mucgia2);
                 form.find("[name='Mucgia3']").val(data.mucgia3);
                 form.find("[name='Mucgia4']").val(data.mucgia4);
+                MoneyDecimalMask();
             }
         })
     }
 
 
     function SetUpdate() {
+        $('#frm_chitiet').find("[name='Mucgia1']").val().replace(/\./g, "").replace(/,/g, ".");
+        $('#frm_chitiet').find("[name='Mucgia2']").val().replace(/\./g, "").replace(/,/g, ".");
+        $('#frm_chitiet').find("[name='Mucgia3']").val().replace(/\./g, "").replace(/,/g, ".");
+        $('#frm_chitiet').find("[name='Mucgia4']").val().replace(/\./g, "").replace(/,/g, ".");
         var formData = new FormData($('#frm_chitiet')[0]);
         formData.append('PhanLoaiHoSo', $('#PhanLoaiHoSo').val());
         $.ajax({

@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 Madv = Madv,
                 Manghe = Manghe,
-                Manganh = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe)?.Manganh ?? "",
+                //Manganh = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == Manghe)?.Manganh ?? "",
                 Macqcq = Macqcq,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
@@ -129,6 +129,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         //Get
         public string GetData(string Madv)
         {
+            var dsdonvi = _db.DsDonVi;
             var model = _db.CompanyLvCc.Where(t => t.Madv == Madv).ToList();
             var model_join = (from cty in model
                               join dmnghe in _db.DmNgheKd on cty.Manghe equals dmnghe.Manghe
@@ -147,7 +148,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
             int record = 1;
             string result = "<div class='mb-12' id='lvkd_data'>";
-            result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
+            result += "<table class='table table-striped table-bordered table-hover table-responsive'>";
             result += "<thead>";
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
@@ -163,7 +164,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
                 result += "<td style='font-weight:bold'>" + item.Tennghe + "</td>";
-                result += "<td style='text-align:center'>" + "</td>";
+                if (!string.IsNullOrEmpty(item.Macqcq))
+                {
+                    result += "<td style='text-align:center'>" + dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "" + "</td>";
+                }
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                 result += " data-target='#Edit_Lvkd_Modal' data-toggle='modal' onclick='SetEditLvkd(`" + item.Id + "`)'>";

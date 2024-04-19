@@ -23,9 +23,8 @@
             </button>
         </div>
     </div>
-    <hr />
     <div class="card-body" id="lvkd_data">
-        <table class="table table-striped table-bordered table-hover" id="datatable_4">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr style="text-align:center">
                     <th width="2%">#</th>
@@ -43,8 +42,14 @@
                         {
                             <tr>
                                 <td style="text-align:center">@(record_id++)</td>
-                                <td style="font-weight:bold">@item.Tennghe</td>
-                                <td style="text-align:center"></td>
+                                <td style="font-weight:bold">@item.Phanloai - @item.Tennghe</td>
+                                <td style="text-align:center">
+                                    @if (!string.IsNullOrEmpty(item.Macqcq))
+                                        @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
+
+                                </td>
                                 <td>
                                     <button type="button" data-target="#Edit_Lvkd_Modal" data-toggle="modal"
                                             onclick="SetEditLvkd('@item.Id')"
@@ -80,29 +85,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row text-left">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Nghề</label>
+                            <label style="font-weight:bold">Nghề</label>
                             <select class="form-control select2basic" id="manghe_create" name="manghe_create" style="width: 100%" onchange="AjaxGetDvNhanHs()">
-                                @foreach (var nganh in dmnganhkd)
+                                @foreach (var item in dmnghekd)
                                 {
-                                    <optgroup label="@nganh.Tennganh">
-                                        @{
-                                            var nghe = dmnghekd.Where(t => t.Manganh == nganh.Manganh);
-                                        }
-                                        @foreach (var item in nghe)
-                                        {
-                                            <!option value="@item.Manghe">&emsp;@item.Tennghe</!option>
-                                        }
-                                    </optgroup>
+                                    <!option value="@item.Manghe">&emsp;@item.Phanloai - @item.Tennghe</!option>
                                 }
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Đơn vị nhận hồ sơ</label>
+                            <label style="font-weight:bold">Đơn vị nhận hồ sơ</label>
                             <select class="form-control select2basic" id="madvhs_create" name="madvhs_create" style="width: 100%">
                                 <option value="">--Chọn đơn vị nhận hồ sơ--</option>
                                 @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())

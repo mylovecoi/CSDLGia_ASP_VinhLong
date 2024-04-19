@@ -23,28 +23,28 @@
     <thead>
 
         <tr>
-            <th style="text-align:center" rowspan="2" width="2%">STT</th>
-            <th style="text-align:center" rowspan="2">Loại bất động sản</th>
-            <th style="text-align:center" rowspan="2">Đơn vị tính</th>
-            <th style="text-align:center" colspan="4">Mức giá</th>
+            <th style="text-align:center"  width="2%">STT</th>
+            <th style="text-align:center" >Loại bất động sản</th>
+            <th style="text-align:center" >Đơn vị tính</th>
+            <th style="text-align:center" >Mức giá</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var nhom in DanhMucNhom)
         {
-            var data = Model.GiaGiaoDichBDSCt.Where(x=>x.Manhom== nhom.Manhom);
+            var data = Model.GiaGiaoDichBDSCt.Where(x => x.Manhom == nhom.Manhom);
             if (data.Any())
             {
                 foreach (var item in data)
                 {
                     <tr>
-                    <td style="text-align:center">@(record_id++)</td>
-                    <td style="text-align:left">@item.Ten</td>
-                    <td style="text-align:center">@item.Dvt</td>
-                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gia)</td>
-                </tr>
-                }                
-            }           
-        }        
+                        <td style="text-align:center">@(record_id++)</td>
+                        <td style="text-align:left">@item.Ten</td>
+                        <td style="text-align:center">@item.Dvt</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gia)</td>
+                    </tr>
+                }
+            }
+        }
     </tbody>
 </table>

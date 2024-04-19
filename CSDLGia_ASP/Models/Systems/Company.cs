@@ -20,6 +20,7 @@ namespace CSDLGia_ASP.Models.Systems
         public string Fax { get; set; }
         [EmailAddress]
         public string Email { get; set; }
+        public string Website { get; set; }
         public string Diadanh { get; set; }
         public string Chucdanh { get; set; }
         public string Nguoiky { get; set; }
