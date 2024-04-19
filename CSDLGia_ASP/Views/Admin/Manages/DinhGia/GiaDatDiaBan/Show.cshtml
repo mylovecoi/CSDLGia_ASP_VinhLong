@@ -13,7 +13,7 @@
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ</p>
-<p style="text-align: left; font-size: 16px;">Số quyết định: 01</p>
+<p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
 <p style="text-align: left; font-size: 16px;">
     Địa bàn:@ViewData["TenDiaBan"]
 </p>
@@ -21,7 +21,7 @@
 
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
 
     <thead>
         <tr>

@@ -21,30 +21,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DoanhNghiep/XetDuyet")]
         [HttpGet]
-        public IActionResult Index(string Madiaban)
+        public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                    {
-                        var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                        var GetMadiaban = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv);
-                        Madiaban = GetMadiaban.MaDiaBan;
-                    }
-                    else
-                    {
-                        if (string.IsNullOrEmpty(Madiaban))
-                        {
-                            Madiaban = _db.DsDiaBan.OrderBy(t => t.Id).Where(t => t.Level != "ADMIN").Select(t => t.MaDiaBan).First();
-                        }
-                    }
+                    //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    //{
+                    //    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    //    var GetMadiaban = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv);
+                    //    Madiaban = GetMadiaban.MaDiaBan;
+                    //}
+                    //else
+                    //{
+                    //    if (string.IsNullOrEmpty(Madiaban))
+                    //    {
+                    //        Madiaban = _db.DsDiaBan.OrderBy(t => t.Id).Where(t => t.Level != "ADMIN").Select(t => t.MaDiaBan).First();
+                    //    }
+                    //}
 
-                    var model = _db.TtDnTd.Where(t => t.Madiaban == Madiaban && t.Trangthai == "CD");
+                    var model = _db.TtDnTd.Where(t => t.Trangthai == "CD");
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                    ViewData["Madiaban"] = Madiaban;
                     ViewData["Title"] = "Thông tin doanh nghiệp xét duyệt";
                     ViewData["MenuLv1"] = "menu_bog";
                     ViewData["MenuLv2"] = "menu_ttdntdxdbog";
@@ -70,24 +69,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
                 {
-                    var com_join = (from com in _db.Company
-                                    join db in _db.DsDiaBan on com.Madiaban equals db.MaDiaBan
-                                    select new VMCompany
-                                    {
-                                        Id = com.Id,
-                                        Madv = com.Madv,
-                                        Madiaban = com.Madiaban,
-                                        Tendiaban = db.TenDiaBan,
-                                        Tendn = com.Tendn,
-                                        Diachi = com.Diachi,
-                                        Tel = com.Tel,
-                                        Fax = com.Fax,
-                                        Email = com.Email,
-                                        Chucdanh = com.Chucdanh,
-                                        Nguoiky = com.Nguoiky,
-                                        Diadanh = com.Diadanh,
-                                        Trangthai = com.Trangthai,
-                                    }).FirstOrDefault(t => t.Madv == Madv);
+                    var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
 
                     var comct_join = (from comct in _db.CompanyLvCc
                                       join nghe in _db.DmNgheKd on comct.Manghe equals nghe.Manghe
@@ -103,24 +85,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                           Trangthai = comct.Trangthai,
                                       }).Where(t => t.Madv == Madv && t.Trangthai == "XD").ToList();
 
-                    var dn_join = (from dn in _db.TtDnTd
-                                   join db in _db.DsDiaBan on dn.Madiaban equals db.MaDiaBan
-                                   select new VMTtDnTd
-                                   {
-                                       Id = dn.Id,
-                                       Madv = dn.Madv,
-                                       Madiaban = dn.Madiaban,
-                                       Tendiaban = db.TenDiaBan,
-                                       Tendn = dn.Tendn,
-                                       Diachi = dn.Diachi,
-                                       Tel = dn.Tel,
-                                       Fax = dn.Fax,
-                                       Email = dn.Email,
-                                       Chucdanh = dn.Chucdanh,
-                                       Nguoiky = dn.Nguoiky,
-                                       Diadanh = dn.Diadanh,
-                                       Trangthai = dn.Trangthai,
-                                   }).FirstOrDefault(t => t.Madv == Madv);
+                    var model_ttdntd = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
 
                     var dnct_join = (from dnct in _db.TtDnTdCt
                                      join nghe in _db.DmNgheKd on dnct.Manghe equals nghe.Manghe
@@ -137,14 +102,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                      }).Where(t => t.Madv == Madv).ToList();
 
                     ViewData["CompanyLvCc"] = comct_join;
-                    ViewData["TtDnTd"] = dn_join;
+                    ViewData["TtDnTd"] = model_ttdntd;
                     ViewData["TtDnTdCt"] = dnct_join;
                     ViewData["Madv"] = Madv;
-                    ViewData["Madiaban"] = com_join.Madiaban;
                     ViewData["Title"] = "Thông tin doanh nghiệp chi tiết";
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_ttdntdxd";
-                    return View("Views/Admin/Systems/TtDnTd/XetDuyet/Show.cshtml", com_join);
+                    return View("Views/Admin/Systems/TtDnTd/XetDuyet/Show.cshtml", model);
                 }
                 else
                 {

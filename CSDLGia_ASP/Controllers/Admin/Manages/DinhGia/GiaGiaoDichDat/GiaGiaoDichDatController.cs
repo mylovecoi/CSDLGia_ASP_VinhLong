@@ -88,6 +88,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                         Mahs = MadvBc + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Madv = MadvBc,
                         Manhom = Manhom,
+                        Thoidiem=DateTime.Now,
+                        Thoidiemlk = DateTime.Now,
                     };
 
                     var danhmuc = _db.GiaGiaoDichDatDm.ToList();

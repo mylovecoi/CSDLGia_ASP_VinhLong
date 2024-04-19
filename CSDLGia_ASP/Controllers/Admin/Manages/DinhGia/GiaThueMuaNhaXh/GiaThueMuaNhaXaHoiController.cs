@@ -351,6 +351,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     _db.GiaThueMuaNhaXh.Remove(model);
                     _db.SaveChanges();
 
+          
+
                     return RedirectToAction("Index", "GiaThueMuaNhaXaHoi", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

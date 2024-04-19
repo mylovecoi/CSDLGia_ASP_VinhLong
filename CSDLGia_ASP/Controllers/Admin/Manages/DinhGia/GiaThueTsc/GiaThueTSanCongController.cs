@@ -20,13 +20,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
-        public GiaThueTSanCongController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
+
+        public GiaThueTSanCongController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
-
+     
         [Route("DinhGiaThueTsc")]
         [HttpGet]
         public IActionResult Index(string Madv, int Nam)
@@ -183,6 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     var modelct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == request.Mahs);
                     _db.GiaThueTaiSanCongCt.UpdateRange(modelct);
                     _db.SaveChanges();
+
 
                     return RedirectToAction("Index", "GiaThueTSanCong", new { Madv = request.Madv });
                 }

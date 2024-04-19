@@ -43,9 +43,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();
-            ViewData["MenuLv1"] = "menu_dg";
-            ViewData["MenuLv2"] = "menu_dg_giadatpl";
-            ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);
@@ -91,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tên đường, giới hạn, khu vực<span class='text-danger'>*</span></b></label>";
-                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + model.Khuvuc + "' class='form-control'/>";
+                result += "<input type='text' id='tenduong_edit' name='tenduong_edit' value='" + model.Khuvuc + "' class='form-control' required/>";
                 result += "</div>";
                 result += "</div>";
 

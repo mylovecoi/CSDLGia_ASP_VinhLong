@@ -98,12 +98,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
+
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Phân loại hồ sơ</label>";
+                        result += "<label>Mã nhóm</label>";
+                        result += "<input type='text' id='manhom_edit' name='manhom_edit' class='form-control' value='" + model.Manhom + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên nhóm</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
-                        result += "</div>";                       
+                        result += "</div>";
+
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -131,7 +141,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
         [Route("GiaThueDNDM/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tennhom, string Theodoi)
+        public JsonResult Update(int Id, string Tennhom, string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -139,7 +149,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 {
                     var model = _db.GiaThueMatDatMatNuocNhom.FirstOrDefault(t => t.Id == Id);
                     model.Tennhom = Tennhom;
-                    model.Theodoi = Theodoi;
+                    model.Manhom = Manhom;
+                   
                     model.Updated_at = DateTime.Now;
                     _db.GiaThueMatDatMatNuocNhom.Update(model);
                     _db.SaveChanges();

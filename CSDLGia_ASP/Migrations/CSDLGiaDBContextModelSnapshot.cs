@@ -14688,6 +14688,9 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<double>("Vtxtx")
                         .HasColumnType("float");
 
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Xangdau")
                         .HasColumnType("float");
 
@@ -16188,6 +16191,9 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<double>("Vtxtx")
                         .HasColumnType("float");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

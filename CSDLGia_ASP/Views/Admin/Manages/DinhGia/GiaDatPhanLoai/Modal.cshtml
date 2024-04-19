@@ -42,7 +42,7 @@
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên đường, giới hạn, khu vực<span class="text-danger">*</span></b></label>
-                            <input type="text" id="tenduong_create" name="tenduong_create" class="form-control" />
+                            <input type="text" id="tenduong_create" name="tenduong_create" class="form-control" required />
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -115,31 +115,36 @@
     }
     
     function SetStore() {
-        var giacuthe = $('#giact_create').val().replace(/\./g, "").replace(/,/g, ".");
-        $.ajax({
-            url: '/GiaDatCuTheCt/Store',
-            type: 'POST',
-            data: {
-                Mahs: $('#mahs_create').val(),
-                Khuvuc: $('#tenduong_create').val(),
-                Giacuthe: giacuthe,
-                MaDv: $('#Madv').val(),
-                MaDiaBan: $('#MaDiaBanChiTiet').val(), 
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
-                    $('#frm_data').replaceWith(data.message);
-                    $(document).ready(function () {
-                        TableManaged4.init();
-                    });
-                    $('#Create_Modal').modal("hide");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
+        var khuvuc = $('#tenduong_create').val();
+        if (khuvuc != "") {
+            var giacuthe = $('#giact_create').val().replace(/\./g, "").replace(/,/g, ".");
+            $.ajax({
+                url: '/GiaDatCuTheCt/Store',
+                type: 'POST',
+                data: {
+                    Mahs: $('#mahs_create').val(),
+                    Khuvuc: $('#tenduong_create').val(),
+                    Giacuthe: giacuthe,
+                    MaDv: $('#Madv').val(),
+                    MaDiaBan: $('#MaDiaBanChiTiet').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                        $('#frm_data').replaceWith(data.message);
+                        $(document).ready(function () {
+                            TableManaged4.init();
+                        });
+                        $('#Create_Modal').modal("hide");
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            toastr.error("Tên đường, giới hạn, khu vực không được để trống !!!", "Lỗi!!!");
+        }
     }
 
     function SetEdit(id_edit) {

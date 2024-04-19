@@ -56,24 +56,11 @@
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="Validatedgd()"><i class="la la-check"></i>Lưu Lại</button>
+            <button type="submit" class="btn btn-primary mr-2" ><i class="la la-check"></i>Lưu Lại</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
-    function Validatedgd() {
-        if ($('#Tenduan').val().trim() == '') {
-            toastr.error("Tên dự án không được để trống!", "Lỗi!!!")
-        } else {
-            if ($('#Thoidiem').val().trim() == '') {
-                toastr.error("Thời điểm không được để trống!", "Lỗi!!!")
-            } else {
-                document.getElementById("frm_r_store").submit();
-            }
-        }
-    }
-</script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -30,6 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.thongtin", "Create"))
                 {
+
                     var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
                     {
                         Madv = Madv,
@@ -41,7 +42,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     };
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                    if (!string.IsNullOrEmpty(diaBanApDung))
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                    }
+                    else
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    }
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Excels/Excel.cshtml", model);
 
@@ -106,8 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 }
                 
                 _db.GiaSpDvCuTheCt.AddRange(list_add);
-
-               
+                _db.SaveChanges();
 
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
                 {
@@ -117,15 +126,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     Soqd = request.Soqd,
                     Thoidiem = request.Thoidiem,
                     PhanLoaiHoSo = request.PhanLoaiHoSo,
+                    GhiChu = request.Noidung,
                     Trangthai = "CHT",
                     Congbo = "CHUACONGBO",
                     Created_at = DateTime.Now,
                     Updated_at = DateTime.Now,
                 };
 
-                _db.GiaSpDvCuThe.Add(model);
-                _db.SaveChanges();
-                return RedirectToAction("Edit", "GiaSpDvCuThe", new { Mahs = request.Mahs });
+                model.GiaSpDvCuTheCt = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs).ToList();
+                var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                if (!string.IsNullOrEmpty(diaBanApDung))
+                {
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                }
+                else
+                {
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                }
+                //ViewData["Manhom"] = Manhom;
+                ViewData["Madv"] = request.Madv;
+                ViewData["Mahs"] = model.Mahs;
+
+                ViewData["Title"] = "Bảng giá sản phẩm dịch vụ cụ thể";
+                ViewData["MenuLv1"] = "menu_spdvcuthe";
+                ViewData["MenuLv2"] = "menu_spdvcuthe_thongtin";
+                return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/Create.cshtml", model);
             }
             else
             {

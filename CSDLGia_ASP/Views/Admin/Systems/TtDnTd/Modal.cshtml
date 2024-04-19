@@ -1,6 +1,7 @@
 ﻿@{
     var dmnganhkd = (IEnumerable<DmNganhKd>)ViewData["DmNganhKd"];
     var dmnghekd = (IEnumerable<DmNgheKd>)ViewData["DmNgheKd"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 
 <!--Create Modal-->
@@ -19,19 +20,24 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Ngành nghề</b></label>
-                            <select class="form-control" id="manghe_create" name="manghe_create">
-                                @foreach (var nganh in dmnganhkd)
+                            <label style="font-weight:bold">Danh mục kê khai đăng ký giá</label>
+                            <select class="form-control select2basic" id="manghe_create" name="manghe_create" style="width: 100%" onchange="AjaxGetDvNhanHs()">
+                                @foreach (var item in dmnghekd)
                                 {
-                                    <optgroup label="@nganh.Tennganh">
-                                        @{
-                                            var dmnganhnghekd = dmnghekd.Where(t => t.Manganh == nganh.Manganh && t.Theodoi == "TD").ToList();
-                                        }
-                                        @foreach (var nghe in dmnganhnghekd)
-                                        {
-                                            <!option value="@nghe.Manghe" @((string)ViewData["Manghe"] == nghe.Manghe ? "selected" : "")>@nghe.Tennghe</!option>
-                                        }
-                                    </optgroup>
+                                    <!option value="@item.Manghe">&emsp;@item.Phanloai - @item.Tennghe</!option>
+                                    @* <!option value="@nghe.Manghe" @((string)ViewData["Manghe"] == nghe.Manghe ? "selected" : "")>@nghe.Tennghe</!option> *@
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold">Đơn vị nhận hồ sơ</label>
+                            <select class="form-control select2basic" id="madvhs_create" name="madvhs_create" style="width: 100%">
+                                <option value="">--Chọn đơn vị nhận hồ sơ--</option>
+                                @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU").ToList())
+                                {
+                                    <option value="@item.MaDv">&emsp;@item.TenDv</option>
                                 }
                             </select>
                         </div>
@@ -72,20 +78,41 @@
 </div>
 
 <script>
+    function AjaxGetDvNhanHs() {
+        $.ajax({
+            url: '/Ajax/GetDvNhanHs',
+            type: 'POST',
+            data: {
+                Manghe: $('#manghe_create').val(),
+                KeySelect: 'madvhs_create'
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success('Success');
+                    $('#madvhs_create').html(data.message);
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
     function SetStore() {
         $.ajax({
             url: '/DoanhNghiepCt/Store',
             type: 'POST',
             data: {
-                Manghe: $('#manghe_create').val(),
                 Madv: $('#Madv').val(),
+                Manghe: $('#manghe_create').val(),
+                Macqcq: $('#madvhs_create').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thông tin thành công!", "Thành công");
                     $('#frm_ct_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Create_Modal').modal("hide");
@@ -108,11 +135,11 @@
                 Id: $('#id_delete').val(),
             },
             dataType: 'JSON',
-            success: function(data) {
+            success: function (data) {
                 if (data.status == 'success') {
                     toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#frm_ct_data').replaceWith(data.message);
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         TableManaged4.init();
                     });
                     $('#Delete_Modal').modal("hide");

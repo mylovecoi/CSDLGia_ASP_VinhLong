@@ -56,7 +56,7 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
                 <a href="~/UpLoad/File/DinhGia/Excel/FileExcelGiaDatPl.xlsx" target="_blank" class="btn btn-link"
                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                    <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaDatPl.xlsx</span>
+                    <span style="font-weight:bold;">Link tải file mẫu FileExcelGiaDatPl.xlsm</span>
                 </a>
             </div>            
             <div class="mb-3 font-weight-bold font-size-lg">
@@ -109,7 +109,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu:</label><br />
-                        <input type="file" accept=".xls,.xlsx, .xlsm" asp-for="FormFile" />
+                        <input type="file" accept=".xlsm" asp-for="FormFile" />
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>

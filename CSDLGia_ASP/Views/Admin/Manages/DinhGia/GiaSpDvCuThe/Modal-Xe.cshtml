@@ -54,7 +54,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label>Điểm giữ xe thông thường và danh lam thắng cảnh</label>
-                                <input type="number" class="form-control" name="Mucgia1" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia1" />
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label>Điểm giữ xe có nhu cầu sử dụng lớn</label>
-                                <input type="number" class="form-control" name="Mucgia2" />
+                                <input type="text" class="form-control money-decimal-mask" name="Mucgia2" />
                             </div>
                         </div>
                     </div>
@@ -93,12 +93,15 @@
                 form.find("[name='Mahs']").val(data.mahs);
                 form.find("[name='Mucgia1']").val(data.mucgia1);
                 form.find("[name='Mucgia2']").val(data.mucgia2);
+                MoneyDecimalMask();
             }
         })
     }
 
 
     function SetUpdate() {
+        $('#frm_chitiet').find("[name='Mucgia1']").val().replace(/\./g, "").replace(/,/g, ".");
+        $('#frm_chitiet').find("[name='Mucgia2']").val().replace(/\./g, "").replace(/,/g, ".");
         var formData = new FormData($('#frm_chitiet')[0]);
         formData.append('PhanLoaiHoSo', $('#PhanLoaiHoSo').val());
         $.ajax({
