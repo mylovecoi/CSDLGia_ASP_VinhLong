@@ -148,10 +148,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
 
-
-                    // Xử lý phần lịch sử hồ sơ 
-
-
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
 
@@ -184,13 +180,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                     _db.GiaThueMuaNhaXh.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
-
-                    //Kết thúc Xử lý phần lịch sử hồ sơ 
 
                     return RedirectToAction("Index", "GiaThueMuaNhaXhXd");
                 }

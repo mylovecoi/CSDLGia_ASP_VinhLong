@@ -6,9 +6,8 @@
                 <h3 class="card-label">
                     @ViewData["Title"]
                     <span class="d-block text-muted pt-2 font-size-sm">
-                       Thêm mới danh mục nhóm giá thuê đất, mặt nước
+                        Thêm mới danh mục nhóm giá thuê đất, mặt nước
                     </span>
-                    <span class="d-block text-muted pt-2 font-size-sm">Thêm mới nhóm sản phẩm</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -18,16 +17,16 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Mã hồ sơ:</label>
+                            <label>Mã nhóm:</label>
                             <input type="text" id="manhom_create" name="manhom_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Hồ sơ:</label>
+                            <label>Tên nhóm:</label>
                             <input type="text" id="tennhom_create" name="tennhom_create" class="form-control" />
                         </div>
-                    </div>                  
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -119,7 +118,7 @@
 <script>
     function Store() {
         if ($('#tennhom_create').val().trim() == '') {
-            toastr.error("Tên nhóm sản phẩm dịch vụ không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaThueDNDm/Store',
@@ -155,7 +154,7 @@
             },
             dataType: 'JSON',
             success: function (data) {
-                if (data.status == 'success') {  
+                if (data.status == 'success') {
                     $('#edit_thongtin').replaceWith(data.message);
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
@@ -166,13 +165,14 @@
 
     function Update() {
         if ($('#tennhom_edit').val().trim() == '') {
-            toastr.error("Tên nhóm sản phẩm dịch vụ khung giá không được để trống!!!", "Lỗi!");
+            toastr.error("Tên nhóm không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
                 url: '/GiaThueDNDm/Update',
                 type: 'POST',
                 data: {
                     Tennhom: $('#tennhom_edit').val(),
+                    Manhom: $('#manhom_edit').val(),
                     Id: $('#id_edit').val()
                 },
                 dataType: 'JSON',
