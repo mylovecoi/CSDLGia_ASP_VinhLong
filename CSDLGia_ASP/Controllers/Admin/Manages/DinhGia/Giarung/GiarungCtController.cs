@@ -50,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Tối đa</b></label>";
-                result += "<input type='text' id='GiaRung2_edit' name='GiaRung2_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung1) + "' class='form-control money-decimal-mask'/>";
+                result += "<input type='text' id='GiaRung2_edit' name='GiaRung2_edit' value='" + Helpers.ConvertDbToStr(model.GiaRung2) + "' class='form-control money-decimal-mask'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
