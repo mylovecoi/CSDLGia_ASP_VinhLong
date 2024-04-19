@@ -23,6 +23,7 @@
                 <tr style="text-align:center">
                     <th width="2%">#</th>
                     <th>Tên ngành nghề</th>
+                    <th>Đơn vị quản lý</th>
                     <th width="9%">Thao tác</th>
                 </tr>
             </thead>
@@ -36,6 +37,7 @@
                             <tr>
                                 <td style="text-align:center">@(record_id++)</td>
                                 <td class="active">@item.Tennghe</td>
+                                <td></td>
                                 <td>
                                     <button type="button" data-target="#Delete_Modal" data-toggle="modal"
                                             onclick="GetDelete('@item.Id')" class="btn btn-sm btn-clean btn-icon" title="Xóa">
