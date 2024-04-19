@@ -6,6 +6,7 @@
     var ngaynhap_den = ((DateTime)ViewData["ngaynhap_den"]).ToString("yyyy-MM-dd");
     var manhom = ViewData["manhom"];
 }
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSCt>
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -89,7 +90,7 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Nhóm hàng hóa dịch vụ</label>
+                        <label>Phân loại nhóm bất động sản</label>
                         <select class="form-control select2basic" asp-for="@manhom" id="manhom" name="manhom">
                             <option value="all">--Tất cả--</option>
                             @foreach (var nhom in nhomtn)
@@ -141,7 +142,8 @@
                 <th style="text-align: center">STT</th>
                 <th style="text-align: center">Đơn vị nhập</th>
                 <th style="text-align: center">Thời điểm</th>
-                <th style="text-align: center">Phân loại bất động sản</th>
+                <th style="text-align: center">Phân loại nhóm bất động sản</th>
+                <th style="text-align: center">Phân loại nhà</th>
                 <th style="text-align: center">Đơn vị tính</th>
                 <th style="text-align: center">Giá giao dịch</th>
                 <th style="text-align: center">Thao tác</th>
@@ -162,6 +164,11 @@
                         }
                     </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                    <td style="text-align: left">
+                        @if(!string.IsNullOrEmpty(item.Manhom)){
+                            @nhomtn.FirstOrDefault(x=>x.Manhom==item.Manhom).Tennhom
+                        }
+                    </td>
                     <td style="text-align: left">@item.Ten</td>
                     <td style="text-align: center">@item.Dvt</td>
                     <td style="text-align: right">@Helpers.ConvertDbToStr(item.Gia)</td>

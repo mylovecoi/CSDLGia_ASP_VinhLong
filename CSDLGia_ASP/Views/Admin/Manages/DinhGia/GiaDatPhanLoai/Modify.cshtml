@@ -69,13 +69,13 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số quyết định<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" id="Soqd" required />
                     </div>
                 </div>
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Thời điểm<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" />
+                        <input type="date" class="form-control" asp-for="Thoidiem" id="Thoidiem" required/>
                     </div>
                 </div>
             </div>
@@ -83,8 +83,8 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Thông tin hồ sơ</label>
-                        <input type="text" class="form-control" asp-for="Thongtin" />
+                        <label>Thông tin hồ sơ<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Thongtin" required />
                     </div>
                 </div>
             </div>

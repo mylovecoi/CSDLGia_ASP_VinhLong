@@ -2,16 +2,18 @@
     Layout = "_LayoutReports";
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var nhomtn = (IEnumerable<GiaGiaoDichBDSNhom>)ViewData["NhomTn"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSCt>
 <p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th style="text-align: center">STT</th>
             <th style="text-align: center">Đơn vị nhập</th>
             <th style="text-align: center">Thời điểm</th>
-            <th style="text-align: center">Phân loại bất động sản</th>
+            <th style="text-align: center">Phân loại nhóm bất động sản</th>
+            <th style="text-align: center">Phân loại nhà</th>
             <th style="text-align: center">Đơn vị tính</th>
             <th style="text-align: center">Giá giao dịch</th>           
         </tr>
@@ -31,6 +33,12 @@
                     }
                 </td>
                 <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td style="text-align: left">
+                    @if (!string.IsNullOrEmpty(item.Manhom))
+                    {
+                        @nhomtn.FirstOrDefault(x => x.Manhom == item.Manhom).Tennhom
+                    }
+                </td>
                 <td style="text-align: left">@item.Ten</td>
                 <td style="text-align: center">@item.Dvt</td>
                 <td style="text-align: right" class="sotien">@Helpers.ConvertDbToStr(item.Gia)</td>                

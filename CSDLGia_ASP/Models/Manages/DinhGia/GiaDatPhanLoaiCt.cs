@@ -51,5 +51,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Style { get; set; }
         [NotMapped]
         public string MaDiaBanCapHuyen { get; set; }
+        [NotMapped]
+        public string Soqd { get; set; }
     }
 }

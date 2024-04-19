@@ -175,8 +175,11 @@
             <thead>
                 <tr style="text-align:center">
                     <th style="text-align: center">STT</th>
-                    <th style="text-align: center">Đơn vị nhập</th>
+                    <th style="text-align: center">Đơn vị</th>
+                    <th style="text-align: center">Số quyết định</th>
                     <th style="text-align: center">Thời điểm</th>
+                    <th style="text-align: center">Phân loại hồ sơ</th>
+                    <th style="text-align: center">Xã/phường</th>
                     <th style="text-align: center">Giá trị</th>
                     <th style="text-align: center">Thao tác</th>
                 </tr>
@@ -187,7 +190,14 @@
                     <tr>
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: left">@item.Tendv</td>
+                        <td style="text-align: left">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                        <td style="text-align: center">@item.PhanLoai</td>
+                        <td style="text-align: left">
+                            @if(!string.IsNullOrEmpty(item.MaXaPhuong)){
+                                @DsDiaBan.FirstOrDefault(x=>x.MaDiaBan==item.MaXaPhuong).TenDiaBan
+                            }
+                        </td>
                         <td style="text-align: right">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
                         <td style="text-align: center">
                             <a asp-controller="GiaDatPl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
