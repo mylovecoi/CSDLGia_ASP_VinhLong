@@ -2,6 +2,7 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.API;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
     public class LoginController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-        public LoginController(CSDLGiaDBContext db)
+        private readonly IDsDonviService _dsDonviService;
+        public LoginController(CSDLGiaDBContext db, IDsDonviService dsDonviService)
         {
             _db = db;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("DangNhap")]
@@ -65,206 +68,84 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
 
                 //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
                 //
-                if (model.Level != "DN")
+
+                if (model != null)
                 {
-                    if (model != null)
+                    string md5_password = "";
+                    using (MD5 md5Hash = MD5.Create())
                     {
-                        string md5_password = "";
-                        using (MD5 md5Hash = MD5.Create())
+                        string change = Helpers.GetMd5Hash(md5Hash, password);
+                        md5_password = change;
+                    }
+                    if (md5_password == model.Password)
+                    {
+                        if (model.Status == "Chờ xét duyệt")
                         {
-                            string change = Helpers.GetMd5Hash(md5Hash, password);
-                            md5_password = change;
+                            ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                            ViewData["username"] = username;
+                            ViewData["password"] = password;
+                            return View("Views/Admin/Systems/Auth/Login.cshtml");
                         }
-                        if (md5_password == model.Password)
+                        else
                         {
-                            if (model.Status == "Chờ xét duyệt")
+                            if (model.Status == "Vô hiệu")
                             {
-                                ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+                                ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
                                 ViewData["username"] = username;
                                 ViewData["password"] = password;
                                 return View("Views/Admin/Systems/Auth/Login.cshtml");
                             }
                             else
                             {
-                                if (model.Status == "Vô hiệu")
+
+                                HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+
+                                if (model.Chucnang == "K")
                                 {
-                                    ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
-                                    ViewData["username"] = username;
-                                    ViewData["password"] = password;
-                                    return View("Views/Admin/Systems/Auth/Login.cshtml");
+                                    var permissions = _db.Permissions.Where(p => p.Username == username);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                 }
                                 else
                                 {
-
-                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
-
-                                    if (model.Chucnang == "K")
-                                    {
-                                        var permissions = _db.Permissions.Where(p => p.Username == username);
-                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                    }
-                                    else
-                                    {
-                                        var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
-                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                    }
-                                    return RedirectToAction("Index", "Home");
+                                    var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
                                 }
+
+                                if (model.Level != "DN")
+                                {
+                                    var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
+                                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                                    var data_nghe = _db.DmNgheKd.ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+
+                                    // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+                                    data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+                                    HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+                                }
+                                else
+                                {
+                                    var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
+                                    List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
+                                    var data_nghe = _db.DmNgheKd.Where(t => list_manghe.Contains(t.Manghe));
+                                    HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+                                }
+                                return RedirectToAction("Index", "Home");
                             }
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
-                            ViewData["username"] = username;
-                            ViewData["Title"] = "Đăng nhập";
-                            return View("Views/Admin/Systems/Auth/Login.cshtml");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                        ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
+                        ViewData["username"] = username;
                         ViewData["Title"] = "Đăng nhập";
                         return View("Views/Admin/Systems/Auth/Login.cshtml");
                     }
                 }
                 else
                 {
-                    var model2 = _db.Users
-                                .Where(u => u.Username == username)
-                                .Join(
-                                    _db.Company,
-                                    user => user.Madv,
-                                    company => company.Madv,
-                                    (user, company) => new Users
-                                    {
-                                        Id = user.Id,
-                                        Username = user.Username,
-                                        Password = user.Password,
-                                        Name = user.Name,
-                                        Phone = user.Phone,
-                                        Email = user.Email,
-                                        Status = user.Status,
-                                        Maxa = user.Maxa,
-                                        Mahuyen = user.Mahuyen,
-                                        Town = user.Town,
-                                        District = user.District,
-                                        Level = user.Level,
-                                        Sadmin = user.Sadmin,
-                                        Permission = user.Permission,
-                                        Emailxt = user.Emailxt,
-                                        Question = user.Question,
-                                        Answer = user.Answer,
-                                        Ttnguoitao = user.Ttnguoitao,
-                                        Lydo = user.Lydo,
-                                        Madv = user.Madv,
-                                        Created_at = user.Created_at,
-                                        Updated_at = user.Updated_at,
-                                        Manhomtk = user.Manhomtk,
-                                        Chucnang = user.Chucnang,
-                                        Solandn = user.Solandn,
-                                        LinkAPI = user.LinkAPI,
-                                        Manghanh = user.Manghanh,
-                                        Manghe = user.Manghe,
-                                        Vtxk = company.Vtxk,
-                                        Vtxb = company.Vtxb,
-                                        Vtxtx = company.Vtxtx,
-                                        Vtch = company.Vtch,
-                                        Xangdau = company.Xangdau,
-                                        Dien = company.Dien,
-                                        Khidau = company.Khidau,
-                                        Phan = company.Phan,
-                                        Thuocbvtv = company.Thuocbvtv,
-                                        Vacxingsgc = company.Vacxingsgc,
-                                        Muoi = company.Muoi,
-                                        Suate6t = company.Suate6t,
-                                        Duong = company.Duong,
-                                        Thocgao = company.Thocgao,
-                                        Thuocpcb = company.Thuocpcb,
-                                        Dvlt = company.Dvlt,
-                                        XmThepXd = company.XmThepXd,
-                                        SachGk = company.SachGk,
-                                        Etanol = company.Etanol,
-                                        ThucPhamCn = company.ThucPhamCn,
-                                        VlXdCatSan = company.VlXdCatSan,
-                                        HocPhiDaoTaoLaiXe = company.HocPhiDaoTaoLaiXe,
-                                        Than = company.Than,
-                                        Giay = company.Giay,
-                                        ThucAnChanNuoi = company.ThucAnChanNuoi,
-                                        VlXdDatSanlap = company.VlXdDatSanlap,
-                                        VlXdDaXayDung = company.VlXdDaXayDung,
-                                        VanTaiKhachBangOtoCoDinh = company.VanTaiKhachBangOtoCoDinh,
-                                        VanTaiKhachBangXeBuyt = company.VanTaiKhachBangXeBuyt,
-                                        VanTaiKhachBangTaXi = company.VanTaiKhachBangTaXi,
-                                        CaHue = company.CaHue,
-                                        SieuThi = company.SieuThi,
-                                        BOG = company.BOG,
-                                        KKNYGIA = company.KKNYGIA,
-                                        VlXd = company.VlXd,
-                                        LuHanh = company.LuHanh,
-                                        KhamChuaBenh = company.KhamChuaBenh,
-                                        DvThuongMai = company.DvThuongMai,
-                                    }
-                                ).FirstOrDefault();
-
-                    if (model2 != null)
-                    {
-                        string md5_password = "";
-                        using (MD5 md5Hash = MD5.Create())
-                        {
-                            string change = Helpers.GetMd5Hash(md5Hash, password);
-                            md5_password = change;
-                        }
-                        if (md5_password == model.Password)
-                        {
-                            if (model2.Status == "Chờ xét duyệt")
-                            {
-                                ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
-                                ViewData["username"] = username;
-                                ViewData["password"] = password;
-                                return View("Views/Admin/Systems/Auth/Login.cshtml");
-                            }
-                            else
-                            {
-                                if (model.Status == "Vô hiệu")
-                                {
-                                    ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
-                                    ViewData["username"] = username;
-                                    ViewData["password"] = password;
-                                    return View("Views/Admin/Systems/Auth/Login.cshtml");
-                                }
-                                else
-                                {
-
-                                    HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model2));
-
-                                    if (model2.Chucnang == "K")
-                                    {
-                                        var permissions = _db.Permissions.Where(p => p.Username == username);
-                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                    }
-                                    else
-                                    {
-                                        var permissions = _db.Permissions.Where(p => p.Username == model2.Chucnang);
-                                        HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                    }
-                                    return RedirectToAction("Index", "Home");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
-                            ViewData["username"] = username;
-                            ViewData["Title"] = "Đăng nhập";
-                            return View("Views/Admin/Systems/Auth/Login.cshtml");
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
-                        ViewData["Title"] = "Đăng nhập";
-                        return View("Views/Admin/Systems/Auth/Login.cshtml");
-                    }
+                    ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+                    ViewData["Title"] = "Đăng nhập";
+                    return View("Views/Admin/Systems/Auth/Login.cshtml");
                 }
 
 
@@ -285,6 +166,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             HttpContext.Session.Remove("Permission");
             HttpContext.Session.Remove("SsAdmin");
             return RedirectToAction("Login", "Login");
+        }
+        [HttpGet("TestList")]
+        public IActionResult TestList()
+        {
+            string Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+            var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+            List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+            var model = _db.DmNgheKd.ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+
+            // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+            model = model.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+            return Ok(model);
         }
     }
 }
