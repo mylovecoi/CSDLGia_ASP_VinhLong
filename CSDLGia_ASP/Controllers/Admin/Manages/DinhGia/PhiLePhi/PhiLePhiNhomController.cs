@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Index"))
                 {
                     var model = _db.PhiLePhiNhom.ToList();
                     ViewData["Title"] = "Nhóm danh mục giá phí, lệ phí";
