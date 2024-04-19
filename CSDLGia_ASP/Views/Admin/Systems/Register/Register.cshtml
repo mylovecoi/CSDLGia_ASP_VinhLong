@@ -1,10 +1,6 @@
 ﻿@{
     Layout = null;
 }
-@{
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
-}
 @model CSDLGia_ASP.ViewModels.Systems.VMRegisters
 <!DOCTYPE html>
 <html lang="en">
@@ -34,8 +30,8 @@
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/FileUpload/Logo/Icon_Life.png" />
 
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+    @* <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" /> *@
 
 </head>
 <!--end::Head-->
@@ -51,7 +47,7 @@
                     <!--begin::Login Header-->
                     <div class="d-flex flex-center mb-15">
                         <a href="#">
-                            <img src="~/logo/logolife.png" width="180" alt="Công ty TNHH phát triển phần mềm Cuộc Sống" />
+                            <img src="~/logo/logovn.png" width="150" alt="Phần mềm Cơ sở dữ liệu giá Khánh Hòa" />
                         </a>
                     </div>
                     <!--end::Login Header-->
@@ -99,27 +95,28 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa danh</label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diadanh" />
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
                                         <label class="font-size-h7 font-weight-bolder text-dark">Email</label>
                                         <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="email" asp-for="Email" />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa danh</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diadanh" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Website</label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Website" />
                                     </div>
                                 </div>
-                                @* <div class="col-xl-6">
+                                <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan xét duyệt đăng ký tài khoản</label>
-                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" asp-for="Macqcq">
-                                            @foreach (var item in dsdonvi.Where(t => t.ChucNang == "NHAPLIEU"))
-                                            {
-                                                <option value="@item.MaDv">@item.TenDv</option>
-                                            }
-                                        </select>
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Thông tin giấy tờ</label>
+                                        <textarea class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Tailieu"></textarea>
                                     </div>
-                                </div> *@
+                                </div>
                                 <div class="col-xl-6 text-dark">
                                     <div class="form-group">
                                         <label class="font-size-h7 font-weight-bolder text-dark">Giấy đăng ký kinh doanh</label><br />
@@ -150,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="form-group text-center mt-10">
-                                <button type="button" onclick="ValidateRegister()" class="btn btn-pill btn-light-primary font-weight-bold opacity-90 px-15 py-3">Đăng ký</button>
+                                <button type="button" onclick="ValidateRegister()" class="btn btn-pill btn-primary font-weight-bold opacity-90 px-15 py-3">Đăng ký</button>
                             </div>
                         </form>
 

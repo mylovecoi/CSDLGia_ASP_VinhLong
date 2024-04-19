@@ -69,7 +69,7 @@
     }
 
     <!--Mặt hàng bình ổn giá-->
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "BOG") == "1")
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_bog">
             <a href="javascript:;" class="menu-link menu-toggle">

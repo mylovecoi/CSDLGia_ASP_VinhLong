@@ -43,9 +43,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             };
             _db.GiaDatPhanLoaiCt.Add(model);
             _db.SaveChanges();
-            ViewData["MenuLv1"] = "menu_dg";
-            ViewData["MenuLv2"] = "menu_dg_giadatpl";
-            ViewData["MenuLv3"] = "menu_dg_giadatpl_tt";
             string result = GetData(Mahs);
             var data = new { status = "success", message = result };
             return Json(data);

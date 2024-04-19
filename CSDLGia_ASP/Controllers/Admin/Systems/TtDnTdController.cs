@@ -168,6 +168,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     Tel = model.Tel,
                     Fax = model.Fax,
                     Email = model.Email,
+                    Website = model.Website,
+                    Tailieu = model.Tailieu,
                     Diachi = model.Diachi,
                     Chucdanh = model.Chucdanh,
                     Nguoiky = model.Nguoiky,
@@ -377,6 +379,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
             result += "<th>Tên nghề kinh doanh</th>";
+            result += "<th>Đơn vị quản lý</th>";
             result += "<th width='9%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -386,6 +389,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
+                result += "<td style='font-weight:bold'>" + item.Tennghe + "</td>";
                 result += "<td style='font-weight:bold'>" + item.Tennghe + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa' data-toggle='modal'";

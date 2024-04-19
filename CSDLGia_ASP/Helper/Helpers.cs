@@ -370,6 +370,13 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgluhanh.timkiem", Name = "KKNYG - Dịch vụ lữ hành - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kknygia.kkgluhanh.baocao", Name = "KKNYG - Dịch vụ lữ hành - Báo cáo" });
 
+            //đăng ký kê khai giá
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia", Name = "Kê khai đăng ký giá" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.thongtin", Name = "Kê khai đăng ký giá - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.xetduyet", Name = "Kê khai đăng ký giá - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.timkiem", Name = "Kê khai đăng ký giá - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.baocao", Name = "Kê khai đăng ký giá - Báo cáo" });
+
             roldelist.Add(new VMRoleList { Role = "", Name = "" });
 
             // Giá đất
