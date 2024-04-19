@@ -133,6 +133,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
                 }
 
+                ViewData["DsDonVi"] = _db.DsDonVi;
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                 ViewData["CompanyLvCc"] = comct_join;
                 ViewData["TtDnTd"] = dn_join;
@@ -156,6 +157,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) ||
                     Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
+                var modelct_cxd = _db.TtDnTdCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+                if (modelct_cxd.Any())
+                {
+                    _db.TtDnTdCt.RemoveRange(modelct_cxd);
+                    _db.SaveChanges();
+                }
+
                 var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
                 var model_new = new VMCompany
                 {
@@ -220,6 +228,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
 
                 ViewData["Madv"] = Madv;
+                ViewData["DsDonVi"] = _db.DsDonVi;
                 ViewData["DmNganhKd"] = _db.DmNganhKd;
                 ViewData["DmNgheKd"] = _db.DmNgheKd;
                 ViewData["Title"] = "Thông tin doanh nghiệp chỉnh sửa";
@@ -323,13 +332,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DoanhNghiepCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Manghe, string Madiaban)
+        public JsonResult Store(string Madv, string Manghe, string Macqcq)
         {
             var model = new TtDnTdCt
             {
                 Madv = Madv,
                 Manghe = Manghe,
-                Macqcq = Madiaban,
+                Macqcq = Macqcq,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
@@ -371,7 +380,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                   Trangthai = cty.Trangthai,
 
                               });
-
+            var dsdonvi = _db.DsDonVi;
             int record = 1;
             string result = "<div class='card-body' id='frm_ct_data'>";
             result += "<table class='table table-striped table-bordered table-hover' id='datatable_4'>";
@@ -390,7 +399,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<tr>";
                 result += "<td style='text-align:center'>" + (record++) + "</td>";
                 result += "<td style='font-weight:bold'>" + item.Tennghe + "</td>";
-                result += "<td style='font-weight:bold'>" + item.Tennghe + "</td>";
+                if (!string.IsNullOrEmpty(item.Macqcq))
+                {
+                    result += "<td style='text-align:center'>" + dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "" + "</td>";
+                }
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Xóa' data-toggle='modal'";
                 result += " data-target='#Delete_Modal' onclick='GetDelete(`" + item.Id + "`, `" + item.Tennghe + "`)'>";

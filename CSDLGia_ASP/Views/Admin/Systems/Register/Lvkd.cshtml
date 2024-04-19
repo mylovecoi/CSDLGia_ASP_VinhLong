@@ -48,6 +48,7 @@
                                         @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
 
 
+
                                 </td>
                                 <td>
                                     <button type="button" data-target="#Edit_Lvkd_Modal" data-toggle="modal"
@@ -89,18 +90,10 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label style="font-weight:bold">Nghề</label>
                             <select class="form-control select2basic" id="manghe_create" name="manghe_create" style="width: 100%" onchange="AjaxGetDvNhanHs()">
-                                @* @foreach (var nganh in dmnganhkd)
-                                {
-                                <optgroup label="@nganh.Tennganh">
-                                @{
-                                var nghe = dmnghekd.Where(t => t.Manganh == nganh.Manganh);
-                                } *@
                                 @foreach (var item in dmnghekd)
                                 {
                                     <!option value="@item.Manghe">&emsp;@item.Phanloai - @item.Tennghe</!option>
                                 }
-                                @* </optgroup>
-                                } *@
                             </select>
                         </div>
                     </div>

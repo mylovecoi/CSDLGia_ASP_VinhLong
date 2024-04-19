@@ -231,6 +231,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                          Tendn = com.Tendn,
                                          Diachi = com.Diachi,
                                          Diadanh = com.Diadanh,
+                                         Giayphepkd = com.Giayphepkd,
                                          Tel = com.Tel,
                                          Fax = com.Fax,
                                          Email = com.Email,

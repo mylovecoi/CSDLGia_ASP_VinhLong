@@ -61,7 +61,15 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold">Giấy đăng ký kinh doanh</td>
-                        <td>@item.Giayphepkd</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Giayphepkd))
+                            {
+                                <a href="~/UpLoad/File/@item.Giayphepkd" target="_blank"
+                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                    Giấy đăng ký kinh doanh hiện tại
+                                </a>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">Địa danh</td>
