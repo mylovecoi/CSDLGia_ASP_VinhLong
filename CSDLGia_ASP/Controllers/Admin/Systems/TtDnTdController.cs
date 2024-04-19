@@ -43,24 +43,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
                 }
 
-                var com_join = (from com in _db.Company
-                                join db in _db.DsDiaBan on com.Madiaban equals db.MaDiaBan
-                                select new VMCompany
-                                {
-                                    Id = com.Id,
-                                    Madv = com.Madv,
-                                    Madiaban = com.Madiaban,
-                                    Tendiaban = db.TenDiaBan,
-                                    Tendn = com.Tendn,
-                                    Diachi = com.Diachi,
-                                    Tel = com.Tel,
-                                    Fax = com.Fax,
-                                    Email = com.Email,
-                                    Chucdanh = com.Chucdanh,
-                                    Nguoiky = com.Nguoiky,
-                                    Diadanh = com.Diadanh,
-                                    Trangthai = com.Trangthai,
-                                }).FirstOrDefault(t => t.Madv == Madv);
+                var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
 
                 var comct_join = (from comct in _db.CompanyLvCc
                                   join nghe in _db.DmNgheKd on comct.Manghe equals nghe.Manghe
@@ -76,25 +59,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       Trangthai = comct.Trangthai,
                                   }).Where(t => t.Madv == Madv && t.Trangthai == "XD").ToList();
 
-                var dn_join = (from dn in _db.TtDnTd
-                               join db in _db.DsDiaBan on dn.Madiaban equals db.MaDiaBan
-                               select new VMTtDnTd
-                               {
-                                   Id = dn.Id,
-                                   Madv = dn.Madv,
-                                   Madiaban = dn.Madiaban,
-                                   Tendiaban = db.TenDiaBan,
-                                   Tendn = dn.Tendn,
-                                   Diachi = dn.Diachi,
-                                   Tel = dn.Tel,
-                                   Fax = dn.Fax,
-                                   Email = dn.Email,
-                                   Chucdanh = dn.Chucdanh,
-                                   Nguoiky = dn.Nguoiky,
-                                   Diadanh = dn.Diadanh,
-                                   Trangthai = dn.Trangthai,
-                                   Lydo = dn.Lydo,
-                               }).FirstOrDefault(t => t.Madv == Madv);
+                var model_ttdntd = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
 
                 var dnct_join = (from dnct in _db.TtDnTdCt
                                  join nghe in _db.DmNgheKd on dnct.Manghe equals nghe.Manghe
@@ -136,13 +101,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["DsDonVi"] = _db.DsDonVi;
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                 ViewData["CompanyLvCc"] = comct_join;
-                ViewData["TtDnTd"] = dn_join;
+                ViewData["TtDnTd"] = model_ttdntd;
                 ViewData["TtDnTdCt"] = dnct_join;
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
                 ViewData["MenuLv1"] = "menu_bog";
                 ViewData["MenuLv2"] = "menu_ttdnbog";
-                return View("Views/Admin/Systems/TtDnTd/Index.cshtml", com_join);
+                return View("Views/Admin/Systems/TtDnTd/Index.cshtml", model);
             }
             else
             {

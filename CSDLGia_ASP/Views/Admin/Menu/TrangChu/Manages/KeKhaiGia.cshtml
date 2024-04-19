@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdn", "Index"))
+@* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.ttdn", "Index"))
 {
     <li class="menu-item" aria-haspopup="true" id="menu_ttdn">
         <a asp-controller="TtDnTd" asp-action="Index" class="menu-link">
@@ -23,7 +23,7 @@
             <span class="menu-text text-truncate">Xét duyệt thông tin thay đổi doanh nghiệp</span>
         </a>
     </li>
-}
+} *@
 
 <!--Dịch vụ lưu trú-->
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia.kkgdvlt", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Dvlt") == "1")

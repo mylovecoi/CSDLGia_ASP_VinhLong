@@ -5,10 +5,10 @@
     var dsdoanhnghiep = (IEnumerable<Company>)ViewData["DsDoanhNghiep"];
 
     var comct = (IEnumerable<VMCompanyLvCc>)ViewData["CompanyLvcc"];
-    var dn = (CSDLGia_ASP.ViewModels.Systems.VMTtDnTd)ViewData["TtDnTd"];
+    var dn = (CSDLGia_ASP.Models.Systems.TtDnTd)ViewData["TtDnTd"];
     var dnct = (IEnumerable<VMTtDnTdCt>)ViewData["TtDnTdCt"];
 }
-@model CSDLGia_ASP.ViewModels.Systems.VMCompany
+@model CSDLGia_ASP.Models.Systems.Company
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -134,10 +134,10 @@
                                 <td style="width:15%"><b>Họ và tên người ký</b></td>
                                 <td style="width:35%"><span class="text-muted">@Model.Nguoiky</span></td>
                             </tr>
-                            <tr>
+                            @* <tr>
                                 <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
                                 <td style="width:35%"><span class="text-muted">@Model.Tendiaban</span></td>
-                            </tr>
+                            </tr> *@
                             <tr>
                                 <td style="width:15%"><b>Địa danh</b></td>
                                 <td style="width:35%"><span class="text-muted">@Model.Diadanh</span></td>
@@ -162,7 +162,6 @@
                         }
                     }
                 </table>
-
             </div>
             @if (dn != null)
             {
@@ -206,10 +205,10 @@
                                     <td style="width:15%"><b>Họ và tên người ký</b></td>
                                     <td style="width:35%"><span class="text-muted">@dn.Nguoiky</span></td>
                                 </tr>
-                                <tr>
+                                @* <tr>
                                     <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
                                     <td style="width:35%"><span class="text-muted">@dn.Tendiaban</span></td>
-                                </tr>
+                                </tr> *@
                                 <tr>
                                     <td style="width:15%"><b>Địa danh</b></td>
                                     <td style="width:35%"><span class="text-muted">@dn.Diadanh</span></td>
