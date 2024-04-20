@@ -1,7 +1,7 @@
 ﻿@{
     var record_id = 1;
     var record_id_td = 1;
-
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var comct = (IEnumerable<VMCompanyLvCc>)ViewData["CompanyLvcc"];
     var dn = (CSDLGia_ASP.Models.Systems.TtDnTd)ViewData["TtDnTd"];
     var dnct = (IEnumerable<VMTtDnTdCt>)ViewData["TtDnTdCt"];
@@ -96,13 +96,20 @@
                     {
                         <tr style="text-align: center">
                             <th>STT</th>
-                            <th>Ngành nghề kinh doanh</th>
+                            <th>Nghề kinh doanh</th>
+                            <th>Đơn vị quản lý</th>
                         </tr>
                         @foreach (var item in comct)
                         {
                             <tr>
                                 <td class="text-center">@(record_id++)</td>
                                 <td>@item.Tennghe</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Macqcq))
+                                        @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
+                                </td>
                             </tr>
                         }
                     }
@@ -164,13 +171,20 @@
                         {
                             <tr style="text-align: center">
                                 <th>STT</th>
-                                <th>Ngành nghề kinh doanh</th>
+                                <th>Nghề kinh doanh</th>
+                                <th>Đơn vị quản lý</th>
                             </tr>
                             @foreach (var item in dnct)
                             {
                                 <tr>
                                     <td class="text-center">@(record_id_td++)</td>
                                     <td>@item.Tennghe</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Macqcq))
+                                            @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
+                                    </td>
                                 </tr>
                             }
                         }
