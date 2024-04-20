@@ -140,7 +140,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     _db.SaveChanges();
 
                     model.GiaSpDvKhungGiaCt = chitiet.Where(t => t.Mahs == model.Mahs).ToList();
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "T");
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                    if (!string.IsNullOrEmpty(diaBanApDung))
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                    }
+                    else
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    }
                     ViewData["Manhom"] = Manhom;
                     ViewData["Madv"] = MadvBc;
                     ViewData["Mahs"] = model.Mahs;
@@ -281,7 +290,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs);
                     model.ThongTinGiayTo = model_file.ToList();
 
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                    if (!string.IsNullOrEmpty(diaBanApDung))
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                    }
+                    else
+                    {
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                    }
                     ViewData["Madv"] = model.Madv;
                     ViewData["Title"] = "Bảng giá sản phẩm dịch vụ khung giá";
                     ViewData["MenuLv1"] = "menu_spdvkhunggia";
@@ -393,7 +411,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvtoida.thongtin", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Approve"))
                 {
                     var model = _db.GiaSpDvKhungGia.FirstOrDefault(t => t.Mahs == mahs_chuyen);
                     model.Updated_at = DateTime.Now;
@@ -424,7 +442,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvcuthe.thongtin", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Index"))
                 {
                     var model = _db.GiaSpDvKhungGia.FirstOrDefault(t => t.Mahs == Mahs);
 

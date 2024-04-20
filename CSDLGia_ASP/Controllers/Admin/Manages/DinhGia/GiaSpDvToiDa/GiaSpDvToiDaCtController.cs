@@ -52,7 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá(đồng)</label>";
-                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Dongia + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='gia_edit' name='gia_edit' value='" + model.Dongia + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
                 result += "</div>";
@@ -118,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             result += "</thead>";
 
             result += "<tbody>";
-            foreach (var item in model.OrderBy(x=>x.Sapxep))
+            foreach (var item in model.OrderBy(x => x.Sapxep))
             {
 
                 result += "<tr>";
@@ -126,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 result += "<td>" + item.HienThi + "</td>";
                 result += "<td style='text-align:center'>" + item.Tenspdv + "</td>";
                 result += "<td style='text-align:center'>" + item.Dvt + "</td>";
-                result += "<td style='text-align:center'>" + item.Dongia + "</td>";
+                result += "<td style='text-align:right'>" + Helper.Helpers.ConvertDbToStr(item.Dongia) + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";

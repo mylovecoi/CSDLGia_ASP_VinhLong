@@ -71,6 +71,8 @@
     }
 
     function SetStore() {
+        var Giatoithieu = $('#giatoithieu_create').val().replace(/\./g, "").replace(/,/g, ".");
+        var Giatoida = $('#giatoida_create').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/DinhGiaSpDvKhungGiaCt/Store',
             type: 'POST',
@@ -78,8 +80,8 @@
                 Mahs: $('#Mahs').val(), //mahs
                 Mota: $('#mota_create').val(),
                 Dvt: $('#dvt_create').val(),
-                Giatoithieu: $('#giatoithieu_create').val(),
-                Giatoida: $('#giatoida_create').val(),
+                Giatoithieu: Giatoithieu,
+                Giatoida: Giatoida,
                 Phanloaidv: $('#plspdv_create').val(),
             },
             dataType: 'JSON',
@@ -109,8 +111,8 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -119,6 +121,8 @@
     }
     // 
     function SetUpdate() {
+        var Giatoithieu = $('#giatoithieu_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var Giatoida = $('#giatoida_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaSpDvKhungGiaCt/Update',
             type: 'POST',
@@ -126,8 +130,8 @@
                 Tenspdv: $('#tenspdv_edit').val(),
                 SapXep: $('#sapxep_edit').val(),
                 HienThi: $('#hienthi_edit').val(),
-                Giatoithieu: $('#giatoithieu_edit').val(),
-                Giatoida: $('#giatoida_edit').val(),
+                Giatoithieu: Giatoithieu,
+                Giatoida: Giatoida,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

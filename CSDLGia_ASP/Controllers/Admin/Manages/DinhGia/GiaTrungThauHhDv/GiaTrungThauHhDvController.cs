@@ -163,7 +163,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                         };
                         _db.GiaMuaTaiSan.Add(giaMuaTaiSan);
                         //Add Log
-                        _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+                        _trangThaiHoSoService.LogHoSo(request.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
                     }
                     _db.SaveChanges();
 

@@ -14,11 +14,11 @@
 <p style="font-size: 16px;">
     Địa bàn áp dụng:
     @if (!string.IsNullOrEmpty(Model.Madiaban))
-        @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban)?.TenDiaBan ?? ""
+        @(dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban)?.TenDiaBan ?? "")
 </p>
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
         <tr>
             <th style="text-align:center">STT</th>
@@ -36,7 +36,7 @@
                 {
                     <tr>
                         <td style="text-align:center">@item.HienThi</td>
-                        <td style="text-align:center">@item.Tenspdv</td>
+                        <td>@item.Tenspdv</td>
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:center">@Helpers.ConvertDbToStr(item.Dongia)</td>
                     </tr>

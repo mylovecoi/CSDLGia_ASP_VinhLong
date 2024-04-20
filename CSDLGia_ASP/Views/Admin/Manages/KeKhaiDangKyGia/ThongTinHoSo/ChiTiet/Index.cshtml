@@ -1,0 +1,113 @@
+﻿@{
+    int record_id = 1;
+}
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="MaCsKd" />
+<input hidden asp-for="Id" />
+<input hidden asp-for="MaNghe" />
+<input hidden asp-for="TrangThai" />
+@model CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia
+
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<div class="row">
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Số quyết định:<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="SoQD" required />
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Ngày QĐ:<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="NgayQD" required />
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Số quyết định liền kề:<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="SoQdLk" required />
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Ngày QĐ liền kề:<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="NgayQdLk" required />
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="form-group">
+            <label>Đơn vị tính:<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="DonViTinh" />
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Ghi chú:</label>
+            <input type="text" class="form-control" asp-for="GhiChu" />
+        </div>
+    </div>
+</div>
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
+</div>
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+        </div>
+        <div>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Create"))
+            {
+                <button type="button" class="btn btn-primary font-weight-bolder" onclick="Create()">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
+
+        </div>
+    </div>
+    <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover class-nosort">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="2%">STT</th>
+                    <th>Tên dịch vụ cung ứng</th>
+                    <th>Quy cách chất lượng</th>
+                    <th>Thời điểm áp dụng</th>
+                    <th width="10%">Mức giá liền kề</th>
+                    <th width="10%">Mức giá kê khai</th>
+                    <th width="10%">Hình thức kinh doanh</th>
+
+                    <th width="10%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.KeKhaiDangKyGiaCt != null)
+                {
+                    @foreach (var item in Model.KeKhaiDangKyGiaCt.OrderBy(x => x.Id))
+                    {
+                        <tr>
+                            <td style="text-align:center">@(record_id++)</td>
+                            <td style="text-align:left">@item.TenDvCungUng</td>
+                            <td style="text-align:left">@item.QuyCachChatLuong</td>
+                            <td style="text-align:center">@item.ThoiGianThucHien</td>
+                            <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.MucGiaKeKhaiLk)</td>
+                            <td style="text-align: right; font-weight:bold">@Helpers.ConvertDbToStr(item.MucGiaKeKhai)</td>
+                            <td style="text-align: right; font-weight:bold">@item.HinhThucKinhDoanh</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" onclick="Edit('@item.Id')" title="Chỉnh sửa">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" onclick="Delete('@item.Id','@item.TenDvCungUng')" title="Xóa">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/ChiTiet/Modal.cshtml")

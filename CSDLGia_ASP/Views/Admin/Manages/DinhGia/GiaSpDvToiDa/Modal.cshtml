@@ -140,8 +140,8 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 'success') {
-                    toastr.success("Success!");
                     $('#edit_thongtin').replaceWith(data.message);
+                    MoneyDecimalMask();
                 } else {
                     toastr.error(data.message, "Lỗi!!!");
                 }
@@ -151,7 +151,7 @@
 
 
     function SetUpdate() {
-        var gia = $('#gia_edit').val().replace(',', '');
+        var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/DinhGiaSpDvToiDaCt/Update',
             type: 'POST',

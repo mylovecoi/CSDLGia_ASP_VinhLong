@@ -1,5 +1,7 @@
 ﻿@{
-    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"]; 
+    int STT = Int32.Parse(ViewData["STT"].ToString());
+
 }
 
 <!--Create Modal-->
@@ -20,26 +22,33 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên đối tượng</label>
+                            <label>Tên hàng hóa</label>
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label class="form-control-label">Đơn vị tính</label>
-                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
+                    <div class="form-group fv-plugins-icon-container" style="width:100%">
+                        <div class="col-xl-12">
+                            <label>Đơn vị tính</label>
+                        </div>
+                        <div class="col-xl-12">
+                            <select id="dvt_create" name="dvt_create" class="form-control select2basic" style="width:100%">
+                                @foreach (var item in dsdvt)
+                                {
+                                    <option value="@item.Dvt">@item.Dvt</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>STT báo cáo</label>
-                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" value="@ViewData["STT"]" />
+                            <label>STT Hiển Thị</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
-                            <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
+                            <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" step="1" value="@STT" />
                         </div>
                     </div>
                 </div>
