@@ -95,7 +95,6 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
             ViewData["Dmloaidat"] = _db.DmLoaiDat.ToList();
             ViewData["Title"] = "Xem chi tiết giá đất cụ thể";
-
             return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Show.cshtml", model_new);
         }
 
@@ -170,6 +169,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["Madv"] = model.Madv;
             ViewData["Title"] = "Thông tin hồ sơ bảng giá đất";
             return View("Views/Admin/Manages/DinhGia/GiaDatDiaBan/Show.cshtml", model);
+
         }
 
         [Route("CongBo/GiaGiaoDichDat")]
@@ -210,7 +210,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             var model = _db.GiaGiaoDichDat.FirstOrDefault(t => t.Mahs == Mahs);
             model.GiaGiaoDichDatCt = _db.GiaGiaoDichDatCt.Where(t => t.Mahs == model.Mahs).ToList();
             var donvi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
-            ViewData["Title"] = "Bảng giá giao dịch đất thực tế trên thị trường";
+            ViewData["Title"] = "Xem chi tiết giá giao dịch đất thực tế trên thị trường"; 
             ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
             ViewData["TenDonVi"] = donvi.TenDv;
             ViewData["DanhMucNhom"] = _db.GiaGiaoDichDatNhom;

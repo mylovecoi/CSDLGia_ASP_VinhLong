@@ -386,8 +386,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             }
         }
 
-
-
         [Route("GiaTrungThauDat/Show")]
         [HttpGet]
         public IActionResult Show(string Mahs)
