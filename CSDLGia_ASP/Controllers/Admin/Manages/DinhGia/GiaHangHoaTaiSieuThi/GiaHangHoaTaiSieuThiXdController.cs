@@ -54,11 +54,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                                          Soqd = dg.Soqd,
                                          Thongtin = dg.Thongtin,
                                          TenDonVi = donvi.TenDv,
-                                         Trangthai = dg.Trangthai
+                                         Trangthai = dg.Trangthai,
+                                         Mota = dg.Mota
                                      };
 
                     ViewData["Nam"] = Nam;
-                    ViewData["Title"] = "Thông tin hồ sơ giá hàngm hóa tại siêu thị";
+                    ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa tại siêu thị";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgsieuthi";
                     ViewData["MenuLv3"] = "menu_dgsieuthi_xd";

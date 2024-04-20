@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia;
 using System;
 using System.Collections.Generic;
 
@@ -34,6 +35,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Loaihang { get; set; }
         public string Chucvuky { get; set; }
         public string Nguoiky { get; set; }
+        public string Manghe { get; set; }
         public DateTime Ngaychuyen { get; set; }
         public DateTime Ngaynhan { get; set; }
         public List<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
@@ -57,5 +59,6 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public List<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
         public List<KkGiaLuHanhCt> KkGiaLuHanhCt { get; set; }
         public List<KkMhBogCt> KkMhBogCt { get; set; }
+        public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }
     }
 }

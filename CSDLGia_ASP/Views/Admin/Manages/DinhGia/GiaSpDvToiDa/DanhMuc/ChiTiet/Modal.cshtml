@@ -85,6 +85,12 @@
             </div>
             <form asp-controller="GiaSpDvToiDaDm" asp-action="Delete">
                 <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Tên sản phẩm, dịch vụ </label>
+                            <input type="text" id="tenspdv_delete" class="form-control" />
+                        </div>
+                    </div>
                     <input hidden id="id_delete" name="id_delete" />
                 </div>
                 <div class="modal-footer">
@@ -97,6 +103,11 @@
 </div>
 
 <script>
+    function getId(id, tenspdv) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("tenspdv_delete").value = tenspdv;
+    }
+
     function editId(id_edit) {
         $.ajax({
             url: '/GiaSpDvToiDaDmCt/Edit',

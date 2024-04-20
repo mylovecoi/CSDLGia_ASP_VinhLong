@@ -32,7 +32,11 @@
                 </span>
             </h3>
         </div>
-
+        <div class="card-toolbar">
+            <a class="btn btn-success font-weight-bolder" asp-controller="ThamDinhGiaDv" asp-action="Print">
+                <i class="la la-printf"></i>In dữ liệu
+            </a>
+        </div>
     </div>
 
     <hr />
@@ -68,11 +72,17 @@
                                     <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Ngưng theo dõi</span>
                                 }
                             </td>
+
                             <td>
                                 <a asp-controller="ThamDinhGiaDv" asp-action="LichSuDonvi_Xem" asp-route-IdDV="@item.Id" target="_blank" class="btn btn-sm btn-clean btn-icon" title="Lịch sử theo dõi">
                                     <i class="icon-lg la la-clipboard-check text-primary"></i>
                                 </a>
+                                <a asp-controller="ThamDinhGiaDv" asp-action="Show" asp-route-Maso="@item.Maso" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                   target="_blank">
+                                    <i class="icon-lg la la-eye text-success"></i>
+                                </a>
                             </td>
+
                         </tr>
                     }
                 }

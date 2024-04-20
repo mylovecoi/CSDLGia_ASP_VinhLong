@@ -233,6 +233,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
             }
         }
 
+
+        [Route("ThamDinhGia/Donvi/Show")]
+        [HttpGet]
+        public IActionResult Show(string Maso)
+        {
+            var model = _db.ThamDinhGiaDv.FirstOrDefault(p => p.Maso == Maso);
+            _db.SaveChanges();
+            return View("Views/Admin/Manages/ThamDinhGia/DonVi/Show.cshtml", model);
+        }
+
+
         [Route("ThamDinhGia/Donvi/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
@@ -329,26 +340,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
         [HttpGet]
         public IActionResult Print()
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.tdg.dv", "Index"))
-                {
-                    var model = _db.ThamDinhGiaDv;
-                    ViewData["Title"] = "Thông tin đơn vị thẩm định giá";
-                    ViewData["MenuLv1"] = "menu_tdg";
-                    ViewData["MenuLv2"] = "menu_dm_dv";
-                    return View("Views/Admin/Manages/ThamDinhGia/DonVi/Print.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
+
+            var model = _db.ThamDinhGiaDv;
+            ViewData["Title"] = "Thông tin đơn vị thẩm định giá";
+            ViewData["MenuLv1"] = "menu_tdg";
+            ViewData["MenuLv2"] = "menu_dm_dv";
+            return View("Views/Admin/Manages/ThamDinhGia/DonVi/Print.cshtml", model);
+
         }
 
         [Route("ThamDinhGia/LichSuDonvi")]

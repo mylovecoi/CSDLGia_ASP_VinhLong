@@ -12,6 +12,7 @@
         <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
         <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
         <script>
             $(document).ready(function () {
                 TableManaged.init();
@@ -45,7 +46,7 @@
                 </h3>
             </div>
             <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Create"))
             {
                     <a class="btn btn-primary font-weight-bolder" asp-controller="VbQlNn" asp-action="Create">
                         <i class="la la-plus"></i>Thêm mới
@@ -69,7 +70,7 @@
             <div class="col-xl-6">
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Loại văn bản</label>
-                    <select class="form-control" id="Loaivb" name="Loaivb">
+                    <select class="form-control select2basic" id="Loaivb" name="Loaivb">
                         <!option value="all" @((string)ViewData["Loaivb"] == "all" ? "selected" : "")>--Tất cả loại văn bản--</!option>
                         <!option value="luat" @((string)ViewData["Loaivb"] == "luat" ? "selected" : "")>Luật</!option>
                         <!option value="nghidinh" @((string)ViewData["Loaivb"] == "nghidinh" ? "selected" : "")>Nghị định</!option>
@@ -117,13 +118,13 @@
                                            onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                             <i class="icon-lg la la-cloud-download text-warning"></i>
                                         </a>
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Edit"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Edit"))
                                 {
                                                 <a asp-controller="VbQlNn" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                                     <i class="icon-lg la la-edit text-primary"></i>
                                                 </a>
                                 }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Delete"))
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Delete"))
                                 {
                                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                                     <i class="icon-lg la la-trash text-danger"></i>

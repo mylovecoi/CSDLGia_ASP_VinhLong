@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Index"))
                 {
                     if (string.IsNullOrEmpty(Phanloai))
                     {
@@ -68,7 +68,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Create"))
                 {
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Thêm mới văn bản quản lý nhà nước về giá";
@@ -95,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Create"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -211,7 +211,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Edit"))
                 {
                     var model = _db.VbQlNn.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -240,7 +240,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Edit"))
                 {
                     if (Ipf1upload != null && Ipf1upload.Length > 0)
                     {
@@ -352,7 +352,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.vbqlnn.ds", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Delete"))
                 {
                     var model = _db.VbQlNn.FirstOrDefault(t => t.Id == id_delete);
                     _db.VbQlNn.Remove(model);

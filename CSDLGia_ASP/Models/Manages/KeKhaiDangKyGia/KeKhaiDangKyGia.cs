@@ -19,7 +19,10 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia
         public string TenDv { get; set; }
         [NotMapped]
         public string TenCsKd { get; set; }
-
+        [NotMapped]
+        public string TenCqCq { get; set; }
+        [NotMapped]
+        public string TenNghe { get; set; }
 
         public string SoQD { get; set; }
         public DateTime NgayQD { get; set; }
@@ -37,6 +40,9 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia
         public string LyDo { get; set; }
         public string SoHsDuyet { get; set; }
         public DateTime NgayDuyet { get; set; }
+
+        public string Ytcauthanhgia { get; set; }
+        public string Thydggadgia { get; set; }
 
         [NotMapped]
         public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }

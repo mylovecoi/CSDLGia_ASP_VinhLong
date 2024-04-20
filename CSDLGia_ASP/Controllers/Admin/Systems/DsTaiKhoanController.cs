@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan")]
         [HttpGet]
-        public IActionResult Index(string MaDv)
+        public IActionResult Index(string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -31,29 +31,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var dsdiaban = _db.DsDiaBan.ToList();
                     var dsdonvi = _db.DsDonVi.ToList();
-                    //if (string.IsNullOrEmpty(MaDv))
-                    //{
-                    //    MaDv = dsdonvi.OrderBy(t => t.Id).Select(t => t.MaDv).First();
-                    //}
-                    var model = _db.Users.Where(t=>!t.Sadmin);
 
-
-                    /*var model_join = (from user in model
-                                      join nhom in _db.GroupPermissions on user.Chucnang equals nhom.KeyLink
-                                      select new VMUsers
-                                      {
-                                          Id = user.Id,
-                                          Madv = user.Madv,
-                                          Name = user.Name,
-                                          Username = user.Username,
-                                          Chucnang = user.Chucnang,
-                                          TenChucnang = nhom.ChucNang,
-                                          Status = user.Status
-                                      });*/
+                    var model = _db.Users.Where(t => !t.Sadmin);
+                    if (string.IsNullOrEmpty(Phanloai))
+                    {
+                        model = model.Where(t => t.Level != "DN");
+                    }
+                    else
+                    {
+                        model = model.Where(t => t.Level == "DN");
+                    }
 
                     ViewData["DsDonVi"] = dsdonvi;
                     ViewData["DsDiaBan"] = dsdiaban;
-                    ViewData["MaDv"] = MaDv;
+                    ViewData["Phanloai"] = Phanloai;
                     ViewData["GroupPer"] = _db.GroupPermissions;
                     ViewData["Title"] = "Danh sách tài khoản đơn vị";
                     ViewData["MenuLv1"] = "menu_hethong";
@@ -396,7 +387,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
                     ViewData["MenuLv3"] = "menu_dstaikhoan";
-                    return RedirectToAction("Index", "DsTaiKhoan", new {Madv = Madv});
+                    return RedirectToAction("Index", "DsTaiKhoan", new { Madv = Madv });
                 }
                 else
                 {

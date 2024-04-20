@@ -28,7 +28,7 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Danh sách thông tin hồ sơ giá rừng
+                    Danh sách thông tin cơ sở kinh doanh @ViewData["HoSo"]
                 </span>
             </h3>
         </div>
@@ -83,9 +83,9 @@
                             }
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Edit"))
                             {
-                                <a asp-controller="Giarung" asp-action="Modify" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <button class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" onclick="Edit('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
-                                </a>
+                                </button>
                             }
                         </td>
                     </tr>
@@ -148,6 +148,29 @@
     </div>
 </div>
 
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Chỉnh sửa thông tin cơ sở kinh doanh
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function Store() {
         if ($('#Madv_create').val() != "" && $('#tencskd_create').val() != "") {
@@ -160,6 +183,50 @@
                     TenCsKd: $('#tencskd_create').val(),
                     DiaChi: $('#diachi_create').val(),
                     SoDt: $('#sodt_create').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Thêm mới thành công!", "Thành công");
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        } else {
+            toastr.error("Thông tin không được bỏ trống", "Lỗi!");
+        }
+    }
+    function Edit(id) {
+        $.ajax({
+            url: '/KeKhaiDangKyGia/CoSoKinhDoanh/Edit',
+            type: 'POST',
+            data: {
+                Id: id
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                    $('#Edit_Modal').modal("show");                    
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        if ($('#tencskd_edit').val() != "") {
+            $.ajax({
+                url: '/KeKhaiDangKyGia/CoSoKinhDoanh/Update',
+                type: 'POST',
+                data: {
+                    TenCsKd: $('#tencskd_edit').val(),
+                    DiaChi: $('#diachi_edit').val(),
+                    SoDt: $('#sodt_edit').val(),
+                    Id: $('#id_edit').val(),
                 },
                 dataType: 'JSON',
                 success: function (data) {

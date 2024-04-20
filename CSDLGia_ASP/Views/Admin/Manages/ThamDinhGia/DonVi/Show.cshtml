@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "_LayoutReports";
+}
+
+@model CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN ĐƠN VỊ</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+
+    <thead>
+        <tr>
+            <th style="text-align:center" >Tên đơn vị*</th>
+            <th style="text-align:center">Địa chỉ trụ sở*</th>
+            <th style="text-align:center">Người đại diện*</th>
+            <th style="text-align:center">Chức danh đăng ký hành nghề</th>
+            <th style="text-align:center">Số thẻ</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align:center">@Model.Tendv</td>
+            <td style="text-align:center">@Model.Diachi</td>
+            <td style="text-align:center">@Model.Nguoidaidien</td>
+            <td style="text-align:center">@Model.Chucvu</td>
+            <td style="text-align:center">@Model.Maso</td>
+        </tr>
+    </tbody>
+
+</table>

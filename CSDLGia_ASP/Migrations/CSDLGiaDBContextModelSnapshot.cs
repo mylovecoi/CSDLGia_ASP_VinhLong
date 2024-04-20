@@ -11442,7 +11442,13 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("ThongTinNguoiChuyen")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Thydggadgia")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TrangThai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ytcauthanhgia")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

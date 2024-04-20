@@ -20,6 +20,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         public IActionResult Index( string Mahs)
         {
             var model = _db.TrangThaiHoSo.Where(t => t.MaHoSo == Mahs);
+            ViewData["Title"] = "Lịch sử hồ sơ";
             return View("Views/Admin/Systems/TrangThaiHoSo/Index.cshtml", model);
         }
     }
