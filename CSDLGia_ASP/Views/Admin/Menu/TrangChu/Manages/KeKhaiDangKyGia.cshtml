@@ -38,23 +38,23 @@
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_kekhaidangkygia_thongtindonvi">
                         <a href="javascript:;" class="menu-link menu-toggle">
-                        <i class="menu-bullet menu-bullet-line">
-                            <span></span>
-                        </i>
-                        <span class="menu-text" title="">Thông tin đơn vị</span>
-                    </a>                   
-                </li>
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text" title="">Thông tin đơn vị</span>
+                        </a>
+                    </li>
                 }
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_kekhaidangkygia_xetduyetthongtindonvi">
                         <a href="javascript:;" class="menu-link menu-toggle">
-                        <i class="menu-bullet menu-bullet-line">
-                            <span></span>
-                        </i>
-                        <span class="menu-text" title="">Xét duyệt chỉnh sửa thông tin đơn vị</span>
-                    </a>
-                </li>
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text" title="">Xét duyệt chỉnh sửa thông tin đơn vị</span>
+                        </a>
+                    </li>
                 }
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyet", "Index"))
                 {
@@ -63,21 +63,21 @@
                             <i class="menu-bullet menu-bullet-line">
                                 <span></span>
                             </i>
-                            <span class="menu-text">Thông tin xét duyệt</span>
+                            <span class="menu-text">Thông tin hồ sơ xét duyệt</span>
                         </a>
                     </li>
                 }
-            @*     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.timkiem", "Index"))
-                {
-                    <li class="menu-item" aria-haspopup="true" id="menu_kekhaidangkygia_timkiem">
-                        <a asp-controller="GiaHhDvCn" asp-action="Search" class="menu-link">
-                            <i class="menu-bullet menu-bullet-line">
-                                <span></span>
-                            </i>
-                            <span class="menu-text">Tìm kiếm hồ sơ</span>
-                        </a>
-                    </li>
-                } *@
+                @*     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.timkiem", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_kekhaidangkygia_timkiem">
+            <a asp-controller="GiaHhDvCn" asp-action="Search" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Tìm kiếm hồ sơ</span>
+            </a>
+            </li>
+            } *@
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
                     <li class="menu-item" aria-haspopup="true" id="menu_kekhaidangkygia_baocao">

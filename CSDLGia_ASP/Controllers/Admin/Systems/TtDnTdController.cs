@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,11 +18,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
 
-        public TtDnTdController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public TtDnTdController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("DoanhNghiep/DanhSach")]
@@ -30,17 +33,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                if(Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(Madv))
-                    {
-                        Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
-                    }
+                    Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
                 }
 
                 var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
@@ -73,31 +72,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                      Manganh = dnct.Manganh,
                                      Macqcq = dnct.Macqcq,
                                      Trangthai = dnct.Trangthai,
-                                 }).Where(t => t.Madv == Madv).ToList();
+                                 }).Where(t => t.Madv == Madv).ToList(); 
 
-                if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
-                {
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    {
-                        ViewData["DsDoanhNghiep"] = _db.Company;
-                    }
-                    else
-                    {
-                        ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
-                    }
-                }
-                else
-                {
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    {
-                        ViewData["DsDoanhNghiep"] = _db.Company;
-                    }
-                    else
-                    {
-                        ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Macqcq == Madv);
-                    }
-                }
+                var test = (from lvcc in _db.CompanyLvCc.Where(t=>t.Macqcq == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
+                            join com in _db.Company on lvcc.Madv equals com.Madv
+                            select new VMCompany
+                            {
+                                Id = com.Id,
+                                Madv = com.Madv,
+                                Tendn = com.Tendn,
+                            }).ToList();
 
+                ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
                 ViewData["DsDonVi"] = _db.DsDonVi;
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                 ViewData["CompanyLvCc"] = comct_join;
@@ -105,8 +91,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["TtDnTdCt"] = dnct_join;
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
-                ViewData["MenuLv1"] = "menu_bog";
-                ViewData["MenuLv2"] = "menu_ttdnbog";
+                ViewData["MenuLv1"] = "menu_kekhaidangkygia";
+                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
                 return View("Views/Admin/Systems/TtDnTd/Index.cshtml", model);
             }
             else
@@ -151,15 +137,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     Created_at = model.Created_at,
                 };
 
-              
 
-                
+
+
                 /* 31/03/2024 
                 Kiểm tra trong TtDnTdCt
                 -1. Đã có bỏ qua ko thêm vào bảng TtDnTdCt
                 -2. Chưa có thì thêm từ CompanyLvCc vào TtDnTdCt
                 */
-                var ttThayDoi = _db.TtDnTdCt.Where(t=>t.Madv == model_new.Madv);
+                var ttThayDoi = _db.TtDnTdCt.Where(t => t.Madv == model_new.Madv);
                 if (!ttThayDoi.Any())
                 {
                     foreach (var item in _db.CompanyLvCc.Where(t => t.Madv == model_new.Madv))
@@ -173,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             Trangthai = item.Trangthai,
                             Created_at = DateTime.Now,
                         };
-                        _db.TtDnTdCt.Add(model_ttdntd_ct);                        
+                        _db.TtDnTdCt.Add(model_ttdntd_ct);
                     }
                     _db.SaveChanges();
                 }
@@ -197,8 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["DmNganhKd"] = _db.DmNganhKd;
                 ViewData["DmNgheKd"] = _db.DmNgheKd;
                 ViewData["Title"] = "Thông tin doanh nghiệp chỉnh sửa";
-                ViewData["MenuLv1"] = "menu_kknygia";
-                ViewData["MenuLv2"] = "menu_ttdn";
+                ViewData["MenuLv1"] = "menu_kekhaidangkygia";
+                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
                 return View("Views/Admin/Systems/TtDnTd/Edit.cshtml", model_new);
             }
             else

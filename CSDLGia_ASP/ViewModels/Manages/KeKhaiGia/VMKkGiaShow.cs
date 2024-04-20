@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Models.Manages.KeKhaiDkg;
 using CSDLGia_ASP.Models.Manages.KeKhaiGia;
+using CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia;
 using System;
 using System.Collections.Generic;
 
@@ -57,5 +58,6 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public List<KkGiaVlXdCt> KkGiaVlXdCt { get; set; }
         public List<KkGiaLuHanhCt> KkGiaLuHanhCt { get; set; }
         public List<KkMhBogCt> KkMhBogCt { get; set; }
+        public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }
     }
 }

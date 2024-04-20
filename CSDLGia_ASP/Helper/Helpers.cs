@@ -372,8 +372,10 @@ namespace CSDLGia_ASP.Helper
 
             //đăng ký kê khai giá
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia", Name = "Kê khai đăng ký giá" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.thongtin", Name = "Kê khai đăng ký giá - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.xetduyet", Name = "Kê khai đăng ký giá - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.thongtindonvi", Name = "Kê khai đăng ký giá - Thông tin đơn vị" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", Name = "Kê khai đăng ký giá - Xét duyệt thông tin đơn vị" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.thongtin", Name = "Kê khai đăng ký giá - Thông tin hồ sơ" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.xetduyet", Name = "Kê khai đăng ký giá - Xét duyệt hồ sơ" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.timkiem", Name = "Kê khai đăng ký giá - Tìm kiếm" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.kekhaidangkygia.baocao", Name = "Kê khai đăng ký giá - Báo cáo" });
 

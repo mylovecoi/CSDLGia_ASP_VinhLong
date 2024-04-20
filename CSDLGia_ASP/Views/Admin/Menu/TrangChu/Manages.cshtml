@@ -7,8 +7,9 @@
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
 {
     <li class="menu-section">
-        <h4 class="menu-text">CSDL VỀ MỨC GIÁ HH-DV/h4>
-        <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+        <h4 class="menu-text">
+            CSDL VỀ MỨC GIÁ HH-DV</h4>
+            <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
 
     <!--Giá HH - DV do UBND tỉnh định giá-->
@@ -92,17 +93,16 @@
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
 
-                    @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_ttdnbog">
-                            <a asp-controller="TtDnTd" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text" title="Thông tin doanh nghiệp">Thông tin doanh nghiệp</span>
-                            </a>
-                        </li>
-                    }
+
+                    <li class="menu-item" aria-haspopup="true" id="menu_ttdnbog">
+                        <a asp-controller="TtDnTd" asp-action="Index" class="menu-link">
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text" title="Thông tin doanh nghiệp">Thông tin doanh nghiệp</span>
+                        </a>
+                    </li>
+
 
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.bog.ttdntdxd", "Index"))
                     {
@@ -568,13 +568,13 @@
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.dmdv", "Index"))
                     {
                         @* <li class="menu-item" aria-haspopup="true" id="menu_hhdvk_dmdv">
-                            <a asp-controller="GiaHhDvkDmDv" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Danh mục hàng hóa dịch vụ(đơn vị)</span>
-                            </a>
-                        </li> *@
+            <a asp-controller="GiaHhDvkDmDv" asp-action="Index" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Danh mục hàng hóa dịch vụ(đơn vị)</span>
+            </a>
+            </li> *@
                     }
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Index"))
                     {
@@ -862,8 +862,8 @@
                                     <span class="menu-text" title="Các báo cáo, văn bản có liên quan khác">Các báo cáo, văn bản có liên quan khác</span>
                                 </a>
                             </li>
-                           
-                          
+
+
                         }
 
                     </ul>

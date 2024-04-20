@@ -17,31 +17,40 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Mã nghề<span class="require">*</span></label>
+                            <label>Mã nghề*</label>
                             <input type="text" name="manghe_create" id="manghe_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên nghề<span class="require">*</span></label>
+                            <label>Tên nghề*</label>
                             <input type="text" name="tennghe_create" id="tennghe_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Phân loại<span class="require">*</span></label>
+                            <label>Phân loại</label>
                             <select id="phanloai_create" name="phanloai_create" class="form-control">
                                 <option value="Kê khai giá">Kê khai giá</option>
                                 <option value="Đăng ký giá">Đăng ký giá</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Theo dõi<span class="require">*</span></label>
+                            <label>Theo dõi</label>
                             <select id="theodoi_create" name="theodoi_create" class="form-control">
                                 <option value="TD">Theo dõi</option>
                                 <option value="DTD">Dừng theo dõi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Báo cáo</label>
+                            <select id="baocao_create" name="baocao_create" class="form-control">
+                                <option value="Báo cáo 1">Báo cáo 1</option>
+                                <option value="Báo cáo 2">Báo cáo 2</option>
                             </select>
                         </div>
                     </div>
@@ -136,6 +145,7 @@
                         Manghe: $('#manghe_create').val(),
                         Tennghe: $('#tennghe_create').val(),
                         Phanloai: $('#phanloai_create').val(),
+                        Baocao: $('#baocao_create').val(),
                         Theodoi: $('#theodoi_create').val(),
                     },
                     dataType: 'JSON',
@@ -175,6 +185,7 @@
                         Manghe: $('#manghe_edit').val(),
                         Tennghe: $('#tennghe_edit').val(),
                         Phanloai: $('#phanloai_edit').val(),
+                        Baocao: $('#baocao_edit').val(),
                         Theodoi: $('#theodoi_edit').val(),
                         Id: $('#id_edit').val(),
                     },

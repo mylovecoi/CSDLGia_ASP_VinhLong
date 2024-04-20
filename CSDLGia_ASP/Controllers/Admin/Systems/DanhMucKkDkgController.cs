@@ -49,7 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DanhMucKkDkg/Store")]
         [HttpPost]
-        public JsonResult Store(string Manghe, string[] Madv, string Tennghe, string Phanloai, string Theodoi, string Report)
+        public JsonResult Store(string Manghe, string[] Madv, string Tennghe, string Phanloai, string Theodoi, string Baocao)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -65,6 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             Madv = str_mdv,
                             Tennghe = Tennghe,
                             Phanloai = Phanloai,
+                            Report = Baocao,
                             Theodoi = Theodoi,
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now,
@@ -125,7 +126,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-12'>";
+                        result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Phân loại</label>";
                         result += "<select class='form-control' id='phanloai_edit' name='phanloai_edit'>";
@@ -143,7 +144,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-12'>";
+                        result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Theo dõi</label>";
                         result += "<select class='form-control' id='theodoi_edit' name='theodoi_edit'>";
@@ -156,6 +157,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         {
                             result += "<option value='TD'>Theo dõi</option>";
                             result += "<option value='DTD' selected>Dừng theo dõi</option>";
+                        }
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+                        
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Báo cáo</label>";
+                        result += "<select class='form-control' id='baocao_edit' name='baocao_edit'>";
+                        if (model.Report == "Báo cáo 1")
+                        {
+                            result += "<option value='Báo cáo 1' selected>Báo cáo 1</option>";
+                            result += "<option value='Báo cáo 2'>Báo cáo 2</option>";
+                        }
+                        else
+                        {
+                            result += "<option value='Báo cáo 1'>Báo cáo 1</option>";
+                            result += "<option value='Báo cáo 2' selected>Báo cáo 2</option>";
                         }
                         result += "</select>";
                         result += "</div>";
@@ -201,7 +220,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DanhMucKkDkg/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Manghe, string[] Madv, string Tennghe, string Phanloai, string Theodoi, string Report)
+        public IActionResult Update(int Id, string Manghe, string[] Madv, string Tennghe, string Phanloai, string Theodoi, string Baocao)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -220,6 +239,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                 model.Madv = str_madv;
                                 model.Tennghe = Tennghe;
                                 model.Phanloai = Phanloai;
+                                model.Report = Baocao;
                                 model.Theodoi = Theodoi;
                                 model.Updated_at = DateTime.Now;
 
