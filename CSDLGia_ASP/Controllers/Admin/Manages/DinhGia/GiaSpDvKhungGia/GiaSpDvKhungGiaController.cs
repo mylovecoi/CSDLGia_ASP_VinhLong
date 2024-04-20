@@ -251,7 +251,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.spdvcuthe.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.thongtin", "Delete"))
                 {
                     var model = _db.GiaSpDvKhungGia.FirstOrDefault(t => t.Id == id_delete);
                     _db.GiaSpDvKhungGia.Remove(model);
@@ -558,8 +558,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                      Madiaban = giaspdvkhunggia.Madiaban,
                                      Trangthai = giaspdvkhunggia.Trangthai
                                  });
-                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => list_trangthai.Contains(t.Trangthai));
+                    //List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    //model = model.Where(t => list_trangthai.Contains(t.Trangthai));
                     if (madv != "all")
                     {
                         model = model.Where(t => t.Madv == madv);

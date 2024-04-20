@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
 {
-    public class GiaHhDvCnNhomController : Controller
+    public class GiaSpDvToiDaNhomController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaHhDvCnNhomController(CSDLGiaDBContext db)
+        public GiaSpDvToiDaNhomController(CSDLGiaDBContext db)
         {
             _db = db;
         }

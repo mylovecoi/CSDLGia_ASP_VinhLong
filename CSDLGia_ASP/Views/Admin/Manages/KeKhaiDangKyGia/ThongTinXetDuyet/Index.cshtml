@@ -46,8 +46,6 @@
 
     </script>
 }
-<input hidden id="MaCsKd" name="MaCsKd" value="@ViewData["MaCsKd"]" />
-<input hidden id="MaNghe" name="MaNghe" value="@ViewData["MaNghe"]" />
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -213,7 +211,11 @@
                                         </button>
                                     }
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
 
+                                </a>
 
                             </td>
                         </tr>

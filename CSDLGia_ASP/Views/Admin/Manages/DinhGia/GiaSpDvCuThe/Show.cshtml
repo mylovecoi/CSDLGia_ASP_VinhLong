@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
-    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];   
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
 }
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe
 
@@ -16,9 +16,11 @@
             break;
     }
 }
-<p style="font-size: 16px;"> Địa bàn áp dụng: 
+<p style="font-size: 16px;">
+    Địa bàn áp dụng:
     @if (!string.IsNullOrEmpty(Model.Madiaban))
         @dsdiaban.FirstOrDefault(x => x.MaDiaBan == Model.Madiaban).TenDiaBan
+
 </p>
 <p style="font-size: 16px;">Thời điểm áp dụng @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
 <p style="font-size: 16px;">Số quyết định: @Model.Soqd</p>
@@ -29,10 +31,10 @@
 
 @if (Model.PhanLoaiHoSo == "XE")
 {
-    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>                
+                <th>STT</th>
                 <th>Tên sản phẩm dịch vụ</th>
                 <th>Đơn vị tính</th>
                 <th>Điểm giữ xe thông<br />thường và danh lam<br />thắng cảnh</th>
@@ -61,10 +63,10 @@
 }
 else
 {
-    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
         <thead>
             <tr style="text-align:center">
-                <th>STT</th>                
+                <th>STT</th>
                 <th>Tên sản phẩm dịch vụ</th>
                 <th>Đơn vị tính</th>
                 <th>Thành phố</th>

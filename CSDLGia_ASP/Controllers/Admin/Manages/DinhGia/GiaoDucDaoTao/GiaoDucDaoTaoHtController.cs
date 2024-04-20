@@ -48,7 +48,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                                          Soqd = dg.Soqd,
                                          Thongtin = dg.Thongtin,
                                          TenDv = donvi.TenDv,
-                                         Trangthai = dg.Trangthai
+                                         Trangthai = dg.Trangthai,
+                                         Mota = dg.Mota,
                                      };
 
                     ViewData["Nam"] = Nam;

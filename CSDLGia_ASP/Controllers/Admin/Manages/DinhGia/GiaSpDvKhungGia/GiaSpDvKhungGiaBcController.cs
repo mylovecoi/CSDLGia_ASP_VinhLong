@@ -15,16 +15,23 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
 {
     public class GiaSpDvKhungGiaBcController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaSpDvKhungGiaBcController(CSDLGiaDBContext db)
+        public GiaSpDvKhungGiaBcController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaSpDvKhungGiaBc/BaoCao")]
@@ -68,10 +75,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvkhunggia.baocao", "Index"))
-                {
+                {  
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     var model = (from hoso in _db.GiaSpDvKhungGia.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay && list_trangthai.Contains(t.Trangthai))
-                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 join donvi in _db.DsDonVi.Where(x=>list_madv.Contains(x.MaDv)) on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
                                  {
                                      TenDonVi = donvi.TenDv,
@@ -117,9 +127,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
 
+                    var model_donvi_bc = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv_bc = model_donvi_bc.Select(t => t.MaDv).ToList();
+
                     var model = (from giaspdvkhunggiact in _db.GiaSpDvKhungGiaCt
                                  join giaspdvkhunggia in _db.GiaSpDvKhungGia on giaspdvkhunggiact.Mahs equals giaspdvkhunggia.Mahs
-                                 join donvi in _db.DsDonVi on giaspdvkhunggia.Madv equals donvi.MaDv
+                                 join donvi in _db.DsDonVi.Where(x => list_madv_bc.Contains(x.MaDv)) on giaspdvkhunggia.Madv equals donvi.MaDv
                                  select new GiaSpDvKhungGiaCt
                                  {
                                      Id = giaspdvkhunggiact.Id,
@@ -137,7 +150,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                                      Madiaban = giaspdvkhunggia.Madiaban,
                                      Trangthai = giaspdvkhunggia.Trangthai
                                  });
-                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+                    List<string> list_trangthai = new List<string> { "HT", "DD", "CB", "HCB" };
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
 
                     if (MaNhom != "all") { model = model.Where(t => t.Manhom == MaNhom); }

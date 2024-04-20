@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
             ViewData["DsNghe"] = model_nghe;
             ViewData["Nam"] = Nam;
             ViewData["MaNghe"] = MaNghe;
-            ViewData["Title"] = "Công bố kê khai giá";
+            ViewData["Title"] = "Công bố kê khai - đăng ký giá";
             ViewData["MenuLv1"] = "menu_cb";
             ViewData["MenuLv2"] = "menu_kknygiacb";
             ViewBag.bSession = false;

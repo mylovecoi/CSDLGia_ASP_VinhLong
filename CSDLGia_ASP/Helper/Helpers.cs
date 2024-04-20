@@ -661,7 +661,7 @@ namespace CSDLGia_ASP.Helper
 
         public static string ConvertDateTimeToStr(DateTime datetime)
         {
-            string str = datetime.ToString("dd/MM/yyyy HH:mm:ss,fff tt");
+            string str = datetime.ToString("dd/MM/yyyy HH:mm:ss");
             return str;
         }
 

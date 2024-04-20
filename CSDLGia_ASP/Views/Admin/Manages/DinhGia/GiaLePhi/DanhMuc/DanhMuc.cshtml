@@ -35,7 +35,7 @@
             <a asp-controller="GiaLePhiNhom" asp-action="Index" class="btn btn-danger font-weight-bolder">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.lephi.danhmuc", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
             {
                 @if (ViewData["Manhom"].ToString() != "")
                 {
