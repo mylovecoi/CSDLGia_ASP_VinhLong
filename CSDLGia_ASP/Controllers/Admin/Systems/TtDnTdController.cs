@@ -33,29 +33,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
             {
-                //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
-                //{
-                //    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-
-                //}
-                //else
-                //{
-                //    if (string.IsNullOrEmpty(Madv))
-                //    {
-                //        Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
-                //    }
-                //}
                 if(Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                 {
                     Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
                 }
                 else
                 {
-                    //var model_donvicq = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
-                    //List<string> list_madvcq = model_donvicq.Select(t => t.MaDv).ToList();
                     Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
                 }
-                
 
                 var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
 
