@@ -116,8 +116,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                 }
 
                 var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan
-                {
-                    
+                {                    
                     NoiDungQDTT = request.NoiDungQDTT,
                     Noidung=request.Noidung,
                     Mahs = request.Mahs,
