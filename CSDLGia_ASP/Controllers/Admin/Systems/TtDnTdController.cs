@@ -31,69 +31,79 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index(string Madv)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")) || Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if(Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtindonvi", "Index"))
                 {
-                    Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
+                    {
+                        Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    }
+                    else
+                    {
+                        Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
+                    }
+
+                    var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
+
+                    var comct_join = (from comct in _db.CompanyLvCc
+                                      join nghe in _db.DmNgheKd on comct.Manghe equals nghe.Manghe
+                                      select new VMCompanyLvCc
+                                      {
+                                          Id = comct.Id,
+                                          Mahs = comct.Mahs,
+                                          Madv = comct.Madv,
+                                          Manghe = comct.Manghe,
+                                          Tennghe = nghe.Tennghe,
+                                          Manganh = comct.Manganh,
+                                          Macqcq = comct.Macqcq,
+                                          Trangthai = comct.Trangthai,
+                                      }).Where(t => t.Madv == Madv && t.Trangthai == "XD").ToList();
+
+                    var model_ttdntd = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
+
+                    var dnct_join = (from dnct in _db.TtDnTdCt
+                                     join nghe in _db.DmNgheKd on dnct.Manghe equals nghe.Manghe
+                                     select new VMTtDnTdCt
+                                     {
+                                         Id = dnct.Id,
+                                         Mahs = dnct.Mahs,
+                                         Madv = dnct.Madv,
+                                         Manghe = dnct.Manghe,
+                                         Tennghe = nghe.Tennghe,
+                                         Manganh = dnct.Manganh,
+                                         Macqcq = dnct.Macqcq,
+                                         Trangthai = dnct.Trangthai,
+                                     }).Where(t => t.Madv == Madv).ToList();
+
+                    var test = (from lvcc in _db.CompanyLvCc.Where(t => t.Macqcq == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
+                                join com in _db.Company on lvcc.Madv equals com.Madv
+                                select new VMCompany
+                                {
+                                    Id = com.Id,
+                                    Madv = com.Madv,
+                                    Tendn = com.Tendn,
+                                }).ToList();
+
+                    ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
+                    ViewData["DsDonVi"] = _db.DsDonVi;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    ViewData["CompanyLvCc"] = comct_join;
+                    ViewData["TtDnTd"] = model_ttdntd;
+                    ViewData["TtDnTdCt"] = dnct_join;
+                    ViewData["Madv"] = Madv;
+                    ViewData["Title"] = "Thông tin doanh nghiệp";
+                    ViewData["MenuLv1"] = "menu_kekhaidangkygia";
+                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
+                    return View("Views/Admin/Systems/TtDnTd/Index.cshtml", model);
                 }
                 else
                 {
-                    Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
                 }
 
-                var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
-
-                var comct_join = (from comct in _db.CompanyLvCc
-                                  join nghe in _db.DmNgheKd on comct.Manghe equals nghe.Manghe
-                                  select new VMCompanyLvCc
-                                  {
-                                      Id = comct.Id,
-                                      Mahs = comct.Mahs,
-                                      Madv = comct.Madv,
-                                      Manghe = comct.Manghe,
-                                      Tennghe = nghe.Tennghe,
-                                      Manganh = comct.Manganh,
-                                      Macqcq = comct.Macqcq,
-                                      Trangthai = comct.Trangthai,
-                                  }).Where(t => t.Madv == Madv && t.Trangthai == "XD").ToList();
-
-                var model_ttdntd = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
-
-                var dnct_join = (from dnct in _db.TtDnTdCt
-                                 join nghe in _db.DmNgheKd on dnct.Manghe equals nghe.Manghe
-                                 select new VMTtDnTdCt
-                                 {
-                                     Id = dnct.Id,
-                                     Mahs = dnct.Mahs,
-                                     Madv = dnct.Madv,
-                                     Manghe = dnct.Manghe,
-                                     Tennghe = nghe.Tennghe,
-                                     Manganh = dnct.Manganh,
-                                     Macqcq = dnct.Macqcq,
-                                     Trangthai = dnct.Trangthai,
-                                 }).Where(t => t.Madv == Madv).ToList(); 
-
-                var test = (from lvcc in _db.CompanyLvCc.Where(t=>t.Macqcq == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
-                            join com in _db.Company on lvcc.Madv equals com.Madv
-                            select new VMCompany
-                            {
-                                Id = com.Id,
-                                Madv = com.Madv,
-                                Tendn = com.Tendn,
-                            }).ToList();
-
-                ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
-                ViewData["DsDonVi"] = _db.DsDonVi;
-                ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
-                ViewData["CompanyLvCc"] = comct_join;
-                ViewData["TtDnTd"] = model_ttdntd;
-                ViewData["TtDnTdCt"] = dnct_join;
-                ViewData["Madv"] = Madv;
-                ViewData["Title"] = "Thông tin doanh nghiệp";
-                ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
-                return View("Views/Admin/Systems/TtDnTd/Index.cshtml", model);
             }
             else
             {

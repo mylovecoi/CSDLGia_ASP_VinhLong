@@ -106,7 +106,7 @@
         <tr>
             <th style="text-align: center">Tên chương trình hoặc dịch vụ</th>
             <th style="text-align: center">Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
-            @* <th style="text-align: center">Thời gian thực hiện<br />mức giá(Từ ngày)</th> *@
+            <th style="text-align: center">Thời gian thực hiện<br />mức giá(Từ ngày)</th>
             <th style="text-align: center">Mức giá<br />kê khai(đồng)</th>
             <th style="text-align: center">Hình thức kinh doanh</th>
         </tr>
@@ -118,8 +118,8 @@
                 {
                 <tr>
                     <td>@item.TenDvCungUng</td>
+                    <td style="text-align:center">@item.QuyCachChatLuong</td>
                     <td style="text-align:center">@item.ThoiGianThucHien</td>
-                    @* <td style="text-align:center">@Helpers.ConvertDateToStr(item.ThoiGianThucHien)</td> *@
                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.MucGiaKeKhai)</td>
                     <td>@item.HinhThucKinhDoanh</td>
                 </tr>
