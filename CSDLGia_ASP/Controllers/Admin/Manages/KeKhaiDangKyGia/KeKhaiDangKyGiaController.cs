@@ -13,12 +13,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
     public class KeKhaiDangKyGiaController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public KeKhaiDangKyGiaController(CSDLGiaDBContext db, ITrangThaiHoSoService trangThaiHoSoService)
+        public KeKhaiDangKyGiaController(CSDLGiaDBContext db)
         {
             _db = db;
-            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [HttpGet("KeKhaiDangKyGia")]
@@ -130,8 +128,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     }
                     _db.KeKhaiDangKyGia.Add(request);
                     _db.SaveChanges();
-                    //Add Log
-                    _trangThaiHoSoService.LogHoSo(request.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
@@ -191,8 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     }
                     _db.KeKhaiDangKyGia.Update(request);
                     _db.SaveChanges();
-                    //Add Log
-                    _trangThaiHoSoService.LogHoSo(request.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
                 else
@@ -250,7 +245,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     var model = _db.KeKhaiDangKyGia.FirstOrDefault(t => t.Mahs == mahs_chuyen);
                     var model_dv = _db.KeKhaiDangKyGiaCSKD.FirstOrDefault(t => t.MaCsKd == model.MaCsKd);
                     var model_cqcq = _db.CompanyLvCc.FirstOrDefault(t => t.Manghe == model.MaNghe && t.Madv == model_dv.MaDv);
-                    var donvi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model_cqcq.Macqcq);
+
                     model.TrangThai = "CD";
                     model.ThongTinNguoiChuyen = thongtinnguoichuyen_chuyen;
                     model.SoDtNguoiChuyen = sodienthoaichuyen_chuyen;
@@ -258,8 +253,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     model.MaCqCq = model_cqcq.Macqcq;
                     _db.KeKhaiDangKyGia.Update(model);
                     _db.SaveChanges();
-                    //Add Log
-                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Chuyển hồ sơ " + (donvi?.TenDv ?? ""));
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = model.MaCsKd, MaNghe = model.MaNghe });
                 }
                 else
@@ -276,16 +270,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
         [Route("KeKhaiDangKyGia/Show")]
         [HttpGet]
-        public IActionResult Show(string Mahs, string MaNghe)
+        public IActionResult Show(string Mahs)
         {
-           
+            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            //{
                 var model = GetThongTinKk(Mahs);
-                var check = _db.DmNgheKd.FirstOrDefault(x => x.Manghe == MaNghe)?.Report ?? "QD01";
+                var show = _db.DmNgheKd.FirstOrDefault(x => x.Manghe == model.Manghe)?.Report ?? "QD223";
                 ViewData["Title"] = "Xem chi tiết hồ sơ kê khai đăng ký giá";
                 ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + MaNghe;
-                return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/XemChiTiet/" + check + ".cshtml", model);
-          
+                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + model.Manghe;
+                return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/XemChiTiet/" + show + ".cshtml", model);
+            //}
+            //else
+            //{
+            //    return View("Views/Admin/Error/SessionOut.cshtml");
+            //}
         }
 
         private VMKkGiaShow GetThongTinKk(string Mahs)
@@ -303,8 +302,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                 Sohsnhan = model.SoHsDuyet,
                 Ngaychuyen = model.NgayChuyen,
                 Ngaynhan = model.NgayDuyet,
-                //Ytcauthanhgia = model.Ytcauthanhgia,
-                //Thydggadgia = model.Thydggadgia
+                Ytcauthanhgia = model.Ytcauthanhgia,
+                Thydggadgia = model.Thydggadgia,
+                Manghe = model.MaNghe,
             };
             var cskd = _db.KeKhaiDangKyGiaCSKD.FirstOrDefault(t => t.MaCsKd == model.MaCsKd)?.MaDv ?? "";
             var doanhnghiep = _db.Company.FirstOrDefault(t => t.Madv == cskd)?.Madv??"";

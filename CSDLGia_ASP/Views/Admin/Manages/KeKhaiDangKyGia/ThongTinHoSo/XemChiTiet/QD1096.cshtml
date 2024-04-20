@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_LayoutReports";
+    var record_id = 1;
 }
 @model CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaShow
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
@@ -99,11 +100,12 @@
             <td style="text-align: right"><i style="margin-right: 25%;">@Model.Diadanh, ngày..@Model.Ngaynhap.Day..tháng..@Model.Ngaynhap.Month..năm..@Model.Ngaynhap.Year..</i></td>
         </tr>
     </table>
-<p style="text-align: center; font-weight: bold; font-size: 16px;">BẢNG KÊ KHAI GIÁ DỊCH VỤ LỮ HÀNH</p>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BẢNG KÊ KHAI ĐĂNG KÝ GIÁ</p>
 <p style="text-align: center; font-style: italic">(Kèm theo công văn số @Model.Socv  ngày @Model.Ngaynhap.Day tháng @Model.Ngaynhap.Month năm @Model.Ngaynhap.Year của @Model.Tendn</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
     <thead>
         <tr>
+            <th style="text-align: center">STT</th>
             <th style="text-align: center">Tên chương trình hoặc dịch vụ</th>
             <th style="text-align: center">Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
             <th style="text-align: center">Thời gian thực hiện<br />mức giá(Từ ngày)</th>
@@ -117,6 +119,7 @@
                 @foreach (var item in Model.KeKhaiDangKyGiaCt)
                 {
                 <tr>
+                    <td>@(record_id++)</td>
                     <td>@item.TenDvCungUng</td>
                     <td style="text-align:center">@item.QuyCachChatLuong</td>
                     <td style="text-align:center">@item.ThoiGianThucHien</td>

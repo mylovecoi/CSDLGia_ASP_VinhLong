@@ -41,6 +41,9 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia
         public string SoHsDuyet { get; set; }
         public DateTime NgayDuyet { get; set; }
 
+        public string Ytcauthanhgia { get; set; }
+        public string Thydggadgia { get; set; }
+
         [NotMapped]
         public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }
         

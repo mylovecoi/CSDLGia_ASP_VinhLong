@@ -35,6 +35,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Loaihang { get; set; }
         public string Chucvuky { get; set; }
         public string Nguoiky { get; set; }
+        public string Manghe { get; set; }
         public DateTime Ngaychuyen { get; set; }
         public DateTime Ngaynhan { get; set; }
         public List<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
