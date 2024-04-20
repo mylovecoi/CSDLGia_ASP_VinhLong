@@ -1,5 +1,6 @@
 ﻿@{
-    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"]; 
+    int STT = Int32.Parse(ViewData["STT"].ToString());
 }
 
 <!--Create Modal-->
@@ -32,14 +33,14 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>STT báo cáo</label>
-                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" value="@ViewData["STT"]" />
+                            <label>STT Hiển Thị</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
-                            <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" value="@ViewData["STT"]" />
+                            <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" step="1" value="@STT" />
                         </div>
                     </div>
                 </div>
