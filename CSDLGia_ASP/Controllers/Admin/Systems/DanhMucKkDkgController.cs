@@ -166,15 +166,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Báo cáo</label>";
                         result += "<select class='form-control' id='baocao_edit' name='baocao_edit'>";
-                        if (model.Report == "Báo cáo 1")
+                        if (model.Report == "QD01")
                         {
-                            result += "<option value='Báo cáo 1' selected>Báo cáo 1</option>";
-                            result += "<option value='Báo cáo 2'>Báo cáo 2</option>";
+                            result += "<option value='QD01' selected>Quyết định số 01</option>";
+                            result += "<option value='QD02'>Quyết định số 02</option>";
                         }
                         else
                         {
-                            result += "<option value='Báo cáo 1'>Báo cáo 1</option>";
-                            result += "<option value='Báo cáo 2' selected>Báo cáo 2</option>";
+                            result += "<option value='QD01'>Quyết định số 01</option>";
+                            result += "<option value='QD02' selected>Quyết định số 02</option>";
                         }
                         result += "</select>";
                         result += "</div>";
