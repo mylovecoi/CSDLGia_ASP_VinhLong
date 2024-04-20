@@ -80,9 +80,7 @@
                         <td style="text-align: center">@(record_id++)</td>
                         <td style="text-align: center">@item.Tenspdv</td>
                         <td style="text-align: center">@item.Dvt</td>
-
                         <td>
-
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
@@ -94,7 +92,7 @@
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                        data-target="#Delete_Modal" onclick="getId('@item.Id')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id', '@item.Tenspdv')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
