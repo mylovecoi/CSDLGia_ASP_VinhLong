@@ -455,7 +455,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                     ViewData["MenuLv1"] = "menu_kknygia";
                     ViewData["MenuLv2"] = "menu_kkgluhanh";
                     ViewData["MenuLv3"] = "menu_ttluhanh";
-                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/Show.cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiGia/KkGiaLuHanh/DanhSach/ShowNew.cshtml", model);
                 }
                 else
                 {
@@ -742,6 +742,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiGia.KkGiaLuHanh
                 hoso.Tendn = modeldn.Tendn;
                 hoso.Diadanh = modeldn.Diadanh;
                 hoso.Diachi = modeldn.Diachi;
+                hoso.Tel = modeldn.Tel;
+                hoso.Fax = modeldn.Fax;
+                hoso.Email = modeldn.Email;
+                hoso.Website = modeldn.Website;
             }
             return hoso;
         }

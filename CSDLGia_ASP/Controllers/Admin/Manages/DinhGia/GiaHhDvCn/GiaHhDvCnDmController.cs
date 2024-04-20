@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("GiaHhDvCnDm/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Dvt)
+        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string HienThi, int SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -70,6 +70,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         Tenspdv = Tenspdv,
                         Dvt = Dvt,
                         Manhom = Manhom,
+                        HienThi = HienThi,
+                        Sapxep = SapXep,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -148,18 +150,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-                        result += "<div class='col-xl-12'>";
+                        result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên hàng hóa*</label>";
-                        result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "<label>TT</label>";
+                        result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.Sapxep + "'/>";
                         result += "</div>";
                         result += "</div>";
 
-                       
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>STT Hiển Thị</label>";
+                        result += "<input type='text' id='hienthi_edit' name='hienthi_edit' class='form-control' value='" + model.HienThi + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên hàng hóa:</label>";
+                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
 
                         result += "<div class='col-xl-4'>";
                         result += "<label class='form-control-label'>Đơn vị tính</label>";
                         result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2me select2-offscreen' tabindex='-1' title=''>";
+
                         var dvt = _db.DmDvt.ToList();
                         foreach (var item in dvt)
                         {
@@ -168,11 +184,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                         result += "</select>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-1' style='padding-left: 0px;'>";
-                        result += "<label class='control-label'>Thêm</label>";
-                        result += "<button type='button' class='btn btn-default' data-target='#Dvt_Modal_edit' data-toggle='modal'><i class='la la-plus'></i>";
-                        result += "</button>";
-                        result += "</div>";
 
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
@@ -201,7 +212,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
 
         [Route("GiaHhDvCnDm/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, string Dvt, string Mota)
+        public JsonResult Update(int Id, string Tenspdv, string Dvt, int SapXep, string HienThi)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -210,6 +221,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvCn
                     var model = _db.GiaHhDvCnDm.FirstOrDefault(t => t.Id == Id);
                     model.Tenspdv = Tenspdv;                    
                     model.Dvt = Dvt;
+                    model.HienThi = HienThi;
+                    model.Sapxep = SapXep;
                     model.Updated_at = DateTime.Now;
                     _db.GiaHhDvCnDm.Update(model);
                     _db.SaveChanges();

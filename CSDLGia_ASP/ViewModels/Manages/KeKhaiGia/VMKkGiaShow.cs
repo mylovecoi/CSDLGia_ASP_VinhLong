@@ -22,7 +22,9 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public string Diachi { get; set; }
         public string Diachikd { get; set; }
         public string Dtll { get; set; }
+        public string Tel { get; set; }
         public string Email { get; set; }
+        public string Website { get; set; }
         public string Fax { get; set; }
         public string Sohsnhan { get; set; }
         public string Ytcauthanhgia { get; set; }

@@ -1,6 +1,7 @@
 ﻿@{
     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"]; 
     int STT = Int32.Parse(ViewData["STT"].ToString());
+
 }
 
 <!--Create Modal-->
@@ -21,14 +22,21 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Tên đối tượng</label>
+                            <label>Tên hàng hóa</label>
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-xl-12">
-                        <div class="form-group fv-plugins-icon-container">
-                            <label class="form-control-label">Đơn vị tính</label>
-                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
+                    <div class="form-group fv-plugins-icon-container" style="width:100%">
+                        <div class="col-xl-12">
+                            <label>Đơn vị tính</label>
+                        </div>
+                        <div class="col-xl-12">
+                            <select id="dvt_create" name="dvt_create" class="form-control select2basic" style="width:100%">
+                                @foreach (var item in dsdvt)
+                                {
+                                    <option value="@item.Dvt">@item.Dvt</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6">
