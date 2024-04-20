@@ -121,7 +121,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                     var model = (from giaspdvcuthect in _db.GiaSpDvCuTheCt
                                  join giaspdvcuthe in _db.GiaSpDvCuThe on giaspdvcuthect.Mahs equals giaspdvcuthe.Mahs
-                                 join nhom in _db.GiaSpDvCuTheNhom on giaspdvcuthect.Manhom equals nhom.Manhom
+                                 //join nhom in _db.GiaSpDvCuTheNhom on giaspdvcuthect.Manhom equals nhom.Manhom
                                  join donvi in _db.DsDonVi on giaspdvcuthe.Madv equals donvi.MaDv
                                  select new GiaSpDvCuTheCt
                                  {
@@ -142,9 +142,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                                      PhanLoaiHoSo = giaspdvcuthe.PhanLoaiHoSo,
                                      Ttqd = giaspdvcuthe.Ttqd,
                                      GhiChu = giaspdvcuthe.GhiChu,
-
+                                     Tt= giaspdvcuthect.Tt,
                                      Manhom = giaspdvcuthect.Manhom,
-                                     Tennhom = nhom.Tennhom,
+                                     //Tennhom = nhom.Tennhom,
                                      Trangthai = giaspdvcuthe.Trangthai,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };

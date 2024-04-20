@@ -58,10 +58,10 @@
                     <td colspan="6" style="font-weight: bold; padding-left: 2em;">Số QĐ:@hosoindv.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                 </tr>
                 var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);
-                @foreach (var item in chitieths)
+                @foreach (var item in chitieths.OrderBy(x => x.Sapxep))
                 {
                     <tr>
-                        <td></td>  
+                        <td>@item.Tt</td>
                         <td style="text-align: left">@item.TenSpDv</td>
                         <td style="text-align: left">@item.Dvt</td>
                         <td style="text-align: right">@Helpers.ConvertDbToStr(item.Mucgia1)</td>
