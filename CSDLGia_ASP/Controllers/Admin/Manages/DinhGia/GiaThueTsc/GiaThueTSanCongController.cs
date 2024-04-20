@@ -187,6 +187,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     _db.GiaThueTaiSanCongCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                     return RedirectToAction("Index", "GiaThueTSanCong", new { Madv = request.Madv });
                 }
@@ -269,7 +271,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
                     _db.GiaThueTaiSanCongCt.UpdateRange(modelct);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
                     return RedirectToAction("Index", "GiaThueTSanCong", new { Madv = request.Madv });
                 }
                 else
