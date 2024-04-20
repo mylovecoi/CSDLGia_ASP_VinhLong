@@ -205,18 +205,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DmNganhKd"] = _db.DmNganhKd.ToList();
-                    ViewData["DmNgheKd"] = _db.DmNgheKd.ToList();
+                    ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
                     ViewData["Title"] = "Đăng ký";
                     return View("Views/Admin/Systems/Register/Register.cshtml", request);
                 }
             }
             else
             {
+                var model_join = (from lvkd in _db.CompanyLvCc.Where(t => t.Madv == request.Madv)
+                                  join dmnghe in _db.DmNgheKd on lvkd.Manghe equals dmnghe.Manghe
+                                  select new VMCompanyLvCc
+                                  {
+                                      Id = lvkd.Id,
+                                      Madv = lvkd.Madv,
+                                      Mahs = lvkd.Mahs,
+                                      Manghe = lvkd.Manghe,
+                                      Macqcq = lvkd.Macqcq,
+                                      Tennghe = dmnghe.Tennghe,
+                                      Phanloai = dmnghe.Phanloai,
+                                  }).ToList();
+                request.VMCompanyLvCc = model_join.ToList();
+
                 ModelState.AddModelError("Madv", "Mã số thuế hoặc mã số đăng ký KD này đã tồn tại");
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
                 ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                 ViewData["DmNganhKd"] = _db.DmNganhKd.ToList();
-                ViewData["DmNgheKd"] = _db.DmNgheKd.ToList();
+                ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
                 ViewData["Title"] = "Đăng ký";
                 return View("Views/Admin/Systems/Register/Register.cshtml", request);
             }
