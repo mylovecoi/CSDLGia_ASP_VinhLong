@@ -197,6 +197,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                           Manghe = lvkd.Manghe,
                                           Macqcq = lvkd.Macqcq,
                                           Tennghe = dmnghe.Tennghe,
+                                          Phanloai = dmnghe.Phanloai,
                                       }).ToList();
                     request.VMCompanyLvCc = model_join.ToList();
 
