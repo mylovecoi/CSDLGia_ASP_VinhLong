@@ -74,6 +74,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                      Trangthai = dnct.Trangthai,
                                  }).Where(t => t.Madv == Madv).ToList(); 
 
+                var test = (from lvcc in _db.CompanyLvCc.Where(t=>t.Macqcq == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
+                            join com in _db.Company on lvcc.Madv equals com.Madv
+                            select new VMCompany
+                            {
+                                Id = com.Id,
+                                Madv = com.Madv,
+                                Tendn = com.Tendn,
+                            }).ToList();
+
                 ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
                 ViewData["DsDonVi"] = _db.DsDonVi;
                 ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
@@ -82,8 +91,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["TtDnTdCt"] = dnct_join;
                 ViewData["Madv"] = Madv;
                 ViewData["Title"] = "Thông tin doanh nghiệp";
-                ViewData["MenuLv1"] = "menu_bog";
-                ViewData["MenuLv2"] = "menu_ttdnbog";
+                ViewData["MenuLv1"] = "menu_kekhaidangkygia";
+                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
                 return View("Views/Admin/Systems/TtDnTd/Index.cshtml", model);
             }
             else
@@ -174,8 +183,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["DmNganhKd"] = _db.DmNganhKd;
                 ViewData["DmNgheKd"] = _db.DmNgheKd;
                 ViewData["Title"] = "Thông tin doanh nghiệp chỉnh sửa";
-                ViewData["MenuLv1"] = "menu_kknygia";
-                ViewData["MenuLv2"] = "menu_ttdn";
+                ViewData["MenuLv1"] = "menu_kekhaidangkygia";
+                ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtindonvi";
                 return View("Views/Admin/Systems/TtDnTd/Edit.cshtml", model_new);
             }
             else
