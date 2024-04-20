@@ -65,7 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá tối thiểu</label>";
-                result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
@@ -73,14 +73,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá tối thiểu</label>";
-                result += "<input type='text' id='giatoithieu_edit' name='giatoithieu_edit' value='" + Helpers.ConvertDbToStr(model.Giatoithieu) + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='giatoithieu_edit' name='giatoithieu_edit' value='" + Helpers.ConvertDbToStr(model.Giatoithieu) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá tối đa</label>";
-                result += "<input type='text' id='giatoida_edit' name='giatoida_edit' value='" + Helpers.ConvertDbToStr(model.Giatoida) + "' class='form-control money text-right' style='font-weight: bold'/>";
+                result += "<input type='text' id='giatoida_edit' name='giatoida_edit' value='" + Helpers.ConvertDbToStr(model.Giatoida) + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
