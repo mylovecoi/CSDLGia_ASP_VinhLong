@@ -161,20 +161,28 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "</select>";
                         result += "</div>";
                         result += "</div>";
-                        
+
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Báo cáo</label>";
                         result += "<select class='form-control' id='baocao_edit' name='baocao_edit'>";
-                        if (model.Report == "QD01")
+                        if (model.Report == "223")
                         {
-                            result += "<option value='QD01' selected>Quyết định số 01</option>";
-                            result += "<option value='QD02'>Quyết định số 02</option>";
+                            result += "<option value='QD223' selected>Quyết định số 223</option>";
+                            result += "<option value='QD56'>Quyết định số 56</option>";
+                            result += "<option value='QD1096'>Quyết định số 1096</option>";
+                        }
+                        else if (model.Report == "56")
+                        {
+                            result += "<option value='QD223'>Quyết định số 223</option>";
+                            result += "<option value='QD56' selected>Quyết định số 56</option>";
+                            result += "<option value='QD1096'>Quyết định số 1096</option>";
                         }
                         else
                         {
-                            result += "<option value='QD01'>Quyết định số 01</option>";
-                            result += "<option value='QD02' selected>Quyết định số 02</option>";
+                            result += "<option value='QD223'>Quyết định số 223</option>";
+                            result += "<option value='QD56'>Quyết định số 56</option>";
+                            result += "<option value='QD1096' selected>Quyết định số 1096</option>";
                         }
                         result += "</select>";
                         result += "</div>";

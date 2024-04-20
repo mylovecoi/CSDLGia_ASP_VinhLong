@@ -275,11 +275,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 var model = GetThongTinKk(Mahs);
-                var check = _db.DmNgheKd.FirstOrDefault(x => x.Manghe == MaNghe)?.Report ?? "QD01";
+                var show = _db.DmNgheKd.FirstOrDefault(x => x.Manghe == MaNghe)?.Report ?? "QD223";
                 ViewData["Title"] = "Xem chi tiết hồ sơ kê khai đăng ký giá";
                 ViewData["MenuLv1"] = "menu_kekhaidangkygia";
                 ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + MaNghe;
-                return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/XemChiTiet/" + check + ".cshtml", model);
+                return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/XemChiTiet/" + show + ".cshtml", model);
             }
             else
             {
@@ -302,8 +302,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                 Sohsnhan = model.SoHsDuyet,
                 Ngaychuyen = model.NgayChuyen,
                 Ngaynhan = model.NgayDuyet,
-                //Ytcauthanhgia = model.Ytcauthanhgia,
-                //Thydggadgia = model.Thydggadgia
+                Ytcauthanhgia = model.Ytcauthanhgia,
+                Thydggadgia = model.Thydggadgia
             };
             var cskd = _db.KeKhaiDangKyGiaCSKD.FirstOrDefault(t => t.MaCsKd == model.MaCsKd)?.MaDv ?? "";
             var doanhnghiep = _db.Company.FirstOrDefault(t => t.Madv == cskd)?.Madv??"";
