@@ -14,11 +14,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public KeKhaiDangKyGiaXetDuyetController(CSDLGiaDBContext db, IDsDonviService dsDonviService)
+        public KeKhaiDangKyGiaXetDuyetController(CSDLGiaDBContext db, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [HttpGet("KeKhaiDangKyGiaXetDuyet")]
@@ -113,7 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.SaveChanges();
 
                     //Add Log
-                    //_trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
                     return RedirectToAction("Index", "KeKhaiDangKyGiaXetDuyet", new { Nam = model.NgayDuyet.Year, MaCqCq = model.MaCqCq, MaNghe = model.MaNghe });
                 }
                 else
@@ -144,7 +146,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.SaveChanges();
 
                     //Add Log
-                    //_trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     return RedirectToAction("Index", "KeKhaiDangKyGiaXetDuyet", new { Nam = model.NgayDuyet.Year, MaCqCq = model.MaCqCq, MaNghe = model.MaNghe });
                 }
                 else
@@ -177,7 +179,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     // Xử lý phần lịch sử hồ sơ 
 
                     //Add Log
-                    //_trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
 
@@ -212,7 +214,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
 
                     //Add Log
-                    //_trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
@@ -245,7 +247,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.SaveChanges();
 
                     //Add Log
-                    //_trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
                     return RedirectToAction("Index", "KeKhaiDangKyGiaXetDuyet", new { Nam = model.NgayDuyet.Year, MaCqCq = model.MaCqCq, MaNghe = model.MaNghe });
                 }
                 else
