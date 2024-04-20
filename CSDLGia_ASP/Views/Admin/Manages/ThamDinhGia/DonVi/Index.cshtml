@@ -82,9 +82,14 @@
                         </td>
 
                         <td>
+                            <a asp-controller="ThamDinhGiaDv" asp-action="Show" asp-route-Maso="@item.Maso" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Edit"))
                             {
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                               
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hoặc chỉnh sửa" data-toggle="modal"
                                         data-target="#Edit_Modal" onclick="editId('@item.Id')">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
@@ -93,6 +98,7 @@
                                     <i class="icon-lg la la-clipboard-check text-primary"></i>
                                 </a>
                             }
+
 
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.dv", "Delete"))
                             {
