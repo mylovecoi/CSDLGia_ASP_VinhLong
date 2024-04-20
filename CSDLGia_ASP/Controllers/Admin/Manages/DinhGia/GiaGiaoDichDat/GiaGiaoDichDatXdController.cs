@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
     public class GiaGiaoDichDatXdController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaGiaoDichDatXdController(CSDLGiaDBContext db)
+        public GiaGiaoDichDatXdController(CSDLGiaDBContext db,ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaGiaoDichDat/XetDuyet")]
@@ -81,7 +84,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
                     _db.GiaGiaoDichDat.Update(model);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
                     return RedirectToAction("Index", "GiaGiaoDichDatXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -109,6 +113,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
                     _db.GiaGiaoDichDat.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     return RedirectToAction("Index", "GiaGiaoDichDatXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -137,17 +143,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     _db.GiaGiaoDichDat.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "BTL",
-
-                    };
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
                     _db.SaveChanges();
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
@@ -181,18 +178,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     _db.GiaGiaoDichDat.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = mahs_cb,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "CB",
-
-                    };
-
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
                     _db.SaveChanges();
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
                     return RedirectToAction("Index", "GiaGiaoDichDatXd", new { Nam = model.Thoidiem.Year });
@@ -221,7 +208,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     model.Updated_at = DateTime.Now;
 
                     _db.GiaGiaoDichDat.Update(model);
-                    _db.SaveChanges();                    
+                    _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
                     return RedirectToAction("Index", "GiaGiaoDichDatXd");
                 }
                 else

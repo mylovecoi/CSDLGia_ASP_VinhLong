@@ -53,7 +53,7 @@
                 <div class="col-xl-4">
                     <div class="form-group">
                         <label>Số QĐ kết quả lựa trọn nhà thầu*</label>
-                        <input type="text" class="form-control" asp-for="Soqd" />
+                        <input type="text" class="form-control" asp-for="Soqd" required/>
                     </div>
                 </div>
             </div>
@@ -66,16 +66,16 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="form-group">
-                        <label>Thôn tin quyết định</label>
-                        <input type="text" class="form-control" asp-for="Thongtinqd" />
+                        <label>Thôn tin quyết định<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Thongtinqd"required />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Tên nhà thầu</label>
-                        <input type="text" class="form-control" asp-for="Tennhathau" />
+                        <label>Tên nhà thầu<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Tennhathau"required />
                     </div>
                 </div>
                 <div class="col-xl-12">
@@ -99,13 +99,13 @@
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
             <button type="reset" class="btn btn-secondary"><i class="la la-refresh"></i>Nhập lại</button>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="Validatemts()"><i class="la la-check"></i>Lưu lại</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Lưu lại</button>
         </div>
     </form>
     @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/DanhSach/Modal.cshtml")
     <!--end::Form-->
 </div>
-<script>
+@* <script>
     function Validatemts() {
         if ($('#Soqd').val().trim() == '') {
             toastr.error("Số quyết định không được để trống!", "Lỗi!!!")
@@ -117,4 +117,4 @@
             }
         }
     }
-</script>
+</script> *@

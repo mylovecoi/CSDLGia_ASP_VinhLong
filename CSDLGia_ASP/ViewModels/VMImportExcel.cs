@@ -21,5 +21,12 @@ namespace CSDLGia_ASP.ViewModels
         public string MaNghe { get; set; }
         public string Maxp { get; set; }
         public string Mahs { get; set; }
+
+        //KeKhaiDangKyGia
+        public string MaCsKd { get; set; }
+        public string TenCsKd { get; set; }
+        public string TenDn { get; set; }
+        public string TenNghe { get; set; }
+       
     }
 }

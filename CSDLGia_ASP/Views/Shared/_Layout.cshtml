@@ -585,15 +585,27 @@
                     document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
                     document.getElementById(menu3).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
                     document.getElementById(menu4).className = "menu-item menu-item-active";
+                    scrollToElementById(menu4);
                 } else if (menu3 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-open menu-item-here";
                     document.getElementById(menu2).className = "menu-item menu-item-submenu menu-item-open menu-item-here";
                     document.getElementById(menu3).className = "menu-item menu-item-active";
+                    scrollToElementById(menu3);
                 } else if (menu2 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-open";
                     document.getElementById(menu2).className = "menu-item menu-item-active";
+                    scrollToElementById(menu2);
                 } else if (menu1 != '') {
                     document.getElementById(menu1).className = "menu-item menu-item-active";
+                    scrollToElementById(menu1);
+                }
+            }
+            function scrollToElementById(elementId) {
+                var targetElement = $('#' + elementId);
+                if (targetElement.length) {
+                    $('#kt_aside_menu').animate({
+                        scrollTop: targetElement.offset().top - $(window).height() / 2
+                    }, 'slow');
                 }
             }
           

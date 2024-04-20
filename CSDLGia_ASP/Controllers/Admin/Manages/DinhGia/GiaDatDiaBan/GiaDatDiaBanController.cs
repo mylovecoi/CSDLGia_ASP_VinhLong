@@ -22,13 +22,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDiaBanService _IDsDiaBan;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaDatDiaBanController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDiaBanService IDsDiaBan, IDsDonviService dsDonviService)
+        public GiaDatDiaBanController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDiaBanService IDsDiaBan, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _IDsDiaBan = IDsDiaBan;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaDatDiaBan")]
@@ -191,6 +193,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     };
                     _db.GiaDatDiaBan.Add(model);
                     this.SaveDataCXD(model.Mahs);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "GiaDatDiaBan", new { request.Madv });
@@ -397,6 +401,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     model.GhiChu = request.GhiChu;
                     _db.GiaDatDiaBan.Update(model);
                     this.SaveDataCXD(model.Mahs);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaDatDiaBan", new { request.Madv });
                 }
