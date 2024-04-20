@@ -127,6 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          ThoiDiem = dg.Thoidiem,
                                          TrangThai = dg.Trangthai,
                                          MaDiaBan=dgct.MaDiaBan,
+                                         TenDiaBan=diaban.TenDiaBan,
                                          MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dgct.MaDiaBan).MaDiaBanCq,                                         
                                      };
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };

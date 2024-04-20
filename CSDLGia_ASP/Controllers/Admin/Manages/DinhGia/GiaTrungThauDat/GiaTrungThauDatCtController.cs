@@ -118,7 +118,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Diện tích</b></label>";
-                result += "<input type='text' id='Dientich_edit' name='Dientich_edit' value='" + @model.Dientich + "' class='form-control' />";
+                result += "<input type='number' id='Dientich_edit' name='Dientich_edit' value='" + @model.Dientich + "' class='form-control' />";
                 result += "</div>";
                 result += "</div>";
                 result += "<div class='col-xl-4'>";

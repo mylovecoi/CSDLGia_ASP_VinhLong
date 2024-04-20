@@ -84,7 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          TenDv = donvi.TenDv,
                                      });
                     ViewData["DsDonvi"] = model_donvi;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x=>x.Level != "X");
                     //ViewData["DsDonViTh"] = dsDonViTH;
                     ViewData["Madv"] = Madv;
                     ViewData["Nam"] = Nam;
@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan);
 
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBan).TenDiaBan;
-                    ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                    ViewData["DsXaPhuong"] = DsXaPhuong;
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == Madv).TenDv;
                     ViewData["Xas"] = _db.DsXaPhuong.Where(x => x.Madiaban == MaDiaBan);
@@ -243,7 +243,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(model.Madiaban);
 
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
-                    ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                    ViewData["DsXaPhuong"] = DsXaPhuong;
 
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Xas"] = _db.DsXaPhuong.Where(x => x.Madiaban == model.Madiaban);
@@ -432,6 +432,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                        MaDv = gdCt.MaDv,
                                        MaDiaBan = gdCt.MaDiaBan,
                                        MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == gdCt.MaDiaBan).MaDiaBanCq,
+                                       TenDiaBan=diaban.TenDiaBan,
                                    };
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
                     var donvi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
@@ -456,7 +457,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDat/Search")]
         [HttpGet]
         public IActionResult Search(DateTime beginTime, DateTime endTime,
-            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all", string MaXa = "all")
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -484,8 +485,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          TrangThai = dg.Trangthai,
                                          TenDuAn = dg.Tenduan,
                                          MaDv = dg.Madv,
-                                         MaDiaBan = dg.Madiaban,
-                                         Maxp = dgct.MaDiaBan,
+                                         MaDiaBan = dgct.MaDiaBan,
+                                        
 
                                      };
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
@@ -514,15 +515,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         model_join = model_join.Where(t => t.PhanLoai == PhanLoai);
                     }
-                    var DsXaPhuong = new List<DsDiaBan>();
+                   
                     if (MaDiaBan != "all")
                     {
-                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);
-                        DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan).Where(x => x.Level == "X").ToList();
-                        if (MaXa != "all")
-                        {
-                            model_join = model_join.Where(x => x.Maxp == MaXa);
-                        }
+                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);                        
                     }
                     //if (MaDiaBan != "all")
                     //{
@@ -535,9 +531,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     //    }
                     //}
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDiaBanXaPhuong"] = DsXaPhuong;
+                    ViewData["DsDiaBanXaPhuong"] = _db.DsDiaBan;
                     ViewData["MaDiaBan"] = MaDiaBan;
-                    ViewData["MaXa"] = MaXa;
+                   
                     ViewData["Phanloai"] = PhanLoai;
                     ViewData["beginTime"] = beginTime;
                     ViewData["endTime"] = endTime;
@@ -569,7 +565,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDat/PrintSearch")]
         [HttpPost]
         public IActionResult PrintSearch(DateTime beginTime, DateTime endTime,
-            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all", string MaXa = "all")
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -598,9 +594,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          TrangThai = dg.Trangthai,
                                          TenDuAn = dg.Tenduan,
                                          MaDv = dg.Madv,
-                                         MaDiaBan = dg.Madiaban,
+                                         MaDiaBan = dgct.MaDiaBan,
                                          Maxp = dgct.MaDiaBan,
                                          MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dgct.MaDiaBan).MaDiaBanCq,
+                                         TenDiaBan=diaban.TenDiaBan,
                                      };
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model_join = model_join.Where(x => x.ThoiDiem >= beginTime && x.ThoiDiem <= endTime && list_trangthai.Contains(x.TrangThai));
@@ -610,11 +607,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     }
                     if (MaDiaBan != "all")
                     {
-                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);
-                        if (MaXa != "all")
-                        {
-                            model_join = model_join.Where(x => x.Maxp == MaXa);
-                        }
+                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);                        
                     }
                     if (Giakhoidiem_tu != 0)
                     {

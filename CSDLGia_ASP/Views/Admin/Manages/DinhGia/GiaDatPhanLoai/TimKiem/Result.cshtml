@@ -3,10 +3,9 @@
    
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
     var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var DsDiaBanXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXaPhuong"];
     var phanloaihoso = ViewData["phanloaihoso"];
     var MaDiaBan = ViewData["MaDiaBan"];
-    var MaXaPhuong = ViewData["MaXaPhuong"];
+    
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt>
 @section custom_style {
@@ -57,15 +56,13 @@
 
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaDatCuThe/Search?';                    
-                    var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
-                    var MaXaPhuong = '&MaXaPhuong=' + $('#MaXaPhuong').val();
+                    var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();                   
                     var phanloaihoso = '&phanloaihoso=' + $('#phanloaihoso').val();
                     var endPrice = '&endPrice=' + $('#endPrice').val();
                     var beginPrice = '&beginPrice=' + $('#beginPrice').val();
                     var endTime = '&endTime=' + $('#endTime').val();
                     var beginTime = '&beginTime=' + $('#beginTime').val();
-
-                    var url = current_path_url + MaDiaBan + MaXaPhuong + phanloaihoso + endPrice + beginPrice + endPrice + beginTime;
+                    var url = current_path_url + MaDiaBan + phanloaihoso + endPrice + beginPrice + endPrice + beginTime;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -102,7 +99,7 @@
                 <div class="row">                   
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label>Địa bàn áp dụng</label><br />
+                            <label>Địa bàn</label><br />
                             <select class="form-control select2basic" id="MaDiaBan" asp-for="@MaDiaBan" onchange="GetXaPhuong()">
                                 <option value="all">--Chọn địa bàn--</option>
                                 @foreach (var item in DsDiaBan)
@@ -112,18 +109,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    @* <div class="col-xl-6">
                         <div class="form-group">
                             <label>Xã phường</label><br />
                             <select class="form-control select2basic" asp-for="@MaXaPhuong" id="MaXaPhuong">
-                                <option value="all">--Chọn xã phường--</option>
+                                <option value="all">--Chọn địa bàn--</option>
                                 @foreach (var item in DsDiaBanXaPhuong)
                                 {
                                     <option value="@item.MaDiaBan">@item.TenDiaBan</option>
                                 }
                             </select>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Phân loại hồ sơ</b></label>
