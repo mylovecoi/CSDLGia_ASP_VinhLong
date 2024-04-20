@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
     public class GiaKhungGiaDatXdController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaKhungGiaDatXdController(CSDLGiaDBContext db)
+        public GiaKhungGiaDatXdController(CSDLGiaDBContext db, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaKhungGiaDat/XetDuyet")]
@@ -79,6 +82,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "DD";
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
                     return RedirectToAction("Index", "GiaKhungGiaDatXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -105,6 +110,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
                     _db.GiaKhungGiaDat.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     return RedirectToAction("Index", "GiaKhungGiaDatXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -133,17 +140,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     _db.GiaKhungGiaDat.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "BTL",
-
-                    };
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
                     _db.SaveChanges();
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
@@ -176,18 +174,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     _db.GiaKhungGiaDat.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = mahs_cb,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "CB",
-
-                    };
-
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
                     _db.SaveChanges();
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
                     return RedirectToAction("Index", "GiaKhungGiaDatXd", new { Nam = model.Thoidiem.Year });
@@ -214,6 +202,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     model.Updated_at = DateTime.Now;
                     _db.GiaKhungGiaDat.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
                     return RedirectToAction("Index", "GiaKhungGiaDatXd", new { Nam = model.Thoidiem.Year });
                 }
                 else

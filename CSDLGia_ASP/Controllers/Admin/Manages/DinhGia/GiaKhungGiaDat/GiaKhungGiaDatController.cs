@@ -20,12 +20,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaKhungGiaDatController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
+        public GiaKhungGiaDatController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
             _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaKhungGiaDat/DanhSach")]
@@ -50,7 +52,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     if (Madv != "all")
                     {
                         model = model.Where(t => t.Madv == Madv);
-                    }                    
+                    }
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "H");
                     ViewData["DsDonVi"] = model_donvi;
                     ViewData["Nam"] = Nam;
@@ -157,7 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
 
         [Route("GiaKhungGiaDat/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat request)
+        public IActionResult Store(CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -186,8 +188,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                         Updated_at = DateTime.Now,
                     };
                     _db.GiaKhungGiaDat.Add(model);
-
-                    await _db.SaveChangesAsync();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+                    _db.SaveChanges();
                     return RedirectToAction("Index", "GiaKhungGiaDat", new { request.Madv });
                 }
                 else
@@ -258,7 +261,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     _db.GiaKhungGiaDat.Update(model);
                     this.SaveData_Ct_CXD(model.Mahs);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
                     return RedirectToAction("Index", "GiaKhungGiaDat", new { Madv = request.Madv, Nam = request.Thoidiem.Year });
                 }
                 else
@@ -363,7 +367,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.khunggd.thongtin", "Index"))
                 {
                     var model = _db.GiaKhungGiaDat.FirstOrDefault(t => t.Mahs == mahs_complete);
-                    
+
                     model.Trangthai = trangthai_complete;
                     model.Updated_at = DateTime.Now;
                     _db.GiaKhungGiaDat.Update(model);
@@ -475,7 +479,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     DateTime lastDayCurrentYear = new DateTime(nowDate.Year, 12, 31);
                     madv = string.IsNullOrEmpty(madv) ? "all" : madv;
                     ngaynhap_tu = ngaynhap_tu == DateTime.MinValue ? firstDayCurrentYear : ngaynhap_tu;
-                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? lastDayCurrentYear : ngaynhap_den;                    
+                    ngaynhap_den = ngaynhap_den == DateTime.MinValue ? lastDayCurrentYear : ngaynhap_den;
                     var model = (from giakgdct in _db.GiaKhungGiaDatCt
                                  join giakgd in _db.GiaKhungGiaDat on giakgdct.Mahs equals giakgd.Mahs
                                  join donvi in _db.DsDonVi on giakgd.Madv equals donvi.MaDv
@@ -513,7 +517,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaKhungGiaDat
                     if (!string.IsNullOrEmpty(Vungkt))
                     {
                         model = model.Where(x => x.Vungkt.Contains(Vungkt));
-                    }                    
+                    }
                     return View("Views/Admin/Manages/DinhGia/GiaKhungGiaDat/TimKiem/Result.cshtml", model);
 
                 }
