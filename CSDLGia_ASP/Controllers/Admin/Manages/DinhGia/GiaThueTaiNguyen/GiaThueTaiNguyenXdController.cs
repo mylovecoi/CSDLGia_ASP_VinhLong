@@ -125,8 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
 
                     _db.GiaThueTaiNguyen.Update(model);
                     _db.SaveChanges();
-                    //Add Log
-                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
+                    
 
                     return RedirectToAction("Index", "GiaThueTaiNguyenXd", new { Nam = model.Thoidiem.Year });
                 }

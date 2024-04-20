@@ -35,6 +35,7 @@
     <thead>
         <tr>
             <th style="text-align:center;">STT</th>            
+            <th style="text-align:center;">Địa bàn</th>            
             <th style="text-align:center;">Tên đường, giới hạn, khu vực</th>
             <th style="text-align:center;">Giá đất cụ thể</th>
         </tr>
@@ -42,7 +43,20 @@
     <tbody>
         @if (Model.GiaDatPhanLoaiCt.Any())
         {
-            <tr>
+            @foreach (var item in Model.GiaDatPhanLoaiCt)
+            {
+                <tr style="text-align:center">
+                    <td style="text-align:center">@(record_id++)</td>
+                    <td style="text-align:left">@item.TenDiaBan</td>
+                    <td style="text-align:left"> @item.Khuvuc</td>
+                    <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Giacuthe)</td>
+                </tr>
+            }
+
+
+
+
+           @*  <tr>
                 <td colspan="3" style="text-align:left; font-weight:bold;padding-left:">@ViewData["TenTinh"]</td>
             </tr>
             @foreach (var diaban in DsDiaBanHuyen)
@@ -73,7 +87,7 @@
                     }
                 }
 
-            }    
+            }     *@
         }
     </tbody>
 </table>
