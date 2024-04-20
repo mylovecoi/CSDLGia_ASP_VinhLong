@@ -40,7 +40,7 @@
     }
 
     @await Html.PartialAsync("~/Views/Admin/Menu/TrangChu/Manages/KeKhaiDangKyGia.cshtml")
-    <!--Mức giá kê khai - đăng ký-->
+  @*   <!--Mức giá kê khai - đăng ký-->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "KKNYGIA") == "1")
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_kknygia"
@@ -67,9 +67,9 @@
                 </ul>
             </div>
         </li>
-    }
+    } *@
 
-    <!--Mặt hàng bình ổn giá-->
+@*     <!--Mặt hàng bình ổn giá-->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kknygia", "Index") || Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Level") == "DN")
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_bog">
@@ -168,7 +168,7 @@
             </div>
         </li>
     }
-
+ *@
     <!--Sản phẩm dịch vụ cụ thể-->
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.spdvcuthe", "Index"))
     {

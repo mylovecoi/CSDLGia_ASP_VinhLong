@@ -1,0 +1,103 @@
+﻿<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="KeKhaiDangKyGia" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Xóa hồ sơ kê khai đăng ký giá
+                        </span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Số QĐ:</label>
+                            <label class="form-control" id="soqd_delete" name="soqd_delete"></label>
+                        </div>
+                    </div>
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- hoàn thành Modal-->
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="KeKhaiDangKyGia" asp-action="Chuyen" method="post" id="frm_chuyen">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        @ViewData["Title"]
+                        <span class="d-block text-muted pt-2 font-size-sm">
+                            Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
+                        </span>
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Số QĐ:</label>
+                                <label type="text" id="soqd_chuyen" name="soqd_chuyen" class="form-control"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Họ và tên người chuyển hồ sơ:</label>
+                                <input type="text" id="thongtinnguoichuyen_chuyen" name="thongtinnguoichuyen_chuyen" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Số điện thoại:</label>
+                                <input type="text" id="sodienthoaichuyen_chuyen" name="sodienthoaichuyen_chuyen" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <input id="mahs_chuyen" name="mahs_chuyen" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ChuyenHoSo()">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function ChuyenHoSo() {
+        if (document.getElementById("thongtinnguoichuyen_chuyen").value != '' && document.getElementById("thongtinnguoichuyen_chuyen").value != '') {
+            document.getElementById("frm_chuyen").submit();
+        } else {
+            toastr.error("Thông tin không được để trống", "Lỗi!");
+        }
+    }
+    function SetDelete(id, soqd) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("soqd_delete").innerHTML = soqd;
+    }
+
+    function SetChuyen(mahs, soqd) {
+        document.getElementById("mahs_chuyen").value = mahs;
+        document.getElementById("soqd_chuyen").innerHTML = soqd;
+        $('#Chuyen_Modal').modal("show");
+    }
+</script>

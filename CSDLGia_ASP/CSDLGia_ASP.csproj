@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Admin\Manages\KeKhaiDangKyGia\BaoCao\" />
     <Folder Include="wwwroot\data\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaRung\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueDN\" />

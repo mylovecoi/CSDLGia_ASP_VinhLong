@@ -54,8 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     ViewData["MaCsKd"] = MaCsKd;
                     ViewData["Title"] = "Thông tin hồ sơ kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_" + MaNghe;
-                    ViewData["MenuLv3"] = "menu_kekhaidangkygia_hoso_" + MaNghe;
+                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + MaNghe;
                     return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/Index.cshtml", model);
                 }
                 else
@@ -87,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     {
                         NgayQD = DateTime.Now,
                         NgayQdLk = DateTime.Now,
-                        Mahs = MaCsKd + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = MaCsKd + "_" + MaNghe + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         MaNghe = MaNghe,
                         MaCsKd = MaCsKd,
                         TrangThai = "CC"
@@ -95,11 +94,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
                     var nghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == MaNghe);
                     ViewData["HoSo"] = (nghekd?.Phanloai ?? "") + " " + (nghekd?.Tennghe ?? "");
-                   
+
                     ViewData["Title"] = "Thông tin hồ sơ kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_" + MaNghe;
-                    ViewData["MenuLv3"] = "menu_kekhaidangkygia_hoso_" + MaNghe;
+                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + MaNghe;
                     return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/Create.cshtml", model);
                 }
                 else
@@ -124,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     var data_ct = _db.KeKhaiDangKyGiaCt.Where(t => t.Mahs == request.Mahs);
                     if (data_ct.Any())
                     {
-                        foreach(var item in data_ct) { item.TrangThai = "XD"; }
+                        foreach (var item in data_ct) { item.TrangThai = "XD"; }
                         _db.KeKhaiDangKyGiaCt.UpdateRange(data_ct);
                     }
                     _db.KeKhaiDangKyGia.Add(request);
@@ -151,15 +149,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Edit"))
                 {
-                    var model = _db.KeKhaiDangKyGia.FirstOrDefault(t=>t.Mahs == Mahs);
-                    model.KeKhaiDangKyGiaCt = _db.KeKhaiDangKyGiaCt.Where(t=>t.Mahs == model.Mahs).ToList();
+                    var model = _db.KeKhaiDangKyGia.FirstOrDefault(t => t.Mahs == Mahs);
+                    model.KeKhaiDangKyGiaCt = _db.KeKhaiDangKyGiaCt.Where(t => t.Mahs == model.Mahs).ToList();
 
                     var nghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == model.MaNghe);
                     ViewData["HoSo"] = (nghekd?.Phanloai ?? "") + " " + (nghekd?.Tennghe ?? "");
                     ViewData["Title"] = "Thông tin hồ sơ kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_" + model.MaNghe;
-                    ViewData["MenuLv3"] = "menu_kekhaidangkygia_hoso_" + model.MaNghe;
+                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + model.MaNghe;
                     return View("Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/Edit.cshtml", model);
                 }
                 else
@@ -211,11 +208,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Delete"))
                 {
-                    var model = _db.KeKhaiDangKyGia.FirstOrDefault(t=>t.Id == id_delete);
+                    var model = _db.KeKhaiDangKyGia.FirstOrDefault(t => t.Id == id_delete);
                     var data_ct = _db.KeKhaiDangKyGiaCt.Where(t => t.Mahs == model.Mahs);
                     if (data_ct.Any())
                     {
-                       
+
                         _db.KeKhaiDangKyGiaCt.RemoveRange(data_ct);
                     }
                     string MaCsKd = model.MaCsKd;

@@ -71,8 +71,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     ViewData["Company"] = model_dn;
                     ViewData["Title"] = "Thông tin cơ sở kinh doanh";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
-                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_" + MaNghe;
-                    ViewData["MenuLv3"] = "menu_kekhaidangkygia_hoso_" + MaNghe;
+                    ViewData["MenuLv2"] = "menu_kekhaidangkygia_thongtin_" + MaNghe;
                     return View("Views/Admin/Manages/KeKhaiDangKyGia/CoSoKinhDoanh/Index.cshtml", model);
                 }
                 else
@@ -106,6 +105,91 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                         DiaChi = requests.DiaChi
                     };
                     _db.KeKhaiDangKyGiaCSKD.Add(model);
+                    _db.SaveChanges();
+                    var data = new { status = "success", message = "Thành công" };
+                    return Json(data);
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Kết thúc phiên làm việc. Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
+
+        [HttpPost("KeKhaiDangKyGia/CoSoKinhDoanh/Edit")]
+        public IActionResult Edit(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Create"))
+                {
+                    var model = _db.KeKhaiDangKyGiaCSKD.FirstOrDefault(t => t.Id == Id);
+                    var company = _db.Company.FirstOrDefault(t=>t.Madv == model.MaDv);
+                    string result = "<div class='modal-body' id='frm_edit'>";
+                    result += "<div class='row'>";
+                    result += "<div class='col-md-6'>";
+                    result += "<div class='form-group'>";
+                    result += "<label class='control-label'>Doanh nghiệp</label>";
+                    result += "<label class='form-control'>" + (company?.Tendn ?? "") + "</label>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<div class='col-md-6'>";
+                    result += "<div class='form-group'>";
+                    result += "<label class='control-label'>Tên cơ sở kinh doanh</label>";
+                    result += "<input id='tencskd_edit' name='tencskd_edit' class='form-control' value='" + model.TenCsKd + "'>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<div class='col-md-6'>";
+                    result += "<div class='form-group'>";
+                    result += "<label class='control-label'>Số điện thoại</label>";
+                    result += "<input id='sodt_edit' name='sodt_edit' class='form-control' value='" + model.SoDt + "'>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<div class='col-md-6'>";
+                    result += "<div class='form-group'>";
+                    result += "<label class='control-label'>Địa chỉ</label>";
+                    result += "<input id='diachi_edit' name='diachi_edit' class='form-control' value='" + model.DiaChi + "'>";
+                    result += "</div>";
+                    result += "</div>";
+                    result += "<input id='id_edit' name='id_edit' hidden value='" + model.Id + "'>";
+                    result += "</div>";
+                    result += "</div>";
+
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Kết thúc phiên làm việc. Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
+
+        [HttpPost("KeKhaiDangKyGia/CoSoKinhDoanh/Update")]
+
+        public IActionResult Update(KeKhaiDangKyGiaCSKD requests)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Edit"))
+                {
+                    var model = _db.KeKhaiDangKyGiaCSKD.FirstOrDefault(t => t.Id == requests.Id);
+                    model.TenCsKd = requests.TenCsKd;
+                    model.DiaChi = requests.DiaChi;
+                    model.SoDt = requests.SoDt;
+                    _db.KeKhaiDangKyGiaCSKD.Update(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thành công" };
                     return Json(data);

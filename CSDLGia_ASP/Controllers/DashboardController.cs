@@ -29,7 +29,7 @@ namespace CSDLGia_ASP.Controllers
             result += "<div class='card-header border-0 py-5'>";
             result += "<h3 class='card-title align-items-start flex-column'>";
             result += "<span class='card-label font-weight-bolder text-dark'>Bảng giá đất địa bàn năm " + (HoSo?.Thoidiem.Year.ToString() ?? "") + "</span>";
-            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'> Số QĐ: " + (HoSo?.Soqd ?? "") + "- Thời điểm: " + Helpers.ConvertDateToStr(HoSo?.Thoidiem ?? DateTime.MinValue)  +"</span>";
+            result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'> Số QĐ: " + (HoSo?.Soqd ?? "") + "- Thời điểm: " + Helpers.ConvertDateToStr(HoSo?.Thoidiem ?? DateTime.MinValue) + "</span>";
             result += "</h3>";
             result += "</div>";
             result += "<div class='card-body pt-0 pb-3'>";
@@ -102,10 +102,35 @@ namespace CSDLGia_ASP.Controllers
         [HttpPost("Dashboard/GetDichVuLuuTru")]
         public IActionResult GetDichVuLuuTru()
         {
+            var model = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == "LUUTRU" && t.NgayDuyet.Year == DateTime.Now.Year && t.NgayDuyet.Month == DateTime.Now.Month && t.TrangThai == "CB");
+
+            var model_join = from hoso in model
+                             join cskd in _db.KeKhaiDangKyGiaCSKD on hoso.MaCsKd equals cskd.MaCsKd
+                             join dn in _db.Company on cskd.MaDv equals dn.Madv
+                             join donvi in _db.DsDonVi on hoso.MaCqCq equals donvi.MaDv
+                             join dmnghe in _db.DmNgheKd on hoso.MaNghe equals dmnghe.Manghe
+                             select new CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia
+                             {
+                                 Id = hoso.Id,
+                                 Mahs = hoso.Mahs,
+                                 TenCsKd = cskd.TenCsKd,
+                                 TenDv = dn.Tendn,
+                                 SoQD = hoso.SoQD,
+                                 NgayQD = hoso.NgayQD,
+                                 NgayChuyen = hoso.NgayChuyen,
+                                 ThongTinNguoiChuyen = hoso.ThongTinNguoiChuyen,
+                                 LyDo = hoso.LyDo,
+                                 TrangThai = hoso.TrangThai,
+                                 NgayDuyet = hoso.NgayDuyet,
+                                 TenCqCq = donvi.TenDv,
+                                 MaCqCq = hoso.MaCqCq,
+                                 MaNghe = hoso.MaNghe,
+                                 TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
+                             };
             string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
             result += "<div class='card-header border-0 py-5'>";
             result += "<h3 class='card-title align-items-start flex-column'>";
-            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ kê khai giá dịch vụ lưu trú</span>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ giá dịch vụ lưu trú</span>";
             result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
             result += "</h3>";
             result += "</div>";
@@ -114,14 +139,30 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th>Tên đơn vị</th>";
-            result += "<th>Số QĐ</th>";
-            result += "<th>Thời điểm</th>";
-            result += "<th>Số QĐ liển kề</th>";
-            result += "<th>Thời điểm LK</th>";
+            result += "<th width='2%'>STT</th>";
+            result += "<th>Tên doanh nghiệp</th>";
+            result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th width='10%'>Phân loại</th>";
+            result += "<th width='10%'>Số QĐ</th> ";
+            result += "<th width='10%'>Thời điểm</th> ";
+            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
+            if (model_join.Any())
+            {
+                foreach (var item in model_join)
+                {
+                    result += "<tr>";
+                    result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
+                    result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
+                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
+                    result += "</tr>";
+                }
+            }
 
             result += "</tbody>";
             result += "</table>";
@@ -136,10 +177,35 @@ namespace CSDLGia_ASP.Controllers
         [HttpPost("Dashboard/GetXangDau")]
         public IActionResult GetXangDau()
         {
+            var model = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == "XANGDAU" && t.NgayDuyet.Year == DateTime.Now.Year && t.NgayDuyet.Month == DateTime.Now.Month && t.TrangThai == "CB");
+
+            var model_join = from hoso in model
+                             join cskd in _db.KeKhaiDangKyGiaCSKD on hoso.MaCsKd equals cskd.MaCsKd
+                             join dn in _db.Company on cskd.MaDv equals dn.Madv
+                             join donvi in _db.DsDonVi on hoso.MaCqCq equals donvi.MaDv
+                             join dmnghe in _db.DmNgheKd on hoso.MaNghe equals dmnghe.Manghe
+                             select new CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia
+                             {
+                                 Id = hoso.Id,
+                                 Mahs = hoso.Mahs,
+                                 TenCsKd = cskd.TenCsKd,
+                                 TenDv = dn.Tendn,
+                                 SoQD = hoso.SoQD,
+                                 NgayQD = hoso.NgayQD,
+                                 NgayChuyen = hoso.NgayChuyen,
+                                 ThongTinNguoiChuyen = hoso.ThongTinNguoiChuyen,
+                                 LyDo = hoso.LyDo,
+                                 TrangThai = hoso.TrangThai,
+                                 NgayDuyet = hoso.NgayDuyet,
+                                 TenCqCq = donvi.TenDv,
+                                 MaCqCq = hoso.MaCqCq,
+                                 MaNghe = hoso.MaNghe,
+                                 TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
+                             };
             string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
             result += "<div class='card-header border-0 py-5'>";
             result += "<h3 class='card-title align-items-start flex-column'>";
-            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ đăng ký giá dịch vụ xăng dầu</span>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ giá xăng dầu</span>";
             result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
             result += "</h3>";
             result += "</div>";
@@ -148,14 +214,30 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th>Tên đơn vị</th>";
-            result += "<th>Số QĐ</th>";
-            result += "<th>Thời điểm</th>";
-            result += "<th>Số QĐ liển kề</th>";
-            result += "<th>Thời điểm LK</th>";
+            result += "<th width='2%'>STT</th>";
+            result += "<th>Tên doanh nghiệp</th>";
+            result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th width='10%'>Phân loại</th>";
+            result += "<th width='10%'>Số QĐ</th> ";
+            result += "<th width='10%'>Thời điểm</th> ";
+            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
+            if (model_join.Any())
+            {
+                foreach (var item in model_join)
+                {
+                    result += "<tr>";
+                    result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
+                    result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
+                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
+                    result += "</tr>";
+                }
+            }
 
             result += "</tbody>";
             result += "</table>";
@@ -170,10 +252,35 @@ namespace CSDLGia_ASP.Controllers
         [HttpPost("Dashboard/GetDichVuLuHanh")]
         public IActionResult GetDichVuLuHanh()
         {
+            var model = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == "LUHANH" && t.NgayDuyet.Year == DateTime.Now.Year && t.NgayDuyet.Month == DateTime.Now.Month && t.TrangThai == "CB");
+
+            var model_join = from hoso in model
+                             join cskd in _db.KeKhaiDangKyGiaCSKD on hoso.MaCsKd equals cskd.MaCsKd
+                             join dn in _db.Company on cskd.MaDv equals dn.Madv
+                             join donvi in _db.DsDonVi on hoso.MaCqCq equals donvi.MaDv
+                             join dmnghe in _db.DmNgheKd on hoso.MaNghe equals dmnghe.Manghe
+                             select new CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia
+                             {
+                                 Id = hoso.Id,
+                                 Mahs = hoso.Mahs,
+                                 TenCsKd = cskd.TenCsKd,
+                                 TenDv = dn.Tendn,
+                                 SoQD = hoso.SoQD,
+                                 NgayQD = hoso.NgayQD,
+                                 NgayChuyen = hoso.NgayChuyen,
+                                 ThongTinNguoiChuyen = hoso.ThongTinNguoiChuyen,
+                                 LyDo = hoso.LyDo,
+                                 TrangThai = hoso.TrangThai,
+                                 NgayDuyet = hoso.NgayDuyet,
+                                 TenCqCq = donvi.TenDv,
+                                 MaCqCq = hoso.MaCqCq,
+                                 MaNghe = hoso.MaNghe,
+                                 TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
+                             };
             string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
             result += "<div class='card-header border-0 py-5'>";
             result += "<h3 class='card-title align-items-start flex-column'>";
-            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ kê khai giá dịch vụ lữ hành</span>";
+            result += "<span class='card-label font-weight-bolder text-dark'>Thông tin hồ sơ giá dịch vụ lữ hành</span>";
             result += "<span class='text-muted mt-3 font-weight-bold font-size-sm'>Thời điểm tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year + "</span>";
             result += "</h3>";
             result += "</div>";
@@ -182,14 +289,30 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th>Tên đơn vị</th>";
-            result += "<th>Số QĐ</th>";
-            result += "<th>Thời điểm</th>";
-            result += "<th>Số QĐ liển kề</th>";
-            result += "<th>Thời điểm LK</th>";
+            result += "<th width='2%'>STT</th>";
+            result += "<th>Tên doanh nghiệp</th>";
+            result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th width='10%'>Phân loại</th>";
+            result += "<th width='10%'>Số QĐ</th> ";
+            result += "<th width='10%'>Thời điểm</th> ";
+            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
+            if (model_join.Any())
+            {
+                foreach (var item in model_join)
+                {
+                    result += "<tr>";
+                    result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
+                    result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
+                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
+                    result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
+                    result += "</tr>";
+                }
+            }
 
             result += "</tbody>";
             result += "</table>";
