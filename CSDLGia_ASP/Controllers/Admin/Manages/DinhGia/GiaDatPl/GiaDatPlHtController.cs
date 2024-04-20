@@ -1,6 +1,7 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
     public class GiaDatPlHtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaDatPlHtController(CSDLGiaDBContext db)
+        public GiaDatPlHtController(CSDLGiaDBContext db, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaDatCuThe/XetDuyet")]
@@ -173,6 +176,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     model.Trangthai = "DD";
 
                     _db.GiaDatPhanLoai.Update(model);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaDatPlHt", new { Nam = model.Thoidiem.Year });
                 }
@@ -200,6 +205,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "CD";
                     _db.GiaDatPhanLoai.Update(model);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     _db.SaveChanges();
                     return RedirectToAction("Index", "GiaDatPlHt", new { Nam = model.Thoidiem.Year });
                 }
@@ -230,17 +237,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = model.Mahs,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "BTL",
-
-                    };
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
 
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
@@ -269,38 +267,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "CB";
-                    _db.GiaDatPhanLoai.Update(model);                    
+                    _db.GiaDatPhanLoai.Update(model);
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    var lichSuHoSo = new TrangThaiHoSo
-                    {
-                        MaHoSo = mahs_cb,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        ThoiGian = DateTime.Now,
-                        TrangThai = "CB",
-                    };
-                    _db.TrangThaiHoSo.Add(lichSuHoSo);
-                    _db.SaveChanges();
-                    //model.Thoidiem_ad = DateTime.Now;
-                    //model.Trangthai_ad = "CB";
-                    //model.Congbo = "DACONGBO";
-                    //if (model.Macqcq_h == model.Madv_ad)
-                    //{
-                    //    model.Thoidiem_h = DateTime.Now;
-                    //    model.Trangthai_h = "CB";
-                    //}
-                    //if (model.Macqcq_t == model.Madv_ad)
-                    //{
-                    //    model.Thoidiem_t = DateTime.Now;
-                    //    model.Trangthai_t = "CB";
-                    //}
-
-                    //_db.GiaDatPhanLoai.Update(model);
-                    //_db.SaveChanges();
-                    //ViewData["MenuLv1"] = "menu_giadat";
-                    //ViewData["MenuLv2"] = "menu_dgdct";
-                    //ViewData["MenuLv3"] = "menu_dgdct_ht";
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
+                    _db.SaveChanges();                    
                     return RedirectToAction("Index", "GiaDatPlHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -328,7 +299,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     _db.GiaDatPhanLoai.Update(model);
                     _db.SaveChanges();
-
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
                     return RedirectToAction("Index", "GiaDatPlHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
