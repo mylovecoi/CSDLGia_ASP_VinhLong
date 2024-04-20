@@ -1,5 +1,184 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "_LayoutReports";
 }
+@model CSDLGia_ASP.ViewModels.Manages.KeKhaiGia.VMKkGiaShow
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <span style="text-transform: uppercase;font-weight: bold">@Model.Tendn</span>
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số: @Model.Socv<br>V/v kê khai giá </td>
+        <td style="text-align: right; vertical-align: top"><i style="margin-right: 25%;">Khánh Hòa, ngày..@Model.Ngaynhap.Day..tháng..@Model.Ngaynhap.Month..năm..@Model.Ngaynhap.Year..</i></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;"><i><u>Kính gửi</u></i>: @Model.Tendvhienthi</p>
+<br>
+<br>
+<p>&emsp;Thực hiện Quyết định số 1096/QĐ-UBND ngày 06/05/2015 của UBND tỉnh về việc bổ sung danh hàng hóa, dịch vụ thực hiện kê khai giá trên địa bàn tỉnh Khánh Hòa, doanh nghiệp chúng tôi tự xây dựng và kê khai giá dịch vụ lữ hành như sau:</p>
+
+<p>- Tên doanh nghiệp viết bằng tiếng Việt: @Model.Tendn</p>
+<p>+ Mã số thuế: @Model.Madv</p>
+<p>+ Địa chỉ trụ sở chính: @Model.Diachi</p>
+<p>+ Số điện thoại: @Model.Tel</p>
+<p>+ Số fax: @Model.Fax</p>
+<p>+ Email: @Model.Email</p>
+<p>+ Website: @Model.Website</p>
+<p>- Tên chi nhánh hoặc cơ sở kinh doanh của Doanh nghiệp tại Khánh Hòa (nếu có):</p>
+<p>+ Số điện thoại:</p>
+<p>+ Số fax:</p>
+<p>- Giấy chứng nhận đăng kí kinh doanh số @Model.Madv do @Model.Madv cấp @Helpers.ConvertDateToStr(Model.Ngaynhap)</p>
+<p>- Giấy phép kinh doanh du lịch lữ hành quốc tế số @Model.Madv do Tổng cục Du lịch cấp @Helpers.ConvertDateToStr(Model.Ngaynhap)</p>
+<p>- Nơi đăng ký nộp thuế của doanh nghiệp kê khai giá</p>
+<p>&emsp;@Model.Tendn gửi Bảng kê khai giá dịch vụ lữ hành kèm theo Công văn này thực hiện kể từ ngày</p>
+<p>&emsp;@Model.Tendn xin chịu trách nhiệm trước pháo luật về tính chính xác của mức giá mà chúng tôi đã kê khai.</p>
+<p>&emsp;Đề nghị quý cơ quan ghi nhận ngày nộp Biểu mẫu kê khai giá của @Model.Tendn theo quy định</p>
+
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+            <span style="font-weight: bold;font-style: italic">Nơi nhận:</span><br>
+            - Như trên:<br>
+            - Lưu.
+        </td>
+        <td style="vertical-align: top;">
+            <p style="text-transform: uppercase; font-weight:bold">@Model.Chucvuky</p><br>
+            <i>(Ký tên, đóng dấu)</i><br /><br /><br /><br /><br /><br />
+            <p>@Model.Nguoiky</p>
+        </td>
+    </tr>
+    @* <tr style="text-align: center; height:100px">
+    <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+    <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+    </tr> *@
+</table>
+<p>- Họ và tên người nộp biểu mẫu : @Model.Ttnguoinop</p>
+<p>- Số điện thoại liên lạc : @Model.Dtll</p>
+<p>- Số Fax : </p>
+<p style="font-weight: bold; text-align: center">Ghi nhận ngày nộp Biểu mẫu kê khai giá <br>của Sở Tài chính</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin-top: 5px; border-collapse: collapse;width:30%">
+    <tr>
+        <td><b>@Model.Tendvhienthi</b></td>
+    </tr>
+    <tr>
+        <td style="text-align: left;">
+            <b>Số:</b> @Model.Sohsnhan<br>
+            <b>Ngày nhận hồ sơ:</b> @Helpers.ConvertDateToStr(Model.Ngaychuyen)<br>
+            <b>Ngày duyệt hồ sơ:</b> @Helpers.ConvertDateToStr(Model.Ngaynhan)
+        </td>
+    </tr>
+</table>
+<hr class="in">
+<p style="page-break-before: always">
+    <!--Trang2-->
+    <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+        <tr>
+            <td width="40%" style="vertical-align: top;">
+                <span style="text-transform: uppercase;font-weight: bold">@Model.Tendn</span>
+                <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+            </td>
+            <td style="vertical-align: top;">
+                <b>
+                    CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                    Độc lập - Tự do - Hạnh phúc
+                </b>
+                <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align: right"><i style="margin-right: 25%;">@Model.Diadanh, ngày..@Model.Ngaynhap.Day..tháng..@Model.Ngaynhap.Month..năm..@Model.Ngaynhap.Year..</i></td>
+        </tr>
+    </table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;">BẢNG KÊ KHAI GIÁ DỊCH VỤ LỮ HÀNH</p>
+<p style="text-align: center; font-style: italic">(Kèm theo công văn số @Model.Socv  ngày @Model.Ngaynhap.Day tháng @Model.Ngaynhap.Month năm @Model.Ngaynhap.Year của @Model.Tendn</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+    <thead>
+        <tr>
+                @* <th style="text-align: center" width="2%">#</th>
+            <th style="text-align: center" width="2%">Stt</th> *@
+            <th style="text-align: center">Tên chương trình hoặc dịch vụ</th>
+            <th style="text-align: center">Độ dài thời gian<br />chương trình hoặc<br />dịch vụ</th>
+            <th style="text-align: center">Thời gian thực hiện<br />mức giá(Từ ngày)</th>
+            <th style="text-align: center">Mức giá<br />kê khai(đồng)</th>
+            <th style="text-align: center">Hình thức kinh doanh</th>
+        </tr>
+    </thead>
+    <tbody>
+            @if (Model.KeKhaiDangKyGiaCt.Count() > 0)
+            {
+                @foreach (var item in Model.KeKhaiDangKyGiaCt)
+                {
+                    @* string HtmlStyle = Helpers.ConvertStrToStyle(item.Style); *@
+                <tr>
+                        @* <td style="text-align:center; @HtmlStyle">@item.STTSapxep</td>
+            <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td>
+            <td style="@HtmlStyle">@item.Tendvcu</td>
+            <td style="text-align:center; @HtmlStyle">@item.Dodaitgian</td>
+            <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDateToStr(item.Thoigian)</td>
+            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Giakk)</td>
+            <td style="@HtmlStyle">@item.Qccl</td> *@
+                        @* <td style="text-align:center; @HtmlStyle">@item.STTSapxep</td>
+            <td style="text-align:center; @HtmlStyle">@item.STTHienthi</td> *@
+                    @* <td style="@HtmlStyle">@item.Tendvcu</td>
+                    <td style="text-align:center; @HtmlStyle">@item.Dodaitgian</td>
+                    <td style="text-align:center; @HtmlStyle">@Helpers.ConvertDateToStr(item.Thoigian)</td>
+                    <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Giakk)</td>
+                    <td style="@HtmlStyle">@item.Qccl</td> *@
+                </tr>
+                }
+            }
+    </tbody>
+</table>
+<p>
+    - Mức giá kê khai nêu trên đã bao gồm thuế giá trị gia trăng và các loại phí như:
+    <i>
+        phí tàu, xe, khách sạn, vé máy bay, tàu hỏa, ăn uống, vé tham quan...
+        (trừ nhưng bữa ăn không bao gồm theo yêu cầu của khách và những dịch vự không có trong chương trình cụ thể)
+    </i>
+</p>
+<p>
+    - Các trường hợp ưu đãi, giảm giá hoặc chiết khấu,... đối với các đối tượng khách hàng(nếu có)
+</p>
+<p>
+    <i>
+        - Đính kèm bảng chương trình tờ rơi, ấn phẩm, ... cụ thể hành trình
+    </i>
+</p>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <tr>
+        <td width="40%" style="text-align: left; vertical-align: top;">
+        </td>
+        <td style="vertical-align: top;">
+            <p style="text-transform: uppercase; font-weight:bold">@Model.Chucvuky</p><br>
+            <i>(Ký tên, đóng dấu)</i><br /><br /><br /><br /><br /><br />
+            <p>@Model.Nguoiky</p>
+        </td>
+    </tr>
+        @* <tr style="text-align: center; height:100px">
+    <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+    <td colspan="9" style="font-weight: bold; padding-top: 90px"></td>
+    </tr> *@
+</table>
+<p style="font-weight: bold; text-align: center">Ghi nhận ngày nộp Biểu mẫu kê khai giá <br>của Sở Tài chính</p>
+<table cellspacing="0" cellpadding="0" border="1" style="margin-top: 5px; border-collapse: collapse;width:30%">
+    <tr>
+        <td><b>@Model.Tendvhienthi</b></td>
+    </tr>
+    <tr>
+        <td style="text-align: left;">
+            <b>Số:</b> @Model.Sohsnhan<br>
+            <b>Ngày nhận hồ sơ:</b> @Helpers.ConvertDateToStr(Model.Ngaychuyen)<br>
+            <b>Ngày duyệt hồ sơ:</b> @Helpers.ConvertDateToStr(Model.Ngaynhan)
+        </td>
+    </tr>
+</table>
