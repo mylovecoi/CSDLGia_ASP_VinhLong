@@ -26,6 +26,7 @@
     <thead>
         <tr>
             <th style="text-align:center">STT</th>
+            <th style="text-align:center">Địa bàn</th>
             <th style="text-align:center">Loại đất</th>
             <th style="text-align:center">Tên đường phố</th>
             <th style="text-align:center">Loại đường</th>
@@ -44,7 +45,29 @@
         {
             @if (Model.GiaDatDiaBanCt.Any())
             {
-                <tr>
+                @foreach (var item in Model.GiaDatDiaBanCt)
+                {
+                    <tr style="text-align:center">
+                        <td style="text-align:center">@item.HienThi</td>
+                        <td style="text-align:center">@item.TenDiaBan</td>
+                        <td style="text-align:left">@item.Loaidat</td>
+                        <td class="active" style="text-align:left">@item.Mota</td>
+                        <td class="active" style="text-align:left">@item.Loaiduong</td>
+                        <td class="active" style="text-align:left">@item.Diemdau</td>
+                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
+                        <td class="active">@Helpers.ConvertDbToStr(item.Hesok)</td>
+                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                    </tr>
+                }
+
+
+
+
+                @* <tr>
                     <td colspan="12" style="text-align:left; font-weight:bold;">@ViewData["TenTinh"]</td>
                 </tr>
                 @foreach (var huyen in DsDiaBanHuyen)
@@ -67,6 +90,7 @@
                                 {
                                     <tr style="text-align:center">
                                         <td style="text-align:center">@item.HienThi</td>
+                                        <td style="text-align:center">@item.TenDiaBan</td>
                                         <td style="text-align:left">@item.Loaidat</td>
                                         <td class="active" style="text-align:left">@item.Mota</td>
                                         <td class="active" style="text-align:left">@item.Loaiduong</td>
@@ -84,7 +108,7 @@
                         }
                     }
 
-                }
+                } *@
             }
         }
     </tbody>

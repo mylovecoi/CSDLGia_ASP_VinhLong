@@ -22,15 +22,15 @@
             <div class="modal-body">
                 <input type="hidden" value="@mahs" id="mahs_create" />
                 <div class="row">
-                    <div class="col-xl-6">
+                    @* <div class="col-xl-6">
                         <div class="form-group">
                             <label>Địa bàn áp dụng</label><br />
                             <label style="color:blue" class="form-control"> @ViewData["TenDiaBan"]</label>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-xl-6">
                         <div class="form-group ">
-                            <label>Xã phường</label><br />
+                            <label>Địa bàn</label><br />
                             <select class="form-control select2basic" id="MaDiaBanChiTiet" name="MaDiaBanChiTiet" style="width:100%">
                                 @foreach (var item in dsxaphuong)
                                 {

@@ -55,7 +55,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
            
             var model = _db.GiaDatPhanLoaiCt.FirstOrDefault(p => p.Id == Id);            
             
-            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBangiadat).Where(x=>x.Level=="X");
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBangiadat);
            
             var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBangiadat).TenDiaBan;
 
@@ -67,15 +67,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                 result += "<div class='row'>";
 
+                //result += "<div class='col-xl-6'>";
+                //result += "<div class='form-group'>";
+                //result += "<label>Địa bàn áp dụng</label><br />";
+                //result += "<label style='color:blue' class='form-control'>"+ tendiaban +"</label>";
+                //result += "</div>";
+                //result += "</div>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group'>";
-                result += "<label>Địa bàn áp dụng</label><br />";
-                result += "<label style='color:blue' class='form-control'>"+ tendiaban +"</label>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group'>";
-                result += "<label>Xã phường</label><br />";
+                result += "<label>Địa bàn</label><br />";
                 result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' style='width:100%'>";
                 foreach (var item in DsXaPhuong)
                 {

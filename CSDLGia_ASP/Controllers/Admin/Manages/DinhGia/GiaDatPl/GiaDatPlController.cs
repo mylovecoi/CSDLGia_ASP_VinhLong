@@ -58,7 +58,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ViewData["DsDonVi"] = model_donvi;
                         ViewData["Madv"] = Madv;
                         ViewData["Nam"] = Nam;
-                        ViewData["DsDiaBan"] = _db.DsDiaBan;                       
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level != "X");                       
                         ViewData["Title"] = " Thông tin hồ sơ giá các loại đất";
                         ViewData["MenuLv1"] = "menu_giadat";
                         ViewData["MenuLv2"] = "menu_dgdct";
@@ -98,7 +98,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         ThongTinGiayTo = new List<CSDLGia_ASP.Models.Manages.DinhGia.ThongTinGiayTo>(),
                     };
                     var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan);
-                    ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                    ViewData["DsXaPhuong"] = DsXaPhuong;
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBan).TenDiaBan;
                     ViewData["Madv"] = Madv;
                     ViewData["Mahs"] = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
@@ -246,8 +246,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     };
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
                     model_new.GiaDatPhanLoaiCt = model_ct.ToList();
-                    var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(model.Madiaban);
-                    ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                    var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(model.Madiaban);                    
+                    ViewData["DsXaPhuong"] = DsXaPhuong;
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
@@ -292,6 +292,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
                     //var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
                     var model_ct = from gd in _db.GiaDatPhanLoaiCt.Where(x=>x.Mahs== model_new.Mahs)
+                                   join diaban in _db.DsDiaBan on gd.MaDiaBan equals diaban.MaDiaBan
                                    select new GiaDatPhanLoaiCt()
                                    {
                                        Mahs = gd.Mahs,
@@ -306,8 +307,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                        Sapxep = gd.Sapxep,
                                        Trangthai = gd.Trangthai,
                                        Madv = gd.Madv,
-                                       MaDiaBan = gd.MaDiaBan,
-                                       MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == gd.MaDiaBan).MaDiaBanCq,
+                                       MaDiaBan = gd.MaDiaBan,  
+                                       TenDiaBan=diaban.TenDiaBan,
                                    };
 
                     model_new.GiaDatPhanLoaiCt = model_ct.ToList();
@@ -434,7 +435,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
 
         [Route("GiaDatCuThe/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all")
+        public IActionResult Search(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -456,8 +457,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
                                      Khuvuc = giact.Khuvuc,
-                                     MaDiaBan = gia.Madiaban,
-                                     MaXaPhuong = giact.MaDiaBan,
+                                     MaDiaBan = giact.MaDiaBan,                                     
                                      Trangthai=gia.Trangthai,
                                      Soqd=gia.Soqd,                                     
                                  });
@@ -468,29 +468,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         model = model.Where(t => t.Giacuthe <= endPrice);
                     }
-                    var DsXaPhuong = new List<DsDiaBan>();
+                    //var DsXaPhuong = new List<DsDiaBan>();
                     if (MaDiaBan != "all")
                     {
                         model = model.Where(t => t.MaDiaBan == MaDiaBan);
                         //DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
                         //DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
-                        DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBan).Where(x=>x.Level=="X").ToList();
-                        if (MaXaPhuong != "all")
-                        {
-                            model = model.Where(x => x.MaXaPhuong == MaXaPhuong);
-                        }
+                        //DsXaPhuong =
                     }
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDiaBanXaPhuong"] = DsXaPhuong;                    
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan;
+                    //ViewData["DsDiaBanXaPhuong"] = _db.DsDiaBan ;                    
                     ViewBag.beginTime = beginTime;
                     ViewBag.endTime = endTime;
                     ViewBag.beginPrice = beginPrice;
                     ViewBag.endPrice = endPrice;
-                    ViewData["MaDiaBan"] = MaDiaBan;
-                    ViewData["MaXaPhuong"] = MaXaPhuong;
+                    ViewData["MaDiaBan"] = MaDiaBan;                    
                     ViewData["phanloaihoso"] = phanloaihoso;
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
+                    //ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
                     ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";
@@ -512,7 +507,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
         }
         [Route("GiaDatCuThe/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all", string MaXaPhuong = "all")
+        public IActionResult PrintSearch(DateTime beginTime, DateTime endTime, double beginPrice, double endPrice, string phanloaihoso, string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -535,21 +530,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
                                      Khuvuc = giact.Khuvuc,                                     
-                                     MaDiaBan = gia.Madiaban,
-                                     MaXaPhuong=giact.MaDiaBan,
-                                     MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == giact.MaDiaBan).MaDiaBanCq,
+                                     MaDiaBan = giact.MaDiaBan,                                                                         
                                      Trangthai=gia.Trangthai,
                                      Soqd=gia.Soqd,
+                                     TenDiaBan=diaban.TenDiaBan,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                                      
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(x => x.MaDiaBan == MaDiaBan);
-                        if (MaXaPhuong != "all")
-                        {
-                            model = model.Where(x => x.MaXaPhuong == MaXaPhuong);
-                        }
+                        model = model.Where(x => x.MaDiaBan == MaDiaBan);                        
                     }
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)

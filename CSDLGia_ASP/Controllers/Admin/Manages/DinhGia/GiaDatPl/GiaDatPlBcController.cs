@@ -127,8 +127,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      PhanLoai = gia.Phanloai,
                                      Khuvuc = giact.Khuvuc,
                                      Trangthai = gia.Trangthai,
-                                     MaDiaBan = giact.MaDiaBan,
-                                     MaDiaBanCapHuyen= _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == giact.MaDiaBan).MaDiaBanCq,
+                                     MaDiaBan = giact.MaDiaBan,     
+                                     TenDiaBan = diaban.TenDiaBan,
+                                     
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model = model.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
