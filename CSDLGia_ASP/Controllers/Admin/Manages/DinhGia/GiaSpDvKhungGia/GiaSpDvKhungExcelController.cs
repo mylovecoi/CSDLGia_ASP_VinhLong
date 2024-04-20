@@ -103,23 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 var list_add = new List<GiaSpDvKhungGiaCt>();
                 int sheet = request.Sheet == 0 ? 0 : (request.Sheet - 1);
                 using (var stream = new MemoryStream())
-                { 
-                    var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
-                    {
-                        Mahs = request.Mahs,
-                        Madv = request.Madv,
-                        Manhom = request.Manhom,
-                        Madiaban = request.Madiaban,
-                        Soqd = request.Soqd,
-                        Ghichu = request.Ghichu,
-                        Thoidiem = request.Thoidiem,
-                        Ttqd = request.Ttqd,
-                        Trangthai = "CHT",
-                        Congbo = "CHUACONGBO",
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-                    _db.GiaSpDvKhungGia.Add(model);
+                {                   
 
                     //Xử lý nhận excel
                     await request.FormFile.CopyToAsync(stream);
@@ -152,7 +136,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 }
                 _db.GiaSpDvKhungGiaCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Edit", "GiaSpDvKhungGia", new { Mahs = request.Mahs });
+
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia
+                {
+                    Mahs = request.Mahs,
+                    Madv = request.Madv,
+                    Manhom = request.Manhom,
+                    Madiaban = request.Madiaban,
+                    Soqd = request.Soqd,
+                    Ghichu = request.Ghichu,
+                    Thoidiem = request.Thoidiem,
+                    Ttqd = request.Ttqd,
+                };
+
+                model.GiaSpDvKhungGiaCt = _db.GiaSpDvKhungGiaCt.Where(t => t.Mahs == model.Mahs).ToList();
+                var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.Madv);
+                string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                if (!string.IsNullOrEmpty(diaBanApDung))
+                {
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
+                }
+                else
+                {
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
+                }
+                ViewData["Manhom"] = request.Manhom;
+                ViewData["Madv"] = request.Madv;
+                ViewData["Mahs"] = model.Mahs;
+                ViewData["Title"] = "Bảng giá sản phẩm dịch vụ khung giá";
+                ViewData["MenuLv1"] = "menu_spdvkhunggia";
+                ViewData["MenuLv2"] = "menu_spdvkhunggia_thongtin";
+                return View("Views/Admin/Manages/DinhGia/GiaSpDvKhungGia/Create.cshtml", model);
             }
             else
             {
