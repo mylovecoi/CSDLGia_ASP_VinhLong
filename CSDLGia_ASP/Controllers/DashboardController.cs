@@ -142,7 +142,6 @@ namespace CSDLGia_ASP.Controllers
             result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
@@ -217,7 +216,6 @@ namespace CSDLGia_ASP.Controllers
             result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
@@ -292,7 +290,6 @@ namespace CSDLGia_ASP.Controllers
             result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
