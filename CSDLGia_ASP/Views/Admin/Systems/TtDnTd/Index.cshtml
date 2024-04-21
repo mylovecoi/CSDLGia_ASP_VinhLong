@@ -3,7 +3,7 @@
     var record_id_td = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdoanhnghiep = (IEnumerable<Company>)ViewData["DsDoanhNghiep"];
-
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var comct = (IEnumerable<VMCompanyLvCc>)ViewData["CompanyLvcc"];
     var dn = (CSDLGia_ASP.Models.Systems.TtDnTd)ViewData["TtDnTd"];
     var dnct = (IEnumerable<VMTtDnTdCt>)ViewData["TtDnTdCt"];
@@ -134,10 +134,6 @@
                                 <td style="width:15%"><b>Họ và tên người ký</b></td>
                                 <td style="width:35%"><span class="text-muted">@Model.Nguoiky</span></td>
                             </tr>
-                            @* <tr>
-                                <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
-                                <td style="width:35%"><span class="text-muted">@Model.Tendiaban</span></td>
-                            </tr> *@
                             <tr>
                                 <td style="width:15%"><b>Địa danh</b></td>
                                 <td style="width:35%"><span class="text-muted">@Model.Diadanh</span></td>
@@ -151,13 +147,19 @@
                     {
                         <tr style="text-align: center">
                             <th>STT</th>
-                            <th>Ngành nghề kinh doanh</th>
+                            <th>Nghề kinh doanh</th>
+                            <th>Đơn vị quản lý</th>
                         </tr>
                         @foreach (var item in comct)
                         {
                             <tr>
                                 <td class="text-center">@(record_id++)</td>
                                 <td>@item.Tennghe</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Macqcq))
+                                        @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+                                </td>
                             </tr>
                         }
                     }
@@ -205,10 +207,6 @@
                                     <td style="width:15%"><b>Họ và tên người ký</b></td>
                                     <td style="width:35%"><span class="text-muted">@dn.Nguoiky</span></td>
                                 </tr>
-                                @* <tr>
-                                    <td style="width:15%"><b>Địa bàn bàn đăng ký</b></td>
-                                    <td style="width:35%"><span class="text-muted">@dn.Tendiaban</span></td>
-                                </tr> *@
                                 <tr>
                                     <td style="width:15%"><b>Địa danh</b></td>
                                     <td style="width:35%"><span class="text-muted">@dn.Diadanh</span></td>
@@ -222,13 +220,19 @@
                         {
                             <tr style="text-align: center">
                                 <th>STT</th>
-                                <th>Ngành nghề kinh doanh</th>
+                                <th>Nghề kinh doanh</th>
+                                <th>Đơn vị quản lý</th>
                             </tr>
                             @foreach (var item in dnct)
                             {
                                 <tr>
                                     <td class="text-center">@(record_id_td++)</td>
                                     <td>@item.Tennghe</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Macqcq))
+                                            @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+                                    </td>
                                 </tr>
                             }
                         }

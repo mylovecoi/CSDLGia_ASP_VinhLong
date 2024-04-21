@@ -119,16 +119,16 @@
             <tbody>
                 @if (Model != null)
                 {
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.OrderByDescending(t=>t.NgayChuyen))
                     {
                         <tr>
                             <td style="text-align:center">@(record_id++)</td>
-                            <td style="text-align: center">@item.TenDv</td>
-                            <td style="text-align: center">@item.TenCsKd</td>
-                            <td style="text-align: center">@item.TenNghe</td>
+                            <td style="text-align: left">@item.TenDv</td>
+                            <td style="text-align: left">@item.TenCsKd</td>
+                            <td style="text-align: left">@item.TenNghe</td>
                             <td style="text-align: center">@item.SoQD</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.NgayQD)</td>
-                            <td style="text-align: center">@item.TenCqCq</td>
+                            <td style="text-align: left">@item.TenCqCq</td>
                             <td style="text-align: center">
                                 <span style="width: 112px;">
                                     @if (item.TrangThai == "CD")
@@ -164,13 +164,13 @@
                                 </span>
                             </td>
                             <td>
-                                <a asp-controller="" asp-action="" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
+                                <a asp-controller="KeKhaiDangKyGia" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-                                <!--button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                         <i class="icon-lg la la-file-alt text-dark"></i>
-                                </button-->
+                                </button>
                                 @if (item.TrangThai == "CD")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyet", "Approve"))
@@ -228,3 +228,4 @@
 
 
 @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinXetDuyet/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinGiayTo/Show.cshtml")

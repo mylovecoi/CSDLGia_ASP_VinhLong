@@ -36,14 +36,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtindonvi", "Index"))
                 {
+                    Madv = string.IsNullOrEmpty(Madv) ? "" : Madv;
+                    IQueryable<Company> model_dn = _db.Company;
                     if (Helpers.GetSsAdmin(HttpContext.Session, "Level") == "DN")
                     {
                         Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                        model_dn = model_dn.Where(t=>t.Madv == Madv);
                     }
-                    else
-                    {
-                        Madv = _db.Company.OrderBy(t => t.Id).Select(t => t.Madv).First();
-                    }
+                    //else
+                    //{
+                    //    var modelcqcq = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    //    List<string> list_dvcq = modelcqcq.Select(t=>t.MaDv).ToList();
+                    //    model_dn = model_dn.Where(t => list_dvcq.Contains(t.Macqcq));
+                    //    var data = model_dn.First();
+                    //    Madv = data.Madv;
+                    //}
 
                     var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
 
@@ -77,16 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                          Trangthai = dnct.Trangthai,
                                      }).Where(t => t.Madv == Madv).ToList();
 
-                    var test = (from lvcc in _db.CompanyLvCc.Where(t => t.Macqcq == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
-                                join com in _db.Company on lvcc.Madv equals com.Madv
-                                select new VMCompany
-                                {
-                                    Id = com.Id,
-                                    Madv = com.Madv,
-                                    Tendn = com.Tendn,
-                                }).ToList();
-
-                    ViewData["DsDoanhNghiep"] = _db.Company.Where(t => t.Madv == Madv);
+                    ViewData["DsDoanhNghiep"] = model_dn;
                     ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                     ViewData["CompanyLvCc"] = comct_join;

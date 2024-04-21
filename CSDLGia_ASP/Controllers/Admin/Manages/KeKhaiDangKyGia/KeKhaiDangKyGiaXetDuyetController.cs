@@ -30,16 +30,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyet", "Index"))
                 {
-                    MaCqCq = string.IsNullOrEmpty(MaCqCq) ? "all" : MaCqCq;
+                    MaCqCq = string.IsNullOrEmpty(MaCqCq) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : MaCqCq;
                     MaNghe = string.IsNullOrEmpty(MaNghe) ? "all" : MaNghe;
-                    List<string> list_trangthai = new List<string> { "CD", "DD", "CB"};
+                    List<string> list_trangthai = new List<string> { "CD", "DD", "CB" };
                     var model_donvicq = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madvcq = model_donvicq.Select(t => t.MaDv).ToList();
                     var model_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
                     model_nghe = model_nghe.Where(x => list_madvcq.Any(v => x.Madv.Split(',').Contains(v))).ToList();
-                    List<string> list_manghe = model_nghe.Select(t=>t.Manghe).ToList();
+                    List<string> list_manghe = model_nghe.Select(t => t.Manghe).ToList();
 
-                    var model = from hoso in _db.KeKhaiDangKyGia.Where(t => list_trangthai.Contains(t.TrangThai))
+                    var model_hoso = _db.KeKhaiDangKyGia.Where(t => list_madvcq.Contains(t.MaCqCq) && list_manghe.Contains(t.MaNghe)
+                                        && list_trangthai.Contains(t.TrangThai));
+                    var model = from hoso in model_hoso
                                 join cskd in _db.KeKhaiDangKyGiaCSKD on hoso.MaCsKd equals cskd.MaCsKd
                                 join dn in _db.Company on cskd.MaDv equals dn.Madv
                                 join donvi in _db.DsDonVi on hoso.MaCqCq equals donvi.MaDv
@@ -62,20 +64,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                                     MaNghe = hoso.MaNghe,
                                     TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
                                 };
-                    //model = _db.KeKhaiDangKyGia.Where(t => list_madvcq.Contains(t.MaCqCq) && list_manghe.Contains(t.MaNghe));
                     if (Nam != 0)
                     {
                         model = model.Where(t => t.NgayQD.Year == Nam);
                     }
-                    if(MaCqCq != "all")
+                    if (MaCqCq != "all")
                     {
                         model = model.Where(t => t.MaCqCq == MaCqCq);
                     }
-                    if(MaNghe != "all")
+                    if (MaNghe != "all")
                     {
-                        model = model.Where(t=>t.MaNghe == MaNghe);
-                    }                   
-                   
+                        model = model.Where(t => t.MaNghe == MaNghe);
+                    }
+
                     ViewData["Nam"] = Nam;
                     ViewData["MaNghe"] = MaNghe;
                     ViewData["MaCqCq"] = MaCqCq;
@@ -96,7 +97,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
-        }       
+        }
 
         [HttpPost]
         public IActionResult Duyet(string mahs_duyet, string sohoso_duyet)

@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    ViewData["DmNgheKd"] = _db.DmNgheKd;
+                    ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD");
                     ViewData["Title"] = "Báo cáo kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
                     ViewData["MenuLv2"] = "menu_kekhaidangkygia_baocao";
@@ -51,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe)
+                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia
@@ -64,8 +64,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                                      Socv = kk.SoQD,
                                      Socvlk = kk.SoQdLk,
                                      Ngaycvlk = kk.NgayQdLk,
-                                     //Ytcauthanhgia = kk.Ytcauthanhgia,
-                                     //Thydggadgia = kk.Thydggadgia,
+                                     Ytcauthanhgia = kk.Ytcauthanhgia,
+                                     Thydggadgia = kk.Thydggadgia,
                                      Ttnguoinop = kk.ThongTinNguoiChuyen,
                                      Dtll = kk.SoDtNguoiChuyen,
                                      Sohsnhan = kk.SoHsDuyet,
@@ -148,15 +148,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                             model = model.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
                         }
                     }
-
+                    var phanloaibc = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == manghe)?.Phanloai ?? "Kê khai giá";
+                    var tenbaocao = "";
+                    if (phanloaibc == "Kê khai giá")
+                    {
+                        tenbaocao = "Kkg";
+                    }
+                    else
+                    {
+                        tenbaocao = "Dkg";
+                    }
                     ViewData["time"] = time;
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["thang"] = thang;
                     ViewData["quy"] = quy;
                     ViewData["nam"] = nam;
+                    ViewData["DmNgheKd"] = _db.DmNgheKd;
                     ViewData["Title"] = "Báo cáo kê khai đăng ký giá";
-                    return View("Views/Admin/Manages/KeKhaiDangKyGia/BaoCao/BcTongHop.cshtml", model); 
+                    return View("Views/Admin/Manages/KeKhaiDangKyGia/BaoCao/BcTongHop" + tenbaocao + ".cshtml", model);
                 }
                 else
                 {
@@ -178,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe)
+                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia
@@ -191,8 +201,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                                      Socv = kk.SoQD,
                                      Socvlk = kk.SoQdLk,
                                      Ngaycvlk = kk.NgayQdLk,
-                                     //Ytcauthanhgia = kk.Ytcauthanhgia,
-                                     //Thydggadgia = kk.Thydggadgia,
+                                     Ytcauthanhgia = kk.Ytcauthanhgia,
+                                     Thydggadgia = kk.Thydggadgia,
                                      Ttnguoinop = kk.ThongTinNguoiChuyen,
                                      Dtll = kk.SoDtNguoiChuyen,
                                      Sohsnhan = kk.SoHsDuyet,

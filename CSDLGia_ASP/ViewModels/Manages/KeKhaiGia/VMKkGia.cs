@@ -76,6 +76,7 @@ namespace CSDLGia_ASP.ViewModels.Manages.KeKhaiGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Tendn { get; set; }
+        public string Tengnhe { get; set; }
         public string Level { get; set; }
         public List<KkGiaXmTxdCt> KkGiaXmTxdCt { get; set; }
         public List<KkGiaEtanolCt> KkGiaEtanolCt { get; set; }

@@ -21,7 +21,7 @@
     </div>
     <div class="col-xl-6">
         <div class="form-group">
-            <label>Ngày áp dụng:<span class="text-danger">*</span></label>
+            <label>Ngày quyết định:<span class="text-danger">*</span></label>
             <input type="date" class="form-control" asp-for="NgayQD" required />
         </div>
     </div>
@@ -39,14 +39,13 @@
     </div>
     <div class="col-xl-6">
         <div class="form-group">
-            <label>Đơn vị tính:<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" asp-for="DonViTinh" />
+            <label>Ngày áp dụng mức giá:<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="NgayThucHien" required />
         </div>
-    </div>
-    <div class="col-xl-12">
+    </div><div class="col-xl-6">
         <div class="form-group">
-            <label>Ghi chú:</label>
-            <input type="text" class="form-control" asp-for="GhiChu" />
+            <label>Đơn vị tính:<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="DonViTinh" required />
         </div>
     </div>
     <div class="col-xl-12">
@@ -66,6 +65,9 @@
         </div>
     </div>
 </div>
+
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinGiayTo/Index.cshtml")
+
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
 </div>
@@ -126,5 +128,12 @@
         </table>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Ghi chú:</label>
+            <input type="text" class="form-control" asp-for="GhiChu" />
+        </div>
+    </div>
+</div>
 @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/ChiTiet/Modal.cshtml")

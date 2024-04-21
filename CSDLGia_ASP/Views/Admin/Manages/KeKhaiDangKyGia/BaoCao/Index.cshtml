@@ -87,10 +87,10 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nghề kinh doanh</b></label>
-                                <select class="form-control" id="manghe" name="manghe">
-                                    @foreach(var item in dmnghekd)
+                                <select class="form-control select2basic" id="manghe" name="manghe" style="width:100%">
+                                    @foreach (var item in dmnghekd)
                                     {
-                                        <option value="@item.Manghe">@item.Tennghe</option>
+                                        <option value="@item.Manghe">&emsp;@item.Phanloai @item.Tennghe</option>
                                     }
                                 </select>
                             </div>
