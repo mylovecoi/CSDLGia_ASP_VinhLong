@@ -471,7 +471,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     //var DsXaPhuong = new List<DsDiaBan>();
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(t => t.MaDiaBan == MaDiaBan);
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t=>t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                         //DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
                         //DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
                         //DsXaPhuong =
@@ -539,7 +541,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                                      
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(x => x.MaDiaBan == MaDiaBan);                        
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                     }
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
