@@ -3,6 +3,7 @@
     var record = 1;
     var lvkd = (IEnumerable<CompanyLvCc>)ViewData["Lvkd"];
     var dmnghekd = (IEnumerable<DmNgheKd>)ViewData["DmNgheKd"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -98,6 +99,7 @@
                 <tr style="text-align:center">
                     <th width="5%">#</th>
                     <th>Ngành nghề kinh doanh</th>
+                    <th>Đơn vị nhận hồ sơ</th>
                 </tr>
             </thead>
             <tbody>
@@ -108,6 +110,14 @@
                         <td>
                             @if (!string.IsNullOrEmpty(item.Manghe))
                                 @(dmnghekd.FirstOrDefault(x => x.Manghe == item.Manghe)?.Tennghe ?? "")
+                        </td>
+                        <td style="text-align:center">
+                            @if (!string.IsNullOrEmpty(item.Macqcq))
+                                @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
+
+
+
                         </td>
                     </tr>
                 }

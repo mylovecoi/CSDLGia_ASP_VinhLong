@@ -276,6 +276,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["Status"] = Status;
                     ViewData["Lvkd"] = model_lvkd;
                     ViewData["DmNgheKd"] = _db.DmNgheKd;
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Title"] = "Chi tiết doanh nghiệp đăng ký";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qtnguoidung";
