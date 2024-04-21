@@ -139,9 +139,9 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
@@ -156,7 +156,7 @@ namespace CSDLGia_ASP.Controllers
                     result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
                     result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
                     result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
-                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'><a target='_blank' href='/KeKhaiDangKyGia/Show?&Mahs=" + item.Mahs + "'>" + item.SoQD + "</a></td>";
                     result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
                     result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
                     result += "</tr>";
@@ -213,9 +213,9 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
@@ -230,7 +230,7 @@ namespace CSDLGia_ASP.Controllers
                     result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
                     result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
                     result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
-                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'><a target='_blank' href='/KeKhaiDangKyGia/Show?&Mahs=" + item.Mahs + "'>" + item.SoQD + "</a></td>";
                     result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
                     result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
                     result += "</tr>";
@@ -287,9 +287,9 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th width='2%'>STT</th>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
             result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
@@ -304,7 +304,7 @@ namespace CSDLGia_ASP.Controllers
                     result += "<td style='text-align: center'>" + item.TenDv + "</td> ";
                     result += "<td style='text-align: center'>" + item.TenCsKd + "</td>";
                     result += "<td style='text-align: center'>" + item.TenNghe + "</td>";
-                    result += "<td style='text-align: center'>" + item.SoQD + "</td>";
+                    result += "<td style='text-align: center'><a target='_blank' href='/KeKhaiDangKyGia/Show?&Mahs=" + item.Mahs + "'>" + item.SoQD + "</a></td>";
                     result += "<td style='text-align: center'>" + Helpers.ConvertDateToStr(item.NgayQD) + "</td>";
                     result += "<td style='text-align: center'>" + item.TenCqCq + "<br/> Ngày duyệt:" + Helpers.ConvertDateTimeToStr(item.NgayDuyet) + "</td>";
                     result += "</tr>";
