@@ -166,13 +166,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Báo cáo</label>";
                         result += "<select class='form-control' id='baocao_edit' name='baocao_edit'>";
-                        if (model.Report == "223")
+                        if (model.Report == "QD223")
                         {
                             result += "<option value='QD223' selected>Quyết định số 223</option>";
                             result += "<option value='QD56'>Quyết định số 56</option>";
                             result += "<option value='QD1096'>Quyết định số 1096</option>";
                         }
-                        else if (model.Report == "56")
+                        else if (model.Report == "QD56")
                         {
                             result += "<option value='QD223'>Quyết định số 223</option>";
                             result += "<option value='QD56' selected>Quyết định số 56</option>";

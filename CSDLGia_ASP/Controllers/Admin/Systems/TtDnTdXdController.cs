@@ -104,6 +104,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["CompanyLvCc"] = comct_join;
                     ViewData["TtDnTd"] = model_ttdntd;
                     ViewData["TtDnTdCt"] = dnct_join;
+                    ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["Madv"] = Madv;
                     ViewData["Title"] = "Thông tin doanh nghiệp chi tiết";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";

@@ -119,16 +119,16 @@
             <tbody>
                 @if (Model != null)
                 {
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.OrderByDescending(t=>t.NgayChuyen))
                     {
                         <tr>
                             <td style="text-align:center">@(record_id++)</td>
-                            <td style="text-align: center">@item.TenDv</td>
-                            <td style="text-align: center">@item.TenCsKd</td>
-                            <td style="text-align: center">@item.TenNghe</td>
+                            <td style="text-align: left">@item.TenDv</td>
+                            <td style="text-align: left">@item.TenCsKd</td>
+                            <td style="text-align: left">@item.TenNghe</td>
                             <td style="text-align: center">@item.SoQD</td>
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.NgayQD)</td>
-                            <td style="text-align: center">@item.TenCqCq</td>
+                            <td style="text-align: left">@item.TenCqCq</td>
                             <td style="text-align: center">
                                 <span style="width: 112px;">
                                     @if (item.TrangThai == "CD")

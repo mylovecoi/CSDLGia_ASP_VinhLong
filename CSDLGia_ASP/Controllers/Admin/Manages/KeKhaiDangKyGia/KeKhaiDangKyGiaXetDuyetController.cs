@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyet", "Index"))
                 {
-                    MaCqCq = string.IsNullOrEmpty(MaCqCq) ? "all" : MaCqCq;
+                    MaCqCq = string.IsNullOrEmpty(MaCqCq) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : MaCqCq;
                     MaNghe = string.IsNullOrEmpty(MaNghe) ? "all" : MaNghe;
                     List<string> list_trangthai = new List<string> { "CD", "DD", "CB" };
                     var model_donvicq = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
