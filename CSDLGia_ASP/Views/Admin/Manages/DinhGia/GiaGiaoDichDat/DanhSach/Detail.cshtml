@@ -97,6 +97,7 @@
 
     function SetUpdate() {
         var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaGiaoDichDatCt/Update',
             type: 'POST',
@@ -120,6 +121,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }

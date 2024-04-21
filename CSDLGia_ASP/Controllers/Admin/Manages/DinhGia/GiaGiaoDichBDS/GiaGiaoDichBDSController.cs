@@ -364,7 +364,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
         [Route("GiaGiaoDichBDS/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
+        public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den,string Soqd="all", string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -403,6 +403,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     {
                         model = model.Where(t => t.Gia <= gia_den);
                     }
+                    if (Soqd !="all")
+                    {
+                        model = model.Where(x => x.Mahs == Soqd);
+                    }
+                    ViewData["ListQuyetDinh"] = _db.GiaGiaoDichBDS;
+                    ViewData["QuyetDinh"]     = Soqd;
+
 
 
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
@@ -433,7 +440,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
         [Route("GiaGiaoDichBDS/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
+        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string Soqd="all", string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -471,6 +478,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     if (gia_den > 0)
                     {
                         model = model.Where(t => t.Gia <= gia_den);
+                    }
+                    if (Soqd!="all")
+                    {
+                        model = model.Where(x=>x.Mahs == Soqd);
                     }
 
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;

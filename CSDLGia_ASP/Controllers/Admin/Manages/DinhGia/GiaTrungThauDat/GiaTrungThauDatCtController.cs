@@ -57,7 +57,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         {
             var DmDvt = _db.DmDvt.ToList();
             var model = _db.GiaDauGiaDatCt.FirstOrDefault(p => p.Id == Id);
-            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaTrungThau).Where(x => x.Level == "X");
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaTrungThau);
 
 
             var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaTrungThau).TenDiaBan;
@@ -68,15 +68,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 result += "<div class='row'>";
 
 
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Địa bàn</label>";
-                result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
+                //result += "<div class='col-xl-6'>";
+                //result += "<div class='form-group fv-plugins-icon-container'>";
+                //result += "<label>Địa bàn</label>";
+                //result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
+                //result += "</div>";
+                //result += "</div>";
+                result += "<div class='col-xl-12'>";
                 result += "<div class='form-group' style='width:100%'>";
-                result += "<label>Xã/phường</label>";
+                result += "<label>Địa bàn</label>";
                 result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";
                 result += "<option value='all'>--Chọn xã phường--</option>";               
                

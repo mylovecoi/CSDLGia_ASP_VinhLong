@@ -371,7 +371,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/Search")]
         [HttpGet]
-        public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
+        public IActionResult Search(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den,string Soqd = "all", string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -415,6 +415,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     {
                         model = model.Where(t => t.Gia <= gia_den);
                     }
+                    if (Soqd != "all")
+                    {
+                        model = model.Where(x=>x.Mahs== Soqd);
+                    }
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
                     ViewData["ngaynhap_den"] = ngaynhap_den;
                     ViewData["gia_tu"] = gia_tu;
@@ -423,6 +427,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     ViewData["manhom"] = manhom;
 
 
+                    ViewData["ListSoQuyetDinh"] = _db.GiaGiaoDichDat;
+                    ViewData["SoQuyetDinh"] = Soqd;
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["NhomTn"] = _db.GiaGiaoDichDatNhom.Where(t => t.Theodoi == "TD").ToList();
@@ -447,7 +453,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
 
         [Route("GiaGiaoDichDat/PrintSearch")]
         [HttpPost]
-        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den, string madv = "all", string manhom = "all")
+        public IActionResult PrintSearch(DateTime ngaynhap_tu, DateTime ngaynhap_den, double gia_tu, double gia_den,string Soqd = "all", string madv = "all", string manhom = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -473,6 +479,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                                      Trangthai = giathuetn.Trangthai,
                                      Dvt = giathuetnct.Dvt,
                                      Tennhom = nhomtn.Tennhom,
+                                     
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model = model.Where(x => x.Thoidiem >= ngaynhap_tu && x.Thoidiem <= ngaynhap_den && list_trangthai.Contains(x.Trangthai));
@@ -490,6 +497,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichDat
                     if (gia_den > 0)
                     {
                         model = model.Where(t => t.Gia <= gia_den);
+                    }
+                    if (Soqd !="all")
+                    {
+                        model = model.Where(x=>x.Mahs == Soqd);
                     }
                     ViewData["ngaynhap_tu"] = ngaynhap_tu;
                     ViewData["ngaynhap_den"] = ngaynhap_den;

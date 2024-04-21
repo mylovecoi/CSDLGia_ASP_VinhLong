@@ -5,6 +5,8 @@
     var ngaynhap_tu = ((DateTime)ViewData["ngaynhap_tu"]).ToString("yyyy-MM-dd");
     var ngaynhap_den = ((DateTime)ViewData["ngaynhap_den"]).ToString("yyyy-MM-dd");
     var manhom = ViewData["manhom"];
+    var ListQuyetDinh = (IEnumerable<GiaGiaoDichBDS>)ViewData["ListQuyetDinh"];
+    var QuyetDinh = ViewData["QuyetDinh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSCt>
 @section custom_style {
@@ -44,7 +46,8 @@
                     var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
                     var manhom = '&manhom=' + $('#manhom').val();
                     var madv = '&madv=' + $('#madv').val();
-                    var url = current_path_url + gia_tu + gia_den + ngaynhap_tu + ngaynhap_den + manhom + madv;
+                    var Soqd = '&Soqd=' + $('#Soqd').val();
+                    var url = current_path_url + gia_tu + gia_den + ngaynhap_tu + ngaynhap_den + manhom + madv + Soqd;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -84,6 +87,18 @@
                             @foreach (var item in dsdonvi)
                             {
                                 <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thông tư quyết định</label>
+                        <select class="form-control select2basic" asp-for="@QuyetDinh" id="Soqd" name="Soqd">
+                            <option value="all">--Tất cả--</option>
+                            @foreach (var qd in ListQuyetDinh)
+                            {
+                                <option value="@qd.Mahs">Số QĐ: @qd.Soqd -Thời điểm: @Helpers.ConvertDateToStr(qd.Thoidiem)</option>
                             }
                         </select>
                     </div>
