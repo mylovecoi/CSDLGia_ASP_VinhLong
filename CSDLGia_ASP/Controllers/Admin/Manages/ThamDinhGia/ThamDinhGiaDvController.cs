@@ -74,8 +74,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         Chucvu = Chucvu,
                         Sothe = Sothe,
                         Ngaycap = Ngaycap,
-                        //Soqddungtd = Soqddungtd,
-                        //Ngaydungtd = Ngaydungtd,
+                        Soqddungtd = Soqddungtd,
+                        Ngaydungtd = Ngaydungtd,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -147,18 +147,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         result += "</div>";
                         result += "</div>";
 
-                        //result += "<div class='col-xl-6'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Số quyết định dừng theo dõi</label>";
-                        //result += "<input type='text' id='soqddungtd_edit' name='soqddungtd_edit' class='form-control' value='" + model.Soqddungtd + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
-                        //result += "<div class='col-xl-6'>";
-                        //result += "<div class='form-group fv-plugins-icon-container'>";
-                        //result += "<label>Ngày dừng theo dõi</label>";
-                        //result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
-                        //result += "</div>";
-                        //result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Số quyết định </label>";
+                        result += "<input type='text' id='soqddungtd_edit' name='soqddungtd_edit' class='form-control' value='" + model.Soqddungtd + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Ngày quyết định</label>";
+                        result += "<input type='date' id='ngaydungtd_edit' name='ngaydungtd_edit' class='form-control' value='" + Helpers.ConvertDateToStrAjax(model.Ngaydungtd) + "'/>";
+                        result += "</div>";
+                        result += "</div>";
 
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
@@ -211,8 +211,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     model.Sothe = Sothe;
                     model.Ngaycap = Ngaycap;
                     model.Theodoi = Theodoi;
-                    // model.Soqddungtd = Soqddungtd;
-                    // model.Ngaydungtd = Ngaydungtd;
+                     model.Soqddungtd = Soqddungtd;
+                     model.Ngaydungtd = Ngaydungtd;
                     model.Updated_at = DateTime.Now;
                     _db.ThamDinhGiaDv.Update(model);
                     _db.SaveChanges();
