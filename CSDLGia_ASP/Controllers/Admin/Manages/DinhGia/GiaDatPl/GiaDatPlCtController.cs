@@ -65,15 +65,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
                 result += "<input hidden type='text' id='mahs_edit' name='mahs_edit' value='" + model.Mahs + "' class='form-control'/>";
 
-                result += "<div class='row'>";
-
-                //result += "<div class='col-xl-6'>";
-                //result += "<div class='form-group'>";
-                //result += "<label>Địa bàn áp dụng</label><br />";
-                //result += "<label style='color:blue' class='form-control'>"+ tendiaban +"</label>";
-                //result += "</div>";
-                //result += "</div>";
-                result += "<div class='col-xl-6'>";
+                result += "<div class='row'>";                
+                result += "<div class='col-xl-12'>";
                 result += "<div class='form-group'>";
                 result += "<label>Địa bàn</label><br />";
                 result += "<select class='form-control select2basic' id='MaDiaBanChiTiet_edit' style='width:100%'>";

@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
         {
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(p => p.Id == Id);                        
 
-            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatDiaBan).Where(x=>x.Level=="X");
+            var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatDiaBan);
             
 
             var tendiaban = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaDatDiaBan).TenDiaBan;
@@ -104,15 +104,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row'>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Địa bàn</label>";
-                result += "<label class='form-control' style='color:blue'>" + tendiaban + "</label>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
+                
+                result += "<div class='col-xl-12'>";
                 result += "<div class='form-group' style='width:100%'>";
-                result += "<label>Xã/phường</label>";
+                result += "<label>Địa bàn</label>";
                 result += "<select id='MaXaPhuong_edit' name='MaXaPhuong_edit' class='form-control select2basic' style='width:100%'>";                                
                 foreach (var item in DsXaPhuong)
                 {

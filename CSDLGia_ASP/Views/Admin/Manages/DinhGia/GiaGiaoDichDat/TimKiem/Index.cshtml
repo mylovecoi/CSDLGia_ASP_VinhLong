@@ -9,6 +9,8 @@
     var gia_tu = ViewData["gia_tu"];
     var gia_den = ViewData["gia_den"];    
     var manhom = ViewData["manhom"];
+    var ListSoQuyetDinh = (IEnumerable<GiaGiaoDichDat>) ViewData["ListSoQuyetDinh"];
+    var Soqd = ViewData["SoQuyetDinh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatCt>
 @section custom_style {
@@ -45,13 +47,14 @@
                 if (fromDateObj <= toDateObj) {
                     var current_path_url = '/GiaGiaoDichDat/Search?';
                     var madv = '&madv=' + $('#madv').val();
+                    var Soqd = '&Soqd=' + $('#Soqd').val();
                     var manhom = '&manhom=' + $('#manhom').val();
                     var ngaynhap_tu = '&ngaynhap_tu=' + $('#ngaynhap_tu').val();
                     var ngaynhap_den = '&ngaynhap_den=' + $('#ngaynhap_den').val();
                     var gia_tu = '&gia_tu=' + $('#gia_tu').val();
                     var gia_den = '&gia_den=' + $('#gia_den').val();
 
-                    var url = current_path_url + madv + manhom + ngaynhap_tu + ngaynhap_den + gia_tu + gia_den;
+                    var url = current_path_url + madv + Soqd + manhom + ngaynhap_tu + ngaynhap_den + gia_tu + gia_den;
                     window.location.href = url;
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
@@ -99,6 +102,18 @@
                                         <!option value="@item.MaDv" @((string)ViewData["madv"] == item.MaDv ? "selected" : "")>@item.TenDv</!option>
                                     }
                                 </optgroup>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Thông tư quyết định </label>
+                        <select class="form-control select2basic" asp-for="@Soqd" id="Soqd" name="Soqd">
+                            <option value="all">--Chọn tất cả--</option>
+                            @foreach (var qd in ListSoQuyetDinh)
+                            {
+                                <option value="@qd.Mahs">Số QĐ: @qd.Soqd -Thời điểm: @Helpers.ConvertDateToStr(qd.Thoidiem)</option>
                             }
                         </select>
                     </div>

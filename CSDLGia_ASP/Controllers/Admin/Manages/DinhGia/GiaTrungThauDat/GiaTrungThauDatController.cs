@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,8 +59,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                     TenDiaBan = diaban.TenDiaBan,
                                     Macqcq = dat.Macqcq,
                                     Madv = dat.Madv,
-                                    TenDonVi=donvi.TenDv,
-                                    Soqddaugia=dat.Soqddaugia,
+                                    TenDonVi = donvi.TenDv,
+                                    Soqddaugia = dat.Soqddaugia,
                                 };
 
                     if (Madv != "all")
@@ -84,7 +85,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          TenDv = donvi.TenDv,
                                      });
                     ViewData["DsDonvi"] = model_donvi;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x=>x.Level != "X");
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level != "X");
                     //ViewData["DsDonViTh"] = dsDonViTH;
                     ViewData["Madv"] = Madv;
                     ViewData["Nam"] = Nam;
@@ -434,7 +435,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                        MaDv = gdCt.MaDv,
                                        MaDiaBan = gdCt.MaDiaBan,
                                        MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == gdCt.MaDiaBan).MaDiaBanCq,
-                                       TenDiaBan=diaban.TenDiaBan,
+                                       TenDiaBan = diaban.TenDiaBan,
                                    };
                     model_new.GiaDauGiaDatCt = model_ct.ToList();
                     var donvi = _db.DsDonVi.FirstOrDefault(t => t.MaDv == model.Macqcq);
@@ -459,7 +460,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDat/Search")]
         [HttpGet]
         public IActionResult Search(DateTime beginTime, DateTime endTime,
-            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all")
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string Soqd = "all", string PhanLoai = "all", string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -488,14 +489,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          TenDuAn = dg.Tenduan,
                                          MaDv = dg.Madv,
                                          MaDiaBan = dgct.MaDiaBan,
-                                        
+
 
                                      };
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model_join = model_join.Where(x => x.ThoiDiem >= beginTime && x.ThoiDiem <= endTime && list_trangthai.Contains(x.TrangThai));
-                    if (!string.IsNullOrEmpty(ten))
+                    if (Soqd != "all")
                     {
-                        model_join = model_join.Where(t => t.TenDuAn.Contains(ten));
+                        model_join = model_join.Where(t => t.Mahs == Soqd);
                     }
                     if (Giakhoidiem_tu != 0)
                     {
@@ -517,28 +518,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         model_join = model_join.Where(t => t.PhanLoai == PhanLoai);
                     }
-                   
+
                     if (MaDiaBan != "all")
                     {
-                        
+
                         var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
                         List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
                         model_join = model_join.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                     }
-                    //if (MaDiaBan != "all")
-                    //{
-                    //    model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);
-                    //    DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
-                    //    DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
-                    //    if (MaXa != "all")
-                    //    {
-                    //        model_join = model_join.Where(x => x.Maxp == MaXa);
-                    //    }
-                    //}
+
+                    ViewData["ListQuyetDinh"] = _db.GiaDauGiaDat;
+                    ViewData["QuyetDinh"] = Soqd;
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDiaBanXaPhuong"] = _db.DsDiaBan;
                     ViewData["MaDiaBan"] = MaDiaBan;
-                   
+
                     ViewData["Phanloai"] = PhanLoai;
                     ViewData["beginTime"] = beginTime;
                     ViewData["endTime"] = endTime;
@@ -546,7 +541,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     ViewData["Giakhoidiem_tu"] = Giakhoidiem_tu;
                     ViewData["Giadaugia_tu"] = Giadaugia_tu;
                     ViewData["Giadaugia_den"] = Giadaugia_den;
-                    ViewData["ten"] = ten;
                     ViewData["MaDiaBan"] = MaDiaBan;
 
                     ViewData["Cqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
@@ -570,7 +564,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
         [Route("GiaTrungThauDat/PrintSearch")]
         [HttpPost]
         public IActionResult PrintSearch(DateTime beginTime, DateTime endTime,
-            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string ten, string PhanLoai = "all", string MaDiaBan = "all")
+            double Giakhoidiem_den, double Giakhoidiem_tu, double Giadaugia_tu, double Giadaugia_den, string Soqd = "all", string PhanLoai = "all", string MaDiaBan = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -602,13 +596,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                                          MaDiaBan = dgct.MaDiaBan,
                                          Maxp = dgct.MaDiaBan,
                                          MaDiaBanCapHuyen = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == dgct.MaDiaBan).MaDiaBanCq,
-                                         TenDiaBan=diaban.TenDiaBan,
+                                         TenDiaBan = diaban.TenDiaBan,
                                      };
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model_join = model_join.Where(x => x.ThoiDiem >= beginTime && x.ThoiDiem <= endTime && list_trangthai.Contains(x.TrangThai));
-                    if (!string.IsNullOrEmpty(ten))
+                    if (Soqd != "all")
                     {
-                        model_join = model_join.Where(t => t.TenDuAn.Contains(ten));
+                        model_join = model_join.Where(t => t.Mahs == Soqd);
                     }
                     if (MaDiaBan != "all")
                     {
@@ -636,7 +630,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     {
                         model_join = model_join.Where(t => t.PhanLoai == PhanLoai);
                     }
-                    
+
                     ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");
                     ViewData["DsDiaBanXa"] = _db.DsDiaBan.Where(x => x.Level == "X");
@@ -696,6 +690,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                 giayto_cxd.ForEach(x => x.Status = "XD");
             }
             _db.SaveChanges();
-        }                
+        }
     }
 }

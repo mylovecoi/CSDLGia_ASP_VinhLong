@@ -1,7 +1,7 @@
 ﻿@{
-    int record_id = 1;    
+    int record_id = 1;
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
-    
+
 
     var beginTime = ((DateTime)ViewData["beginTime"]).ToString("yyyy-MM-dd");
     var endTime = ((DateTime)ViewData["endTime"]).ToString("yyyy-MM-dd");
@@ -9,9 +9,11 @@
     var Giakhoidiem_tu = ViewData["Giakhoidiem_tu"];
     var Giadaugia_tu = ViewData["Giadaugia_tu"];
     var Giadaugia_den = ViewData["Giadaugia_den"];
-    var ten = ViewData["ten"];
     var Phanloai = ViewData["Phanloai"];
-    
+
+    var ListQuyetDinh = (IEnumerable<GiaDauGiaDat>)ViewData["ListQuyetDinh"];
+    var QuyetDinh = ViewData["QuyetDinh"];
+
     var DsDiaBan = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var DsDiaBanXaPhuong = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXaPhuong"];
     var MaDiaBan = ViewData["MaDiaBan"];
@@ -62,7 +64,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Địa bàn</label>
-                        <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan" onchange="GetXaPhuong()">
+                        <select class="form-control select2basic" asp-for="@MaDiaBan" id="MaDiaBan" name="MaDiaBan">
                             <option value="all">---Chọn địa bàn---</option>
                             @foreach (var item in DsDiaBanXaPhuong)
                             {
@@ -71,26 +73,20 @@
                         </select>
                     </div>
                 </div>
-               @*  <div class="col-xl-6">
+                <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Xã/phường</label>
-                        <select class="form-control select2basic" asp-for="@MaXa" id="MaXa" name="MaXa">
-                            <option value="all">---Chọn địa bàn---</option>
-                            @foreach (var item in DsDiaBanXaPhuong)
+                        <label>Thông tư quyết định</label>
+                        <select class="form-control select2basic" asp-for="@QuyetDinh" id="Soqd" name="Soqd" >
+                            <option value="all">---Chọn tất cả---</option>
+                            @foreach (var item in ListQuyetDinh)
                             {
-                                <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                                <option value="@item.Mahs">Số QĐ: @item.Soqddaugia -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)</option>
                             }
                         </select>
                     </div>
-                </div> *@
+                </div>
 
-
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>Tên dự án</label>
-                        <input type="text" class="form-control" asp-for="@ten" name="ten" id="ten" />
-                    </div>
-                </div>                
+               
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Phân loại</label>
@@ -203,25 +199,25 @@
         var form = document.getElementById("frm_search");
         form.submit();
     }
-    function GetXaPhuong() {
-        $.ajax({
-            url: '/Ajax/GetXaPhuong',
-            type: 'POST',
-            data: {
-                MaDiaBanHuyen: $('#MaDiaBan').val(),
-                KeySelect: 'MaXa'
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success('Success');
-                    $('#MaXa').html(data.message);
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
-    }
+    // function GetXaPhuong() {
+    //     $.ajax({
+    //         url: '/Ajax/GetXaPhuong',
+    //         type: 'POST',
+    //         data: {
+    //             MaDiaBanHuyen: $('#MaDiaBan').val(),
+    //             KeySelect: 'MaXa'
+    //         },
+    //         dataType: 'JSON',
+    //         success: function (data) {
+    //             if (data.status == 'success') {
+    //                 toastr.success('Success');
+    //                 $('#MaXa').html(data.message);
+    //             } else {
+    //                 toastr.error(data.message, "Lỗi!");
+    //             }
+    //         }
+    //     })
+    // }
     function ClickSearch() {
         var fromDate = document.getElementById("beginTime").value;
         var toDate = document.getElementById("endTime").value;
@@ -232,11 +228,9 @@
             var toDateObj = new Date(toDate);
 
             if (fromDateObj <= toDateObj) {
-                var current_path_url = '/GiaTrungThauDat/Search?';                
-                var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();
-                var MaXa = '&MaXa=' + $('#MaXa').val();
-                
-                var ten = '&ten=' + $('#ten').val();
+                var current_path_url = '/GiaTrungThauDat/Search?';
+                var MaDiaBan = '&MaDiaBan=' + $('#MaDiaBan').val();     
+                var Soqd = '&Soqd=' + $('#Soqd').val();
                 var PhanLoai = '&PhanLoai=' + $('#PhanLoai').val();
                 var endTime = '&endTime=' + $('#endTime').val();
                 var beginTime = '&beginTime=' + $('#beginTime').val();
@@ -244,7 +238,7 @@
                 var Giakhoidiem_den = '&Giakhoidiem_den=' + $('#Giakhoidiem_den').val();
                 var Giadaugia_den = '&Giadaugia_den=' + $('#Giadaugia_den').val();
                 var Giadaugia_tu = '&Giadaugia_tu=' + $('#Giadaugia_tu').val();
-                var url = current_path_url + MaDiaBan + MaXa + ten + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
+                var url = current_path_url + MaDiaBan + Soqd + PhanLoai + endTime + beginTime + Giakhoidiem_tu + Giakhoidiem_den + Giadaugia_tu + Giadaugia_den;
                 window.location.href = url;
             } else {
                 toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");

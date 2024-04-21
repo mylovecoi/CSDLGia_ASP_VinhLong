@@ -27,7 +27,7 @@
             <div class="modal-body">
                 @* <input hidden asp-for="Mahs"> *@
                 <div class="row">                    
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group" style="width:100%">
                             <label>Địa bàn</label>
                             <select  id="MaDiaBan_create" name="MaDiaBan_create" class="form-control select2basic" style="width:100%">                               
@@ -295,6 +295,7 @@
     }
     //Thêm
     function SetStore() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaDatDiaBanCt/Store',
             type: 'POST',
@@ -333,6 +334,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
 
@@ -345,6 +348,7 @@
 
 
     function SetDelete() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaDatDiaBanCt/Delete',
             type: 'POST',
@@ -363,6 +367,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }
@@ -396,6 +402,7 @@
     //Sửa
 
     function SetUpdate() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaDatDiaBanCt/Update',
             type: 'POST',
@@ -432,6 +439,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
 

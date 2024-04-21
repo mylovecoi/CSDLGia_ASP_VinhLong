@@ -474,20 +474,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                         var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
                         List<string> list_diaban_search = diaban_search.Select(t=>t.MaDiaBan).ToList();
                         model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
-                        //DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
-                        //DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
-                        //DsXaPhuong =
-                    }
-                    //ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    //ViewData["DsDiaBanXaPhuong"] = _db.DsDiaBan ;                    
+                        
+                    }                                       
                     ViewBag.beginTime = beginTime;
                     ViewBag.endTime = endTime;
                     ViewBag.beginPrice = beginPrice;
                     ViewBag.endPrice = endPrice;
                     ViewData["MaDiaBan"] = MaDiaBan;                    
                     ViewData["phanloaihoso"] = phanloaihoso;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    //ViewData["DsXaPhuong"] = DsXaPhuong.Any() ? DsXaPhuong : _db.DsXaPhuong;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;                   
                     ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";

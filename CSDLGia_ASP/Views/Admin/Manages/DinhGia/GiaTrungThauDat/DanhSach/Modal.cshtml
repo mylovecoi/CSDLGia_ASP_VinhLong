@@ -17,7 +17,7 @@
             </div>
             <div class="modal-body">               
                 <div class="row">                    
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group" style="width:100%">
                             <label>Địa bàn</label>
                             <select  id="MaDiaBan_create" name="MaDiaBan_create" class="form-control select2basic" style="width:100%">
@@ -223,6 +223,7 @@
     }
 
     function SetStore() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaTrungThauDatCt/Store',
             type: 'POST',
@@ -253,6 +254,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }
@@ -281,6 +284,7 @@
     }
 
     function SetUpdate() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaTrungThauDatCt/Update',
             type: 'POST',
@@ -308,6 +312,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }
@@ -317,6 +323,7 @@
     }
 
     function SetDelete() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaTrungThauDatCt/Delete',
             type: 'POST',
@@ -335,6 +342,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }

@@ -510,9 +510,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     if (Maloaidat != "all")
                     {
                         model = model.Where(t => t.Maloaidat == Maloaidat);
-                    }
-
-                    
+                    }                    
                     if (MaDiaBan != "all")
                     {
                        
@@ -521,7 +519,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         model = model.Where(t => list_diaban_search.Contains(t.Madiaban));
 
                     }
-
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsDiaBanXaPhuong"] = _db.DsDiaBan;
                     ViewData["MaDiaBan"] = MaDiaBan;                   

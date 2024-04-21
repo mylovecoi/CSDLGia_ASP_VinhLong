@@ -28,7 +28,7 @@
                             <label style="color:blue" class="form-control"> @ViewData["TenDiaBan"]</label>
                         </div>
                     </div> *@
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group ">
                             <label>Địa bàn</label><br />
                             <select class="form-control select2basic" id="MaDiaBanChiTiet" name="MaDiaBanChiTiet" style="width:100%">
@@ -118,6 +118,7 @@
         var khuvuc = $('#tenduong_create').val();
         if (khuvuc != "") {
             var giacuthe = $('#giact_create').val().replace(/\./g, "").replace(/,/g, ".");
+            showLoadingOverlay();
             $.ajax({
                 url: '/GiaDatCuTheCt/Store',
                 type: 'POST',
@@ -140,6 +141,8 @@
                     } else {
                         toastr.error(data.message, "Lỗi!");
                     }
+                    hideLoadingOverlay();
+                    document.getElementById('#frm_data').scrollIntoView();
                 }
             })
         } else {
@@ -173,6 +176,7 @@
 
     function SetUpdate() {
         var giacuthe = $('#giact_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaDatCuTheCt/Update',
             type: 'POST',
@@ -195,6 +199,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }
@@ -204,6 +210,7 @@
     }
 
     function SetDelete() {
+        showLoadingOverlay();
         $.ajax({
             url: '/GiaDatCuTheCt/Delete',
             type: 'POST',
@@ -222,6 +229,8 @@
                 } else {
                     toastr.error(data.message, "Lỗi!");
                 }
+                hideLoadingOverlay();
+                document.getElementById('#frm_data').scrollIntoView();
             }
         })
     }
