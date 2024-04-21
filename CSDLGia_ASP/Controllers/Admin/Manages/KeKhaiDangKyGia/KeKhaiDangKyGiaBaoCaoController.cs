@@ -51,7 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe)
+                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia
@@ -188,7 +188,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe)
+                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia

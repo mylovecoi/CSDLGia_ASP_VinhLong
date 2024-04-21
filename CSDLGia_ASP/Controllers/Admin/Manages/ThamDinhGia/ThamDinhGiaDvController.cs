@@ -440,6 +440,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                     if (donVi != null)
                     {
                         donVi.Theodoi = requests.Theodoi;
+                        donVi.Soqddungtd = requests.SoQD;
+                        donVi.Ngaydungtd = requests.NgayQD;
                         _db.ThamDinhGiaDv.Update(donVi);
                     }
                     _db.SaveChanges();

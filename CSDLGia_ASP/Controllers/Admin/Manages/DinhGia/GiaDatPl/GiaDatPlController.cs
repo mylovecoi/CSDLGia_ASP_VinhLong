@@ -471,7 +471,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     //var DsXaPhuong = new List<DsDiaBan>();
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(t => t.MaDiaBan == MaDiaBan);
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t=>t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                         //DsXaPhuong = _db.DsDiaBan.Where(x => x.MaDiaBanCq == MaDiaBan && x.Level == "X").ToList();
                         //DsXaPhuong = DsXaPhuong.Any() ? DsXaPhuong : _db.DsDiaBan.Where(x => x.Level == "X").ToList();
                         //DsXaPhuong =
@@ -539,7 +541,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                                      
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(x => x.MaDiaBan == MaDiaBan);                        
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                     }
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
@@ -569,46 +573,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
                 {
-                    //var model = _db.GiaDatPhanLoai.FirstOrDefault(t => t.Mahs == mahs_chuyen);
-
-                    //var dvcq_join = from dvcq in _db.DsDonVi
-                    //                join db in _db.DsDiaBan on dvcq.MaDiaBan equals db.MaDiaBan
-                    //                select new VMDsDonVi
-                    //                {
-                    //                    Id = dvcq.Id,
-                    //                    MaDiaBan = dvcq.MaDiaBan,
-                    //                    MaDv = dvcq.MaDv,
-                    //                    TenDv = dvcq.TenDv,
-                    //                    Level = db.Level,
-                    //                };
-                    //var chk_dvcq = dvcq_join.FirstOrDefault(t => t.MaDv == macqcq_chuyen);
-                    //model.Macqcq = macqcq_chuyen;
-                    //model.Trangthai = "HT";
-                    //if (chk_dvcq != null && chk_dvcq.Level == "T")
-                    //{
-                    //    model.Madv_t = macqcq_chuyen;
-                    //    model.Thoidiem_t = DateTime.Now;
-                    //    model.Trangthai_t = "CHT";
-                    //}
-                    //else if (chk_dvcq != null && chk_dvcq.Level == "ADMIN")
-                    //{
-                    //    model.Madv_ad = macqcq_chuyen;
-                    //    model.Thoidiem_ad = DateTime.Now;
-                    //    model.Trangthai_ad = "CHT";
-                    //}
-                    //else
-                    //{
-                    //    model.Madv_h = macqcq_chuyen;
-                    //    model.Thoidiem_h = DateTime.Now;
-                    //    model.Trangthai_h = "CHT";
-                    //}
+                    
                     var model = _db.GiaDatPhanLoai.FirstOrDefault(p => p.Mahs == mahs_complete);
                     model.Trangthai = trangthai_complete;
                     model.Updated_at = DateTime.Now;
 
                     _db.GiaDatPhanLoai.Update(model);
-                    _db.SaveChanges();                  
-
+                    _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
 
 

@@ -84,6 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
                                 var MaDiaBan = requests.MadiabanBc == "all" ? (worksheet.Cells[row, 4].Value != null ?
                                                 worksheet.Cells[row, 4].Value.ToString().Trim() : "") :requests.MadiabanBc;
+                                MaDiaBan = (string.IsNullOrEmpty(MaDiaBan) || MaDiaBan == "all") ? MaDiaBanGiaDatPhanLoai : MaDiaBan;
 
                                 list_add.Add(new GiaDatPhanLoaiCt
                                 {
@@ -127,7 +128,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                 var modelct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == Mahs);
                 model.GiaDatPhanLoaiCt = modelct.ToList();
                 var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(MaDiaBanGiaDatPhanLoai);
-                ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+                ViewData["DsXaPhuong"] = DsXaPhuong;
                 ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == MaDiaBanGiaDatPhanLoai).TenDiaBan;
                 ViewData["Mahs"] = model.Mahs;
                 ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");               

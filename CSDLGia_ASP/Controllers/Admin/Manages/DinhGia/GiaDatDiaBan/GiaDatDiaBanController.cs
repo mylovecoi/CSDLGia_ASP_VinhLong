@@ -435,6 +435,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     _db.GiaDatDiaBan.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "GiaDatDiaBan", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -513,9 +515,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(t => t.Madiaban == MaDiaBan);
-                        
-                        
+                       
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.Madiaban));
+
                     }
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
@@ -594,7 +598,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     }
                     if (MaDiaBan != "all")
                     {
-                        model = model.Where(x => x.Madiaban == MaDiaBan);                        
+                       
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model = model.Where(t => list_diaban_search.Contains(t.Madiaban));
                     }
                     ViewData["TenTinh"] = _db.DsDiaBan.FirstOrDefault(x => string.IsNullOrEmpty(x.MaDiaBanCq)).TenDiaBan;
                     ViewData["DsDiaBanHuyen"] = _db.DsDiaBan.Where(x => x.Level == "H");

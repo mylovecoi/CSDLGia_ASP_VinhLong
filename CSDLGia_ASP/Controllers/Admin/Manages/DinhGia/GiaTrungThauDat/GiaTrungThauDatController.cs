@@ -372,6 +372,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "GiaTrungThauDat", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
@@ -518,7 +520,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                    
                     if (MaDiaBan != "all")
                     {
-                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);                        
+                        
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model_join = model_join.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                     }
                     //if (MaDiaBan != "all")
                     //{
@@ -607,7 +612,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     }
                     if (MaDiaBan != "all")
                     {
-                        model_join = model_join.Where(t => t.MaDiaBan == MaDiaBan);                        
+                        var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                        model_join = model_join.Where(t => list_diaban_search.Contains(t.MaDiaBan));
                     }
                     if (Giakhoidiem_tu != 0)
                     {
