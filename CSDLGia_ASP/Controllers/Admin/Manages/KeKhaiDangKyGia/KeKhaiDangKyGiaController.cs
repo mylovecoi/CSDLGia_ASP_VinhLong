@@ -87,6 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     {
                         NgayQD = DateTime.Now,
                         NgayQdLk = DateTime.Now,
+                        NgayThucHien = DateTime.Now,
                         Mahs = MaCsKd + "_" + MaNghe + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         MaNghe = MaNghe,
                         MaCsKd = MaCsKd,
@@ -126,6 +127,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                         foreach (var item in data_ct) { item.TrangThai = "XD"; }
                         _db.KeKhaiDangKyGiaCt.UpdateRange(data_ct);
                     }
+                    var data_giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
+                    if (data_giayto.Any())
+                    {
+                        foreach (var item in data_giayto) { item.Status = "XD"; }
+                        _db.ThongTinGiayTo.UpdateRange(data_giayto);
+                    }
                     _db.KeKhaiDangKyGia.Add(request);
                     _db.SaveChanges();
 
@@ -152,6 +159,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                 {
                     var model = _db.KeKhaiDangKyGia.FirstOrDefault(t => t.Mahs == Mahs);
                     model.KeKhaiDangKyGiaCt = _db.KeKhaiDangKyGiaCt.Where(t => t.Mahs == model.Mahs).ToList();
+                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs).ToList();
 
                     var nghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == model.MaNghe);
                     ViewData["HoSo"] = (nghekd?.Phanloai ?? "") + " " + (nghekd?.Tennghe ?? "");
@@ -184,6 +192,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     {
                         foreach (var item in data_ct) { item.TrangThai = "XD"; }
                         _db.KeKhaiDangKyGiaCt.UpdateRange(data_ct);
+                    }
+                    var data_giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
+                    if (data_giayto.Any())
+                    {
+                        foreach (var item in data_giayto) { item.Status = "XD"; }
+                        _db.ThongTinGiayTo.UpdateRange(data_giayto);
                     }
                     _db.KeKhaiDangKyGia.Update(request);
                     _db.SaveChanges();

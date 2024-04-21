@@ -147,9 +147,9 @@
                                    target="_blank">
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
-                               <!--button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                               <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                      <i class="icon-lg la la-file-alt text-dark"></i>
-                               </button-->
+                               </button>
                                 @if (item.TrangThai == "CC" || item.TrangThai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.thongtin", "Edit"))
@@ -186,3 +186,4 @@
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinHoSo/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/KeKhaiDangKyGia/ThongTinGiayTo/Show.cshtml")
