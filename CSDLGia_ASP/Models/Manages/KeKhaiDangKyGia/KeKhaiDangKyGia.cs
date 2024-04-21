@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -46,8 +47,9 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia
 
         [NotMapped]
         public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }
-        
 
-        
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+
     }
 }

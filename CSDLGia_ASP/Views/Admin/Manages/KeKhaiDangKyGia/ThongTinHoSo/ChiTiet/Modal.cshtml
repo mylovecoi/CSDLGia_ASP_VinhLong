@@ -149,6 +149,7 @@
                         toastr.error(data.message, "Lỗi!");
                     }
                     hideLoadingOverlay();
+                    document.getElementById("frm_data").scrollIntoView();
                 }
             })
 
@@ -207,6 +208,7 @@
                         toastr.error(data.message, "Lỗi!");
                     }
                     hideLoadingOverlay();
+                    document.getElementById("frm_data").scrollIntoView();
                 }
             })
 
@@ -242,6 +244,7 @@
                     toastr.error(data.message, "Lỗi!");
                 }
                 hideLoadingOverlay();
+                document.getElementById("frm_data").scrollIntoView();
             }
         })
     }
