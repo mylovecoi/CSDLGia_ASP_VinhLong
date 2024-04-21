@@ -88,6 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                         for (int row = request.LineStart; row <= request.LineStop; row++)
                         {
                             string MaDiaBan = request.MaXa == "all" ? (worksheet.Cells[row, 13].Value != null ? worksheet.Cells[row, 13].Value.ToString().Trim() : "") : request.Madiaban;
+                            MaDiaBan = (string.IsNullOrEmpty(MaDiaBan) || MaDiaBan =="all")? MaDiaBanHuyen :MaDiaBan;
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
                             {
                                 Madiaban=request.Madiaban,                               

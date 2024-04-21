@@ -50,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
                 {
                     var request = new PhiLePhiNhom
                     {
@@ -85,7 +85,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Edit"))
                 {
                     var model = _db.PhiLePhiNhom.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -93,7 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                         string result = "<div class='row' id='edit_thongtin'>";
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Mã nhóm*</label>";
+                        result += "<label>Mã nhóm<span class='text-danger'>*</span></label>";
                         result += "<input type='text' id='manhom_edit' name='manhom_edit' class='form-control' value='" + model.Manhom + "'/>";
                         result += "</div>";
                         result += "</div>"; 
@@ -143,7 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Edit"))
                 {
                     var model = _db.PhiLePhiNhom.FirstOrDefault(t => t.Id == Id);
                     var model_ct = _db.PhiLePhiDm.Where(t => t.Manhom == model.Manhom);
@@ -181,7 +181,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaphilephi.danhmucphilephi", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Delete"))
                 {
                     var model = _db.PhiLePhiNhom.FirstOrDefault(p => p.Id == id_delete);
                     _db.PhiLePhiNhom.Remove(model);
