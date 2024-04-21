@@ -153,7 +153,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             result += "<tr style='text-align:center'>";
             result += "<th width='2%'>#</th>";
             result += "<th>Tên nghề kinh doanh</th>";
-            result += "<th>Đơn vị quản lý</th>";
+            result += "<th>Đơn vị nhận hồ sơ</th>";
             result += "<th width='15%'>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";

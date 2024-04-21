@@ -1,49 +1,89 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
     public class TtDnTdXdController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDonviService _dsDonviService;
 
-        public TtDnTdXdController(CSDLGiaDBContext db)
+        public TtDnTdXdController(CSDLGiaDBContext db, IDsDonviService dsDonviService)
         {
             _db = db;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("DoanhNghiep/XetDuyet")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Manghe, string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", "Index"))
                 {
-                    //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") != null)
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    
+                    var model = (from ttdntd in _db.TtDnTd.Where(t => t.Trangthai == "CD")
+                                 join ttdntdct in _db.TtDnTdCt on ttdntd.Madv equals ttdntdct.Madv
+                                 select new TtDnTd
+                                 {
+                                     Id = ttdntd.Id,
+                                     Madv = ttdntd.Madv,
+                                     Mahs = ttdntd.Mahs,
+                                     Macqcq = ttdntd.Macqcq,
+                                     Madiaban = ttdntd.Madiaban,
+                                     Tendn = ttdntd.Tendn,
+                                     Diachi = ttdntd.Diachi,
+                                     Tel = ttdntd.Tel,
+                                     Fax = ttdntd.Fax,
+                                     Email = ttdntd.Email,
+                                     Website = ttdntd.Website,
+                                     Diadanh = ttdntd.Diadanh,
+                                     Chucdanh = ttdntd.Chucdanh,
+                                     Nguoiky = ttdntd.Nguoiky,
+                                     Noidknopthue = ttdntd.Noidknopthue,
+                                     Tailieu = ttdntd.Tailieu,
+                                     Giayphepkd = ttdntd.Giayphepkd,
+                                     Ghichu = ttdntd.Ghichu,
+                                     Trangthai = ttdntd.Trangthai,
+                                     Level = ttdntd.Level,
+                                     Lydo = ttdntd.Lydo,
+                                     Ngaychuyen = ttdntd.Ngaychuyen,
+                                     Manghe = ttdntdct.Manghe,
+                                 }).ToList();
+
+                    //model = model.Where(t=> list_madv.Contains(t.Macqcq)).ToList();
+                    //if (Madv != "all" || !string.IsNullOrEmpty(Madv))
                     //{
-                    //    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
-                    //    var GetMadiaban = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv);
-                    //    Madiaban = GetMadiaban.MaDiaBan;
-                    //}
-                    //else
-                    //{
-                    //    if (string.IsNullOrEmpty(Madiaban))
-                    //    {
-                    //        Madiaban = _db.DsDiaBan.OrderBy(t => t.Id).Where(t => t.Level != "ADMIN").Select(t => t.MaDiaBan).First();
-                    //    }
+                    //    model = model.Where(t => t.Macqcq == Madv).ToList();
                     //}
 
-                    var model = _db.TtDnTd.Where(t => t.Trangthai == "CD");
+                    if (string.IsNullOrEmpty(Manghe))
+                    {
+                        Manghe = _db.DmNgheKd.FirstOrDefault(t => t.Theodoi == "TD")?.Manghe ?? "";
+                    }
+
+                    model = model.Where(t => t.Manghe == Manghe).ToList();
+
+                    //var model = _db.TtDnTd.Where(t => t.Trangthai == "CD");
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
+                    ViewData["Manghe"] = Manghe;
+                    ViewData["Madv"] = Madv;
+                    ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD");
                     ViewData["Title"] = "Thông tin doanh nghiệp xét duyệt";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
                     ViewData["MenuLv2"] = "menu_kekhaidangkygia_xetduyetthongtindonvi";
