@@ -9,21 +9,28 @@
 
     <thead>
         <tr>
-            <th style="text-align:center" >Tên đơn vị*</th>
-            <th style="text-align:center">Địa chỉ trụ sở*</th>
-            <th style="text-align:center">Người đại diện*</th>
-            <th style="text-align:center">Chức danh đăng ký hành nghề</th>
-            <th style="text-align:center">Số thẻ</th>
-
+            <th style="text-align: center; font-weight: bold">Mã số</th>
+            <th style="text-align: center; font-weight: bold">Tên đơn vị</th>
+            <th style="text-align: center; font-weight: bold">Địa chỉ</th>
+            <th style="text-align: center; font-weight: bold">Người đại diện</th>
+            <th style="text-align: center; font-weight: bold">Số thẻ</th>
+            <th style="text-align: center; font-weight: bold">Chức danh</th>
+            <th style="text-align: center; font-weight: bold">Số quyết định</th>
+            <th style="text-align: center; font-weight: bold">Ngày quyết định</th>
+            <th style="text-align: center; font-weight: bold">Trạng thái</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td style="text-align:center">@Model.Tendv</td>
-            <td style="text-align:center">@Model.Diachi</td>
-            <td style="text-align:center">@Model.Nguoidaidien</td>
-            <td style="text-align:center">@Model.Chucvu</td>
-            <td style="text-align:center">@Model.Maso</td>
+            <td style="text-align: left">@Model.Maso</td>
+            <td style="text-align: left">@Model.Tendv</td>
+            <td style="text-align: left">@Model.Diachi</td>
+            <td style="text-align: left">@Model.Nguoidaidien</td>
+            <td style="text-align: center">@Model.Sothe</td>
+            <td style="text-align: center">@Model.Chucvu</td>
+            <td style="text-align: center">@Model.Soqddungtd</td>
+            <td style="text-align: center">@Helpers.ConvertDateToStr(Model.Ngaydungtd)</td>
+            <td style="text-align: center">@(Model.Theodoi == "TD" ? "Theo dõi" : "Ngưng theo dõi")</td>
         </tr>
     </tbody>
 
