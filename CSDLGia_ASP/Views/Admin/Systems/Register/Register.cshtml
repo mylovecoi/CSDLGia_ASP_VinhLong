@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.ViewModels.Systems.VMRegisters
 <!DOCTYPE html>
@@ -132,6 +133,21 @@
                             <br />
                             <p class="text-left" style="color: blue; font-weight: bold">Thông tin đăng nhập</p>
                             <div class="row text-left">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan quản lý xét duyệt đăng ký tài khoản</label>
+                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7 select2basic" asp-for="Macqcq">
+                                            @foreach (var item in dsdonvi)
+                                            {
+                                                <option value="@item.MaDv">&emsp;@item.TenDv</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                    </div>
+                                </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label class="font-size-h7 font-weight-bolder text-dark">Tài khoản đăng nhập</label>
