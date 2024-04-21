@@ -88,6 +88,7 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Nghề kinh doanh</b></label>
                                 <select class="form-control select2basic" id="manghe" name="manghe" style="width:100%">
+                                    <option value="all">--Tất cả--</option>
                                     @foreach (var item in dmnghekd)
                                     {
                                         <option value="@item.Manghe">&emsp;@item.Phanloai @item.Tennghe</option>
@@ -198,7 +199,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCTh('BaoCaoKeKhaiDangKyGia/BaoCaoTongHop')">BC Tổng hợp</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCCt('BaoCaoKeKhaiDangKyGia/BaoCaoChiTiet')">BC Chi tiết</button>
+                    @* <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCCt('BaoCaoKeKhaiDangKyGia/BaoCaoChiTiet')">BC Chi tiết</button> *@
                 </div>
             </div>
         </form>

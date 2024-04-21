@@ -94,6 +94,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                         TrangThai = "CC"
                     };
 
+                    var modellk = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == MaNghe && t.MaCsKd == MaCsKd &&
+                    (t.TrangThai == "DD" || t.TrangThai == "CB" )).OrderByDescending(t => t.NgayThucHien).FirstOrDefault();
+                    if (modellk != null)
+                    {
+                        model.SoQdLk = modellk.SoQD;
+                        model.NgayQdLk = modellk.NgayQD;
+                    }
+
                     var nghekd = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == MaNghe);
                     ViewData["HoSo"] = (nghekd?.Phanloai ?? "") + " " + (nghekd?.Tennghe ?? "");
 

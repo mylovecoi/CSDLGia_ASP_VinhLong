@@ -1,9 +1,11 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
@@ -11,10 +13,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
     public class KeKhaiDangKyGiaBaoCaoController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IDsDonviService _dsDonviService;
 
-        public KeKhaiDangKyGiaBaoCaoController(CSDLGiaDBContext db)
+        public KeKhaiDangKyGiaBaoCaoController(CSDLGiaDBContext db, IDsDonviService dsDonviService)
         {
             _db = db;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("BaoCaoKeKhaiDangKyGia")]
@@ -25,7 +29,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD");
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+
+                    // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+                    data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+
+                    ViewData["DmNgheKd"] = data_nghe;
                     ViewData["Title"] = "Báo cáo kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
                     ViewData["MenuLv2"] = "menu_kekhaidangkygia_baocao";
@@ -51,7 +63,92 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+                    // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+                    data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+                    List<string> list_manghe = data_nghe.Select(t => t.Manghe).ToList();
+                    List<string> list_trangthaihs = new List<string> { "DD", "CB"};
+                    var datahoso = _db.KeKhaiDangKyGia.Where(t => list_madv.Contains(t.MaCqCq) && list_trangthaihs.Contains(t.TrangThai) && list_manghe.Contains(t.MaNghe));
+                    if(manghe != "all")
+                    {
+                        datahoso = datahoso.Where(t => t.MaNghe == manghe);
+                    }
+                    if (phanloai == "ngaychuyen")
+                    {
+                        if (time == "ngay")
+                        {
+                            datahoso = datahoso.Where(t => t.NgayChuyen >= tungay && t.NgayChuyen <= denngay);
+                        }
+                        else if (time == "thang")
+                        {
+                            datahoso = datahoso.Where(t => t.NgayChuyen.Month == int.Parse(thang) && t.NgayChuyen.Year == int.Parse(nam));
+                        }
+                        else
+                        {
+                            if (quy == "1")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 1, 1);
+                                denngay = new DateTime(int.Parse(nam), 3, 31);
+                            }
+                            else if (quy == "2")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 4, 1);
+                                denngay = new DateTime(int.Parse(nam), 6, 30);
+                            }
+                            else if (quy == "3")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 7, 1);
+                                denngay = new DateTime(int.Parse(nam), 9, 30);
+                            }
+                            else
+                            {
+                                tungay = new DateTime(int.Parse(nam), 10, 1);
+                                denngay = new DateTime(int.Parse(nam), 12, 31);
+                            }
+
+                            datahoso = datahoso.Where(t => t.NgayChuyen >= tungay && t.NgayChuyen <= denngay);
+                        }
+                    }
+                    else
+                    {
+                        if (time == "ngay")
+                        {
+                            datahoso = datahoso.Where(t => t.NgayDuyet >= tungay && t.NgayDuyet <= denngay);
+                        }
+                        else if (time == "thang")
+                        {
+                            datahoso = datahoso.Where(t => t.NgayDuyet.Month == int.Parse(thang) && t.NgayDuyet.Year == int.Parse(nam));
+                        }
+                        else
+                        {
+                            if (quy == "1")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 1, 1);
+                                denngay = new DateTime(int.Parse(nam), 3, 31);
+                            }
+                            else if (quy == "2")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 4, 1);
+                                denngay = new DateTime(int.Parse(nam), 6, 30);
+                            }
+                            else if (quy == "3")
+                            {
+                                tungay = new DateTime(int.Parse(nam), 7, 1);
+                                denngay = new DateTime(int.Parse(nam), 9, 30);
+                            }
+                            else
+                            {
+                                tungay = new DateTime(int.Parse(nam), 10, 1);
+                                denngay = new DateTime(int.Parse(nam), 12, 31);
+                            }
+
+                            datahoso = datahoso.Where(t => t.NgayDuyet >= tungay && t.NgayDuyet <= denngay);
+                        }
+                    }
+
+                    var model = (from kk in datahoso
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia
@@ -76,97 +173,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                                      Tendn = com.Tendn,
                                  });
 
-                    if (phanloai == "ngaychuyen")
-                    {
-                        if (time == "ngay")
-                        {
-                            model = model.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
-                        }
-                        else if (time == "thang")
-                        {
-                            model = model.Where(t => t.Ngaychuyen.Month == int.Parse(thang) && t.Ngaychuyen.Year == int.Parse(nam));
-                        }
-                        else
-                        {
-                            if (quy == "1")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 1, 1);
-                                denngay = new DateTime(int.Parse(nam), 3, 31);
-                            }
-                            else if (quy == "2")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 4, 1);
-                                denngay = new DateTime(int.Parse(nam), 6, 30);
-                            }
-                            else if (quy == "3")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 7, 1);
-                                denngay = new DateTime(int.Parse(nam), 9, 30);
-                            }
-                            else
-                            {
-                                tungay = new DateTime(int.Parse(nam), 10, 1);
-                                denngay = new DateTime(int.Parse(nam), 12, 31);
-                            }
-
-                            model = model.Where(t => t.Ngaychuyen >= tungay && t.Ngaychuyen <= denngay);
-                        }
-                    }
-                    else
-                    {
-                        if (time == "ngay")
-                        {
-                            model = model.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
-                        }
-                        else if (time == "thang")
-                        {
-                            model = model.Where(t => t.Ngaynhan.Month == int.Parse(thang) && t.Ngaynhan.Year == int.Parse(nam));
-                        }
-                        else
-                        {
-                            if (quy == "1")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 1, 1);
-                                denngay = new DateTime(int.Parse(nam), 3, 31);
-                            }
-                            else if (quy == "2")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 4, 1);
-                                denngay = new DateTime(int.Parse(nam), 6, 30);
-                            }
-                            else if (quy == "3")
-                            {
-                                tungay = new DateTime(int.Parse(nam), 7, 1);
-                                denngay = new DateTime(int.Parse(nam), 9, 30);
-                            }
-                            else
-                            {
-                                tungay = new DateTime(int.Parse(nam), 10, 1);
-                                denngay = new DateTime(int.Parse(nam), 12, 31);
-                            }
-
-                            model = model.Where(t => t.Ngaynhan >= tungay && t.Ngaynhan <= denngay);
-                        }
-                    }
-                    var phanloaibc = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == manghe)?.Phanloai ?? "Kê khai giá";
-                    var tenbaocao = "";
-                    if (phanloaibc == "Kê khai giá")
-                    {
-                        tenbaocao = "Kkg";
-                    }
-                    else
-                    {
-                        tenbaocao = "Dkg";
-                    }
+                    
+                    var phanloaibc = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == manghe)?.Phanloai ?? "Kê khai đăng ký giá";
+                    var tennghe = _db.DmNgheKd.FirstOrDefault(t => t.Manghe == manghe)?.Tennghe ?? "";
                     ViewData["time"] = time;
                     ViewData["tungay"] = tungay;
                     ViewData["denngay"] = denngay;
                     ViewData["thang"] = thang;
                     ViewData["quy"] = quy;
                     ViewData["nam"] = nam;
+                    ViewData["phanloaibc"] = phanloaibc;
+                    ViewData["tennghe"] = tennghe;
                     ViewData["DmNgheKd"] = _db.DmNgheKd;
                     ViewData["Title"] = "Báo cáo kê khai đăng ký giá";
-                    return View("Views/Admin/Manages/KeKhaiDangKyGia/BaoCao/BcTongHop" + tenbaocao + ".cshtml", model);
+                    return View("Views/Admin/Manages/KeKhaiDangKyGia/BaoCao/BcTongHop.cshtml", model);
                 }
                 else
                 {
@@ -188,7 +208,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.baocao", "Index"))
                 {
-                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaNghe == manghe && (t.TrangThai == "DD" || t.TrangThai == "CB"))
+                    var model = (from kk in _db.KeKhaiDangKyGia.Where(t => t.MaCqCq == Helpers.GetSsAdmin(HttpContext.Session, "Madv") && t.MaNghe == manghe/* && (t.TrangThai == "DD" || t.TrangThai == "CB")*/)
                                  join cskd in _db.KeKhaiDangKyGiaCSKD on kk.MaCsKd equals cskd.MaCsKd
                                  join com in _db.Company on cskd.MaDv equals com.Madv
                                  select new VMKkGia
