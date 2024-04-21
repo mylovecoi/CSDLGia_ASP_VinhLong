@@ -82,6 +82,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     ViewData["MaCqCq"] = MaCqCq;
                     ViewData["DsDonviCq"] = model_donvicq;
                     ViewData["DsNghe"] = model_nghe;
+                    ViewData["SoHsDuyet"] = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == MaNghe)?.Max(t => t.SoHsDuyet) ?? "0";
                     ViewData["Title"] = "Thông tin xét duyệt hồ sơ kê khai đăng ký giá";
                     ViewData["MenuLv1"] = "menu_kekhaidangkygia";
                     ViewData["MenuLv2"] = "menu_kekhaidangkygia_xetduyet";

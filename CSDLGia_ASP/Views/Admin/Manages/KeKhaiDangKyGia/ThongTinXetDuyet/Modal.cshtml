@@ -1,4 +1,7 @@
-﻿<!--Trả lại Modal-->
+﻿@{
+    int sohsduyet = Convert.ToInt32(ViewData["SoHsDuyet"]) + 1;
+}
+<!--Trả lại Modal-->
 <div class="modal fade" id="TraLai_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form asp-controller="KeKhaiDangKyGiaXetDuyet" asp-action="TraLai" id="frm_tralai" method="post">
@@ -49,8 +52,8 @@
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Số hố sơ duyêt</label>
-                                <input class="form-control" id="sohoso_duyet" name="sohoso_duyet">
+                                <label>Số hồ sơ duyệt</label>
+                                <input class="form-control" id="sohoso_duyet" name="sohoso_duyet" value="@sohsduyet">
                             </div>
                         </div>
                     </div>

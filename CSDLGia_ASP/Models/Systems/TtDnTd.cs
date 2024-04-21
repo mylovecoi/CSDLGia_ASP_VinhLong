@@ -42,5 +42,7 @@ namespace CSDLGia_ASP.Models.Systems
         public DateTime Ngaychuyen { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public string Manghe { get; set; }
     }
 }
