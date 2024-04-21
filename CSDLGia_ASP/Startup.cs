@@ -26,7 +26,7 @@ namespace CSDLGia_ASP
             services.AddDbContext<CSDLGiaDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CSDLGia_ASPConnection"), options =>
                 {
-                    options.CommandTimeout(180); // 3 minutes
+                    options.CommandTimeout(1800); // 3 minutes
                 })
             );
             //services.AddDbContext<DanhMucChungDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DanhMucChungConnection")));
