@@ -81,10 +81,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
                     Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
                     for (int row = requests.LineStart; row <= requests.LineStop; row++)
                     {
-                        string MaXaPhuong = requests.Maxp == "all" ? (worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 11].Value.ToString().Trim() : "") : requests.Maxp;
+                        string MaDiaBan = requests.Maxp == "all" ? (worksheet.Cells[row, 11].Value != null ? worksheet.Cells[row, 11].Value.ToString().Trim() : "") : requests.Maxp;
+                        MaDiaBan = (string.IsNullOrEmpty(MaDiaBan) || MaDiaBan == "all") ? requests.MadiabanBc : MaDiaBan;
                         list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt
                         {
-                            MaDiaBan= MaXaPhuong,                           
+                            MaDiaBan= MaDiaBan,                           
                             Mahs = Mahs,
                             MaDv = requests.MaDv,
                             TrangThai = "CXD",
@@ -138,7 +139,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
             var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(requests.MadiabanBc);
 
             ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == requests.MadiabanBc).TenDiaBan;
-            ViewData["DsXaPhuong"] = DsXaPhuong.Where(x => x.Level == "X");
+            ViewData["DsXaPhuong"] = DsXaPhuong;
 
             ViewData["DmDvt"] = _db.DmDvt.ToList();
             ViewData["TenDonVi"] = _db.DsDonVi.First(x => x.MaDv == requests.MaDv).TenDv;            

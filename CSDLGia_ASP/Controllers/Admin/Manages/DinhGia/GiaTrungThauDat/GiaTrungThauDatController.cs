@@ -372,6 +372,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauDat
 
                     _db.GiaDauGiaDat.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
                     return RedirectToAction("Index", "GiaTrungThauDat", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else
