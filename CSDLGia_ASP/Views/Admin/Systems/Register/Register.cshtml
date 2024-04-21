@@ -46,11 +46,11 @@
                 <div class="login-form text-center text-white p-7 position-static overflow-hidden"
                      style="position: static; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); overflow: hidden; color: #000; max-width: 1000px;">
                     <!--begin::Login Header-->
-                    <div class="d-flex flex-center mb-15">
+                    @* <div class="d-flex flex-center mb-15">
                         <a href="#">
                             <img src="~/logo/logovn.png" width="150" alt="Phần mềm Cơ sở dữ liệu giá Khánh Hòa" />
                         </a>
-                    </div>
+                    </div> *@
                     <!--end::Login Header-->
                     <!--begin::Login Sign in form-->
                     <div class="login-signin">
@@ -65,78 +65,78 @@
                             <div class="row text-left">
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Tên doanh nghiệp*</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Tendn" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Tên doanh nghiệp<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Tendn" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Mã số thuế hoặc mã số đăng ký KD*</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Madv" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Mã số thuế hoặc mã số đăng ký KD<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Madv" required />
                                         <span asp-validation-for="Madv" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Số điện thoại trụ sở chính</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="tel" asp-for="Tel" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Số điện thoại trụ sở chính<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="tel" asp-for="Tel" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Số fax trụ sở chính</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="tel" asp-for="Fax" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Số fax trụ sở chính<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="tel" asp-for="Fax" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa chỉ trụ sở</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diachi" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa chỉ trụ sở<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diachi" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa danh</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diadanh" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Địa danh<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Diadanh" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Email</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="email" asp-for="Email" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Email<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="email" asp-for="Email" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Website</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Website" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Website<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Website" required />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Thông tin giấy tờ</label>
-                                        <textarea class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Tailieu"></textarea>
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Thông tin giấy tờ<span class="text-danger">*</span></label>
+                                        <textarea class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Tailieu" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 text-dark">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Giấy đăng ký kinh doanh</label><br />
-                                        <input class="text-dark opacity-60 font-weight-bold" type="file" asp-for="Giayphepkdupload" accept=".doc, .pdf" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Giấy đăng ký kinh doanh<span class="text-danger">*</span></label><br />
+                                        <input class="text-dark opacity-60 font-weight-bold" type="file" asp-for="Giayphepkdupload" accept=".doc, .pdf, .img" required />
                                     </div>
                                 </div>
 
                             </div>
 
-                            <p class="text-left" style="color: blue; font-weight: bold">Thông tin dịch vụ kê khai</p>
+                            <p class="text-left" style="color: blue; font-weight: bold">Thông tin lĩnh vực kinh doanh</p>
                             @await Html.PartialAsync("~/Views/Admin/Systems/Register/Lvkd.cshtml")
                             <br />
                             <br />
                             <p class="text-left" style="color: blue; font-weight: bold">Thông tin đăng nhập</p>
                             <div class="row text-left">
-                                <div class="col-xl-6">
+                                <div class="col-xl-12">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan quản lý xét duyệt đăng ký tài khoản</label>
-                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7 select2basic" asp-for="Macqcq">
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Cơ quan quản lý xét duyệt đăng ký tài khoản<span class="text-danger">*</span></label>
+                                        <select class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7 select2basic" asp-for="Macqcq" required>
                                             @foreach (var item in dsdonvi)
                                             {
                                                 <option value="@item.MaDv">&emsp;@item.TenDv</option>
@@ -146,19 +146,15 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Tài khoản đăng nhập</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Username" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Tài khoản đăng nhập<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="text" asp-for="Username" required />
                                         <span asp-validation-for="Username" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
-                                        <label class="font-size-h7 font-weight-bolder text-dark">Mật khẩu</label>
-                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="password" asp-for="Password" />
+                                        <label class="font-size-h7 font-weight-bolder text-dark">Mật khẩu<span class="text-danger">*</span></label>
+                                        <input class="form-control h-auto py-3 px-6 border-0 rounded-lg font-size-h7" type="password" asp-for="Password" required />
                                     </div>
                                 </div>
                             </div>

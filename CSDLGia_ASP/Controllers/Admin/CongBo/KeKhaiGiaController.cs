@@ -22,10 +22,22 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         [HttpGet]
         public IActionResult KeKhaiGia(int Nam,string MaNghe)
         {
-  
+            var model_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
+            List<string> list = model_nghe.Select(t=>t.Manghe).ToList();
+
             MaNghe = string.IsNullOrEmpty(MaNghe) ? "all" : MaNghe;
 
-            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia> model = _db.KeKhaiDangKyGia.Where(t => t.TrangThai == "CB");
+            IEnumerable<CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia> model = _db.KeKhaiDangKyGia.Where(t => t.TrangThai == "CB" && list.Contains(t.MaNghe));
+
+            if (Nam != 0)
+            {
+                model = model.Where(t => t.NgayQD.Year == Nam);
+            }
+
+            if (MaNghe != "all")
+            {
+                model = model.Where(t => t.MaNghe == MaNghe);
+            }
 
             var model_jon = from hoso in model
                             join cskd in _db.KeKhaiDangKyGiaCSKD on hoso.MaCsKd equals cskd.MaCsKd
@@ -51,17 +63,6 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
                             TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
                         };
 
-            if (Nam != 0)
-            {
-                model = model.Where(t => t.NgayQD.Year == Nam);
-            }
-        
-            if (MaNghe != "all")
-            {
-                model = model.Where(t => t.MaNghe == MaNghe);
-            }
-
-            var model_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
             ViewData["DsNghe"] = model_nghe;
             ViewData["Nam"] = Nam;
             ViewData["MaNghe"] = MaNghe;
