@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
-    @section custom_script{
+@section custom_script {
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
 
@@ -19,33 +19,24 @@
         });
     </script>
 }
-    <div class="card card-custom">
-        <div class="card-header ribbon ribbon-top ribbon-ver">
-            <div class="card-title">
-                <h3 class="card-label">
-                    Văn bản quản lý nhà nước về giá, phí lệ phí<small> thêm mới</small>
-                </h3>
-            </div>
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Văn bản quản lý nhà nước về giá, phí lệ phí<small> thêm mới</small>
+            </h3>
         </div>
-        <!--begin::Form-->
-        <form asp-controller="VbQlNn" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_vbqlnn_store">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label>Đơn vị nhập liệu</label>
-                            <select class="form-control" asp-for="Madv">
-                            @foreach (var dv in dsdonvi)
-                            {
-                                <option value="@dv.MaDv">@dv.TenDv</option>
-                            }
-                        </select>
-                    </div>
-                </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="VbQlNn" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_vbqlnn_store">
+        <div class="card-body">
+            <input hidden asp-for="Madv" />
+            <input hidden asp-for="Mahs" />
+            <div class="row">                
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Đơn vị ban hành*</label>
-                        <input type="text" asp-for="Dvbanhanh" class="form-control">
+                        <label>Đơn vị ban hành<span class="text-danger">*</span></label>
+                        <input type="text" asp-for="Dvbanhanh" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -70,43 +61,40 @@
                             <option value="baocao">Báo cáo tình hình giá thị trường</option>
                             <option value="tailieu">Báo cáo, tài liệu học tập kinh nghiệm</option>
                             <option value="khoahoc">Kết quả, đề tài nghiên cứu khoa học</option>
-                            <option value="qdmhbog">Quyết định mặt hàng thực hiện bình ổn giá</option>
                             <option value="vbkhac">Báo cáo, văn bản có liên quan khác</option>
                         </select>
                     </div>
-                </div>
-            </div>
-            <div class="row">
+                </div>            
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Số hiệu*</label>
-                        <input type="text" asp-for="Kyhieuvb" class="form-control">
+                        <label>Số hiệu <span class="text-danger">*</span></label>
+                        <input type="text" asp-for="Kyhieuvb" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Ngày nhập liệu*</label>
-                        <input type="date" id="Thoidiem" name="Thoidiem" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" class="form-control">
+                        <label>Ngày nhập liệu <span class="text-danger">*</span></label>
+                        <input type="date" asp-for="Thoidiem" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Ngày ban hành*</label>
-                        <input type="date" id="Ngaybanhanh" name="Ngaybanhanh" class="form-control">
+                        <label>Ngày ban hành <span class="text-danger">*</span></label>
+                        <input type="date" asp-for="Ngaybanhanh" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>Ngày áp dụng*</label>
-                        <input type="date" id="Ngayapdung" name="Ngayapdung" class="form-control">
+                        <label>Ngày áp dụng <span class="text-danger">*</span></label>
+                        <input type="date" asp-for="Ngayapdung" class="form-control" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="form-group">
-                        <label>Nội dung*</label>
-                        <textarea class="form-control" rows="2" asp-for="Tieude"></textarea>
+                        <label>Nội dung <span class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="2" asp-for="Tieude" required></textarea>
                     </div>
                 </div>
                 <div class="col-xl-12">
@@ -116,49 +104,50 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm 1</label>
-                        <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm 2</label>
-                        <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm 3</label>
-                        <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm 4</label>
-                        <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="form-group">
-                        <label>File đính kèm 5</label>
-                        <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
-                    </div>
-                </div>
+            @await Html.PartialAsync("~/Views/Admin/Manages/VbQlNn/ThongTinGiayTo/Index.cshtml")
+            @*  <div class="row">
+            <div class="col-xl-6">
+            <div class="form-group">
+            <label>File đính kèm 1</label>
+            <input type="file" asp-for="Ipf1upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
             </div>
+            </div>
+            <div class="col-xl-6">
+            <div class="form-group">
+            <label>File đính kèm 2</label>
+            <input type="file" asp-for="Ipf2upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+            </div>
+            </div>
+            <div class="col-xl-6">
+            <div class="form-group">
+            <label>File đính kèm 3</label>
+            <input type="file" asp-for="Ipf3upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+            </div>
+            </div>
+            <div class="col-xl-6">
+            <div class="form-group">
+            <label>File đính kèm 4</label>
+            <input type="file" asp-for="Ipf4upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+            </div>
+            </div>
+            <div class="col-xl-6">
+            <div class="form-group">
+            <label>File đính kèm 5</label>
+            <input type="file" asp-for="Ipf5upload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+            </div>
+            </div>
+            </div> *@
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="VbQlNn" asp-action="Index" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            <button type="button" class="btn btn-primary mr-2" onclick="ValVb()"><i class="la la-check"></i>Thêm mới</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->
 </div>
-<script>
+@* <script>
     function ValVb() {
         if ($('#Thoidiem').val().trim() == '') {
             toastr.error("Ngày nhập liệu không được để trống", "Lỗi")
@@ -183,9 +172,9 @@
             }
         }
     }
-</script>
-@section Scripts{
+</script> *@
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

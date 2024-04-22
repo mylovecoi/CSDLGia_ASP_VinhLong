@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CSDLGia_ASP.Models.Manages.DinhGia;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Manages.VbQlNn
@@ -35,5 +37,7 @@ namespace CSDLGia_ASP.Models.Manages.VbQlNn
         public DateTime Thoidiem { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
     }
 }

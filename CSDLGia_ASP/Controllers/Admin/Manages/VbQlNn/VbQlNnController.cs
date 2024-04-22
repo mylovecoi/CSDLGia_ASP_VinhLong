@@ -1,9 +1,11 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,35 +16,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
 
-        public VbQlNnController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public VbQlNnController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
         }
 
         [Route("VanBanQlNnVeGia")]
         [HttpGet]
-        public IActionResult Index(string Phanloai, string Loaivb)
+        public IActionResult Index(string Phanloai ="all", string Loaivb = "all")
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Index"))
                 {
-                    if (string.IsNullOrEmpty(Phanloai))
+
+                    var MaDonVi = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var model_donvi = _dsDonviService.GetListDonvi(MaDonVi);
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    var model = _db.VbQlNn.Where(x=>x.Mahs != null);
+                    if (Phanloai != "all")
                     {
-                        Phanloai = "gia";
+                        model = model.Where(x=>x.Phanloai == Phanloai);
                     }
-                    if (string.IsNullOrEmpty(Loaivb))
-                    {
-                        Loaivb = "all";
-                    }
-                    var model = _db.VbQlNn.Where(t => t.Phanloai == Phanloai);
                     if (Loaivb != "all")
                     {
                         model = model.Where(t => t.Loaivb == Loaivb);
                     }
-
+                    ViewData["DsDonVi"] = model_donvi;
+                    ViewData["Madv"] = MaDonVi;
                     ViewData["Phanloai"] = Phanloai;
                     ViewData["Loaivb"] = Loaivb;
                     ViewData["Title"] = "Văn bản quản lý nhà nước về giá";
@@ -64,17 +69,43 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
 
         [Route("VanBanQlNnVeGia/Create")]
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Create"))
-                {
+                {                    
+                    // xóa giấy tờ đính kèm chưa xác định                    
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(x => x.Madv == madv && x.Status == "CXD");
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
+                    _db.SaveChanges();
+                    var model = new CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn()
+                    {
+                        Madv = madv,
+                        Mahs = $"{madv}_VBQL_{DateTime.Now.ToString("yyMMddHHmmssff")}",
+                        Thoidiem=DateTime.Now,
+                        Ngaybanhanh=DateTime.Now,
+                        Ngayapdung=DateTime.Now,
+                    };
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Thêm mới văn bản quản lý nhà nước về giá";
                     ViewData["MenuLv1"] = "menu_vbql";
                     ViewData["MenuLv2"] = "menu_vbqlds";
-                    return View("Views/Admin/Manages/VbQlNn/Create.cshtml");
+                    return View("Views/Admin/Manages/VbQlNn/Create.cshtml",model);
                 }
                 else
                 {
@@ -90,86 +121,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
 
         [Route("VanBanQlNnVeGia/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn request,
-            IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
+        public  IActionResult Store(CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Create"))
-                {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
-
-                    if (Ipf2upload != null && Ipf2upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf2upload.FileName);
-                        string extension = Path.GetExtension(Ipf2upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf2upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf2 = filename;
-                    }
-
-                    if (Ipf3upload != null && Ipf3upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf3upload.FileName);
-                        string extension = Path.GetExtension(Ipf3upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf3upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf3 = filename;
-                    }
-
-                    if (Ipf4upload != null && Ipf4upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf4upload.FileName);
-                        string extension = Path.GetExtension(Ipf4upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf4upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf4 = filename;
-                    }
-
-                    if (Ipf5upload != null && Ipf5upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf5upload.FileName);
-                        string extension = Path.GetExtension(Ipf5upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf5upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf5 = filename;
-                    }
+                {                   
 
                     var model = new CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn
                     {
-                        Mahs = request.Phanloai + "_" + request.Loaivb + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
+                        Mahs = request.Mahs,
                         Madv = request.Madv,
                         Phanloai = request.Phanloai,
                         Loaivb = request.Loaivb,
@@ -179,16 +140,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                         Ngayapdung = request.Ngayapdung,
                         Ngaybanhanh = request.Ngaybanhanh,
                         Tieude = request.Tieude,
-                        Ghichu = request.Ghichu,
-                        Ipf1 = request.Ipf1,
-                        Ipf2 = request.Ipf2,
-                        Ipf3 = request.Ipf3,
-                        Ipf4 = request.Ipf4,
-                        Ipf5 = request.Ipf5,
+                        Ghichu = request.Ghichu,                        
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
                     _db.VbQlNn.Add(model);
+                    // Lưu lại thông tin giấy tờ chưa xác định
+                    var giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs && t.Status =="CXD").ToList();
+                    if (giayto.Any())
+                    {
+                        giayto.ForEach(x => x.Status = "XD");
+                    }
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "VbQlNn");
@@ -214,7 +176,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Edit"))
                 {
                     var model = _db.VbQlNn.FirstOrDefault(t => t.Mahs == Mahs);
-
+                    model.ThongTinGiayTo = _db.ThongTinGiayTo.Where(x=>x.Mahs==model.Mahs).ToList();
                     ViewData["Dsdonvi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Title"] = "Chỉnh sửa văn bản quản lý nhà nước về giá";
                     ViewData["MenuLv1"] = "menu_vbql";
@@ -235,82 +197,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
 
         [Route("VanBanQlNnVeGia/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn request,
-            IFormFile Ipf1upload, IFormFile Ipf2upload, IFormFile Ipf3upload, IFormFile Ipf4upload, IFormFile Ipf5upload)
+        public  IActionResult Update(CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "vbqlnnvegiaplp.vbqlnn.ds", "Edit"))
                 {
-                    if (Ipf1upload != null && Ipf1upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1upload.FileName);
-                        string extension = Path.GetExtension(Ipf1upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
-                    }
-
-                    if (Ipf2upload != null && Ipf2upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf2upload.FileName);
-                        string extension = Path.GetExtension(Ipf2upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf2upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf2 = filename;
-                    }
-
-                    if (Ipf3upload != null && Ipf3upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf3upload.FileName);
-                        string extension = Path.GetExtension(Ipf3upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf3upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf3 = filename;
-                    }
-
-                    if (Ipf4upload != null && Ipf4upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf4upload.FileName);
-                        string extension = Path.GetExtension(Ipf4upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf4upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf4 = filename;
-                    }
-
-                    if (Ipf5upload != null && Ipf5upload.Length > 0)
-                    {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf5upload.FileName);
-                        string extension = Path.GetExtension(Ipf5upload.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/VbQlNn/", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf5upload.CopyToAsync(FileStream);
-                        }
-                        request.Ipf5 = filename;
-                    }
+                    
 
                     var model = _db.VbQlNn.FirstOrDefault(t => t.Mahs == request.Mahs);
                     model.Phanloai = request.Phanloai;
@@ -321,15 +214,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                     model.Ngayapdung = request.Ngayapdung;
                     model.Ngaybanhanh = request.Ngaybanhanh;
                     model.Tieude = request.Tieude;
-                    model.Ghichu = request.Ghichu;
-                    model.Ipf1 = request.Ipf1;
-                    model.Ipf2 = request.Ipf2;
-                    model.Ipf3 = request.Ipf3;
-                    model.Ipf4 = request.Ipf4;
-                    model.Ipf5 = request.Ipf5;
+                    model.Ghichu = request.Ghichu;                   
                     model.Updated_at = DateTime.Now;
 
                     _db.VbQlNn.Update(model);
+                    // Lưu lại thông tin giấy tờ chưa xác định
+                    var giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == model.Mahs && t.Status == "CXD").ToList();
+                    if (giayto.Any())
+                    {
+                        giayto.ForEach(x => x.Status = "XD");
+                    }
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "VbQlNn");
@@ -356,6 +250,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.VbQlNn
                 {
                     var model = _db.VbQlNn.FirstOrDefault(t => t.Id == id_delete);
                     _db.VbQlNn.Remove(model);
+                    // xóa thông tin giấy tờ
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(x => x.Mahs == model.Mahs);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                    }
                     _db.SaveChanges();
 
                     return RedirectToAction("Index", "VbQlNn");
