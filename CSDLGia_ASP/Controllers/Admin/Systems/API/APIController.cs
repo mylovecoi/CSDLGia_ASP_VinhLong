@@ -1091,6 +1091,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaHHDVK) + @"}";
                             break;
                         }
+
                     case "giahhdvkdm":
                         {
                             var model_giahhdvkdm = _db.GiaHhDvkDm.Where(x => x.Matt == request.Mahs && x.Theodoi == "TD").OrderBy(x => x.Mahhdv);
@@ -1115,7 +1116,97 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             break;
 
                         }
+
+                    case "giathuetainguyen":
+                        {
+                            break;
+                        }
+
+                    case "giathuetainguyendm":
+                        {
+                            //Chỉ lấy các danh mục đã kê khai giá
+                            var hoSoChiTiet = (from hosoct in _db.GiaThueTaiNguyenCt.Where(x => x.Gia > 0)
+                                         join hoso in _db.GiaThueTaiNguyen.Where(x => x.Manhom == request.Mahs) on hosoct.Mahs equals hoso.Mahs                                       
+                                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenCt
+                                         {                                         
+                                             Cap1 = hosoct.Cap1,
+                                             Cap2 = hosoct.Cap2,
+                                             Cap3 = hosoct.Cap3,
+                                             Cap4 = hosoct.Cap4,
+                                             Cap5 = hosoct.Cap5,
+                                             Cap6 = hosoct.Cap6,
+                                             Ten = hosoct.Ten,
+                                             Dvt = hosoct.Dvt,
+                                             Gia = hosoct.Gia,                                            
+                                         });
+
+                            var dmDVT = _db.DmDvt;
+                            var giaTaiNguyenDM = new List<VMGiaThueTaiNguyenDM>();
+                            List<string> capFields = new List<string> { "Cap6", "Cap5", "Cap4", "Cap3", "Cap2", "Cap1" };
+                            //Lấy danh mục
+                            List<string> listDM = new List<string>();
+                            var model_giatndm = _db.GiaThueTaiNguyenDm.Where(x => x.Manhom == request.Mahs && x.Theodoi == "TD").OrderBy(x => x.Sapxep);
+                            foreach (var item in hoSoChiTiet)
+                            {
+                                foreach (var capField in capFields)
+                                {
+                                    string capProperty = (string)item.GetType().GetProperty(capField).GetValue(item);
+
+                                    if (!string.IsNullOrEmpty(capProperty))
+                                    {
+                                        listDM.Add(capProperty);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            //Lấy danh mục có trong bảng kê khai và listDM để tạo danh mục xuất ra
+                            List<string> listDM_hientai = new List<string>();
+
+                            foreach (var item in model_giatndm)
+                            {
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
+
+                                string maTN = "";
+                                int capDo = 1;
+                                string maGoc = "";
+
+                                foreach (var capField in capFields)
+                                {
+                                    string capProperty = (string)item.GetType().GetProperty(capField).GetValue(item);
+
+                                    if (!string.IsNullOrEmpty(capProperty))
+                                    {
+                                        maTN = capProperty;
+                                        capDo = int.Parse(capField.Substring(3)); // Lấy số từ chuỗi "CapX"
+                                        maGoc = capDo == 1 ? maTN : maTN.Substring(0, (maTN.Length > 2 ? maTN.Length - 2 : 0));
+                                        break;
+                                    }
+                                }
+
+                                //Kiểm tra trong nhóm danh muc
+                                if (listDM.Contains(maTN))
+                                    if (!listDM_hientai.Contains(maTN))
+                                    {
+                                        giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
+                                        {
+                                            DIA_BAN = request.DIA_BAN,
+                                            MA_TAI_NGUYEN = maTN,
+                                            TEN_TAI_NGUYEN = item.Ten,
+                                            CAP_TAI_NGUYEN = capDo,
+                                            DON_VI_TINH = dvt?.Madvt, // Kiểm tra null trước khi truy cập thuộc tính
+                                            MA_TAI_NGUYEN_TINH_CHA = maGoc,
+                                            TAI_NGUYEN_BTC = maTN,
+                                            NGUOI_TAO = request.NGUOI_TAO,
+                                        });
+                                        listDM_hientai.Add(maTN);
+                                    }
+                            }
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyenDM) + @"}";
+                            break;
+                        }
                 }
+
 
                 if (!request.THAO_TAC)
                 {
@@ -1176,5 +1267,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             return false;
         }
     }
-    
+
 }

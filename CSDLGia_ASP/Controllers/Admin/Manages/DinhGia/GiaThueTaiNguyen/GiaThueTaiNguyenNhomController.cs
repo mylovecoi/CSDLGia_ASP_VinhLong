@@ -30,6 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";
                     ViewData["MenuLv3"] = "menu_dgthuetn_dm";
+                    ViewData["maKetNoiAPI"] = "giathuetainguyendm";
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else

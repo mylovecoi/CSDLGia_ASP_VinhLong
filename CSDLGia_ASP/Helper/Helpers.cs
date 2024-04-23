@@ -1289,6 +1289,7 @@ namespace CSDLGia_ASP.Helper
                 new KeyValuePair<string, string>("giahhdvk", "Giá thị trường hàng hóa, dịch vụ"),
                 new KeyValuePair<string, string>("giahhdvkdm", "Danh mục hàng hóa, dịch vụ thu thập giá thị trường của Tỉnh"),
                 new KeyValuePair<string, string>("giathuetainguyen", "Giá tính thuế tài nguyên do UBND tỉnh ban hành"),
+                new KeyValuePair<string, string>("giathuetainguyendm", "Danh mục tài nguyên do UBND tỉnh ban hành"),
                 new KeyValuePair<string, string>("giaspdvcongichdm", "Danh mục dịch vụ thu gom rác thải của Tỉnh"),
                 new KeyValuePair<string, string>("giaspdvcongich", "Dịch vụ thu gom, vận chuyển rác thải sinh hoạt tại sử dụng nguồn vốn ngân sách Nhà nước tại địa phương"),
                 new KeyValuePair<string, string>("giaphilephidm", "Danh mục đối tượng tính lệ phí trước bạ do UBND Tỉnh quy định"),

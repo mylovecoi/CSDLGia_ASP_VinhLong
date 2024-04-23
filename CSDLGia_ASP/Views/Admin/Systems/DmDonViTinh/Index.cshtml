@@ -22,7 +22,7 @@
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">            
+        <div class="card-title">
             <h3 class="card-label">
                 @ViewData["Title"]
             </h3>
@@ -42,6 +42,7 @@
             <thead>
                 <tr style="text-align:center">
                     <th width="2%">STT</th>
+                    <th>Mã số</th>
                     <th>Đơn vị tính</th>
                     <th width="15%">Thao tác</th>
                 </tr>
@@ -50,20 +51,21 @@
                 @if (Model.Any())
                 {
                     @foreach (var item in Model)
-                    {     
-                    <tr>
-                        <td style="text-align: center">@(stt++)</td>                        
-                        <td style="text-align: left">@item.Dvt</td>
-                            <td >
-                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                    data-target="#Edit_Modal" onclick="Setedit('@item.Id','@item.Dvt')">
-                                <i class="icon-lg la la-edit text-primary"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Dvt')">
-                                <i class="icon-lg la la-trash text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    {
+                        <tr>
+                            <td style="text-align: center">@(stt++)</td>
+                            <td style="text-align: center">@item.Madvt</td>
+                            <td style="text-align: left">@item.Dvt</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
+                                        data-target="#Edit_Modal" onclick="Setedit('@item.Id','@item.Dvt')">
+                                    <i class="icon-lg la la-edit text-primary"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Dvt')">
+                                    <i class="icon-lg la la-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -77,7 +79,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form id="modalForm" method="post" asp-controller="DmDvt" asp-action="Store">
-                    <div class="row">                        
+                    <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị tính:</label>
@@ -109,7 +111,7 @@
                         </div>
                         <div class="col-xl-12">
                             <input hidden id="id_edit" name="id_edit" type="text" class="form-control" readonly />
-                        </div>                        
+                        </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị tính:</label>
@@ -153,10 +155,10 @@
 
 <script>
     function Setedit(Id, dvt) {
-        document.getElementById("id_edit").value = Id;        
+        document.getElementById("id_edit").value = Id;
         document.getElementById("Dvt_edit").value = dvt;
     }
-    function SetDelete(id,mota) {
+    function SetDelete(id, mota) {
         document.getElementById("id_delete").value = id;
         document.getElementById("mota_delete").innerHTML = mota;
     }
