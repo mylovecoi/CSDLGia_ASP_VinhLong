@@ -175,7 +175,7 @@
                 <th style="text-align: center">Nhóm đất</th>
                 <th style="text-align: center">Phân loại đất thực tế trên thị trường</th>
                 <th style="text-align: center">Đơn vị tính</th>
-                <th style="text-align: center">Giá giao dịch</th>
+                <th style="text-align: right">Giá giao dịch</th>
                 <th style="text-align: center">Thao tác</th>
             </tr>
         </thead>
@@ -191,7 +191,7 @@
                         <td style="text-align: left">@item.Tennhom</td>
                         <td style="text-align: left">@item.Ten</td>
                         <th style="text-align: center">@item.Dvt</th>
-                        <td style="text-align: center" class="sotien" font-weight:bold;">@Helpers.ConvertDbToStr(item.Gia)</td>
+                        <td style="text-align: right" class="sotien" font-weight:bold;">@Helpers.ConvertDbToStr(item.Gia)</td>
                         <td >
                             <a asp-controller="GiaGiaoDichDat" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">
