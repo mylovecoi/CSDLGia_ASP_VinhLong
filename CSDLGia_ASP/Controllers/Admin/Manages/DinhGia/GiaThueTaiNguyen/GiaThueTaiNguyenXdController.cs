@@ -65,6 +65,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgthuetn";
                     ViewData["MenuLv3"] = "menu_dgthuetn_xd";
+                    ViewData["maKetNoiAPI"] = "giathuetainguyen";
                     return View("Views/Admin/Manages/DinhGia/GiaThueTaiNguyen/XetDuyet/Index.cshtml", model_join);
 
                 }

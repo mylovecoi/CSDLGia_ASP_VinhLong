@@ -7,6 +7,7 @@ namespace CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia
     {
         public string DIA_BAN { get; set; }
         public string NGUON_SO_LIEU { get; set; }
+        public string DONVI_TTSL { get; set; }
         public int DINH_KY { get; set; }
         public int THOI_GIAN_BC_1 { get; set; }
         public int THOI_GIAN_BC_2 { get; set; }
