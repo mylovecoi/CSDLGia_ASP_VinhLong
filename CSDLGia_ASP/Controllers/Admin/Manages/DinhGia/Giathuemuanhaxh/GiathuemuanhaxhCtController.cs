@@ -114,14 +114,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                 result += "</div>";
                 result += "</div>";
 
+                //result += "<div class='col-xl-4'>";
+                //result += "<label class='form-control-label'>Đơn vị tính</label>";
+                //result += "<select id='dvt_edit' name='dvt_edit' class='form-control select2basic'>";
+                //foreach (var item in dvt)
+                //{
+                //    result += "<option  value ='" + @item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + @item.Dvt + "</ option >";
+                //}
+                //result += "</select>";
+                //result += "</div>";
+
                 result += "<div class='col-xl-4'>";
-                result += "<label class='form-control-label'>Đơn vị tính</label>";
-                result += "<select id='dvt_edit' name='dvt_edit' class='form-control'>";
-                foreach (var item in dvt)
-                {
-                    result += "<option value ='" + @item.Dvt + "' " + ((string)model.Dvt == item.Dvt ? "selected" : "") + ">" + @item.Dvt + "</ option >";
-                }
-                result += "</select>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Đơn vị tính</label>";
+                result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Dvt + "'/>";
+                result += "</div>";
                 result += "</div>";
 
                 result += "<div class='col-xl-4'>";

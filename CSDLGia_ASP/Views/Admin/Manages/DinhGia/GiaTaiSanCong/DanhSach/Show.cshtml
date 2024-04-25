@@ -60,10 +60,10 @@
                         <td style="text-align:center">@(record_id++)</td>
                         <td style="text-align:center">@item.Tentaisan</td>
                         <td style="text-align:center">@item.Dacdiem</td>
-                        <td style="text-align:center">@item.Giathue</td>
-                        <td style="text-align:center">@item.Giaconlai</td>
-                        <td style="text-align:center">@item.Giapheduyet</td>
-                        <td style="text-align:center">@item.Giaban</td>
+                        <td style="text-align:center">@Helpers.ConvertDbToStr(@item.Giathue)</td>
+                        <td style="text-align: right">@Helpers.ConvertDbToStr(@item.Giaconlai)</td>
+                        <td style="text-align: right">@Helpers.ConvertDbToStr(@item.Giapheduyet)</td>
+                        <td style="text-align: right">@Helpers.ConvertDbToStr(@item.Giaban)</td>
 
                     </tr>
                 }
