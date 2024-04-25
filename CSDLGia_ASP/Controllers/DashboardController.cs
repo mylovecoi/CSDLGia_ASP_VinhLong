@@ -125,7 +125,7 @@ namespace CSDLGia_ASP.Controllers
                                  TenCqCq = donvi.TenDv,
                                  MaCqCq = hoso.MaCqCq,
                                  MaNghe = hoso.MaNghe,
-                                 TenNghe = dmnghe.Phanloai + " " + dmnghe.Tennghe
+                                 TenNghe = dmnghe.Phanloai 
                              };
             string result = "<div class='card card-custom card-stretch gutter-b' id='data_load'>";
             result += "<div class='card-header border-0 py-5'>";
@@ -141,10 +141,10 @@ namespace CSDLGia_ASP.Controllers
             result += "<tr class='text-center text-uppercase'>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th>Phân loại</th>";
+            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
-            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
+            result += "<th>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
@@ -215,10 +215,10 @@ namespace CSDLGia_ASP.Controllers
             result += "<tr class='text-center text-uppercase'>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th>Phân loại</th>";
+            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
-            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
+            result += "<th>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
@@ -289,10 +289,10 @@ namespace CSDLGia_ASP.Controllers
             result += "<tr class='text-center text-uppercase'>";
             result += "<th>Tên doanh nghiệp</th>";
             result += "<th>Tên cơ sở kinh doanh</th>";
-            result += "<th>Phân loại</th>";
+            result += "<th width='10%'>Phân loại</th>";
             result += "<th width='10%'>Số QĐ</th> ";
             result += "<th width='10%'>Thời điểm</th> ";
-            result += "<th width='10%'>Đơn vị tiếp nhận hồ sơ</th>";
+            result += "<th>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
             result += "</thead>";
             result += "<tbody>";
@@ -336,13 +336,13 @@ namespace CSDLGia_ASP.Controllers
             result += "<table class='table table-striped table-hover table-responsive-lg' id='sample_4'>";
             result += "<thead>";
             result += "<tr class='text-center text-uppercase'>";
-            result += "<th>Tên đơn vị</th>";
-            result += "<th>Số QĐ</th>";
-            result += "<th>Thời điểm</th>";
-            result += "<th>Số QĐ liển kề</th>";
-            result += "<th>Thời điểm LK</th>";
+            result += "<th>Tên doanh nghiệp</th>";
+            result += "<th>Tên cơ sở kinh doanh</th>";
+            result += "<th width='10%'>Phân loại</th>";
+            result += "<th width='10%'>Số QĐ</th> ";
+            result += "<th width='10%'>Thời điểm</th> ";
+            result += "<th>Đơn vị tiếp nhận hồ sơ</th>";
             result += "</tr>";
-            result += "</thead>";
             result += "<tbody>";
 
             result += "</tbody>";
