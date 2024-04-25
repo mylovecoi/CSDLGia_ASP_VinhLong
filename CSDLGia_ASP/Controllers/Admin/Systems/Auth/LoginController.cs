@@ -166,7 +166,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
         {
             HttpContext.Session.Remove("Permission");
             HttpContext.Session.Remove("SsAdmin");
-            return RedirectToAction("Login", "Login");
+            HttpContext.Session.Remove("KeKhaiDangKyGia");
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet("TestList")]
         public IActionResult TestList()
