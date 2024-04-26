@@ -111,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", "Approve"))
                 {
                     var model = _db.Company.FirstOrDefault(t => t.Madv == Madv);
 
@@ -171,7 +171,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", "Approve"))
                 {
                     var model = _db.TtDnTd.FirstOrDefault(t => t.Madv == Madv);
                     var model_ct = _db.TtDnTdCt.Where(t => t.Madv == model.Madv && t.Mahs == model.Mahs);
@@ -234,7 +234,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.bog.xdtttddn", "Approve"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.kekhaidangkygia.xetduyetthongtindonvi", "Approve"))
                 {
                     var model = _db.TtDnTd.FirstOrDefault(t => t.Madv == madv_tralai);
                     model.Trangthai = "BTL";
