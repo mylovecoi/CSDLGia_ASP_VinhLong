@@ -49,24 +49,33 @@
         #loadingOverlay {
             display: none; /* Mặc định ẩn đi */
             position: fixed;
-            top: 0%;
-            left: 0%;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0); /* Màu nền với độ trong suốt */
+            background-color: rgba(255, 255, 255, 0); /* Màu trắng nhẹ nhàng có độ trong suốt */
             z-index: 9999; /* Đảm bảo hiển thị trên cùng */
+            text-align: center;
         }
 
-        .spinner {
+        .loading {
+            position: absolute;
             top: 50%;
-            left: 50%
+            left: 50%;
+            transform: translate(-50%, -50%); /* Di chuyển sang giữa màn hình */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9); /* Màu nền nhẹ nhàng */
+            padding: 20px; /* Để tạo khoảng cách với viền của phần tử cha */
+            border-radius: 10px; /* Tạo bo tròn cho phần tử */
         }
 
-        .overlay-active {
-            pointer-events: none; /* Ngăn chặn tất cả các sự kiện chuột */
-            overflow: hidden; /* Ngăn chặn cuộn trang */
-            position: fixed;
-        }
+            .loading .spinner {
+                margin-bottom: 20px; /* Khoảng cách giữa spinner và văn bản */
+                margin-top: 10px; /* Khoảng cách giữa spinner và văn bản */
+            }
+      
     </style>
 
 </head>
@@ -75,10 +84,11 @@
 <body onload="display_ct6()" id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading
       @(session != null && string.IsNullOrEmpty(session.GetString("SsAdmin")) ? " aside-minimize aside-minimize-hoverable" : " aside-minimize-hoverable")">
     <!--begin::Loading-->
-    <div id="loadingOverlay">
-        <button type="button" class="btn btn-primary spinner spinner-white spinner-left mr-20">
-            Loading...
-        </button>
+    <div id="loadingOverlay" class="overlay overlay-block">
+        <div class="bg-secondary loading">
+            <div class="spinner spinner-lg spinner-primary"></div>
+            <span class="text-dark">Đang xử lý! Vui lòng đợi trong giây lát...</span>
+        </div>
     </div>
     <!--end::Loading-->
     <!--begin::Main-->
@@ -432,7 +442,7 @@
                 </div>
                 <div class="d-flex flex-column">
                     <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
-                        @(session != null && string.IsNullOrEmpty(session.GetString("SsAdmin")) ? "Chưa xác định" : Helpers.GetSsAdmin(session, "Name"))                        
+                        @(session != null && string.IsNullOrEmpty(session.GetString("SsAdmin")) ? "Chưa xác định" : Helpers.GetSsAdmin(session, "Name"))
                     </a>
                     <div class="text-muted mt-1">
                         @(session != null && string.IsNullOrEmpty(session.GetString("SsAdmin")) ? "Chưa xác định" : Helpers.GetSsAdmin(session, "Username"))
@@ -458,15 +468,18 @@
                                 </span>
                             </span>
                         </a>
-                        @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin"))){
+                        @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin")))
+                        {
 
                             <button type="button" class="btn btn-sm btn-light-danger font-weight-bolder py-2 px-5" title="Đăng xuất" data-toggle="modal" data-target="#Logout_Modal">
                                 Đăng xuất
                             </button>
-                        }else{
+                        }
+                        else
+                        {
                             <a asp-controller="Login" asp-action="Login" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Đăng nhập</a>
                         }
-                       
+
                     </div>
                 </div>
             </div>
@@ -479,34 +492,34 @@
             {
                 <div class="navi navi-spacer-x-0 p-0">
                     <a asp-controller="Home" asp-action="ChangePassword" class="navi-item">
-                    <div class="navi-link">
-                        <div class="symbol symbol-40 bg-light mr-3">
-                            <div class="symbol-label">
-                                <span class="svg-icon svg-icon-md svg-icon-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <mask fill="white">
-                                                <use xlink:href="#path-1"></use>
-                                            </mask>
-                                            <g></g>
-                                            <path d="M7,10 L7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 L17,10 L18,10 C19.1045695,10 20,10.8954305 20,12 L20,18 C20,19.1045695 19.1045695,20 18,20 L6,20 C4.8954305,20 4,19.1045695 4,18 L4,12 C4,10.8954305 4.8954305,10 6,10 L7,10 Z M12,5 C10.3431458,5 9,6.34314575 9,8 L9,10 L15,10 L15,8 C15,6.34314575 13.6568542,5 12,5 Z" fill="#000000"></path>
-                                        </g>
-                                    </svg>
-                                </span>
+                        <div class="navi-link">
+                            <div class="symbol symbol-40 bg-light mr-3">
+                                <div class="symbol-label">
+                                    <span class="svg-icon svg-icon-md svg-icon-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <mask fill="white">
+                                                    <use xlink:href="#path-1"></use>
+                                                </mask>
+                                                <g></g>
+                                                <path d="M7,10 L7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 L17,10 L18,10 C19.1045695,10 20,10.8954305 20,12 L20,18 C20,19.1045695 19.1045695,20 18,20 L6,20 C4.8954305,20 4,19.1045695 4,18 L4,12 C4,10.8954305 4.8954305,10 6,10 L7,10 Z M12,5 C10.3431458,5 9,6.34314575 9,8 L9,10 L15,10 L15,8 C15,6.34314575 13.6568542,5 12,5 Z" fill="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="navi-text">
+                                <div class="font-weight-bold">Mật khẩu truy cập</div>
+                                <div class="text-muted">
+                                    Thay đổi mật khẩu
+                                    <span class="label label-light-primary label-inline font-weight-bold">Cập nhật</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="navi-text">
-                            <div class="font-weight-bold">Mật khẩu truy cập</div>
-                            <div class="text-muted">
-                                Thay đổi mật khẩu
-                                <span class="label label-light-primary label-inline font-weight-bold">Cập nhật</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <div class="separator separator-dashed my-7"></div>
-                <!--end::Nav-->
-            </div>
+                    </a>
+                    <div class="separator separator-dashed my-7"></div>
+                    <!--end::Nav-->
+                </div>
             }
 
             <!--end::Content-->
@@ -600,21 +613,19 @@
 
             function showLoadingOverlay() {
                 $('#loadingOverlay').css('display', 'block'); // Hiển thị LoadingOverlay
-                $('#kt_body').addClass('overlay-active'); // Thêm class để ngăn chặn tương tác
             }
             function hideLoadingOverlay() {
                 $('#loadingOverlay').css('display', 'none') // Ẩn LoadingOverlay khi xong quá trình xử lý
-                $('#kt_body').removeClass('overlay-active'); // Loại bỏ class để cho phép tương tác lại
             }
-            // // Gọi hàm showLoadingOverlay khi trang bắt đầu tải
-            // document.addEventListener("DOMContentLoaded", function () {
-            //     showLoadingOverlay();
-            // });
+            // Gọi hàm showLoadingOverlay khi trang bắt đầu tải
+            document.addEventListener("DOMContentLoaded", function () {
+                showLoadingOverlay();
+            });
 
-            // // Gọi hàm hideLoadingOverlay khi trang đã tải xong
-            // window.onload = function () {
-            //     hideLoadingOverlay();
-            // };
+            // Gọi hàm hideLoadingOverlay khi trang đã tải xong
+            window.onload = function () {
+                hideLoadingOverlay();
+            };
             function MoneyDecimalMask() {
                 $('.money-decimal-mask').inputmask({
                     alias: 'numeric',
