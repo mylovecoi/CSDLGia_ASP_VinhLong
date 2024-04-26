@@ -34,35 +34,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
-                    
-                    var model = (from ttdntd in _db.TtDnTd.Where(t => t.Trangthai == "CD")
-                                 join ttdntdct in _db.TtDnTdCt on ttdntd.Madv equals ttdntdct.Madv
-                                 select new TtDnTd
-                                 {
-                                     Id = ttdntd.Id,
-                                     Madv = ttdntd.Madv,
-                                     Mahs = ttdntd.Mahs,
-                                     Macqcq = ttdntd.Macqcq,
-                                     Madiaban = ttdntd.Madiaban,
-                                     Tendn = ttdntd.Tendn,
-                                     Diachi = ttdntd.Diachi,
-                                     Tel = ttdntd.Tel,
-                                     Fax = ttdntd.Fax,
-                                     Email = ttdntd.Email,
-                                     Website = ttdntd.Website,
-                                     Diadanh = ttdntd.Diadanh,
-                                     Chucdanh = ttdntd.Chucdanh,
-                                     Nguoiky = ttdntd.Nguoiky,
-                                     Noidknopthue = ttdntd.Noidknopthue,
-                                     Tailieu = ttdntd.Tailieu,
-                                     Giayphepkd = ttdntd.Giayphepkd,
-                                     Ghichu = ttdntd.Ghichu,
-                                     Trangthai = ttdntd.Trangthai,
-                                     Level = ttdntd.Level,
-                                     Lydo = ttdntd.Lydo,
-                                     Ngaychuyen = ttdntd.Ngaychuyen,
-                                     Manghe = ttdntdct.Manghe,
-                                 }).ToList();
+                    var model = _db.TtDnTd.Where(t => t.Trangthai == "CD" && list_madv.Contains(t.Macqcq));
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
+                    //var model = (from ttdntd in _db.TtDnTd.Where(t => t.Trangthai == "CD" && t.Macqcq == Madv)
+                    //             join ttdntdct in _db.TtDnTdCt on ttdntd.Madv equals ttdntdct.Madv
+                    //             select new TtDnTd
+                    //             {
+                    //                 Id = ttdntd.Id,
+                    //                 Madv = ttdntd.Madv,
+                    //                 Mahs = ttdntd.Mahs,
+                    //                 Macqcq = ttdntd.Macqcq,
+                    //                 Madiaban = ttdntd.Madiaban,
+                    //                 Tendn = ttdntd.Tendn,
+                    //                 Diachi = ttdntd.Diachi,
+                    //                 Tel = ttdntd.Tel,
+                    //                 Fax = ttdntd.Fax,
+                    //                 Email = ttdntd.Email,
+                    //                 Website = ttdntd.Website,
+                    //                 Diadanh = ttdntd.Diadanh,
+                    //                 Chucdanh = ttdntd.Chucdanh,
+                    //                 Nguoiky = ttdntd.Nguoiky,
+                    //                 Noidknopthue = ttdntd.Noidknopthue,
+                    //                 Tailieu = ttdntd.Tailieu,
+                    //                 Giayphepkd = ttdntd.Giayphepkd,
+                    //                 Ghichu = ttdntd.Ghichu,
+                    //                 Trangthai = ttdntd.Trangthai,
+                    //                 Level = ttdntd.Level,
+                    //                 Lydo = ttdntd.Lydo,
+                    //                 Ngaychuyen = ttdntd.Ngaychuyen,
+                    //                 Manghe = ttdntdct.Manghe,
+                    //             }).ToList();
 
                     //model = model.Where(t=> list_madv.Contains(t.Macqcq)).ToList();
                     //if (Madv != "all" || !string.IsNullOrEmpty(Madv))
@@ -70,18 +74,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     //    model = model.Where(t => t.Macqcq == Madv).ToList();
                     //}
 
-                    if (string.IsNullOrEmpty(Manghe))
-                    {
-                        Manghe = _db.DmNgheKd.FirstOrDefault(t => t.Theodoi == "TD")?.Manghe ?? "";
-                    }
+                    //if (string.IsNullOrEmpty(Manghe))
+                    //{
+                    //    Manghe = _db.DmNgheKd.FirstOrDefault(t => t.Theodoi == "TD")?.Manghe ?? "";
+                    //}
 
-                    model = model.Where(t => t.Manghe == Manghe).ToList();
+                    //model = model.Where(t => t.Manghe == Manghe).ToList();
 
-                    //var model = _db.TtDnTd.Where(t => t.Trangthai == "CD");
+                    //var model = _db.TtDnTd.Where(t => t.Trangthai == "CD" && t.Macqcq == Madv);
+
 
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN");
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
-                    ViewData["Manghe"] = Manghe;
                     ViewData["Madv"] = Madv;
                     ViewData["DmNgheKd"] = _db.DmNgheKd.Where(t => t.Theodoi == "TD");
                     ViewData["Title"] = "Thông tin doanh nghiệp xét duyệt";
