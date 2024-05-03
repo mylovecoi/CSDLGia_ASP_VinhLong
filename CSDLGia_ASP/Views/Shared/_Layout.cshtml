@@ -75,7 +75,6 @@
                 margin-bottom: 20px; /* Khoảng cách giữa spinner và văn bản */
                 margin-top: 10px; /* Khoảng cách giữa spinner và văn bản */
             }
-      
     </style>
 
 </head>
@@ -207,6 +206,77 @@
                             <!--begin::Header Menu-->
                             <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
                                 <!--begin::Header Nav-->
+                                <ul class="menu-nav">
+                                    <li class="menu-item menu-item-open menu-item-here menu-item-submenu menu-item-rel menu-item-open menu-item-here menu-item-active" data-menu-toggle="click" aria-haspopup="true">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                            <span class="menu-text">Docs & Upgrade</span>
+                                        </a>
+                                        <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                                            <ul class="menu-subnav">
+                                                @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin")) && Helpers.GetSsAdmin(session, "Level") == "SSA")
+                                                {                                                  
+                                                    <li class="menu-item " aria-haspopup="true">
+                                                        <a onclick="ImportHDSD()" class="menu-link">
+                                                            <span class="svg-icon menu-icon">
+                                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Clothes/Briefcase.svg-->
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                                                        <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                        <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
+                                                                        <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
+                                                                    </g>
+                                                                </svg>
+                                                                <!--end::Svg Icon-->
+                                                            </span>
+                                                            <span class="menu-text">Chỉnh sửa tài liệu hướng dẫn sử dụng</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                @if (ViewData.ContainsKey("FileHDSD") && ViewData["FileHDSD"] != null)
+                                                {
+                                                    <li class="menu-item " aria-haspopup="true">
+                                                        <a href="@Url.Content("~/UpLoad/File/HuongDanSuDung/Life_HDSD" + ViewData["FileHDSD"])" target="_blank"
+                                                           onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="menu-link">
+                                                            <span class="svg-icon menu-icon">
+                                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Clothes/Briefcase.svg-->
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                                                        <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                        <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
+                                                                        <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
+                                                                    </g>
+                                                                </svg>
+                                                                <!--end::Svg Icon-->
+                                                            </span>
+                                                            <span class="menu-text">Tài liệu hướng dẫn sử dụng</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                <li class="menu-item " aria-haspopup="true">
+                                                    <a href="~/History/UpdateNcc.docx" target="_blank"
+                                                       onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="menu-link">
+                                                        <span class="svg-icon menu-icon">
+                                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Clothes/Briefcase.svg-->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                                    <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                    <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
+                                                                    <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
+                                                                </g>
+                                                            </svg>
+                                                            <!--end::Svg Icon-->
+                                                        </span>
+                                                        <span class="menu-text">Thông tin nâng cấp phần mềm</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </li>
+                                </ul>
                                 <!--end::Header Nav-->
                             </div>
                             <!--end::Header Menu-->
@@ -214,24 +284,6 @@
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
                         <div class="topbar">
-                            @* <div class="topbar-item" data-offset="10px,0px" aria-expanded="false">
-                            <a asp-controller="CongBo" asp-action="Index" target="_blank" title="Trang công bố">
-                            <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
-                            <span class="svg-icon svg-icon-xl svg-icon-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24" />
-                            <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
-                            <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
-                            <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
-                            <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
-                            </g>
-                            </svg>
-                            </span>
-                            <span class="pulse-ring"></span>
-                            </div>
-                            </a>
-                            </div> *@
                             <!--begin::Toggle-->
                             <!--begin::Quick Actions-->
                             <div class="dropdown">
@@ -539,9 +591,6 @@
                 <!--end::Svg Icon-->
             </span>
         </div>
-
-
-
         <!--end::Scrolltop-->
         <!--end::Demo Panel-->
         <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
@@ -668,6 +717,33 @@
                 mytime = setTimeout('display_ct6()', refresh)
             }
             display_c6()
+
+            function ImportHDSD() {
+                $('#ImportHDSD_Modal').modal('show');
+            }
+            function UpdateHDSD() {
+                showLoadingOverlay();
+                var file = new FormData();
+                file.append("FileUpLoad", $("#file_HDSD")[0].files[0]);
+
+                $.ajax({
+                    url: '/UpdateHDSD',
+                    type: 'POST',
+                    data: file,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Cập nhật thành công!!!", "Thành công!");
+                            location.reload();
+                        } else {
+                            toastr.error(data.message, "Lỗi!");
+                        }
+                        hideLoadingOverlay();
+                    }
+                })
+
+            }
         </script>
         @RenderSection("custom_script", required: false)
         @await RenderSectionAsync("Scripts", required: false)
@@ -695,6 +771,38 @@
                     <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ImportHDSD_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    Cập nhật tài liệu hướng dẫn
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold">File đính kèm</label>
+                            <input type="file" class="form-control" id="file_HDSD" name="file_HDSD" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="UpdateHDSD()" id="btn_HDSD">Cập nhật</button>
+                <div id="loading_HDSD" style="display:none">
+                    <span class="mr-2 text-muted">Loading...</span>
+                    <span class="spinner spinner-primary mr-10"></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

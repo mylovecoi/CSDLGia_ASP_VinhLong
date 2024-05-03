@@ -10,9 +10,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers
 {
@@ -21,11 +24,13 @@ namespace CSDLGia_ASP.Controllers
 
         private readonly CSDLGiaDBContext _db;
         private readonly IDsDiaBanService _dsDiaBanService;
+        private readonly IWebHostEnvironment _env;
 
-        public HomeController(CSDLGiaDBContext db, IDsDiaBanService dsDiaBanService)
+        public HomeController(CSDLGiaDBContext db, IDsDiaBanService dsDiaBanService, IWebHostEnvironment hostingEnv)
         {
             _db = db;
             _dsDiaBanService = dsDiaBanService;
+            _env = hostingEnv;
         }
 
         [Route("")]
@@ -45,35 +50,41 @@ namespace CSDLGia_ASP.Controllers
             //Lấy data default cho bảng giá đất            
             var data = _db.GiaDatDiaBan.Where(t => t.Trangthai == "CB" && t.Thoidiem <= DateTime.Now).OrderByDescending(t => t.Thoidiem)
                                                                                 .FirstOrDefault();
-            
-            if(data.Mahs != null)
+
+            if (data.Mahs != null)
             {
                 var datact = (from dat in _db.GiaDatDiaBanCt.Where(t => t.Mahs == data.Mahs)
-                          join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
-                          select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
-                          {
-                              Id = dat.Id,
-                              HienThi = dat.HienThi,
-                              Maloaidat = dat.Maloaidat,
-                              Mota = dat.Mota,
-                              Diemdau = dat.Diemdau,
-                              Diemcuoi = dat.Diemcuoi,
-                              Loaiduong = dat.Loaiduong,
-                              Hesok = dat.Hesok,
-                              Giavt1 = dat.Giavt1,
-                              Giavt2 = dat.Giavt2,
-                              Giavt3 = dat.Giavt3,
-                              Giavt4 = dat.Giavt4,
-                              Giavt5 = dat.Giavt5,
-                              Loaidat = dm.Loaidat,
-                              Sapxep = dat.Sapxep
-                          });
+                              join dm in _db.DmLoaiDat on dat.Maloaidat equals dm.Maloaidat
+                              select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
+                              {
+                                  Id = dat.Id,
+                                  HienThi = dat.HienThi,
+                                  Maloaidat = dat.Maloaidat,
+                                  Mota = dat.Mota,
+                                  Diemdau = dat.Diemdau,
+                                  Diemcuoi = dat.Diemcuoi,
+                                  Loaiduong = dat.Loaiduong,
+                                  Hesok = dat.Hesok,
+                                  Giavt1 = dat.Giavt1,
+                                  Giavt2 = dat.Giavt2,
+                                  Giavt3 = dat.Giavt3,
+                                  Giavt4 = dat.Giavt4,
+                                  Giavt5 = dat.Giavt5,
+                                  Loaidat = dm.Loaidat,
+                                  Sapxep = dat.Sapxep
+                              });
                 data.GiaDatDiaBanCt = datact.ToList();
-            }           
-            ViewData["ThongTinHoSo"] = data;           
-            //
+            }
+            string wwwRootPath = _env.WebRootPath;
+            if (Directory.Exists(wwwRootPath + "/UpLoad/File/HuongDanSuDung"))
+            {
+                //Lấy danh sách tất cả các tập tin trong thư mục
+                string[] files = Directory.GetFiles(wwwRootPath + "/UpLoad/File/HuongDanSuDung");
+                ViewData["FileHDSD"] = Path.GetExtension(files[0]);
+            }
 
             var model = _db.Supports;
+            ViewData["ThongTinHoSo"] = data;
             ViewData["Title"] = "Trang chủ";
             ViewData["MenuLv1"] = "menu_home";
             return View("Views/Admin/Home/Index.cshtml", model);
@@ -183,5 +194,69 @@ namespace CSDLGia_ASP.Controllers
             ViewData["Title"] = "Ứng dụng điện thoại";
             return View("Views/Admin/Systems/CongBo/MobileApp.cshtml");
         }
+
+        [HttpPost("UpdateHDSD")]
+        public async Task<JsonResult> UpdateHDSD(IFormFile FileUpLoad)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (FileUpLoad != null)
+                {
+                    string wwwRootPath = _env.WebRootPath;
+                    string extension = Path.GetExtension(FileUpLoad.FileName);
+                    if (Helper.Helpers.CheckFileType(extension))
+                    {
+                        if (Directory.Exists(wwwRootPath + "/UpLoad/File/HuongDanSuDung"))
+                        {
+                            // Lấy danh sách tất cả các tập tin trong thư mục
+                            string[] files = Directory.GetFiles(wwwRootPath + "/UpLoad/File/HuongDanSuDung");
+
+                            // Lặp qua từng tập tin
+                            foreach (string filePath in files)
+                            {
+                                // Kiểm tra xem tập tin có phần tên cơ bản trùng khớp không
+                                if (Path.GetFileNameWithoutExtension(filePath) == "Life_HDSD")
+                                {
+                                    // Xóa tập tin
+                                    System.IO.File.Delete(filePath);
+                                }
+                            }
+
+                            string filename = "Life_HDSD" + extension;
+                            string path = Path.Combine(wwwRootPath + "/UpLoad/File/HuongDanSuDung", filename);
+                            using (var FileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await FileUpLoad.CopyToAsync(FileStream);
+                                FileStream.Close();
+                            }
+
+                            var data = new { status = "success" };
+                            return Json(data);
+                        }
+                        else
+                        {
+                            var data = new { status = "error", message = "Không tìm thấy thư mục!" };
+                            return Json(data);
+                        }
+                    }
+                    else
+                    {
+                        var data = new { status = "error", message = "File tải lên không đúng định dạng (.jpg, jpeg, png, doc, docx, xls, xlsx, pdf)!" };
+                        return Json(data);
+                    }
+                }
+                else
+                {
+                    var data = new { status = "error", message = "File tải lên không đúng định dạng (.jpg, jpeg, png, doc, docx, xls, xlsx, pdf)!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
     }
 }
