@@ -51,6 +51,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ cụ thể";
                     ViewData["MenuLv1"] = "menu_spdvcuthe";
                     ViewData["MenuLv2"] = "menu_spdvcuthe_ht";
+                    
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvCuThe/HoanThanh/Index.cshtml", model_join);
                 }
                 else

@@ -370,7 +370,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTaiNguyen
                                         Dvt = worksheet.Cells[row, 9].Value != null ?
                                                         worksheet.Cells[row, 9].Value.ToString().Trim() : "",
                                         Manhom = requests.MaNhom,
-                                        Theodoi = "TD"
+                                        Theodoi = "TD",
+                                        Sapxep = (line++).ToString(),
                                     });
                                     line++;
                                 }

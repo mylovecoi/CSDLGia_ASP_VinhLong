@@ -56,6 +56,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Title"] = "Thông tin hồ sơ giá sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_ht";
+                    ViewData["maKetNoiAPI"] = "giaspdvcongich"; // do giá thu gom rác thải nhập vào đây
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/HoanThanh/Index.cshtml", model_join);
 
                 }

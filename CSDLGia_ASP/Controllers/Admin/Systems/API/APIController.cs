@@ -2,13 +2,9 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems.API;
-using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
-using CSDLGia_ASP.ViewModels.Systems;
 using CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia;
-using CSDLGia_ASP.ViewModels.Systems.KetNoiGiaDichVu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -18,16 +14,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using System.Text.RegularExpressions;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {
     public class APIController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _env;
 
-        public APIController(CSDLGiaDBContext db)
+        public APIController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
         {
             _db = db;
+            _env = hostingEnv;
         }
 
         [Route("KetNoiAPI/ThietLapChung")]
@@ -1057,7 +1058,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
                             foreach (var item in hoSoChiTiet)
                             {
-                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt.ToLower() == item.Dvt.ToLower());
                                 int lOAI_GIA;
                                 int nGUON_THONG_TIN;
                                 TryGetKey(loaiGia, item.Loaigia, out lOAI_GIA);
@@ -1101,7 +1102,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             var giaHHDVKDM = new List<VMGiaHHDVKDM>();
                             foreach (var item in model_giahhdvkdm)
                             {
-                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt.ToLower() == item.Dvt.ToLower());
                                 giaHHDVKDM.Add(new VMGiaHHDVKDM
                                 {
                                     DIA_BAN = request.DIA_BAN,
@@ -1121,13 +1122,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
                     case "giathuetainguyen":
                         {
-                            //Chỉ lấy các danh mục đã kê khai giá
-                            var chiTiet = _db.GiaThueTaiNguyenCt.Where(x => x.Gia > 0 && x.Mahs == request.Mahs);
+                            var chiTiet = _db.GiaThueTaiNguyenCt.Where(x => x.Mahs == request.Mahs);
                             var hoSo = _db.GiaThueTaiNguyen.FirstOrDefault(x => x.Mahs == request.Mahs);
 
                             var giaTaiNguyenCT = new List<VMGiaThueTaiNguyen_DSCT>();
                             List<string> capFields = new List<string> { "Cap6", "Cap5", "Cap4", "Cap3", "Cap2", "Cap1" };
-                            foreach (var item in chiTiet)
+                            foreach (var item in chiTiet.OrderBy(x => x.SapXep))
                             {
                                 string maTN = "";
                                 int capDo = 1;
@@ -1177,8 +1177,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
                     case "giathuetainguyendm":
                         {
-                            //Chỉ lấy các danh mục đã kê khai giá
-                            var hoSoChiTiet = (from hosoct in _db.GiaThueTaiNguyenCt.Where(x => x.Gia > 0)
+
+                            //Chỉ lấy các danh mục theo hồ sơ đã kê khai giá
+                            var hoSoChiTiet = (from hosoct in _db.GiaThueTaiNguyenCt
                                                join hoso in _db.GiaThueTaiNguyen.Where(x => x.Manhom == request.Mahs) on hosoct.Mahs equals hoso.Mahs
                                                select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenCt
                                                {
@@ -1191,7 +1192,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                                    Ten = hosoct.Ten,
                                                    Dvt = hosoct.Dvt,
                                                    Gia = hosoct.Gia,
+                                                   SapXep = hosoct.SapXep,
                                                });
+                            if (!hoSoChiTiet.Any())
+                            {
+                                ViewData["Messages"] = "Danh mục chưa phát sinh hồ sơ giá thuế tài nguyên để so sánh và gửi danh mục lên cơ sở dữ liệu quốc giá";
+                                return View("Views/Admin/Error/Error.cshtml");
+                            }
 
                             var dmDVT = _db.DmDvt;
                             var giaTaiNguyenDM = new List<VMGiaThueTaiNguyenDM>();
@@ -1199,7 +1206,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             //Lấy danh mục
                             List<string> listDM = new List<string>();
                             var model_giatndm = _db.GiaThueTaiNguyenDm.Where(x => x.Manhom == request.Mahs && x.Theodoi == "TD").OrderBy(x => x.Sapxep);
-                            foreach (var item in hoSoChiTiet)
+                            foreach (var item in model_giatndm)
                             {
                                 foreach (var capField in capFields)
                                 {
@@ -1216,9 +1223,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             //Lấy danh mục có trong bảng kê khai và listDM để tạo danh mục xuất ra
                             List<string> listDM_hientai = new List<string>();
 
-                            foreach (var item in model_giatndm)
+                            foreach (var item in hoSoChiTiet.OrderBy(x => x.SapXep))
                             {
-                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt == item.Dvt);
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt.ToLower() == item.Dvt.ToLower());
 
                                 string maTN = "";
                                 int capDo = 1;
@@ -1232,30 +1239,100 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                     {
                                         maTN = capProperty;
                                         capDo = int.Parse(capField.Substring(3)); // Lấy số từ chuỗi "CapX"
-                                        maGoc = capDo == 1 ? maTN : maTN.Substring(0, (maTN.Length > 2 ? maTN.Length - 2 : 0));
+                                        if (capDo == 1)
+                                        {
+                                            maGoc = null;
+                                        }
+                                        else if (capDo == 2)
+                                        {
+                                            maGoc = Regex.Replace(maTN, @"\d", "");
+                                        }
+                                        else
+                                        {
+                                            maGoc = maTN.Substring(0, (maTN.Length > 2 ? maTN.Length - 2 : 0));
+                                        }
+
                                         break;
                                     }
                                 }
 
-                                //Kiểm tra trong nhóm danh muc
-                                if (listDM.Contains(maTN))
-                                    if (!listDM_hientai.Contains(maTN))
+                                //Kiểm tra trong danh muc nếu chưa có thì thêm vào
+                                //if (listDM.Contains(maTN)) //bỏ đi do y.c truyền tất cả danh mục lên giá qg
+                                if (!listDM_hientai.Contains(maTN))
+                                {
+                                    giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
                                     {
-                                        giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
-                                        {
-                                            DIA_BAN = request.DIA_BAN,
-                                            MA_TAI_NGUYEN = maTN,
-                                            TEN_TAI_NGUYEN = item.Ten,
-                                            CAP_TAI_NGUYEN = capDo,
-                                            DON_VI_TINH = dvt?.Madvt, // Kiểm tra null trước khi truy cập thuộc tính
-                                            MA_TAI_NGUYEN_TINH_CHA = maGoc,
-                                            TAI_NGUYEN_BTC = maTN,
-                                            NGUOI_TAO = request.NGUOI_TAO,
-                                        });
-                                        listDM_hientai.Add(maTN);
-                                    }
+                                        DIA_BAN = request.DIA_BAN,
+                                        MA_TAI_NGUYEN = maTN,
+                                        TEN_TAI_NGUYEN = item.Ten,
+                                        CAP_TAI_NGUYEN = capDo,
+                                        DON_VI_TINH = (dvt == null ? null : dvt.Madvt), // Kiểm tra null trước khi truy cập thuộc tính
+                                        MA_TAI_NGUYEN_TINH_CHA = maGoc,
+                                        TAI_NGUYEN_BTC = maTN,
+                                        NGUOI_TAO = request.NGUOI_TAO,
+                                    });
+                                    listDM_hientai.Add(maTN);
+                                    //jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyenDM) + @"}";
+                                    //break;
+                                }
                             }
                             jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyenDM) + @"}";
+                            break;
+                        }
+
+                    case "giaspdvcongichdm":
+                        {
+                            break;
+                        }
+
+                    case "giaspdvcongich":
+                        {
+                            var model = _db.GiaSpDvToiDa.FirstOrDefault(x => x.Mahs == request.Mahs);
+                            var model_file = _db.ThongTinGiayTo.FirstOrDefault(t => t.Mahs == model.Mahs);
+                            string fileBase64 = "";
+                            if (model_file == null)
+                            {
+                                ViewData["Messages"] = "Hồ sơ chưa có file đính kèm để gửi dữ liệu lên cơ sở dữ liệu quốc giá";
+                                return View("Views/Admin/Error/Error.cshtml");
+                            }
+                            else
+                            {
+                                //Kiểm tra lại đường dẫn của file
+                                string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + model_file.FileName;
+                                if (!System.IO.File.Exists(path))
+                                {
+                                    ViewData["Messages"] = "Hồ sơ chưa có file đính kèm để gửi dữ liệu lên cơ sở dữ liệu quốc giá";
+                                    return View("Views/Admin/Error/Error.cshtml");
+                                }
+                                else
+                                {
+                                    // Đọc tất cả dữ liệu từ tập tin
+                                    byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+
+                                    // Chuyển đổi dữ liệu thành mã base64
+                                    fileBase64 = Convert.ToBase64String(fileBytes);
+                                }
+
+                            }
+                            var giaDichVuRacThai = new List<VMGiaDichVuRacThai>();
+
+                            giaDichVuRacThai.Add(new VMGiaDichVuRacThai
+                            {
+                                DIA_BAN = request.DIA_BAN,
+                                DONVI_TTSL = request.NGUON_SO_LIEU,
+                                NGUON_SO_LIEU = request.NGUON_SO_LIEU,
+                                SO_VAN_BAN = LaySoQD(model.Soqd),
+                                NGAY_THUC_HIEN = model.Thoidiem.ToString("yyyyMMdd"),
+                                NGAY_BD_HIEU_LUC = model.Thoidiem.ToString("yyyyMMdd"),
+                                NGAY_KT_HIEU_LUC = null,
+                                NGUOI_TAO = request.NGUOI_TAO,
+                                NGUOI_DUYET = request.NGUOI_DUYET,
+                                MA_BM = "82001",
+                                FILE_SO_LIEU = fileBase64,
+                                TEN_FILE = model_file.FileName,
+                            });
+
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaDichVuRacThai) + @"}";
                             break;
                         }
                 }
@@ -1266,6 +1343,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     //Xem dữ liệu
                     return Ok(jsonKetQua);
                 }
+                /* 25.04
 
                 //Truyền dữ liệu
                 // Khởi tạo HttpClient
@@ -1280,7 +1358,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 requestTruyen.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 httpTruyen.Content = requestData;
                 var responseTruyen = await client.SendAsync(httpTruyen);
-
+                */
+                var client = new HttpClient();
+                var requestTruyen = new HttpRequestMessage(HttpMethod.Post, request.LinkAPIKetNoi);
+                requestTruyen.Headers.Add("lgspaccesstoken", request.TokenLGSP);
+                requestTruyen.Headers.Add("SENDER_CODE", "");
+                requestTruyen.Headers.Add("TRAN_CODE", "");
+                requestTruyen.Headers.Add("RECEIVER_CODE", "");
+                requestTruyen.Headers.Add("Authorization", maBearer);
+                requestTruyen.Content = new StringContent(jsonKetQua, null, "application/json");
+                var responseTruyen = await client.SendAsync(requestTruyen);
                 // Đọc phản hồi
                 string responseBody = await responseTruyen.Content.ReadAsStringAsync();
                 if (responseTruyen.IsSuccessStatusCode)
