@@ -50,7 +50,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Index"))
                 {
 
                     var model = new Supports
@@ -85,7 +85,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Index"))
                 {
                     var model = _db.Supports.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
@@ -165,7 +165,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hethong.dshotro", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hethong.dshotro", "Index"))
                 {
 
                     var model = _db.Supports.FirstOrDefault(t => t.Id == Id);
@@ -197,7 +197,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dshotro", "Index"))
                 {
                     var model = _db.Supports.FirstOrDefault(t => t.Id == id_delete);
                     _db.Supports.Remove(model);
