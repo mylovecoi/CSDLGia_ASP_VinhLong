@@ -86,7 +86,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Create"))
                 {
                     if (FileGocUpload != null && FileGocUpload.Length > 0)
                     {
