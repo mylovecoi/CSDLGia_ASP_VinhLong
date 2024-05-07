@@ -395,7 +395,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsdonvi", Name = "Danh sách đơn vị sử dụng" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsxaphuong", Name = "Danh sách xã, phường, thị trấn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dshotro", Name = "Danh sách cán bộ hỗ trợ" });
-            roldelist.Add(new VMRoleList { Role = "hethong.hethong.hdsd", Name = "Danh sách tài liệu hướng dẫn" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dlth", Name = "Danh sách dữ liệu tập huấn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.hethongchung", Name = "Thông tin hệ thống chung" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc", Name = "Quản trị danh mục" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmkkdkg", Name = "Danh mục kê khai đăng ký giá" });

@@ -1,7 +1,7 @@
 ﻿@{
     var session = HttpContextAccessor?.HttpContext?.Session ?? null;
 }
-@model IEnumerable<CSDLGia_ASP.Models.Systems.HuongDanSuDung>
+@model IEnumerable<CSDLGia_ASP.Models.Systems.DuLieuTapHuan>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -31,7 +31,7 @@
             {
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Create"))
                 {
-                    <a class="btn btn-primary font-weight-bolder" asp-controller="HuongDanSuDung" asp-action="Create">
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="DuLieuTapHuan" asp-action="Create">
                         <i class="la la-plus"></i>Thêm mới
                     </a>
                 }
@@ -69,7 +69,7 @@
                             {
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Edit"))
                                 {
-                                    <a asp-controller="HuongDanSuDung" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                    <a asp-controller="DuLieuTapHuan" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                         <i class="icon-lg la la-edit text-primary"></i>
                                     </a>
                                 }
@@ -87,4 +87,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Systems/HuongDanSuDung/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Systems/DuLieuTapHuan/Modal.cshtml")

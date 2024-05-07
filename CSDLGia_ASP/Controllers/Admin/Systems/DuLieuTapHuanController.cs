@@ -15,31 +15,40 @@ using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
 {
-    public class HuongDanSuDungController : Controller
+    public class DuLieuTapHuanController : Controller
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _env;
 
-        public HuongDanSuDungController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public DuLieuTapHuanController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IWebHostEnvironment hostingEnv)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _env = hostingEnv;
         }
 
-        [Route("HuongDanSuDung")]
+        [Route("DuLieuTapHuan")]
         [HttpGet]
         public IActionResult Index()
         {
             //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             //{
-            //    if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Index"))
+            //    if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Index"))
             //    {
-            var model = _db.HuongDanSuDung.ToList();
-            ViewData["Title"] = "Danh sách tài liệu hướng dẫn sử dụng";
+            var model = _db.DuLieuTapHuan.ToList();
+            string wwwRootPath = _env.WebRootPath;
+            if (Directory.Exists(wwwRootPath + "/UpLoad/File/HuongDanSuDung"))
+            {
+                //Lấy danh sách tất cả các tập tin trong thư mục
+                string[] files = Directory.GetFiles(wwwRootPath + "/UpLoad/File/HuongDanSuDung");
+                ViewData["FileHDSD"] = Path.GetExtension(files[0]);
+            }
+            ViewData["Title"] = "Danh sách dữ liệu tập huấn";
             ViewData["MenuLv1"] = "menu_hethong";
             ViewData["MenuLv2"] = "menu_qthethong";
-            ViewData["MenuLv3"] = "menu_hdsd";
-            return View("Views/Admin/Systems/HuongDanSuDung/Index.cshtml", model);
+            ViewData["MenuLv3"] = "menu_dlth";
+            return View("Views/Admin/Systems/DuLieuTapHuan/Index.cshtml", model);
             //    }
             //    else
             //    {
@@ -53,20 +62,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             //}
         }
 
-        [Route("HuongDanSuDung/Create")]
+        [Route("DuLieuTapHuan/Create")]
         [HttpGet]
         public IActionResult Create()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Create"))
                 {
 
-                    ViewData["Title"] = "Thêm mới tài liệu hướng dẫn sử dụng";
+                    ViewData["Title"] = "Thêm mới dữ liệu tập huấn";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_hdsd";
-                    return View("Views/Admin/Systems/HuongDanSuDung/Create.cshtml");
+                    ViewData["MenuLv3"] = "menu_dlth";
+                    return View("Views/Admin/Systems/DuLieuTapHuan/Create.cshtml");
                 }
                 else
                 {
@@ -80,13 +89,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("HuongDanSuDung/Store")]
+        [Route("DuLieuTapHuan/Store")]
         [HttpPost]
-        public async Task<IActionResult> Store(HuongDanSuDung request, IFormFile FileGocUpload, IFormFile FileMauUpload)
+        public async Task<IActionResult> Store(DuLieuTapHuan request, IFormFile FileGocUpload, IFormFile FileMauUpload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Create"))
                 {
                     if (FileGocUpload != null && FileGocUpload.Length > 0)
                     {
@@ -94,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         string filename = Path.GetFileNameWithoutExtension(FileGocUpload.FileName);
                         string extension = Path.GetExtension(FileGocUpload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/HuongDanSuDung/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DuLieuTapHuan/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await FileGocUpload.CopyToAsync(FileStream);
@@ -108,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         string filename = Path.GetFileNameWithoutExtension(FileMauUpload.FileName);
                         string extension = Path.GetExtension(FileMauUpload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/HuongDanSuDung/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DuLieuTapHuan/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await FileMauUpload.CopyToAsync(FileStream);
@@ -116,7 +125,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         request.FileMau = filename;
                     }
 
-                    var model = new HuongDanSuDung
+                    var model = new DuLieuTapHuan
                     {
                         STTSapxep = request.STTSapxep,
                         TenChucNang = request.TenChucNang,
@@ -126,10 +135,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Created_At = DateTime.Now,
                         Updated_At = DateTime.Now,
                     };
-                    _db.HuongDanSuDung.Add(model);
+                    _db.DuLieuTapHuan.Add(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "HuongDanSuDung");
+                    return RedirectToAction("Index", "DuLieuTapHuan");
                 }
                 else
                 {
@@ -143,21 +152,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("HuongDanSuDung/Edit")]
+        [Route("DuLieuTapHuan/Edit")]
         [HttpGet]
         public IActionResult Edit(int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Edit"))
                 {
-                    var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == Id);
+                    var model = _db.DuLieuTapHuan.FirstOrDefault(t => t.Id == Id);
 
-                    ViewData["Title"] = "Chỉnh sửa tài liệu hướng dẫn sử dụng";
+                    ViewData["Title"] = "Chỉnh sửa dữ liệu tập huấn";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_hdsd";
-                    return View("Views/Admin/Systems/HuongDanSuDung/Edit.cshtml", model);
+                    ViewData["MenuLv3"] = "menu_dlth";
+                    return View("Views/Admin/Systems/DuLieuTapHuan/Edit.cshtml", model);
                 }
                 else
                 {
@@ -171,13 +180,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("HuongDanSuDung/Update")]
+        [Route("DuLieuTapHuan/Update")]
         [HttpPost]
-        public async Task<IActionResult> Update(HuongDanSuDung request, IFormFile FileGocUpload, IFormFile FileMauUpload)
+        public async Task<IActionResult> Update(DuLieuTapHuan request, IFormFile FileGocUpload, IFormFile FileMauUpload)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Edit"))
                 {
                     if (FileGocUpload != null && FileGocUpload.Length > 0)
                     {
@@ -185,7 +194,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         string filename = Path.GetFileNameWithoutExtension(FileGocUpload.FileName);
                         string extension = Path.GetExtension(FileGocUpload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/HuongDanSuDung/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DuLieuTapHuan/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await FileGocUpload.CopyToAsync(FileStream);
@@ -199,7 +208,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         string filename = Path.GetFileNameWithoutExtension(FileMauUpload.FileName);
                         string extension = Path.GetExtension(FileMauUpload.FileName);
                         filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File/HuongDanSuDung/", filename);
+                        string path = Path.Combine(wwwRootPath + "/Upload/File/DuLieuTapHuan/", filename);
                         using (var FileStream = new FileStream(path, FileMode.Create))
                         {
                             await FileMauUpload.CopyToAsync(FileStream);
@@ -207,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         request.FileMau = filename;
                     }
 
-                    var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == request.Id);
+                    var model = _db.DuLieuTapHuan.FirstOrDefault(t => t.Id == request.Id);
                     model.TenChucNang = request.TenChucNang;
                     model.NoiDung = request.NoiDung;
                     model.STTSapxep = request.STTSapxep;
@@ -215,10 +224,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     model.FileMau = request.FileMau;
                     model.Updated_At = DateTime.Now;
 
-                    _db.HuongDanSuDung.Update(model);
+                    _db.DuLieuTapHuan.Update(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "HuongDanSuDung");
+                    return RedirectToAction("Index", "DuLieuTapHuan");
                 }
                 else
                 {
@@ -232,19 +241,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("HuongDanSuDung/Delete")]
+        [Route("DuLieuTapHuan/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Delete"))
                 {
-                    var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == id_delete);
-                    _db.HuongDanSuDung.Remove(model);
+                    var model = _db.DuLieuTapHuan.FirstOrDefault(t => t.Id == id_delete);
+                    _db.DuLieuTapHuan.Remove(model);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "HuongDanSuDung");
+                    return RedirectToAction("Index", "DuLieuTapHuan");
                 }
                 else
                 {
@@ -258,13 +267,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("HuongDanSuDung/Show")]
+        [Route("DuLieuTapHuan/Show")]
         [HttpPost]
         public JsonResult Show(int Id)
         {
             //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             //{
-            var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == Id);
+            var model = _db.DuLieuTapHuan.FirstOrDefault(t => t.Id == Id);
             string result = "<div class='modal-body' id='frm_show'>";
             result += "<div class='row'>";
             result += "<div class='col-xl-12'>";
@@ -287,8 +296,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 result += "<p>";
                 result += "-";
-                result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "' target='_blank' class='btn btn-link'";
-                result += " onclick='window.open(`/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += "<a href='/UpLoad/File/DuLieuTapHuan/" + model.FileGoc + "' target='_blank' class='btn btn-link'";
+                result += " onclick='window.open(`/UpLoad/File/DuLieuTapHuan/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                 result += model.FileGoc + "</a>";
                 result += "</p>";
             }
@@ -304,8 +313,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 result += "<p>";
                 result += "-";
-                result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileMau + "' target='_blank' class='btn btn-link'";
-                result += " onclick='window.open(`/UpLoad/File/HuongDanSuDung/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += "<a href='/UpLoad/File/DuLieuTapHuan/" + model.FileMau + "' target='_blank' class='btn btn-link'";
+                result += " onclick='window.open(`/UpLoad/File/DuLieuTapHuan/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                 result += model.FileMau + "</a>";
                 result += "</p>";
             }

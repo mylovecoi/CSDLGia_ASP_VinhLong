@@ -2,7 +2,7 @@
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="HuongDanSuDung" asp-action="Delete">
+            <form asp-controller="DuLieuTapHuan" asp-action="Delete">
                 <div class="modal-header">
                     <h3 class="card-label">
                         Đồng ý xóa tài liệu???
@@ -55,7 +55,7 @@
 
     function GetShow(id) {
         $.ajax({
-            url: '/HuongDanSuDung/Show',
+            url: '/DuLieuTapHuan/Show',
             type: 'POST',
             data: {
                 Id: id,

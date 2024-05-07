@@ -1,4 +1,4 @@
-﻿@model CSDLGia_ASP.Models.Systems.HuongDanSuDung
+﻿@model CSDLGia_ASP.Models.Systems.DuLieuTapHuan
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -20,17 +20,14 @@
     <div class="card-header ribbon ribbon-top ribbon-ver">
         <div class="card-title">
             <h3 class="card-label">
-                Tài liệu hướng dẫn sử dụng<small> chỉnh sửa</small>
+                Dữ liệu tập huấn<small> thêm mới</small>
             </h3>
         </div>
     </div>
     <!--begin::Form-->
-    <form asp-controller="HuongDanSuDung" asp-action="Update" method="post" enctype="multipart/form-data" id="frm_hdsd_update">
+    <form asp-controller="DuLieuTapHuan" asp-action="Store" method="post" enctype="multipart/form-data" id="frm_hdsd_store">
         <div class="card-body">
             <div class="row">
-                <input hidden asp-for="Id" />
-                <input hidden asp-for="FileGoc" />
-                <input hidden asp-for="FileMau" />
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>STT Sắp xếp</label>
@@ -51,41 +48,23 @@
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>
-                            File gốc
-                            @if (!string.IsNullOrEmpty(Model.FileGoc))
-                            {
-                                <a href="~/UpLoad/File/HuongDanSuDung/@Model.FileGoc" target="_blank"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File gốc hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="FileGocUpload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                        <label>File gốc</label>
+                        <input type="file" asp-for="FileGocUpload" accept=".doc, .pdf, .xlsx, .txt, .rar" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="form-group">
-                        <label>
-                            File mẫu
-                            @if (!string.IsNullOrEmpty(Model.FileMau))
-                            {
-                                <a href="~/UpLoad/File/HuongDanSuDung/@Model.FileMau" target="_blank"
-                                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                    File mẫu hiện tại
-                                </a>
-                            }
-                        </label>
-                        <input type="file" asp-for="FileMauUpload" accept=".doc, .pdf, .xlsx, .txt" class="form-control" />
+                        <label>File mẫu</label>
+                        <input type="file" asp-for="FileMauUpload" accept=".doc, .pdf, .xlsx, .txt, .rar" class="form-control" />
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer" style="text-align:center">
-            <a asp-controller="HuongDanSuDung" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="DuLieuTapHuan" asp-action="Index" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Cập nhật</button>
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Thêm mới</button>
         </div>
     </form>
     <!--end::Form-->

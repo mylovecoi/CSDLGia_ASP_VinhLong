@@ -6,7 +6,7 @@ using System.IO;
 
 namespace CSDLGia_ASP.Models.Systems
 {
-    public class HuongDanSuDung
+    public class DuLieuTapHuan
     {
         [Key]
         public int Id { get; set; }
