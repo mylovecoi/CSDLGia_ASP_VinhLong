@@ -288,7 +288,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<p>";
                 result += "-";
                 result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "' target='_blank' class='btn btn-link'";
-                result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += " onclick='window.open(`/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                 result += model.FileGoc + "</a>";
                 result += "</p>";
             }
@@ -305,7 +305,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 result += "<p>";
                 result += "-";
                 result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileMau + "' target='_blank' class='btn btn-link'";
-                result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += " onclick='window.open(`/UpLoad/File/HuongDanSuDung/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
                 result += model.FileMau + "</a>";
                 result += "</p>";
             }
