@@ -11,6 +11,7 @@ namespace CSDLGia_ASP.Models.Systems
         [Key]
         public int Id { get; set; }
         public string TenChucNang { get; set; }
+        public string NoiDung { get; set; }
         public string FileGoc { get; set; }
         [NotMapped]
         public IFormFile FileGocUpload { get; set; }
