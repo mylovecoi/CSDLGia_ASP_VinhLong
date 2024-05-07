@@ -34,12 +34,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             //{
             //    if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Index"))
             //    {
-                    var model = _db.HuongDanSuDung.ToList();
-                    ViewData["Title"] = "Danh sách tài liệu hướng dẫn sử dụng";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_hdsd";
-                    return View("Views/Admin/Systems/HuongDanSuDung/Index.cshtml", model);
+            var model = _db.HuongDanSuDung.ToList();
+            ViewData["Title"] = "Danh sách tài liệu hướng dẫn sử dụng";
+            ViewData["MenuLv1"] = "menu_hethong";
+            ViewData["MenuLv2"] = "menu_qthethong";
+            ViewData["MenuLv3"] = "menu_hdsd";
+            return View("Views/Admin/Systems/HuongDanSuDung/Index.cshtml", model);
             //    }
             //    else
             //    {
@@ -61,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.hdsd", "Create"))
                 {
-                    
+
                     ViewData["Title"] = "Thêm mới tài liệu hướng dẫn sử dụng";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
@@ -120,6 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     {
                         STTSapxep = request.STTSapxep,
                         TenChucNang = request.TenChucNang,
+                        NoiDung = request.NoiDung,
                         FileMau = request.FileMau,
                         FileGoc = request.FileGoc,
                         Created_At = DateTime.Now,
@@ -208,6 +209,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == request.Id);
                     model.TenChucNang = request.TenChucNang;
+                    model.NoiDung = request.NoiDung;
                     model.STTSapxep = request.STTSapxep;
                     model.FileGoc = request.FileGoc;
                     model.FileMau = request.FileMau;
@@ -262,54 +264,60 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             //{
-                var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == Id);
-                string result = "<div class='modal-body' id='frm_show'>";
-                result += "<div class='row'>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold'>Tên chức năng: </label>";
-                result += "<span style='color:blue'>" + model.TenChucNang + "</span>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form -group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold'>File gốc</label>";
+            var model = _db.HuongDanSuDung.FirstOrDefault(t => t.Id == Id);
+            string result = "<div class='modal-body' id='frm_show'>";
+            result += "<div class='row'>";
+            result += "<div class='col-xl-12'>";
+            result += "<div class='form-group fv-plugins-icon-container'>";
+            result += "<label style='font-weight:bold'>Tên chức năng: </label>";
+            result += "<span style='color:blue'>" + model.TenChucNang + "</span>";
+            result += "</div>";
+            result += "</div>";
+            result += "<div class='col-xl-12'>";
+            result += "<div class='form-group fv-plugins-icon-container'>";
+            result += "<label style='font-weight:bold'>Nội dung: </label>";
+            result += "<span style='color:blue'>" + model.NoiDung + "</span>";
+            result += "</div>";
+            result += "</div>";
+            result += "<div class='col-xl-12'>";
+            result += "<div class='form -group fv-plugins-icon-container'>";
+            result += "<label style='font-weight:bold'>File gốc</label>";
 
-                if (model.FileGoc != null && model.FileGoc.Length > 0)
-                {
-                    result += "<p>";
-                    result += "-";
-                    result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "' target='_blank' class='btn btn-link'";
-                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                    result += model.FileGoc + "</a>";
-                    result += "</p>";
-                }
+            if (model.FileGoc != null && model.FileGoc.Length > 0)
+            {
+                result += "<p>";
+                result += "-";
+                result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileGoc + "' target='_blank' class='btn btn-link'";
+                result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileGoc + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += model.FileGoc + "</a>";
+                result += "</p>";
+            }
 
-                result += "</div>";
-                result += "</div>";
+            result += "</div>";
+            result += "</div>";
 
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form -group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold'>File mẫu</label>";
+            result += "<div class='col-xl-12'>";
+            result += "<div class='form -group fv-plugins-icon-container'>";
+            result += "<label style='font-weight:bold'>File mẫu</label>";
 
-                if (model.FileMau != null && model.FileMau.Length > 0)
-                {
-                    result += "<p>";
-                    result += "-";
-                    result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileMau + "' target='_blank' class='btn btn-link'";
-                    result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                    result += model.FileMau + "</a>";
-                    result += "</p>";
-                }
+            if (model.FileMau != null && model.FileMau.Length > 0)
+            {
+                result += "<p>";
+                result += "-";
+                result += "<a href='/UpLoad/File/HuongDanSuDung/" + model.FileMau + "' target='_blank' class='btn btn-link'";
+                result += " onclick='window.open(`/UpLoad/File/VbQlNn/" + model.FileMau + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                result += model.FileMau + "</a>";
+                result += "</p>";
+            }
 
-                result += "</div>";
-                result += "</div>";
+            result += "</div>";
+            result += "</div>";
 
-                result += "</div>";
-                result += "</div>";
+            result += "</div>";
+            result += "</div>";
 
-                var data = new { status = "success", message = result };
-                return Json(data);
+            var data = new { status = "success", message = result };
+            return Json(data);
             //}
             //else
             //{
