@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.HuongDanSuDung>
+﻿@{
+    var session = HttpContextAccessor?.HttpContext?.Session ?? null;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.HuongDanSuDung>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -24,13 +27,15 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Create"))
+            @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin")) && Helpers.GetSsAdmin(session, "Level") == "SSA")
             {
-                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                    <i class="la la-plus"></i>Thêm mới
-                </button>
+                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Create"))
+                {
+                    <a class="btn btn-primary font-weight-bolder" asp-controller="HuongDanSuDung" asp-action="Create">
+                        <i class="la la-plus"></i>Thêm mới
+                    </a>
+                }
             }
-
         </div>
     </div>
     <hr />
@@ -47,25 +52,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.OrderBy(t=>t.STTSapxep))
+                @foreach (var item in Model.OrderBy(t => t.STTSapxep))
                 {
-                    <tr style="text-align: center">
+                    <tr>
                         <td>@item.STTSapxep</td>
                         <td>@item.TenChucNang</td>
                         <td>@item.NoiDung</td>
                         <td>@item.FileGoc</td>
                         <td>@item.FileMau</td>
                         <td>
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Edit"))
+                            <button type="button" data-target="#Show_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                    onclick="GetShow('@item.Id')" title="Tải tệp">
+                                <i class="icon-lg la la-cloud-download text-warning"></i>
+                            </button>
+                            @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin")) && Helpers.GetSsAdmin(session, "Level") == "SSA")
                             {
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                        data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Edit"))
+                                {
+                                    <a asp-controller="HuongDanSuDung" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </a>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hdsd", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                }
                             }
                         </td>
                     </tr>

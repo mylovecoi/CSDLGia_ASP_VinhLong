@@ -206,10 +206,9 @@
                             <!--begin::Header Menu-->
                             <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
                                 <!--begin::Header Nav-->
-                                <ul class="menu-nav">
+                                @* <ul class="menu-nav">
                                     <li class="menu-item menu-item-open menu-item-here menu-item-submenu menu-item-rel menu-item-open menu-item-here menu-item-active" data-menu-toggle="click" aria-haspopup="true">
                                         <a href="javascript:;" class="menu-link menu-toggle">
-                                            @* <span class="menu-text">Docs & Upgrade</span> *@
                                             <span class="svg-icon svg-icon-xl svg-icon-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -264,6 +263,23 @@
                                                     </li>
                                                 }
                                                 <li class="menu-item " aria-haspopup="true">
+                                                    <a asp-controller="HuongDanSuDung" asp-action="Index" class="menu-link">
+                                                        <span class="svg-icon menu-icon">
+                                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Clothes/Briefcase.svg-->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                                    <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                    <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
+                                                                    <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
+                                                                </g>
+                                                            </svg>
+                                                            <!--end::Svg Icon-->
+                                                        </span>
+                                                        <span class="menu-text">Tài liệu hướng dẫn sử dụng</span>
+                                                    </a>
+                                                </li>
+                                                <li class="menu-item " aria-haspopup="true">
                                                     <a href="~/History/UpdateNcc.docx" target="_blank"
                                                        onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="menu-link">
                                                         <span class="svg-icon menu-icon">
@@ -285,7 +301,7 @@
                                         </div>
 
                                     </li>
-                                </ul>
+                                </ul> *@
                                 <!--end::Header Nav-->
                             </div>
                             <!--end::Header Menu-->
@@ -294,7 +310,7 @@
                         <!--begin::Topbar-->
                         <div class="topbar">
                             <!--begin::Quick Actions-->
-                            @* <div class="dropdown">
+                            <div class="dropdown">
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                     <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1">
@@ -315,14 +331,15 @@
                                     <!--begin:Header-->
                                     <div class="d-flex flex-column flex-center py-10 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(Admin/assets/media/misc/bg-1.jpg)">
                                         <h4 class="text-white font-weight-bold">Trợ giúp</h4>
-                                        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">23 tasks pending</span>
+                                        @* <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">23 tasks pending</span> *@
                                     </div>
                                     <!--end:Header-->
                                     <!--begin:Nav-->
                                     <div class="row row-paddingless">
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="~/thongtinhotro" target="_blank" class="d-block py-10 px-5 text-center bg-hover-light">
+                                            <a href="~/History/UpdateNcc.docx" target="_blank"
+                                               onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="d-block py-10 px-5 text-center bg-hover-light">
                                                 <span class="svg-icon svg-icon-3x svg-icon-primary">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -334,13 +351,13 @@
                                                     </svg>
                                                     <!--end::Svg Icon-->
                                                 </span>
-                                                <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Thông tin hỗ trợ</span>
+                                                <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Thông tin nâng cấp phần mềm</span>
                                             </a>
                                         </div>
                                         <!--end:Item-->
                                         <!--begin:Item-->
                                         <div class="col-6">
-                                            <a href="" target="_blank" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
+                                            <a asp-controller="HuongDanSuDung" asp-action="Index" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
                                                 <span class="svg-icon svg-icon-3x svg-icon-primary">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-attachment.svg-->
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -352,7 +369,7 @@
                                                     </svg>
                                                     <!--end::Svg Icon-->
                                                 </span>
-                                                <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Tài liệu hướng dẫn</span>
+                                                <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Tài liệu hướng dẫn sử dụng</span>
                                             </a>
                                         </div>
                                         <!--end:Item-->
@@ -360,7 +377,7 @@
                                     <!--end:Nav-->
                                 </div>
                                 <!--end::Dropdown-->
-                            </div> *@
+                            </div>
 
                             <!--end::Quick Actions-->
                             <!--begin::User-->
