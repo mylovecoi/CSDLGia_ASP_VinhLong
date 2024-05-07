@@ -401,6 +401,8 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnganhnghekd", Name = "Danh mục ngành nghề kinh doanh" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmloaidat", Name = "Danh mục loại đất" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnhomhh", Name = "Danh mục nhóm hàng hóa" });
+            roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmctktvm", Name = "Danh mục chỉ tiêu kinh tế vĩ mô" });
+            roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmdonvitinh", Name = "Danh mục đơn vị tính" });
             //API
             roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản trị kết nối API" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.doanhngiepdvlt", Name = "Danh sách doanh nghiệp kê khai dịch vụ lưu trú" });

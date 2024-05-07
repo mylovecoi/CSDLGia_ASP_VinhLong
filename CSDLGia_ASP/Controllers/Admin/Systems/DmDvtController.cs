@@ -19,14 +19,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             var models = _db.DmDvt;
             ViewData["Title"] = "Thông tin danh mục đơn vị tính";
+            ViewData["MenuLv1"] = "menu_hethong";
+            ViewData["MenuLv2"] = "menu_qtdanhmuc";
+            ViewData["MenuLv3"] = "menu_dmdonvitinh";
             return View("~/Views/Admin/Systems/DmDonViTinh/Index.cshtml", models);
         }
+
         [HttpPost]
         public IActionResult Store(string Dvt_create)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Create"))
                 {
 
                     var model = new DmDvt
@@ -56,7 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Edit"))
                 {
 
                     var model = _db.DmDvt.FirstOrDefault(t => t.Id == id_edit);
@@ -83,7 +87,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Delete"))
                 {
                     var model = _db.DmDvt.FirstOrDefault(x => x.Id == id_delete);
                     _db.DmDvt.Remove(model);

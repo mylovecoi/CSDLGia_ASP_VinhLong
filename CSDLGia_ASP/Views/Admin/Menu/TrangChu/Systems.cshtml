@@ -244,14 +244,6 @@
 
                                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnganhnghekd", "Index"))
                                 {
-                                    @* <li class="menu-item" aria-haspopup="true" id="menu_dmkkdkg">
-                        <a asp-controller="DmNganhKd" asp-action="Index" class="menu-link">
-                        <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                        </i>
-                        <span class="menu-text">Danh mục ngành nghề kinh doanh</span>
-                        </a>
-                        </li> *@
                                     <li class="menu-item" aria-haspopup="true" id="menu_dmkkdkg">
                                         <a asp-controller="DanhMucKkDkg" asp-action="Index" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
@@ -260,6 +252,9 @@
                                             <span class="menu-text" title="Danh mục Kê khai - Đăng ký giá">Danh mục Kê khai - Đăng ký giá</span>
                                         </a>
                                     </li>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                                {
                                     <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
                                         <a asp-controller="DmNhomHh" asp-action="Index" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
@@ -268,7 +263,10 @@
                                             <span class="menu-text">Danh mục hàng hóa</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmctktvm", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dmctktvm">
                                         <a asp-controller="DmChiTieuKinhTeViMo" asp-action="Index" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -276,7 +274,10 @@
                                             <span class="menu-text">Danh mục chỉ tiêu kinh tế vĩ mô</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmdonvitinh">
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Index"))
+                                {
+                                <li class="menu-item" aria-haspopup="true" id="menu_dmdonvitinh">
                                         <a asp-controller="DmDvt" asp-action="Index" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
