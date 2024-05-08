@@ -1,8 +1,10 @@
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,17 @@ namespace CSDLGia_ASP
                     options.CommandTimeout(1800); // 3 minutes
                 })
             );
+            //services.Configure<FormOptions>(options =>
+            //{
+            //    options.ValueLengthLimit = int.MaxValue; // Giới hạn tổng số byte của một tệp tin
+            //    options.MultipartBodyLengthLimit = int.MaxValue; // Giới hạn tổng số byte của dữ liệu được tải lên trong một yêu cầu
+            //    options.MemoryBufferThreshold = int.MaxValue; // Giới hạn tổng số byte của bộ đệm trong bộ nhớ khi sử dụng Stream
+            //});
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                // Thiết lập giới hạn kích thước tải lên (ví dụ: 100 MB)
+                options.Limits.MaxRequestBodySize = 100 * 1024 * 1024; // 100 MB
+            });
             //services.AddDbContext<DanhMucChungDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DanhMucChungConnection")));
             services.AddRazorPages();
             services.AddControllersWithViews();

@@ -89,7 +89,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("DuLieuTapHuan/Store")]
         [HttpPost]
         public async Task<IActionResult> Store(DuLieuTapHuan request, IFormFile FileGocUpload, IFormFile FileMauUpload)
         {
@@ -180,7 +179,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("DuLieuTapHuan/Update")]
         [HttpPost]
         public async Task<IActionResult> Update(DuLieuTapHuan request, IFormFile FileGocUpload, IFormFile FileMauUpload)
         {
