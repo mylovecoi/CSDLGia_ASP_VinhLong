@@ -1132,7 +1132,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                 string maTN = "";
                                 int capDo = 1;
                                 string maGoc = "";
-
+                                string nhomTN = "";
                                 foreach (var capField in capFields)
                                 {
                                     string capProperty = (string)item.GetType().GetProperty(capField).GetValue(item);
@@ -1146,8 +1146,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                     }
                                 }
 
-                                //Kiểm tra trong nhóm danh muc
-
+                                if (maTN == "")//do nhận dữ liệu có trường hợp để trống mã tài nguyên
+                                {
+                                    continue;
+                                }
+                                //Gán nhóm tài nguyên để cho trường hợp truyền từng Mục tài nguyên
+                                nhomTN = Regex.Replace(maTN, @"\d", "");
+                                //Check gửi từng nhóm
+                                //if(nhomTN == "IV" && item.Gia > 0)                                
+                                //if(nhomTN == "IV")                                
                                 giaTaiNguyenCT.Add(new VMGiaThueTaiNguyen_DSCT
                                 {
                                     MA_TAI_NGUYEN = maTN,
@@ -1163,7 +1170,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                 DIA_BAN = request.DIA_BAN,
                                 DONVI_TTSL = request.NGUON_SO_LIEU,
                                 NGUON_SO_LIEU = request.NGUON_SO_LIEU,
-                                SO_VAN_BAN = LaySoQD(hoSo.Soqd),
+                                SO_VAN_BAN = hoSo.Soqd,
                                 NGAY_THUC_HIEN = hoSo.Thoidiem.ToString("yyyyMMdd"),
                                 NGAY_BD_HIEU_LUC = hoSo.Thoidiem.ToString("yyyyMMdd"),
                                 NGAY_KT_HIEU_LUC = null,
@@ -1255,22 +1262,42 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                         break;
                                     }
                                 }
+                                /*Xử lý nếu  nằm trong danh mục thì 
+                                  - Nằm trong danh mục thì TAI_NGUYEN_BTC = maTN;
+                                  - Ko trong danh mục thì lấy TAI_NGUYEN_BTC = mã tài nguyên trong danh mục gần nhất
+                                 */
+                                string maBTC = maTN;
+                                if (!listDM.Contains(maTN))
+                                {
+                                    maBTC = maGoc;
+                                    //Kiểm tra mã gốc xem có nằm trong danh mục không nếu ko thì lùi lại thêm 1 lần
+                                    if (!listDM.Contains(maBTC))
+                                    {
+                                        maBTC = maBTC.Substring(0, maBTC.Length - 2);
+                                    }
+                                }
+                                //gán lại mã cho mục II210103 do theo dm 05/VBHN-BTC tài nguyên này ở nhóm II2401
+                                if (maTN == "II210103")
+                                {
+                                    maGoc = "II2401";
+                                }
 
                                 //Kiểm tra trong danh muc nếu chưa có thì thêm vào
-                                //if (listDM.Contains(maTN)) //bỏ đi do y.c truyền tất cả danh mục lên giá qg
                                 if (!listDM_hientai.Contains(maTN))
                                 {
-                                    giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
-                                    {
-                                        DIA_BAN = request.DIA_BAN,
-                                        MA_TAI_NGUYEN = maTN,
-                                        TEN_TAI_NGUYEN = item.Ten,
-                                        CAP_TAI_NGUYEN = capDo,
-                                        DON_VI_TINH = (dvt == null ? null : dvt.Madvt), // Kiểm tra null trước khi truy cập thuộc tính
-                                        MA_TAI_NGUYEN_TINH_CHA = maGoc,
-                                        TAI_NGUYEN_BTC = maTN,
-                                        NGUOI_TAO = request.NGUOI_TAO,
-                                    });
+                                    //Thử bỏ qua mã cấp 1
+                                    //if (capDo > 1)
+                                        giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
+                                        {
+                                            DIA_BAN = request.DIA_BAN,
+                                            MA_TAI_NGUYEN = maTN,
+                                            TEN_TAI_NGUYEN = item.Ten,
+                                            CAP_TAI_NGUYEN = capDo,
+                                            DON_VI_TINH = (dvt == null ? null : dvt.Madvt), // Kiểm tra null trước khi truy cập thuộc tính
+                                            MA_TAI_NGUYEN_TINH_CHA = maGoc,
+                                            TAI_NGUYEN_BTC = maBTC,
+                                            NGUOI_TAO = request.NGUOI_TAO,
+                                        });
                                     listDM_hientai.Add(maTN);
                                     //jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyenDM) + @"}";
                                     //break;

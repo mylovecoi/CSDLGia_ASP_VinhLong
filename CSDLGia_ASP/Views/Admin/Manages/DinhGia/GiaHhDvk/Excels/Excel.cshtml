@@ -1,7 +1,7 @@
 ﻿@{
     var DanhMucThongTu = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkNhom>)ViewData["DanhMucThongTu"];
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 }
 @model CSDLGia_ASP.ViewModels.VMImportExcel
 
@@ -51,7 +51,7 @@
                     <div class="form-group fv-plugins-icon-container">
                         <label>Đơn vị báo cáo</label>
                         <select asp-for="MaDv" class="form-control">
-                            @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
+                            @foreach (var dv in dsdonvi)
                             {
                                 <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
                             }
