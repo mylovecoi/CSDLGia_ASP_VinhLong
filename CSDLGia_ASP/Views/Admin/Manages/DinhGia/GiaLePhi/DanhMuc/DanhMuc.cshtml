@@ -104,7 +104,7 @@
     </div>
 </div>
 
-<!--create Modal-->
+<!--Create Modal-->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -184,6 +184,7 @@
         </div>
     </div>
 </div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -207,6 +208,7 @@
         </div>
     </div>
 </div>
+
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -231,6 +233,7 @@
         </div>
     </div>
 </div>
+
 <!--Remove Modal-->
 <div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -245,12 +248,23 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
-                <input id="manhom_remove" name="manhom_remove" value="@ViewData["MaNhom"]" type="hidden" />
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-danger font-weight-bold" onclick="DataRemove()">Đồng ý xóa</button>
-            </div>
+            <form asp-controller="GiaLePhiDm" asp-action="RemoveRange">
+                <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Nhóm:</label>
+                            <label class="form-control">@ViewData["TenNhom"]</label>
+                            <input hidden id="manhom_remove" name="manhom_remove" value="@ViewData["Manhom"]" />
+                        </div>
+                    </div>
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -308,24 +322,24 @@
         })
     } 
 
-    function DataRemove() {
-        $.ajax({
-            url: '/DanhMucLePhi/Remove',
-            type: 'POST',
-            data: {
-                Manhom: $('#manhom_remove').val(),
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                if (data.status == 'success') {
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
-                    location.reload();
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
-            }
-        })
-    }
+    // function DataRemove() {
+    //     $.ajax({
+    //         url: '/DanhMucLePhi/Remove',
+    //         type: 'POST',
+    //         data: {
+    //             Manhom: $('#manhom_remove').val(),
+    //         },
+    //         dataType: 'JSON',
+    //         success: function (data) {
+    //             if (data.status == 'success') {
+    //                 toastr.success("Cập nhật thành công!!!", "Thành công!");
+    //                 location.reload();
+    //             } else {
+    //                 toastr.error(data.message, "Lỗi!");
+    //             }
+    //         }
+    //     })
+    // }
 
     function SetEdit(id_edit) {
         $.ajax({

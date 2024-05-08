@@ -125,26 +125,52 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-        [HttpPost("DanhMucLePhi/Remove")]
-        public IActionResult Remove(string Manhom)
+        //[HttpPost("DanhMucLePhi/Remove")]
+        //public IActionResult Remove(string Manhom)
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+        //    {
+        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
+        //        {
+        //            var model = _db.GiaPhiLePhiDm.Where(t => t.Manhom == Manhom);
+        //            if (model.Any())
+        //            {
+        //                _db.GiaPhiLePhiDm.RemoveRange(model);
+        //                _db.SaveChanges();
+        //                var data = new { status = "success", message = "Thành công" };
+        //                return Json(data);
+        //            }
+        //            else
+        //            {
+        //                ViewData["Messages"] = "Không tìm thấy thông tin!";
+        //                return View("Views/Admin/Error/Page.cshtml");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+        //            return View("Views/Admin/Error/Page.cshtml");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View("Views/Admin/Error/SessionOut.cshtml");
+        //    }
+        //}
+
+        [HttpPost]
+        public IActionResult RemoveRange(string manhom_remove)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
                 {
-                    var model = _db.GiaPhiLePhiDm.Where(t => t.Manhom == Manhom);
-                    if (model.Any())
-                    {
-                        _db.GiaPhiLePhiDm.RemoveRange(model);
-                        _db.SaveChanges();
-                        var data = new { status = "success", message = "Thành công" };
-                        return Json(data);
-                    }
-                    else
-                    {
-                        ViewData["Messages"] = "Không tìm thấy thông tin!";
-                        return View("Views/Admin/Error/Page.cshtml");
-                    }
+                    var model = _db.GiaPhiLePhiDm.Where(t => t.Manhom == manhom_remove);
+
+                    _db.GiaPhiLePhiDm.RemoveRange(model);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "GiaLePhiDm", new { Manhom = manhom_remove });
+
                 }
                 else
                 {

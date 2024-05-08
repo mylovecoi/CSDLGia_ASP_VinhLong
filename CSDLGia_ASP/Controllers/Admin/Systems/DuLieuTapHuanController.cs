@@ -70,7 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.dlth", "Create"))
                 {
-
+                    ViewData["SapXep"] = _db.DuLieuTapHuan.Any() ? _db.DuLieuTapHuan.Max(t => t.STTSapxep) : 0;
                     ViewData["Title"] = "Thêm mới dữ liệu tập huấn";
                     ViewData["MenuLv1"] = "menu_hethong";
                     ViewData["MenuLv2"] = "menu_qthethong";
