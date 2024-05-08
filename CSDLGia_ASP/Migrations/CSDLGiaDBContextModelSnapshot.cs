@@ -15638,6 +15638,40 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("DsXaPhuong");
                 });
 
+            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DuLieuTapHuan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created_At")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileGoc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileMau")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("STTSapxep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenChucNang")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_At")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DuLieuTapHuan");
+                });
+
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Excell.ExcellDanhMucLoaiDat", b =>
                 {
                     b.Property<int>("Id")
@@ -15777,40 +15811,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GroupPermissions");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.HuongDanSuDung", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_At")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileGoc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileMau")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NoiDung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenChucNang")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_At")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HuongDanSuDung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.CoSoKinhDoanhDVLT", b =>

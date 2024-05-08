@@ -3,7 +3,20 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-
+  
+  <!--<PropertyGroup>    
+    <MaxRequestBufferSize>104857600</MaxRequestBufferSize>
+    --><!-- Đây là giới hạn cho request body của HTTP (đơn vị byte) --><!--
+    <MaxRequestBodySize>104857600</MaxRequestBodySize>
+    --><!-- Đây là giới hạn cho request body của HTTP (đơn vị byte) --><!--
+    <Kestrel>
+      <Limits>
+        <MaxRequestBodySize>104857600</MaxRequestBodySize>
+        --><!-- Đây là giới hạn cho request body của Kestrel (đơn vị byte) --><!--
+      </Limits>
+    </Kestrel>
+  </PropertyGroup>-->
+  
   <ItemGroup>
     <Compile Remove="Controllers\NghiepVu\**" />
     <Compile Remove="Function\**" />
@@ -51,6 +64,7 @@
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueDN\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaDatDiaBan\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueTn\" />
+    <Folder Include="wwwroot\UpLoad\File\DuLieuTapHuan\" />
     <Folder Include="wwwroot\UpLoad\File\ThongTinGiayTo\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />

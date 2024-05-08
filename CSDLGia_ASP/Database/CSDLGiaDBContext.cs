@@ -308,7 +308,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<GroupPermissions> GroupPermissions { get; set; }
         public DbSet<NhatKySuDung> NhatKySuDung { get; set; }
         public DbSet<Supports> Supports { get; set; }
-        public DbSet<HuongDanSuDung> HuongDanSuDung { get; set; }
+        public DbSet<DuLieuTapHuan> DuLieuTapHuan { get; set; }
 
         // Trạng Thái Hồ Sơ
         public DbSet<TrangThaiHoSo> TrangThaiHoSo { get; set; }
