@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
@@ -12,17 +13,19 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 {
     //Trường Phanloai trong Ct là nội dung của trường Manhom trong danh muc chuyển vào ct
-    public class GiaLePhiMoiExcelController : Controller
+    public class GiaLePhiExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-
-        public GiaLePhiMoiExcelController(CSDLGiaDBContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public GiaLePhiExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         [HttpGet("DinhGiaLePhi/NhanExcel")]
@@ -32,6 +35,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
                 {
+                    var model_ct_cxd = _db.GiaPhiLePhiCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+                    if (model_ct_cxd.Any())
+                    {
+                        _db.GiaPhiLePhiCt.RemoveRange(model_ct_cxd);
+                        _db.SaveChanges();
+                    }
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
+                    if (model_file_cxd.Any())
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        foreach (var file in model_file_cxd)
+                        {
+                            string path_del = Path.Combine(wwwRootPath + "/UpLoad/File/ThongTinGiayTo/", file.FileName);
+                            FileInfo fi = new FileInfo(path_del);
+                            if (fi != null)
+                            {
+                                System.IO.File.Delete(path_del);
+                                fi.Delete();
+                            }
+                        }
+                        _db.ThongTinGiayTo.RemoveRange(model_file_cxd);
+                        _db.SaveChanges();
+                    }
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
                         LineStart = 3,
@@ -91,10 +117,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                 StringBuilder strStyle = new StringBuilder();
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
-                                string PhanLoai = requests.MaNhom;
+                                /*string PhanLoai = requests.MaNhom;
                                 if(requests.MaNhom == "all")
                                 {
                                     PhanLoai = worksheet.Cells[row, 8].Value != null ?
+                                                worksheet.Cells[row, 8].Value.ToString().Trim() : "";
+                                }*/
+                                string str_manhom = requests.MaNhom;
+                                if (requests.MaNhom == "all")
+                                {
+                                    str_manhom = worksheet.Cells[row, 8].Value != null ?
                                                 worksheet.Cells[row, 8].Value.ToString().Trim() : "";
                                 }
 
@@ -119,7 +151,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                                     Mucthutu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                                     worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
                                     Style = strStyle.ToString(),
-                                    Phanloai = PhanLoai,
+                                    Phanloai = str_manhom,
                                 });
                                 line++;
                             }
@@ -139,7 +171,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                 var modelct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
                 model.GiaPhiLePhiCt = modelct.ToList();
-                ViewData["Mahs"] = model.Mahs;
                 ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                 ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
                 ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";

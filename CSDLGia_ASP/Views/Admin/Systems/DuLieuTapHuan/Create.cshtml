@@ -1,4 +1,7 @@
-﻿@model CSDLGia_ASP.Models.Systems.DuLieuTapHuan
+﻿@{
+    int SapXep = Int32.Parse(ViewData["SapXep"].ToString()) + 1;
+}
+@model CSDLGia_ASP.Models.Systems.DuLieuTapHuan
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
@@ -31,7 +34,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>STT Sắp xếp</label>
-                        <input type="number" asp-for="STTSapxep" class="form-control" />
+                        <input type="number" asp-for="STTSapxep" step="1" value="@SapXep" class="form-control" />
                     </div>
                 </div>
                 <div class="col-xl-6">

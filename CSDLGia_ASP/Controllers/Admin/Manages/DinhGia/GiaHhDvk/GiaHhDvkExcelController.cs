@@ -2,7 +2,9 @@
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -17,10 +19,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
     public class GiaHhDvkExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
 
-        public GiaHhDvkExcelController(CSDLGiaDBContext db)
+        public GiaHhDvkExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
         }
 
         [HttpGet("GiaHangHoaDichVuKhac/NhanExcel")]
@@ -30,6 +36,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Create"))
                 {
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
+
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
                         MaDv = Madv,
@@ -38,26 +49,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Sheet = 1,
                         MadiabanBc = MadiabanBc
                     };
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
-                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                                   select new VMDsDonVi
-                                   {
-                                       Id = dv.Id,
-                                       TenDiaBan = db.TenDiaBan,
-                                       MaDiaBan = dv.MaDiaBan,
-                                       TenDv = dv.TenDv,
-                                       MaDv = dv.MaDv,
-                                   }).ToList();
                     
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    var donVi = _db.DsDonVi.FirstOrDefault(x => x.MaDv == model.MaDv);
+                    string diaBanApDung = donVi?.DiaBanApDung ?? null;
+                    if (!string.IsNullOrEmpty(diaBanApDung))
                     {
-                        ViewData["DsDonVi"] = dsdonvi;
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => diaBanApDung.Contains(x.MaDiaBan));
                     }
                     else
                     {
-                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level == "H");
                     }
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;
+
+                    ViewData["DsDonVi"] = model_donvi;                    
                     ViewData["DanhMucThongTu"] = _db.GiaHhDvkNhom;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dg_xaydungmoi";
