@@ -103,7 +103,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["dsnhom"] = _db.GiaHhDvkNhom;
                     /*ViewData["model"] = model_join;*/
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDonVi"] = dsDonVi;
+                    ViewData["DsDonVi"] = dsdonvi;
                     ViewData["thang"] = Thang;
                     ViewData["nam"] = Nam;
                     ViewData["maDV"] = maDV;
@@ -133,7 +133,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.hhdvk.th", "Create"))
                 {
-
                     var modelcthskk = _db.GiaHhDvkCt.Where(t => Hoso.Contains(t.Mahs) && t.Gia != 0).ToList();
                     var modeldm = _db.GiaHhDvkDm.Where(x => x.Matt == Matt && x.Theodoi == "TD");
 

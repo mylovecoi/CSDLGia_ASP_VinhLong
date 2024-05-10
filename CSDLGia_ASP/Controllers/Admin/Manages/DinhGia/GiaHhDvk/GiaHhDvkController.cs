@@ -41,7 +41,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_madv.Contains(t.Madv));
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_madv.Contains(t.Madv));                   
 
                     var model_join = (from kk in model
                                       join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt
@@ -978,6 +978,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                         Nam = NamTh,
                         Thoidiem = DateTime.Now,
                         Thoidiemlk = DateTime.Now,
+                        Trangthai = "CHT",
+
                     };
 
                     var dmHangHoa = _db.GiaHhDvkDm.Where(x => x.Matt == MattTh && x.Theodoi == "TD");

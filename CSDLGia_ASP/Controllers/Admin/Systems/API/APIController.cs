@@ -986,6 +986,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             }
         }
 
+        //
         [HttpPost]
         public async Task<IActionResult> TruyenDuLieuCSDLQG(VMHoSoTruyenCSDLQG request)
         {
@@ -1119,7 +1120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             break;
 
                         }
-
+                        //START
                     case "giathuetainguyen":
                         {
                             var chiTiet = _db.GiaThueTaiNguyenCt.Where(x => x.Mahs == request.Mahs);
@@ -1181,7 +1182,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyen) + @"}";
                             break;
                         }
-
+                    //END
                     case "giathuetainguyendm":
                         {
 
@@ -1414,7 +1415,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Json(data);
             }
         }
-
+        //
         public static bool TryGetKey(Dictionary<string, int> dictionary, string value, out int ketQua)
         {
             // Lặp qua từng cặp key-value trong từ điển
