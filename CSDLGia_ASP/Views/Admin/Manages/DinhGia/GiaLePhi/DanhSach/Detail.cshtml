@@ -3,10 +3,10 @@
 }
 
 @model CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi;
-<input asp-for="Madv" />
-<input asp-for="Mahs" />
-<input asp-for="Id" />
-<input asp-for="Manhom" />
+<input hidden asp-for="Madv" />
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="Id" />
+<input hidden asp-for="Manhom" />
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
 </div>
@@ -56,8 +56,8 @@
                     <thead>
                         <tr>
                             <th style="text-align:center" width="2%">STT</th>
-                            <th style="text-align:center" width="10%">Nhãn hiệu</th>
-                            <th style="text-align:center" width="10%">Nước sản xuất/ lắp ráp</th>
+                            <th style="text-align:center" width="10%">Nhãn hiệu/Mô tả</th>
+                            <th style="text-align:center" width="10%">Nước sản xuất lắp ráp/Tỉ lệ %</th>
                             <th style="text-align:center">Kiểu loại</th>
                             <th style="text-align:center" width="10%">Thể tích</th>
                             <th style="text-align:center" width="10%">Số người/ Tải trọng</th>

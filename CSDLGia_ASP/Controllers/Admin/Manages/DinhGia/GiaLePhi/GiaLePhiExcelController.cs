@@ -171,6 +171,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
 
                 var modelct = _db.GiaPhiLePhiCt.Where(t => t.Mahs == Mahs);
                 model.GiaPhiLePhiCt = modelct.ToList();
+
+                ViewData["NhomDm"] = _db.GiaPhiLePhiNhom;
                 ViewData["DsDiaBan"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                 ViewData["Phanloai"] = _db.GiaPhiLePhiDm.ToList();
                 ViewData["Title"] = " Thông tin hồ sơ giá lệ phí trước bạ";

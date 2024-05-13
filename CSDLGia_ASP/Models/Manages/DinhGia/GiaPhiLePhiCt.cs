@@ -28,9 +28,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [NotMapped]
         public DateTime ThoiDiem { get; set; }
         [NotMapped]
-        public string SoQD { get; set; }       
-        [NotMapped]
-        public string MoTa { get; set; }
+        public string SoQD { get; set; }    
         [NotMapped]
         public string TenDv { get; set; }
 
@@ -39,7 +37,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string TheTich { get; set; }
         public string SoNguoiTaiTrong { get; set; }
         public double DonGia { get; set; }
-        
+        public string MoTa { get; set; }
+        public string TiLe { get; set; }
+
 
 
     }
