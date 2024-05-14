@@ -344,5 +344,6 @@ namespace CSDLGia_ASP.Database
         /*//Test API
         public DbSet<WeatherForecast> WeatherForecast { get; set; }*/
         public DbSet<ThongTinGiayTo> ThongTinGiayTo { get; set; }
+        public DbSet<YKienGopY> YKienGopY { get; set; }
     }
 }
