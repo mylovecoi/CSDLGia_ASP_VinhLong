@@ -138,8 +138,6 @@ namespace CSDLGia_ASP.Database
 
         public DbSet<GiaNuocSh> GiaNuocSh { get; set; }
         public DbSet<GiaNuocShCt> GiaNuocShCt { get; set; }
-        public DbSet<GiaNuocShCtDf> GiaNuocShCtDf { get; set; }
-        public DbSet<GiaNuocShDmVung> GiaNuocShDmVung { get; set; }
         public DbSet<GiaNuocShDmKhung> GiaNuocShDmKhung { get; set; }
 
         public DbSet<GiaPhiChuyenGia> GiaPhiChuyenGia { get; set; }

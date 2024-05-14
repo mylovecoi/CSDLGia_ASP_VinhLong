@@ -41,7 +41,34 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_madv.Contains(t.Madv));                   
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_madv.Contains(t.Madv));
+
+                    if (string.IsNullOrEmpty(Nam))
+                    {
+                        Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
+                        model = model.Where(t => t.Nam == Nam);
+                    }
+                    else
+                    {
+                        if (Nam != "all")
+                        {
+                            model = model.Where(t => t.Nam == Nam);
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(Thang))
+                    {
+                        Thang = Helpers.ConvertYearToStr(DateTime.Now.Month);
+                        model = model.Where(t => t.Thang == Thang);
+                    }
+                    else
+                    {
+                        if (Thang != "all")
+                        {
+                            model = model.Where(t => t.Thang == Thang);
+                        }
+
+                    }
 
                     var model_join = (from kk in model
                                       join nhom in _db.GiaHhDvkNhom on kk.Matt equals nhom.Matt

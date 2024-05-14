@@ -16,30 +16,30 @@ using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
 {
-    public class GiaNuocShDmKhungController : Controller
+    public class GianuocShDmController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaNuocShDmKhungController(CSDLGiaDBContext db)
+        public GianuocShDmController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [HttpGet("DanhMucGiaNuocShKhung")]
+        [HttpGet("DanhMucGiaNuocSh")]
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
                 {
                     var model = _db.GiaNuocShDmKhung;
                     int max_sttsapxep = model.Any() ? model.Max(t => t.STTSapxep) : 1;
-                    ViewData["Title"] = "Danh mục khung giá sạch sinh hoạt";
+                    ViewData["Title"] = "Danh mục giá nước sạch sinh hoạt";
                     ViewData["SapXep"] = max_sttsapxep;
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_dmkhung";
-                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/IndexKhung.cshtml", model);
+                    ViewData["MenuLv3"] = "menu_dgnsh_dm";
+                    return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/Index.cshtml", model);
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             }
         }
 
-        [HttpPost("DanhMucGiaNuocShKhung/Store")]
+        [HttpPost("DanhMucGiaNuocSh/Store")]
         public JsonResult Store(string STTHienthi, int STTSapxep, string[] Style, string Doituongsd)
         {
             string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
@@ -73,7 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             return Json(data);
         }
 
-        [HttpPost("DanhMucGiaNuocShKhung/Delete")]
+        [HttpPost("DanhMucGiaNuocSh/Delete")]
         public JsonResult Delete(int Id)
         {
             var model = _db.GiaNuocShDmKhung.FirstOrDefault(t => t.Id == Id);
@@ -84,7 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             return Json(data);
         }
 
-        [HttpPost("DanhMucGiaNuocShKhung/Edit")]
+        [HttpPost("DanhMucGiaNuocSh/Edit")]
         public JsonResult Edit(int Id)
         {
             var model = _db.GiaNuocShDmKhung.FirstOrDefault(p => p.Id == Id);
@@ -137,7 +137,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             }
         }
 
-        [HttpPost("DanhMucGiaNuocShKhung/Update")]
+        [HttpPost("DanhMucGiaNuocSh/Update")]
         public JsonResult Update(int Id, string STTHienthi, int STTSapxep, string[] Style, string Doituongsd)
         {
             var model = _db.GiaNuocShDmKhung.FirstOrDefault(t => t.Id == Id);
@@ -155,7 +155,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
         }
 
 
-        [HttpPost("DanhMucGiaNuocShKhung/Remove")]
+        [HttpPost("DanhMucGiaNuocSh/Remove")]
         public JsonResult Remove()
         {
             var model = _db.GiaNuocShDmKhung;
@@ -167,12 +167,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             return Json(data);
         }
 
-        [HttpGet("DanhMucGiaNuocShKhung/NhanExcel")]
+        [HttpGet("DanhMucGiaNuocSh/NhanExcel")]
         public IActionResult NhanExcel()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Index"))
                 {
                     var model = new VMImportExcel()
                     {
@@ -180,10 +180,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
                         LineStart = 4,
                         LineStop = 1000
                     };
-                    ViewData["Title"] = "Danh mục khung giá sạch sinh hoạt";
+                    ViewData["Title"] = "Danh mục giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
-                    ViewData["MenuLv3"] = "menu_dgnsh_dmkhung";
+                    ViewData["MenuLv3"] = "menu_dgnsh_dm";
                     return View("Views/Admin/Manages/DinhGia/GiaNuocSh/DanhMuc/Excel.cshtml", model);
                 }
                 else
@@ -242,7 +242,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
                     _db.SaveChanges();                    
                 }
             }
-            return RedirectToAction("Index", "GiaNuocShDmKhung");
+            return RedirectToAction("Index", "GiaNuocShDm");
         }
     }
 }

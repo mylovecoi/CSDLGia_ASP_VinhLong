@@ -39,10 +39,13 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
                 <span>&ensp;</span>
-                <a class="btn btn-success font-weight-bolder" asp-controller="GianuocshDmKhung" asp-action="NhanExcel">
+                <a class="btn btn-success font-weight-bolder" asp-controller="GianuocshDm" asp-action="NhanExcel">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
-                <span>&ensp;</span>
+            }
+            <span>&ensp;</span>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Delete"))
+            {
                 <button type="button" data-target="#Remove_Modal" data-toggle="modal"
                         class="btn btn-danger font-weight-bolder" title="Xóa">
                     <i class="la la-trash"></i>Xóa dữ liệu
@@ -73,12 +76,18 @@
                             <td style="text-align: center; @HtmlStyle">@item.STTHienthi</td>
                             <td style="text-align: left; @HtmlStyle">@item.Doituongsd</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
-                                    <i class="icon-lg la la-edit text-warning"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Doituongsd')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Edit"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                        <i class="icon-lg la la-edit text-warning"></i>
+                                    </button>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuc", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.Doituongsd')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }
@@ -233,7 +242,7 @@
 <script>
     function GetCreate() {
         $.ajax({
-            url: '/DanhMucGiaNuocShKhung/Store',
+            url: '/DanhMucGiaNuocSh/Store',
             type: 'POST',
             data: {
                 Doituongsd: $('#doituongsd_create').val(),
@@ -258,7 +267,7 @@
     }
     function GetDelete() {
         $.ajax({
-            url: '/DanhMucGiaNuocShKhung/Delete',
+            url: '/DanhMucGiaNuocSh/Delete',
             type: 'POST',
             data: {
                 Id: $('#id_delete').val(),
@@ -277,7 +286,7 @@
 
     function SetEdit(id_edit) {
         $.ajax({
-            url: '/DanhMucGiaNuocShKhung/Edit',
+            url: '/DanhMucGiaNuocSh/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -295,7 +304,7 @@
     }
     function GetEdit() {
         $.ajax({
-            url: '/DanhMucGiaNuocShKhung/Update',
+            url: '/DanhMucGiaNuocSh/Update',
             type: 'POST',
             data: {
                 Doituongsd: $('#doituongsd_edit').val(),
@@ -323,7 +332,7 @@
 
     function DataRemove() {
         $.ajax({
-            url: '/DanhMucGiaNuocShKhung/Remove',
+            url: '/DanhMucGiaNuocSh/Remove',
             type: 'POST',
             dataType: 'JSON',
             success: function (data) {

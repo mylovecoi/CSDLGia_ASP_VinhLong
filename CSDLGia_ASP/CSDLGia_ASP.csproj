@@ -111,8 +111,7 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\BcTH.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\BaoCao\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Create.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\DanhMuc\IndexKhung.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\DanhMuc\IndexVung.cshtml" />
+    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\DanhMuc\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Detail.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Edit.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Excels\Create.cshtml" />
@@ -123,7 +122,6 @@
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Printf.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\Show.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\ShowExcel.cshtml" />
-    <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\TimKiem\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\TimKiem\Result.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\XetDuyet\Index.cshtml" />
     <None Include="Views\Admin\Manages\DinhGia\GiaNuocSh\XetDuyet\Modal.cshtml" />

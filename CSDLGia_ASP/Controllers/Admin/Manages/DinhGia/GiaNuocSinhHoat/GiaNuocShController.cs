@@ -147,7 +147,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 
                     ViewData["Madv"] = Madv;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                    ViewData["Danhmuc"] = _db.GiaNuocShDmVung.ToList();
+                    ViewData["Danhmuc"] = _db.GiaNuocShDmKhung.ToList();
                     ViewData["Title"] = "Thêm mới giá nước sạch sinh hoạt";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgnsh";
@@ -295,7 +295,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             model.GiaNuocShCt = modelct.ToList();
             ViewData["Madv"] = requests.MaDv;
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-            ViewData["Danhmuc"] = _db.GiaNuocShDmVung.ToList();
+            ViewData["Danhmuc"] = _db.GiaNuocShDmKhung.ToList();
 
             ViewData["Title"] = "Thêm mới giá nước sạch sinh hoạt";
             ViewData["MenuLv1"] = "menu_dg";

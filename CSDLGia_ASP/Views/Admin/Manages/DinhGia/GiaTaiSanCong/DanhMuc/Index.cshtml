@@ -29,7 +29,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.r.dm", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", "Create"))
             {
                 <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
                     <i class="la la-plus"></i>Thêm mới
@@ -41,7 +41,7 @@
                 <span>&ensp;</span>
 
             }
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dg.r.dm", "Delete"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", "Delete"))
             {
                 <button type="button" data-target="#Remove_Modal" data-toggle="modal" class="btn btn-danger font-weight-bolder" title="Xóa dữ liệu">
                     <i class="la la-trash"></i>Xóa dữ liệu
@@ -72,12 +72,18 @@
                             <td style="text-align: center">@item.Mataisan</td>
                             <td class="text-left active">@item.Tentaisan</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
-                                    <i class="icon-lg la la-edit text-warning"></i>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", "Edit"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                        <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }

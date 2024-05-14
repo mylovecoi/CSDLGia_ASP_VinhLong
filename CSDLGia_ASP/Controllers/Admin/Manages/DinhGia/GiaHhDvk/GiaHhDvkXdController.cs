@@ -36,7 +36,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                        TenDv = donvi.TenDv,
                                    });
 
-                    // var dsdonvi = _db.DsDonVi;
                     var dsdiaban = _db.DsDiaBan;
                     Madv = string.IsNullOrEmpty(Madv) ? dsdonvi.Select(t => t.MaDv).First() : Madv;                    
 
@@ -52,44 +51,36 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                         Level = db.Level,
                                     }).First();
                     List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB", "CHT", "HCB" };
-                    var model = _db.GiaHhDvk.Where(t => list_trangthai.Contains(t.Trangthai) && t.Macqcq == Madv).ToList();
-                    //var model = _db.GiaHhDvk.ToList();
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_trangthai.Contains(t.Trangthai) && t.Macqcq == Madv);
+
 
                     if (string.IsNullOrEmpty(Nam))
                     {
                         Nam = Helpers.ConvertYearToStr(DateTime.Now.Year);
-                        model = model.Where(t => t.Nam == Nam).ToList();
+                        model = model.Where(t => t.Nam == Nam);
                     }
                     else
                     {
                         if (Nam != "all")
                         {
-                            model = model.Where(t => t.Nam == Nam ).ToList();
-                        }                        
+                            model = model.Where(t => t.Nam == Nam);
+                        }
                     }
 
                     if (string.IsNullOrEmpty(Thang))
                     {
                         Thang = Helpers.ConvertYearToStr(DateTime.Now.Month);
-                        model = model.Where(t => t.Thang == Thang).ToList();
+                        model = model.Where(t => t.Thang == Thang);
                     }
                     else
                     {
                         if (Thang != "all")
                         {
-                            model = model.Where(t => t.Thang == Thang && t.Madv_h == Madv).ToList();
-                        }                        
-                    }
-                    
+                            model = model.Where(t => t.Thang == Thang);
+                        }
 
-                    //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    //{
-                    //    ViewData["DsDonVi"] = dsdonvi;
-                    //}
-                    //else
-                    //{
-                    //    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.MaDv == Madv);
-                    //}
+                    }
+
                     ViewData["DsDonVi"] = dsdonvi;
                     ViewData["DsDonViChuyen"] = _db.DsDonVi;
                     ViewData["DsDiaBan"] = dsdiaban;
@@ -100,7 +91,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_xd";
                     return View("Views/Admin/Manages/DinhGia/GiaHhDvk/XetDuyet/Index.cshtml", model);
-                    //return View("Views/Admin/Manages/DinhGia/GiaHhDvk/XetDuyet/Index.cshtml", model_join);
                 }
                 else
                 {
