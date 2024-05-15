@@ -2,14 +2,14 @@
 
 @{
     var stt = 1;
-   
+
 }
-@section custom_style{
+@section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
 }
 
-@section custom_script{
+@section custom_script {
     <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
@@ -20,7 +20,8 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                Danh mục ý kiến đóng góp
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">Danh mục ý kiến đóng góp</span>
             </h3>
         </div>
         <div class="card-toolbar">
@@ -50,11 +51,11 @@
                     {
                         <tr>
                             <td style="text-align: center" width="3%">@(stt++)</td>
-                            <td style="text-align: center" >@item.TieuDe</td>
-                            <td style="text-align: center" >@item.NoiDung</td>
+                            <td style="text-align: center">@item.TieuDe</td>
+                            <td style="text-align: center">@item.NoiDung</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
-                                        data-target="#Edit_Modal" onclick="Setedit('@item.Id','@item.TieuDe','@item.NoiDung')">
+                                <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                        onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
                                     <i class="icon-lg la la-edit text-primary"></i>
                                 </button>
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
@@ -80,21 +81,22 @@
             <div class="modal-body">
                 <form id="modalForm" method="post" asp-controller="YKienGopY" asp-action="Store" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h3 class="card-label text-dark">
-                          Thêm mới
+                        <h3 class="card-label">
+                            @ViewData["Title"]
+                            <span class="d-block text-muted pt-2 font-size-sm">Danh mục ý kiến đóng góp</span>
                         </h3>
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tiêu đề</label>
-                                <input type="text" id="TieuDe" name="TieuDe" class="form-control" />
+                                <input type="text" id="TieuDe" name="TieuDe" class="form-control" placeholder="[Tài khoản Sở Tài Chính] lỗi không xem được báo cáo"  />
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Nội dung</label>
-                                <textarea type="text" id="NoiDung" name="NoiDung" class="form-control" rows="5" cols="30"></textarea>
+                                <textarea type="text" id="NoiDung" name="NoiDung" class="form-control" rows="5" cols="30" placeholder="Lỗi không xem được báo cáo"></textarea>
                             </div>
                         </div>
                         <div class="col-xl-12">
@@ -112,51 +114,25 @@
     </div>
 </div>
 
+
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-body">
-                <form id="modalForm" method="post" asp-controller="YKienGopY" asp-action="Update">
-                    <div class="row">
-                        <div class="modal-header">
-                            <h3 class="card-label text-dark">
-                                Chỉnh sửa
-                            </h3>
-                        </div>
-                        <div class="col-xl-12">
-                            <input hidden id="Id_edit" name="Id_edit" type="text" class="form-control" readonly />
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Tiêu đề</label>
-                                <input id="tieude_edit" name="tieude_edit" type="text" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Nội dung</label>
-                                <textarea type="text" id="noidung_edit" name="noidung_edit" class="form-control" rows="5" cols="30"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Xem file cũ</label><br>
-                                <button type="button" id="view_old_file" class="btn btn-primary">
-                                    <i class="fa fa-eye"></i> Xem file cũ
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <label>File đính kèm</label>
-                            <input type="file" name="Ipf1" accept=".docx, .pdf, .xlsx, .txt" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold">Update</button>
-                    </div>
-                </form>
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin ý kiến đóng góp</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()" id="btn_update">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -166,7 +142,7 @@
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-controller="DmTaiLieuHuongDanSuDung" asp-action="Delete" method="post">
+            <form asp-controller="YKienGopY" asp-action="Delete" method="post">
                 <div class="modal-header">
                     <h3 class="card-label">
                         <span class="d-block text-muted pt-2 font-size-sm">Đồng ý xóa ?</span>
@@ -186,10 +162,62 @@
 
 <script>
 
-    function Setedit(Id, tieude, noidung) {
-        document.getElementById("Id_edit").value = Id;
-        document.getElementById("tieude_edit").value = tieude;
-        document.getElementById("noidung_edit").value = noidung;
+    function SetEdit(id) {
+        $.ajax({
+            url: '/YKienDongGop/Edit',
+            type: 'POST',
+            data:
+            {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit').replaceWith(data.message);
+                }
+                else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetUpdate() {  
+        // Tạo một đối tượng FormData
+        var formData = new FormData();
+
+        // Lấy giá trị từ các trường input
+        formData.append('Id', $('#id_edit').val());
+        formData.append('TieuDe', $('#tieude_edit').val());
+        formData.append('NoiDung', $('#noidung_edit').val());
+
+        // Lấy file từ input và thêm vào FormData
+        var fileInput = $('#ipf1_edit')[0];
+        if (fileInput.files.length > 0) {
+            formData.append('FileUpLoad', fileInput.files[0]);
+        }
+
+        // Gửi AJAX request
+        $.ajax({
+            url: '/YKienDongGop/Update',
+            type: 'POST',
+            data: formData,
+            processData: false,  // Không xử lý dữ liệu
+            contentType: false,  // Không set contentType
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Đã có lỗi xảy ra khi gửi dữ liệu!", "Lỗi!");
+            }
+        });
+
     }
     function SetDelete(Id) {
         document.getElementById("id_delete").value = Id;
