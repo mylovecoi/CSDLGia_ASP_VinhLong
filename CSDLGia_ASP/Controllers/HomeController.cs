@@ -83,6 +83,7 @@ namespace CSDLGia_ASP.Controllers
                 ViewData["FileHDSD"] = Path.GetExtension(files[0]);
             }
 
+            
             var model = _db.Supports;
             ViewData["ThongTinHoSo"] = data;
             ViewData["Title"] = "Trang chủ";

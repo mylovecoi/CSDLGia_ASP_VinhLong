@@ -15,6 +15,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using static System.Collections.Specialized.BitVector32;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
 {
@@ -66,6 +67,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 // Lưu chuỗi JSON vào session
                 HttpContext.Session.SetString("LinkAPIKetNoi", json);
 
+                // Số ý kiến góp ý vào session
+
+               
+
                 //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
                 //
 
@@ -97,6 +102,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                             }
                             else
                             {
+                                var danhsachykien = _db.YKienGopY.Count();
+                                HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
 
                                 HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
 
