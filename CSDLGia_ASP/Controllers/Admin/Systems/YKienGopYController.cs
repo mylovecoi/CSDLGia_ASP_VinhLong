@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using static System.Collections.Specialized.BitVector32;
+using System.Collections.Generic;
 
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems
@@ -29,14 +30,32 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(YKienGopY request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
                 {
-                    ViewData["Title"] = " Thông tin ý kiến đóng góp ";
-                    var danhsachykien = _db.YKienGopY.ToList();
+                    ViewData["Title"] = "Thông tin ý kiến đóng góp";
+
+                    // Khởi tạo danh sách ý kiến
+                    List<YKienGopY> danhsachykien;
+ 
+                    if (string.IsNullOrEmpty(request.TenDangNhap))
+                    {
+                        // Lấy tất cả ý kiến nếu TenDangNhap không có giá trị
+                        danhsachykien = _db.YKienGopY.ToList();
+                    }
+                    else
+                    {
+                        // Lấy ý kiến theo TenDangNhap nếu có giá trị
+                        danhsachykien = _db.YKienGopY.Where(x => x.TenDangNhap == request.TenDangNhap).ToList();
+                    }
+
+                    // Lấy danh sách đơn vị không trùng lặp
+                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+
+                    // Trả về view với danh sách ý kiến
                     return View("Views/Admin/Systems/YKienGopY/Index.cshtml", danhsachykien);
                 }
                 else
@@ -55,7 +74,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Greate"))
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Create"))
                 {
                     if (Ipf1 != null && Ipf1.Length > 0)
                     {
@@ -133,7 +152,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form -group fv-plugins-icon-container'>";
-                    result += "<label>File hiện tại</label>";
                     if (!string.IsNullOrEmpty(model.Ipf1))
                     {
                         result += "<br>";
