@@ -1051,11 +1051,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             loaiGia["Giá bán lẻ"] = 5;
 
                             Dictionary<string, int> nguonThongTin = new Dictionary<string, int>();
-                            loaiGia["Do trực tiếp điều tra, thu thập"] = 1;
-                            loaiGia["Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định"] = 2;
-                            loaiGia["Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp"] = 3;
-                            loaiGia["Hợp đồng mua tin"] = 4;
-                            loaiGia["Các nguồn thông tin khác"] = 5;
+                            nguonThongTin["Do trực tiếp điều tra, thu thập"] = 1;
+                            nguonThongTin["Do cơ quan/đơn vị quản lý nhà nước có liên quan cung cấp/báo cáo theo quy định"] = 2;
+                            nguonThongTin["Từ thống kê đăng ký giá, kê khai giá, thông báo giá của doanh nghiệp"] = 3;
+                            nguonThongTin["Hợp đồng mua tin"] = 4;
+                            nguonThongTin["Các nguồn thông tin khác"] = 5;
 
                             foreach (var item in hoSoChiTiet)
                             {
