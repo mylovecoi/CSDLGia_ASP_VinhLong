@@ -112,7 +112,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                             bool isItalic = style.Font.Italic;
                             StringBuilder strStyle = new StringBuilder();
                             if (isBold) { strStyle.Append("Chữ in đậm,"); }
-                            if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }     
+                            if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
 
                             int line = 1;
                             list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchCt
@@ -126,13 +126,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                 Ten = worksheet.Cells[row, 2].Value != null ?
                                             worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                 Dvt = worksheet.Cells[row, 3].Value != null ?
-                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",                               
+                                            worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                 Mucgiatu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                            worksheet.Cells[row, 4].Value.ToString().Trim() : ""),                             
+                                            worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
                                 Mucgiaden = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
-                                            worksheet.Cells[row, 5].Value.ToString().Trim() : ""),                        
+                                            worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
                                 Mucgia3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
-                                            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),                        
+                                            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
                                 Mucgia4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                             worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
                                 Style = strStyle.ToString(),
@@ -149,7 +149,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
-                    Mahs = Mahs, 
+                    Mahs = Mahs,
                     Manhom = requests.MaNhom
                 };
                 var modelct = _db.GiaSpDvCongIchCt.Where(t => t.Mahs == Mahs);

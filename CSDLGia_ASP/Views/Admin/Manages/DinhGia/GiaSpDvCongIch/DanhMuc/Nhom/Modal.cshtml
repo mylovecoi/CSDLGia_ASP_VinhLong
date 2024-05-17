@@ -16,6 +16,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <input hidden id="madv_create" name="madv_create" value="@ViewData["Madv"]" />
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Sắp xếp</label>
@@ -127,6 +128,7 @@
                 url: '/GiaSpDvCongIchDm/Store',
                 type: 'POST',
                 data: {
+                    Madv: $('#madv_create').val(),
                     SapXep: $('#sapxep_create').val(),
                     Tennhom: $('#tennhom_create').val(),
                     Manhom: $('#manhom_create').val(),

@@ -27,6 +27,7 @@
                 <h3 class="card-label">
                     Danh mục chi tiết nhóm sản phẩm dịch vụ công ích<br />
                     <small style="color: blue;text-transform:uppercase;">@ViewData["Tennhom"]</small><br />
+                @ViewData["Madv"]
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -39,7 +40,7 @@
                     <i class="la la-plus"></i>Thêm mới
                 </button>
                 <span>&ensp;</span>
-                <a asp-controller="GiaSpDvCongIchDm" asp-action="NhanExcel" asp-route-Manhom="@ViewData["Manhom"]" class="btn btn-success font-weight-bolder">
+                <a asp-controller="GiaSpDvCongIchDm" asp-action="NhanExcel" asp-route-Madv="@ViewData["Madv"]" asp-route-Manhom="@ViewData["Manhom"]" class="btn btn-success font-weight-bolder">
                     <i class="la la-file-excel-o"></i>Nhận dữ liệu
                 </a>
                 <span>&ensp;</span>

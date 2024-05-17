@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.ViewModels;
+using CSDLGia_ASP.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,33 +16,37 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
-//using OfficeOpenXml;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 {
     public class GiaSpDvCongIchDmController : Controller
     {
         private readonly CSDLGiaDBContext _db;
-        private readonly IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaSpDvCongIchDmController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
+        public GiaSpDvCongIchDmController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
-            _env = hostingEnv;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaSpDvCongIchDmCt")]
         [HttpGet]
-        public IActionResult Index(string Manhom)
+        public IActionResult Index(string Madv, string Manhom)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                 {
-                    var model = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom).ToList();
+                    var model = _db.GiaSpDvCongIchDm.Where(t => t.Manhom == Manhom && t.Madv == Madv).ToList();
                     int max_sttsapxep = model.Any() ? model.Max(t => t.Sapxep) : 1;
                     ViewData["SapXep"] = max_sttsapxep;
                     ViewData["Manhom"] = Manhom;
+                    ViewData["Madv"] = Madv;
                     ViewData["Tennhom"] = _db.GiaSpDvCongIchNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? "";
                     ViewData["Title"] = "Danh mục chi tiết nhóm sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -65,7 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep, string[] Style)
+        public JsonResult Store(string Madv, string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -74,6 +79,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                     var request = new GiaSpDvCongIchDm
                     {
+                        Madv = Madv,
                         Manhom = Manhom,
                         Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Tenspdv = Tenspdv,
@@ -260,13 +266,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         }
 
         [HttpPost]
-        public IActionResult Remove(string manhom_remove)
+        public IActionResult Remove(string manhom_remove, string madv_remove)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Delete"))
                 {
-                    var model = _db.GiaSpDvCongIchDm.Where(p => p.Manhom == manhom_remove);
+                    var model = _db.GiaSpDvCongIchDm.Where(p => p.Manhom == manhom_remove && p.Madv == madv_remove);
                     _db.GiaSpDvCongIchDm.RemoveRange(model);
                     _db.SaveChanges();
 
@@ -285,7 +291,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         }
 
         [HttpGet("GiaSpDvCongIchDmCt/NhanExcel")]
-        public IActionResult NhanExcel (string Manhom)
+        public IActionResult NhanExcel (string Manhom, string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -296,7 +302,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         Sheet = 1,
                         LineStart = 2,
                         LineStop = 1000,
-                        MaNhom = Manhom
+                        MaNhom = Manhom,
+                        MaDv = Madv,
                     };
                     ViewData["Title"] = "Danh mục chi tiết nhóm sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -346,6 +353,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
                         list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchDm
                         {
+                            Madv = requests.MaDv,
                             Manhom = requests.MaNhom,
                             Sapxep = line,
                             HienThi = worksheet.Cells[row, 1].Value != null ?
@@ -363,9 +371,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     _db.SaveChanges();
                 }
             }
-            return RedirectToAction("Index", "GiaSpDvCongIchDm", new { Manhom = requests.MaNhom});
+
+            return RedirectToAction("Index", "GiaSpDvCongIchDm", new { Manhom = requests.MaNhom, Madv = requests.MaDv});
         }
-
-
     }
 }
