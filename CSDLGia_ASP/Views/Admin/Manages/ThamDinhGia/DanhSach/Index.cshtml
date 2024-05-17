@@ -1,7 +1,7 @@
 ﻿@{
     int record_id = 1;
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
-    var dsdonvi = (IEnumerable<VMDsDonVi>)ViewData["DsDonVi"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dmnhomhh = (IEnumerable<DmNhomHh>)ViewData["DmNhomHh"];
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia>
@@ -153,6 +153,12 @@
                                     {
                                         <a asp-controller="ThamDinhGia" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
                                             <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Edit"))
+                                    {
+                                        <a asp-controller="ThamDinhGia" asp-action="EditHoiDong" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Hội đồng thẩm định giá">
+                                            <i class="icon-lg la flaticon-user text-primary"></i>
                                         </a>
                                     }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdltdg.tdg.tt", "Delete"))

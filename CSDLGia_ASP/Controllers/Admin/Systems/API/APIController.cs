@@ -1120,7 +1120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             break;
 
                         }
-                        //START
+                    //START
                     case "giathuetainguyen":
                         {
                             var chiTiet = _db.GiaThueTaiNguyenCt.Where(x => x.Mahs == request.Mahs);
@@ -1288,17 +1288,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                 {
                                     //Thử bỏ qua mã cấp 1
                                     //if (capDo > 1)
-                                        giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
-                                        {
-                                            DIA_BAN = request.DIA_BAN,
-                                            MA_TAI_NGUYEN = maTN,
-                                            TEN_TAI_NGUYEN = item.Ten,
-                                            CAP_TAI_NGUYEN = capDo,
-                                            DON_VI_TINH = (dvt == null ? null : dvt.Madvt), // Kiểm tra null trước khi truy cập thuộc tính
-                                            MA_TAI_NGUYEN_TINH_CHA = maGoc,
-                                            TAI_NGUYEN_BTC = maBTC,
-                                            NGUOI_TAO = request.NGUOI_TAO,
-                                        });
+                                    giaTaiNguyenDM.Add(new VMGiaThueTaiNguyenDM
+                                    {
+                                        DIA_BAN = request.DIA_BAN,
+                                        MA_TAI_NGUYEN = maTN,
+                                        TEN_TAI_NGUYEN = item.Ten,
+                                        CAP_TAI_NGUYEN = capDo,
+                                        DON_VI_TINH = (dvt == null ? null : dvt.Madvt), // Kiểm tra null trước khi truy cập thuộc tính
+                                        MA_TAI_NGUYEN_TINH_CHA = maGoc,
+                                        TAI_NGUYEN_BTC = maBTC,
+                                        NGUOI_TAO = request.NGUOI_TAO,
+                                    });
                                     listDM_hientai.Add(maTN);
                                     //jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyenDM) + @"}";
                                     //break;
@@ -1310,11 +1310,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
                     case "giaspdvcongichdm":
                         {
+                            //2024.05.14 Do khánh hoà nhập thu gom rác thải vào GiaSpDvToiDa
+                            //Chỉ lấy danh mục có đơn vị tính
+                            var model = _db.GiaSpDvToiDaDm.Where(x => x.Manhom == request.Mahs).OrderBy(x => x.Sapxep);
+                            var dmDVT = _db.DmDvt;
+                            var danhMuc = new List<VMGiaDichVuRacThaiDM>();
+                            foreach (var item in model.OrderBy(x => x.Sapxep))
+                            {
+                                var dvt = dmDVT.FirstOrDefault(x => x.Dvt.ToLower() == item.Dvt.ToLower());
+                                if (!string.IsNullOrEmpty(item.Dvt) && dvt != null)
+                                    danhMuc.Add(new VMGiaDichVuRacThaiDM
+                                    {
+                                        DIA_BAN = request.DIA_BAN,
+                                        MA_DV_VCTG = item.Maspdv,
+                                        TEN_DV_VCTG = item.Tenspdv,
+                                        MO_TA = item.Tenspdv,
+                                        DON_VI_TINH = dvt.Madvt,
+                                        NGUOI_TAO = request.NGUOI_TAO,
+                                    });
+                            }
+
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(danhMuc) + @"}";
                             break;
                         }
 
                     case "giaspdvcongich":
                         {
+                            /*2024.05.15: File đính kèm chỉ nhận file .xls
+                             * MA_BM của khánh hoà là 183
+                             */
                             var model = _db.GiaSpDvToiDa.FirstOrDefault(x => x.Mahs == request.Mahs);
                             var model_file = _db.ThongTinGiayTo.FirstOrDefault(t => t.Mahs == model.Mahs);
                             string fileBase64 = "";
@@ -1349,13 +1373,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                                 DIA_BAN = request.DIA_BAN,
                                 DONVI_TTSL = request.NGUON_SO_LIEU,
                                 NGUON_SO_LIEU = request.NGUON_SO_LIEU,
-                                SO_VAN_BAN = LaySoQD(model.Soqd),
+                                SO_VAN_BAN = model.Soqd,
                                 NGAY_THUC_HIEN = model.Thoidiem.ToString("yyyyMMdd"),
                                 NGAY_BD_HIEU_LUC = model.Thoidiem.ToString("yyyyMMdd"),
                                 NGAY_KT_HIEU_LUC = null,
                                 NGUOI_TAO = request.NGUOI_TAO,
                                 NGUOI_DUYET = request.NGUOI_DUYET,
-                                MA_BM = "82001",
+                                MA_BM = "183",
                                 FILE_SO_LIEU = fileBase64,
                                 TEN_FILE = model_file.FileName,
                             });

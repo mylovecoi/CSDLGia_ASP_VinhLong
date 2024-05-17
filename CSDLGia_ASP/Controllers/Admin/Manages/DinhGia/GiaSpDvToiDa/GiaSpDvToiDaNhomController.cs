@@ -29,6 +29,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ tối đa";
                     ViewData["MenuLv1"] = "menu_spdvtoida";
                     ViewData["MenuLv2"] = "menu_spdvtoida_dm";
+                    ViewData["maKetNoiAPI"] = "giaspdvcongichdm";
                     return View("Views/Admin/Manages/DinhGia/GiaSpDvToiDa/DanhMuc/Nhom/Index.cshtml", model);
                 }
                 else

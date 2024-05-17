@@ -260,6 +260,8 @@ namespace CSDLGia_ASP.Database
         public DbSet<ThamDinhGiaDv> ThamDinhGiaDv { get; set; }
         public DbSet<ThamDinhGiaDmHh> ThamDinhGiaDmHh { get; set; }
         public DbSet<ThamDinhGiaDvLichSu> ThamDinhGiaDvLichSu { get; set; }
+        public DbSet<ThamDinhGiaHD> ThamDinhGiaHD { get; set; }
+        public DbSet<ThamDinhGiaHDCt> ThamDinhGiaHDCt { get; set; }
 
         //VBQLNN
         public DbSet<VbQlNn> VbQlNn { get; set; }
