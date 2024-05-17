@@ -1,32 +1,58 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Services;
+using CSDLGia_ASP.ViewModels.Manages.DinhGia;
+using CSDLGia_ASP.ViewModels.Systems;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 {
     public class GiaSpDvCongIchNhomController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaSpDvCongIchNhomController(CSDLGiaDBContext db)
+        public GiaSpDvCongIchNhomController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaSpDvCongIchDm")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                 {
-                    var model = _db.GiaSpDvCongIchNhom.ToList();
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchNhom> model = _db.GiaSpDvCongIchNhom.Where(t => list_madv.Contains(t.Madv));
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
+
                     ViewData["SapXep"] = model.Any() ? model.Max(t => t.SapXep) + 1 : 1;
+                    ViewData["Madv"] = Madv;
+                    ViewData["DsDonvi"] = model_donvi;
                     ViewData["Title"] = "Nhóm sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -47,7 +73,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDm/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom, string Theodoi, int SapXep)
+        public JsonResult Store(string Madv, string Manhom, string Tennhom, string Theodoi, int SapXep)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -55,6 +81,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 {
                     var request = new GiaSpDvCongIchNhom
                     {
+                        Madv = Madv,
                         SapXep = SapXep,
                         Manhom = Manhom,
                         Tennhom = Tennhom,
@@ -98,13 +125,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         result += "<label>Sắp xếp</label>";
                         result += "<input type='number' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.SapXep + "'/>";
                         result += "</div>";
-                        result += "</div>";                       
+                        result += "</div>";
                         result += "<div class='col-xl-9'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên nhóm</label>";
                         result += "<input type='text' id='tennhom_edit' name='tennhom_edit' class='form-control' value='" + model.Tennhom + "'/>";
                         result += "</div>";
-                        result += "</div>";                      
+                        result += "</div>";
                         result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                         result += "</div>";
 
@@ -173,11 +200,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     _db.GiaSpDvCongIchNhom.Remove(model);
                     _db.SaveChanges();
 
-                    var model_ct = _db.GiaSpDvCongIchDm.Where(p => p.Manhom == model.Manhom).ToList();
+                    var model_ct = _db.GiaSpDvCongIchDm.Where(p => p.Manhom == model.Manhom && p.Madv == model.Madv).ToList();
                     _db.GiaSpDvCongIchDm.RemoveRange(model_ct);
                     _db.SaveChanges();
 
-                    return RedirectToAction("Index", "GiaSpDvCongIchNhom");
+                    return RedirectToAction("Index", "GiaSpDvCongIchNhom", new { model.Madv });
                 }
                 else
                 {

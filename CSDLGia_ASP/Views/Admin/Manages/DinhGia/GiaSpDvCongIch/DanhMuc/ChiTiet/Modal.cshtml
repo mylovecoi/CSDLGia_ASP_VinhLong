@@ -18,6 +18,7 @@
             </div>
             <div class="modal-body">
                 <input hidden id="manhom_create" name="manhom_create" value="@ViewData["Manhom"]" />
+                <input hidden id="madv_create" name="madv_create" value="@ViewData["Madv"]" />
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
@@ -63,6 +64,7 @@
         </div>
     </div>
 </div>
+
 <!--Edit Modal-->
 <div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -130,6 +132,7 @@
             <form asp-controller="GiaSpDvCongIchDm" asp-action="Remove">
                 <div class="modal-body">
                     <input hidden id="manhom_remove" name="manhom_remove" value="@ViewData["Manhom"]"/>
+                    <input hidden id="madv_remove" name="madv_remove" value="@ViewData["Madv"]" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
@@ -156,6 +159,7 @@
             <div class="modal-body">
                 <div class="row">
                     <input id="manhom_lock" name="manhom_lock" value="@ViewData["Manhom"]" />
+                    <input id="madv_lock" name="madv_lock" value="@ViewData["Manhom"]" />
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Trạng thái</label>
@@ -177,7 +181,6 @@
 
 
 <!--Thêm phân loại sản phẩm-->
-
 <div class="modal fade" id="Plspdv_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -206,7 +209,6 @@
 </div>
 
 <!--Thêm đơn vị tính -->
-
 <div class="modal fade" id="Dvt_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -235,7 +237,6 @@
 </div>
 
 <!--Thêm đơn vị tính edit  -->
-
 <div class="modal fade" id="Dvt_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -263,9 +264,7 @@
     </div>
 </div>
 
-
 <!--Thêm phân loại sản phẩm-->
-
 <div class="modal fade" id="Plspdv_Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -293,7 +292,6 @@
     </div>
 </div>
 
-
 <!--Excel Modal-->
 <div class="modal fade" id="Excel_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -309,7 +307,8 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input id="Manhom" name="Manhom" value="@ViewData["Manhom"]" type="hidden" />
+                    <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+                    <input hidden id="Madv" name="Madv" value="@ViewData["Madv"]" />
                     <div class="mb-3 font-weight-bold font-size-lg">
                         <label style="color: blue;font-weight: bold; text-transform: uppercase">@ViewData["Tennhom"]</label>
                     </div>
@@ -421,6 +420,7 @@
         $('#dvt_create').append(new Option(gt, gt, true, true));
         $('#dvt_create').val(gt).trigger('change');
     }
+
     function Plspdv() {
         $('#Plspdv_Modal').modal('hide');
         var gt = $('#plspdv_add').val();
@@ -447,6 +447,7 @@
             url: '/GiaSpDvCongIchDmCt/Store',
             type: 'POST',
             data: {
+                Madv: $('#madv_create').val(),
                 HienThi: $('#hienthi_create').val(),
                 manhom: $('#manhom_create').val(),
                 tenspdv: $('#tenspdv_create').val(),
@@ -538,6 +539,7 @@
             url: '/GiaSpDvCongIchDmCt/Lock',
             type: 'POST',
             data: {
+                Madv: $('#madv_lock').val(),
                 Manhom: $('#manhom_lock').val(),
                 Theodoi: $('#theodoi_lock').val(),
             },
@@ -569,6 +571,7 @@
             file.append("LineStart", $("#linestart_excel").val());
             file.append("LineStop", $("#linestop_excel").val());
             file.append("Manhom", $("#Manhom").val());
+            file.append("Madv", $("#Madv").val());
 
             $.ajax({
                 url: '/GiaSpDvCongIchDmCt/Excel',
