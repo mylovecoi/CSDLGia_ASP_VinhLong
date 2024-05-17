@@ -272,7 +272,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                     Dvt = worksheet.Cells[row, 3].Value != null ?
                                                  worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                     Style = strStyle.ToString(),
-                                    Manhom = requests.MaNhom
+                                    Manhom = requests.MaNhom,
+                                    Maspdv = requests.MaNhom + line,
                                 });
                                 line++;
                             }
