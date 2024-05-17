@@ -29,7 +29,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             _hostEnvironment = hostEnvironment;
 
         }
-
+        [Route("YKienDongGop")]
+        [HttpGet]
         public IActionResult Index(YKienGopY request)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -40,7 +41,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     // Khởi tạo danh sách ý kiến
                     List<YKienGopY> danhsachykien;
- 
+
                     if (string.IsNullOrEmpty(request.TenDangNhap))
                     {
                         // Lấy tất cả ý kiến nếu TenDangNhap không có giá trị
@@ -95,7 +96,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         TieuDe = request.TieuDe,
                         NoiDung = request.NoiDung,
                         TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-
+                        NgayGopY = DateTime.Now,
                         Ipf1 = request.Ipf1,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
@@ -138,14 +139,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Tiêu đề</label>";
+                    result += "<label>Tiêu đề:</label>";
                     result += "<input type='text' class='form-control' id='tieude_edit' name='tieude_edit'value='" + model.TieuDe + "'/>";
                     result += "</div>";
                     result += "</div>";
 
                     result += "<div class='col-xl-12'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Nội dung</label>";
+                    result += "<label>Nội dung:</label>";
                     result += "<textarea class='form-control' id='noidung_edit' name='noidung_edit' rows='5' cols='30'>" + model.NoiDung + "</textarea>";
                     result += "</div>";
                     result += "</div>";
@@ -233,6 +234,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                 model.TieuDe = request.TieuDe;
                                 model.NoiDung = request.NoiDung;
                                 model.Ipf1 = filename;
+                                model.NgayGopY = DateTime.Now;
 
                                 // Cập nhật model và lưu thay đổi vào cơ sở dữ liệu
                                 _db.YKienGopY.Update(model);
@@ -252,6 +254,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             // Nếu không có file được tải lên, chỉ cập nhật dữ liệu không cần thay đổi file
                             model.TieuDe = request.TieuDe;
                             model.NoiDung = request.NoiDung;
+                            model.NgayGopY = DateTime.Now;
 
                             // Cập nhật model và lưu thay đổi vào cơ sở dữ liệu
                             _db.YKienGopY.Update(model);
@@ -322,6 +325,63 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+
+        [Route("YKienDongGopPhanHoi/Edit")]
+        [HttpPost]
+        public JsonResult EditPhanHoi(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Edit"))
+                {
+                    var model = _db.YKienGopY.FirstOrDefault(t => t.Id == Id);
+
+                    string result = "<div class='modal-body' id='frm_edit_phanhoi'>";
+                    result += "<div class='row'>";
+
+                    result += "<div class='col-xl-12'>";
+                    result += "<div class='form-group fv-plugins-icon-container'>";
+                    result += "<label>Nội dung phản hồi:</label>";
+                    result += "<textarea class='form-control' id='noidung_edit_phanhoi' name='noidung_edit_phanhoi' rows='5' cols='30'>" + model.NoiDungPhanHoi + "</textarea>";
+                    result += "</div>";
+                    result += "</div>";
+
+                    result += "</div>";
+                    result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                    result += "</div>";
+
+                    var data = new { status = "success", message = result };
+                    return Json(data);
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này !!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [Route("YKienDongGopPhanHoi/Update")]
+        [HttpPost]
+        public JsonResult Update(YKienGopY request)
+        {
+            var model = _db.YKienGopY.FirstOrDefault(t => t.Id == request.Id);
+            model.NoiDungPhanHoi = request.NoiDungPhanHoi;
+            model.NgayPhanHoi = DateTime.Now;
+
+            model.DonViPhanHoi = Helpers.GetSsAdmin(HttpContext.Session, "Name");
+            _db.YKienGopY.Update(model);
+            _db.SaveChanges();
+            var data = new { status = "success" };
+            return Json(data);
+
         }
     }
 }
