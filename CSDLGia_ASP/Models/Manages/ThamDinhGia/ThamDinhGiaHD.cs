@@ -31,6 +31,8 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string FileQD_Base64 { get; set; }       
         [NotMapped]
         public List<ThamDinhGiaHDCt> ThamDinhGiaHDCt { get; set; }
+        [NotMapped]
+        public IFormFile FileUpload { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }

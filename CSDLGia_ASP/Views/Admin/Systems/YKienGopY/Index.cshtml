@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.YKienGopY>
 
 @{
+    var dsDonvi = ViewData["DsDonvi"] as List<string>;
+
     var stt = 1;
 
 }
@@ -14,7 +16,25 @@
     <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
     <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
     <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+        });
+
+
+        $(function () {
+            $('#Donvi_Search').change(function () {
+                var current_path_url = '/YKienDongGop?';
+                var tenDangNhap = 'TenDangNhap=' + $('#Donvi_Search').val();
+                var url = current_path_url + tenDangNhap;
+                window.location.href = url;
+            });
+        });
+
+    </script>
 }
+
+
 
 <div class="card card-custom">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -35,13 +55,32 @@
     </div>
     <hr />
     <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group">
+                    <label style="font-weight:bold;color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Donvi_Search" name="Donvi_Search">
+                        <option value="all">--Tất cả--</option>
+                        @if (dsDonvi != null)
+                        {
+                            @foreach (var tenDangNhap in dsDonvi)
+                            {
+                                <option value="@tenDangNhap">@tenDangNhap</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
         <table class="table table-striped table-bordered table-hover" id="sample_3">
             <thead>
                 <tr style="text-align:center">
                     <th style="text-align: center">STT</th>
                     <th style="text-align: center">Tên đơn vị góp ý</th>
                     <th style="text-align: center">Tiêu đề</th>
-                    <th style="text-align: center">Nội dung</th>
+                    <th style="text-align: center">Nội dung góp ý</th>
+                    <th style="text-align: center">Nội dung phản hồi</th>
+                    <th style="text-align: center">Tên đơn vị phản hồi góp ý</th>
                     <th style="text-align: center">Thao tác</th>
                 </tr>
             </thead>
@@ -54,19 +93,39 @@
                             <td style="text-align: center" width="3%">@(stt++)</td>
                             <td style="text-align: center">@item.TenDangNhap</td>
                             <td style="text-align: center">@item.TieuDe</td>
-                            <td style="text-align: center">@item.NoiDung</td>
+                            <td style="text-align: center">@item.NoiDung<br />@item.NgayGopY</td>
+                            <td style="text-align: center">@item.NoiDungPhanHoi<br />@item.NgayPhanHoi</td>
+                            <td style="text-align: center">@item.DonViPhanHoi</td>
                             <td>
-                                <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
-                                        onclick="SetEdit('@item.Id')" title="Chỉnh sửa">
-                                    <i class="icon-lg la la-edit text-primary"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                    <i class="icon-lg la la-trash text-danger"></i>
-                                </button>
-                                <a href="~/UpLoad/File/@item.Ipf1" target="_blank" title="Tải tệp" class="btn btn-sm btn-clean btn-icon"
+                                @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name") == item.TenDangNhap)
+                                {
+                                    <button type="button" data-target="#Edit_Modal" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                            onclick="SetEdit('@item.Id')" title="Chỉnh sửa ý kiến góp ý">
+                                        <i class="icon-lg la la-edit text-primary"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+
+                                }
+
+
+                                @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name") == "SSA" || item.TenDangNhap == "SSA")
+                                {
+                                    <!-- Nút Phản hồi sẽ được hiển thị khi tài khoản đăng nhập là SSA hoặc tên đăng nhập của mục là SSA -->
+                                    <button type="button" data-target="#Edit_Modal_Phanhoi" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
+                                            onclick="SetEditPhanHoi('@item.Id')" title="Phản hồi">
+                                        <i class="icon-lg la la-plus text-primary"></i>
+                                    </button>
+                                }
+
+
+                                <a href="~/UpLoad/File/@item.Ipf1" target="_blank" title="Tải tệp ý kiến đóng góp" class="btn btn-sm btn-clean btn-icon"
                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
                                     <i class="icon-lg la la-cloud-download text-warning"></i>
                                 </a>
+
+
                             </td>
                         </tr>
                     }
@@ -89,18 +148,18 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Tiêu đề</label>
-                                <input type="text" id="TieuDe" name="TieuDe" class="form-control" placeholder="Lỗi không xem được báo cáo"  />
+                                <label>Tiêu đề:</label>
+                                <input type="text" id="TieuDe" name="TieuDe" class="form-control" placeholder="Lỗi không xem được báo cáo" />
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
-                                <label>Nội dung</label>
+                                <label>Nội dung:</label>
                                 <textarea type="text" id="NoiDung" name="NoiDung" class="form-control" rows="5" cols="30" placeholder="Mô tả chi tiết lỗi"></textarea>
                             </div>
                         </div>
                         <div class="col-xl-12">
-                            <label>File đính kèm</label>
+                            <label>File đính kèm:</label>
                             <input type="file" name="Ipf1" accept=".docx, .pdf, .xlsx, .txt" class="form-control" />
                         </div>
                     </div>
@@ -122,7 +181,7 @@
             <div class="modal-header">
                 <h3 class="card-label">
                     @ViewData["Title"]
-                    <span class="d-block text-muted pt-2 font-size-sm">Chỉnh sửa thông tin ý kiến đóng góp</span>
+                    <span class="d-block text-muted pt-2 font-size-sm">Nội dung ý kiến góp ý</span>
                 </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -133,6 +192,29 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
                 <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdate()" id="btn_update">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Phản hồi-->
+<div class="modal fade" id="Edit_Modal_Phanhoi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">Phản hồi thông tin ý kiến góp ý</span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="frm_edit_phanhoi">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="SetUpdatePhanHoi()" id="btn_update">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -182,7 +264,7 @@
         })
     }
 
-    function SetUpdate() {  
+    function SetUpdate() {
         // Tạo một đối tượng FormData
         var formData = new FormData();
 
@@ -222,4 +304,47 @@
     function SetDelete(Id) {
         document.getElementById("id_delete").value = Id;
     }
+
+    function SetEditPhanHoi(id) {
+        $.ajax({
+            url: '/YKienDongGopPhanHoi/Edit',
+            type: 'POST',
+            data:
+            {
+                Id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#frm_edit_phanhoi').replaceWith(data.message);
+                }
+                else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetUpdatePhanHoi() {
+
+        $.ajax({
+            url: '/YKienDongGopPhanHoi/Update',
+            type: 'POST',
+            data: {
+                Id: $('#id_edit').val(),
+                NoiDungPhanHoi: $('#noidung_edit_phanhoi').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+
 </script>

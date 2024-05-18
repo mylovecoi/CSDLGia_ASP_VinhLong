@@ -67,7 +67,7 @@
                         @if (!string.IsNullOrEmpty(Model.FileHDSDBase64))
                         {
                             <br />
-                            <button onclick="downloadFile('@Model.FileHDSDBase64', '@Model.FileHDSD')">Tải file @Model.FileHDSD</button>
+                            <button type="button" onclick="downloadFile('@Model.FileHDSDBase64', '@Model.FileHDSD')">Tải file @Model.FileHDSD</button>
                         }
                     </div>
                 </div>
