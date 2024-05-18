@@ -30,6 +30,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Thoidiem { get; set; }
         public string Macqcq { get; set; }
         public string Madv { get; set; }
+        public string MadvXuly { get; set; }
         public string Lydo { get; set; }
         public string Thongtin { get; set; }
         public string Trangthai { get; set; }

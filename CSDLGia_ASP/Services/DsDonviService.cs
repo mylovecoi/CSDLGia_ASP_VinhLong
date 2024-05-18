@@ -10,6 +10,7 @@ namespace CSDLGia_ASP.Services
     {
         List<DsDonVi> GetListDonvi(string Madv);
         List<DsDonVi> GetListDonviCapDuoi (string Madv);
+        List<DsDonVi> GetListDonviCapTren (string MaCqcq);
     }
     public class DsDonviService: IDsDonviService
     {
@@ -90,6 +91,48 @@ namespace CSDLGia_ASP.Services
                 }
             }
             return listdonvi;
-        }   
+        }
+
+        public List<DsDonVi> GetListDonviCapTren(string MaCqcq)
+        {
+            List<DsDonVi> listdonvi = new List<DsDonVi>();
+            if (!string.IsNullOrEmpty(MaCqcq))
+            {
+                var model = _db.DsDonVi.FirstOrDefault(t => t.MaCqcq == MaCqcq);
+                if (model != null)
+                {
+                    listdonvi.Add(new DsDonVi
+                    {
+                        MaDv = model.MaDv,
+                        TenDv = model.TenDv,
+                        MaCqcq = model.MaCqcq,
+                    });
+                    if (!string.IsNullOrEmpty(model.MaCqcq))
+                    {
+                        this.GetDonviCapTren(listdonvi, model.MaCqcq);
+                    }
+                }
+            }
+            return listdonvi;
+        }
+
+        private void GetDonviCapTren(List<DsDonVi> ListDonVi, string MaCqcq)
+        {
+            var model = _db.DsDonVi.FirstOrDefault(t => t.MaDv == MaCqcq);
+            if (model!= null)
+            {
+                
+                    ListDonVi.Add(new DsDonVi
+                    {
+                        MaDv = model.MaDv,
+                        TenDv = model.TenDv,
+                        MaCqcq = model.MaCqcq,
+                    });
+                    if (!string.IsNullOrEmpty(model.MaCqcq))
+                    {
+                        GetDonviCapTren(ListDonVi, model.MaCqcq);
+                    }
+            }   
+        }
     }
 }

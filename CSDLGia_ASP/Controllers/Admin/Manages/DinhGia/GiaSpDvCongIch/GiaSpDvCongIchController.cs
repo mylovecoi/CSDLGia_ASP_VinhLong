@@ -44,23 +44,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
                     var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
-
-                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch> model = _db.GiaSpDvCongIch.Where(t => list_madv.Contains(t.Madv));
+                    
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch> model = _db.GiaSpDvCongIch.Where(t => list_madv.Contains(t.Madv) );
 
                     if (Madv != "all")
                     {
-                        model = model.Where(t => t.Madv == Madv);
+                        model = model.Where(t => t.Madv == Madv || t.MadvXuly == Madv);
                     }
                     if (Nam != 0)
                     {
                         model = model.Where(t => t.Thoidiem.Year == Nam).ToList();
                     }
-
+                    //string Macqcq = _db.DsDonVi.FirstOrDefault(t=>t.MaDv == Madv).MaCqcq;
+                    //var model_donvixuly = _dsDonviService.GetListDonviCapTren(Macqcq);
+                    //return Ok(model_donvixuly);
 
                     ViewData["Nam"] = Nam;
                     ViewData["Madv"] = Madv;
                     ViewData["DsDonvi"] = model_donvi;
-                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom.Where(t => list_madv.Contains(t.Madv)).ToList();
+                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom.ToList();
                     ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";
@@ -184,6 +186,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     {
                         Mahs = request.Mahs,
                         Madv = request.Madv,
+                        MadvXuly = request.Madv,
                         Manhom = request.Manhom,
                         Madiaban = request.Madiaban,
                         Soqd = request.Soqd,
@@ -472,7 +475,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             }
         }
 
-        public IActionResult Complete(string mahs_chuyen, string trangthai_complete)
+        public IActionResult Complete(string mahs_chuyen, string trangthai_complete, string madonvixuly_complete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -481,6 +484,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Mahs == mahs_chuyen);
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = trangthai_complete;
+                    model.MadvXuly = madonvixuly_complete;
 
                     _db.GiaSpDvCongIch.Update(model);
                     _db.SaveChanges();
@@ -676,6 +680,37 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
             else
             {
                 var data = new { status = "error", message = "Phiên đăng nhập kết thúc, Bạn cần đăng nhập lại!!!" };
+                return Json(data);
+            }
+        }
+
+        [Route("GiaSpDvCongIch/GetListDonviXuly")]
+        [HttpPost]
+        public JsonResult GetListDonviXuly(string Madv)
+        {
+            string Macqcq = _db.DsDonVi.FirstOrDefault(t => t.MaDv == Madv).MaCqcq;
+            var model_donvixuly = _dsDonviService.GetListDonviCapTren(Macqcq);
+
+            if (model_donvixuly != null)
+            {
+                string result = "<div class='col-md-12' id='edit_donvixuly'>";
+                result += "<div class='form-group'>";
+                result += "<label>Đơn vị xử lý hồ sơ:</label>";
+                result += "<select class='form-control select2basic' id='madonvixuly_complete' name='madonvixuly_complete' style='width:100%'>";
+                foreach (var item in model_donvixuly)
+                {
+                    result += "<option value='" + item.MaDv + "'>&emsp;" + item.TenDv + "</option>";
+                }
+                result += "</select>";
+                result += "</div>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+            }
+            else
+            {
+                var data = new { status = "error", message = "Không tìm thấy thông tin đơn vị xử lý!!!" };
                 return Json(data);
             }
         }
