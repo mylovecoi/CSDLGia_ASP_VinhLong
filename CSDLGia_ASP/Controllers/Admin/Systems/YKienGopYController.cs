@@ -54,6 +54,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
 
                     // Lấy danh sách đơn vị không trùng lặp
+
                     ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
 
                     // Trả về view với danh sách ý kiến
@@ -70,7 +71,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
+        [Route("YKienDongGop/Store")]
+        [HttpPost]
         public async Task<IActionResult> Store(YKienGopY request, IFormFile Ipf1)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -108,8 +110,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
 
                     ViewData["Title"] = " Thông tin ý kiến đóng góp ";
-                    var DanhSachGopYNew = _db.YKienGopY.ToList();
-                    return View("Views/Admin/Systems/YKienGopY/Index.cshtml", DanhSachGopYNew);
+
+                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+                    return RedirectToAction("Index", "YKienGopY", new { TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name") });
                 }
                 else
                 {
@@ -309,11 +312,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         _db.YKienGopY.Remove(DanhSachGopY);
                         _db.SaveChanges();
                     }
-
+                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
                     var danhsachykien = _db.YKienGopY.Count();
                     HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
-                    var DanhSachGopYNew = _db.YKienGopY.ToList();
-                    return View("Views/Admin/Systems/YKienGopY/Index.cshtml", DanhSachGopYNew);
+                    return RedirectToAction("Index", "YKienGopY", new { TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name") });
                 }
                 else
                 {

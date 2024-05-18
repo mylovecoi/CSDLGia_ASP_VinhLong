@@ -15,7 +15,7 @@ namespace CSDLGia_ASP.Models.Systems
         //Phản hồi
         public string NoiDungPhanHoi { get; set; }
         public string DonViPhanHoi { get; set; }
-        public DateTime NgayPhanHoi { get; set; }
+        public DateTime? NgayPhanHoi { get; set; }
 
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }

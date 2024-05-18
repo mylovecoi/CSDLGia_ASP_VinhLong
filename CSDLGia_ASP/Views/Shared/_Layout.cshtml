@@ -395,8 +395,7 @@
                                                     <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Cập nhật tài liệu HDSD</span>
                                                 </a>
                                             }
-                                            @if (ViewData.ContainsKey("FileHDSD") && ViewData["FileHDSD"] != null)
-                                            {
+                                           
                                                 <a href="@Url.Content("~/UpLoad/File/HuongDanSuDung/Life_HDSD" + ViewData["FileHDSD"])" target="_blank"
                                                    onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
                                                     <span class="svg-icon svg-icon-3x svg-icon-primary">
@@ -412,7 +411,8 @@
                                                     </span>
                                                     <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Tài liệu HDSD</span>
                                                 </a>
-                                            }
+                                            
+
                                         </div>
                                         <!--end:Item-->
                                     </div>
