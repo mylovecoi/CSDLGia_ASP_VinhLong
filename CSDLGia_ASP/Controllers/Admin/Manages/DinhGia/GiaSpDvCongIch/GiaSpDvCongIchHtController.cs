@@ -206,6 +206,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var model = _db.GiaSpDvCongIch.FirstOrDefault(t => t.Id == id_tralai);
                     model.Trangthai = "BTL";
                     model.Lydo = Lydo;
+                    model.MadvXuly = model.Madv;
                     model.Updated_at = DateTime.Now;
 
                     _db.GiaSpDvCongIch.Update(model);

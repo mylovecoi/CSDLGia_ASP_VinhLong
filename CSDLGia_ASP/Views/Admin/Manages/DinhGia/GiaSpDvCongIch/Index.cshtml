@@ -116,6 +116,11 @@
                         <td style="text-align: center">
                             @if (!string.IsNullOrEmpty(item.Madv))
                                 @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
+
+
+
+
+
                         </td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
@@ -154,27 +159,42 @@
                             <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                 <i class="icon-lg la la-file-alt text-dark"></i>
                             </button>
-                            @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
+                            @if (item.Trangthai == "CC" || item.Trangthai == "BTL" || item.Trangthai == "CD")
                             {
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Edit"))
+                                @if (item.MadvXuly == ViewData["Madv"].ToString())
                                 {
-                                    <a asp-controller="GiaSpDvCongIch" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
-                                        <i class="icon-lg la la-edit text-primary"></i>
-                                    </a>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Edit"))
+                                    {
+                                        <a asp-controller="GiaSpDvCongIch" asp-action="Edit" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (item.Trangthai == "CD" || item.Trangthai == "CC" || item.Trangthai == "BTL")
+                                    {
+                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Approve"))
+                                        {
+                                            <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" onclick="SetComplete('@item.Mahs','@item.MadvXuly')">
+                                                <i class="icon-lg la la-mail-forward text-primary "></i>
+                                            </button>
+                                        }
+                                    }
+                                    @if (item.Trangthai == "CD")
+                                    {
+                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.xetduyet", "Approve"))
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                                                    onclick="TraLai('@item.Id')">
+                                                <i class="icon-lg la la-reply text-danger "></i>
+                                            </button>
+                                        }
+                                    }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Delete"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                            <i class="icon-lg la la-trash text-danger"></i>
+                                        </button>
+                                    }
                                 }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Approve"))
-                                {
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Complete_Modal" onclick="SetComplete('@item.Mahs')">
-                                        <i class="icon-lg la la-mail-forward text-primary "></i>
-                                    </button>
-                                }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.thongtin", "Delete"))
-                                {
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
-                                        <i class="icon-lg la la-trash text-danger"></i>
-                                    </button>
-                                }
-
                             }
                             <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
                                target="_blank">
@@ -270,6 +290,8 @@
                 <div class="modal-body">
                     <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
+                        <div class="col-md-12" id="edit_donvixuly">
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Hồ sơ:</label>
@@ -305,9 +327,30 @@
         document.getElementById("id_delete").value = id;
     }
 
-    function SetComplete(mahs) {
-        document.getElementById("mahs_chuyen").value = mahs;
+    function SetComplete(mahs, madonvixuly) {
+        $.ajax({
+            url: '/GiaSpDvCongIch/GetListDonviXuly',
+            type: 'POST',
+            data: {
+                Madv: madonvixuly
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Thành công!");
+                    $('#edit_donvixuly').replaceWith(data.message);
+                    document.getElementById("mahs_chuyen").value = mahs;
+                    $('#Complete_Modal').modal('show');
+                    $(document).ready(function () {
+                        $('.select2basic').select2();
+                    });
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
     }
-
 </script>
+
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/HoanThanh/Modal.cshtml")
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaSpDvCongIch/ThongTinGiayTo/Show.cshtml")

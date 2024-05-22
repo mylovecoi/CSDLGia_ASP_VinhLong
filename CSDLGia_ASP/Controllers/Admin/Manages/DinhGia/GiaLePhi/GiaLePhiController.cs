@@ -211,7 +211,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
-                    return RedirectToAction("Index", "GiaLePhi", new { Madv = request.Madv });
+                    return RedirectToAction("Index", "GiaLePhi"
+                        );
                 }
                 else
                 {
