@@ -89,6 +89,7 @@
                     <th>Thời điểm xác định</th>
                     <th>Thông tin tài sản thẩm định</th>
                     <th>Đơn vị yêu cầu thẩm định</th>
+                    <th>Thông tin hồ sơ</th>
                     <th>Trạng thái</th>
                     <th>Cơ quan tiếp nhận hồ sơ</th>
                     <th width="15%">Thao tác</th>
@@ -105,6 +106,7 @@
                             <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                             <td>@item.Tttstd</td>
                             <td>@item.Dvyeucau</td>
+                            <td>@item.Ghichu</td>
                             <td style="text-align: center">
                                 @if (item.Trangthai == "CHT")
                                 {
@@ -164,6 +166,9 @@
                                             </button>
                                         }
                                     }
+
+                                    ViewData["maHoSoTruyen"] = item.Mahs;
+                                    @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["maHoSoTruyen"])
                                 }
                             </td>
                         </tr>
@@ -174,3 +179,4 @@
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/XetDuyet/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_modal.cshtml")

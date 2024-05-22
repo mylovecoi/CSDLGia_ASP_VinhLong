@@ -25,7 +25,7 @@ namespace CSDLGia_ASP.Migrations
                     CapHoiDong = table.Column<int>(type: "int", nullable: false),
                     LoaiHoiDong = table.Column<int>(type: "int", nullable: false),
                     SoQD = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgayQD = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NgayQD = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CoQuanBanHanh = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TenHoiDong = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChuTichHoiDong = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -133,6 +133,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         ViewData["Title"] = "Thông tin hồ sơ thẩm định giá";
                         ViewData["MenuLv1"] = "menu_tdg";
                         ViewData["MenuLv2"] = "menu_tdg_xd";
+                        ViewData["maKetNoiAPI"] = "thamdinhgia";
                         return View("Views/Admin/Manages/ThamDinhGia/XetDuyet/Index.cshtml", model_join);
                     }
                     else if (getdonvi.Level == "T")
@@ -209,6 +210,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         ViewData["Title"] = "Thông tin hồ sơ thẩm định giá";
                         ViewData["MenuLv1"] = "menu_tdg";
                         ViewData["MenuLv2"] = "menu_tdg_xd";
+                        ViewData["maKetNoiAPI"] = "thamdinhgia";
                         return View("Views/Admin/Manages/ThamDinhGia/XetDuyet/Index.cshtml", model_join);
                     }
                     else
@@ -289,6 +291,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         ViewData["Title"] = "Thông tin hồ sơ thẩm định giá";
                         ViewData["MenuLv1"] = "menu_tdg";
                         ViewData["MenuLv2"] = "menu_tdg_xd";
+                        ViewData["maKetNoiAPI"] = "thamdinhgia";
                         return View("Views/Admin/Manages/ThamDinhGia/XetDuyet/Index.cshtml", model_join);
                     }
                 }

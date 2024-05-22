@@ -18,7 +18,7 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public int CapHoiDong { get; set; }
         public int LoaiHoiDong { get; set; }
         public string SoQD { get; set; }
-        public string NgayQD { get; set; }
+        public DateTime NgayQD { get; set; }
         public string CoQuanBanHanh { get; set; }
         public string TenHoiDong { get; set; }
         public string ChuTichHoiDong { get; set; }

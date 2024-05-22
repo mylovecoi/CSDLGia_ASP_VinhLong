@@ -22,6 +22,7 @@ namespace CSDLGia_ASP.ViewModels.Systems.CSDLQuocGia
         public string NOI_DUNG_QUYET_DINH { get; set; }
         public string MA_TINH_THANH { get; set; }
         public string MA_QUAN_HUYEN { get; set; }       
+        public string NGUOI_TAO { get; set; }       
         public List<VMHoiDongThamDinhGia_DSTVHD> DS_TV_HOI_DONG { get; set; }
         public List<VMHoiDongThamDinhGia_DSDK> DS_DINH_KEM { get; set; }
     }

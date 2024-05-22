@@ -986,7 +986,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             }
         }
 
-        //
         [HttpPost]
         public async Task<IActionResult> TruyenDuLieuCSDLQG(VMHoSoTruyenCSDLQG request)
         {
@@ -1120,7 +1119,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             break;
 
                         }
-                    //START
+
                     case "giathuetainguyen":
                         {
                             var chiTiet = _db.GiaThueTaiNguyenCt.Where(x => x.Mahs == request.Mahs);
@@ -1182,7 +1181,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaTaiNguyen) + @"}";
                             break;
                         }
-                    //END
+
                     case "giathuetainguyendm":
                         {
 
@@ -1387,6 +1386,67 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(giaDichVuRacThai) + @"}";
                             break;
                         }
+
+                    case "thamdinhgia":
+                        {
+                            var model_hoso = _db.ThamDinhGia.FirstOrDefault(x => x.Mahs == request.Mahs);
+                            var model = _db.ThamDinhGiaHD.FirstOrDefault(t => t.Mahs == model_hoso.Mahs);
+
+                            if (string.IsNullOrEmpty(model.FileQD_Base64))
+                            {
+                                ViewData["Messages"] = "Hồ sơ chưa có file đính kèm để gửi dữ liệu lên cơ sở dữ liệu quốc giá";
+                                return View("Views/Admin/Error/Error.cshtml");
+                            }
+
+                            var hoiDongTDG = new List<VMHoiDongThamDinhGia>();
+                            //Lấy danh sách thành viên hội đồng
+                            var hoiDongTDG_ThanhVien = new List<VMHoiDongThamDinhGia_DSTVHD>();
+                            var model_thanhvien = _db.ThamDinhGiaHDCt.Where(x => x.MaHoiDong == model.MaHoiDong).ToList();
+                            if (model_thanhvien.Any())
+                            {
+                                foreach (var item in model_thanhvien.OrderBy(x => x.STT))
+                                    hoiDongTDG_ThanhVien.Add(new VMHoiDongThamDinhGia_DSTVHD
+                                    {
+                                        HO_TEN = item.HoTen,
+                                        CHUC_VU = item.ChucVu,
+                                        VAI_TRO = item.VaiTro,
+                                    });
+                            }
+                            //Lấy tài liệu đính kèm
+                            var hoiDongTDG_DinhKem = new List<VMHoiDongThamDinhGia_DSDK>();
+                            hoiDongTDG_DinhKem.Add(new VMHoiDongThamDinhGia_DSDK
+                            {
+                                TEN_FILE = model.FileQD,
+                                FILE_DINH_KEM = model.FileQD_Base64,
+                            });
+                            //Thông hội đồng thẩm định
+                            hoiDongTDG.Add(new VMHoiDongThamDinhGia
+                            {
+                                DIA_BAN = request.DIA_BAN,
+                                MA_HOI_DONG = model.MaHoiDong,
+                                TO_TUNG = model.ToTung,
+                                CAN_CU_PHAP_LY = model.CanCuPhapLy,
+                                THEO_DE_NGHI_CUA = model.TheoDeNghi,
+                                CAP_HOI_DONG = model.CapHoiDong,
+                                LOAI_HINH_HOI_DONG = model.LoaiHoiDong,
+                                SO_QUYET_DINH_THANH_LAP = model.SoQD,
+                                NGAY_BAN_HANH = model.NgayQD.ToString("yyyyMMdd"),
+                                CO_QUAN_BAN_HANH = model.CoQuanBanHanh,
+                                TEN_HOI_DONG = model.TenHoiDong,
+                                CHU_TICH_HOI_DONG = model.ChuTichHoiDong,
+                                CHUC_VU = model.ChucVu,
+                                NHIEM_VU_HOI_DONG = model.NhiemVuHoiDong,
+                                NOI_DUNG_QUYET_DINH = model.NoiDungQD,
+                                MA_TINH_THANH = model.MaTinhApDung,
+                                MA_QUAN_HUYEN = model.MaHuyenApDung,
+                                NGUOI_TAO = request.NGUOI_TAO,
+                                DS_TV_HOI_DONG = hoiDongTDG_ThanhVien,
+                                DS_DINH_KEM = hoiDongTDG_DinhKem,
+                            });
+
+                            jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(hoiDongTDG) + @"}";
+                            break;
+                        }
                 }
 
 
@@ -1439,7 +1499,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 return Json(data);
             }
         }
-        //
+
         public static bool TryGetKey(Dictionary<string, int> dictionary, string value, out int ketQua)
         {
             // Lặp qua từng cặp key-value trong từ điển
