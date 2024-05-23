@@ -11,7 +11,7 @@ namespace CSDLGia_ASP.Models.Systems
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
-        [RegularExpression(@"^(?=.{5,32}$)(?!.*[._-]{2})(?!.*[0-9]{5,})[a-z](?:[\w]*|[a-z\d\.]*|[a-z\d-]*)[a-z0-9]$"
+        [RegularExpression(@"^(?=.{5,32}$)(?!.*[._-]{2})(?!.*[0-9]{5,})[a-zA-Z](?:[\w]*|[a-zA-Z\d\.]*|[a-zA-Z\d-]*)[a-zA-Z0-9]$"
             , ErrorMessage = "Tên đăng nhập không có ký tự đặc biệt, độ dài ít nhất 5 và lớn nhất 32 ký tự")]
         public string Username { get; set; }
 

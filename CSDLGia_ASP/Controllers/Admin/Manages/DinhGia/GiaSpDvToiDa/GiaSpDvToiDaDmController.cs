@@ -109,38 +109,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             return Json(model);
         }
 
-        [Route("GiaSpDvToiDaDmCt/Update")]
-        [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, string Mota, string Dvt, double Gia, string Hientrang, string Phanloai)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
-                {
-                    var model = _db.GiaSpDvToiDaDm.FirstOrDefault(t => t.Id == Id);
-                    model.Tenspdv = Tenspdv;
+        //[Route("GiaSpDvToiDaDmCt/Update")]
+        //[HttpPost]
+        //public JsonResult Update(int Id, string Tenspdv, string Dvt)
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+        //    {
+        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvtoida.danhmuc", "Edit"))
+        //        {
+        //            var model = _db.GiaSpDvToiDaDm.FirstOrDefault(t => t.Id == Id);
+        //            model.Tenspdv = Tenspdv;
 
-                    model.Dvt = Dvt;
+        //            model.Dvt = Dvt;
 
-                    model.Updated_at = DateTime.Now;
-                    _db.GiaSpDvToiDaDm.Update(model);
-                    _db.SaveChanges();
+        //            model.Updated_at = DateTime.Now;
+        //            _db.GiaSpDvToiDaDm.Update(model);
+        //            _db.SaveChanges();
 
-                    var data = new { status = "success", message = "Cập nhật thành công!" };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
-            }
-        }
+        //            var data = new { status = "success", message = "Cập nhật thành công!" };
+        //            return Json(data);
+        //        }
+        //        else
+        //        {
+        //            var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+        //            return Json(data);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+        //        return Json(data);
+        //    }
+        //}
 
         [Route("GiaSpDvToiDaDmCt/Delete")]
         [HttpPost]

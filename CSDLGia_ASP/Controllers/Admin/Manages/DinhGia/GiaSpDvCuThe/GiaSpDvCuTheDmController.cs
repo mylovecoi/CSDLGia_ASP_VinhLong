@@ -78,13 +78,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string manhom, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, int sapxep)
+        public JsonResult Store(string manhom, string tt, string tenspdv, string dvt, int sapxep, string[] style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.danhmuc", "Create"))
                 {
-
+                    string str_style = style.Count() > 0 ? string.Join(",", style.ToArray()) : "";
                     var request = new GiaSpDvCuTheDm
                     {
                         Manhom = manhom,
@@ -93,6 +93,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                         Tenspdv = tenspdv,
                         Dvt = dvt,                       
                         Sapxep = sapxep,
+                        Style = str_style,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
@@ -125,36 +126,47 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                 {
                     var model = _db.GiaSpDvCuTheDm.FirstOrDefault(p => p.Id == Id);
                     var phanloai = _db.GiaSpDvCuTheDm;
-                    
+                    List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
                     if (model != null)
                     {
                         string result = "<div class='row' id='edit_thongtin'>";
 
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>TT</label>";
-                        result += "<input type='text' id='tt_edit' name='tt_edit' class='form-control' value='" + model.Tt + "'/>";
+                        result += "<div class='col-xl-3'>";
+                        result += "<div class='form -group fv-plugins-icon-container'>";
+                        result += "<label>STT báo cáo</label>";
+                        result += "<input type='text' id='hienthi_edit' name='hienthi_edit' class='form-control' value='" + model.Tt + "'/>";
                         result += "</div>";
                         result += "</div>";
 
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Tên sản phẩm dịch vụ</label>";
-                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
-                        result += "</div>";
-                        result += "</div>";                        
-
-                        result += "<div class='col-xl-4'>";
-                        result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Đơn vị tính</label>";
-                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Dvt + "'/>";
-                        result += "</div>";
-                        result += "</div>";
-
-                        result += "<div class='col-xl-4'>";
+                        result += "<div class='col-xl-3'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Sắp xếp</label>";
                         result += "<input type='text' id='sapxep_edit' name='sapxep_edit' class='form-control' value='" + model.Sapxep + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                        result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                        result += "<option value='Chữ in hoa'" + (list_style.Contains("Chữ in hoa") ? "selected" : "") + ">Chữ in hoa</option >";
+                        result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
+                        result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Tên đối tượng</label>";
+                        result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-12'>";
+                        result += "<label class='form-control-label'>Đơn vị tính</label>";
+                        result += "<label>Đơn vị tính</label>";
+                        result += "<input type='text' id='dvt_edit' name='dvt_edit' class='form-control' value='" + model.Dvt + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -186,19 +198,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
         [Route("GiaSpDvCuTheDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string tt, string tenspdv, string dvt, string mucgia1, string mucgia2, int sapxep)
+        public JsonResult Update(int Id, string tt, string tenspdv, string dvt, int sapxep, string[] style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.spdvcuthe.danhmuc", "Edit"))
                 {
                     var model = _db.GiaSpDvCuTheDm.FirstOrDefault(t => t.Id == Id);
-
+                    string str_style = style.Count() > 0 ? string.Join(",", style.ToArray()) : "";
                     model.Tt = tt;
                     model.Tenspdv = tenspdv;
                     model.Dvt = dvt;                  
                     model.Sapxep = sapxep;
-                  
+                    model.Style = str_style;
                     model.Updated_at = DateTime.Now;
                     _db.GiaSpDvCuTheDm.Update(model);
                     _db.SaveChanges();
