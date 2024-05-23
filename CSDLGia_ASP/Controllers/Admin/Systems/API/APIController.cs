@@ -1448,8 +1448,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                             break;
                         }
                 }
-
-
+               
                 if (!request.THAO_TAC)
                 {
                     //Xem dữ liệu

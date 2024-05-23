@@ -252,11 +252,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
             {
                 foreach (var item in model)
                 {
+                    string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + item.FileName;
                     result += "<tr>";
                     result += "<td style='text-align:center'>" + (record_id++) + "</td>";
                     result += "<td style='font-weight:bold'>" + item.MoTa + "</td>";
                     result += "<td>";
-                    if (!string.IsNullOrEmpty(item.FileName))
+                    if (!string.IsNullOrEmpty(item.FileName) && !System.IO.File.Exists(path))
                     {
                         result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-sm btn-clean btn-icon' title='Xem chi tiết'";
                         result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
@@ -298,11 +299,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
             {
                 foreach (var item in model)
                 {
+                    string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + item.FileName;
                     result += "<p>";
                     result += (record_id++) + "." + item.MoTa + " ";
-                    result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
-                    result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                    result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                    if (!string.IsNullOrEmpty(item.FileName) && !System.IO.File.Exists(path))
+                    {
+                        result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
+                        result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                        result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                    }                        
                     result += "</p>";
                 }
             }
