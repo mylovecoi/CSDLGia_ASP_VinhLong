@@ -62,7 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     ViewData["Nam"] = Nam;
                     ViewData["Madv"] = Madv;
                     ViewData["DsDonvi"] = model_donvi;
-                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom.ToList();
+                    ViewData["DanhMucNhom"] = _db.GiaSpDvCongIchNhom.Where(t=>t.Madv == Madv).ToList();
                     ViewData["Title"] = "Thông tin giá sản phẩm dịch vụ công ích";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgdvci";

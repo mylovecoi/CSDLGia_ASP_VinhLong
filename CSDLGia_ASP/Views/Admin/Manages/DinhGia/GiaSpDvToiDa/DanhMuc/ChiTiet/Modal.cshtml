@@ -6,7 +6,7 @@
 <!--Create Modal-->
 <form method="post" id="frm_chitiet" asp-controller="GiaSpDvToiDaDm" asp-action="Store">
     <div class="modal fade kt_select2_modal" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="card-label">
@@ -22,38 +22,43 @@
                     <input hidden id="Id" name="Id" />
 
                     <div class="row">
+                        <div class="col-xl-3">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>TT</label>
+                                <input type="text" id="HienThi" name="HienThi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Sắp xếp</label>
+                                <input type="number" id="SapXep" name="SapXep" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                                <select class="form-control select2multi" multiple="multiple" id="Style" name="Style" style="width:100%">
+                                    <option value="Chữ in hoa">Chữ in hoa</option>
+                                    <option value="Chữ in đậm">Chữ in đậm</option>
+                                    <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tên sản phẩm</label>
                                 <input type="text" id="Tenspdv" name="Tenspdv" class="form-control" />
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-4">                            
+                        <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị tính</label>
-                                <select class="form-control kt_select2_1_modal" id="Dvt" name="Dvt">
+                                <select class="form-control select2basic" id="Dvt" name="Dvt" style="width:100%">
                                     @foreach (var item in dsdvt)
                                     {
                                         <option value="@item.Dvt">@item.Dvt</option>
                                     }
-                                </select>                               
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>STT báo cáo</label>
-                                <input type="text" id="HienThi" name="HienThi" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Sắp xếp</label>
-                                <input type="number" id="SapXep" name="SapXep" class="form-control" />
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -122,8 +127,9 @@
                 form.find("[name='Id']").val(data.id);
                 form.find("[name='Tenspdv']").val(data.tenspdv);
                 form.find("[name='Dvt']").val(data.dvt).trigger('change');;
-                form.find("[name='HienThi']").val(data.hienThi);
+                form.find("[name='HienThi']").val(data.hienthi);
                 form.find("[name='SapXep']").val(data.sapxep);
+                $('.select2multi').select2();
             }
         })
     }
@@ -133,7 +139,7 @@
         var form = $('#frm_chitiet');
         form.find("[name='Id']").val(id_edit);
         form.find("[name='Tenspdv']").val("");
-        //form.find("[name='Dvt']").val(data.dvt);
+        form.find("[name='Dvt']").val(data.dvt);
         form.find("[name='HienThi']").val("");
         form.find("[name='SapXep']").val(1);
 
@@ -157,5 +163,5 @@
                 }
             }
         })
-    }    
+    }
 </script>

@@ -111,6 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
                 result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                result += "<option value='Chữ in hoa'" + (list_style.Contains("Chữ in hoa") ? "selected" : "") + ">Chữ in hoa</option >";
                 result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
                 result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
                 result += "</select>";
@@ -153,7 +154,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
             var data = new { status = "success" };
             return Json(data);
         }
-
 
         [HttpPost("DanhMucGiaNuocSh/Remove")]
         public JsonResult Remove()
