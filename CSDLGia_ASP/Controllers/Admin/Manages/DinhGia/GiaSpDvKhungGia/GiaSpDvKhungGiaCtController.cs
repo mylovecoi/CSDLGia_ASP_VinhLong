@@ -62,14 +62,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvKhungGia
                 string result = "<div class='modal-body' id='edit_thongtin'>";
 
                 result += "<div class='row text-left'>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Giá tối thiểu</label>";
+                result += "<label>Tên sản phẩm dịch vụ</label>";
                 result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' style='font-weight: bold'/>";
                 result += "</div>";
                 result += "</div>";
 
-                result += "<div class='row text-left'>";
                 result += "<div class='col-xl-6'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label>Giá tối thiểu</label>";

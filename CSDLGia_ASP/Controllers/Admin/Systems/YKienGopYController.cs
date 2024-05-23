@@ -33,44 +33,45 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index(YKienGopY request)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            //{
+            //    if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
+            //    {
+            
+            // Khởi tạo danh sách ý kiến
+            List<YKienGopY> danhsachykien;
+
+            if (string.IsNullOrEmpty(request.TenDangNhap))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
-                {
-                    ViewData["Title"] = "Thông tin ý kiến đóng góp";
-
-                    // Khởi tạo danh sách ý kiến
-                    List<YKienGopY> danhsachykien;
-
-                    if (string.IsNullOrEmpty(request.TenDangNhap))
-                    {
-                        // Lấy tất cả ý kiến nếu TenDangNhap không có giá trị
-                        danhsachykien = _db.YKienGopY.ToList();
-                    }
-                    else
-                    {
-                        // Lấy ý kiến theo TenDangNhap nếu có giá trị
-                        danhsachykien = _db.YKienGopY.Where(x => x.TenDangNhap == request.TenDangNhap).ToList();
-                    }
-
-                    // Lấy danh sách đơn vị không trùng lặp
-
-                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
-
-                    // Trả về view với danh sách ý kiến
-                    return View("Views/Admin/Systems/YKienGopY/Index.cshtml", danhsachykien);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+                // Lấy tất cả ý kiến nếu TenDangNhap không có giá trị
+                danhsachykien = _db.YKienGopY.ToList();
             }
             else
             {
-                return View("Views/Admin/Error/SessionOut.cshtml");
+                // Lấy ý kiến theo TenDangNhap nếu có giá trị
+                danhsachykien = _db.YKienGopY.Where(x => x.TenDangNhap == request.TenDangNhap).ToList();
             }
+
+            // Lấy danh sách đơn vị không trùng lặp
+
+            ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+            ViewData["Title"] = "Thông tin ý kiến đóng góp";
+            // Trả về view với danh sách ý kiến
+            return View("Views/Admin/Systems/YKienGopY/Index.cshtml", danhsachykien);
+
+            //    }
+            //    else
+            //    {
+            //        ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+            //        return View("Views/Admin/Error/Page.cshtml");
+            //    }
+            //}
+            //else
+            //{
+            //    return View("Views/Admin/Error/SessionOut.cshtml");
+            //}
         }
+
         [Route("YKienDongGop/Store")]
         [HttpPost]
         public async Task<IActionResult> Store(YKienGopY request, IFormFile Ipf1)
@@ -189,7 +190,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [HttpPost("/YKienDongGop/Update")] // Chỉnh sửa đường dẫn
+        [HttpPost("YKienDongGop/Update")] // Chỉnh sửa đường dẫn
         [DisableRequestSizeLimit]
         public async Task<JsonResult> Update(IFormFile FileUpLoad, YKienGopY request)
         {
@@ -328,7 +329,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [Route("YKienDongGopPhanHoi/Edit")]
         [HttpPost]

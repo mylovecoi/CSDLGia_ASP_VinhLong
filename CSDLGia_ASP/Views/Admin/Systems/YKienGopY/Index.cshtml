@@ -45,12 +45,12 @@
             </h3>
         </div>
         <div class="card-toolbar">
-
-            <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
-                <i class="la la-plus"></i>Thêm mới
-            </button>
-
-
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.ykiengopy", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+            }
         </div>
     </div>
     <hr />
@@ -110,7 +110,7 @@
                                 }
 
 
-                                @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name") == "SSA" || item.TenDangNhap == "SSA")
+                                @if (Helpers.GetSsAdmin(HttpContextAccessor.HttpContext.Session, "Name") == "SSA")
                                 {
                                     <!-- Nút Phản hồi sẽ được hiển thị khi tài khoản đăng nhập là SSA hoặc tên đăng nhập của mục là SSA -->
                                     <button type="button" data-target="#Edit_Modal_Phanhoi" data-toggle="modal" class="btn btn-sm btn-clean btn-icon"
