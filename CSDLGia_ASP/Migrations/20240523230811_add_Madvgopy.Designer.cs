@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240523230811_add_Madvgopy")]
+    partial class add_Madvgopy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -16671,7 +16674,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Ipf1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaDv")
+                    b.Property<string>("MaDvDongGopYKien")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayGopY")

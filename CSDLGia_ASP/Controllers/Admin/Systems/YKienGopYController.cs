@@ -31,31 +31,39 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
         [Route("YKienDongGop")]
         [HttpGet]
-        public IActionResult Index(YKienGopY request)
+        public IActionResult Index(string Madv)
         {
-            
+            Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
             // Khởi tạo danh sách ý kiến
             List<YKienGopY> danhsachykien;
 
-            if (string.IsNullOrEmpty(request.TenDangNhap) || request.TenDangNhap == "all")
+            if (string.IsNullOrEmpty(Madv) || Madv.ToLower() == "all")
             {
-                // Lấy tất cả ý kiến nếu TenDangNhap không có giá trị
                 danhsachykien = _db.YKienGopY.ToList();
             }
             else
             {
-                // Lấy ý kiến theo TenDangNhap nếu có giá trị
-                danhsachykien = _db.YKienGopY.Where(x => x.TenDangNhap == request.TenDangNhap).ToList();
+                danhsachykien = _db.YKienGopY.Where(t => t.MaDv == Madv).ToList();
             }
 
             // Lấy danh sách đơn vị không trùng lặp
 
-            ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+            danhsachykien = _db.YKienGopY.ToList();
+            if (danhsachykien.Any())
+            {
+                var danhsachdonvi = (from ykgy in _db.YKienGopY
+                                     select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
+                ViewData["DonViList"] = danhsachdonvi;
+            }
+
+            ViewData["Madv"] = Madv;
+
+
             ViewData["Title"] = "Thông tin ý kiến đóng góp";
             // Trả về view với danh sách ý kiến
             return View("Views/Admin/Systems/YKienGopY/Index.cshtml", danhsachykien);
 
-            
+
         }
 
         [Route("YKienDongGop/Store")]
@@ -81,7 +89,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
                     var model = new YKienGopY
                     {
-
+                        MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
                         TieuDe = request.TieuDe,
                         NoiDung = request.NoiDung,
                         TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
@@ -98,9 +106,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["Title"] = " Thông tin ý kiến đóng góp ";
 
-                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+                    var danhsachdonvi = (from ykgy in _db.YKienGopY
+                                         select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
+                    ViewData["DonViList"] = danhsachdonvi;
 
-                    return RedirectToAction("Index", "YKienGopY", new { TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name") });
+                    return RedirectToAction("Index", "YKienGopY", new { Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
                 }
                 else
                 {
@@ -300,10 +310,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         _db.YKienGopY.Remove(DanhSachGopY);
                         _db.SaveChanges();
                     }
-                    ViewData["DsDonvi"] = _db.YKienGopY.Select(x => x.TenDangNhap).Distinct().ToList();
+
+                    var danhsachdonvi = (from ykgy in _db.YKienGopY
+                                         select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
+                    ViewData["DonViList"] = danhsachdonvi;
+
                     var danhsachykien = _db.YKienGopY.Count();
                     HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
-                    return RedirectToAction("Index", "YKienGopY", new { TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name") });
+                    return RedirectToAction("Index", "YKienGopY", new { MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
                 }
                 else
                 {

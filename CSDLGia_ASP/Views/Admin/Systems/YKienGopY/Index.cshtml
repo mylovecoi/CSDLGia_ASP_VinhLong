@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.YKienGopY>
 
 @{
-    var dsDonvi = ViewData["DsDonvi"] as List<string>;
+   
 
     var stt = 1;
 
@@ -25,8 +25,8 @@
         $(function () {
             $('#Donvi_Search').change(function () {
                 var current_path_url = '/YKienDongGop?';
-                var tenDangNhap = 'TenDangNhap=' + $('#Donvi_Search').val();
-                var url = current_path_url + tenDangNhap;
+                var Madv = 'Madv=' + $('#Donvi_Search').val();
+                var url = current_path_url + Madv;
                 window.location.href = url;
             });
         });
@@ -61,11 +61,11 @@
                     <label style="font-weight:bold;color:blue">Đơn vị</label>
                     <select class="form-control select2basic" id="Donvi_Search" name="Donvi_Search">
                         <option value="all">--Tất cả--</option>
-                        @if (dsDonvi != null)
+                        @if (ViewData["DonViList"] != null)
                         {
-                            @foreach (var tenDangNhap in dsDonvi)
-                            {
-                                <option value="@tenDangNhap">@tenDangNhap</option>
+                            foreach (var item in ViewData["DonViList"] as IEnumerable<dynamic>)
+                            { 
+                                <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDangNhap</!option>
                             }
                         }
                     </select>
