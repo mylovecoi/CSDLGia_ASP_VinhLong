@@ -115,6 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
 
             ViewData["Nhomhh"] = nhomhh;
             ViewData["DmDvt"] = _db.DmDvt.ToList();
+            ViewData["DsDonVi"] = _db.DsDonVi.Where(x => x.MaDv == model.Madv).ToList();
             ViewData["Title"] = "Thông tin giá hàng hóa dịch vụ khác chi tiết";
             return View("Views/Admin/Manages/DinhGia/GiaHhDvk/DanhSach/Show.cshtml", model);
         }
