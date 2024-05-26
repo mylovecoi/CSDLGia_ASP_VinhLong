@@ -14411,8 +14411,8 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Mahs")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NgayQD")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("NgayQD")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NhiemVuHoiDong")
                         .HasColumnType("nvarchar(max)");
@@ -16669,6 +16669,9 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ipf1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaDv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayGopY")

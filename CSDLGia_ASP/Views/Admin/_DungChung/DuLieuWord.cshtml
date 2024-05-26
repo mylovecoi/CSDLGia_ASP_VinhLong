@@ -1,0 +1,47 @@
+﻿@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+
+    <script>
+        function openSmallWindow() {
+            const width = 600;
+            const height = 400;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+            const windowFeatures = `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars`;
+            window.open('@Url.Page("/SmallWindow")', 'SmallWindow', windowFeatures);
+        }
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thông tin hồ sơ dữ liệu đính kèm
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a class="btn btn-success font-weight-bolder" href="/UpLoad/File/ThongTinGiayTo/@ViewData["FileName"]" target="_blank">
+                <i class="la la-file-excel-o"></i>Tải về
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <pre>@ViewBag.Content</pre>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="text-align:center">
+    </div>
+
+</div>

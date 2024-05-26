@@ -7,6 +7,7 @@ namespace CSDLGia_ASP.Models.Systems
     public class YKienGopY
     {
         public int Id { get; set; }
+        public string MaDv { get; set; }
         public string TieuDe { get; set; }
         public string NoiDung { get; set; }
         public string Ipf1 { get; set; }

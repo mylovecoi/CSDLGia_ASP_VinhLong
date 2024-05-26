@@ -33,7 +33,6 @@
             success: function (data) {
                 if (data.status == 'success') {
                     $('#giayto_data').replaceWith(data.message);
-                    toastr.success("Cập nhật thành công!!!", "Thành công!");
                     $('#GiayTo_Modal').modal("show");
                 } else {
                     toastr.error(data.message, "Lỗi!");

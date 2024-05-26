@@ -8,6 +8,9 @@ using System;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Linq;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Aspose.Words;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
 {
@@ -257,7 +260,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
                     result += "<td style='text-align:center'>" + (record_id++) + "</td>";
                     result += "<td style='font-weight:bold'>" + item.MoTa + "</td>";
                     result += "<td>";
-                    if (!string.IsNullOrEmpty(item.FileName) && !System.IO.File.Exists(path))
+                    if (!string.IsNullOrEmpty(item.FileName) && System.IO.File.Exists(path))
                     {
                         result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-sm btn-clean btn-icon' title='Xem chi tiết'";
                         result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
@@ -302,11 +305,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
                     string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + item.FileName;
                     result += "<p>";
                     result += (record_id++) + "." + item.MoTa + " ";
-                    if (!string.IsNullOrEmpty(item.FileName) && !System.IO.File.Exists(path))
+                    if (!string.IsNullOrEmpty(item.FileName) && System.IO.File.Exists(path))
                     {
-                        result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
-                        result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                        result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                        if (item.FileName.Contains(".doc"))
+                        {
+                            result += "<a href='/ThongTinGiayTo/DuLieuWord?fileName=" + item.FileName + "' target='_blank' class='btn btn-link'>";
+                            result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                        }
+                        else
+                        {
+                            result += "<a href='/UpLoad/File/ThongTinGiayTo/" + item.FileName + "' target='_blank' class='btn btn-link'";
+                            result += " onclick='window.open(`/UpLoad/File/ThongTinGiayTo/" + item.FileName + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                            result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                        }
+                       
                     }                        
                     result += "</p>";
                 }
@@ -319,6 +331,54 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
 
             var data = new { status = "success", message = result };
             return Json(data);
+        }
+
+        [Route("ThongTinGiayTo/DuLieuWord")]
+        public async Task<IActionResult> DuLieuWord(string fileName)
+        {
+            string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + fileName;
+            if (string.IsNullOrEmpty(path))
+            {
+                ViewBag.ErrorMessage = "Invalid file path.";
+                return View("Index");
+            }
+
+            if (!System.IO.File.Exists(path))
+            {
+                ViewBag.ErrorMessage = "File does not exist.";
+                return View("Index");
+            }
+
+            string content;
+            try
+            {
+                var fileExtension = Path.GetExtension(path).ToLower();
+                if (fileExtension == ".docx" || fileExtension == ".doc")
+                {
+                    content = ReadWordContent(path);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Dữ liệu đính kèm không phải là .docx hoặc .doc ";
+                    return View("Views/Admin/Error/Error.cshtml");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["Messages"] = "Không thể đọc dữ liệu từ: " + ex.Message;
+                return View("Views/Admin/Error/Error.cshtml");
+            }
+
+            ViewBag.Content = content;
+            ViewData["FileName"] = fileName;
+            return View("Views/Admin/_DungChung/DuLieuWord.cshtml");
+        }
+
+
+        private string ReadWordContent(string filePath)
+        {
+            Aspose.Words.Document doc = new Aspose.Words.Document(filePath);
+            return doc.ToString(SaveFormat.Text);
         }
     }
 }
