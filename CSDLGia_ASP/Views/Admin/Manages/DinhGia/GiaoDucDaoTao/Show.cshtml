@@ -5,6 +5,8 @@
     var GiaDvGdDtCt = (IEnumerable<GiaDvGdDtCt>)ViewData["GiaDvGdDtCt"];
     int record_id = 1;
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var NhomDm = (IEnumerable<GiaDvGdDtNhom>)ViewData["DsNhom"];
+
 }
 
 <br />
@@ -13,55 +15,46 @@
 
 <p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
 <p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
-<p style="text-align: left; font-size: 16px;">
-    Địa bàn:
-    @foreach (var ds in dsdiaban)
-    {
-        @if (Model.Madiaban == ds.MaDiaBan)
-        {
-            @ds.TenDiaBan
-        }
-    }
-</p>
 <p style="text-align: left; font-size: 16px;">Thời điểm: @Model.Thoidiem</p>
 <p style="text-align: left; font-size: 16px;">Mô tả: @Model.Mota</p>
-<p style="text-align: left; font-size: 16px;">
-    Cơ quan tiếp nhận:
-    @foreach (var dsonvi in dsdonvi)
-    {
-        @if (Model.Macqcq == dsonvi.MaDv)
-        {
-            @dsonvi.TenDv
-        }
-    }
-</p>
 <br />
 <p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
 <p style="text-align:right">Đơn vị tính: nghìn đồng/học sinh/tháng</p>
-<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
-    <thead>
-        <tr>
-            <th style="text-align: center;">STT</th>
-            <th style="text-align: center;">Tên sản phẩm dịch vụ</th>
-            <th style="text-align: center;">Thành thị</th>
-            <th style="text-align: center;">Nông thôn</th>
-            <th style="text-align: center;">Miền núi</th>
-        </tr>
-       
-    </thead>
-    <tbody>
-        @if (GiaDvGdDtCt != null)
-        {
-            @foreach (var item in GiaDvGdDtCt)
-            {
+
+
+@foreach (var nhom in NhomDm)
+{
+    var data_nhom = Model.GiaDvGdDtCt.Where(t => t.MaNhom == nhom.MaNhom);
+    if (data_nhom.Any())
+    {
+        <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@nhom.TenNhom</p>
+
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+            <thead>
                 <tr>
-                    <td style="text-align:center">@(record_id++)</td>
-                    <td style="text-align:left">@item.Mota</td>
-                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
-                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
-                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>                 
+                    <th style="text-align: center;">STT</th>
+                    <th style="text-align: center;">Tên sản phẩm dịch vụ</th>
+                    <th style="text-align: center;">Thành thị</th>
+                    <th style="text-align: center;">Nông thôn</th>
+                    <th style="text-align: center;">Miền núi</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+
+            </thead>
+            <tbody>
+                
+                    @foreach (var item in data_nhom)
+                    {
+                    
+                        <tr>
+                            <td style="text-align:center">@(record_id++)</td>
+                            <td style="text-align:left">@item.Mota</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                            <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
+                        </tr>
+                    }
+                
+            </tbody>
+        </table>
+    }
+}

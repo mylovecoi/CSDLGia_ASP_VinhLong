@@ -478,8 +478,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Show"))
                 {
+                //    var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
+                //    ViewData["GiaDvGdDtCt"] = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs).ToList();
+                //    ViewData["DsNhom"] = _db.GiaDvGdDtNhom;
                     var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
-                    ViewData["GiaDvGdDtCt"] = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs).ToList();
+                    var modelct = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs);
+                    model.GiaDvGdDtCt = modelct.ToList();
+                    ViewData["DsNhom"] = _db.GiaDvGdDtNhom;
+
+
 
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
