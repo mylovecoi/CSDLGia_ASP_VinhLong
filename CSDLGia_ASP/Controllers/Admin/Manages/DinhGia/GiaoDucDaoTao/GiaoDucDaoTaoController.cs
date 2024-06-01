@@ -53,6 +53,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     {
                         model = model.Where(t => t.Madv == Madv);
                     }
+
                     if (Nam != 0)
                     {
                         model = model.Where(t => t.Thoidiem.Year == Nam);

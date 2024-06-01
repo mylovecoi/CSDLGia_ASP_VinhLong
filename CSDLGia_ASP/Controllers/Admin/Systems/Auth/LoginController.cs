@@ -67,8 +67,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                 // Lưu chuỗi JSON vào session
                 HttpContext.Session.SetString("LinkAPIKetNoi", json);
 
-                // Số ý kiến góp ý vào session
-
                
 
                 //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
@@ -102,6 +100,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                             }
                             else
                             {
+
                                 var danhsachykien = _db.YKienGopY.Count();
                                 HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
 
