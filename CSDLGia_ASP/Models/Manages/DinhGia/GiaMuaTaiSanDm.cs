@@ -7,11 +7,12 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
     {
         [Key]
         public int Id { get; set; }
-        public string Phanloai { get; set; }
-        public string Manhom { get; set; }
-        public string Tennhom { get; set; }
+        public string Mota { get; set; }//Nội dung công việc
         public string Dvt { get; set; }
-        public string Stt { get; set; }
+        public double KhoiLuong { get; set; }
+        public double SapXep { get; set; }
+        public string HienThi { get; set; }
+        public string Style { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
 

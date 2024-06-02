@@ -33,31 +33,58 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         [HttpGet]
         public IActionResult Index(string Madv)
         {
+            // Kiểm tra nhóm chức năng của Madv đăng nhập
             Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
-            // Khởi tạo danh sách ý kiến
-            List<YKienGopY> danhsachykien;
 
-            if (string.IsNullOrEmpty(Madv) || Madv.ToLower() == "all")
+            var maChucNangQuery = from gp in _db.GroupPermissions
+                                  join u in _db.Users on gp.KeyLink equals u.Chucnang
+                                  where u.Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")
+                                  select gp.ChucNang;
+
+            var chucNang = maChucNangQuery.FirstOrDefault();
+
+            // Lấy các bản ghi theo nhóm chức năng của mã đơn vị đăng nhập
+
+            List<YKienGopY> danhsachykien = new List<YKienGopY>();
+
+            if (chucNang == "QUANTRI" || chucNang == "TONGHOP" && Madv == Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
             {
                 danhsachykien = _db.YKienGopY.ToList();
             }
-            else
+
+            if (Madv != Helpers.GetSsAdmin(HttpContext.Session, "Madv"))
             {
                 danhsachykien = _db.YKienGopY.Where(t => t.MaDv == Madv).ToList();
             }
-
-            // Lấy danh sách đơn vị không trùng lặp
-
-            danhsachykien = _db.YKienGopY.ToList();
-            if (danhsachykien.Any())
+            if (Madv == "all")
             {
-                var danhsachdonvi = (from ykgy in _db.YKienGopY
-                                     select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
-                ViewData["DonViList"] = danhsachdonvi;
+                danhsachykien = _db.YKienGopY.ToList();
             }
 
-            ViewData["Madv"] = Madv;
+            if (chucNang == "NHAPLIEU")
+            {
+                Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                danhsachykien = _db.YKienGopY.Where(t => t.MaDv == Madv).ToList();
+            }
 
+            // Xử lý phần ô select
+            var danhsachdonvi = new List<object>();
+
+            if (chucNang == "NHAPLIEU")
+            {
+                danhsachdonvi = (from ykgy in _db.YKienGopY
+                                 where ykgy.MaDv == Helpers.GetSsAdmin(HttpContext.Session, "Madv")
+                                 select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct().Cast<object>().ToList();
+            }
+            else
+            {
+                danhsachdonvi = (from ykgy in _db.YKienGopY
+                                 select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct().Cast<object>().ToList();
+            }
+
+            ViewData["DonViList"] = danhsachdonvi;
+
+            ViewData["Madv"] = Madv;
 
             ViewData["Title"] = "Thông tin ý kiến đóng góp";
             // Trả về view với danh sách ý kiến

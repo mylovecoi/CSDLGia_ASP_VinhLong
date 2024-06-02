@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240601021212_edit-giamuataisanndm2")]
+    partial class editgiamuataisanndm2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5503,9 +5506,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")

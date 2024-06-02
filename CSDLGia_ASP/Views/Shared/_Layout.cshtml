@@ -337,8 +337,8 @@
                                     <!--begin:Nav-->
                                     <div class="row row-paddingless">
                                         <!--begin:Item-->
-                                        @* if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
-                                        { *@
+                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
+                                        {
                                             <div class="col-6">
                                                 <a asp-controller="YKienGopY" asp-action="Index" class="d-block py-10 px-5 text-center bg-hover-light border-bottom position-relative">
                                                     <span class="svg-icon svg-icon-3x svg-icon-primary">
@@ -355,7 +355,7 @@
                                                     <span class="badge rounded-pill bg-danger" style="position: absolute;top: 27px;right: 60px;">@Context.Session.GetString("DanhSachYKienDongGop")</span>
                                                 </a>
                                             </div>
-                                        @* } *@
+                                        }
 
                                         <div class="col-6">
                                             @* <a href="~/History/UpdateNcc.docx" target="_blank"

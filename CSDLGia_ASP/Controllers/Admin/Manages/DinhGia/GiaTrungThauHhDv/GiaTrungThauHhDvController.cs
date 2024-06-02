@@ -85,12 +85,41 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Create"))
                 {
+                    var modelcxd = _db.GiaMuaTaiSanCt.Where(t => t.TrangThai == "CXD");
+                    if (modelcxd.Any())
+                    {
+                        _db.GiaMuaTaiSanCt.RemoveRange(modelcxd);
+                        _db.SaveChanges();
+                    }
+                    var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
                     var model = new GiaMuaTaiSan
                     {
                         Madv = Madv,
                         Ngayqd = DateTime.Now,
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                     };
+
+                    var dm = _db.GiaMuaTaiSanDm;
+                    var ct = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt>();
+                    foreach (var item in dm)
+                    {
+                        ct.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt()
+                        {
+                            Mahs = model.Mahs,
+                            Madv = Madv,
+                            Mota = item.Mota,
+                            Dvt = item.Dvt,
+                            KhoiLuong = item.KhoiLuong,                
+                            TrangThai = "CXD",
+                            Created_at = DateTime.Now,
+                            Updated_at = DateTime.Now,
+                        });
+                    }
+
+                    _db.GiaMuaTaiSanCt.AddRange(ct);
+                    _db.SaveChanges();
+
+                    model.GiaMuaTaiSanCt = ct.Where(t => t.Mahs == model.Mahs).ToList();
 
                     //ViewData["Madb"] = _db.GiaMuaTaiSan.Where(t => t.Madv == Madv).OrderBy(t => t.Id).Select(t => t.Madiaban).First();
                     ViewData["Mahs"] = model.Mahs;
@@ -164,7 +193,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                         _db.GiaMuaTaiSan.Add(giaMuaTaiSan);
                         //Add Log
                         _trangThaiHoSoService.LogHoSo(request.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+
+
                     }
+
+                    var modelct = _db.GiaMuaTaiSanCt.Where(t => t.Mahs == request.Mahs);
+                    if (modelct.Any())
+                    {
+                        foreach (var item in modelct)
+                        {
+                            item.TrangThai = "XD";
+                        }
+                        _db.GiaMuaTaiSanCt.UpdateRange(modelct);
+                    }
+                    var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
+                    if (model_file.Any())
+                    {
+                        foreach (var file in model_file) { file.Status = "XD"; }
+                        _db.ThongTinGiayTo.UpdateRange(model_file);
+                    }
+
+
                     _db.SaveChanges();
 
 
@@ -199,8 +248,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["DmNhomHh"] = _db.DmNhomHh.ToList();
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "T");
-
+                    //ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "T");
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level == "H");
                     ViewData["Title"] = " Thông tin hồ sơ giá trúng thầu hàng hóa dịch vụ";
                     ViewData["MenuLv1"] = "menu_mts";
                     ViewData["MenuLv2"] = "menu_giamts_tt";
@@ -507,10 +556,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                 result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                 result += "<i class='icon-lg la la-edit text-primary'></i>";
                 result += "</button>";
-                result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
-                result += " onclick='GetDelete(" + item.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
-                result += "<i class='icon-lg la la-trash text-danger'></i>";
-                result += "</button>";
+                //result += "<button type='button' data-target='#Delete_Modal' data-toggle='modal'";
+                //result += " onclick='GetDelete(" + item.Id + ")' class='btn btn-sm btn-clean btn-icon' title='Xóa'>";
+                //result += "<i class='icon-lg la la-trash text-danger'></i>";
+                //result += "</button>";
                 result += "</td>";
                 result += "</tr>";
             }

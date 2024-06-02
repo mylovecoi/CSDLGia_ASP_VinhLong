@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Madiaban { get; set; }
         [NotMapped]
         public string Tennhathau { get; set; }
-        [NotMapped]
+        //[NotMapped]
         public string TrangThai { get; set; }
     }
 }

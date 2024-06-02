@@ -33,9 +33,12 @@
             <div class="card-toolbar">
                 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Create"))
             {
-                <a asp-controller="DsNhomTaiKhoan" asp-action="Create" class="btn btn-primary font-weight-bolder">
+                @* <a asp-controller="DsNhomTaiKhoan" asp-action="Create" class="btn btn-primary font-weight-bolder">
                     <i class="la la-plus"></i>Thêm mới
-                </a>
+                </a> *@
+                <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thêm mới">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
             }
             <!--end::Button-->
         </div>
@@ -98,6 +101,44 @@
         <!--end: Datatable-->
     </div>
 </div>
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-controller="DsNhomTaiKhoan" asp-action="Create" method="get">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thêm mới nhóm quyền truy cập hệ thống
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Nhóm chức năng</label>
+                                <select class="form-control" id="ChucNang_create" name="ChucNang_create">
+                                    <option value="TONGHOP">Tổng hợp</option>
+                                    <option value="QUANTRI">Quản trị</option>
+                                    <option value="NHAPLIEU">Nhập liệu</option>
+                                    <option value="K">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!--Delete Modal-->
 <div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -49,11 +49,11 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Chức năng</label>
-                        <select class="form-control" asp-for="ChucNang">
-                            <option value="TONGHOP">Đơn vị tổng hợp dữ liệu</option>
-                            <option value="NHAPLIEU">Đơn vị nhập liệu</option>
-                            <option value="QUANTRI">Quản trị hệ thống</option>
-                            <option value="K">Khác</option>
+                        <select class="form-control" asp-for="ChucNang" disabled>
+                            <!option value="TONGHOP" @(Model.ChucNang == "TONGHOP" ? "selected" : "")> Đơn vị tổng hợp dữ liệu</!option>
+                            <!option value="NHAPLIEU" @(Model.ChucNang == "NHAPLIEU" ? "selected" : "")> Đơn vị nhập liệu</!option>
+                            <!option value="QUANTRI" @(Model.ChucNang == "QUANTRI" ? "selected" : "")> Quản trị hệ thống</!option>
+                            <!option value="K" @(Model.ChucNang == "K" ? "selected" : "")> Khác</!option>
                         </select>
                     </div>
                 </div>

@@ -479,6 +479,18 @@
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
 
+
+                    
+                        <li class="menu-item" aria-haspopup="true" id="menu_giamts_dm">
+                            <a asp-controller="GiaTrungThauHhDvDm" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh mục</span>
+                            </a>
+                        </li>
+                    
+
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.muataisan.thongtin", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_giamts_tt">

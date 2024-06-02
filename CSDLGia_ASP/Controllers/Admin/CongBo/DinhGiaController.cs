@@ -420,11 +420,16 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         public IActionResult GiaDvGiaoDucDaoTaoShow(string Mahs)
         {
             var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
-            model.GiaDvGdDtCt = _db.GiaDvGdDtCt.Where(t => t.Mahs == model.Mahs).ToList();
+            var modelct = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs);
+            model.GiaDvGdDtCt = modelct.ToList();
+            ViewData["DsNhom"] = _db.GiaDvGdDtNhom;
 
+            ViewData["Madv"] = model.Madv;
+            ViewData["Mahs"] = model.Mahs;
             ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
             ViewData["DsDonVi"] = _db.DsDonVi.ToList();
-            ViewData["Title"] = "Xem chi tiết giá dịch vụ giáo dục đào tạo";
+            ViewData["Title"] = "Xem giá dịch vụ giáo dục đào tạo";
+
             return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Show.cshtml", model);
         }
 

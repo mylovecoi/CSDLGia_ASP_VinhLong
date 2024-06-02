@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240601020928_edit-giamuataisandm")]
+    partial class editgiamuataisandm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5505,9 +5508,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TrangThai")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -5530,19 +5530,10 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HienThi")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("KhoiLuong")
                         .HasColumnType("float");
 
                     b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SapXep")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
