@@ -77,7 +77,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             }
         }
 
-
         [HttpGet("PhiLePhi/Create")]
         public IActionResult Create(string madv_create, string manhom_create)
         {

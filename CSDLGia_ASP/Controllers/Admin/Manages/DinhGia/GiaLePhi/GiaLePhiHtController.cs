@@ -237,7 +237,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.xetduyet", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Index"))
                 {
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     var model = _db.GiaPhiLePhi.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
@@ -266,7 +266,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
 
         [HttpPost("GiaLePhiHt/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)

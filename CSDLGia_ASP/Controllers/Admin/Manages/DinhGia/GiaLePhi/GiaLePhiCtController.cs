@@ -114,6 +114,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 return Json(data);
             }
         }
+
         [Route("DinhGiaLePhiCt/Update")]
         [HttpPost]
         public JsonResult Update(double Mucthutu, string[] Style, int Id)

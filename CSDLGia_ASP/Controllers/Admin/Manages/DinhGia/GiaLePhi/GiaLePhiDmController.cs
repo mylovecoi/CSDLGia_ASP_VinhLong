@@ -61,52 +61,30 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-
         [Route("DanhMucLePhi/Store")]
         [HttpPost]
         public JsonResult Store(GiaPhiLePhiDm requests, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
-                var model = new GiaPhiLePhiDm
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
                 {
-                    Stt = requests.Stt,
-                    HienThi = requests.HienThi,
-                    SttHienthi = requests.SttHienthi,
-                    Manhom = requests.Manhom,
-                    NhanHieu = requests.NhanHieu,
-                    NuocSxLr = requests.NuocSxLr,
-                    TheTich = requests.TheTich,
-                    SoNguoiTaiTrong = requests.SoNguoiTaiTrong,
-                    Style = str_style,
-                    Created_at = DateTime.Now,
-                    Updated_at = DateTime.Now,
-                };
-                _db.GiaPhiLePhiDm.Add(model);
-                _db.SaveChanges();
-
-                var data = new { status = "success", message = "Thành công" };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
-            }
-        }
-
-
-        [Route("DanhMucLePhi/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == Id);
-                if (model != null)
-                {
-                    _db.GiaPhiLePhiDm.Remove(model);
+                    string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
+                    var model = new GiaPhiLePhiDm
+                    {
+                        Stt = requests.Stt,
+                        HienThi = requests.HienThi,
+                        SttHienthi = requests.SttHienthi,
+                        Manhom = requests.Manhom,
+                        NhanHieu = requests.NhanHieu,
+                        NuocSxLr = requests.NuocSxLr,
+                        TheTich = requests.TheTich,
+                        SoNguoiTaiTrong = requests.SoNguoiTaiTrong,
+                        Style = str_style,
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now,
+                    };
+                    _db.GiaPhiLePhiDm.Add(model);
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Thành công" };
@@ -114,7 +92,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
                 }
                 else
                 {
-                    var data = new { status = "error", message = "Không tìm thấy thông tin cập nhật! Bạn cần kiểm tra lại" };
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
                     return Json(data);
                 }
             }
@@ -125,45 +103,182 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-        //[HttpPost("DanhMucLePhi/Remove")]
-        //public IActionResult Remove(string Manhom)
-        //{
-        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-        //    {
-        //        if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
-        //        {
-        //            var model = _db.GiaPhiLePhiDm.Where(t => t.Manhom == Manhom);
-        //            if (model.Any())
-        //            {
-        //                _db.GiaPhiLePhiDm.RemoveRange(model);
-        //                _db.SaveChanges();
-        //                var data = new { status = "success", message = "Thành công" };
-        //                return Json(data);
-        //            }
-        //            else
-        //            {
-        //                ViewData["Messages"] = "Không tìm thấy thông tin!";
-        //                return View("Views/Admin/Error/Page.cshtml");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-        //            return View("Views/Admin/Error/Page.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("Views/Admin/Error/SessionOut.cshtml");
-        //    }
-        //}
+        [Route("DanhMucLePhi/Edit")]
+        [HttpPost]
+        public JsonResult Edit(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
+                {
+                    var model = _db.GiaPhiLePhiDm.FirstOrDefault(p => p.Id == Id);
+
+                    if (model != null)
+                    {
+                        List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
+                        string result = "<div class='modal-body' id='edit_thongtin'>";
+
+                        result += "<div class='row'>";
+                        result += "<div class='col-xl-2'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Sắp xếp:</label>";
+                        result += "<input type='number' id='stt_edit' name='stt_edit' class='form-control' step='1' value='" + model.Stt + "' />";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-2'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>STT hiển thị</label> ";
+                        result += "<input type='text' id='stthienthi_edit' name='stthienthi_edit' class='form-control' value='" + model.SttHienthi + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-8'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
+                        result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
+                        result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
+                        result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
+                        result += "</select>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Nhãn hiệu:</label>";
+                        result += "<input type='text' id='nhanhieu_edit' name='nhanhieu_edit' value='" + model.NhanHieu + "' class='form-control'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Nước sản xuất, lắp ráp:</label>";
+                        result += "<input type='text' id='nuocsxlr_edit' name='nuocsxlr_edit' value='" + model.NuocSxLr + "' class='form-control'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-12'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Kiểu loại:</label>";
+                        result += "<input type='text' id='hienthi_edit' name='hienthi_edit' value='" + model.HienThi + "' class='form-control'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Thể tích làm việc:</label>";
+                        result += "<input type='text' id='thetich_edit' name='thetich_edit' value='" + model.TheTich + "' class='form-control'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<div class='col-xl-6'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Số người cho phép trở/ Tải trọng:</label>";
+                        result += "<input type='text' id='songuoitaitrong_edit' name='songuoitaitrong_edit' value='" + model.SoNguoiTaiTrong + "' class='form-control'/>";
+                        result += "</div>";
+                        result += "</div>";
+                        result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
+                        result += "</div>";
+
+                        var data = new { status = "success", message = result };
+                        return Json(data);
+                    }
+                    else
+                    {
+                        var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
+                        return Json(data);
+                    }
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [Route("DanhMucLePhi/Update")]
+        [HttpPost]
+        public JsonResult Update(int Stt, string HienThi, string SttHienthi, int Id, string[] Style)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
+                {
+                    var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == Id);
+                    if (model != null)
+                    {
+                        string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
+                        model.Stt = Stt;
+                        model.HienThi = HienThi;
+                        model.SttHienthi = SttHienthi;
+                        model.Style = str_style;
+
+                        _db.GiaPhiLePhiDm.Update(model);
+                        _db.SaveChanges();
+
+                        var data = new { status = "success", message = "Thành công" };
+                        return Json(data);
+                    }
+                    else
+                    {
+                        var data = new { status = "error", message = "Không tìm thấy thông tin cập nhật! Bạn cần kiểm tra lại" };
+                        return Json(data);
+                    }
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
+
+        [Route("DanhMucLePhi/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", "Create"))
+                {
+                    var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == Id);
+                    if (model != null)
+                    {
+                        _db.GiaPhiLePhiDm.Remove(model);
+                        _db.SaveChanges();
+
+                        var data = new { status = "success", message = "Thành công" };
+                        return Json(data);
+                    }
+                    else
+                    {
+                        var data = new { status = "error", message = "Không tìm thấy thông tin cập nhật! Bạn cần kiểm tra lại" };
+                        return Json(data);
+                    }
+                }
+                else
+                {
+                    var data = new { status = "error", message = "Bạn không có quyền thực hiện chức năng này!!!" };
+                    return Json(data);
+                }
+            }
+            else
+            {
+                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
+                return Json(data);
+            }
+        }
 
         [HttpPost]
         public IActionResult RemoveRange(string manhom_remove)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.lephi.thongtin", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Delete"))
                 {
                     var model = _db.GiaPhiLePhiDm.Where(t => t.Manhom == manhom_remove);
 
@@ -181,117 +296,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-
-        [Route("DanhMucLePhi/Edit")]
-        [HttpPost]
-        public JsonResult Edit(int Id)
-        {
-            var model = _db.GiaPhiLePhiDm.FirstOrDefault(p => p.Id == Id);
-
-            if (model != null)
-            {
-                List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
-                string result = "<div class='modal-body' id='edit_thongtin'>";
-
-                result += "<div class='row'>";
-                result += "<div class='col-xl-2'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold;color:blue'>Sắp xếp:</label>";
-                result += "<input type='number' id='stt_edit' name='stt_edit' class='form-control' step='1' value='" + model.Stt + "' />";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-2'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold;color:blue'>STT hiển thị</label> ";
-                result += "<input type='text' id='stthienthi_edit' name='stthienthi_edit' class='form-control' value='" + model.SttHienthi + "'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-8'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label style='font-weight:bold;color:blue'>Kiểu in hiển thị: </label>";
-                result += "<select class='form-control select2multi' multiple='multiple' id='style_edit' name='style_edit' style='width:100%'>";
-                result += "<option value='Chữ in đậm'" + (list_style.Contains("Chữ in đậm") ? "selected" : "") + ">Chữ in đậm</option >";
-                result += "<option value='Chữ in nghiêng'" + (list_style.Contains("Chữ in nghiêng") ? "selected" : "") + ">Chữ in nghiêng</option >";
-                result += "</select>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Nhãn hiệu:</label>";
-                result += "<input type='text' id='nhanhieu_edit' name='nhanhieu_edit' value='" + model.NhanHieu + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Nước sản xuất, lắp ráp:</label>";
-                result += "<input type='text' id='nuocsxlr_edit' name='nuocsxlr_edit' value='" + model.NuocSxLr + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-12'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Kiểu loại:</label>";
-                result += "<input type='text' id='hienthi_edit' name='hienthi_edit' value='" + model.HienThi + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Thể tích làm việc:</label>";
-                result += "<input type='text' id='thetich_edit' name='thetich_edit' value='" + model.TheTich + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Số người cho phép trở/ Tải trọng:</label>";
-                result += "<input type='text' id='songuoitaitrong_edit' name='songuoitaitrong_edit' value='" + model.SoNguoiTaiTrong + "' class='form-control'/>";
-                result += "</div>";
-                result += "</div>";
-                result += "<input type='hidden' id='id_edit' name='id_edit' value='" + Id + "' class='form-control'/>";
-                result += "</div>";
-
-                var data = new { status = "success", message = result };
-                return Json(data);
-            }
-            else
-            {
-                var data = new { status = "error", message = "Không tìm thấy thông tin cần chỉnh sửa!!!" };
-                return Json(data);
-            }
-        }
-        [Route("DanhMucLePhi/Update")]
-
-        [HttpPost]
-        public JsonResult Update(int Stt, string HienThi, string SttHienthi, int Id, string[] Style)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                var model = _db.GiaPhiLePhiDm.FirstOrDefault(t => t.Id == Id);
-                if (model != null)
-                {
-                    string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
-                    model.Stt = Stt;
-                    model.HienThi = HienThi;
-                    model.SttHienthi = SttHienthi;
-                    model.Style = str_style;
-
-                    _db.GiaPhiLePhiDm.Update(model);
-                    _db.SaveChanges();
-
-                    var data = new { status = "success", message = "Thành công" };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Không tìm thấy thông tin cập nhật! Bạn cần kiểm tra lại" };
-                    return Json(data);
-                }
-            }
-            else
-            {
-                var data = new { status = "error", message = "Bạn kêt thúc phiên đăng nhập! Đăng nhập lại để tiếp tục công việc" };
-                return Json(data);
             }
         }
 

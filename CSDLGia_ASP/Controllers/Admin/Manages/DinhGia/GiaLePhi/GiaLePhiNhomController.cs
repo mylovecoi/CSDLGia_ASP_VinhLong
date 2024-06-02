@@ -152,7 +152,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaLePhi
             }
         }
 
-
         [HttpPost("DanhMucLePhiNhom/Delete")]
         public JsonResult Delete(int Id)
         {

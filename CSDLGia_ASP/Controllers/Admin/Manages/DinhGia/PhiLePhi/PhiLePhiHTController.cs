@@ -132,7 +132,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             }
         }
 
-
         public IActionResult TraLai(int id_tralai, string madv_tralai, string Lydo)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
