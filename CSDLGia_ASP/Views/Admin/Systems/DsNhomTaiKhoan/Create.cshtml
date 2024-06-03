@@ -45,7 +45,7 @@
                 <div class="col-xl-6">
                     <div class="form-group">
                         <label>Chức năng</label>
-                        <select class="form-control" asp-for="ChucNang" disabled>
+                        <select class="form-control" asp-for="ChucNang" readonly>
                             <!option value="TONGHOP" @((string)ViewData["ChucNang"] == "TONGHOP" ? "selected" : "")> Đơn vị tổng hợp dữ liệu</!option>
                             <!option value="NHAPLIEU" @((string)ViewData["ChucNang"] == "NHAPLIEU" ? "selected" : "")> Đơn vị nhập liệu</!option>
                             <!option value="QUANTRI" @((string)ViewData["ChucNang"] == "QUANTRI" ? "selected" : "")> Quản trị hệ thống</!option>

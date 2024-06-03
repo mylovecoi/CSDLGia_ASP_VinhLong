@@ -60,6 +60,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.SaveChanges();
                     string KeyLink = "Per_" + DateTime.Now.ToString("yymmssfff");
                     var model = new VMGroupPermissions {KeyLink = KeyLink};
+
                     var data_rolelist = Helpers.GetRoleList();
                     if(ChucNang_create == "QUANTRI")
                     {
