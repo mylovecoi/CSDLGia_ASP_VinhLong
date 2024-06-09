@@ -18,27 +18,45 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.Text.RegularExpressions;
 using System.Text;
+using CSDLGia_ASP.Services;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 {
     public class TaiSanCongDmController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public TaiSanCongDmController(CSDLGiaDBContext db)
+        public TaiSanCongDmController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("DanhMucTaiSanCong")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.danhmuc", "Index"))
                 {
-                    var model = _db.GiaTaiSanCongDm.ToList();
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongDm> model = _db.GiaTaiSanCongDm.Where(t => list_madv.Contains(t.Madv));
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
+
+                    ViewData["Madv"] = Madv;
+                    ViewData["DsDonvi"] = model_donvi;
                     ViewData["Title"] = "Danh mục giá tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_tsc";
@@ -59,12 +77,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
         [Route("DanhMucTaiSanCong/Store")]
         [HttpPost]
-        public JsonResult Store(string Manhom, string Tennhom)
+        public JsonResult Store(string Manhom, string Tennhom, string Madv)
         {
             var model = new GiaTaiSanCongDm
             {
                 Mataisan = Manhom,
                 Tentaisan = Tennhom,
+                Madv = Madv,
                 Created_at = DateTime.Now,
                 Updated_at = DateTime.Now,
             };
@@ -160,7 +179,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
 
         [HttpGet("DanhMucTaiSanCong/NhanExcel")]
-        public IActionResult NhanExcel()
+        public IActionResult NhanExcel(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -168,6 +187,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                 {
                     var model = new VMImportExcel
                     {
+                        MaDv = Madv,
                         Sheet = 1,
                         LineStart = 3,
                         LineStop = 1000
@@ -227,6 +247,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
 
                                     list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongDm
                                     {
+                                        Madv = requests.MaDv,
                                         Mataisan = worksheet.Cells[row, 1].Value != null ?
                                                      worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                         Tentaisan = worksheet.Cells[row, 2].Value != null ?
@@ -238,7 +259,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                             }
                         }
                     }
-                    return RedirectToAction("Index", "TaiSanCongDm");
+                    return RedirectToAction("Index", "TaiSanCongDm", new {requests.MaDv});
                 }
                 else
                 {

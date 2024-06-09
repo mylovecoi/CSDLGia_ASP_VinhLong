@@ -107,7 +107,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     }
 
                     string Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-                    var danhmuc = _db.GiaTaiSanCongDm;
+                    var danhmuc = _db.GiaTaiSanCongDm.Where(t=>t.Madv == Madv);
                     if (danhmuc.Any())
                     {
                         List<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt> list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt>();
@@ -117,7 +117,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                             {
                                 Mataisan = dm.Mataisan,
                                 Tentaisan = dm.Tentaisan,
-                                Madv = Madv,
+                                Madv = dm.Madv,
                                 Mahs = Mahs,
                                 Trangthai = "CXD"
                             });

@@ -105,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     }
 
                     string Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH");
-                    var danhmuc = _db.GiaThueTaiSanCongDm;
+                    var danhmuc = _db.GiaThueTaiSanCongDm.Where(t=>t.Madv == Madv);
                     if (danhmuc.Any())
                     {
                         List<GiaThueTaiSanCongCt> list_add = new List<GiaThueTaiSanCongCt>();
@@ -115,7 +115,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                             {
                                 Mataisan = dm.Mataisan,
                                 Tentaisan = dm.Tentaisan,
-                                Madv = Madv,
+                                Madv = dm.Madv,
                                 Mahs = Mahs
                             });
                         }
