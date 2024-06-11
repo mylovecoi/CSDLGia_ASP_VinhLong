@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using OfficeOpenXml.Style;
 using System.Text;
 using CSDLGia_ASP.Services;
+using System.Drawing;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
 {
@@ -746,6 +747,134 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
             }
         }
 
+        [HttpGet("GiaNuocSh/ExportToExcel")]
+        public IActionResult ExportToExcel(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string Doituongsd)
+        {
+            var model = (from hosoct in _db.GiaNuocShCt
+                                 join hoso in _db.GiaNuocSh on hosoct.Mahs equals hoso.Mahs
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                                 select new CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShCt
+                                 {
+                                     Madv = hoso.Madv,
+                                     Tendv = donvi.TenDv,
+                                     SoQD = hoso.Soqd,
+                                     ThoiDiem = hoso.Thoidiem,
+                                     Doituongsd = hosoct.Doituongsd,
+                                     TyTrongTieuThu = hosoct.TyTrongTieuThu,
+                                     SanLuong = hosoct.SanLuong,
+                                     DonGia1 = hosoct.DonGia1,
+                                     DonGia2 = hosoct.DonGia2,
+                                     Trangthai = hoso.Trangthai,
+                                     Mahs = hoso.Mahs,
+                                 });
+
+            List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+            model = model.Where(t => t.ThoiDiem >= NgayTu && t.ThoiDiem <= NgayDen && t.DonGia1 >= DonGiaTu || t.DonGia2 >= DonGiaTu && list_trangthai.Contains(t.Trangthai));
+            if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+            if (DonGiaDen > 0) { model = model.Where(t => t.DonGia1 <= DonGiaDen || t.DonGia2 <= DonGiaDen); }
+            if (!string.IsNullOrEmpty(Doituongsd))
+            {
+                model = model.Where(t => t.Doituongsd.ToLower().Contains(Doituongsd.ToLower()));
+            }
+
+            // Start exporting to excel
+            var stream = new MemoryStream();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var xlPackage = new ExcelPackage(stream))
+            {
+                // Define a worksheet
+                var worksheet = xlPackage.Workbook.Worksheets.Add("Sheet1");
+
+                // Styling
+                var customStyle = xlPackage.Workbook.Styles.CreateNamedStyle("CustomStyle");
+
+                customStyle.Style.Font.UnderLine = true;
+                customStyle.Style.Font.Color.SetColor(Color.Red);
+
+                // 1st row
+                var record_id = 1;
+                var startRow = 3;
+                var row = startRow;
+
+                worksheet.Cells["A1"].Value = "Thông tin tìm kiếm hồ sơ giá nước sinh hoạt";
+                using (var r = worksheet.Cells[1, 1, 1, 9])
+                {
+                    r.Merge = true;
+                    r.Style.Font.Color.SetColor(Color.Green);
+                    r.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    r.Style.Fill.BackgroundColor.SetColor(Color.Lavender);
+                }
+
+                worksheet.Cells["A2"].Value = "STT";
+                worksheet.Cells["B2"].Value = "Đơn vị";
+                worksheet.Cells["C2"].Value = "Số QĐ";
+                worksheet.Cells["D2"].Value = "Thời điểm";
+                worksheet.Cells["E2"].Value = "Mục đích sử dụng";
+                worksheet.Cells["F2"].Value = "Tỷ trọng tiêu thụ (%)";
+                worksheet.Cells["G2"].Value = "Sản lượng(m3)";
+                worksheet.Cells["H2"].Value = "Đơn giá chưa bao gồm thuế GTGT(đồng/m3)";
+                worksheet.Cells["I2"].Value = "Đơn giá đã bao gồm thuế GTGT(đồng/m3)";
+                worksheet.Cells[2, 1, 2, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[2, 1, 2, 9].Style.Fill.BackgroundColor.SetColor(Color.Yellow);
+
+                row = 3;
+                foreach (var item in model)
+                {
+                    worksheet.Cells[row, 1].Value = record_id++;
+                    worksheet.Cells[row, 2].Value = item.Tendv;
+                    worksheet.Cells[row, 3].Value = item.SoQD;
+                    worksheet.Cells[row, 4].Value = Helpers.ConvertDateToStr(item.ThoiDiem);
+                    worksheet.Cells[row, 5].Value = item.Doituongsd;
+                    worksheet.Cells[row, 6].Value = item.TyTrongTieuThu;
+                    worksheet.Cells[row, 7].Value = item.SanLuong;
+                    worksheet.Cells[row, 8].Value = Helpers.ConvertDbToStr(item.DonGia1);
+                    worksheet.Cells[row, 9].Value = Helpers.ConvertDbToStr(item.DonGia2);
+
+                    row++;
+                }
+
+                // Define border styles
+                var borderStyle = ExcelBorderStyle.Thin;
+                var borderColor = Color.Black;
+
+                // Apply border to header cells
+                using (var headerRange = worksheet.Cells["A2:I2"])
+                {
+                    headerRange.Style.Border.Top.Style = borderStyle;
+                    headerRange.Style.Border.Bottom.Style = borderStyle;
+                    headerRange.Style.Border.Left.Style = borderStyle;
+                    headerRange.Style.Border.Right.Style = borderStyle;
+                    headerRange.Style.Border.Top.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Left.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                // Apply border to data cells
+                for (int i = startRow; i < row; i++)
+                {
+                    var dataRange = worksheet.Cells[i, 1, i, 9];
+                    dataRange.Style.Border.Top.Style = borderStyle;
+                    dataRange.Style.Border.Bottom.Style = borderStyle;
+                    dataRange.Style.Border.Left.Style = borderStyle;
+                    dataRange.Style.Border.Right.Style = borderStyle;
+                    dataRange.Style.Border.Top.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Left.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                xlPackage.Workbook.Properties.Title = "Thông tin tìm kiếm hồ sơ giá nước sinh hoạt";
+                xlPackage.Workbook.Properties.Author = "Hùng Anh";
+
+                xlPackage.Save();
+            }
+
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Thông tin tìm kiếm hồ sơ giá nước sinh hoạt.xlsx");
+        }
 
         [HttpPost("GiaNuocSh/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)
