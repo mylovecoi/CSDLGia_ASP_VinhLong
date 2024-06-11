@@ -199,6 +199,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCTh('BaoCaoKeKhaiDangKyGia/BaoCaoTongHop')">BC Tổng hợp</button>
+                    <button type="button" class="btn btn-success font-weight-bold" onclick="ClickExcel('BaoCaoKeKhaiDangKyGia/ExportToExcel')">Kết xuất Excel</button>
                     @* <button type="button" class="btn btn-primary font-weight-bold" onclick="ClickBCCt('BaoCaoKeKhaiDangKyGia/BaoCaoChiTiet')">BC Chi tiết</button> *@
                 </div>
             </div>
@@ -208,6 +209,24 @@
 
 <script>
     function ClickBCTh(url) {
+        $('#frm_report').attr('action', url);
+
+        if (document.querySelector('input[name="time"]:checked').value == "ngay") {
+            var date_tu = new Date($('#tungay').val());
+            var date_den = new Date($('#denngay').val());
+            var date_tu_int = date_tu.getTime();
+            var date_den_int = date_den.getTime();
+            if (date_tu_int > date_den_int) {
+                toastr.error("Thời gian báo cáo kết thúc phải lớn hơn thời gian báo cáo bắt đầu!", "Lỗi!!!")
+            } else {
+                $('#frm_report').submit();
+            }
+        } else {
+            $('#frm_report').submit();
+        }
+    }
+
+    function ClickExcel(url) {
         $('#frm_report').attr('action', url);
 
         if (document.querySelector('input[name="time"]:checked').value == "ngay") {
