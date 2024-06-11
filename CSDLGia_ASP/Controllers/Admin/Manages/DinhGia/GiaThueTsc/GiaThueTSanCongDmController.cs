@@ -13,29 +13,46 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSDLGia_ASP.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 {
     public class GiaThueTSanCongDmController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaThueTSanCongDmController(CSDLGiaDBContext db)
+        public GiaThueTSanCongDmController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("DanhMucThueTsc")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Index"))
                 {
-                    var model = _db.GiaThueTaiSanCongDm.ToList();
-                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm> model = _db.GiaThueTaiSanCongDm.Where(t => list_madv.Contains(t.Madv));
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
+
+                    ViewData["Madv"] = Madv;
+                    ViewData["DsDonvi"] = model_donvi;
                     ViewData["DmDvt"] = _db.DmDvt.ToList();
                     ViewData["Title"] = "Danh mục thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -59,7 +76,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         [HttpPost]
         public JsonResult Store(GiaThueTaiSanCongDm request)
         {
-
             var model = new GiaThueTaiSanCongDm
             {
                 Madv = request.Madv,
@@ -74,34 +90,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 Updated_at = DateTime.Now,
             };
             _db.GiaThueTaiSanCongDm.Add(model);
-            _db.SaveChanges();
-
-            //if (request.Dvt != null)
-            //{
-            //    var dvt = _db.DmDvt.Where(t => t.Dvt == request.Dvt).ToList();
-            //    if (dvt.Count == 0)
-            //    {
-            //        var new_dvt = new DmDvt
-            //        {
-            //            Dvt = request.Dvt,
-            //            Created_at = DateTime.Now,
-            //            Updated_at = DateTime.Now,
-            //        };
-            //        _db.DmDvt.AddRange(new_dvt);
-            //        _db.SaveChanges();
-            //    }
-            //}
-            var data = new { status = "success" };
-            return Json(data);
-        }
-
-
-        [Route("DanhMucThueTsc/Delete")]
-        [HttpPost]
-        public JsonResult Delete(int Id)
-        {
-            var model = _db.GiaThueTaiSanCongDm.FirstOrDefault(t => t.Id == Id);
-            _db.GiaThueTaiSanCongDm.Remove(model);
             _db.SaveChanges();
             var data = new { status = "success" };
             return Json(data);
@@ -119,16 +107,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 string result = "<div class='modal-body' id='edit_thongtin'>";
                 result += "<div class='row'>";
                 result += "<input hidden id='id_edit' name='id_edit'  value='" + model.Id + "' /> ";
-                //result += "<div class='col-xl-12'>";
-                //result += "<div class='form-group fv-plugins-icon-container'>";
-                //result += "<label><b>Tên sản phẩm , dịch vụ*</b></label>";
-                //result += "<select id = 'Madv_edit' name = 'Madv_edit'  class='form-control'>";
-                //foreach (var item in DsDonVi)
-                //{
-                //    result += "<option value ='" + @item.MaDv + "'>" + @item.TenDv + "</option>";
-                //}
-                //result += "</select>";
-                //result += "</div></div>";
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Mã sản phẩm , dịch vụ*</b></label>";
@@ -179,6 +157,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                 return Json(data);
             }
         }
+
         [Route("DanhMucThueTsc/Update")]
         [HttpPost]
         public JsonResult Update(GiaThueTaiSanCongDm request)
@@ -214,6 +193,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
             return Json(data);
         }
 
+
+        [Route("DanhMucThueTsc/Delete")]
+        [HttpPost]
+        public JsonResult Delete(int Id)
+        {
+            var model = _db.GiaThueTaiSanCongDm.FirstOrDefault(t => t.Id == Id);
+            _db.GiaThueTaiSanCongDm.Remove(model);
+            _db.SaveChanges();
+            var data = new { status = "success" };
+            return Json(data);
+        }
+
         public IActionResult RemoveRange()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -238,17 +229,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
         }
 
         [HttpGet("DanhMucThueTsc/NhanExcel")]
-        public IActionResult NhanExcel()
+        public IActionResult NhanExcel(string Madv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.danhmuc", "Create"))
                 {
-                    var model = new VMImportExcel { 
+                    var model = new VMImportExcel
+                    {
+                        MaDv = Madv,
                         Sheet = 1,
                         LineStart = 3,
                         LineStop = 1000,
-                    
                     };
                     ViewData["Title"] = "Danh mục thuê tài sản công";
                     ViewData["MenuLv1"] = "menu_dg";
@@ -293,9 +285,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
 
                                 var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm>();
                                 for (int row = requests.LineStart; row <= requests.LineStop; row++)
-                                {     
+                                {
                                     list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm
                                     {
+                                        Madv = requests.MaDv,
                                         Mataisan = worksheet.Cells[row, 1].Value != null ?
                                                      worksheet.Cells[row, 1].Value.ToString().Trim() : "",
                                         Tentaisan = worksheet.Cells[row, 2].Value != null ?
@@ -307,7 +300,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                             }
                         }
                     }
-                    return RedirectToAction("Index", "GiaThueTSanCongDm");
+                    return RedirectToAction("Index", "GiaThueTSanCongDm", new { requests.MaDv });
                 }
                 else
                 {

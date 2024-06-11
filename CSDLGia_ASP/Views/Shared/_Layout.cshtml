@@ -337,7 +337,7 @@
                                     <!--begin:Nav-->
                                     <div class="row row-paddingless">
                                         <!--begin:Item-->
-                                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.ykiengopy", "Index"))
+                                       @if (session != null && !string.IsNullOrEmpty(session.GetString("SsAdmin")))
                                         {
                                             <div class="col-6">
                                                 <a asp-controller="YKienGopY" asp-action="Index" class="d-block py-10 px-5 text-center bg-hover-light border-bottom position-relative">
@@ -352,11 +352,10 @@
                                                         <!--end::Svg Icon-->
                                                     </span>
                                                     <span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Ý kiến góp ý</span>
-                                                    <span class="badge rounded-pill bg-danger" style="position: absolute;top: 27px;right: 60px;">@Context.Session.GetString("DanhSachYKienDongGop")</span>
+
                                                 </a>
                                             </div>
                                         }
-
                                         <div class="col-6">
                                             @* <a href="~/History/UpdateNcc.docx" target="_blank"
                                             onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="d-block py-10 px-5 text-center bg-hover-light"> *@

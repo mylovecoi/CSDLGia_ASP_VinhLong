@@ -99,51 +99,45 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Create"))
+
+                if (Ipf1 != null && Ipf1.Length > 0)
                 {
-                    if (Ipf1 != null && Ipf1.Length > 0)
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
+                    string extension = Path.GetExtension(Ipf1.FileName);
+                    filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Upload/File", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
                     {
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(Ipf1.FileName);
-                        string extension = Path.GetExtension(Ipf1.FileName);
-                        filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Upload/File", filename);
-                        using (var FileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await Ipf1.CopyToAsync(FileStream);
-                        }
-                        request.Ipf1 = filename;
+                        await Ipf1.CopyToAsync(FileStream);
                     }
-                    var model = new YKienGopY
-                    {
-                        MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
-                        TieuDe = request.TieuDe,
-                        NoiDung = request.NoiDung,
-                        TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                        NgayGopY = DateTime.Now,
-                        Ipf1 = request.Ipf1,
-                        Created_at = DateTime.Now,
-                        Updated_at = DateTime.Now,
-                    };
-
-                    _db.YKienGopY.Add(model);
-                    _db.SaveChanges();
-                    var danhsachykien = _db.YKienGopY.Count();
-                    HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
-
-                    ViewData["Title"] = " Thông tin ý kiến đóng góp ";
-
-                    var danhsachdonvi = (from ykgy in _db.YKienGopY
-                                         select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
-                    ViewData["DonViList"] = danhsachdonvi;
-
-                    return RedirectToAction("Index", "YKienGopY", new { Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
+                    request.Ipf1 = filename;
                 }
-                else
+                var model = new YKienGopY
                 {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+                    MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv"),
+                    TieuDe = request.TieuDe,
+                    NoiDung = request.NoiDung,
+                    TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
+                    NgayGopY = DateTime.Now,
+                    Ipf1 = request.Ipf1,
+                    Created_at = DateTime.Now,
+                    Updated_at = DateTime.Now,
+                };
+
+                _db.YKienGopY.Add(model);
+                _db.SaveChanges();
+                var danhsachykien = _db.YKienGopY.Count();
+                HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
+
+                ViewData["Title"] = " Thông tin ý kiến đóng góp ";
+
+                var danhsachdonvi = (from ykgy in _db.YKienGopY
+                                     select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
+                ViewData["DonViList"] = danhsachdonvi;
+
+                return RedirectToAction("Index", "YKienGopY", new { Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
+
             }
             else
             {
@@ -158,54 +152,48 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Edit"))
+
+                var model = _db.YKienGopY.FirstOrDefault(t => t.Id == Id);
+
+                string result = "<div class='modal-body' id='frm_edit'>";
+                result += "<div class='row'>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Tiêu đề:</label>";
+                result += "<input type='text' class='form-control' id='tieude_edit' name='tieude_edit'value='" + model.TieuDe + "'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Nội dung:</label>";
+                result += "<textarea class='form-control' id='noidung_edit' name='noidung_edit' rows='5' cols='30'>" + model.NoiDung + "</textarea>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form -group fv-plugins-icon-container'>";
+                if (!string.IsNullOrEmpty(model.Ipf1))
                 {
-                    var model = _db.YKienGopY.FirstOrDefault(t => t.Id == Id);
-
-                    string result = "<div class='modal-body' id='frm_edit'>";
-                    result += "<div class='row'>";
-
-                    result += "<div class='col-xl-12'>";
-                    result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Tiêu đề:</label>";
-                    result += "<input type='text' class='form-control' id='tieude_edit' name='tieude_edit'value='" + model.TieuDe + "'/>";
-                    result += "</div>";
-                    result += "</div>";
-
-                    result += "<div class='col-xl-12'>";
-                    result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Nội dung:</label>";
-                    result += "<textarea class='form-control' id='noidung_edit' name='noidung_edit' rows='5' cols='30'>" + model.NoiDung + "</textarea>";
-                    result += "</div>";
-                    result += "</div>";
-
-                    result += "<div class='col-xl-12'>";
-                    result += "<div class='form -group fv-plugins-icon-container'>";
-                    if (!string.IsNullOrEmpty(model.Ipf1))
-                    {
-                        result += "<br>";
-                        result += "<a href='/UpLoad/File/" + model.Ipf1 + "' target='_blank' class='btn btn-link'";
-                        result += " onclick='window.open(`/UpLoad/File/" + model.Ipf1 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
-                        result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
-                        result += "<br>";
-                    }
-                    result += "<label>File mới</label>";
-                    result += "<input type='file' class='form-control' id='ipf1_edit' name='ipf1_edit'/>";
-                    result += "</div>";
-                    result += "</div>";
-
-                    result += "</div>";
-                    result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
-                    result += "</div>";
-
-                    var data = new { status = "success", message = result };
-                    return Json(data);
+                    result += "<br>";
+                    result += "<a href='/UpLoad/File/" + model.Ipf1 + "' target='_blank' class='btn btn-link'";
+                    result += " onclick='window.open(`/UpLoad/File/" + model.Ipf1 + "`, `mywin`, `left=20,top=20,width=500,height=500,toolbar=1,resizable=0`); return false;'>";
+                    result += "<i class='icon-lg la la-eye text-success''></i>File đính kèm hiện tại</a>";
+                    result += "<br>";
                 }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này !!" };
-                    return Json(data);
-                }
+                result += "<label>File mới</label>";
+                result += "<input type='file' class='form-control' id='ipf1_edit' name='ipf1_edit'/>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "</div>";
+                result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+
             }
             else
             {
@@ -220,68 +208,47 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Edit"))
+
+                var model = _db.YKienGopY.FirstOrDefault(t => t.Id == request.Id);
+
+                if (model != null)
                 {
-                    var model = _db.YKienGopY.FirstOrDefault(t => t.Id == request.Id);
+                    string filename = model.Ipf1;
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
 
-                    if (model != null)
+                    if (FileUpLoad != null)
                     {
-                        string filename = model.Ipf1;
-                        string wwwRootPath = _hostEnvironment.WebRootPath;
-
-                        if (FileUpLoad != null)
+                        string extension = Path.GetExtension(FileUpLoad.FileName);
+                        if (Helpers.CheckFileType(extension)) // Sử dụng Helper.CheckFileType thay vì Helper.Helpers.CheckFileType
                         {
-                            string extension = Path.GetExtension(FileUpLoad.FileName);
-                            if (Helpers.CheckFileType(extension)) // Sử dụng Helper.CheckFileType thay vì Helper.Helpers.CheckFileType
+                            // Xóa file cũ nếu có
+                            if (!string.IsNullOrEmpty(filename))
                             {
-                                // Xóa file cũ nếu có
-                                if (!string.IsNullOrEmpty(filename))
+                                string path_del = Path.Combine(wwwRootPath, "UpLoad", "File", filename);
+                                if (System.IO.File.Exists(path_del))
                                 {
-                                    string path_del = Path.Combine(wwwRootPath, "UpLoad", "File", filename);
-                                    if (System.IO.File.Exists(path_del))
-                                    {
-                                        System.IO.File.Delete(path_del);
-                                    }
+                                    System.IO.File.Delete(path_del);
                                 }
-
-                                // Tạo tên file mới
-                                string name = Path.GetFileNameWithoutExtension(FileUpLoad.FileName);
-                                name = Regex.Replace(name.Normalize(NormalizationForm.FormD), @"[^\p{L}\p{N}]", ""); // Xóa ký tự đặc biệt
-                                filename = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + name + extension; // Sử dụng định dạng ngày tháng năm đầy đủ
-
-                                // Tạo đường dẫn lưu file mới
-                                string path_up = Path.Combine(wwwRootPath, "UpLoad", "File", filename);
-
-                                // Lưu file mới
-                                using (var fileStream = new FileStream(path_up, FileMode.Create))
-                                {
-                                    await FileUpLoad.CopyToAsync(fileStream);
-                                }
-
-                                // Cập nhật thông tin vào model
-                                model.TieuDe = request.TieuDe;
-                                model.NoiDung = request.NoiDung;
-                                model.Ipf1 = filename;
-                                model.NgayGopY = DateTime.Now;
-
-                                // Cập nhật model và lưu thay đổi vào cơ sở dữ liệu
-                                _db.YKienGopY.Update(model);
-                                await _db.SaveChangesAsync();
-                                ViewData["Title"] = " Thông tin ý kiến đóng góp ";
-                                var data = new { status = "success" };
-                                return Json(data);
                             }
-                            else
+
+                            // Tạo tên file mới
+                            string name = Path.GetFileNameWithoutExtension(FileUpLoad.FileName);
+                            name = Regex.Replace(name.Normalize(NormalizationForm.FormD), @"[^\p{L}\p{N}]", ""); // Xóa ký tự đặc biệt
+                            filename = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + name + extension; // Sử dụng định dạng ngày tháng năm đầy đủ
+
+                            // Tạo đường dẫn lưu file mới
+                            string path_up = Path.Combine(wwwRootPath, "UpLoad", "File", filename);
+
+                            // Lưu file mới
+                            using (var fileStream = new FileStream(path_up, FileMode.Create))
                             {
-                                var data = new { status = "error", message = "File tải lên không đúng định dạng (.jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .pdf)!" };
-                                return Json(data);
+                                await FileUpLoad.CopyToAsync(fileStream);
                             }
-                        }
-                        else
-                        {
-                            // Nếu không có file được tải lên, chỉ cập nhật dữ liệu không cần thay đổi file
+
+                            // Cập nhật thông tin vào model
                             model.TieuDe = request.TieuDe;
                             model.NoiDung = request.NoiDung;
+                            model.Ipf1 = filename;
                             model.NgayGopY = DateTime.Now;
 
                             // Cập nhật model và lưu thay đổi vào cơ sở dữ liệu
@@ -291,12 +258,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             var data = new { status = "success" };
                             return Json(data);
                         }
+                        else
+                        {
+                            var data = new { status = "error", message = "File tải lên không đúng định dạng (.jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .pdf)!" };
+                            return Json(data);
+                        }
                     }
                     else
                     {
-                        var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này !!" };
+                        // Nếu không có file được tải lên, chỉ cập nhật dữ liệu không cần thay đổi file
+                        model.TieuDe = request.TieuDe;
+                        model.NoiDung = request.NoiDung;
+                        model.NgayGopY = DateTime.Now;
+
+                        // Cập nhật model và lưu thay đổi vào cơ sở dữ liệu
+                        _db.YKienGopY.Update(model);
+                        await _db.SaveChangesAsync();
+                        ViewData["Title"] = " Thông tin ý kiến đóng góp ";
+                        var data = new { status = "success" };
                         return Json(data);
                     }
+
                 }
                 else
                 {
@@ -316,41 +298,35 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Delete"))
+
+                var DanhSachGopY = _db.YKienGopY.Find(id_delete);
+                if (DanhSachGopY != null)
                 {
-                    var DanhSachGopY = _db.YKienGopY.Find(id_delete);
-                    if (DanhSachGopY != null)
+                    if (!string.IsNullOrEmpty(DanhSachGopY.Ipf1))
                     {
-                        if (!string.IsNullOrEmpty(DanhSachGopY.Ipf1))
+                        // Xóa tệp tin từ thư mục /Upload/File nếu tệp tin tồn tại
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "File", DanhSachGopY.Ipf1);
+                        if (System.IO.File.Exists(filePath))
                         {
-                            // Xóa tệp tin từ thư mục /Upload/File nếu tệp tin tồn tại
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "File", DanhSachGopY.Ipf1);
-                            if (System.IO.File.Exists(filePath))
-                            {
-                                System.IO.File.Delete(filePath);
-                            }
+                            System.IO.File.Delete(filePath);
                         }
-
-                        ViewData["Title"] = "Thông tin ý kiến đóng góp";
-
-                        // Xóa thông tin tài liệu khỏi cơ sở dữ liệu
-                        _db.YKienGopY.Remove(DanhSachGopY);
-                        _db.SaveChanges();
                     }
 
-                    var danhsachdonvi = (from ykgy in _db.YKienGopY
-                                         select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
-                    ViewData["DonViList"] = danhsachdonvi;
+                    ViewData["Title"] = "Thông tin ý kiến đóng góp";
 
-                    var danhsachykien = _db.YKienGopY.Count();
-                    HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
-                    return RedirectToAction("Index", "YKienGopY", new { MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
+                    // Xóa thông tin tài liệu khỏi cơ sở dữ liệu
+                    _db.YKienGopY.Remove(DanhSachGopY);
+                    _db.SaveChanges();
                 }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+
+                var danhsachdonvi = (from ykgy in _db.YKienGopY
+                                     select new { ykgy.MaDv, ykgy.TenDangNhap }).Distinct();
+                ViewData["DonViList"] = danhsachdonvi;
+
+                var danhsachykien = _db.YKienGopY.Count();
+                HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
+                return RedirectToAction("Index", "YKienGopY", new { MaDv = Helpers.GetSsAdmin(HttpContext.Session, "Madv") });
+
             }
             else
             {
@@ -364,32 +340,26 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.ykiengopy", "Edit"))
-                {
-                    var model = _db.YKienGopY.FirstOrDefault(t => t.Id == Id);
 
-                    string result = "<div class='modal-body' id='frm_edit_phanhoi'>";
-                    result += "<div class='row'>";
+                var model = _db.YKienGopY.FirstOrDefault(t => t.Id == Id);
 
-                    result += "<div class='col-xl-12'>";
-                    result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Nội dung phản hồi:</label>";
-                    result += "<textarea class='form-control' id='noidung_edit_phanhoi' name='noidung_edit_phanhoi' rows='5' cols='30'>" + model.NoiDungPhanHoi + "</textarea>";
-                    result += "</div>";
-                    result += "</div>";
+                string result = "<div class='modal-body' id='frm_edit_phanhoi'>";
+                result += "<div class='row'>";
 
-                    result += "</div>";
-                    result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
-                    result += "</div>";
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Nội dung phản hồi:</label>";
+                result += "<textarea class='form-control' id='noidung_edit_phanhoi' name='noidung_edit_phanhoi' rows='5' cols='30'>" + model.NoiDungPhanHoi + "</textarea>";
+                result += "</div>";
+                result += "</div>";
 
-                    var data = new { status = "success", message = result };
-                    return Json(data);
-                }
-                else
-                {
-                    var data = new { status = "error", message = "Bạn không có quyền truy cập chức năng này !!" };
-                    return Json(data);
-                }
+                result += "</div>";
+                result += "<input hidden class='form-control' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
+                result += "</div>";
+
+                var data = new { status = "success", message = result };
+                return Json(data);
+
             }
             else
             {
