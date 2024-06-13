@@ -2,6 +2,8 @@
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,11 +11,33 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace CSDLGia_ASP.Helper
 {
     public class Helpers
     {
+
+        private ExcelWorksheet _worksheet;
+
+        public Helpers(ExcelWorksheet worksheet)
+        {
+            _worksheet = worksheet;
+        }
+
+        public void CanChinhExCel(int columnIndex, ExcelHorizontalAlignment horizontalAlignment, double width, Color? fontColor = null)
+        {
+            _worksheet.Column(columnIndex).Style.HorizontalAlignment = horizontalAlignment;
+            _worksheet.Column(columnIndex).Width = width;
+
+            if (fontColor.HasValue)
+            {
+                _worksheet.Column(columnIndex).Style.Font.Color.SetColor(fontColor.Value);
+            }
+        }
+
+
+
         public static List<VMKeyValue> GetListColExcel()
         {
             List<VMKeyValue> list = new List<VMKeyValue> { };
@@ -1845,5 +1869,7 @@ namespace CSDLGia_ASP.Helper
                 return DateTime.MinValue; // Trả về một giá trị mặc định nếu quá trình chuyển đổi thất bại
             }
         }
+
+
     }
 }
