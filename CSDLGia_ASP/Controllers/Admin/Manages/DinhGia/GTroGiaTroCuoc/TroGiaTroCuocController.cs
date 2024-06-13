@@ -689,11 +689,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 helpers.CanChinhExCel(2, ExcelHorizontalAlignment.Center, 20, Color.Black);
                 helpers.CanChinhExCel(3, ExcelHorizontalAlignment.Center, 20, Color.Black);
                 helpers.CanChinhExCel(4, ExcelHorizontalAlignment.Center, 20, Color.Black);
-                helpers.CanChinhExCel(5, ExcelHorizontalAlignment.Left, 40, Color.Black);
+                helpers.CanChinhExCel(5, ExcelHorizontalAlignment.Left, 70, Color.Black);
                 helpers.CanChinhExCel(6, ExcelHorizontalAlignment.Center, 20, Color.Black);
                 helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Center, 20, Color.Black);
                 helpers.CanChinhExCel(8, ExcelHorizontalAlignment.Right, 50, Color.Black);
-                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Right, 50, Color.Black);
+                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Right, 20, Color.Black);
 
                 xlPackage.Save();
             }

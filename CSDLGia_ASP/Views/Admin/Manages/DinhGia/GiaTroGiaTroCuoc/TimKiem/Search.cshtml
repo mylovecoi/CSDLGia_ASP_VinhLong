@@ -82,7 +82,7 @@
             }
         }
 
-        function Excel() {
+        function ExportExcel() {
             var fromDate = document.getElementById("NgayTu_Search").value;
             var toDate = document.getElementById("NgayDen_Search").value;
             if (fromDate === "" || toDate === "") {
@@ -126,7 +126,7 @@
             <button class="btn btn-primary font-weight-bolder" onclick="Print()">
                 <i class="la la-print"></i>Kết xuất
             </button>
-            <button class="btn btn-success font-weight-bolder" onclick="Excel()">
+            <button class="btn btn-success font-weight-bolder" onclick="ExportExcel()">
                 <i class="la la-print"></i>Kết xuất Excel
             </button>
 
