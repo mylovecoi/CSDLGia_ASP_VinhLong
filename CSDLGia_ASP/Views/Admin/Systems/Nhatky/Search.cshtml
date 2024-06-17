@@ -22,7 +22,7 @@
 
         $(function () {
             $('#Nam, #Madv, #Noidung').change(function () {
-                var current_path_url = '/NhatKySuDung/Search?';
+                var current_path_url = '/NhatKySuDung?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var madv = '&Madv=' + $('#Madv').val();
                 var noidung = '&Noidung=' + $('#Noidung').val();
@@ -96,9 +96,8 @@
         <thead>
             <tr style="text-align:center">
                 <th width="4%">#</th>
-                <th>Địa chỉ IP</th>
+                <th>Địa chỉ IP</th> 
                 <th>Người sử dụng</th>
-                <th>Tên đăng nhập</th>
                 <th>Thời gian</th>
                 <th>Nội dung</th>
                 <th>Thao tác</th>
@@ -113,7 +112,6 @@
                         <td style="text-align: center" width="3%">@(record_id++)</td>
                         <td width="15%">@item.Diachitruycap</td>
                         <td width="13%">@item.Nguoisudung</td>
-                        <td width="13%">@item.Tendangnhap</td>
                         <td style="text-align: center" width="20%">@Helpers.ConvertDateTimeToStr(item.Thoigian)</td>
                         <td class="active">@item.Noidung</td>
                         <td width="5%">
