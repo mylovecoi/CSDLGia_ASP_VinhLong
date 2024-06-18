@@ -107,9 +107,9 @@ namespace CSDLGia_ASP
         public int GetSessionTimeout()
         {
             int timeoutMinutes = 30; // Default timeout
-            var timeoutSetting = _db.tblHeThong.FirstOrDefault();
+            var timeoutSetting = _db.tblHeThong.FirstOrDefault()?.TimeOut ?? "30";
 
-            if (timeoutSetting != null && int.TryParse(timeoutSetting.TimeOut, out int parsedTimeout))
+            if (timeoutSetting != null && int.TryParse(timeoutSetting, out int parsedTimeout))
             {
                 timeoutMinutes = parsedTimeout;
             }
