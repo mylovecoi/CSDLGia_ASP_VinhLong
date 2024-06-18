@@ -223,6 +223,47 @@
                                         </a>
                                     </li>
                                 }
+
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu", "Index"))
+                                {
+                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text" title="Dữ liệu phần mềm">Dữ liệu phần mềm</span>
+                                            <i class="menu-arrow"></i>
+                                        </a>
+                                        <div class="menu-submenu">
+                                            <i class="menu-arrow"></i>
+                                            <ul class="menu-subnav">
+                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.saoluu", "Index"))
+                                                {
+                                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu_saoluu">
+                                                        <a asp-controller="Database" asp-action="SaoLuu" class="menu-link">
+                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i>
+                                                            <span class="menu-text">Sao lưu dữ liệu</span>
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.khoiphuc", "Index"))
+                                                {
+                                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu_khoiphuc">
+                                                        <a asp-controller="Database" asp-action="KhoiPhuc" class="menu-link">
+                                                            <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i>
+                                                            <span class="menu-text">Khôi phục dữ liệu</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </li>
