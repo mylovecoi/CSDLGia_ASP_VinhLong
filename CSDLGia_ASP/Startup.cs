@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using CSDLGia_ASP.Models.Systems;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace CSDLGia_ASP
 {
@@ -45,13 +48,16 @@ namespace CSDLGia_ASP
             //services.AddDbContext<DanhMucChungDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DanhMucChungConnection")));
             services.AddRazorPages();
             services.AddControllersWithViews();
+
             services.AddSession(options =>
             {
+                //options.IdleTimeout = TimeSpan.FromMinutes(Int32.Parse(_db.tblHeThong.FirstOrDefault()?.TimeOut ?? "30"));
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddScoped<SessionTimeoutConfigurator>(); // Register as scoped
             services.AddScoped<IDsDiaBanService, DsDiaBanService>();
             services.AddScoped<IDsDonviService, DsDonviService>();
             services.AddScoped<ITrangThaiHoSoService, TrangThaiHoSoService>();
@@ -80,6 +86,12 @@ namespace CSDLGia_ASP
             app.UseRouting();
             app.UseAuthorization();
 
+            app.Use(async (context, next) =>
+            {
+                var timeoutConfigurator = context.RequestServices.GetRequiredService<SessionTimeoutConfigurator>();
+                timeoutConfigurator.ConfigureSessionOptions(context);
+                await next();
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -87,6 +99,41 @@ namespace CSDLGia_ASP
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
             });
+        }
+
+        public class SessionTimeoutConfigurator
+        {
+            private readonly CSDLGiaDBContext _db;
+            private readonly IHttpContextAccessor _httpContextAccessor;
+
+            public SessionTimeoutConfigurator(IHttpContextAccessor httpContextAccessor, CSDLGiaDBContext db)
+            {
+                _httpContextAccessor = httpContextAccessor;
+                _db = db;
+            }
+
+            public void ConfigureSessionOptions(HttpContext context)
+            {
+                int timeoutMinutes = 30; // Default timeout
+                var timeoutSetting = _db.tblHeThong.FirstOrDefault()?.TimeOut;
+
+                if (int.TryParse(timeoutSetting, out int parsedTimeout))
+                {
+                    timeoutMinutes = parsedTimeout;
+                }
+
+                context.Session.SetString("TimeOut", timeoutMinutes.ToString());
+
+                var timeoutString = context.Session.GetString("TimeOut");
+                if (int.TryParse(timeoutString, out timeoutMinutes))
+                {
+                    context.Session.SetString("TimeOut", timeoutMinutes.ToString());
+                }
+                else
+                {
+                    context.Session.SetString("TimeOut", "30");
+                }
+            }
         }
     }
 }

@@ -124,6 +124,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             FileHDSD = request.FileHDSD,
                             FileDangKyBase64 = request.FileDangKyBase64,
                             FileDangKy = request.FileDangKy,
+                            TimeOut = request.TimeOut,
                         };
                         _db.tblHeThong.Add(model);
                         _db.SaveChanges();
@@ -142,6 +143,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         check.FileHDSD = request.FileHDSD;
                         check.FileDangKyBase64 = request.FileDangKyBase64;
                         check.FileDangKy = request.FileDangKy;
+                        check.TimeOut = request.TimeOut;
 
                         _db.tblHeThong.Update(check);
                         _db.SaveChanges();

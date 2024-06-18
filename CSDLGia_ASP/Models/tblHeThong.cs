@@ -24,6 +24,7 @@ namespace CSDLGia_ASP.Models
         public string FileQuyCheBase64 { get; set; }
         public string FileDangKy { get; set; }
         public string FileDangKyBase64 { get; set; }
+        public string TimeOut { get; set; }
         [NotMapped]
         public IFormFile FileImportHDSD { get; set; }
         [NotMapped]
