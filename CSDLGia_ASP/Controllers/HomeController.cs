@@ -33,12 +33,6 @@ namespace CSDLGia_ASP.Controllers
             _env = hostingEnv;
         }
 
-        public IActionResult SetTimeout(int timeoutMinutes)
-        {
-            HttpContext.Session.SetString("TimeOut", timeoutMinutes.ToString());
-            return RedirectToAction("Index");
-        }
-
         [Route("")]
         [HttpGet]
         public IActionResult Index()
