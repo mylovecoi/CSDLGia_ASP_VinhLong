@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Database Backup";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="Backup">
+    <button type="submit">Backup Database</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div>
+        <strong>@ViewBag.Message</strong>
+    </div>
+}

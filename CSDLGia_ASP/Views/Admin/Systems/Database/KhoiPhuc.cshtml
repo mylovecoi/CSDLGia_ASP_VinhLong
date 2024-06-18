@@ -1,0 +1,53 @@
+﻿@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+@section custom_script {
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/jquery-mask.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManagedClass.init();
+            MoneyDecimalMask();
+        });
+    </script>
+}
+<div class="card card-custom">
+    <div class="card-header ribbon ribbon-top ribbon-ver">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Khôi phục dữ liệu
+                </span>
+            </h3>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form asp-controller="Database" asp-action="Import" method="post" enctype="multipart/form-data" id="frm_khoiphuc">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">File dữ liệu</label>
+                        <input type="file" class="form-control" name="file_khoiphuc" id="file_khoiphuc" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="text-align:center">
+            <button type="submit" class="btn btn-primary mr-2"><i class="la la-check"></i>Khôi phục</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

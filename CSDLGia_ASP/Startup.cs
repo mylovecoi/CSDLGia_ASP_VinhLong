@@ -39,7 +39,7 @@ namespace CSDLGia_ASP
 
             services.AddRazorPages();
             services.AddControllersWithViews();
-
+            services.AddTransient<BackupService>();
             services.AddScoped<ISessionTimeoutService, SessionTimeoutService>();
 
             // Get the session timeout value from the database
@@ -86,7 +86,15 @@ namespace CSDLGia_ASP
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
+
+                // Route cho action Backup
+                endpoints.MapControllerRoute(
+                    name: "backup",
+                    pattern: "database/backup",
+                    defaults: new { controller = "Database", action = "Backup" });
             });
+
+
         }
     }
 
@@ -107,8 +115,8 @@ namespace CSDLGia_ASP
         public int GetSessionTimeout()
         {
             int timeoutMinutes = 30; // Default timeout
-            //var timeoutSetting = _db.tblHeThong.FirstOrDefault()?.TimeOut ?? timeoutMinutes.ToString();
             var timeoutSetting = _db.tblHeThong.FirstOrDefault();
+
             if (timeoutSetting != null && int.TryParse(timeoutSetting.TimeOut, out int parsedTimeout))
             {
                 timeoutMinutes = parsedTimeout;
