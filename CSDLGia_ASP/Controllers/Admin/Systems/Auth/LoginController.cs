@@ -136,6 +136,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
                                     var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD" &&list_manghe.Contains(t.Manghe));
                                     HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
                                 }
+                                // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                                LoggingHelper.LogAction(HttpContext, _db, "DANGNHAP", "Đăng nhập");
+
                                 return RedirectToAction("Index", "Home");
                             }
                         }
@@ -170,10 +173,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
         [HttpPost]
         public IActionResult LogOut()
         {
+            // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+            LoggingHelper.LogAction(HttpContext, _db, "DANGXUAT", "Đăng xuất");
+
             HttpContext.Session.Remove("Permission");
             HttpContext.Session.Remove("SsAdmin");
             HttpContext.Session.Remove("KeKhaiDangKyGia");
             return RedirectToAction("Index", "Home");
+
+
         }
         [HttpGet("TestList")]
         public IActionResult TestList()

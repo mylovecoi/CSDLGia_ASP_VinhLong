@@ -82,6 +82,33 @@
             }
         }
 
+        function ExportExcel() {
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/DinhGiaTGTC/ExportToExcel?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    var NoiDung = '&MoTa=' + $('#Mota_Search').val();
+                    var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
+
+                    var url = current_path_url + Madv + NgayTu + NgayDen + Mahs + DonGiaTu + DonGiaDen + NoiDung;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
     </script>
 }
 
@@ -99,6 +126,10 @@
             <button class="btn btn-primary font-weight-bolder" onclick="Print()">
                 <i class="la la-print"></i>Kết xuất
             </button>
+            <button class="btn btn-success font-weight-bolder" onclick="ExportExcel()">
+                <i class="la la-print"></i>Kết xuất Excel
+            </button>
+
         </div>
     </div>
     <hr />

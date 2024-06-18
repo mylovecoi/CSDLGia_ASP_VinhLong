@@ -867,7 +867,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocSinhHoat
                 }
 
                 xlPackage.Workbook.Properties.Title = "Thông tin tìm kiếm hồ sơ giá nước sinh hoạt";
-                xlPackage.Workbook.Properties.Author = "Hùng Anh";
+                //xlPackage.Workbook.Properties.Author = "Hùng Anh";
+
+
+                var helpers = new Helpers(worksheet);
+
+                // Căn chỉnh, độ rộng ô,  màu sắc
+                helpers.CanChinhExCel(1, ExcelHorizontalAlignment.Center, 10, Color.Black);
+                helpers.CanChinhExCel(2, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(3, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(4, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(5, ExcelHorizontalAlignment.Left, 40, Color.Black);
+                helpers.CanChinhExCel(6, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(8, ExcelHorizontalAlignment.Right, 50, Color.Black);
+                helpers.CanChinhExCel(9, ExcelHorizontalAlignment.Right, 50, Color.Black);
 
                 xlPackage.Save();
             }

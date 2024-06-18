@@ -17,9 +17,7 @@
         <tr style="text-align:center">
             <th width="4%">#</th>
             <th>Địa chỉ IP</th>
-            <th>Đơn vị</th>
             <th>Người sử dụng</th>
-            <th>Tên đăng nhập</th>
             <th>Thời gian</th>
             <th>Nội dung</th>
         </tr>
@@ -31,23 +29,8 @@
             {
                 <tr>
                     <td style="text-align: center" width="3%">@(record_id++)</td>
-                    <td width="15%">@item.Diachitruycap</td>
-                    @if (item.Madv != null)
-                    {
-                        @foreach (var dv in dsdonvi)
-                        {
-                            @if (item.Madv == dv.MaDv)
-                            {
-                                <td style="text-align: center">@dv.TenDv</td>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <td style="text-align: center"></td>
-                    }
+                    <td width="15%">@item.Diachitruycap</td> 
                     <td width="15%">@item.Nguoisudung</td>
-                    <td width="15%">@item.Tendangnhap</td>
                     <td style="text-align: center" width="25%">@Helpers.ConvertDateTimeToStr(item.Thoigian)</td>
                     <td class="active">@item.Noidung</td>
                 </tr>

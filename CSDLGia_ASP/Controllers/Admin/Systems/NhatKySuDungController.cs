@@ -19,54 +19,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             _db = db;
         }
 
-        /*[Route("NhatKySuDung")]
-        [HttpGet]
-        public IActionResult Index(string Nam)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "hethong.hethong.nhatky.nguoidung", "Index"))
-                {
 
-                    var model = _db.NhatKySuDung.ToList();
-
-                    if (string.IsNullOrEmpty(Nam))
-                    {
-                        model = model.ToList();
-                    }
-                    else
-                    {
-                        if (Nam != "all")
-                        {
-                            model = model.Where(t => t.Thoigian.Year == int.Parse(Nam)).ToList();
-                        }
-                        else
-                        {
-                            model = model.ToList();
-                        }
-                    }
-
-                    ViewData["Nam"] = Nam;
-                    ViewData["Title"] = "Nhật ký sử dụng";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_nhatky";
-                    ViewData["MenuLv4"] = "menu_nhatky_nguoidung";
-                    return View("Views/Admin/Systems/Nhatky/Index.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }*/
-
-        
 
         [Route("NhatKySuDung")]
         [HttpGet]

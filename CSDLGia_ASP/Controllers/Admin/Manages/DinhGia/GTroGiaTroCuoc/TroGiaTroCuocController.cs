@@ -8,10 +8,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Drawing;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
 {
@@ -503,7 +507,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
             }
         }
         [Route("DinhGiaTGTC/PrintSearch")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult Print(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string MoTa)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
@@ -556,6 +560,148 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
+
+
+        [HttpGet("DinhGiaTGTC/ExportToExcel")]
+        public IActionResult ExportToExcel(string Madv, DateTime? NgayTu, DateTime? NgayDen, string Mahs, double DonGiaTu, double DonGiaDen, string MoTa)
+        {
+            var model = (from hosoct in _db.GiaTroGiaTroCuocCt
+                         join hoso in _db.GiaTroGiaTroCuoc on hosoct.Mahs equals hoso.Mahs
+                         join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
+                         select new CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuocCt
+                         {
+                             Madv = hoso.Madv,
+                             Tendv = donvi.TenDv,
+                             SoQD = hoso.Soqd,
+                             Thoidiem = hoso.Thoidiem,
+                             Mota = hosoct.Mota,
+                             Dongia = hosoct.Dongia,
+                             Trangthai = hoso.Trangthai,
+                             Mahs = hoso.Mahs,
+                             Dvt = hosoct.Dvt
+                         });
+            List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+            model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+            if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+            if (DonGiaTu > 0) { model = model.Where(t => t.Dongia >= DonGiaTu); }
+            if (DonGiaDen > 0) { model = model.Where(t => t.Dongia <= DonGiaDen); }
+            if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+            if (!string.IsNullOrEmpty(MoTa))
+            {
+                model = model.Where(t => t.Mota.ToLower().Contains(MoTa.ToLower()));
+            }
+
+
+            // Start exporting to excel
+            var stream = new MemoryStream();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var xlPackage = new ExcelPackage(stream))
+            {
+                // Define a worksheet
+                var worksheet = xlPackage.Workbook.Worksheets.Add("Sheet1");
+
+                // Styling
+                var customStyle = xlPackage.Workbook.Styles.CreateNamedStyle("CustomStyle");
+
+                customStyle.Style.Font.UnderLine = true;
+                customStyle.Style.Font.Color.SetColor(Color.Red);
+
+                // 1st row
+                var record_id = 1;
+                var startRow = 3;
+                var row = startRow;
+
+                worksheet.Cells["A1"].Value = "Thông tin tìm kiếm ";
+                using (var r = worksheet.Cells[1, 1, 1, 7])
+                {
+                    r.Merge = true;
+                    r.Style.Font.Color.SetColor(Color.Green);
+                    r.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    r.Style.Fill.BackgroundColor.SetColor(Color.Lavender);
+                }
+
+                worksheet.Cells["A2"].Value = "STT";
+                worksheet.Cells["B2"].Value = "Đơn vị";
+                worksheet.Cells["C2"].Value = "Số QĐ";
+                worksheet.Cells["D2"].Value = "Thời điểm";
+                worksheet.Cells["E2"].Value = "Mô tả";
+                worksheet.Cells["F2"].Value = "Đơn vị tính";
+                worksheet.Cells["G2"].Value = "Đơn giá";
+
+                worksheet.Cells[2, 1, 2, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[2, 1, 2, 7].Style.Fill.BackgroundColor.SetColor(Color.Yellow);
+
+                row = 3;
+                foreach (var item in model)
+                {
+                    worksheet.Cells[row, 1].Value = record_id++;
+                    worksheet.Cells[row, 2].Value = item.Tendv;
+                    worksheet.Cells[row, 3].Value = item.SoQD;
+                    worksheet.Cells[row, 4].Value = Helpers.ConvertDateToStr(item.Thoidiem);
+                    worksheet.Cells[row, 5].Value = item.Mota;
+                    worksheet.Cells[row, 6].Value = item.Dvt;
+                    worksheet.Cells[row, 7].Value = item.Dongia;
+                  
+                    row++;
+                }
+
+                // Define border styles
+                var borderStyle = ExcelBorderStyle.Thin;
+                var borderColor = Color.Black;
+
+                // Apply border to header cells
+                using (var headerRange = worksheet.Cells["A2:G2"])
+                {
+                    headerRange.Style.Border.Top.Style = borderStyle;
+                    headerRange.Style.Border.Bottom.Style = borderStyle;
+                    headerRange.Style.Border.Left.Style = borderStyle;
+                    headerRange.Style.Border.Right.Style = borderStyle;
+                    headerRange.Style.Border.Top.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Left.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                // Apply border to data cells
+                for (int i = startRow; i < row; i++)
+                {
+                    var dataRange = worksheet.Cells[i, 1, i, 7];
+                    dataRange.Style.Border.Top.Style = borderStyle;
+                    dataRange.Style.Border.Bottom.Style = borderStyle;
+                    dataRange.Style.Border.Left.Style = borderStyle;
+                    dataRange.Style.Border.Right.Style = borderStyle;
+                    dataRange.Style.Border.Top.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Left.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                xlPackage.Workbook.Properties.Title = "Thông tin tìm kiếm ";
+               
+
+
+                var helpers = new Helpers(worksheet);
+
+                // Căn chỉnh, độ rộng ô,  màu sắc
+                helpers.CanChinhExCel(1, ExcelHorizontalAlignment.Center, 10, Color.Black);
+                helpers.CanChinhExCel(2, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(3, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(4, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(5, ExcelHorizontalAlignment.Left, 70, Color.Black);
+                helpers.CanChinhExCel(6, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(8, ExcelHorizontalAlignment.Right, 50, Color.Black);
+                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Right, 20, Color.Black);
+
+                xlPackage.Save();
+            }
+
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Thông tin tìm kiếm .xlsx");
+        }
+
 
         [HttpPost("DinhGiaTGTC/GetListHoSo")]
         public JsonResult GetListHoSo(DateTime ngaytu, DateTime ngayden)

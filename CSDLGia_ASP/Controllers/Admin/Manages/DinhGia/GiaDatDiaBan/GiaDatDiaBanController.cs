@@ -7,11 +7,15 @@ using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
+using System.Drawing;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 {
@@ -618,6 +622,182 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+
+
+        [HttpGet("GiaDatDiaBan/ExportToExcel")]
+        public IActionResult ExportToExcel(DateTime? NgayTu_Search, DateTime? NgayDen_Search, string Mahs_Search,
+                                    double DonGiaTu_Search, double DonGiaDen_Search, string Maloaidat_Search, string MaDiaBan = "all")
+        {
+            var model = from dgct in _db.GiaDatDiaBanCt
+                        join dg in _db.GiaDatDiaBan on dgct.Mahs equals dg.Mahs
+                        join dm in _db.DmLoaiDat on dgct.Maloaidat equals dm.Maloaidat
+                        join diaban in _db.DsDiaBan on dg.Madiaban equals diaban.MaDiaBan
+                        select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
+                        {
+                            Id = dg.Id,
+                            Mahs = dg.Mahs,
+                            Soqd = dg.Soqd,
+                            Loaidat = dm.Loaidat,
+                            Mota = dgct.Mota,
+                            Diemdau = dgct.Diemdau,
+                            Diemcuoi = dgct.Diemcuoi,
+                            Loaiduong = dgct.Loaiduong,
+                            Thoidiem = dg.Thoidiem,
+                            Hesok = dgct.Hesok,
+                            MaDv = dgct.MaDv,
+                            Giavt1 = dgct.Giavt1,
+                            Giavt2 = dgct.Giavt2,
+                            Giavt3 = dgct.Giavt3,
+                            Giavt4 = dgct.Giavt4,
+                            Giavt5 = dgct.Giavt5,
+                            Trangthai = dg.Trangthai,
+                            Madiaban = dgct.Madiaban,
+                            Maloaidat = dgct.Maloaidat,
+                            TenDiaBan = diaban.TenDiaBan,
+                        };
+            List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
+            model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai) && t.Giavt5 >= DonGiaTu_Search);
+            if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
+            if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giavt1 <= DonGiaDen_Search); }
+            if (Maloaidat_Search != "all")
+            {
+                model = model.Where(t => t.Maloaidat == Maloaidat_Search);
+            }
+            if (MaDiaBan != "all")
+            {
+
+                var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
+                List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
+                model = model.Where(t => list_diaban_search.Contains(t.Madiaban));
+            }
+
+            // Start exporting to excel
+            var stream = new MemoryStream();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var xlPackage = new ExcelPackage(stream))
+            {
+                // Define a worksheet
+                var worksheet = xlPackage.Workbook.Worksheets.Add("Sheet1");
+
+                // Styling
+                var customStyle = xlPackage.Workbook.Styles.CreateNamedStyle("CustomStyle");
+
+                customStyle.Style.Font.UnderLine = true;
+                customStyle.Style.Font.Color.SetColor(Color.Red);
+
+                // 1st row
+                var record_id = 1;
+                var startRow = 3;
+                var row = startRow;
+
+                worksheet.Cells["A1"].Value = "Thông tin tìm kiếm ";
+                using (var r = worksheet.Cells[1, 1, 1, 13])
+                {
+                    r.Merge = true;
+                    r.Style.Font.Color.SetColor(Color.Green);
+                    r.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    r.Style.Fill.BackgroundColor.SetColor(Color.Lavender);
+                }
+
+                worksheet.Cells["A2"].Value = "STT";
+                worksheet.Cells["B2"].Value = "Quyết định";
+                worksheet.Cells["C2"].Value = "Ngày áp dụng";
+                worksheet.Cells["D2"].Value = "Địa bàn";
+                worksheet.Cells["E2"].Value = "Loại đất";
+                worksheet.Cells["F2"].Value = "Tên đường phố";
+                worksheet.Cells["G2"].Value = "Loại đường";
+                worksheet.Cells["H2"].Value = "Hệ số";
+                worksheet.Cells["I2"].Value = "VT1";
+                worksheet.Cells["J2"].Value = "VT2";
+                worksheet.Cells["K2"].Value = "VT3";
+                worksheet.Cells["L2"].Value = "VT4";
+                worksheet.Cells["M2"].Value = "VT5";
+             
+
+                worksheet.Cells[2, 1, 2, 13].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[2, 1, 2, 13].Style.Fill.BackgroundColor.SetColor(Color.Yellow);
+
+                row = 3;
+                foreach (var item in model)
+                {
+                    worksheet.Cells[row, 1].Value = record_id++;
+                    worksheet.Cells[row, 2].Value = item.Soqd;
+                    worksheet.Cells[row, 3].Value = Helpers.ConvertDateToStr(item.Thoidiem);
+                    worksheet.Cells[row, 4].Value = item.TenDiaBan;
+                    worksheet.Cells[row, 5].Value = item.Loaidat;
+                    worksheet.Cells[row, 6].Value = item.Mota;
+                    worksheet.Cells[row, 7].Value = item.Loaiduong;
+                    worksheet.Cells[row, 8].Value = Helpers.ConvertDbToStr(item.Hesok);
+                    worksheet.Cells[row, 9].Value = Helpers.ConvertDbToStr(item.Giavt1);
+                    worksheet.Cells[row, 10].Value = Helpers.ConvertDbToStr(item.Giavt2);
+                    worksheet.Cells[row, 11].Value = Helpers.ConvertDbToStr(item.Giavt3);
+                    worksheet.Cells[row, 12].Value = Helpers.ConvertDbToStr(item.Giavt4);
+                    worksheet.Cells[row, 13].Value = Helpers.ConvertDbToStr(item.Giavt5);
+
+                    row++;
+                }
+
+                // Define border styles
+                var borderStyle = ExcelBorderStyle.Thin;
+                var borderColor = Color.Black;
+
+                // Apply border to header cells
+                using (var headerRange = worksheet.Cells["A2:M2"])
+                {
+                    headerRange.Style.Border.Top.Style = borderStyle;
+                    headerRange.Style.Border.Bottom.Style = borderStyle;
+                    headerRange.Style.Border.Left.Style = borderStyle;
+                    headerRange.Style.Border.Right.Style = borderStyle;
+                    headerRange.Style.Border.Top.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Left.Color.SetColor(borderColor);
+                    headerRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                // Apply border to data cells
+                for (int i = startRow; i < row; i++)
+                {
+                    var dataRange = worksheet.Cells[i, 1, i, 13];
+                    dataRange.Style.Border.Top.Style = borderStyle;
+                    dataRange.Style.Border.Bottom.Style = borderStyle;
+                    dataRange.Style.Border.Left.Style = borderStyle;
+                    dataRange.Style.Border.Right.Style = borderStyle;
+                    dataRange.Style.Border.Top.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Bottom.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Left.Color.SetColor(borderColor);
+                    dataRange.Style.Border.Right.Color.SetColor(borderColor);
+                }
+
+                xlPackage.Workbook.Properties.Title = "Thông tin tìm kiếm ";
+
+
+
+                var helpers = new Helpers(worksheet);
+
+                // Căn chỉnh, độ rộng ô,  màu sắc
+                helpers.CanChinhExCel(1, ExcelHorizontalAlignment.Center, 10, Color.Black);
+                helpers.CanChinhExCel(2, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(3, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(4, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(5, ExcelHorizontalAlignment.Left, 20, Color.Black);
+                helpers.CanChinhExCel(6, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(7, ExcelHorizontalAlignment.Center, 20, Color.Black);
+                helpers.CanChinhExCel(8, ExcelHorizontalAlignment.Right, 50, Color.Black);
+                helpers.CanChinhExCel(9, ExcelHorizontalAlignment.Right, 20, Color.Black);
+                helpers.CanChinhExCel(10, ExcelHorizontalAlignment.Right, 20, Color.Black);
+                helpers.CanChinhExCel(11, ExcelHorizontalAlignment.Right, 20, Color.Black);
+                helpers.CanChinhExCel(12, ExcelHorizontalAlignment.Right, 20, Color.Black);
+                helpers.CanChinhExCel(13, ExcelHorizontalAlignment.Right, 20, Color.Black);
+
+
+                xlPackage.Save();
+            }
+
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Thông tin tìm kiếm .xlsx");
         }
 
         [HttpPost("GiaDatDiaBan/GetListHoSo")]
