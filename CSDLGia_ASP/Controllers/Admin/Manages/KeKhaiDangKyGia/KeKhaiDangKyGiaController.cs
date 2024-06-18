@@ -224,7 +224,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
                     var tennghe = GetTenNghe(request.MaNghe);
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
-                    LoggingHelper.LogAction(HttpContext, _db, "UPDATE", $"Kê khai giá - {tennghe}");
+                    LoggingHelper.LogAction(HttpContext, _db, "UPDATE", $"Update kê khai giá - {tennghe}");
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
@@ -261,7 +261,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
                     var tennghe = GetTenNghe(model.MaNghe);
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
-                    LoggingHelper.LogAction(HttpContext, _db, "Delete", $"Kê khai giá - {tennghe}");
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", $"Xóa kê khai giá - {tennghe}");
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = MaCsKd, MaNghe = MaNghe });
                 }
@@ -297,6 +297,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.SaveChanges();
 
                     var tennghe = GetTenNghe(model.MaNghe);
+
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "Chuyen", $"Chuyển hồ sơ kê khai giá - {tennghe}");
 

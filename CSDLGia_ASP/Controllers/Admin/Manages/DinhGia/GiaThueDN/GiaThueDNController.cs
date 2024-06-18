@@ -241,21 +241,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         Updated_at = DateTime.Now,
                     };
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-                    //var lichSuHoSo = new TrangThaiHoSo
-                    //{
-                    //    MaHoSo = request.Mahs,
-                    //    TenDangNhap = Helpers.GetSsAdmin(HttpContext.Session, "Name"),
-                    //    ThongTin = "Thay đổi thông tin hồ sơ",
-                    //    ThoiGian = DateTime.Now,
-                    //    TrangThai = "CHT",
-
-                    //};
-                    //_db.TrangThaiHoSo.Add(lichSuHoSo);
-                    //_db.SaveChanges();
-
-                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+                
 
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct.Any())
@@ -280,6 +266,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá thuê mặt đất mặt nước");
 
                     return RedirectToAction("Index", "GiaThueDN", new { request.Madv });
                 }
@@ -328,6 +317,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                         _db.GiaThueMatDatMatNuoc.Remove(model);
                         _db.SaveChanges();
                     }
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá thuê mặt đất mặt nước ");
+
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
@@ -415,6 +408,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", "Update hồ sơ giá thuê mặt đất mặt nước ");
+
                     return RedirectToAction("Index", "GiaThueDN", new { request.Mahs });
                 }
                 else
@@ -471,6 +468,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Chuyen", "Chuyển hồ sơ giá thuê mặt đất mặt nước ");
+
+
                     return RedirectToAction("Index", "GiaThueDN", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

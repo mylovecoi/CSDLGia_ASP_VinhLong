@@ -328,6 +328,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá giáo dục đào tạo");
+
                     return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = request.Madv });
                 }
                 else
@@ -356,6 +359,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     _db.GiaDvGdDt.Remove(model);
                     _db.SaveChanges();
 
+                  
                     return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = model.Madv });
                 }
                 else
@@ -457,6 +461,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", "Update hồ sơ giá giáo dục đào tạo");
+
+
                     return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = request.Madv });
                 }
                 else
