@@ -359,7 +359,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     _db.GiaDvGdDt.Remove(model);
                     _db.SaveChanges();
 
-                  
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá giáo dục đào tạo");
+
                     return RedirectToAction("Index", "GiaoDucDaoTao", new { Madv = model.Madv });
                 }
                 else
@@ -495,9 +497,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     var modelct = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs);
                     model.GiaDvGdDtCt = modelct.ToList();
                     ViewData["DsNhom"] = _db.GiaDvGdDtNhom;
-
-
-
                     ViewData["Madv"] = model.Madv;
                     ViewData["Mahs"] = model.Mahs;
                     ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();

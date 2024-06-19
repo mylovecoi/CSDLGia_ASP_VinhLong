@@ -97,6 +97,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "XetDuyet", "Xét duyệt hồ sơ giá rừng");
+
                     return RedirectToAction("Index", "GiarungHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -128,6 +132,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyDuyet", "Hủy duyệt hồ sơ giá rừng ");
+
                     return RedirectToAction("Index", "GiarungHt", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -163,6 +170,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "TraLai", "Trả lại hồ sơ giá rừng");
 
                     return RedirectToAction("Index", "GiarungHt", new { Nam = model.Thoidiem.Year });
                 }
@@ -190,16 +199,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     model.Trangthai = "CB";
                    
                     _db.GiaRung.Update(model);
-                    _db.SaveChanges();
-
-                    // Xử lý phần lịch sử hồ sơ 
+                    _db.SaveChanges();            
 
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
 
-                    //Kết thúc Xử lý phần lịch sử hồ sơ 
-
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "CongBo", "Công bố hồ sơ giá rừng ");
                     return RedirectToAction("Index", "GiarungHt");
                 }
                 else
@@ -231,6 +238,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyCongBo", "Hủy công bố hồ sơ giá rừng");
+
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyCongBo", "Hủy công bố hồ sơ giá rừng");
+
+
                     return RedirectToAction("Index", "GiarungHt");
                 }
                 else
