@@ -420,6 +420,9 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dshotro", Name = "Danh sách cán bộ hỗ trợ" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dlth", Name = "Danh sách dữ liệu tập huấn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.hethongchung", Name = "Thông tin hệ thống chung" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu", Name = "Dữ liệu phần mềm" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu.saoluu", Name = "Sao lưu dữ liệu" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu.khoiphuc", Name = "Khôi phục dữ liệu" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc", Name = "Quản trị danh mục" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmkkdkg", Name = "Danh mục kê khai đăng ký giá" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmloaidat", Name = "Danh mục loại đất" });
@@ -456,6 +459,9 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dshotro", Name = "Danh sách cán bộ hỗ trợ" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dlth", Name = "Danh sách dữ liệu tập huấn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.hethongchung", Name = "Thông tin hệ thống chung" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu", Name = "Dữ liệu phần mềm" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu.saoluu", Name = "Sao lưu dữ liệu" });
+            roldelist.Add(new VMRoleList { Role = "hethong.hethong.dulieu.khoiphuc", Name = "Khôi phục dữ liệu" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc", Name = "Quản trị danh mục" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmkkdkg", Name = "Danh mục kê khai đăng ký giá" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmloaidat", Name = "Danh mục loại đất" });
