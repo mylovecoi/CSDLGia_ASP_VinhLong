@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using CSDLGia_ASP.ViewModels.Manages.KeKhaiGia;
+using Microsoft.EntityFrameworkCore;
+using Azure.Core;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 {
@@ -144,6 +146,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.KeKhaiDangKyGia.Add(request);
                     _db.SaveChanges();
 
+                    var tennghe = GetTenNghe(request.MaNghe);
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "KEKHAIGIA", $"Kê khai giá - {tennghe}");
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
                 else
@@ -156,6 +162,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
+        }
+        private string GetTenNghe(string maNghe)
+        {
+            // Truy vấn TenNghe từ cơ sở dữ liệu
+            var nghe = _db.DmNgheKd.FirstOrDefault(n => n.Manghe == maNghe);
+            return nghe?.Tennghe ?? "Không tìm thấy tên nghề";
         }
 
         [HttpGet("KeKhaiDangKyGia/Edit")]
@@ -210,6 +222,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.KeKhaiDangKyGia.Update(request);
                     _db.SaveChanges();
 
+                    var tennghe = GetTenNghe(request.MaNghe);
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "UPDATE", $"Update kê khai giá - {tennghe}");
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
                 else
@@ -243,6 +259,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     _db.KeKhaiDangKyGia.Remove(model);
                     _db.SaveChanges();
 
+                    var tennghe = GetTenNghe(model.MaNghe);
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", $"Xóa kê khai giá - {tennghe}");
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = MaCsKd, MaNghe = MaNghe });
                 }
                 else
@@ -275,6 +295,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     model.MaCqCq = model_cqcq.Macqcq;
                     _db.KeKhaiDangKyGia.Update(model);
                     _db.SaveChanges();
+
+                    var tennghe = GetTenNghe(model.MaNghe);
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Chuyen", $"Chuyển hồ sơ kê khai giá - {tennghe}");
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = model.MaCsKd, MaNghe = model.MaNghe });
                 }
