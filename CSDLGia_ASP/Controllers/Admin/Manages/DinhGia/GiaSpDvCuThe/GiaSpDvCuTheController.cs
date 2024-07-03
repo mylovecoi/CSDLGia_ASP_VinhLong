@@ -218,6 +218,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
 
                         // Xử lý phần lịch sử hồ sơ 
                         _trangThaiHoSoService.LogHoSo(modelExcel.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
+                        // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                        LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá sản phẩm dịch vụ cụ thể");
+
                         // End Xử lý phần lịch sử hồ sơ 
                         return RedirectToAction("Index", "GiaSpDvCuThe", new { request.Madv });
                     }
@@ -261,6 +265,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     // Xử lý phần lịch sử hồ sơ 
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá sản phẩm dịch vụ cụ thể");
+
+
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
                     return RedirectToAction("Index", "GiaSpDvCuThe", new { request.Madv });
@@ -292,6 +300,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCuThe
                     var model_ct = _db.GiaSpDvCuTheCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaSpDvCuTheCt.RemoveRange(model_ct);
                     _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá sản phẩm dịch vụ cụ thể");
 
                     return RedirectToAction("Index", "GiaSpDvCuThe", new { model.Madv });
                 }

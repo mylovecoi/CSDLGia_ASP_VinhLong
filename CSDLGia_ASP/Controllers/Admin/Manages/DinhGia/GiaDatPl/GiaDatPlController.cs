@@ -150,6 +150,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     this.SaveData_Ct_CXD(model.Mahs);
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá đất cụ thể");
+
                     _db.SaveChanges();
                     ViewData["Title"] = "Thông tin hồ sơ giá các loại đất";
                     ViewData["MenuLv1"] = "menu_giadat";
@@ -208,6 +212,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tt";
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá đất cụ thể");
+
                     return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
                 }
                 else
@@ -361,6 +369,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     ViewData["MenuLv1"] = "menu_giadat";
                     ViewData["MenuLv2"] = "menu_dgdct";
                     ViewData["MenuLv3"] = "menu_dgdct_tt";
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giá đất cụ thể");
+
                     return RedirectToAction("Index", "GiaDatPl", new { request.Madv });
 
                 }
@@ -577,6 +589,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+
+
                     return RedirectToAction("Index", "GiaDatPl", new { model.Madv });
 
 

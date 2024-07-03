@@ -204,6 +204,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá tài sản công");
+
+
+
                     return RedirectToAction("Index", "TaiSanCong", new { Madv = request.Madv });
                 }
                 else
@@ -300,6 +305,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         _db.SaveChanges();
                         //Add Log
                         _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
+                        // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                        LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giá tài sản công");
                     }
 
 
@@ -350,6 +358,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                         _db.GiaTaiSanCong.Remove(model);
                         _db.SaveChanges();
                     }
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá tài sản công");
 
                     return RedirectToAction("Index", "TaiSanCong", new { Madv = model.Madv });
                 }

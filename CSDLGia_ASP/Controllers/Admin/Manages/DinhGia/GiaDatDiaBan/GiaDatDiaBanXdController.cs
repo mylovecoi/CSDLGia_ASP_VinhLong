@@ -87,6 +87,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "XetDuyet", "Xét duyệt hồ sơ giá đất địa bàn");
+
                     return RedirectToAction("Index", "GiaDatDiaBanXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -115,6 +119,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
                     _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyDuyet", "Hủy xét duyệt hồ sơ giá đất địa bàn");
+
                     return RedirectToAction("Index", "GiaDatDiaBanXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -154,6 +162,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "TraLai", "Trả lại hồ sơ giá đất địa bàn");
+
                     return RedirectToAction("Index", "GiaDatDiaBanXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -184,8 +195,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
-                    _db.SaveChanges();                                        
+                    _db.SaveChanges();
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
+
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "CongBo", "Công bố hồ sơ giá đất địa bàn");
+
                     return RedirectToAction("Index", "GiaDatDiaBanXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -213,7 +229,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                     _db.GiaDatDiaBan.Update(model);
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
-                    _db.SaveChanges();                   
+                    _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyCongBo", "Hủy công bố hồ sơ giá đất địa bàn");
+
                     return RedirectToAction("Index", "GiaDatDiaBanXd", new { Nam = model.Thoidiem.Year });
                 }
                 else

@@ -240,6 +240,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá sản phẩm dịch vụ tối đa");
+
                     _db.GiaSpDvToiDaCt.UpdateRange(modelct);
                     _db.SaveChanges();
 
@@ -272,6 +275,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     var model_ct = _db.GiaSpDvToiDaCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaSpDvToiDaCt.RemoveRange(model_ct);
                     _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá sản phẩm dịch vụ tối đa");
 
                     return RedirectToAction("Index", "GiaSpDvToiDa", new { model.Madv });
                 }
@@ -403,6 +409,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giá sản phẩm dịch vụ tối đa");
+
+
                     return RedirectToAction("Index", "GiaSpDvToiDa", new { request.Mahs });
                 }
                 else
@@ -432,6 +442,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+
+
                     return RedirectToAction("Index", "GiaSpDvToiDa", new { model.Madv });
 
                 }

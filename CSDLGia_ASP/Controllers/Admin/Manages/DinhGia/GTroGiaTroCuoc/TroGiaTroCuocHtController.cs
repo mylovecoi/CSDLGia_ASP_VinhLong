@@ -199,8 +199,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "CongBo", "Công bố hồ sơ giá trợ giá trợ cước");
 
-
-
                     return RedirectToAction("Index", "TroGiaTroCuocHt");
                 }
                 else
