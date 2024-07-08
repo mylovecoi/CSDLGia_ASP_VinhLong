@@ -245,6 +245,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     //Kết thúc Xử lý phần lịch sử hồ sơ 
 
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá rừng");
+
                     var modelct = _db.GiaRungCt.Where(t => t.Mahs == request.Mahs);
                     if (modelct.Any())
                     {
@@ -364,6 +368,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", "Update hồ sơ giá rừng");
+
+
                     return RedirectToAction("Index", "Giarung", new { Madv = request.Madv, Nam = request.Thoidiem.Year });
                 }
                 else
@@ -414,6 +422,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                         _db.GiaRung.Remove(model);
                         _db.SaveChanges();
                     }
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá rừng");
 
                     return RedirectToAction("Index", "Giarung", new { model.Madv });
                 }
@@ -479,6 +490,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Chuyen", "Chuyển hồ sơ giá rừng");
+
                     return RedirectToAction("Index", "Giarung", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

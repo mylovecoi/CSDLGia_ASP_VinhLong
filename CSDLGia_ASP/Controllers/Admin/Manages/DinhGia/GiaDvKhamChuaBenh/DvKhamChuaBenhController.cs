@@ -309,6 +309,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá khám chữa bệnh");
+
                     return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                 }
                 else
@@ -393,6 +397,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giá khám chữa bệnh");
+
                     return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                 }
                 else
@@ -439,6 +447,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     var model_ct = _db.GiaDvKcbCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaDvKcbCt.RemoveRange(model_ct);
                     _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá khám chữa bệnh");
+
 
                     return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = model.Madv });
                 }

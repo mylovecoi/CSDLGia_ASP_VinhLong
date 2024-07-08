@@ -94,6 +94,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "XetDuyet", "Xét duyệt hồ sơ giá hàng hóa tại siêu thị");
+
                     return RedirectToAction("Index", "GiaHangHoaTaiSieuThiXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -124,6 +127,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyDuyet", "Hủy xét duyệt hồ sơ giá hàng hóa tại siêu thị");
+
 
                     return RedirectToAction("Index", "GiaHangHoaTaiSieuThiXd", new { Nam = model.Thoidiem.Year });
                 }
@@ -156,6 +163,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
 
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "TraLai", "Trả lại hồ sơ giá hàng hóa tại siêu thị");
+
+
                     return RedirectToAction("Index", "GiaHangHoaTaiSieuThiXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
@@ -186,6 +198,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "CongBo", "Công bố hồ sơ giá hàng hóa tại siêu thị");
+
                     return RedirectToAction("Index", "GiaHangHoaTaiSieuThiXd");
                 }
                 else
@@ -215,6 +230,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                     _db.SaveChanges();
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "HuyCongBo", "Hủy công bố hồ sơ giá hàng hóa tại siêu thị");
 
                     return RedirectToAction("Index", "GiaHangHoaTaiSieuThiXd");
                 }

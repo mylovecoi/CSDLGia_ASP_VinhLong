@@ -203,12 +203,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     _db.SaveChanges();
 
 
-                    // Xử lý phần lịch sử hồ sơ 
-
-
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
-                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giá thuê mua nhà xã hội");
+
 
 
 
@@ -304,6 +304,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
 
                         //Add Log
                         _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+                        // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                        LoggingHelper.LogAction(HttpContext, _db, "Update", "Update hồ sơ giá thuê mua nhà xã hội ");
                     }
 
                     return RedirectToAction("Index", "GiaThueMuaNhaXaHoi", new { Nam = request.Thoidiem.Year, Madv = request.Madv });
@@ -351,7 +353,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     _db.GiaThueMuaNhaXh.Remove(model);
                     _db.SaveChanges();
 
-          
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá thuê mua nhà xã hội ");
 
                     return RedirectToAction("Index", "GiaThueMuaNhaXaHoi", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
@@ -431,7 +434,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXh
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
 
-                    //Kết thúc Xử lý phần lịch sử hồ sơ 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Chuyen", "Chuyển hồ sơ giá thuê mua nhà xã hội ");
+
                     return RedirectToAction("Index", "GiaThueMuaNhaXh", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

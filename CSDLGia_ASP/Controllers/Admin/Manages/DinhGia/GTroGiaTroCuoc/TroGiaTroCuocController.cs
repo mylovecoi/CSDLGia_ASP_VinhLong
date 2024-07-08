@@ -300,9 +300,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
-
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
-                    LoggingHelper.LogAction(HttpContext, _db, "Update", "Update hồ sơ giá thuê mặt đất mặt nước");
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giá trợ giá trợ cước");
 
                     return RedirectToAction("Index", "TroGiaTroCuoc", new { Madv = request.Madv });
                 }
@@ -350,6 +349,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                         }
                         _db.ThongTinGiayTo.RemoveRange(model_file);
                     }
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giá trợ giá trợ cước");
+
                     return RedirectToAction("Index", "TroGiaTroCuoc", new { Madv = model.Madv });
                 }
                 else
@@ -423,6 +426,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+
 
                     return RedirectToAction("Index", "TroGiaTroCuoc", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }

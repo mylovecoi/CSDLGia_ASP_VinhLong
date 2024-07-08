@@ -165,6 +165,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Store", "Thêm mới hồ sơ giao dịch bất động sản");
+
 
                     return RedirectToAction("Index", "GiaGiaoDichBDS", new { request.Madv });
                 }
@@ -239,6 +242,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
 
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Update", " Update hồ sơ giao dịch bất động sản");
+
                     return RedirectToAction("Index", "GiaGiaoDichBDS", new { request.Madv });
                 }
                 else
@@ -268,6 +274,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     var model_ct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == model.Mahs);
                     _db.GiaGiaoDichBDSCt.RemoveRange(model_ct);
                     _db.SaveChanges();
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Delete", "Xóa hồ sơ giao dịch bất động sản");
 
                     return RedirectToAction("Index", "GiaGiaoDichBDS", new { model.Madv });
                 }
@@ -346,6 +355,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), trangthai_complete);
+
+                    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+                    LoggingHelper.LogAction(HttpContext, _db, "Chuyen", "Chuyển hồ sơ giao dịch bất động sản");
 
                     return RedirectToAction("Index", "GiaGiaoDichBDS", new { model.Madv });
 
