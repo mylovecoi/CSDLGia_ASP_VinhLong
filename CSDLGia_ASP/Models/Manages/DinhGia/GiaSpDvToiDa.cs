@@ -54,6 +54,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Updated_at { get; set; }
         public string PhanLoaiHoSo { get; set; }//0: Hồ sơ nhập chi tiết; 1: Hồ sơ nhận dữ liệu từ file excel
         public string CodeExcel { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
         [NotMapped]
         public string Tendiaban { get; set; }
         [NotMapped]

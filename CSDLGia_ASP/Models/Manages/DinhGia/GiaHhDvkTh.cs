@@ -31,6 +31,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string ipf_pdf_base64 { get; set; }
         public string ipf_excel { get; set; }
         public string ipf_excel_base64 { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
         [NotMapped]
         public List<GiaHhDvkThCt> GiaHhDvkThCt { get; set; }
         //Index

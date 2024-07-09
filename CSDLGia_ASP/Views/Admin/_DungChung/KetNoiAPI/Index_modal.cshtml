@@ -48,10 +48,25 @@
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Mã AccessToken<span class="text-danger">*</span></label>
-                                <textarea name="TokenLGSP" rows="3" class="form-control" required>@tokenLGSP</textarea>
+                                <textarea name="TokenLGSP" rows="2" class="form-control" required>@tokenLGSP</textarea>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label>Bearer Token<span class="text-danger">*</span></label>
+                                <input type="text" name="bearerToken" placeholder="Bearer Token lấy từ LGSP" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 text-right">
+                            <button type="button" onclick="getBearerToken()" class="btn btn-primary font-weight-bold">Lấy Token từ LGSP</button>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
@@ -113,5 +128,8 @@
 <script>
     function setTruyenDuLieu(maHoSo) {
         $('#frm_truyendulieu').find("[name='Mahs']").val(maHoSo);
+    }
+    function getBearerToken() {
+        $('#frm_truyendulieu').find("[name='bearerToken']").val("b8abce35-b5aa-3fcf-8b9e-fcf6f5a090c0");
     }
 </script>
