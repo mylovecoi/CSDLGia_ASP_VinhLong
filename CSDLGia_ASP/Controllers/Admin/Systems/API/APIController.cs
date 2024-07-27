@@ -15,8 +15,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {
@@ -1483,8 +1483,122 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                 string responseBody = await responseTruyen.Content.ReadAsStringAsync();
                 if (responseTruyen.IsSuccessStatusCode)
                 {
-                    ViewData["Messages"] = responseBody;
-                    return View("Views/Admin/Error/Success.cshtml");
+                    /*2024.07.09: chưa kiểm tra xem thông điệp trả về có thành công ko
+                     * Nếu thành công thì lưu lại trạng thái (DAKETNOI) và thời gian kết nối vào bảng thông tin
+                     */
+                    //VMKetQua ketQua = JsonConvert.DeserializeObject<VMKetQua>(responseBody);
+                   
+                    VMKetQua ketQua = null;
+                    try
+                    {
+                        ketQua = JsonConvert.DeserializeObject<VMKetQua>(responseBody);
+                        if (ketQua != null)
+                        {
+                            // Việc chuyển đổi thành công - Nhận đc thông báo từ CSDLQG
+
+                            if(ketQua.error_code == "0" || ketQua.error_code == "1")
+                            {
+                                //Lưu thông tin vào dữ liệu
+                                switch (request.MaKetNoiAPI)
+                                {
+                                    case "giahhdvk":
+                                        {
+                                            var hoSo = _db.GiaHhDvkTh.FirstOrDefault(x => x.Mahs == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaHhDvkTh.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "giahhdvkdm":
+                                        {
+                                            var hoSo = _db.GiaHhDvkNhom.FirstOrDefault(x => x.Matt == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaHhDvkNhom.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "giathuetainguyen":
+                                        {                                            
+                                            var hoSo = _db.GiaThueTaiNguyen.FirstOrDefault(x => x.Mahs == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaThueTaiNguyen.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "giathuetainguyendm":
+                                        {
+                                            var hoSo = _db.GiaThueTaiNguyenNhom.FirstOrDefault(x => x.Manhom == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaThueTaiNguyenNhom.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "giaspdvcongichdm":
+                                        {
+                                            //2024.05.14 Do khánh hoà nhập thu gom rác thải vào GiaSpDvToiDa                                            
+                                            var hoSo = _db.GiaSpDvToiDaNhom.FirstOrDefault(x => x.Manhom == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaSpDvToiDaNhom.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "giaspdvcongich":
+                                        {
+                                            /*2024.05.15: File đính kèm chỉ nhận file .xls
+                                             * MA_BM của khánh hoà là 183
+                                             */
+                                            var hoSo = _db.GiaSpDvToiDa.FirstOrDefault(x => x.Mahs == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.GiaSpDvToiDa.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+
+                                    case "thamdinhgia":
+                                        {
+                                            var hoSo = _db.ThamDinhGia.FirstOrDefault(x => x.Mahs == request.Mahs);
+                                            hoSo.TrangThaiCSDLQG = "DAKETNOI";
+                                            hoSo.NgayKetNoi = DateTime.Now;
+                                            _db.ThamDinhGia.Add(hoSo);
+                                            _db.SaveChanges();
+                                            break;
+                                        }
+                                }
+                                //
+                                ViewData["Messages"] = ketQua.message;
+                                return View("Views/Admin/Error/Success.cshtml");
+                            }
+                            else
+                            {
+                                ViewData["Messages"] = ketQua.message;
+                                return View("Views/Admin/Error/Error.cshtml");
+                            }
+                            
+                        }
+                        else
+                        {
+                            // Việc chuyển đổi thất bại - Nhận đc thông báo nhưng ko giống định dạng
+                            ViewData["Messages"] = responseBody;
+                            return View("Views/Admin/Error/Error.cshtml");
+                        }
+                    }
+                    catch (JsonException ex)
+                    {
+                        // Việc chuyển đổi thất bại và ném ngoại lệ
+                        return Ok("Không thể truyền dữ liệu lên CSDL quốc giá. Thông báo lỗi:" + ex.Message);
+                    }
+                   
                 }
                 else
                 {

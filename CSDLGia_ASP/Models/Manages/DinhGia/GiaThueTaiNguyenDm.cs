@@ -22,7 +22,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Sapxep { get; set; }
         public string Theodoi { get; set; }
         public DateTime Created_at { get; set; }
-        public DateTime Updated_at { get; set; }
+        public DateTime Updated_at { get; set; }       
         [NotMapped]
         public double dongialk { get; set; }
         [NotMapped]

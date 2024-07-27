@@ -58,6 +58,9 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string Lydo_ad { get; set; }
         public string Thongtin_ad { get; set; }
         public string Trangthai_ad { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
         public string Ipf1 { get; set; }
         [NotMapped]
         public IFormFile Ipf1upload { get; set; }
