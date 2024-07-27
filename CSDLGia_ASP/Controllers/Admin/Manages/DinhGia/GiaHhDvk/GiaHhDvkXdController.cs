@@ -37,21 +37,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                                    });
 
                     var dsdiaban = _db.DsDiaBan;
-                    Madv = string.IsNullOrEmpty(Madv) ? dsdonvi.Select(t => t.MaDv).First() : Madv;                    
+                    //Madv = string.IsNullOrEmpty(Madv) ? dsdonvi.Select(t => t.MaDv).First() : Madv;                    
+                    Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;                    
 
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
-                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dv.Id,
-                                        MaDiaBan = dv.MaDiaBan,
-                                        MaDv = dv.MaDv,
-                                        TenDv = dv.TenDv,
-                                        ChucNang = dv.ChucNang,
-                                        Level = db.Level,
-                                    }).First();
+                    //var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == Madv)
+                    //                join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
+                    //                select new VMDsDonVi
+                    //                {
+                    //                    Id = dv.Id,
+                    //                    MaDiaBan = dv.MaDiaBan,
+                    //                    MaDv = dv.MaDv,
+                    //                    TenDv = dv.TenDv,
+                    //                    ChucNang = dv.ChucNang,
+                    //                    Level = db.Level,
+                    //                }).First();
                     List<string> list_trangthai = new List<string> { "CD", "HT", "DD", "CB", "CHT", "HCB" };
+
                     IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_trangthai.Contains(t.Trangthai) && t.Macqcq == Madv);
+                    //IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_trangthai.Contains(t.Trangthai) && t.Madv == Madv);
 
 
                     if (string.IsNullOrEmpty(Nam))
@@ -81,7 +84,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
 
                     }
 
-                    ViewData["DsDonVi"] = dsdonvi;
+                    ViewData["DsDonVi"] = _db.DsDonVi.Where(t=>t.MaDv == Madv);
                     ViewData["DsDonViChuyen"] = _db.DsDonVi;
                     ViewData["DsDiaBan"] = dsdiaban;
                     ViewData["Madv"] = Madv;

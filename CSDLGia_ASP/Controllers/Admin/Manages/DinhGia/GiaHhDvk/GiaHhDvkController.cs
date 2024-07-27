@@ -38,10 +38,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                 {
                     Madv = string.IsNullOrEmpty(Madv) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : Madv;
 
-                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    //var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    var model_donvi = _db.DsDonVi.Where(t=>t.MaDv == Madv);
                     List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
                     IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => list_madv.Contains(t.Madv));
+                    //IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk> model = _db.GiaHhDvk.Where(t => t.Madv == Madv);
 
                     if (string.IsNullOrEmpty(Nam))
                     {
