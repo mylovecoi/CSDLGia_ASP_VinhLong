@@ -43,10 +43,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-8">
+                   
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
                             <label>Tên sản phẩn dịch vụ</label>
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Loại đô thị</label>
+                            <input type="text" id="loaidothi_create" name="loaidothi_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
@@ -56,6 +65,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
             </div>
             <div class="modal-footer">
@@ -452,6 +463,7 @@
                 HienThi: $('#hienthi_create').val(),
                 Manhom: $('#manhom_create').val(),
                 Tenspdv: $('#tenspdv_create').val(),
+                LoaiDoThi: $('#loaidothi_create').val(),
                 Dvt: $('#dvt_create').val(),
                 Sapxep: $('#sapxep_create').val(),
                 Style: $('#style_create').val(),
@@ -515,6 +527,7 @@
             type: 'POST',
             data: {
                 Tenspdv: $('#tenspdv_edit').val(),
+                LoaiDoThi: $('#loaidothi_edit').val(),
                 Sapxep: $('#sapxep_edit').val(),
                 HienThi: $('#hienthi_edit').val(),
                 Dvt: $('#dvt_edit').val(),

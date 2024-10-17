@@ -70,7 +70,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Madv, string Manhom, string Tenspdv, string Dvt, string HienThi, int Sapxep, string[] Style)
+        public JsonResult Store(string Madv, string Manhom, string Tenspdv,string LoaiDoThi, string Dvt, string HienThi, int Sapxep, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -83,6 +83,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         Manhom = Manhom,
                         Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
                         Tenspdv = Tenspdv,
+                        LoaiDoThi = LoaiDoThi,
                         Dvt = Dvt,
                         HienThi = HienThi,
                         Sapxep = Sapxep,
@@ -141,6 +142,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
 
                         string result = "<div class='row' id='edit_thongtin'>";
+
                         result += "<div class='col-xl-3'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Sắp xếp</label>";
@@ -170,6 +172,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         result += "<div class='form-group fv-plugins-icon-container'>";
                         result += "<label>Tên sản phẩm dịch vụ</label>";
                         result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' class='form-control' value='" + model.Tenspdv + "'/>";
+                        result += "</div>";
+                        result += "</div>";
+
+                        result += "<div class='col-xl-8'>";
+                        result += "<div class='form-group fv-plugins-icon-container'>";
+                        result += "<label>Loại đô thị</label>";
+                        result += "<input type='text' id='loaidothi_edit' name='loaidothi_edit' class='form-control' value='" + model.LoaiDoThi + "'/>";
                         result += "</div>";
                         result += "</div>";
 
@@ -207,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
 
         [Route("GiaSpDvCongIchDmCt/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Dvt, string Tenspdv, int Sapxep, string HienThi, string[] Style)
+        public JsonResult Update(int Id, string Dvt, string Tenspdv, string LoaiDoThi, int Sapxep, string HienThi, string[] Style)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -217,6 +226,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     var model = _db.GiaSpDvCongIchDm.FirstOrDefault(t => t.Id == Id);
                     model.HienThi = HienThi;
                     model.Tenspdv = Tenspdv;
+                    model.LoaiDoThi = LoaiDoThi;
                     model.Dvt = Dvt;
                     model.Sapxep = Sapxep;
                     model.Style = str_style;

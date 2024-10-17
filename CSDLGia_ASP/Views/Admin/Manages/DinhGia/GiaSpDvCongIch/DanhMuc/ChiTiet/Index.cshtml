@@ -60,6 +60,7 @@
                     <th width="2%">#</th>
                     <th width="5%" style="text-align:center">Hiển thị</th>
                     <th style="text-align:left">Tên sản phẩm dịch vụ</th>
+                    <th style="text-align:left">Loại đô thị</th>
                     <th width="5%" style="text-align:center">Đơn vị tính</th>
                     <th width="10%" style="text-align:center">Thao tác</th>
                 </tr>
@@ -71,6 +72,7 @@
                         <td style="text-align: center">@item.Sapxep</td>
                         <td style="text-align: center">@item.HienThi</td>
                         <td style="text-align: left">@item.Tenspdv</td>
+                        <td style="text-align: left">@item.LoaiDoThi</td>
                         <td style="text-align: center">@item.Dvt</td>
                         <td>
                             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Edit"))
