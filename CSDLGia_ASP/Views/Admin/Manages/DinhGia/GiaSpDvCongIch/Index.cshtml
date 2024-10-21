@@ -117,10 +117,6 @@
                             @if (!string.IsNullOrEmpty(item.Madv))
                                 @(dsdonvi.FirstOrDefault(x => x.MaDv == item.Madv)?.TenDv ?? "")
 
-
-
-
-
                         </td>
                         <td style="text-align: center">@item.Soqd</td>
                         <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>

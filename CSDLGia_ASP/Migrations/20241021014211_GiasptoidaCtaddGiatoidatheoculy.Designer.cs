@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241021014211_GiasptoidaCtaddGiatoidatheoculy")]
+    partial class GiasptoidaCtaddGiatoidatheoculy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1246,15 +1249,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Giavt5")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavt6")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavt7")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavtconlai")
                         .HasColumnType("float");
 
                     b.Property<double>("Hesok")
@@ -11369,9 +11363,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Dongia")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Dongia2")
                         .HasColumnType("float");
 
                     b.Property<string>("Dvt")

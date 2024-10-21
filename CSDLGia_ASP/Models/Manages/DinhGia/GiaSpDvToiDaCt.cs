@@ -13,6 +13,10 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Trangthai { get; set; }       
         public double Dongia { get; set; }
+        public double GiaToiDaTheoCuLy1 { get; set; }
+        public double GiaToiDaTheoCuLy2 { get; set; }
+        public double GiaToiDaTheoCuLy3 { get; set; }
+        public double GiaToiDaTheoCuLy4 { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Phanloaidv { get; set; }

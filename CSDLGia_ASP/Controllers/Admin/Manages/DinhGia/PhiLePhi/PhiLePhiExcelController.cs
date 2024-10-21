@@ -134,6 +134,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                                 worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
                                 GhiChu = worksheet.Cells[row, 5].Value != null ?
                                                      worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                Dongia2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
                                 Style = strStyle.ToString(),
                             });
                             line = line + 1;

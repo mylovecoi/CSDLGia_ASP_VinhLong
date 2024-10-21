@@ -49,6 +49,7 @@
                     <th>Nội dung</th>
                     <th width="10%">Đơn vị tính</th>
                     <th width="10%">Đơn giá</th>
+                    <th width="10%">Đơn giá 2</th>
                     <th width="10%">Ghi chú</th>
                     <th width="8%">Thao tác</th>
                 </tr>
@@ -64,7 +65,8 @@
                             <td style="text-align:center; @HtmlStyle">@item.HienThi</td>
                             <td style="text-align:left; @HtmlStyle">@item.Tenspdv</td>
                             <td style="text-align:center; @HtmlStyle">@item.Dvt</td>
-                            <td style="text-align:right; @HtmlStyle">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                            <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                            <td style="text-align:right;">@Helpers.ConvertDbToStr(item.Dongia2)</td>
                             <td style="text-align:center; @HtmlStyle">@item.GhiChu</td>
                             <td>
                                 <button type="button" data-target="#Edit_Modal" data-toggle="modal"

@@ -93,6 +93,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                                     worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
                                 Manhom = worksheet.Cells[row, 5].Value != null ?
                                             worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+                                GiaToiDaTheoCuLy1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                    worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                GiaToiDaTheoCuLy2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
+                                GiaToiDaTheoCuLy3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
+                                                    worksheet.Cells[row, 8].Value.ToString().Trim() : ""),
+                                GiaToiDaTheoCuLy4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value != null ?
+                                                    worksheet.Cells[row, 9].Value.ToString().Trim() : ""),
+
                             });
                         }
                     }

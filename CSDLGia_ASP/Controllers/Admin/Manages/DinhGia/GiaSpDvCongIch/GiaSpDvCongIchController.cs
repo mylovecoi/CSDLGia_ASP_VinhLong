@@ -139,6 +139,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                             Mahs = model.Mahs,
                             Maspdv = item.Maspdv,
                             Ten = item.Tenspdv,
+                            LoaiDoThi = item.LoaiDoThi,
                             Manhom = item.Manhom,
                             Dvt = item.Dvt,
                             HienThi = item.HienThi,

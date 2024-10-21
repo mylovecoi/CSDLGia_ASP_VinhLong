@@ -44,6 +44,7 @@
 
     function SetUpdate() {
         var DonGia = $('#dongia_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var DonGia2 = $('#dongia2_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/PhiLePhiCt/Update',
             type: 'POST',
@@ -51,6 +52,7 @@
                 Mahs: $('#Mahs').val(),
                 GhiChu: $('#ghichu_edit').val(),
                 Dongia: DonGia,
+                Dongia2: DonGia2,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

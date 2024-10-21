@@ -633,6 +633,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             result += "<div class='form-group fv-plugins-icon-container'>";
             result += "<label><b>Đơn giá</b></label>";
             result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.Dongia) + "'/>";
+            result += "<label><b>Đơn giá 2</b></label>";
+            result += "<input type='text' id='dongia2_edit' name='dongia2_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.Dongia2) + "'/>";
             result += "</div>";
             result += "</div>";
             result += "<div class='col-xl-12'>";
@@ -649,10 +651,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
         }
 
         [HttpPost("PhiLePhiCt/Update")]
-        public JsonResult UpdateCt(int Id, double Dongia, string Mahs, string GhiChu)
+        public JsonResult UpdateCt(int Id, double Dongia, double Dongia2, string Mahs, string GhiChu)
         {
             var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
             model.Dongia = Dongia;
+            model.Dongia2 = Dongia2;
             model.GhiChu = GhiChu;
             _db.PhiLePhiCt.Update(model);
             _db.SaveChanges();
@@ -675,6 +678,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             result += " <th>Nội dung</th>";
             result += " <th width='10%'>Đơn vị tính</th>";
             result += " <th width='10%'>Đơn giá</th>";
+            result += " <th width='10%'>Đơn giá2</th>";
             result += " <th width='10%'>Ghi chú</th>";
             result += " <th width='8%'>Thao tác</th>";
             result += "</tr>";
@@ -690,6 +694,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                 result += "<td style='text-align:left;" + @HtmlStyle + "'>" + item.Tenspdv + "</td>";
                 result += "<td style='text-align:center;" + @HtmlStyle + "'>" + item.Dvt + "</td>";
                 result += "<td style='text-align:right; " + @HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Dongia) + "</td>";
+                result += "<td style='text-align:right; " + @HtmlStyle + "'>" + Helpers.ConvertDbToStr(item.Dongia2) + "</td>";
                 result += "<td style='text-align:center;" + @HtmlStyle + "'>" + item.GhiChu + "</td>";
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Nhập giá'";

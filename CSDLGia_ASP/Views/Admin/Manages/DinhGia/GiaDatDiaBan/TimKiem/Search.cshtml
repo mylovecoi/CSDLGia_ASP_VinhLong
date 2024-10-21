@@ -219,13 +219,16 @@
                     <th style="text-align:center">Địa bàn</th>
                     <th style="text-align:center">Loại đất</th>
                     <th style="text-align:left">Tên đường phố</th>
-                    <th style="text-align:center">Loại đường</th>
+                    <th style="text-align:center">Loại đường ( Loại đô thị )</th>
                     <th style="text-align:center">Hệ số</th>
                     <th style="text-align:center">VT1</th>
                     <th style="text-align:center">VT2</th>
                     <th style="text-align:center">VT3</th>
                     <th style="text-align:center">VT4</th>
                     <th style="text-align:center">VT5</th>
+                    <th style="text-align:center">VT6</th>
+                    <th style="text-align:center">VT7</th>
+                    <th style="text-align:center">VT còn lại</th>
                     <th style="text-align:center">Thao tác</th>
                 </tr>
 
@@ -249,6 +252,9 @@
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt6)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt7)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavtconlai)</td>
                         <td>
                             <a asp-controller="GiaDatDiaBan" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
                                target="_blank">

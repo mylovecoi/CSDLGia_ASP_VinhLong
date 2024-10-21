@@ -109,6 +109,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                 Giavt4 = worksheet.Cells[row, 10].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value.ToString().Trim()) : 0,
                                 Giavt5 = worksheet.Cells[row, 11].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 11].Value.ToString().Trim()) : 0,
                                 Maloaidat = worksheet.Cells[row, 12].Value != null ? worksheet.Cells[row, 12].Value.ToString().Trim() : "",
+                                Giavt6 = worksheet.Cells[row, 13].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 13].Value.ToString().Trim()) : 0,
+                                Giavt7 = worksheet.Cells[row, 14].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 14].Value.ToString().Trim()) : 0,
+                                Giavtconlai = worksheet.Cells[row, 15].Value != null ? Helpers.ConvertStrToDb(worksheet.Cells[row, 15].Value.ToString().Trim()) : 0,
                                 Trangthai = "XD",
                                 MaDv = request.Madv
                             });

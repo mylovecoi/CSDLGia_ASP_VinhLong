@@ -27,7 +27,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
         [Route("GiaDatDiaBanCt/Store")]
         [HttpPost]
         public JsonResult Store(string MaDv, string MaDiaBan, string Mahs, string Maloaidat, string Mota, string Loaiduong, string Diemdau, string Diemcuoi, Double Hesok,
-            Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5, string Hienthi, Double SapXep)
+            Double Giavt1, Double Giavt2, Double Giavt3, Double Giavt4, Double Giavt5, Double Giavt6, Double Giavt7, Double Giavtconlai, string Hienthi, Double SapXep)
         {
             // Tạo 1 bản nghi mới trang thái CXD nếu thêm chi tiết xong quay lại
             var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt
@@ -47,6 +47,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 Giavt3 = Giavt3,
                 Giavt4 = Giavt4,
                 Giavt5 = Giavt5,
+                Giavt6 = Giavt6,
+                Giavt7 = Giavt7,
+                Giavtconlai = Giavtconlai,
                 Mota = Mota,
                 Trangthai = "CXD",
                 Created_at = DateTime.Now,
@@ -201,6 +204,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "</div>";
                 result += "</div>";
 
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá vị trí VI</label>";
+                result += "<input type='text' id='giavt6_edit' name='giavt6_edit' value='" + model.Giavt6 + "' class='form-control money-decimal-mask'>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá vị trí VII</label>";
+                result += "<input type='text' id='giavt7_edit' name='giavt7_edit' value='" + model.Giavt7 + "' class='form-control money-decimal-mask'>";
+                result += "</div>";
+                result += "</div>";
+
+                result += "<div class='col-xl-4'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label>Giá vị trí còn lại</label>";
+                result += "<input type='text' id='giavtconlai_edit' name='giavtconlai_edit' value='" + model.Giavtconlai + "' class='form-control money-decimal-mask'>";
+                result += "</div>";
+                result += "</div>";
+
                 result += "<div class='row'>";
                 result += "<div class='col-xl-4'>";
                 result += "<div class='form -group fv-plugins-icon-container'>";
@@ -231,7 +255,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
         [Route("GiaDatDiaBanCt/Update")]
         [HttpPost]
         public JsonResult Update(int Id,string MaXaPhuong, string Loaiduong, string Maloaidat, string Mota, string Diemdau, string Diemcuoi, double Hesok,
-                                    double Giavt1, double Giavt2, double Giavt3, double Giavt4, double Giavt5, string Hienthi, double SapXep)
+                                    double Giavt1, double Giavt2, double Giavt3, double Giavt4, double Giavt5, double Giavt6, double Giavt7, double Giavtconlai, string Hienthi, double SapXep)
         {
             var model = _db.GiaDatDiaBanCt.FirstOrDefault(t => t.Id == Id);
             
@@ -249,6 +273,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             model.Giavt3 = Giavt3;
             model.Giavt4 = Giavt4;
             model.Giavt5 = Giavt5;
+            model.Giavt6 = Giavt6;
+            model.Giavt7 = Giavt7;
+            model.Giavtconlai = Giavtconlai;
             model.Updated_at = DateTime.Now;
             _db.GiaDatDiaBanCt.Update(model);
             _db.SaveChanges();
@@ -368,6 +395,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                              Giavt3 = dat.Giavt3,
                              Giavt4 = dat.Giavt4,
                              Giavt5 = dat.Giavt5,
+                             Giavt6 = dat.Giavt6,
+                             Giavt7 = dat.Giavt7,
+                             Giavtconlai = dat.Giavtconlai,
                              Loaidat = dm.Loaidat,
                              Madiaban = dat.Madiaban,
                              Maxp = dat.Maxp,
@@ -390,6 +420,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
             result += "<th>VT3</th>";
             result += "<th>VT4</th>";
             result += "<th>VT5</th>";
+            result += "<th>VT6</th>";
+            result += "<th>VT7</th>";
+            result += "<th>VT Còn lại</th>";
             result += "<th>Thao tác</th>";
             result += "</tr>";
             result += "</thead>";
@@ -410,6 +443,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan.GiaDatDiaBa
                 result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt3) + "</td>";
                 result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt4) + "</td>";
                 result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt5) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt6) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavt7) + "</td>";
+                result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Giavtconlai) + "</td>";
 
                 result += "<td>";
                 result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
