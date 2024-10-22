@@ -519,6 +519,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                      Ttqd = giaspdvtoida.Ttqd,
                                      Tenspdv = giaspdvtoidact.Tenspdv,
                                      Dongia = giaspdvtoidact.Dongia,
+                                     GiaToiDaTheoCuLy1 = giaspdvtoidact.GiaToiDaTheoCuLy1,
+                                     GiaToiDaTheoCuLy2 = giaspdvtoidact.GiaToiDaTheoCuLy2,
+                                     GiaToiDaTheoCuLy3 = giaspdvtoidact.GiaToiDaTheoCuLy3,
+                                     GiaToiDaTheoCuLy4 = giaspdvtoidact.GiaToiDaTheoCuLy4,
+                                   
+
                                      Ghichu = giaspdvtoida.Ttqd,
                                      Madiaban = giaspdvtoidact.Madiaban,
                                      Trangthai = giaspdvtoida.Trangthai,

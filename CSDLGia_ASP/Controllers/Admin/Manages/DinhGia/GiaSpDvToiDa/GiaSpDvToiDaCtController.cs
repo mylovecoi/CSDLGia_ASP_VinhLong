@@ -124,18 +124,27 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
             result += "<table class='table table-striped table-bordered table-hover table-responsive' id='datatable_4'>";
 
             result += "<thead>";
+
+
             result += "<tr style='text-align:center'>";
-            result += "<th width='2%'>STT</th>";
-            result += "<th>STT<br />báo cáo</th>";
-            result += "<th>Tên sản phẩm dịch vụ</th>";
-            result += "<th>Đơn vị tính</th>";
-            result += "<th>Mức giá tối đa</th>";
+            result += "<th rowspan='2' width='2%'>STT</th>";
+            result += "<th rowspan='2'>STT<br />báo cáo</th>";
+            result += "<th rowspan='2'>Tên sản phẩm dịch vụ</th>";
+            result += "<th rowspan='2'>Đơn vị tính</th>";
+            result += "<th rowspan='2'>Mức giá tối đa</th>";
+            result += "<th colspan='4'>Mức giá tối đa cự ly</th>";
+            result += "<th rowspan='2'>Thao tác</th>";
+            result += "</tr>";
+
+
+            result += "<tr style='text-align:center'>";
             result += "<th>Mức giá tối đa cự ly dưới 500m</th>";
             result += "<th>Mức giá tối đa cự ly từ 500m đến dưới 1.000m</th>";
             result += "<th>Mức giá tối đa cự ly từ 1.000m đến dưới 2.000m</th>";
             result += "<th>Mức giá tối đa cự ly từ 2.000m đến dưới 3.000m</th>";
-            result += "<th>Thao tác</th>";
             result += "</tr>";
+
+
             result += "</thead>";
 
             result += "<tbody>";
