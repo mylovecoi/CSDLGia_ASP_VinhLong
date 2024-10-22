@@ -43,13 +43,13 @@
             {
                 <tr>
                     <td></td>
-                    <td style="text-align:left; font-weight:bold; text-transform:uppercase" colspan="4">@donvi.TenDv</td>
+                    <td style="text-align:left; font-weight:bold; text-transform:uppercase" colspan="5">@donvi.TenDv</td>
                 </tr>
                 @foreach (var hoso in HoSoDv)
                 {
                     <tr>
                         <td></td>
-                        <td style="text-align:left; font-weight:bold;" colspan="4"><span>&ensp;</span>Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)</td>
+                        <td style="text-align:left; font-weight:bold;" colspan="5"><span>&ensp;</span>Số QĐ: @hoso.Soqd - Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)</td>
                     </tr>
                     var chitiet = HoSoCts.Where(t => t.Mahs == hoso.Mahs);
                     if (chitiet.Any())
